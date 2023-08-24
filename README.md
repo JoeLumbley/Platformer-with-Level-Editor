@@ -2,5 +2,5 @@
 
 
 
+![002](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/33929d71-5797-4cd3-8c35-e3246883e0d2)
 
-![001](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/0cc256c0-3b1b-4757-8b0c-c14af67f5283)

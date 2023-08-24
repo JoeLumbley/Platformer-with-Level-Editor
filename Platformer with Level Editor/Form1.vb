@@ -62,7 +62,7 @@ Public Class Form1
 
     Private DeltaTime As TimeSpan
 
-    Private Gravity As Single = 1400
+    Private Gravity As Single = 2000
 
     Private AirResistance As Single = 100.0F
 
@@ -339,11 +339,11 @@ Public Class Form1
                 'Steering
                 If RightArrowDown = True Then
 
-                    OurHero.Velocity.X += 1.5F
+                    OurHero.Velocity.X += 0.5F
 
                 ElseIf LeftArrowDown = True Then
 
-                    OurHero.Velocity.X += -1.5F
+                    OurHero.Velocity.X += -0.5F
 
                 End If
 
@@ -581,7 +581,8 @@ Public Class Form1
 
                                 If Jumped = False Then
 
-                                    OurHero.Velocity.Y += -870.0F
+
+                                    OurHero.Velocity.Y += -1000.0F
 
                                     Jumped = True
 

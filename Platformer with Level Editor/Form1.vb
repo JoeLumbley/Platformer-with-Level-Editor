@@ -283,7 +283,7 @@ Public Class Form1
 
         Me.WindowState = FormWindowState.Maximized
 
-        Text = "Platform - Code with Joe"
+        Text = "Platformer with Level Editor - Code with Joe"
 
         SetStyle(ControlStyles.UserPaint, True)
 

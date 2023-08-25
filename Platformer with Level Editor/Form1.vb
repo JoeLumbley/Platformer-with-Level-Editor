@@ -170,6 +170,10 @@ Public Class Form1
 
     Private GridSize As Integer = 64
 
+    Private GridLineBitmap As New Bitmap(Screen.PrimaryScreen.WorkingArea.Size.Width, Screen.PrimaryScreen.WorkingArea.Size.Height)
+
+    Private GridLineBuffer As Graphics = Graphics.FromImage(GridLineBitmap)
+
     Private GameLoopTask As Task =
         Task.Factory.StartNew(Sub()
                                   Try
@@ -1024,14 +1028,56 @@ Public Class Form1
 
     Private Sub DrawGridLines()
 
+        With Buffer.Graphics
+
+            .DrawImageUnscaled(GridLineBitmap, 0, 0)
+
+        End With
+
+
+
+
+
+        'GridLineBuffer.Clear(Color.Transparent)
+
+        '' Draw vertical lines  |
+        'For x As Integer = 0 To ClientSize.Width Step GridSize
+        '    'Buffer.Graphics.DrawLine(Pens.Black, x, 0, x, ClientSize.Height)
+
+        '    GridLineBuffer.DrawLine(Pens.Black, x, 0, x, ClientSize.Height)
+
+        'Next
+
+        '' Draw horizontal lines ---
+        'For y As Integer = 0 To ClientSize.Width Step GridSize
+        '    'Buffer.Graphics.DrawLine(Pens.Black, 0, y, ClientSize.Width, y)
+
+        '    GridLineBuffer.DrawLine(Pens.Black, 0, y, ClientSize.Width, y)
+
+
+        'Next
+
+    End Sub
+
+    Private Sub BufferGridLines()
+
+        GridLineBuffer.Clear(Color.Transparent)
+
         ' Draw vertical lines  |
         For x As Integer = 0 To ClientSize.Width Step GridSize
-            Buffer.Graphics.DrawLine(Pens.Black, x, 0, x, ClientSize.Height)
+            'Buffer.Graphics.DrawLine(Pens.Black, x, 0, x, ClientSize.Height)
+
+            GridLineBuffer.DrawLine(Pens.Black, x, 0, x, ClientSize.Height)
+
         Next
 
         ' Draw horizontal lines ---
         For y As Integer = 0 To ClientSize.Width Step GridSize
-            Buffer.Graphics.DrawLine(Pens.Black, 0, y, ClientSize.Width, y)
+            'Buffer.Graphics.DrawLine(Pens.Black, 0, y, ClientSize.Width, y)
+
+            GridLineBuffer.DrawLine(Pens.Black, 0, y, ClientSize.Width, y)
+
+
         Next
 
     End Sub
@@ -1078,6 +1124,9 @@ Public Class Form1
         TitleEditButton.Rect = New Rectangle(ClientRectangle.Width \ 2 - 200, ClientRectangle.Height \ 2 + 100, 150, 90)
 
         TitlePlayButton.Rect = New Rectangle(ClientRectangle.Width \ 2 + 100, ClientRectangle.Height \ 2 + 100, 150, 90)
+
+        'DrawGridLines()
+        BufferGridLines()
 
     End Sub
 

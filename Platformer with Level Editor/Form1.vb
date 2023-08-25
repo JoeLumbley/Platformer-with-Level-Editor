@@ -62,7 +62,7 @@ Public Class Form1
 
     Private DeltaTime As TimeSpan
 
-    Private Gravity As Single = 2000
+    Private Gravity As Single = 3000
 
     Private AirResistance As Single = 100.0F
 
@@ -220,7 +220,7 @@ Public Class Form1
 
         OurHero.Velocity = New PointF(0, 0)
 
-        OurHero.MaxVelocity = New PointF(400, 600)
+        OurHero.MaxVelocity = New PointF(400, 1100)
 
         OurHero.Acceleration = New PointF(200, 300)
 
@@ -582,7 +582,7 @@ Public Class Form1
                                 If Jumped = False Then
 
 
-                                    OurHero.Velocity.Y += -1000.0F
+                                    OurHero.Velocity.Y += -1300.0F
 
                                     Jumped = True
 
@@ -743,16 +743,40 @@ Public Class Form1
 
     Private Sub DrawToolBar()
 
+        DrawToolbarBackground()
+
+        DrawPointerToolButton()
+
+        DrawBlockToolButton()
+
+    End Sub
+
+    Private Sub DrawToolbarBackground()
+
         With Buffer.Graphics
 
-            'Draw toolbar background.
             .FillRectangle(Brushes.DarkGray, ToolBarBackground.Rect)
 
-            'Draw pointer tool button.
+        End With
+
+    End Sub
+
+    Private Sub DrawPointerToolButton()
+
+        With Buffer.Graphics
+
             .FillRectangle(Brushes.Black, PointerToolButton.Rect)
+
             .DrawString("ë", PointerToolFont, Brushes.White, PointerToolButton.Rect, AlineCenterMiddle)
 
-            'Draw block tool button.
+        End With
+
+    End Sub
+
+    Private Sub DrawBlockToolButton()
+
+        With Buffer.Graphics
+
             .FillRectangle(Brushes.Black, BlockToolButton.Rect)
 
             .FillRectangle(Brushes.Chocolate, BlockToolIcon.Rect)
@@ -772,10 +796,6 @@ Public Class Form1
         End With
 
     End Sub
-
-
-
-
 
     Private Sub DrawEditButton()
 
@@ -833,9 +853,6 @@ Public Class Form1
 
     End Sub
 
-
-
-
     Private Sub DrawBlocks()
 
         With Buffer.Graphics
@@ -846,6 +863,12 @@ Public Class Form1
 
                     .FillRectangle(Brushes.Chocolate, Block.Rect)
 
+                    If SelectedBlock = Array.IndexOf(Blocks, Block) Then
+
+                        .DrawRectangle(New Pen(Color.Red, 6), Block.Rect)
+
+                    End If
+
                 Next
 
             End If
@@ -853,8 +876,6 @@ Public Class Form1
         End With
 
     End Sub
-
-
 
     Private Sub DrawBushes()
 
@@ -879,8 +900,6 @@ Public Class Form1
         End With
 
     End Sub
-
-
 
     Private Sub DrawClouds()
 
@@ -1055,6 +1074,7 @@ Public Class Form1
     Private Sub Form1_MouseDown(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
 
         Select Case GameState
+
             Case AppState.Start
 
                 If TitlePlayButton.Rect.Contains(e.Location) Then
@@ -1074,6 +1094,7 @@ Public Class Form1
                 End If
 
             Case AppState.Editing
+
                 SelectedBlock = CheckBlockSelection(e)
 
                 SelectedCloud = CheckCloudSelection(e)
@@ -1150,6 +1171,19 @@ Public Class Form1
                     Clouds(SelectedCloud).Rect.X = CInt(Math.Round(e.X / GridSize)) * GridSize
 
                     Clouds(SelectedCloud).Rect.Y = CInt(Math.Round(e.Y / GridSize)) * GridSize
+
+                End If
+
+            End If
+
+            If SelectedBlock > -1 Then
+
+                If e.Button = MouseButtons.Left Then
+
+                    'Snap to grid
+                    Blocks(SelectedBlock).Rect.X = CInt(Math.Round(e.X / GridSize)) * GridSize
+
+                    Blocks(SelectedBlock).Rect.Y = CInt(Math.Round(e.Y / GridSize)) * GridSize
 
                 End If
 

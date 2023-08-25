@@ -122,11 +122,18 @@ Public Class Form1
 
     Private TitleEditButton As GameObject
 
+
     Private SelectedCloud As Integer = -1
 
     Private SelectedBlock As Integer = -1
 
     Private SelectedPlatform As Integer = -1
+
+    Private SelectedBill As Integer = -1
+
+    Private SelectedBush As Integer = -1
+
+
 
     Private ReadOnly AlineCenter As New StringFormat With {.Alignment = StringAlignment.Center}
 
@@ -581,7 +588,6 @@ Public Class Form1
 
                                 If Jumped = False Then
 
-
                                     OurHero.Velocity.Y += -1300.0F
 
                                     Jumped = True
@@ -839,11 +845,17 @@ Public Class Form1
 
             If Cash IsNot Nothing Then
 
-                For Each Coin In Cash
+                For Each Bill In Cash
 
-                    .FillRectangle(Brushes.Goldenrod, Coin.Rect)
+                    .FillRectangle(Brushes.Goldenrod, Bill.Rect)
 
-                    .DrawString("$", FPSFont, Brushes.OrangeRed, Coin.Rect, AlineCenterMiddle)
+                    .DrawString("$", FPSFont, Brushes.OrangeRed, Bill.Rect, AlineCenterMiddle)
+
+                    If SelectedBill = Array.IndexOf(Cash, Bill) Then
+
+                        .DrawRectangle(New Pen(Color.Red, 6), Bill.Rect)
+
+                    End If
 
                 Next
 
@@ -892,6 +904,16 @@ Public Class Form1
                     .DrawLine(SeaGreenPen, Bush.Rect.Left + 10, Bush.Rect.Bottom - 10, Bush.Rect.Right - 10, Bush.Rect.Bottom - 10)
 
                     .DrawRectangle(OutinePen, Bush.Rect)
+
+                    If SelectedBush = Array.IndexOf(Bushes, Bush) Then
+
+                        .DrawRectangle(New Pen(Color.Red, 6), Bush.Rect)
+
+                    Else
+
+                        .DrawRectangle(OutinePen, Bush.Rect)
+
+                    End If
 
                 Next
 
@@ -1099,6 +1121,12 @@ Public Class Form1
 
                 SelectedCloud = CheckCloudSelection(e)
 
+                SelectedBill = CheckBillSelection(e)
+
+                SelectedBush = CheckBushSelection(e)
+
+
+
                 If EditPlayButton.Rect.Contains(e.Location) Then
 
                     LastFrame = Now
@@ -1159,6 +1187,54 @@ Public Class Form1
 
     End Function
 
+    Private Function CheckBillSelection(e As MouseEventArgs) As Integer
+
+        If Cash IsNot Nothing Then
+
+            For Each Bill In Cash
+
+                'Has the player selected a cloud?
+                If Bill.Rect.Contains(e.Location) Then
+                    'Yes, the player has selected a cloud.
+
+                    Return Array.IndexOf(Cash, Bill)
+
+                    Exit Function
+
+                End If
+
+            Next
+
+        End If
+
+        Return -1
+
+    End Function
+
+    Private Function CheckBushSelection(e As MouseEventArgs) As Integer
+
+        If Bushes IsNot Nothing Then
+
+            For Each Bush In Bushes
+
+                'Has the player selected a cloud?
+                If Bush.Rect.Contains(e.Location) Then
+                    'Yes, the player has selected a cloud.
+
+                    Return Array.IndexOf(Bushes, Bush)
+
+                    Exit Function
+
+                End If
+
+            Next
+
+        End If
+
+        Return -1
+
+    End Function
+
     Private Sub Form1_MouseMove(sender As Object, e As MouseEventArgs) Handles Me.MouseMove
 
         If GameState = AppState.Editing Then
@@ -1184,6 +1260,32 @@ Public Class Form1
                     Blocks(SelectedBlock).Rect.X = CInt(Math.Round(e.X / GridSize)) * GridSize
 
                     Blocks(SelectedBlock).Rect.Y = CInt(Math.Round(e.Y / GridSize)) * GridSize
+
+                End If
+
+            End If
+
+            If SelectedBill > -1 Then
+
+                If e.Button = MouseButtons.Left Then
+
+                    'Snap to grid
+                    Cash(SelectedBill).Rect.X = CInt(Math.Round(e.X / GridSize)) * GridSize
+
+                    Cash(SelectedBill).Rect.Y = CInt(Math.Round(e.Y / GridSize)) * GridSize
+
+                End If
+
+            End If
+
+            If SelectedBush > -1 Then
+
+                If e.Button = MouseButtons.Left Then
+
+                    'Snap to grid
+                    Bushes(SelectedBush).Rect.X = CInt(Math.Round(e.X / GridSize)) * GridSize
+
+                    Bushes(SelectedBush).Rect.Y = CInt(Math.Round(e.Y / GridSize)) * GridSize
 
                 End If
 

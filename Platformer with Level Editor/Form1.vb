@@ -176,6 +176,14 @@ Public Class Form1
 
     Private GridLineBuffer As Graphics = Graphics.FromImage(GridLineBitmap)
 
+    Private SizingHandle As Rectangle = New Rectangle(0, 0, 25, 25)
+
+
+    Private SizingHandleSelected As Boolean = False
+
+    Private SelectionOffset As Point
+
+
     Private GameLoopTask As Task =
         Task.Factory.StartNew(Sub()
                                   Try
@@ -237,7 +245,6 @@ Public Class Form1
 
         OurHero.Acceleration = New PointF(200, 300)
 
-
         ReDim Blocks(0)
         Blocks(Blocks.Length - 1).Rect = New Rectangle(0, 832, 2000, 64)
 
@@ -258,13 +265,11 @@ Public Class Form1
 
         Blocks(Blocks.Length - 1).Position = New PointF(Blocks(Blocks.Length - 1).Rect.X, Blocks(Blocks.Length - 1).Rect.Y)
 
-
         ReDim Clouds(0)
         Clouds(Clouds.Length - 1).Rect = New Rectangle(600, 200, 64, 64)
 
         Array.Resize(Clouds, Clouds.Length + 1)
         Clouds(Clouds.Length - 1).Rect = New Rectangle(1400, 100, 64, 64)
-
 
         ReDim Bushes(0)
         Bushes(Bushes.Length - 1).Rect = New Rectangle(750, 768, 300, 64)
@@ -272,13 +277,11 @@ Public Class Form1
         Array.Resize(Bushes, Bushes.Length + 1)
         Bushes(Bushes.Length - 1).Rect = New Rectangle(1600, 768, 100, 64)
 
-
         ReDim Cash(0)
         Cash(Cash.Length - 1).Rect = New Rectangle(1071, 506, 64, 64)
 
         Array.Resize(Cash, Cash.Length + 1)
         Cash(Cash.Length - 1).Rect = New Rectangle(1400, 506, 64, 64)
-
 
         OutinePen.LineJoin = Drawing2D.LineJoin.Round
 
@@ -374,7 +377,6 @@ Public Class Form1
                 'Max falling speed.
                 If OurHero.Velocity.Y > OurHero.MaxVelocity.Y Then OurHero.Velocity.Y = OurHero.MaxVelocity.Y
 
-
                 'air resistance
                 If OurHero.Velocity.X >= 0 Then
 
@@ -389,8 +391,6 @@ Public Class Form1
                     If OurHero.Velocity.X > 0 Then OurHero.Velocity.X = 0
 
                 End If
-
-
 
             End If
 
@@ -494,7 +494,7 @@ Public Class Form1
                         OurHero.Velocity.Y = 0
 
                         'Above
-                        If OurHero.Position.Y <= Block.Rect.Top - Block.Rect.Height \ 2 Then
+                        If OurHero.Position.Y <= Block.Rect.Top - OurHero.Rect.Height \ 2 Then
 
                             'Place our hero on top of our block.
                             If OurHero.Position.Y <> Block.Rect.Top - OurHero.Rect.Height + 1 Then
@@ -514,7 +514,7 @@ Public Class Form1
                         OurHero.Velocity.Y = 0
                         OurHero.Velocity.X = 0
 
-                        If OurHero.Position.Y >= Block.Rect.Bottom - Block.Rect.Height \ 4 Then
+                        If OurHero.Position.Y > Block.Rect.Bottom - OurHero.Rect.Height \ 2 Then
                             'Under
 
                             OurHero.Position.Y = Block.Rect.Bottom
@@ -676,14 +676,6 @@ Public Class Form1
 
         End With
 
-        'GridLineBitmap.Dispose()
-
-        'GridLineBitmap = New Bitmap(ClientSize.Width, ClientSize.Height)
-
-        'GridLineBuffer = Graphics.FromImage(GridLineBitmap)
-
-
-
         UpdateFrameCounter()
 
     End Sub
@@ -730,7 +722,7 @@ Public Class Form1
 
         DrawBlocks()
 
-        DrawCoins()
+        DrawCash()
 
         DrawOurHero()
 
@@ -752,7 +744,7 @@ Public Class Form1
 
         DrawBlocks()
 
-        DrawCoins()
+        DrawCash()
 
         DrawOurHero()
 
@@ -832,7 +824,6 @@ Public Class Form1
 
     End Sub
 
-
     Private Sub DrawFPS()
 
         With Buffer.Graphics
@@ -842,7 +833,6 @@ Public Class Form1
         End With
 
     End Sub
-
 
     Private Sub DrawOurHero()
 
@@ -856,7 +846,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub DrawCoins()
+    Private Sub DrawCash()
 
         With Buffer.Graphics
 
@@ -895,6 +885,14 @@ Public Class Form1
                     If SelectedBlock = Array.IndexOf(Blocks, Block) Then
 
                         .DrawRectangle(New Pen(Color.Red, 6), Block.Rect)
+
+                        'Draw sizing handle.
+                        SizingHandle.X = Block.Rect.Right - SizingHandle.Width \ 2
+
+                        SizingHandle.Y = Block.Rect.Bottom - SizingHandle.Height \ 2
+
+                        .FillRectangle(Brushes.Black,
+                                       SizingHandle)
 
                     End If
 
@@ -1179,61 +1177,79 @@ Public Class Form1
 
             Case AppState.Editing
 
-                'Is the player selecting a block?
-                If CheckBlockSelection(e) > -1 Then
-                    'Yes, the player is selecting a block.
 
-                    SelectedBlock = CheckBlockSelection(e)
+                'SizingHandle
 
-                    SelectedBill = -1
-                    SelectedCloud = -1
-                    SelectedBush = -1
 
-                    'Is the player selecting a bill?
-                ElseIf CheckBillSelection(e) > -1 Then
-                    'Yes, the player is selecting a bill.
 
-                    SelectedBill = CheckBillSelection(e)
+                If SizingHandle.Contains(e.Location) Then
 
-                    SelectedBlock = -1
-                    SelectedCloud = -1
-                    SelectedBush = -1
+                    SizingHandleSelected = True
 
-                    'Is the player selecting a cloud?
-                ElseIf CheckCloudSelection(e) > -1 Then
-                    'Yes, the player is selecting a cloud.
-
-                    SelectedCloud = CheckCloudSelection(e)
-
-                    SelectedBlock = -1
-                    SelectedBill = -1
-                    SelectedBush = -1
-
-                    'Is the player selecting a bush?
-                ElseIf CheckBushSelection(e) > -1 Then
-                    'Yes, the player is selecting a bush.
-
-                    SelectedBush = CheckBushSelection(e)
-
-                    SelectedBlock = -1
-                    SelectedBill = -1
-                    SelectedCloud = -1
 
                 Else
-                    'No, the player is selecting nothing.
 
-                    SelectedBlock = -1
-                    SelectedBill = -1
-                    SelectedCloud = -1
-                    SelectedBush = -1
+                    SizingHandleSelected = False
+
+
+                    'Is the player selecting a block?
+                    If CheckBlockSelection(e) > -1 Then
+                        'Yes, the player is selecting a block.
+
+                        SelectedBlock = CheckBlockSelection(e)
+
+
+                        SelectionOffset.X = e.X - Blocks(SelectedBlock).Rect.X
+
+                        SelectionOffset.Y = e.Y - Blocks(SelectedBlock).Rect.Y
+
+                        SelectedBill = -1
+                        SelectedCloud = -1
+                        SelectedBush = -1
+
+                        'Is the player selecting a bill?
+                    ElseIf CheckBillSelection(e) > -1 Then
+                        'Yes, the player is selecting a bill.
+
+                        SelectedBill = CheckBillSelection(e)
+
+                        SelectedBlock = -1
+                        SelectedCloud = -1
+                        SelectedBush = -1
+
+                        'Is the player selecting a cloud?
+                    ElseIf CheckCloudSelection(e) > -1 Then
+                        'Yes, the player is selecting a cloud.
+
+                        SelectedCloud = CheckCloudSelection(e)
+
+                        SelectedBlock = -1
+                        SelectedBill = -1
+                        SelectedBush = -1
+
+                        'Is the player selecting a bush?
+                    ElseIf CheckBushSelection(e) > -1 Then
+                        'Yes, the player is selecting a bush.
+
+                        SelectedBush = CheckBushSelection(e)
+
+                        SelectedBlock = -1
+                        SelectedBill = -1
+                        SelectedCloud = -1
+
+                    Else
+                        'No, the player is selecting nothing.
+
+                        SelectedBlock = -1
+                        SelectedBill = -1
+                        SelectedCloud = -1
+                        SelectedBush = -1
+
+                    End If
+
+
 
                 End If
-
-
-
-
-
-
 
 
                 'Is the player clicking the play button?
@@ -1246,12 +1262,6 @@ Public Class Form1
                     GameState = AppState.Playing
 
                 End If
-
-
-
-
-
-
 
 
 
@@ -1376,10 +1386,29 @@ Public Class Form1
 
                 If e.Button = MouseButtons.Left Then
 
-                    'Snap to grid
-                    Blocks(SelectedBlock).Rect.X = CInt(Math.Round(e.X / GridSize)) * GridSize
+                    If SizingHandleSelected = True Then
 
-                    Blocks(SelectedBlock).Rect.Y = CInt(Math.Round(e.Y / GridSize)) * GridSize
+                        ''Snap to grid
+                        Blocks(SelectedBlock).Rect.Width = CInt(Math.Round((e.X - Blocks(SelectedBlock).Rect.X) / GridSize)) * GridSize
+
+                        If Blocks(SelectedBlock).Rect.Width < GridSize Then Blocks(SelectedBlock).Rect.Width = GridSize
+
+
+                        Blocks(SelectedBlock).Rect.Height = CInt(Math.Round((e.Y - Blocks(SelectedBlock).Rect.Y) / GridSize)) * GridSize
+
+                        If Blocks(SelectedBlock).Rect.Height < GridSize Then Blocks(SelectedBlock).Rect.Height = GridSize
+
+
+                    Else
+                            'Snap to grid
+                            Blocks(SelectedBlock).Rect.X = CInt(Math.Round((e.X - SelectionOffset.X) / GridSize)) * GridSize
+
+                        Blocks(SelectedBlock).Rect.Y = CInt(Math.Round((e.Y - SelectionOffset.Y) / GridSize)) * GridSize
+
+                    End If
+
+
+
 
                 End If
 

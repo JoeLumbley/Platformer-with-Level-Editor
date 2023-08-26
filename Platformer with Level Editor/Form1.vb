@@ -25,6 +25,8 @@
 'OUT OF Or IN CONNECTION WITH THE SOFTWARE Or THE USE Or OTHER DEALINGS IN THE
 'SOFTWARE.
 
+'Level music by Joseph Lumbley Jr.
+
 'Monica is our an AI assistant.
 'https://monica.im/
 
@@ -287,6 +289,9 @@ Public Class Form1
         InitializeForm()
 
         InitializeBuffer()
+
+        My.Computer.Audio.Play(My.Resources.level,
+        AudioPlayMode.BackgroundLoop)
 
     End Sub
 
@@ -671,6 +676,14 @@ Public Class Form1
 
         End With
 
+        'GridLineBitmap.Dispose()
+
+        'GridLineBitmap = New Bitmap(ClientSize.Width, ClientSize.Height)
+
+        'GridLineBuffer = Graphics.FromImage(GridLineBitmap)
+
+
+
         UpdateFrameCounter()
 
     End Sub
@@ -1028,6 +1041,7 @@ Public Class Form1
 
     Private Sub DrawGridLines()
 
+
         With Buffer.Graphics
 
             .DrawImageUnscaled(GridLineBitmap, 0, 0)
@@ -1076,7 +1090,6 @@ Public Class Form1
             'Buffer.Graphics.DrawLine(Pens.Black, 0, y, ClientSize.Width, y)
 
             GridLineBuffer.DrawLine(Pens.Black, 0, y, ClientSize.Width, y)
-
 
         Next
 

@@ -1179,23 +1179,81 @@ Public Class Form1
 
             Case AppState.Editing
 
-                SelectedBlock = CheckBlockSelection(e)
+                'Is the player selecting a block?
+                If CheckBlockSelection(e) > -1 Then
+                    'Yes, the player is selecting a block.
 
-                SelectedCloud = CheckCloudSelection(e)
+                    SelectedBlock = CheckBlockSelection(e)
 
-                SelectedBill = CheckBillSelection(e)
+                    SelectedBill = -1
+                    SelectedCloud = -1
+                    SelectedBush = -1
 
-                SelectedBush = CheckBushSelection(e)
+                    'Is the player selecting a bill?
+                ElseIf CheckBillSelection(e) > -1 Then
+                    'Yes, the player is selecting a bill.
+
+                    SelectedBill = CheckBillSelection(e)
+
+                    SelectedBlock = -1
+                    SelectedCloud = -1
+                    SelectedBush = -1
+
+                    'Is the player selecting a cloud?
+                ElseIf CheckCloudSelection(e) > -1 Then
+                    'Yes, the player is selecting a cloud.
+
+                    SelectedCloud = CheckCloudSelection(e)
+
+                    SelectedBlock = -1
+                    SelectedBill = -1
+                    SelectedBush = -1
+
+                    'Is the player selecting a bush?
+                ElseIf CheckBushSelection(e) > -1 Then
+                    'Yes, the player is selecting a bush.
+
+                    SelectedBush = CheckBushSelection(e)
+
+                    SelectedBlock = -1
+                    SelectedBill = -1
+                    SelectedCloud = -1
+
+                Else
+                    'No, the player is selecting nothing.
+
+                    SelectedBlock = -1
+                    SelectedBill = -1
+                    SelectedCloud = -1
+                    SelectedBush = -1
+
+                End If
 
 
 
+
+
+
+
+
+                'Is the player clicking the play button?
                 If EditPlayButton.Rect.Contains(e.Location) Then
+                    'Yes, the player is clicking the play button.
 
+                    'Resume Play
                     LastFrame = Now
 
                     GameState = AppState.Playing
 
                 End If
+
+
+
+
+
+
+
+
 
         End Select
 

@@ -68,7 +68,6 @@ Public Class Form1
 
     Private AirResistance As Single = 100.0F
 
-
     '2000 slippery 4000 grippy
     Private Friction As Single = 5000
 
@@ -126,7 +125,6 @@ Public Class Form1
 
     Private TitleEditButton As GameObject
 
-
     Private SelectedCloud As Integer = -1
 
     Private SelectedBlock As Integer = -1
@@ -136,8 +134,6 @@ Public Class Form1
     Private SelectedBill As Integer = -1
 
     Private SelectedBush As Integer = -1
-
-
 
     Private ReadOnly AlineCenter As New StringFormat With {.Alignment = StringAlignment.Center}
 
@@ -178,22 +174,15 @@ Public Class Form1
 
     Private GridLineBuffer As Graphics = Graphics.FromImage(GridLineBitmap)
 
-    Private SizingHandle As Rectangle = New Rectangle(0, 0, 25, 25)
-
+    Private SizingHandle As New Rectangle(0, 0, 25, 25)
 
     Private SizingHandleSelected As Boolean = False
 
     Private SelectionOffset As Point
 
-
-
-
     Private CashCollected As Integer = 0
 
     Private CashCollectedPostion As New Point(0, 0)
-
-
-
 
     Private GameLoopTask As Task =
         Task.Factory.StartNew(Sub()
@@ -288,11 +277,6 @@ Public Class Form1
         Array.Resize(Bushes, Bushes.Length + 1)
         Bushes(Bushes.Length - 1).Rect = New Rectangle(1600, 768, 100, 64)
 
-
-
-
-
-
         ReDim Cash(0)
         Cash(Cash.Length - 1).Rect = New Rectangle(1071, 506, 64, 64)
         Cash(Cash.Length - 1).Collected = False
@@ -300,11 +284,6 @@ Public Class Form1
         Array.Resize(Cash, Cash.Length + 1)
         Cash(Cash.Length - 1).Rect = New Rectangle(1400, 506, 64, 64)
         Cash(Cash.Length - 1).Collected = False
-
-
-
-
-
 
         OutinePen.LineJoin = Drawing2D.LineJoin.Round
 
@@ -613,7 +592,6 @@ Public Class Form1
                                 End If
 
                             ElseIf LeftArrowDown = True Then
-                                'OurHero.Velocity.X = -400.0F
 
                                 If OurHero.Velocity.X > 0 Then
 
@@ -902,7 +880,6 @@ Public Class Form1
 
     End Sub
 
-
     Private Sub DrawOurHero()
 
         With Buffer.Graphics
@@ -1105,7 +1082,6 @@ Public Class Form1
 
     End Sub
 
-
     Private Sub DrawTitle()
 
         With Buffer.Graphics
@@ -1140,35 +1116,11 @@ Public Class Form1
 
     Private Sub DrawGridLines()
 
-
         With Buffer.Graphics
 
             .DrawImageUnscaled(GridLineBitmap, 0, 0)
 
         End With
-
-
-
-
-
-        'GridLineBuffer.Clear(Color.Transparent)
-
-        '' Draw vertical lines  |
-        'For x As Integer = 0 To ClientSize.Width Step GridSize
-        '    'Buffer.Graphics.DrawLine(Pens.Black, x, 0, x, ClientSize.Height)
-
-        '    GridLineBuffer.DrawLine(Pens.Black, x, 0, x, ClientSize.Height)
-
-        'Next
-
-        '' Draw horizontal lines ---
-        'For y As Integer = 0 To ClientSize.Width Step GridSize
-        '    'Buffer.Graphics.DrawLine(Pens.Black, 0, y, ClientSize.Width, y)
-
-        '    GridLineBuffer.DrawLine(Pens.Black, 0, y, ClientSize.Width, y)
-
-
-        'Next
 
     End Sub
 
@@ -1351,10 +1303,7 @@ Public Class Form1
 
                     End If
 
-
-
                 End If
-
 
                 'Is the player clicking the play button?
                 If EditPlayButton.Rect.Contains(e.Location) Then
@@ -1366,8 +1315,6 @@ Public Class Form1
                     GameState = AppState.Playing
 
                 End If
-
-
 
         End Select
 
@@ -1539,7 +1486,7 @@ Public Class Form1
 
                 If e.Button = MouseButtons.Left Then
 
-                    'Snap cash to grid
+                    'Move bill snap to grid.
                     Cash(SelectedBill).Rect.X = CInt(Math.Round((e.X - SelectionOffset.X) / GridSize)) * GridSize
                     Cash(SelectedBill).Rect.Y = CInt(Math.Round((e.Y - SelectionOffset.Y) / GridSize)) * GridSize
 

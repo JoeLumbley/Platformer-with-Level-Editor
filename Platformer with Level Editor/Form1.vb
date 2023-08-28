@@ -1049,6 +1049,14 @@ Public Class Form1
 
                         .DrawRectangle(New Pen(Color.Red, 6), Cloud.Rect)
 
+                        'Draw sizing handle.
+                        SizingHandle.X = Cloud.Rect.Right - SizingHandle.Width \ 2
+
+                        SizingHandle.Y = Cloud.Rect.Bottom - SizingHandle.Height \ 2
+
+                        .FillRectangle(Brushes.Black,
+                                       SizingHandle)
+
                     Else
 
                         .DrawRectangle(OutinePen, Cloud.Rect)
@@ -1318,6 +1326,11 @@ Public Class Form1
 
                         SelectedCloud = CheckCloudSelection(e)
 
+
+                        SelectionOffset.X = e.X - Clouds(SelectedCloud).Rect.X
+
+                        SelectionOffset.Y = e.Y - Clouds(SelectedCloud).Rect.Y
+
                         SelectedBlock = -1
                         SelectedBill = -1
                         SelectedBush = -1
@@ -1472,10 +1485,28 @@ Public Class Form1
 
                 If e.Button = MouseButtons.Left Then
 
-                    'Snap to grid
-                    Clouds(SelectedCloud).Rect.X = CInt(Math.Round(e.X / GridSize)) * GridSize
+                    If SizingHandleSelected = True Then
 
-                    Clouds(SelectedCloud).Rect.Y = CInt(Math.Round(e.Y / GridSize)) * GridSize
+                        'Snap bush width to grid.
+                        Clouds(SelectedCloud).Rect.Width = CInt(Math.Round((e.X - Clouds(SelectedCloud).Rect.X) / GridSize)) * GridSize
+
+                        'Limit smallest bush width to one grid width.
+                        If Clouds(SelectedCloud).Rect.Width < GridSize Then Clouds(SelectedCloud).Rect.Width = GridSize
+
+                        'Snap bush height to grid.
+                        Clouds(SelectedCloud).Rect.Height = CInt(Math.Round((e.Y - Clouds(SelectedCloud).Rect.Y) / GridSize)) * GridSize
+
+                        'Limit smallest bush height to one grid height.
+                        If Clouds(SelectedCloud).Rect.Height < GridSize Then Clouds(SelectedCloud).Rect.Height = GridSize
+
+                    Else
+
+                        'Snap to grid
+                        Clouds(SelectedCloud).Rect.X = CInt(Math.Round((e.X - SelectionOffset.X) / GridSize)) * GridSize
+
+                        Clouds(SelectedCloud).Rect.Y = CInt(Math.Round((e.Y - SelectionOffset.Y) / GridSize)) * GridSize
+
+                    End If
 
                 End If
 
@@ -1524,22 +1555,25 @@ Public Class Form1
 
             End If
 
+            'Has the player selected a bush?
             If SelectedBush > -1 Then
+                'Yes, the player has selected a bush.
 
                 If e.Button = MouseButtons.Left Then
 
                     If SizingHandleSelected = True Then
 
-                        ''Snap to grid
+                        'Snap bush width to grid.
                         Bushes(SelectedBush).Rect.Width = CInt(Math.Round((e.X - Bushes(SelectedBush).Rect.X) / GridSize)) * GridSize
 
+                        'Limit smallest bush width to one grid width.
                         If Bushes(SelectedBush).Rect.Width < GridSize Then Bushes(SelectedBush).Rect.Width = GridSize
 
-
+                        'Snap bush height to grid.
                         Bushes(SelectedBush).Rect.Height = CInt(Math.Round((e.Y - Bushes(SelectedBush).Rect.Y) / GridSize)) * GridSize
 
+                        'Limit smallest bush height to one grid height.
                         If Bushes(SelectedBush).Rect.Height < GridSize Then Bushes(SelectedBush).Rect.Height = GridSize
-
 
                     Else
 

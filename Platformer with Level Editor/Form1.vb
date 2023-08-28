@@ -1280,20 +1280,13 @@ Public Class Form1
 
             Case AppState.Editing
 
-
-                'SizingHandle
-
-
-
                 If SizingHandle.Contains(e.Location) Then
 
                     SizingHandleSelected = True
 
-
                 Else
 
                     SizingHandleSelected = False
-
 
                     'Is the player selecting a block?
                     If CheckBlockSelection(e) > -1 Then
@@ -1303,7 +1296,6 @@ Public Class Form1
 
 
                         SelectionOffset.X = e.X - Blocks(SelectedBlock).Rect.X
-
                         SelectionOffset.Y = e.Y - Blocks(SelectedBlock).Rect.Y
 
                         SelectedBill = -1
@@ -1316,6 +1308,9 @@ Public Class Form1
 
                         SelectedBill = CheckBillSelection(e)
 
+                        SelectionOffset.X = e.X - Cash(SelectedBill).Rect.X
+                        SelectionOffset.Y = e.Y - Cash(SelectedBill).Rect.Y
+
                         SelectedBlock = -1
                         SelectedCloud = -1
                         SelectedBush = -1
@@ -1326,9 +1321,7 @@ Public Class Form1
 
                         SelectedCloud = CheckCloudSelection(e)
 
-
                         SelectionOffset.X = e.X - Clouds(SelectedCloud).Rect.X
-
                         SelectionOffset.Y = e.Y - Clouds(SelectedCloud).Rect.Y
 
                         SelectedBlock = -1
@@ -1342,7 +1335,6 @@ Public Class Form1
                         SelectedBush = CheckBushSelection(e)
 
                         SelectionOffset.X = e.X - Bushes(SelectedBush).Rect.X
-
                         SelectionOffset.Y = e.Y - Bushes(SelectedBush).Rect.Y
 
                         SelectedBlock = -1
@@ -1487,23 +1479,22 @@ Public Class Form1
 
                     If SizingHandleSelected = True Then
 
-                        'Snap bush width to grid.
+                        'Snap cloud width to grid.
                         Clouds(SelectedCloud).Rect.Width = CInt(Math.Round((e.X - Clouds(SelectedCloud).Rect.X) / GridSize)) * GridSize
 
-                        'Limit smallest bush width to one grid width.
+                        'Limit smallest cloud width to one grid width.
                         If Clouds(SelectedCloud).Rect.Width < GridSize Then Clouds(SelectedCloud).Rect.Width = GridSize
 
-                        'Snap bush height to grid.
+                        'Snap cloud height to grid.
                         Clouds(SelectedCloud).Rect.Height = CInt(Math.Round((e.Y - Clouds(SelectedCloud).Rect.Y) / GridSize)) * GridSize
 
-                        'Limit smallest bush height to one grid height.
+                        'Limit smallest cloud height to one grid height.
                         If Clouds(SelectedCloud).Rect.Height < GridSize Then Clouds(SelectedCloud).Rect.Height = GridSize
 
                     Else
 
-                        'Snap to grid
+                        'Snap cloud to grid
                         Clouds(SelectedCloud).Rect.X = CInt(Math.Round((e.X - SelectionOffset.X) / GridSize)) * GridSize
-
                         Clouds(SelectedCloud).Rect.Y = CInt(Math.Round((e.Y - SelectionOffset.Y) / GridSize)) * GridSize
 
                     End If
@@ -1518,22 +1509,22 @@ Public Class Form1
 
                     If SizingHandleSelected = True Then
 
-                        ''Snap to grid
+                        'Snap block width to grid.
                         Blocks(SelectedBlock).Rect.Width = CInt(Math.Round((e.X - Blocks(SelectedBlock).Rect.X) / GridSize)) * GridSize
 
+                        'Limit smallest block width to one grid width.
                         If Blocks(SelectedBlock).Rect.Width < GridSize Then Blocks(SelectedBlock).Rect.Width = GridSize
 
-
+                        'Snap block height to grid.
                         Blocks(SelectedBlock).Rect.Height = CInt(Math.Round((e.Y - Blocks(SelectedBlock).Rect.Y) / GridSize)) * GridSize
 
+                        'Limit smallest block height to one grid height.
                         If Blocks(SelectedBlock).Rect.Height < GridSize Then Blocks(SelectedBlock).Rect.Height = GridSize
-
 
                     Else
 
-                        'Snap to grid
+                        'Snap block to grid
                         Blocks(SelectedBlock).Rect.X = CInt(Math.Round((e.X - SelectionOffset.X) / GridSize)) * GridSize
-
                         Blocks(SelectedBlock).Rect.Y = CInt(Math.Round((e.Y - SelectionOffset.Y) / GridSize)) * GridSize
 
                     End If
@@ -1546,10 +1537,9 @@ Public Class Form1
 
                 If e.Button = MouseButtons.Left Then
 
-                    'Snap to grid
-                    Cash(SelectedBill).Rect.X = CInt(Math.Round(e.X / GridSize)) * GridSize
-
-                    Cash(SelectedBill).Rect.Y = CInt(Math.Round(e.Y / GridSize)) * GridSize
+                    'Snap cash to grid
+                    Cash(SelectedBill).Rect.X = CInt(Math.Round((e.X - SelectionOffset.X) / GridSize)) * GridSize
+                    Cash(SelectedBill).Rect.Y = CInt(Math.Round((e.Y - SelectionOffset.Y) / GridSize)) * GridSize
 
                 End If
 
@@ -1579,7 +1569,6 @@ Public Class Form1
 
                         'Snap to grid
                         Bushes(SelectedBush).Rect.X = CInt(Math.Round((e.X - SelectionOffset.X) / GridSize)) * GridSize
-
                         Bushes(SelectedBush).Rect.Y = CInt(Math.Round((e.Y - SelectionOffset.Y) / GridSize)) * GridSize
 
                     End If

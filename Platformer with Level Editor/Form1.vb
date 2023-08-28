@@ -1551,7 +1551,9 @@ Public Class Form1
 
                 If e.Button = MouseButtons.Left Then
 
+                    'Is the player resizing the bush?
                     If SizingHandleSelected = True Then
+                        'Yes, the player is resizing the bush.
 
                         'Snap bush width to grid.
                         Bushes(SelectedBush).Rect.Width = CInt(Math.Round((e.X - Bushes(SelectedBush).Rect.X) / GridSize)) * GridSize
@@ -1567,7 +1569,7 @@ Public Class Form1
 
                     Else
 
-                        'Snap to grid
+                        'Snap bush to grid
                         Bushes(SelectedBush).Rect.X = CInt(Math.Round((e.X - SelectionOffset.X) / GridSize)) * GridSize
                         Bushes(SelectedBush).Rect.Y = CInt(Math.Round((e.Y - SelectionOffset.Y) / GridSize)) * GridSize
 

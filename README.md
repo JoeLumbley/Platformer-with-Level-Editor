@@ -5,6 +5,6 @@
 
 
 
-![007](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/f1fe1b2b-0555-42c0-a713-4278983180ea)
+![008](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/7891977e-b164-48f3-b05b-8fe08340b747)
 
 

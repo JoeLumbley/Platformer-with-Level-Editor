@@ -1507,7 +1507,9 @@ Public Class Form1
 
                 If e.Button = MouseButtons.Left Then
 
+                    'Is the player resizing the block?
                     If SizingHandleSelected = True Then
+                        'Yes, the player is resizing the block.
 
                         'Snap block width to grid.
                         Blocks(SelectedBlock).Rect.Width = CInt(Math.Round((e.X - Blocks(SelectedBlock).Rect.X) / GridSize)) * GridSize
@@ -1568,8 +1570,10 @@ Public Class Form1
                         If Bushes(SelectedBush).Rect.Height < GridSize Then Bushes(SelectedBush).Rect.Height = GridSize
 
                     Else
+                        'No, the player is not resizing the bush.
+                        'The player is moving the bush.
 
-                        'Snap bush to grid
+                        'Move bush snap to grid
                         Bushes(SelectedBush).Rect.X = CInt(Math.Round((e.X - SelectionOffset.X) / GridSize)) * GridSize
                         Bushes(SelectedBush).Rect.Y = CInt(Math.Round((e.Y - SelectionOffset.Y) / GridSize)) * GridSize
 
@@ -1582,7 +1586,6 @@ Public Class Form1
         End If
 
     End Sub
-
 
     Private Sub Form1_MouseUp(sender As Object, e As MouseEventArgs) Handles Me.MouseUp
 

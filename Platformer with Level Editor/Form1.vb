@@ -1009,6 +1009,14 @@ Public Class Form1
 
                         .DrawRectangle(New Pen(Color.Red, 6), Bush.Rect)
 
+                        'Draw sizing handle.
+                        SizingHandle.X = Bush.Rect.Right - SizingHandle.Width \ 2
+
+                        SizingHandle.Y = Bush.Rect.Bottom - SizingHandle.Height \ 2
+
+                        .FillRectangle(Brushes.Black,
+                                       SizingHandle)
+
                     Else
 
                         .DrawRectangle(OutinePen, Bush.Rect)
@@ -1320,6 +1328,10 @@ Public Class Form1
 
                         SelectedBush = CheckBushSelection(e)
 
+                        SelectionOffset.X = e.X - Bushes(SelectedBush).Rect.X
+
+                        SelectionOffset.Y = e.Y - Bushes(SelectedBush).Rect.Y
+
                         SelectedBlock = -1
                         SelectedBill = -1
                         SelectedCloud = -1
@@ -1487,15 +1499,13 @@ Public Class Form1
 
 
                     Else
-                            'Snap to grid
-                            Blocks(SelectedBlock).Rect.X = CInt(Math.Round((e.X - SelectionOffset.X) / GridSize)) * GridSize
+
+                        'Snap to grid
+                        Blocks(SelectedBlock).Rect.X = CInt(Math.Round((e.X - SelectionOffset.X) / GridSize)) * GridSize
 
                         Blocks(SelectedBlock).Rect.Y = CInt(Math.Round((e.Y - SelectionOffset.Y) / GridSize)) * GridSize
 
                     End If
-
-
-
 
                 End If
 
@@ -1518,10 +1528,27 @@ Public Class Form1
 
                 If e.Button = MouseButtons.Left Then
 
-                    'Snap to grid
-                    Bushes(SelectedBush).Rect.X = CInt(Math.Round(e.X / GridSize)) * GridSize
+                    If SizingHandleSelected = True Then
 
-                    Bushes(SelectedBush).Rect.Y = CInt(Math.Round(e.Y / GridSize)) * GridSize
+                        ''Snap to grid
+                        Bushes(SelectedBush).Rect.Width = CInt(Math.Round((e.X - Bushes(SelectedBush).Rect.X) / GridSize)) * GridSize
+
+                        If Bushes(SelectedBush).Rect.Width < GridSize Then Bushes(SelectedBush).Rect.Width = GridSize
+
+
+                        Bushes(SelectedBush).Rect.Height = CInt(Math.Round((e.Y - Bushes(SelectedBush).Rect.Y) / GridSize)) * GridSize
+
+                        If Bushes(SelectedBush).Rect.Height < GridSize Then Bushes(SelectedBush).Rect.Height = GridSize
+
+
+                    Else
+
+                        'Snap to grid
+                        Bushes(SelectedBush).Rect.X = CInt(Math.Round((e.X - SelectionOffset.X) / GridSize)) * GridSize
+
+                        Bushes(SelectedBush).Rect.Y = CInt(Math.Round((e.Y - SelectionOffset.Y) / GridSize)) * GridSize
+
+                    End If
 
                 End If
 

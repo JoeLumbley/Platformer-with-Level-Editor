@@ -94,6 +94,8 @@ Public Class Form1
 
         Public Text As String
 
+        Public Collected As Boolean
+
     End Structure
 
     Private OurHero As GameObject
@@ -182,6 +184,15 @@ Public Class Form1
     Private SizingHandleSelected As Boolean = False
 
     Private SelectionOffset As Point
+
+
+
+
+    Private CashCollected As Integer = 0
+
+    Private CashCollectedPostion As New Point(0, 0)
+
+
 
 
     Private GameLoopTask As Task =
@@ -277,11 +288,23 @@ Public Class Form1
         Array.Resize(Bushes, Bushes.Length + 1)
         Bushes(Bushes.Length - 1).Rect = New Rectangle(1600, 768, 100, 64)
 
+
+
+
+
+
         ReDim Cash(0)
         Cash(Cash.Length - 1).Rect = New Rectangle(1071, 506, 64, 64)
+        Cash(Cash.Length - 1).Collected = False
 
         Array.Resize(Cash, Cash.Length + 1)
         Cash(Cash.Length - 1).Rect = New Rectangle(1400, 506, 64, 64)
+        Cash(Cash.Length - 1).Collected = False
+
+
+
+
+
 
         OutinePen.LineJoin = Drawing2D.LineJoin.Round
 
@@ -355,7 +378,7 @@ Public Class Form1
                 'Max falling speed.
                 If OurHero.Velocity.Y > OurHero.MaxVelocity.Y Then OurHero.Velocity.Y = OurHero.MaxVelocity.Y
 
-                'Steering
+                'Skydive steering
                 If RightArrowDown = True Then
 
                     OurHero.Velocity.X += 0.5F
@@ -391,6 +414,18 @@ Public Class Form1
                     If OurHero.Velocity.X > 0 Then OurHero.Velocity.X = 0
 
                 End If
+
+            End If
+
+        End If
+
+        If IsOnBill() > -1 Then
+
+            If Cash(IsOnBill).Collected = False Then
+
+                Cash(IsOnBill).Collected = True
+
+                CashCollected += 100
 
             End If
 
@@ -466,6 +501,27 @@ Public Class Form1
 
                     'return index of Plateform
                     Return Array.IndexOf(Blocks, Block)
+
+                End If
+
+            Next
+
+        End If
+
+        Return -1
+
+    End Function
+
+    Private Function IsOnBill() As Integer
+
+        If Cash IsNot Nothing Then
+
+            For Each Bill In Cash
+
+                If OurHero.Rect.IntersectsWith(Bill.Rect) = True Then
+
+                    'return index of Plateform
+                    Return Array.IndexOf(Cash, Bill)
 
                 End If
 
@@ -726,6 +782,8 @@ Public Class Form1
 
         DrawOurHero()
 
+        DrawCollectedCash()
+
         DrawFPS()
 
         DrawEditButton()
@@ -834,6 +892,17 @@ Public Class Form1
 
     End Sub
 
+    Private Sub DrawCollectedCash()
+
+        With Buffer.Graphics
+
+            .DrawString("$" & CashCollected.ToString, FPSFont, Brushes.White, CashCollectedPostion)
+
+        End With
+
+    End Sub
+
+
     Private Sub DrawOurHero()
 
         With Buffer.Graphics
@@ -854,15 +923,31 @@ Public Class Form1
 
                 For Each Bill In Cash
 
-                    .FillRectangle(Brushes.Goldenrod, Bill.Rect)
+                    Select Case GameState
 
-                    .DrawString("$", FPSFont, Brushes.OrangeRed, Bill.Rect, AlineCenterMiddle)
+                        Case AppState.Playing
 
-                    If SelectedBill = Array.IndexOf(Cash, Bill) Then
+                            If Bill.Collected = False Then
 
-                        .DrawRectangle(New Pen(Color.Red, 6), Bill.Rect)
+                                .FillRectangle(Brushes.Goldenrod, Bill.Rect)
 
-                    End If
+                                .DrawString("$", FPSFont, Brushes.OrangeRed, Bill.Rect, AlineCenterMiddle)
+
+                            End If
+
+                        Case AppState.Editing
+
+                            .FillRectangle(Brushes.Goldenrod, Bill.Rect)
+
+                            .DrawString("$", FPSFont, Brushes.OrangeRed, Bill.Rect, AlineCenterMiddle)
+
+                            If SelectedBill = Array.IndexOf(Cash, Bill) Then
+
+                                .DrawRectangle(New Pen(Color.Red, 6), Bill.Rect)
+
+                            End If
+
+                    End Select
 
                 Next
 
@@ -1119,6 +1204,8 @@ Public Class Form1
 
         'Place the FPS display at the bottom of the client area.
         FPS_Postion.Y = ClientRectangle.Bottom - 75
+
+        CashCollectedPostion.Y = ClientRectangle.Top + 5
 
         EditPlayButton.Rect = New Rectangle(ClientRectangle.Left + 210, ClientRectangle.Bottom - 90, 120, 90)
 

@@ -920,6 +920,7 @@ Public Class Form1
 
                             If SelectedBill = Array.IndexOf(Cash, Bill) Then
 
+                                'Draw selection rectangle.
                                 .DrawRectangle(New Pen(Color.Red, 6), Bill.Rect)
 
                             End If
@@ -946,13 +947,14 @@ Public Class Form1
 
                     If SelectedBlock = Array.IndexOf(Blocks, Block) Then
 
+                        'Draw selection rectangle.
                         .DrawRectangle(New Pen(Color.Red, 6), Block.Rect)
 
-                        'Draw sizing handle.
+                        'Position sizing handle.
                         SizingHandle.X = Block.Rect.Right - SizingHandle.Width \ 2
-
                         SizingHandle.Y = Block.Rect.Bottom - SizingHandle.Height \ 2
 
+                        'Draw sizing handle.
                         .FillRectangle(Brushes.Black,
                                        SizingHandle)
 
@@ -984,19 +986,16 @@ Public Class Form1
 
                     If SelectedBush = Array.IndexOf(Bushes, Bush) Then
 
+                        'Draw selection rectangle.
                         .DrawRectangle(New Pen(Color.Red, 6), Bush.Rect)
 
-                        'Draw sizing handle.
+                        'Position sizing handle.
                         SizingHandle.X = Bush.Rect.Right - SizingHandle.Width \ 2
-
                         SizingHandle.Y = Bush.Rect.Bottom - SizingHandle.Height \ 2
 
+                        'Draw sizing handle.
                         .FillRectangle(Brushes.Black,
                                        SizingHandle)
-
-                    Else
-
-                        .DrawRectangle(OutinePen, Bush.Rect)
 
                     End If
 
@@ -1022,21 +1021,20 @@ Public Class Form1
 
                     .DrawLine(LightSkyBluePen, Cloud.Rect.Left + 10, Cloud.Rect.Bottom - 10, Cloud.Rect.Right - 10, Cloud.Rect.Bottom - 10)
 
+                    .DrawRectangle(OutinePen, Cloud.Rect)
+
                     If SelectedCloud = Array.IndexOf(Clouds, Cloud) Then
 
+                        'Draw selection rectangle.
                         .DrawRectangle(New Pen(Color.Red, 6), Cloud.Rect)
 
-                        'Draw sizing handle.
+                        'Position sizing handle.
                         SizingHandle.X = Cloud.Rect.Right - SizingHandle.Width \ 2
-
                         SizingHandle.Y = Cloud.Rect.Bottom - SizingHandle.Height \ 2
 
+                        'Draw sizing handle.
                         .FillRectangle(Brushes.Black,
                                        SizingHandle)
-
-                    Else
-
-                        .DrawRectangle(OutinePen, Cloud.Rect)
 
                     End If
 

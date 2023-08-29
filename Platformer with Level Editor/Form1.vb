@@ -69,7 +69,7 @@ Public Class Form1
     Private AirResistance As Single = 100.0F
 
     '2000 slippery 4000 grippy
-    Private Friction As Single = 5000
+    Private Friction As Single = 1000
 
     Private Enum AppState As Integer
         Start
@@ -585,42 +585,52 @@ Public Class Form1
 
                             'Is the player holding down the right arrow key?
                             If RightArrowDown = True Then
-                                'Yes, the player is holding down the right arrow key
+                                'Yes, the player is holding down the right arrow key.
 
                                 'Is our hero moving to the left?
                                 If OurHero.Velocity.X < 0 Then
 
                                     'Stop the move before change in direction.
-                                    OurHero.Velocity.X = 0
+                                    OurHero.Velocity.X = 0 'Zero speed.
 
                                 End If
 
                                 'Move our hero the right.
                                 OurHero.Velocity.X += OurHero.Acceleration.X * DeltaTime.TotalSeconds
 
-                                'Limit our heros velocity to the max
+                                'Limit our heros velocity to the max.
                                 If OurHero.Velocity.X > OurHero.MaxVelocity.X Then OurHero.Velocity.X = OurHero.MaxVelocity.X
 
-
-
-
+                                'Is the player holding down the left arrow key?
                             ElseIf LeftArrowDown = True Then
+                                'Yes, the player is holding down the left arrow key.
 
-                                If OurHero.Velocity.X > 0 Then
+                                'Is our hero moving to the right?
+                                If OurHero.Velocity.X > 0F Then
+                                    'Yes, our hero is moving to the right.
 
-                                    OurHero.Velocity.X = 0
+                                    'Stop the move before change in direction.
+                                    OurHero.Velocity.X = 0F 'Zero speed.
 
                                 End If
 
+                                'Move our hero the left.
                                 OurHero.Velocity.X += -OurHero.Acceleration.X * DeltaTime.TotalSeconds
 
+                                'Limit our heros velocity to the max.
                                 If OurHero.Velocity.X < -OurHero.MaxVelocity.X Then OurHero.Velocity.X = -OurHero.MaxVelocity.X
 
                             Else
+                                'No,the player is NOT holding down the right arrow key.
+                                'No, the player is NOT holding down the left arrow key.
 
+
+                                'Is our hero moving to the right?
                                 If OurHero.Velocity.X > 0F Then
+                                    'Yes, our hero is moving to the right.
 
-                                    OurHero.Velocity.X -= Friction * DeltaTime.TotalSeconds
+                                    'Slow our hero down.
+                                    OurHero.Velocity.X += -Friction * DeltaTime.TotalSeconds
 
                                     If OurHero.Velocity.X < 0F Then
                                         OurHero.Velocity.X = 0F

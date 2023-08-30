@@ -68,8 +68,8 @@ Public Class Form1
 
     Private AirResistance As Single = 100.0F
 
-    '2000 slippery 4000 grippy
-    Private Friction As Single = 1000
+    '500 slippery 1000 grippy
+    Private Friction As Single = 1300
 
     Private Enum AppState As Integer
         Start
@@ -246,7 +246,7 @@ Public Class Form1
 
         OurHero.Velocity = New PointF(0, 0)
 
-        OurHero.MaxVelocity = New PointF(400, 1100)
+        OurHero.MaxVelocity = New PointF(400, 1000)
 
         OurHero.Acceleration = New PointF(200, 300)
 

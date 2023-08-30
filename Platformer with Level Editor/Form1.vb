@@ -36,9 +36,75 @@
 
 Imports System.ComponentModel
 Imports System.Numerics
+Imports System.Runtime.InteropServices
 Imports System.Threading
 
 Public Class Form1
+
+    <DllImport("XInput1_4.dll")>
+    Private Shared Function XInputGetState(dwUserIndex As Integer, ByRef pState As XINPUT_STATE) As Integer
+    End Function
+
+    'XInput1_4.dll seems to be the current version
+    'XInput9_1_0.dll is maintained primarily for backward compatibility. 
+
+    <StructLayout(LayoutKind.Explicit)>
+    Public Structure XINPUT_STATE
+        <FieldOffset(0)>
+        Public dwPacketNumber As UInteger 'Unsigned 32-bit (4-byte) integer range 0 through 4,294,967,295.
+        <FieldOffset(4)>
+        Public Gamepad As XINPUT_GAMEPAD
+    End Structure
+
+    <StructLayout(LayoutKind.Sequential)>
+    Public Structure XINPUT_GAMEPAD
+        Public wButtons As UShort 'Unsigned 16-bit (2-byte) integer range 0 through 65,535.
+        Public bLeftTrigger As Byte 'Unsigned 8-bit (1-byte) integer range 0 through 255.
+        Public bRightTrigger As Byte
+        Public sThumbLX As Short 'Signed 16-bit (2-byte) integer range -32,768 through 32,767.
+        Public sThumbLY As Short
+        Public sThumbRX As Short
+        Public sThumbRY As Short
+    End Structure
+
+    <DllImport("XInput1_4.dll")>
+    Private Shared Function XInputSetState(playerIndex As Integer, ByRef vibration As XINPUT_VIBRATION) As Integer
+    End Function
+
+    Public Structure XINPUT_VIBRATION
+        Public wLeftMotorSpeed As UShort
+        Public wRightMotorSpeed As UShort
+    End Structure
+
+    'The start of the thumbstick neutral zone.
+    Private Const NeutralStart As Short = -16256 'Signed 16-bit (2-byte) integer range -32,768 through 32,767.
+
+    'The end of the thumbstick neutral zone.
+    Private Const NeutralEnd As Short = 16256
+
+    'Set the trigger threshold to 64 or 1/4 pull.
+    Private Const TriggerThreshold As Byte = 64 '63.75 = 255 / 4
+    'The trigger position must be greater than the trigger threshold to register as pressed.
+
+    Private ReadOnly Connected(0 To 3) As Boolean 'True or False
+
+    Private ControllerNumber As Integer = 0
+
+    Private ControllerPosition As XINPUT_STATE
+
+    Private Vibration As XINPUT_VIBRATION
+
+
+
+
+
+
+
+
+
+
+
+
 
     Private Context As New BufferedGraphicsContext
 
@@ -323,11 +389,259 @@ Public Class Form1
 
         If GameState = AppState.Playing Then
 
+            UpdateControllerData()
+
             UpdateDeltaTime()
 
             UpdateOurHero()
 
         End If
+
+    End Sub
+
+    Private Sub UpdateControllerData()
+
+        UpdateControllerPosition()
+
+        'UpdateBatteryInfo()
+
+    End Sub
+
+    Private Sub UpdateControllerPosition()
+
+        For ControllerNumber = 0 To 3 'Up to 4 controllers
+
+            Try
+
+                ' Check if the function call was successful
+                If XInputGetState(ControllerNumber, ControllerPosition) = 0 Then
+                    ' The function call was successful, so you can access the controller state now
+
+                    UpdateButtonPosition()
+
+                    'UpdateLeftThumbstickPosition()
+
+                    'UpdateRightThumbstickPosition()
+
+                    'UpdateLeftTriggerPosition()
+
+                    'UpdateRightTriggerPosition()
+
+                    Connected(ControllerNumber) = True
+
+                Else
+                    ' The function call failed, so you cannot access the controller state
+
+                    'Text = "Failed to get controller state. Error code: " & XInputGetState(ControllerNumber, ControllerPosition).ToString
+
+                    Connected(ControllerNumber) = False
+
+                End If
+
+            Catch ex As Exception
+
+                MsgBox(ex.ToString)
+
+                Exit Sub
+
+            End Try
+
+        Next
+
+    End Sub
+
+    Private Sub UpdateButtonPosition()
+        'The range of buttons is 0 to 65,535. Unsigned 16-bit (2-byte) integer.
+
+        'What buttons are down?
+        Select Case ControllerPosition.Gamepad.wButtons
+            Case 0 'All the buttons are up.
+
+                If Jumped = True Then Jumped = False
+
+                BDown = False
+
+                RightArrowDown = False
+
+                LeftArrowDown = False
+
+            Case 1 'Up
+                LeftArrowDown = False
+
+                RightArrowDown = False
+
+                If Jumped = True Then Jumped = False
+
+                BDown = False
+            Case 2 'Down
+                LeftArrowDown = False
+
+                RightArrowDown = False
+
+                If Jumped = True Then Jumped = False
+
+                BDown = False
+            Case 4 'Left
+
+                LeftArrowDown = True
+
+                RightArrowDown = False
+
+                If Jumped = True Then Jumped = False
+
+                BDown = False
+
+            Case 5 'Up+Left
+                LeftArrowDown = True
+
+                RightArrowDown = False
+
+                If Jumped = True Then Jumped = False
+
+                BDown = False
+            Case 6 'Down+Left
+                LeftArrowDown = True
+
+                RightArrowDown = False
+
+                If Jumped = True Then Jumped = False
+
+                BDown = False
+            Case 8 'Right
+
+                RightArrowDown = True
+
+                LeftArrowDown = False
+
+                If Jumped = True Then Jumped = False
+
+                BDown = False
+
+            Case 9 'Up+Right
+                LeftArrowDown = False
+
+                RightArrowDown = True
+
+                If Jumped = True Then Jumped = False
+
+                BDown = False
+            Case 10 'Down+Right
+
+                LeftArrowDown = False
+
+                RightArrowDown = True
+
+                If Jumped = True Then Jumped = False
+
+                BDown = False
+
+            Case 16 'Start
+            Case 32 'Back
+            Case 64 'Left Stick
+            Case 128 'Right Stick
+            Case 256 'Left bumper
+            Case 512 'Right bumper
+            Case 4096 'A
+
+                LeftArrowDown = False
+
+                RightArrowDown = False
+
+                If Jumped = True Then Jumped = False
+
+                BDown = False
+
+            Case 8192 'B
+
+                BDown = True
+
+                LeftArrowDown = False
+
+                RightArrowDown = False
+
+            Case 16384 'X
+            Case 32768 'Y
+            Case 48 'Start+Back
+            Case 192 'Left+Right Sticks
+            Case 768 'Left+Right Bumpers
+            Case 12288 'A+B
+            Case 20480 'A+X
+            Case 36864 'A+Y
+            Case 24576 'B+X
+            Case 40960 'B+Y
+            Case 49152 'X+Y
+            Case 28672 'A+B+X
+            Case 45056 'A+B+Y
+            Case 53248 'A+X+Y
+            Case 57344 'B+X+Y
+            Case 61440 'A+B+X+Y
+            Case 4097 'Up+A
+            Case 4098 'Down+A
+            Case 4100 'Left+A
+            Case 4104 'Right+A
+            Case 4105 'Up+Right+A
+            Case 4101 'Up+Left+A
+            Case 4106 'Down+Right+A
+            Case 4102 'Down+Left+A
+
+            Case 8196 'Left+B
+
+                LeftArrowDown = True
+
+                RightArrowDown = False
+
+                BDown = True
+
+            Case 8200 'Right+B
+
+                RightArrowDown = True
+
+                LeftArrowDown = False
+
+                BDown = True
+
+            Case 8198 'Left+Down+B
+
+                RightArrowDown = False
+
+                LeftArrowDown = True
+
+                BDown = True
+            Case 8202 'Right+Down+B
+                RightArrowDown = True
+
+                LeftArrowDown = False
+
+                BDown = True
+
+            Case 8201 'Right+Up+B
+                RightArrowDown = True
+
+                LeftArrowDown = False
+
+                BDown = True
+
+            Case 8197 'Left+Up+B
+                RightArrowDown = False
+
+                LeftArrowDown = True
+
+                BDown = True
+            Case 8194 'Down+B
+                RightArrowDown = False
+
+                LeftArrowDown = False
+
+                BDown = True
+            Case 8193 'Up+B
+                RightArrowDown = False
+
+                LeftArrowDown = False
+
+                BDown = True
+            Case Else 'Any buttons not handled yet.
+                Debug.Print(ControllerPosition.Gamepad.wButtons.ToString)
+        End Select
 
     End Sub
 

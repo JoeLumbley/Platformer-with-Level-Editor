@@ -94,7 +94,13 @@ Public Class Form1
 
     Private Vibration As XINPUT_VIBRATION
 
+    Private ControllerB As Boolean = False
 
+    Private ControllerRight As Boolean = False
+
+    Private ControllerLeft As Boolean = False
+
+    Private ControllerJumped As Boolean = False
 
 
 
@@ -135,7 +141,7 @@ Public Class Form1
     Private AirResistance As Single = 100.0F
 
     '500 slippery 1000 grippy
-    Private Friction As Single = 1300
+    Private Friction As Single = 1400
 
     Private Enum AppState As Integer
         Start
@@ -314,7 +320,7 @@ Public Class Form1
 
         OurHero.MaxVelocity = New PointF(400, 1000)
 
-        OurHero.Acceleration = New PointF(200, 300)
+        OurHero.Acceleration = New PointF(300, 300)
 
         ReDim Blocks(0)
         Blocks(Blocks.Length - 1).Rect = New Rectangle(0, 832, 2000, 64)
@@ -457,83 +463,83 @@ Public Class Form1
         Select Case ControllerPosition.Gamepad.wButtons
             Case 0 'All the buttons are up.
 
-                If Jumped = True Then Jumped = False
+                If ControllerJumped = True Then ControllerJumped = False
 
-                BDown = False
+                ControllerB = False
 
-                RightArrowDown = False
+                ControllerRight = False
 
-                LeftArrowDown = False
+                ControllerLeft = False
 
             Case 1 'Up
-                LeftArrowDown = False
+                ControllerLeft = False
 
-                RightArrowDown = False
+                ControllerRight = False
 
-                If Jumped = True Then Jumped = False
+                If ControllerJumped = True Then ControllerJumped = False
 
-                BDown = False
+                ControllerB = False
             Case 2 'Down
-                LeftArrowDown = False
+                ControllerLeft = False
 
-                RightArrowDown = False
+                ControllerRight = False
 
-                If Jumped = True Then Jumped = False
+                If ControllerJumped = True Then ControllerJumped = False
 
-                BDown = False
+                ControllerB = False
             Case 4 'Left
 
-                LeftArrowDown = True
+                ControllerLeft = True
 
-                RightArrowDown = False
+                ControllerRight = False
 
-                If Jumped = True Then Jumped = False
+                If ControllerJumped = True Then ControllerJumped = False
 
-                BDown = False
+                ControllerB = False
 
             Case 5 'Up+Left
-                LeftArrowDown = True
+                ControllerLeft = True
 
-                RightArrowDown = False
+                ControllerRight = False
 
-                If Jumped = True Then Jumped = False
+                If ControllerJumped = True Then ControllerJumped = False
 
-                BDown = False
+                ControllerB = False
             Case 6 'Down+Left
-                LeftArrowDown = True
+                ControllerLeft = True
 
-                RightArrowDown = False
+                ControllerRight = False
 
-                If Jumped = True Then Jumped = False
+                If ControllerJumped = True Then ControllerJumped = False
 
-                BDown = False
+                ControllerB = False
             Case 8 'Right
 
-                RightArrowDown = True
+                ControllerRight = True
 
-                LeftArrowDown = False
+                ControllerLeft = False
 
-                If Jumped = True Then Jumped = False
+                If ControllerJumped = True Then ControllerJumped = False
 
-                BDown = False
+                ControllerB = False
 
             Case 9 'Up+Right
-                LeftArrowDown = False
+                ControllerLeft = False
 
-                RightArrowDown = True
+                ControllerRight = True
 
-                If Jumped = True Then Jumped = False
+                If ControllerJumped = True Then ControllerJumped = False
 
-                BDown = False
+                ControllerB = False
             Case 10 'Down+Right
 
-                LeftArrowDown = False
+                ControllerLeft = False
 
-                RightArrowDown = True
+                ControllerRight = True
 
-                If Jumped = True Then Jumped = False
+                If ControllerJumped = True Then ControllerJumped = False
 
-                BDown = False
+                ControllerB = False
 
             Case 16 'Start
             Case 32 'Back
@@ -543,21 +549,21 @@ Public Class Form1
             Case 512 'Right bumper
             Case 4096 'A
 
-                LeftArrowDown = False
+                ControllerLeft = False
 
-                RightArrowDown = False
+                ControllerRight = False
 
-                If Jumped = True Then Jumped = False
+                If ControllerJumped = True Then ControllerJumped = False
 
-                BDown = False
+                ControllerB = False
 
             Case 8192 'B
 
-                BDown = True
+                ControllerB = True
 
-                LeftArrowDown = False
+                ControllerLeft = False
 
-                RightArrowDown = False
+                ControllerRight = False
 
             Case 16384 'X
             Case 32768 'Y
@@ -586,59 +592,59 @@ Public Class Form1
 
             Case 8196 'Left+B
 
-                LeftArrowDown = True
+                ControllerLeft = True
 
-                RightArrowDown = False
+                ControllerRight = False
 
-                BDown = True
+                ControllerB = True
 
             Case 8200 'Right+B
 
-                RightArrowDown = True
+                ControllerRight = True
 
-                LeftArrowDown = False
+                ControllerLeft = False
 
-                BDown = True
+                ControllerB = True
 
             Case 8198 'Left+Down+B
 
-                RightArrowDown = False
+                ControllerRight = False
 
-                LeftArrowDown = True
+                ControllerLeft = True
 
-                BDown = True
+                ControllerB = True
             Case 8202 'Right+Down+B
-                RightArrowDown = True
+                ControllerRight = True
 
-                LeftArrowDown = False
+                ControllerLeft = False
 
-                BDown = True
+                ControllerB = True
 
             Case 8201 'Right+Up+B
-                RightArrowDown = True
+                ControllerRight = True
 
-                LeftArrowDown = False
+                ControllerLeft = False
 
-                BDown = True
+                ControllerB = True
 
             Case 8197 'Left+Up+B
-                RightArrowDown = False
+                ControllerRight = False
 
-                LeftArrowDown = True
+                ControllerLeft = True
 
-                BDown = True
+                ControllerB = True
             Case 8194 'Down+B
-                RightArrowDown = False
+                ControllerRight = False
 
-                LeftArrowDown = False
+                ControllerLeft = False
 
-                BDown = True
+                ControllerB = True
             Case 8193 'Up+B
-                RightArrowDown = False
+                ControllerRight = False
 
-                LeftArrowDown = False
+                ControllerLeft = False
 
-                BDown = True
+                ControllerB = True
             Case Else 'Any buttons not handled yet.
                 Debug.Print(ControllerPosition.Gamepad.wButtons.ToString)
         End Select
@@ -898,7 +904,7 @@ Public Class Form1
                             'Yes, our hero is on top of the block.
 
                             'Is the player holding down the right arrow key?
-                            If RightArrowDown = True Then
+                            If RightArrowDown = True Or ControllerRight = True Then
                                 'Yes, the player is holding down the right arrow key.
 
                                 'Is our hero moving to the left?
@@ -916,7 +922,7 @@ Public Class Form1
                                 If OurHero.Velocity.X > OurHero.MaxVelocity.X Then OurHero.Velocity.X = OurHero.MaxVelocity.X
 
                                 'Is the player holding down the left arrow key?
-                            ElseIf LeftArrowDown = True Then
+                            ElseIf LeftArrowDown = True Or ControllerLeft = True Then
                                 'Yes, the player is holding down the left arrow key.
 
                                 'Is our hero moving to the right?
@@ -969,6 +975,18 @@ Public Class Form1
                                     OurHero.Velocity.Y += -1300.0F
 
                                     Jumped = True
+
+                                End If
+
+                            End If
+
+                            If ControllerB = True Then
+
+                                If ControllerJumped = False Then
+
+                                    OurHero.Velocity.Y += -1300.0F
+
+                                    ControllerJumped = True
 
                                 End If
 
@@ -1227,6 +1245,13 @@ Public Class Form1
             .FillRectangle(Brushes.Red, OurHero.Rect)
 
             .DrawString("Hero", CWJFont, Brushes.White, OurHero.Rect, AlineCenterMiddle)
+
+
+            .DrawString("X: " & OurHero.Position.X.ToString & vbCrLf & "Y: " & OurHero.Position.Y.ToString,
+                        CWJFont, Brushes.White,
+                        OurHero.Rect.X,
+                        OurHero.Rect.Y - 50,
+                        New StringFormat With {.Alignment = StringAlignment.Near})
 
         End With
 

@@ -141,7 +141,7 @@ Public Class Form1
     Private AirResistance As Single = 100.0F
 
     '500 slippery 1000 grippy
-    Private Friction As Single = 1400
+    Private Friction As Single = 1500
 
     Private Enum AppState As Integer
         Start
@@ -190,6 +190,27 @@ Public Class Form1
     Private BlockToolButton As GameObject
 
     Private BlockToolIcon As GameObject
+
+
+    Private Enum Tools As Integer
+        Pointer
+        Block
+        Bill
+    End Enum
+
+    Private SelectedTool As Tools = Tools.Pointer
+
+    Private CharcoalGrey As Color = Color.FromArgb(255, 60, 65, 66)
+
+
+    Private DarkCharcoalGrey As Color = Color.FromArgb(255, 48, 52, 53)
+
+
+    Private CharcoalGreyBrush As New SolidBrush(CharcoalGrey)
+
+
+    Private DarkCharcoalGreyBrush As New SolidBrush(DarkCharcoalGrey)
+
 
     Private Title As GameObject
 
@@ -683,15 +704,21 @@ Public Class Form1
                 If OurHero.Velocity.Y > OurHero.MaxVelocity.Y Then OurHero.Velocity.Y = OurHero.MaxVelocity.Y
 
                 'Skydive steering
-                If RightArrowDown = True Then
+                If RightArrowDown = True Or ControllerRight = True Then
 
                     OurHero.Velocity.X += 0.5F
 
-                ElseIf LeftArrowDown = True Then
+                ElseIf LeftArrowDown = True Or ControllerLeft = True Then
 
                     OurHero.Velocity.X += -0.5F
 
                 End If
+
+
+
+
+
+
 
             Else
                 'Apply gravity to our hero. JUMPING.
@@ -1174,9 +1201,18 @@ Public Class Form1
 
         With Buffer.Graphics
 
-            .FillRectangle(Brushes.Black, PointerToolButton.Rect)
+            If SelectedTool = Tools.Pointer Then
 
-            .DrawString("ë", PointerToolFont, Brushes.White, PointerToolButton.Rect, AlineCenterMiddle)
+                .FillRectangle(DarkCharcoalGreyBrush, PointerToolButton.Rect)
+
+                .DrawString("ë", PointerToolFont, Brushes.White, PointerToolButton.Rect, AlineCenterMiddle)
+
+            Else
+                .FillRectangle(Brushes.Black, PointerToolButton.Rect)
+
+                .DrawString("ë", PointerToolFont, Brushes.White, PointerToolButton.Rect, AlineCenterMiddle)
+
+            End If
 
         End With
 
@@ -1186,9 +1222,21 @@ Public Class Form1
 
         With Buffer.Graphics
 
-            .FillRectangle(Brushes.Black, BlockToolButton.Rect)
+            If SelectedTool = Tools.Block Then
 
-            .FillRectangle(Brushes.Chocolate, BlockToolIcon.Rect)
+                .FillRectangle(DarkCharcoalGreyBrush, BlockToolButton.Rect)
+
+                .FillRectangle(Brushes.Chocolate, BlockToolIcon.Rect)
+
+            Else
+
+                .FillRectangle(Brushes.Black, BlockToolButton.Rect)
+
+                .FillRectangle(Brushes.Chocolate, BlockToolIcon.Rect)
+
+            End If
+
+
 
         End With
 
@@ -1246,7 +1294,7 @@ Public Class Form1
 
             .DrawString("Hero", CWJFont, Brushes.White, OurHero.Rect, AlineCenterMiddle)
 
-
+            'Draw hero position
             .DrawString("X: " & OurHero.Position.X.ToString & vbCrLf & "Y: " & OurHero.Position.Y.ToString,
                         CWJFont, Brushes.White,
                         OurHero.Rect.X,
@@ -1332,6 +1380,34 @@ Public Class Form1
         End With
 
     End Sub
+
+    Private Sub AddBlock(Location As Point)
+
+        'Add block to blocks
+        If Blocks IsNot Nothing Then
+
+            Array.Resize(Blocks, Blocks.Length + 1)
+
+        Else
+
+            ReDim Blocks(0)
+
+        End If
+
+        'Init block
+        Blocks(Blocks.Length - 1).Rect.Location = Location
+
+        Blocks(Blocks.Length - 1).Rect.Size = New Size(GridSize, GridSize)
+
+        Blocks(Blocks.Length - 1).Position.X = Location.X
+        Blocks(Blocks.Length - 1).Position.Y = Location.Y
+
+    End Sub
+
+
+
+
+
 
     Private Sub DrawBushes()
 
@@ -1679,6 +1755,31 @@ Public Class Form1
 
                 End If
 
+
+                'Is the player clicking the pointer tool button?
+                If PointerToolButton.Rect.Contains(e.Location) Then
+                    'Yes, the player is clicking the pointer tool button.
+
+                    SelectedTool = Tools.Pointer
+
+                End If
+
+                'Is the player clicking the block tool button?
+                If BlockToolButton.Rect.Contains(e.Location) Then
+                    'Yes, the player is clicking the block tool button.
+
+                    SelectedTool = Tools.Block
+
+                End If
+
+                If SelectedTool = Tools.Block Then
+
+                    'Snap block to grid
+                    AddBlock(New Point(CInt(Math.Round((e.X - SelectionOffset.X) / GridSize)) * GridSize,
+                                       CInt(Math.Round((e.Y - SelectionOffset.Y) / GridSize)) * GridSize))
+
+                End If
+
         End Select
 
     End Sub
@@ -1962,6 +2063,9 @@ Public Class Form1
 
     End Sub
 
+    Private Sub Form1_LocationChanged(sender As Object, e As EventArgs) Handles Me.LocationChanged
+
+    End Sub
 End Class
 
 

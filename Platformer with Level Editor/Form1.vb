@@ -102,16 +102,6 @@ Public Class Form1
 
     Private ControllerJumped As Boolean = False
 
-
-
-
-
-
-
-
-
-
-
     Private Context As New BufferedGraphicsContext
 
     Private Buffer As BufferedGraphics
@@ -191,7 +181,6 @@ Public Class Form1
 
     Private BlockToolIcon As GameObject
 
-
     Private Enum Tools As Integer
         Pointer
         Block
@@ -202,23 +191,15 @@ Public Class Form1
 
     Private ShowToolPreview As Boolean = False
 
-
     Private ToolPreview As Rectangle
-
-
-
 
     Private CharcoalGrey As Color = Color.FromArgb(255, 60, 65, 66)
 
-
     Private DarkCharcoalGrey As Color = Color.FromArgb(255, 48, 52, 53)
-
 
     Private CharcoalGreyBrush As New SolidBrush(CharcoalGrey)
 
-
     Private DarkCharcoalGreyBrush As New SolidBrush(DarkCharcoalGrey)
-
 
     Private Title As GameObject
 
@@ -227,9 +208,6 @@ Public Class Form1
     Private TitleEditButton As GameObject
 
     Private ScoreIndicators As GameObject
-
-
-
 
     Private SelectedCloud As Integer = -1
 
@@ -722,12 +700,6 @@ Public Class Form1
 
                 End If
 
-
-
-
-
-
-
             Else
                 'Apply gravity to our hero. JUMPING.
 
@@ -1201,7 +1173,7 @@ Public Class Form1
 
         With Buffer.Graphics
 
-            .FillRectangle(Brushes.DarkGray, ToolBarBackground.Rect)
+            .FillRectangle(Brushes.Black, ToolBarBackground.Rect)
 
         End With
 
@@ -1391,8 +1363,6 @@ Public Class Form1
 
     End Sub
 
-
-
     Private Sub DrawToolPreview()
 
         With Buffer.Graphics
@@ -1406,9 +1376,6 @@ Public Class Form1
         End With
 
     End Sub
-
-
-
 
     Private Sub AddBlock(Location As Point)
 
@@ -1432,11 +1399,6 @@ Public Class Form1
         Blocks(Blocks.Length - 1).Position.Y = Location.Y
 
     End Sub
-
-
-
-
-
 
     Private Sub DrawBushes()
 
@@ -1806,18 +1768,6 @@ Public Class Form1
 
                 End If
 
-
-
-
-
-
-
-
-
-
-
-
-
                 'Is the player over the toolbar?
                 If ToolBarBackground.Rect.Contains(e.Location) = False Then
                     'No, the player is NOT over the toolbar.
@@ -1962,7 +1912,6 @@ Public Class Form1
 
             End If
 
-
             If SelectedCloud > -1 Then
 
                     If e.Button = MouseButtons.Left Then
@@ -2077,10 +2026,6 @@ Public Class Form1
 
     End Sub
 
-    Private Sub Form1_MouseUp(sender As Object, e As MouseEventArgs) Handles Me.MouseUp
-
-    End Sub
-
     Private Sub Form1_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
 
         'Arrow right.
@@ -2138,13 +2083,6 @@ Public Class Form1
 
     End Sub
 
-    Private Sub Form1_Move(sender As Object, e As EventArgs) Handles Me.Move
-
-    End Sub
-
-    Private Sub Form1_LocationChanged(sender As Object, e As EventArgs) Handles Me.LocationChanged
-
-    End Sub
 End Class
 
 

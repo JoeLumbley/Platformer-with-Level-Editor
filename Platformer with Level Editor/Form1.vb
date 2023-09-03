@@ -94,6 +94,8 @@ Public Class Form1
 
     Private Vibration As XINPUT_VIBRATION
 
+    Private ControllerA As Boolean = False
+
     Private ControllerB As Boolean = False
 
     Private ControllerRight As Boolean = False
@@ -410,6 +412,20 @@ Public Class Form1
 
         End If
 
+        If GameState = AppState.Editing Then
+
+
+            UpdateControllerData()
+
+
+
+
+        End If
+
+
+
+
+
     End Sub
 
     Private Sub UpdateControllerData()
@@ -472,6 +488,8 @@ Public Class Form1
 
                 If ControllerJumped = True Then ControllerJumped = False
 
+                ControllerA = False
+
                 ControllerB = False
 
                 ControllerRight = False
@@ -485,6 +503,8 @@ Public Class Form1
 
                 If ControllerJumped = True Then ControllerJumped = False
 
+                ControllerA = False
+
                 ControllerB = False
             Case 2 'Down
                 ControllerLeft = False
@@ -492,6 +512,8 @@ Public Class Form1
                 ControllerRight = False
 
                 If ControllerJumped = True Then ControllerJumped = False
+
+                ControllerA = False
 
                 ControllerB = False
             Case 4 'Left
@@ -502,6 +524,8 @@ Public Class Form1
 
                 If ControllerJumped = True Then ControllerJumped = False
 
+                ControllerA = False
+
                 ControllerB = False
 
             Case 5 'Up+Left
@@ -511,6 +535,8 @@ Public Class Form1
 
                 If ControllerJumped = True Then ControllerJumped = False
 
+                ControllerA = False
+
                 ControllerB = False
             Case 6 'Down+Left
                 ControllerLeft = True
@@ -518,6 +544,8 @@ Public Class Form1
                 ControllerRight = False
 
                 If ControllerJumped = True Then ControllerJumped = False
+
+                ControllerA = False
 
                 ControllerB = False
             Case 8 'Right
@@ -528,6 +556,8 @@ Public Class Form1
 
                 If ControllerJumped = True Then ControllerJumped = False
 
+                ControllerA = False
+
                 ControllerB = False
 
             Case 9 'Up+Right
@@ -537,6 +567,8 @@ Public Class Form1
 
                 If ControllerJumped = True Then ControllerJumped = False
 
+                ControllerA = False
+
                 ControllerB = False
             Case 10 'Down+Right
 
@@ -545,6 +577,8 @@ Public Class Form1
                 ControllerRight = True
 
                 If ControllerJumped = True Then ControllerJumped = False
+
+                ControllerA = False
 
                 ControllerB = False
 
@@ -556,17 +590,23 @@ Public Class Form1
             Case 512 'Right bumper
             Case 4096 'A
 
+                ControllerA = True
+
                 ControllerLeft = False
 
                 ControllerRight = False
 
-                If ControllerJumped = True Then ControllerJumped = False
+                'If ControllerJumped = True Then ControllerJumped = False
 
                 ControllerB = False
 
             Case 8192 'B
 
                 ControllerB = True
+
+                If ControllerJumped = True Then ControllerJumped = False
+
+                ControllerA = False
 
                 ControllerLeft = False
 
@@ -589,19 +629,81 @@ Public Class Form1
             Case 57344 'B+X+Y
             Case 61440 'A+B+X+Y
             Case 4097 'Up+A
+                ControllerA = True
+
+                ControllerLeft = True
+
+                ControllerRight = False
+
+                ControllerB = False
             Case 4098 'Down+A
+                ControllerA = True
+
+                ControllerLeft = True
+
+                ControllerRight = False
+
+                ControllerB = False
             Case 4100 'Left+A
+
+                ControllerA = True
+
+                ControllerLeft = True
+
+                ControllerRight = False
+
+                ControllerB = False
+
             Case 4104 'Right+A
+
+                ControllerA = True
+
+                ControllerRight = True
+
+                ControllerLeft = False
+
+                ControllerB = False
+
             Case 4105 'Up+Right+A
+                ControllerA = True
+
+                ControllerRight = True
+
+                ControllerLeft = False
+
+                ControllerB = False
             Case 4101 'Up+Left+A
+                ControllerA = True
+
+                ControllerLeft = True
+
+                ControllerRight = False
+
+                ControllerB = False
             Case 4106 'Down+Right+A
+                ControllerA = True
+
+                ControllerRight = True
+
+                ControllerLeft = False
+
+                ControllerB = False
             Case 4102 'Down+Left+A
+                ControllerA = True
+
+                ControllerLeft = True
+
+                ControllerRight = False
+
+                ControllerB = False
 
             Case 8196 'Left+B
 
                 ControllerLeft = True
 
                 ControllerRight = False
+
+                ControllerA = False
 
                 ControllerB = True
 
@@ -610,6 +712,8 @@ Public Class Form1
                 ControllerRight = True
 
                 ControllerLeft = False
+
+                ControllerA = False
 
                 ControllerB = True
 
@@ -625,6 +729,8 @@ Public Class Form1
 
                 ControllerLeft = False
 
+                ControllerA = False
+
                 ControllerB = True
 
             Case 8201 'Right+Up+B
@@ -639,17 +745,23 @@ Public Class Form1
 
                 ControllerLeft = True
 
+                ControllerA = False
+
                 ControllerB = True
             Case 8194 'Down+B
                 ControllerRight = False
 
                 ControllerLeft = False
 
+                ControllerA = False
+
                 ControllerB = True
             Case 8193 'Up+B
                 ControllerRight = False
 
                 ControllerLeft = False
+
+                ControllerA = False
 
                 ControllerB = True
             Case Else 'Any buttons not handled yet.
@@ -987,7 +1099,7 @@ Public Class Form1
 
                             End If
 
-                            If ControllerB = True Then
+                            If ControllerA = True Then
 
                                 If ControllerJumped = False Then
 

@@ -1774,159 +1774,164 @@ Public Class Form1
 
             Case AppState.Editing
 
-                If SizingHandle.Contains(e.Location) Then
+                MouseDownEditing(e)
 
-                    SizingHandleSelected = True
+        End Select
 
-                Else
+    End Sub
 
-                    SizingHandleSelected = False
+    Private Sub MouseDownEditing(e As MouseEventArgs)
 
-                    'Is the player selecting a block?
-                    If CheckBlockSelection(e) > -1 Then
-                        'Yes, the player is selecting a block.
+        If SizingHandle.Contains(e.Location) Then
 
-                        SelectedBlock = CheckBlockSelection(e)
+            SizingHandleSelected = True
 
-                        SelectionOffset.X = e.X - Blocks(SelectedBlock).Rect.X
-                        SelectionOffset.Y = e.Y - Blocks(SelectedBlock).Rect.Y
+        Else
 
-                        'Deselect other game objects.
-                        SelectedBill = -1
-                        SelectedCloud = -1
-                        SelectedBush = -1
+            SizingHandleSelected = False
 
-                        'Is the player selecting a bill?
-                    ElseIf CheckBillSelection(e) > -1 Then
-                        'Yes, the player is selecting a bill.
+            'Is the player selecting a block?
+            If CheckBlockSelection(e) > -1 Then
+                'Yes, the player is selecting a block.
 
-                        SelectedBill = CheckBillSelection(e)
+                SelectedBlock = CheckBlockSelection(e)
 
-                        SelectionOffset.X = e.X - Cash(SelectedBill).Rect.X
-                        SelectionOffset.Y = e.Y - Cash(SelectedBill).Rect.Y
+                SelectionOffset.X = e.X - Blocks(SelectedBlock).Rect.X
+                SelectionOffset.Y = e.Y - Blocks(SelectedBlock).Rect.Y
 
-                        'Deselect other game objects.
-                        SelectedBlock = -1
-                        SelectedCloud = -1
-                        SelectedBush = -1
+                'Deselect other game objects.
+                SelectedBill = -1
+                SelectedCloud = -1
+                SelectedBush = -1
 
-                        'Is the player selecting a cloud?
-                    ElseIf CheckCloudSelection(e) > -1 Then
-                        'Yes, the player is selecting a cloud.
+                'Is the player selecting a bill?
+            ElseIf CheckBillSelection(e) > -1 Then
+                'Yes, the player is selecting a bill.
 
-                        SelectedCloud = CheckCloudSelection(e)
+                SelectedBill = CheckBillSelection(e)
 
-                        SelectionOffset.X = e.X - Clouds(SelectedCloud).Rect.X
-                        SelectionOffset.Y = e.Y - Clouds(SelectedCloud).Rect.Y
+                SelectionOffset.X = e.X - Cash(SelectedBill).Rect.X
+                SelectionOffset.Y = e.Y - Cash(SelectedBill).Rect.Y
 
-                        'Deselect other game objects.
-                        SelectedBlock = -1
-                        SelectedBill = -1
-                        SelectedBush = -1
+                'Deselect other game objects.
+                SelectedBlock = -1
+                SelectedCloud = -1
+                SelectedBush = -1
 
-                        'Is the player selecting a bush?
-                    ElseIf CheckBushSelection(e) > -1 Then
-                        'Yes, the player is selecting a bush.
+                'Is the player selecting a cloud?
+            ElseIf CheckCloudSelection(e) > -1 Then
+                'Yes, the player is selecting a cloud.
 
-                        SelectedBush = CheckBushSelection(e)
+                SelectedCloud = CheckCloudSelection(e)
 
-                        SelectionOffset.X = e.X - Bushes(SelectedBush).Rect.X
-                        SelectionOffset.Y = e.Y - Bushes(SelectedBush).Rect.Y
+                SelectionOffset.X = e.X - Clouds(SelectedCloud).Rect.X
+                SelectionOffset.Y = e.Y - Clouds(SelectedCloud).Rect.Y
 
-                        'Deselect other game objects.
-                        SelectedBlock = -1
-                        SelectedBill = -1
-                        SelectedCloud = -1
+                'Deselect other game objects.
+                SelectedBlock = -1
+                SelectedBill = -1
+                SelectedBush = -1
+
+                'Is the player selecting a bush?
+            ElseIf CheckBushSelection(e) > -1 Then
+                'Yes, the player is selecting a bush.
+
+                SelectedBush = CheckBushSelection(e)
+
+                SelectionOffset.X = e.X - Bushes(SelectedBush).Rect.X
+                SelectionOffset.Y = e.Y - Bushes(SelectedBush).Rect.Y
+
+                'Deselect other game objects.
+                SelectedBlock = -1
+                SelectedBill = -1
+                SelectedCloud = -1
+
+            Else
+                'No, the player is selecting nothing.
+
+                'Is the player over the toolbar?
+                If ToolBarBackground.Rect.Contains(e.Location) = False Then
+                    'No, the player is NOT over the toolbar.
+
+                    If SelectedTool = Tools.Block Then
+
+                        'Snap block to grid.
+                        AddBlock(New Point(CInt(Math.Round(e.X / GridSize) * GridSize),
+                                   CInt(Math.Round(e.Y / GridSize) * GridSize)))
+
+                        'Change tool to the mouse pointer.
+                        SelectedTool = Tools.Pointer
+
+                        'Turn tool preview off.
+                        ShowToolPreview = False
+
+                        'Select the newly created block.
+                        SelectedBlock = Blocks.Length - 1
 
                     Else
-                        'No, the player is selecting nothing.
 
-                        'Is the player over the toolbar?
-                        If ToolBarBackground.Rect.Contains(e.Location) = False Then
-                            'No, the player is NOT over the toolbar.
-
-                            If SelectedTool = Tools.Block Then
-
-                                'Snap block to grid.
-                                AddBlock(New Point(CInt(Math.Round(e.X / GridSize) * GridSize),
-                                           CInt(Math.Round(e.Y / GridSize) * GridSize)))
-
-                                'Change tool to the mouse pointer.
-                                SelectedTool = Tools.Pointer
-
-                                'Turn tool preview off.
-                                ShowToolPreview = False
-
-                                'Select the newly created block.
-                                SelectedBlock = Blocks.Length - 1
-
-                            Else
-
-                                'Deselect game objects.
-                                SelectedBlock = -1
-                                SelectedBill = -1
-                                SelectedCloud = -1
-                                SelectedBush = -1
-
-                            End If
-
-                        End If
+                        'Deselect game objects.
+                        SelectedBlock = -1
+                        SelectedBill = -1
+                        SelectedCloud = -1
+                        SelectedBush = -1
 
                     End If
 
                 End If
 
-                'Is the player clicking the play button?
-                If EditPlayButton.Rect.Contains(e.Location) Then
-                    'Yes, the player is clicking the play button.
+            End If
 
-                    'Deselect game objects.
-                    SelectedBlock = -1
-                    SelectedBill = -1
-                    SelectedCloud = -1
-                    SelectedBush = -1
+        End If
 
-                    'Resume Play
-                    LastFrame = Now
+        'Is the player clicking the play button?
+        If EditPlayButton.Rect.Contains(e.Location) Then
+            'Yes, the player is clicking the play button.
 
-                    GameState = AppState.Playing
+            'Deselect game objects.
+            SelectedBlock = -1
+            SelectedBill = -1
+            SelectedCloud = -1
+            SelectedBush = -1
 
-                End If
+            'Resume Play
+            LastFrame = Now
 
-                'Is the player clicking the pointer tool button?
-                If PointerToolButton.Rect.Contains(e.Location) Then
-                    'Yes, the player is clicking the pointer tool button.
+            GameState = AppState.Playing
 
-                    SelectedTool = Tools.Pointer
+        End If
 
-                    ShowToolPreview = False
+        'Is the player clicking the pointer tool button?
+        If PointerToolButton.Rect.Contains(e.Location) Then
+            'Yes, the player is clicking the pointer tool button.
 
-                End If
+            SelectedTool = Tools.Pointer
 
-                'Is the player clicking the block tool button?
-                If BlockToolButton.Rect.Contains(e.Location) Then
-                    'Yes, the player is clicking the block tool button.
+            ShowToolPreview = False
 
-                    'Deselect game objects.
-                    SelectedBlock = -1
-                    SelectedBill = -1
-                    SelectedCloud = -1
-                    SelectedBush = -1
+        End If
 
-                    ToolPreview.X = CInt(Math.Round(e.X / GridSize)) * GridSize
-                    ToolPreview.Y = CInt(Math.Round(e.Y / GridSize)) * GridSize
+        'Is the player clicking the block tool button?
+        If BlockToolButton.Rect.Contains(e.Location) Then
+            'Yes, the player is clicking the block tool button.
 
-                    ToolPreview.Width = GridSize
-                    ToolPreview.Height = GridSize
+            'Deselect game objects.
+            SelectedBlock = -1
+            SelectedBill = -1
+            SelectedCloud = -1
+            SelectedBush = -1
 
-                    SelectedTool = Tools.Block
+            ToolPreview.X = CInt(Math.Round(e.X / GridSize)) * GridSize
+            ToolPreview.Y = CInt(Math.Round(e.Y / GridSize)) * GridSize
 
-                    ShowToolPreview = True
+            ToolPreview.Width = GridSize
+            ToolPreview.Height = GridSize
 
-                End If
+            SelectedTool = Tools.Block
 
-        End Select
+            ShowToolPreview = True
 
+        End If
     End Sub
 
     Private Function CheckCloudSelection(e As MouseEventArgs) As Integer

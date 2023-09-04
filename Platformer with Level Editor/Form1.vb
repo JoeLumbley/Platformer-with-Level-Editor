@@ -2029,7 +2029,6 @@ Public Class Form1
 
         If GameState = AppState.Editing Then
 
-
             If e.Button = MouseButtons.None Then
 
 
@@ -2041,9 +2040,6 @@ Public Class Form1
 
                         ToolPreview.X = CInt(Math.Round(e.X / GridSize)) * GridSize
                         ToolPreview.Y = CInt(Math.Round(e.Y / GridSize)) * GridSize
-
-                        'ToolPreview.Width = GridSize
-                        'ToolPreview.Height = GridSize
 
                     Else
 

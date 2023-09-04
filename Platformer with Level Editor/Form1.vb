@@ -1782,6 +1782,67 @@ Public Class Form1
 
     Private Sub MouseDownEditing(e As MouseEventArgs)
 
+        MouseDownEditingSelection(e)
+
+        MouseDownEditingButtons(e)
+
+    End Sub
+
+    Private Sub MouseDownEditingButtons(e As MouseEventArgs)
+
+        'Is the player clicking the play button?
+        If EditPlayButton.Rect.Contains(e.Location) Then
+            'Yes, the player is clicking the play button.
+
+            'Deselect game objects.
+            SelectedBlock = -1
+            SelectedBill = -1
+            SelectedCloud = -1
+            SelectedBush = -1
+
+            'Resume Play
+            LastFrame = Now
+
+            GameState = AppState.Playing
+
+        End If
+
+        'Is the player clicking the pointer tool button?
+        If PointerToolButton.Rect.Contains(e.Location) Then
+            'Yes, the player is clicking the pointer tool button.
+
+            SelectedTool = Tools.Pointer
+
+            ShowToolPreview = False
+
+        End If
+
+        'Is the player clicking the block tool button?
+        If BlockToolButton.Rect.Contains(e.Location) Then
+            'Yes, the player is clicking the block tool button.
+
+            'Deselect game objects.
+            SelectedBlock = -1
+            SelectedBill = -1
+            SelectedCloud = -1
+            SelectedBush = -1
+
+            ToolPreview.X = CInt(Math.Round(e.X / GridSize)) * GridSize
+            ToolPreview.Y = CInt(Math.Round(e.Y / GridSize)) * GridSize
+
+            ToolPreview.Width = GridSize
+            ToolPreview.Height = GridSize
+
+            SelectedTool = Tools.Block
+
+            ShowToolPreview = True
+
+        End If
+
+    End Sub
+
+    Private Sub MouseDownEditingSelection(e As MouseEventArgs)
+
         If SizingHandle.Contains(e.Location) Then
 
             SizingHandleSelected = True
@@ -1884,54 +1945,6 @@ Public Class Form1
 
         End If
 
-        'Is the player clicking the play button?
-        If EditPlayButton.Rect.Contains(e.Location) Then
-            'Yes, the player is clicking the play button.
-
-            'Deselect game objects.
-            SelectedBlock = -1
-            SelectedBill = -1
-            SelectedCloud = -1
-            SelectedBush = -1
-
-            'Resume Play
-            LastFrame = Now
-
-            GameState = AppState.Playing
-
-        End If
-
-        'Is the player clicking the pointer tool button?
-        If PointerToolButton.Rect.Contains(e.Location) Then
-            'Yes, the player is clicking the pointer tool button.
-
-            SelectedTool = Tools.Pointer
-
-            ShowToolPreview = False
-
-        End If
-
-        'Is the player clicking the block tool button?
-        If BlockToolButton.Rect.Contains(e.Location) Then
-            'Yes, the player is clicking the block tool button.
-
-            'Deselect game objects.
-            SelectedBlock = -1
-            SelectedBill = -1
-            SelectedCloud = -1
-            SelectedBush = -1
-
-            ToolPreview.X = CInt(Math.Round(e.X / GridSize)) * GridSize
-            ToolPreview.Y = CInt(Math.Round(e.Y / GridSize)) * GridSize
-
-            ToolPreview.Width = GridSize
-            ToolPreview.Height = GridSize
-
-            SelectedTool = Tools.Block
-
-            ShowToolPreview = True
-
-        End If
     End Sub
 
     Private Function CheckCloudSelection(e As MouseEventArgs) As Integer
@@ -2058,115 +2071,115 @@ Public Class Form1
 
             If SelectedCloud > -1 Then
 
-                    If e.Button = MouseButtons.Left Then
+                If e.Button = MouseButtons.Left Then
 
-                        If SizingHandleSelected = True Then
+                    If SizingHandleSelected = True Then
 
-                            'Snap cloud width to grid.
-                            Clouds(SelectedCloud).Rect.Width = CInt(Math.Round((e.X - Clouds(SelectedCloud).Rect.X) / GridSize)) * GridSize
+                        'Snap cloud width to grid.
+                        Clouds(SelectedCloud).Rect.Width = CInt(Math.Round((e.X - Clouds(SelectedCloud).Rect.X) / GridSize)) * GridSize
 
-                            'Limit smallest cloud width to one grid width.
-                            If Clouds(SelectedCloud).Rect.Width < GridSize Then Clouds(SelectedCloud).Rect.Width = GridSize
+                        'Limit smallest cloud width to one grid width.
+                        If Clouds(SelectedCloud).Rect.Width < GridSize Then Clouds(SelectedCloud).Rect.Width = GridSize
 
-                            'Snap cloud height to grid.
-                            Clouds(SelectedCloud).Rect.Height = CInt(Math.Round((e.Y - Clouds(SelectedCloud).Rect.Y) / GridSize)) * GridSize
+                        'Snap cloud height to grid.
+                        Clouds(SelectedCloud).Rect.Height = CInt(Math.Round((e.Y - Clouds(SelectedCloud).Rect.Y) / GridSize)) * GridSize
 
-                            'Limit smallest cloud height to one grid height.
-                            If Clouds(SelectedCloud).Rect.Height < GridSize Then Clouds(SelectedCloud).Rect.Height = GridSize
+                        'Limit smallest cloud height to one grid height.
+                        If Clouds(SelectedCloud).Rect.Height < GridSize Then Clouds(SelectedCloud).Rect.Height = GridSize
 
-                        Else
+                    Else
 
-                            'Snap cloud to grid
-                            Clouds(SelectedCloud).Rect.X = CInt(Math.Round((e.X - SelectionOffset.X) / GridSize)) * GridSize
-                            Clouds(SelectedCloud).Rect.Y = CInt(Math.Round((e.Y - SelectionOffset.Y) / GridSize)) * GridSize
-
-                        End If
-
-                    End If
-
-                End If
-
-                If SelectedBlock > -1 Then
-
-                    If e.Button = MouseButtons.Left Then
-
-                        'Is the player resizing the block?
-                        If SizingHandleSelected = True Then
-                            'Yes, the player is resizing the block.
-
-                            'Snap block width to grid.
-                            Blocks(SelectedBlock).Rect.Width = CInt(Math.Round((e.X - Blocks(SelectedBlock).Rect.X) / GridSize)) * GridSize
-
-                            'Limit smallest block width to one grid width.
-                            If Blocks(SelectedBlock).Rect.Width < GridSize Then Blocks(SelectedBlock).Rect.Width = GridSize
-
-                            'Snap block height to grid.
-                            Blocks(SelectedBlock).Rect.Height = CInt(Math.Round((e.Y - Blocks(SelectedBlock).Rect.Y) / GridSize)) * GridSize
-
-                            'Limit smallest block height to one grid height.
-                            If Blocks(SelectedBlock).Rect.Height < GridSize Then Blocks(SelectedBlock).Rect.Height = GridSize
-
-                        Else
-
-                            'Snap block to grid
-                            Blocks(SelectedBlock).Rect.X = CInt(Math.Round((e.X - SelectionOffset.X) / GridSize)) * GridSize
-                            Blocks(SelectedBlock).Rect.Y = CInt(Math.Round((e.Y - SelectionOffset.Y) / GridSize)) * GridSize
-
-                        End If
-
-                    End If
-
-                End If
-
-                If SelectedBill > -1 Then
-
-                    If e.Button = MouseButtons.Left Then
-
-                        'Move bill snap to grid.
-                        Cash(SelectedBill).Rect.X = CInt(Math.Round((e.X - SelectionOffset.X) / GridSize)) * GridSize
-                        Cash(SelectedBill).Rect.Y = CInt(Math.Round((e.Y - SelectionOffset.Y) / GridSize)) * GridSize
-
-                    End If
-
-                End If
-
-                'Has the player selected a bush?
-                If SelectedBush > -1 Then
-                    'Yes, the player has selected a bush.
-
-                    If e.Button = MouseButtons.Left Then
-
-                        'Is the player resizing the bush?
-                        If SizingHandleSelected = True Then
-                            'Yes, the player is resizing the bush.
-
-                            'Snap bush width to grid.
-                            Bushes(SelectedBush).Rect.Width = CInt(Math.Round((e.X - Bushes(SelectedBush).Rect.X) / GridSize)) * GridSize
-
-                            'Limit smallest bush width to one grid width.
-                            If Bushes(SelectedBush).Rect.Width < GridSize Then Bushes(SelectedBush).Rect.Width = GridSize
-
-                            'Snap bush height to grid.
-                            Bushes(SelectedBush).Rect.Height = CInt(Math.Round((e.Y - Bushes(SelectedBush).Rect.Y) / GridSize)) * GridSize
-
-                            'Limit smallest bush height to one grid height.
-                            If Bushes(SelectedBush).Rect.Height < GridSize Then Bushes(SelectedBush).Rect.Height = GridSize
-
-                        Else
-                            'No, the player is not resizing the bush.
-                            'The player is moving the bush.
-
-                            'Move bush snap to grid
-                            Bushes(SelectedBush).Rect.X = CInt(Math.Round((e.X - SelectionOffset.X) / GridSize)) * GridSize
-                            Bushes(SelectedBush).Rect.Y = CInt(Math.Round((e.Y - SelectionOffset.Y) / GridSize)) * GridSize
-
-                        End If
+                        'Snap cloud to grid
+                        Clouds(SelectedCloud).Rect.X = CInt(Math.Round((e.X - SelectionOffset.X) / GridSize)) * GridSize
+                        Clouds(SelectedCloud).Rect.Y = CInt(Math.Round((e.Y - SelectionOffset.Y) / GridSize)) * GridSize
 
                     End If
 
                 End If
 
             End If
+
+            If SelectedBlock > -1 Then
+
+                If e.Button = MouseButtons.Left Then
+
+                    'Is the player resizing the block?
+                    If SizingHandleSelected = True Then
+                        'Yes, the player is resizing the block.
+
+                        'Snap block width to grid.
+                        Blocks(SelectedBlock).Rect.Width = CInt(Math.Round((e.X - Blocks(SelectedBlock).Rect.X) / GridSize)) * GridSize
+
+                        'Limit smallest block width to one grid width.
+                        If Blocks(SelectedBlock).Rect.Width < GridSize Then Blocks(SelectedBlock).Rect.Width = GridSize
+
+                        'Snap block height to grid.
+                        Blocks(SelectedBlock).Rect.Height = CInt(Math.Round((e.Y - Blocks(SelectedBlock).Rect.Y) / GridSize)) * GridSize
+
+                        'Limit smallest block height to one grid height.
+                        If Blocks(SelectedBlock).Rect.Height < GridSize Then Blocks(SelectedBlock).Rect.Height = GridSize
+
+                    Else
+
+                        'Snap block to grid
+                        Blocks(SelectedBlock).Rect.X = CInt(Math.Round((e.X - SelectionOffset.X) / GridSize)) * GridSize
+                        Blocks(SelectedBlock).Rect.Y = CInt(Math.Round((e.Y - SelectionOffset.Y) / GridSize)) * GridSize
+
+                    End If
+
+                End If
+
+            End If
+
+            If SelectedBill > -1 Then
+
+                If e.Button = MouseButtons.Left Then
+
+                    'Move bill snap to grid.
+                    Cash(SelectedBill).Rect.X = CInt(Math.Round((e.X - SelectionOffset.X) / GridSize)) * GridSize
+                    Cash(SelectedBill).Rect.Y = CInt(Math.Round((e.Y - SelectionOffset.Y) / GridSize)) * GridSize
+
+                End If
+
+            End If
+
+            'Has the player selected a bush?
+            If SelectedBush > -1 Then
+                'Yes, the player has selected a bush.
+
+                If e.Button = MouseButtons.Left Then
+
+                    'Is the player resizing the bush?
+                    If SizingHandleSelected = True Then
+                        'Yes, the player is resizing the bush.
+
+                        'Snap bush width to grid.
+                        Bushes(SelectedBush).Rect.Width = CInt(Math.Round((e.X - Bushes(SelectedBush).Rect.X) / GridSize)) * GridSize
+
+                        'Limit smallest bush width to one grid width.
+                        If Bushes(SelectedBush).Rect.Width < GridSize Then Bushes(SelectedBush).Rect.Width = GridSize
+
+                        'Snap bush height to grid.
+                        Bushes(SelectedBush).Rect.Height = CInt(Math.Round((e.Y - Bushes(SelectedBush).Rect.Y) / GridSize)) * GridSize
+
+                        'Limit smallest bush height to one grid height.
+                        If Bushes(SelectedBush).Rect.Height < GridSize Then Bushes(SelectedBush).Rect.Height = GridSize
+
+                    Else
+                        'No, the player is not resizing the bush.
+                        'The player is moving the bush.
+
+                        'Move bush snap to grid
+                        Bushes(SelectedBush).Rect.X = CInt(Math.Round((e.X - SelectionOffset.X) / GridSize)) * GridSize
+                        Bushes(SelectedBush).Rect.Y = CInt(Math.Round((e.Y - SelectionOffset.Y) / GridSize)) * GridSize
+
+                    End If
+
+                End If
+
+            End If
+
+        End If
 
     End Sub
 

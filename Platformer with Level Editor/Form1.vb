@@ -1788,10 +1788,10 @@ Public Class Form1
 
                         SelectedBlock = CheckBlockSelection(e)
 
-
                         SelectionOffset.X = e.X - Blocks(SelectedBlock).Rect.X
                         SelectionOffset.Y = e.Y - Blocks(SelectedBlock).Rect.Y
 
+                        'Deselect other game objects.
                         SelectedBill = -1
                         SelectedCloud = -1
                         SelectedBush = -1
@@ -1805,6 +1805,7 @@ Public Class Form1
                         SelectionOffset.X = e.X - Cash(SelectedBill).Rect.X
                         SelectionOffset.Y = e.Y - Cash(SelectedBill).Rect.Y
 
+                        'Deselect other game objects.
                         SelectedBlock = -1
                         SelectedCloud = -1
                         SelectedBush = -1
@@ -1818,6 +1819,7 @@ Public Class Form1
                         SelectionOffset.X = e.X - Clouds(SelectedCloud).Rect.X
                         SelectionOffset.Y = e.Y - Clouds(SelectedCloud).Rect.Y
 
+                        'Deselect other game objects.
                         SelectedBlock = -1
                         SelectedBill = -1
                         SelectedBush = -1
@@ -1831,6 +1833,7 @@ Public Class Form1
                         SelectionOffset.X = e.X - Bushes(SelectedBush).Rect.X
                         SelectionOffset.Y = e.Y - Bushes(SelectedBush).Rect.Y
 
+                        'Deselect other game objects.
                         SelectedBlock = -1
                         SelectedBill = -1
                         SelectedCloud = -1
@@ -1838,10 +1841,36 @@ Public Class Form1
                     Else
                         'No, the player is selecting nothing.
 
-                        SelectedBlock = -1
-                        SelectedBill = -1
-                        SelectedCloud = -1
-                        SelectedBush = -1
+                        'Is the player over the toolbar?
+                        If ToolBarBackground.Rect.Contains(e.Location) = False Then
+                            'No, the player is NOT over the toolbar.
+
+                            If SelectedTool = Tools.Block Then
+
+                                'Snap block to grid.
+                                AddBlock(New Point(CInt(Math.Round(e.X / GridSize) * GridSize),
+                                           CInt(Math.Round(e.Y / GridSize) * GridSize)))
+
+                                'Change tool to the mouse pointer.
+                                SelectedTool = Tools.Pointer
+
+                                'Turn tool preview off.
+                                ShowToolPreview = False
+
+                                'Select the newly created block.
+                                SelectedBlock = Blocks.Length - 1
+
+                            Else
+
+                                'Deselect game objects.
+                                SelectedBlock = -1
+                                SelectedBill = -1
+                                SelectedCloud = -1
+                                SelectedBush = -1
+
+                            End If
+
+                        End If
 
                     End If
 
@@ -1851,13 +1880,18 @@ Public Class Form1
                 If EditPlayButton.Rect.Contains(e.Location) Then
                     'Yes, the player is clicking the play button.
 
+                    'Deselect game objects.
+                    SelectedBlock = -1
+                    SelectedBill = -1
+                    SelectedCloud = -1
+                    SelectedBush = -1
+
                     'Resume Play
                     LastFrame = Now
 
                     GameState = AppState.Playing
 
                 End If
-
 
                 'Is the player clicking the pointer tool button?
                 If PointerToolButton.Rect.Contains(e.Location) Then
@@ -1867,30 +1901,27 @@ Public Class Form1
 
                     ShowToolPreview = False
 
-
                 End If
 
                 'Is the player clicking the block tool button?
                 If BlockToolButton.Rect.Contains(e.Location) Then
                     'Yes, the player is clicking the block tool button.
 
+                    'Deselect game objects.
+                    SelectedBlock = -1
+                    SelectedBill = -1
+                    SelectedCloud = -1
+                    SelectedBush = -1
+
+                    ToolPreview.X = CInt(Math.Round(e.X / GridSize)) * GridSize
+                    ToolPreview.Y = CInt(Math.Round(e.Y / GridSize)) * GridSize
+
+                    ToolPreview.Width = GridSize
+                    ToolPreview.Height = GridSize
+
                     SelectedTool = Tools.Block
 
                     ShowToolPreview = True
-
-                End If
-
-                'Is the player over the toolbar?
-                If ToolBarBackground.Rect.Contains(e.Location) = False Then
-                    'No, the player is NOT over the toolbar.
-
-                    If SelectedTool = Tools.Block Then
-
-                        'Snap block to grid
-                        AddBlock(New Point(CInt(Math.Round(e.X / GridSize) * GridSize),
-                                           CInt(Math.Round(e.Y / GridSize) * GridSize)))
-
-                    End If
 
                 End If
 
@@ -2011,8 +2042,8 @@ Public Class Form1
                         ToolPreview.X = CInt(Math.Round(e.X / GridSize)) * GridSize
                         ToolPreview.Y = CInt(Math.Round(e.Y / GridSize)) * GridSize
 
-                        ToolPreview.Width = GridSize
-                        ToolPreview.Height = GridSize
+                        'ToolPreview.Width = GridSize
+                        'ToolPreview.Height = GridSize
 
                     Else
 

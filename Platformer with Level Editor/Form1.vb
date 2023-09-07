@@ -804,11 +804,11 @@ Public Class Form1
                 'Skydive steering
                 If RightArrowDown = True Or ControllerRight = True Then
 
-                    OurHero.Velocity.X += 0.5F
+                    OurHero.Velocity.X += 25.5F * DeltaTime.TotalSeconds
 
                 ElseIf LeftArrowDown = True Or ControllerLeft = True Then
 
-                    OurHero.Velocity.X += -0.5F
+                    OurHero.Velocity.X += -25.5F * DeltaTime.TotalSeconds
 
                 End If
 
@@ -859,7 +859,7 @@ Public Class Form1
 
     Private Sub Wraparound()
 
-        'When the rectangle exits the bottom side of the client area.
+        'When our hero exits the bottom side of the client area.
         If OurHero.Position.Y > ClientRectangle.Bottom Then
 
             OurHero.Velocity.Y = 0F
@@ -867,7 +867,7 @@ Public Class Form1
 
             OurHero.Position.X = 1500.0F
 
-            'The rectangle reappears on the top side the client area.
+            'Our hero reappears on the top side the client area.
             OurHero.Position.Y = ClientRectangle.Top - OurHero.Rect.Height
 
         End If
@@ -1330,8 +1330,6 @@ Public Class Form1
 
             End If
 
-
-
         End With
 
     End Sub
@@ -1491,7 +1489,6 @@ Public Class Form1
 
     Private Sub AddBlock(Location As Point)
 
-        'Add block to blocks
         If Blocks IsNot Nothing Then
 
             Array.Resize(Blocks, Blocks.Length + 1)
@@ -1733,7 +1730,6 @@ Public Class Form1
 
         TitlePlayButton.Rect = New Rectangle(ClientRectangle.Width \ 2 + 100, ClientRectangle.Height \ 2 + 100, 150, 90)
 
-        'DrawGridLines()
         BufferGridLines()
 
     End Sub
@@ -1827,6 +1823,7 @@ Public Class Form1
             SelectedCloud = -1
             SelectedBush = -1
 
+            'Snap preview to grid.
             ToolPreview.X = CInt(Math.Round(e.X / GridSize)) * GridSize
             ToolPreview.Y = CInt(Math.Round(e.Y / GridSize)) * GridSize
 

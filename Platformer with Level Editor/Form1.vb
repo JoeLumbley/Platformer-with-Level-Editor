@@ -1372,6 +1372,12 @@ Public Class Form1
 
         With Buffer.Graphics
 
+            'Draw drop shadow.
+            .DrawString("$" & CashCollected.ToString,
+                    FPSFont,
+                    New SolidBrush(Color.FromArgb(255, Color.Black)),
+                    CashCollectedPostion.X + 2, CashCollectedPostion.Y + 2)
+
             .DrawString("$" & CashCollected.ToString, FPSFont, Brushes.White, CashCollectedPostion)
 
         End With

@@ -143,7 +143,17 @@ Public Class Form1
 
     Private GameState As AppState = AppState.Start
 
+    Private Enum ObjectID As Integer
+        Level
+        Block
+        Bill
+        Bush
+        Cloud
+    End Enum
+
     Private Structure GameObject
+
+        Public ID As ObjectID
 
         Public Position As Vector2
 
@@ -173,7 +183,13 @@ Public Class Form1
 
     Private Cash() As GameObject
 
+    Private FileObjects() As GameObject
+
+
     Private EditPlayButton As GameObject
+
+    Private SaveButton As GameObject
+
 
     Private ToolBarBackground As GameObject
 
@@ -374,6 +390,12 @@ Public Class Form1
         OutinePen.LineJoin = Drawing2D.LineJoin.Round
 
         EditPlayButton.Rect = New Rectangle(ClientRectangle.Left + 210, ClientRectangle.Bottom - 90, 120, 100)
+
+
+        SaveButton.Rect = New Rectangle(ClientRectangle.Right - 210,
+                                        ClientRectangle.Bottom - 90,
+                                        120,
+                                        100)
 
         Title.Text = "Platformer" & vbCrLf & "with Level Editor"
 
@@ -1267,6 +1289,8 @@ Public Class Form1
 
         DrawPlayButton()
 
+        DrawSaveButton()
+
         DrawFPS()
 
     End Sub
@@ -1353,6 +1377,19 @@ Public Class Form1
             .FillRectangle(Brushes.Black, EditPlayButton.Rect)
 
             .DrawString("Edit", FPSFont, Brushes.White, EditPlayButton.Rect, AlineCenterMiddle)
+
+        End With
+
+    End Sub
+
+
+    Private Sub DrawSaveButton()
+
+        With Buffer.Graphics
+
+            .FillRectangle(Brushes.Black, SaveButton.Rect)
+
+            .DrawString("Save", FPSFont, Brushes.White, SaveButton.Rect, AlineCenterMiddle)
 
         End With
 
@@ -1722,6 +1759,11 @@ Public Class Form1
 
         EditPlayButton.Rect = New Rectangle(ClientRectangle.Left + 210, ClientRectangle.Bottom - 90, 120, 90)
 
+        SaveButton.Rect = New Rectangle(ClientRectangle.Right - 152,
+                                        ClientRectangle.Bottom - 90,
+                                        150,
+                                        100)
+
         ToolBarBackground.Rect = New Rectangle(ClientRectangle.Left, ClientRectangle.Bottom - 90, ClientRectangle.Width, 100)
 
         PointerToolButton.Rect = New Rectangle(ClientRectangle.Left + 331, ClientRectangle.Bottom - 90, 90, 90)
@@ -1752,7 +1794,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub Form1_MouseDown(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
+    Private Sub Form1_MouseDown(sender As Object, e As MouseEventArgs) Handles MyBase.MouseDown
 
         Select Case GameState
 
@@ -1760,11 +1802,54 @@ Public Class Form1
 
                 If TitlePlayButton.Rect.Contains(e.Location) Then
 
-                    LastFrame = Now
+                    OpenFileDialog1.FileName = ""
+                    OpenFileDialog1.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
+                    OpenFileDialog1.FilterIndex = 1
+                    OpenFileDialog1.RestoreDirectory = True
 
-                    GameState = AppState.Playing
+                    If OpenFileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+
+                        If My.Computer.FileSystem.FileExists(OpenFileDialog1.FileName) = True Then
+
+                            OpenTestLevelFile(OpenFileDialog1.FileName)
+
+                            LastFrame = Now
+
+                            GameState = AppState.Playing
+
+                        End If
+
+                    End If
+
+
 
                 End If
+
+
+                If TitleEditButton.Rect.Contains(e.Location) Then
+
+                    OpenFileDialog1.FileName = ""
+                    OpenFileDialog1.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
+                    OpenFileDialog1.FilterIndex = 1
+                    OpenFileDialog1.RestoreDirectory = True
+
+                    If OpenFileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+
+                        If My.Computer.FileSystem.FileExists(OpenFileDialog1.FileName) = True Then
+
+                            OpenTestLevelFile(OpenFileDialog1.FileName)
+
+                            GameState = AppState.Editing
+
+
+                        End If
+
+                    End If
+
+
+                End If
+
+
 
             Case AppState.Playing
 
@@ -1839,6 +1924,27 @@ Public Class Form1
             SelectedTool = Tools.Block
 
             ShowToolPreview = True
+
+        End If
+
+        'Is the player clicking the save button?
+        If SaveButton.Rect.Contains(e.Location) Then
+            'Yes, the player is clicking the save button.
+
+            SaveFileDialog1.FileName = ""
+            SaveFileDialog1.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
+            SaveFileDialog1.FilterIndex = 1
+            SaveFileDialog1.RestoreDirectory = True
+
+            If SaveFileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+
+                SaveTestLevelFile(SaveFileDialog1.FileName)
+
+                LastFrame = Now
+
+                GameState = AppState.Playing
+
+            End If
 
         End If
 
@@ -2046,7 +2152,310 @@ Public Class Form1
 
     End Function
 
-    Private Sub Form1_MouseMove(sender As Object, e As MouseEventArgs) Handles Me.MouseMove
+    Private Sub SaveTestLevelFile(FilePath As String)
+
+        Dim File_Number As Integer = FreeFile()
+
+        'Dim AppPath As String = Application.StartupPath
+
+        'Dim File_Path As String = AppPath & "TESTFILE.txt"
+
+
+        FileOpen(File_Number, FilePath, OpenMode.Output)
+
+        'Write Blocks to File
+        If Blocks IsNot Nothing Then
+
+            For Each Block In Blocks
+
+                'Write ID
+                Write(File_Number, ObjectID.Block)
+
+                'Write Position
+                Write(File_Number, Block.Rect.X)
+                Write(File_Number, Block.Rect.Y)
+
+                'Write Size
+                Write(File_Number, Block.Rect.Width)
+                Write(File_Number, Block.Rect.Height)
+
+                Write(File_Number, "Block")
+
+                Write(File_Number, Block.Collected)
+
+            Next
+
+        End If
+
+        'Write Bills to File
+        If Cash IsNot Nothing Then
+
+            For Each Bill In Cash
+
+                'Write ID
+                Write(File_Number, ObjectID.Bill)
+
+                'Write Position
+                Write(File_Number, Bill.Rect.X)
+                Write(File_Number, Bill.Rect.Y)
+
+                'Write Size
+                Write(File_Number, Bill.Rect.Width)
+                Write(File_Number, Bill.Rect.Height)
+
+                Write(File_Number, "Bill")
+
+                Write(File_Number, Bill.Collected)
+
+            Next
+
+        End If
+
+        'Write Bushes to File
+        If Bushes IsNot Nothing Then
+
+            For Each Bush In Bushes
+
+                'Write ID
+                Write(File_Number, ObjectID.Bush)
+
+                'Write Position
+                Write(File_Number, Bush.Rect.X)
+                Write(File_Number, Bush.Rect.Y)
+
+                'Write Size
+                Write(File_Number, Bush.Rect.Width)
+                Write(File_Number, Bush.Rect.Height)
+
+                Write(File_Number, "Bush")
+
+                Write(File_Number, Bush.Collected)
+
+            Next
+
+        End If
+
+        'Write Clouds to File
+        If Clouds IsNot Nothing Then
+
+            For Each Cloud In Clouds
+
+                'Write ID
+                Write(File_Number, ObjectID.Cloud)
+
+                'Write Position
+                Write(File_Number, Cloud.Rect.X)
+                Write(File_Number, Cloud.Rect.Y)
+
+                'Write Size
+                Write(File_Number, Cloud.Rect.Width)
+                Write(File_Number, Cloud.Rect.Height)
+
+                Write(File_Number, "Cloud")
+
+                Write(File_Number, Cloud.Collected)
+
+            Next
+
+        End If
+
+        FileClose(File_Number)
+
+    End Sub
+
+    Private Sub OpenTestLevelFile(FilePath As String)
+
+        'Dim File_Path As String = Application.StartupPath & "TESTFILE.txt"
+
+        Dim File_Number As Integer = FreeFile()
+
+        Dim Index As Integer = -1
+
+        Dim BlockIndex As Integer = -1
+
+        Dim BillIndex As Integer = -1
+
+        Dim BushIndex As Integer = -1
+
+        Dim CloudIndex As Integer = -1
+
+
+        'Clear object arrays.
+        FileObjects = Nothing
+        Blocks = Nothing
+        Cash = Nothing
+        Bushes = Nothing
+        Clouds = Nothing
+
+
+        FileOpen(File_Number, FilePath, OpenMode.Input)
+
+        'Read Objects from File
+        Do Until EOF(File_Number)
+
+            Index += 1
+
+            ReDim Preserve FileObjects(Index)
+
+            With FileObjects(Index)
+
+                'Read ID
+                Input(File_Number, .ID)
+
+                'Read Position
+                Input(File_Number, .Rect.X)
+
+                Input(File_Number, .Rect.Y)
+
+                'Read Size
+                Input(File_Number, .Rect.Width)
+
+                Input(File_Number, .Rect.Height)
+
+
+                Input(File_Number, .Text)
+
+                Input(File_Number, .Collected)
+
+            End With
+
+        Loop
+
+        FileClose(File_Number)
+
+
+        'Load Game Objects
+        For Each FileObject In FileObjects
+
+            'Load Blocks
+            If FileObject.ID = ObjectID.Block Then
+
+                BlockIndex += 1 'Add a block to the blocks array.
+
+                ReDim Preserve Blocks(BlockIndex) 'Resize the blocks array.
+
+                Blocks(BlockIndex).ID = FileObject.ID
+
+
+                Blocks(BlockIndex).Rect.X = FileObject.Rect.X
+
+                Blocks(BlockIndex).Rect.Y = FileObject.Rect.Y
+
+
+                Blocks(BlockIndex).Position.X = FileObject.Rect.X
+
+                Blocks(BlockIndex).Position.Y = FileObject.Rect.Y
+
+
+                Blocks(BlockIndex).Rect.Width = FileObject.Rect.Width
+
+                Blocks(BlockIndex).Rect.Height = FileObject.Rect.Height
+
+
+                Blocks(BlockIndex).Text = FileObject.Text
+
+                Blocks(BlockIndex).Text = FileObject.Text
+
+            End If
+
+            'Load Bills
+            If FileObject.ID = ObjectID.Bill Then
+
+                BillIndex += 1 'Add a bill to the cash array.
+
+                ReDim Preserve Cash(BillIndex) 'Resize the cash array.
+
+                Cash(BillIndex).ID = FileObject.ID
+
+
+                Cash(BillIndex).Rect.X = FileObject.Rect.X
+
+                Cash(BillIndex).Rect.Y = FileObject.Rect.Y
+
+
+                Cash(BillIndex).Position.X = FileObject.Rect.X
+
+                Cash(BillIndex).Position.Y = FileObject.Rect.Y
+
+
+                Cash(BillIndex).Rect.Width = FileObject.Rect.Width
+
+                Cash(BillIndex).Rect.Height = FileObject.Rect.Height
+
+
+                Cash(BillIndex).Text = FileObject.Text
+
+                Cash(BillIndex).Text = FileObject.Text
+
+            End If
+
+            'Load Bushes
+            If FileObject.ID = ObjectID.Bush Then
+
+                BushIndex += 1 'Add a bush to the bushes array.
+
+                ReDim Preserve Bushes(BushIndex) 'Resize the bushes array.
+
+                Bushes(BushIndex).ID = FileObject.ID
+
+
+                Bushes(BushIndex).Rect.X = FileObject.Rect.X
+
+                Bushes(BushIndex).Rect.Y = FileObject.Rect.Y
+
+
+                Bushes(BushIndex).Position.X = FileObject.Rect.X
+
+                Bushes(BushIndex).Position.Y = FileObject.Rect.Y
+
+
+                Bushes(BushIndex).Rect.Width = FileObject.Rect.Width
+
+                Bushes(BushIndex).Rect.Height = FileObject.Rect.Height
+
+
+                Bushes(BushIndex).Text = FileObject.Text
+
+                Bushes(BushIndex).Text = FileObject.Text
+
+            End If
+
+            'Load Clouds
+            If FileObject.ID = ObjectID.Cloud Then
+
+                CloudIndex += 1 'Add a cloud to the clouds array.
+
+                ReDim Preserve Clouds(CloudIndex) 'Resize the clouds array.
+
+                Clouds(CloudIndex).ID = FileObject.ID
+
+
+                Clouds(CloudIndex).Rect.X = FileObject.Rect.X
+
+                Clouds(CloudIndex).Rect.Y = FileObject.Rect.Y
+
+
+                Clouds(CloudIndex).Position.X = FileObject.Rect.X
+
+                Clouds(CloudIndex).Position.Y = FileObject.Rect.Y
+
+
+                Clouds(CloudIndex).Rect.Width = FileObject.Rect.Width
+
+                Clouds(CloudIndex).Rect.Height = FileObject.Rect.Height
+
+
+                Clouds(CloudIndex).Text = FileObject.Text
+
+                Clouds(CloudIndex).Text = FileObject.Text
+
+            End If
+
+        Next
+
+    End Sub
+
+    Private Sub Form1_MouseMove(sender As Object, e As MouseEventArgs) Handles MyBase.MouseMove
 
         If GameState = AppState.Editing Then
 
@@ -2186,7 +2595,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub Form1_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
+    Private Sub Form1_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
 
         'Arrow right.
         Select Case e.KeyCode
@@ -2211,7 +2620,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub Form1_KeyUp(sender As Object, e As KeyEventArgs) Handles Me.KeyUp
+    Private Sub Form1_KeyUp(sender As Object, e As KeyEventArgs) Handles MyBase.KeyUp
 
         'Arrow right.
         Select Case e.KeyCode
@@ -2234,7 +2643,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub Form1_KeyPress(sender As Object, e As KeyPressEventArgs) Handles Me.KeyPress
+    Private Sub Form1_KeyPress(sender As Object, e As KeyPressEventArgs) Handles MyBase.KeyPress
 
         Select Case e.KeyChar
             Case "b"

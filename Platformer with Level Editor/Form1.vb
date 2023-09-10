@@ -1829,7 +1829,6 @@ Public Class Form1
 
                     Text = Path.GetFileName(OpenFileDialog1.FileName) & " - Platformer with Level Editor - Code with Joe"
 
-
                     LastFrame = Now
 
                     GameState = AppState.Playing

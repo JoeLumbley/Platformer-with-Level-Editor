@@ -2267,22 +2267,16 @@ Public Class Form1
 
         Dim Index As Integer = -1
 
-        Dim BlockIndex As Integer = -1
-
-        Dim BillIndex As Integer = -1
-
-        Dim BushIndex As Integer = -1
-
-        Dim CloudIndex As Integer = -1
-
-
-        'Clear object arrays.
         FileObjects = Nothing
-        Blocks = Nothing
-        Cash = Nothing
-        Bushes = Nothing
-        Clouds = Nothing
 
+
+        'Dim BlockIndex As Integer = -1
+
+        'Dim BillIndex As Integer = -1
+
+        'Dim BushIndex As Integer = -1
+
+        'Dim CloudIndex As Integer = -1
 
         FileOpen(File_Number, FilePath, OpenMode.Input)
 
@@ -2318,6 +2312,27 @@ Public Class Form1
         Loop
 
         FileClose(File_Number)
+
+        LoadGameObjects()
+
+    End Sub
+
+    Private Sub LoadGameObjects()
+
+        Dim BlockIndex As Integer = -1
+
+        Dim BillIndex As Integer = -1
+
+        Dim BushIndex As Integer = -1
+
+        Dim CloudIndex As Integer = -1
+
+        'Clear object arrays.
+        Blocks = Nothing
+        Cash = Nothing
+        Bushes = Nothing
+        Clouds = Nothing
+
 
 
         'Load Game Objects
@@ -2380,6 +2395,7 @@ Public Class Form1
 
 
                 Cash(BillIndex).Text = FileObject.Text
+
 
                 Cash(BillIndex).Collected = False
 
@@ -2448,7 +2464,6 @@ Public Class Form1
             End If
 
         Next
-
     End Sub
 
     Private Sub Form1_MouseMove(sender As Object, e As MouseEventArgs) Handles MyBase.MouseMove

@@ -68,14 +68,5 @@ Namespace My.Resources
                 Return ResourceManager.GetStream("level", resourceCulture)
             End Get
         End Property
-        
-        '''<summary>
-        '''  Looks up a localized string similar to 1,0,832,2000,64,&quot;Block&quot;,#FALSE#,1,1088,576,64,64,&quot;Block&quot;,#FALSE#,1,1344,576,320,64,&quot;Block&quot;,#FALSE#,1,1472,320,64,64,&quot;Block&quot;,#FALSE#,1,256,320,192,192,&quot;Block&quot;,#FALSE#,1,512,448,64,64,&quot;Block&quot;,#FALSE#,2,1088,320,64,64,&quot;Bill&quot;,#FALSE#,2,1472,64,64,64,&quot;Bill&quot;,#FALSE#,3,768,768,320,64,&quot;Bush&quot;,#FALSE#,3,1600,768,64,64,&quot;Bush&quot;,#FALSE#,4,512,64,192,128,&quot;Cloud&quot;,#FALSE#,4,1728,64,128,64,&quot;Cloud&quot;,#FALSE#,.
-        '''</summary>
-        Friend ReadOnly Property TESTFILE() As String
-            Get
-                Return ResourceManager.GetString("TESTFILE", resourceCulture)
-            End Get
-        End Property
     End Module
 End Namespace

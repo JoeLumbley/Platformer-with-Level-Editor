@@ -403,11 +403,6 @@ Public Class Form1
 
         InitializeBuffer()
 
-
-
-        'OpenTestLevelFile(My.Resources.TESTFILE)
-
-
         My.Computer.Audio.Play(My.Resources.level,
         AudioPlayMode.BackgroundLoop)
 
@@ -441,17 +436,9 @@ Public Class Form1
 
         If GameState = AppState.Editing Then
 
-
             UpdateControllerData()
 
-
-
-
         End If
-
-
-
-
 
     End Sub
 
@@ -2190,7 +2177,7 @@ Public Class Form1
 
                 Write(File_Number, "Block")
 
-                Write(File_Number, Block.Collected)
+                'Write(File_Number, Block.Collected)
 
             Next
 
@@ -2214,7 +2201,7 @@ Public Class Form1
 
                 Write(File_Number, "Bill")
 
-                Write(File_Number, Bill.Collected)
+                'Write(File_Number, Bill.Collected)
 
             Next
 
@@ -2238,7 +2225,7 @@ Public Class Form1
 
                 Write(File_Number, "Bush")
 
-                Write(File_Number, Bush.Collected)
+                'Write(File_Number, Bush.Collected)
 
             Next
 
@@ -2262,7 +2249,7 @@ Public Class Form1
 
                 Write(File_Number, "Cloud")
 
-                Write(File_Number, Cloud.Collected)
+                'Write(File_Number, Cloud.Collected)
 
             Next
 
@@ -2324,7 +2311,7 @@ Public Class Form1
 
                 Input(File_Number, .Text)
 
-                Input(File_Number, .Collected)
+                'Input(File_Number, .Collected)
 
             End With
 
@@ -2363,7 +2350,7 @@ Public Class Form1
 
                 Blocks(BlockIndex).Text = FileObject.Text
 
-                Blocks(BlockIndex).Text = FileObject.Text
+                'Blocks(BlockIndex).Collected = FileObject.Collected
 
             End If
 
@@ -2394,7 +2381,7 @@ Public Class Form1
 
                 Cash(BillIndex).Text = FileObject.Text
 
-                Cash(BillIndex).Text = FileObject.Text
+                Cash(BillIndex).Collected = False
 
             End If
 
@@ -2425,7 +2412,7 @@ Public Class Form1
 
                 Bushes(BushIndex).Text = FileObject.Text
 
-                Bushes(BushIndex).Text = FileObject.Text
+                'Bushes(BushIndex).Collected = FileObject.Collected
 
             End If
 
@@ -2456,7 +2443,7 @@ Public Class Form1
 
                 Clouds(CloudIndex).Text = FileObject.Text
 
-                Clouds(CloudIndex).Text = FileObject.Text
+                'Clouds(CloudIndex).Collected = FileObject.Collected
 
             End If
 

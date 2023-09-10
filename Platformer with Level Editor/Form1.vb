@@ -1813,7 +1813,6 @@ Public Class Form1
 
     Private Sub MouseDownStart(e As MouseEventArgs)
 
-
         'Open Button
         If TitleOpenButton.Rect.Contains(e.Location) Then
 
@@ -1837,14 +1836,7 @@ Public Class Form1
 
                 End If
 
-                'Else
-
-                '    LastFrame = Now
-
-                '    GameState = AppState.Playing
-
             End If
-
 
         End If
 
@@ -1854,31 +1846,6 @@ Public Class Form1
             LastFrame = Now
 
             GameState = AppState.Playing
-
-
-            'OpenFileDialog1.FileName = ""
-            'OpenFileDialog1.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
-            'OpenFileDialog1.FilterIndex = 1
-            'OpenFileDialog1.RestoreDirectory = True
-
-            'If OpenFileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
-
-            '    If My.Computer.FileSystem.FileExists(OpenFileDialog1.FileName) = True Then
-
-            '        OpenTestLevelFile(OpenFileDialog1.FileName)
-
-            '        Text = Path.GetFileName(OpenFileDialog1.FileName) & " - Platformer with Level Editor - Code with Joe"
-
-
-            '        GameState = AppState.Editing
-
-            '    End If
-
-            'Else
-
-            '    GameState = AppState.Editing
-
-            'End If
 
         End If
 

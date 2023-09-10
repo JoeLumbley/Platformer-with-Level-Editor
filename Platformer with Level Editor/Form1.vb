@@ -368,23 +368,23 @@ Public Class Form1
         Blocks(Blocks.Length - 1).Position = New PointF(Blocks(Blocks.Length - 1).Rect.X, Blocks(Blocks.Length - 1).Rect.Y)
 
         ReDim Clouds(0)
-        Clouds(Clouds.Length - 1).Rect = New Rectangle(600, 200, 64, 64)
+        Clouds(Clouds.Length - 1).Rect = New Rectangle(512, 64, 192, 128)
 
         Array.Resize(Clouds, Clouds.Length + 1)
-        Clouds(Clouds.Length - 1).Rect = New Rectangle(1400, 100, 64, 64)
+        Clouds(Clouds.Length - 1).Rect = New Rectangle(1728, 64, 128, 64)
 
         ReDim Bushes(0)
-        Bushes(Bushes.Length - 1).Rect = New Rectangle(750, 768, 300, 64)
+        Bushes(Bushes.Length - 1).Rect = New Rectangle(768, 768, 320, 64)
 
         Array.Resize(Bushes, Bushes.Length + 1)
-        Bushes(Bushes.Length - 1).Rect = New Rectangle(1600, 768, 100, 64)
+        Bushes(Bushes.Length - 1).Rect = New Rectangle(1600, 768, 64, 64)
 
         ReDim Cash(0)
-        Cash(Cash.Length - 1).Rect = New Rectangle(1071, 506, 64, 64)
+        Cash(Cash.Length - 1).Rect = New Rectangle(1088, 320, 64, 64)
         Cash(Cash.Length - 1).Collected = False
 
         Array.Resize(Cash, Cash.Length + 1)
-        Cash(Cash.Length - 1).Rect = New Rectangle(1400, 506, 64, 64)
+        Cash(Cash.Length - 1).Rect = New Rectangle(1472, 64, 64, 64)
         Cash(Cash.Length - 1).Collected = False
 
         OutinePen.LineJoin = Drawing2D.LineJoin.Round
@@ -402,6 +402,11 @@ Public Class Form1
         InitializeForm()
 
         InitializeBuffer()
+
+
+
+        'OpenTestLevelFile(My.Resources.TESTFILE)
+
 
         My.Computer.Audio.Play(My.Resources.level,
         AudioPlayMode.BackgroundLoop)
@@ -1819,12 +1824,16 @@ Public Class Form1
 
                         End If
 
+                    Else
+
+                        LastFrame = Now
+
+                        GameState = AppState.Playing
+
                     End If
 
 
-
                 End If
-
 
                 If TitleEditButton.Rect.Contains(e.Location) Then
 
@@ -1841,15 +1850,15 @@ Public Class Form1
 
                             GameState = AppState.Editing
 
-
                         End If
+
+                    Else
+
+                        GameState = AppState.Editing
 
                     End If
 
-
                 End If
-
-
 
             Case AppState.Playing
 

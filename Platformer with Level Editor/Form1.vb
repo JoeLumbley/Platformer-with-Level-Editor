@@ -2152,11 +2152,6 @@ Public Class Form1
 
         Dim File_Number As Integer = FreeFile()
 
-        'Dim AppPath As String = Application.StartupPath
-
-        'Dim File_Path As String = AppPath & "TESTFILE.txt"
-
-
         FileOpen(File_Number, FilePath, OpenMode.Output)
 
         'Write Blocks to File
@@ -2176,8 +2171,6 @@ Public Class Form1
                 Write(File_Number, Block.Rect.Height)
 
                 Write(File_Number, "Block")
-
-                'Write(File_Number, Block.Collected)
 
             Next
 
@@ -2201,8 +2194,6 @@ Public Class Form1
 
                 Write(File_Number, "Bill")
 
-                'Write(File_Number, Bill.Collected)
-
             Next
 
         End If
@@ -2224,8 +2215,6 @@ Public Class Form1
                 Write(File_Number, Bush.Rect.Height)
 
                 Write(File_Number, "Bush")
-
-                'Write(File_Number, Bush.Collected)
 
             Next
 
@@ -2249,8 +2238,6 @@ Public Class Form1
 
                 Write(File_Number, "Cloud")
 
-                'Write(File_Number, Cloud.Collected)
-
             Next
 
         End If
@@ -2261,22 +2248,11 @@ Public Class Form1
 
     Private Sub OpenTestLevelFile(FilePath As String)
 
-        'Dim File_Path As String = Application.StartupPath & "TESTFILE.txt"
-
         Dim File_Number As Integer = FreeFile()
 
         Dim Index As Integer = -1
 
         FileObjects = Nothing
-
-
-        'Dim BlockIndex As Integer = -1
-
-        'Dim BillIndex As Integer = -1
-
-        'Dim BushIndex As Integer = -1
-
-        'Dim CloudIndex As Integer = -1
 
         FileOpen(File_Number, FilePath, OpenMode.Input)
 
@@ -2302,10 +2278,7 @@ Public Class Form1
 
                 Input(File_Number, .Rect.Height)
 
-
                 Input(File_Number, .Text)
-
-                'Input(File_Number, .Collected)
 
             End With
 
@@ -2332,8 +2305,6 @@ Public Class Form1
         Cash = Nothing
         Bushes = Nothing
         Clouds = Nothing
-
-
 
         'Load Game Objects
         For Each FileObject In FileObjects
@@ -2364,8 +2335,6 @@ Public Class Form1
 
 
                 Blocks(BlockIndex).Text = FileObject.Text
-
-                'Blocks(BlockIndex).Collected = FileObject.Collected
 
             End If
 
@@ -2428,8 +2397,6 @@ Public Class Form1
 
                 Bushes(BushIndex).Text = FileObject.Text
 
-                'Bushes(BushIndex).Collected = FileObject.Collected
-
             End If
 
             'Load Clouds
@@ -2459,11 +2426,10 @@ Public Class Form1
 
                 Clouds(CloudIndex).Text = FileObject.Text
 
-                'Clouds(CloudIndex).Collected = FileObject.Collected
-
             End If
 
         Next
+
     End Sub
 
     Private Sub Form1_MouseMove(sender As Object, e As MouseEventArgs) Handles MyBase.MouseMove

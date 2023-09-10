@@ -1,16 +1,12 @@
 # Platformer with Level Editor
 
+![017](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/bac79e45-7510-4cde-a2ed-4dc3a516740c)
 
 
-![013](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/fc7edb6f-5259-47e8-9f79-93d167db1af0)
+![014](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/a03da69a-3663-4734-beab-48f2d3b2c216)
 
 
-![014](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/d80a7a04-1009-4d42-b257-5684328990f5)
-
-![015](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/e6ba5b44-446c-4076-8306-021f200e1cc6)
+![018](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/43862af0-38da-459a-8296-f880c916313e)
 
 
-![012](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/c53d66cd-23e0-46ca-9bef-9bb0f19e5470)
 
-
-![016](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/b4b14a86-2ce4-46d8-8ee2-e7cc71547b6f)

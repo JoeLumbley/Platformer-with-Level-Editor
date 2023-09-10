@@ -35,6 +35,7 @@
 '
 
 Imports System.ComponentModel
+Imports System.IO
 Imports System.Numerics
 Imports System.Runtime.InteropServices
 Imports System.Threading
@@ -1805,6 +1806,9 @@ Public Class Form1
 
                             OpenTestLevelFile(OpenFileDialog1.FileName)
 
+                            Text = Path.GetFileName(OpenFileDialog1.FileName) & " - Platformer with Level Editor - Code with Joe"
+
+
                             LastFrame = Now
 
                             GameState = AppState.Playing
@@ -1834,6 +1838,9 @@ Public Class Form1
                         If My.Computer.FileSystem.FileExists(OpenFileDialog1.FileName) = True Then
 
                             OpenTestLevelFile(OpenFileDialog1.FileName)
+
+                            Text = Path.GetFileName(OpenFileDialog1.FileName) & " - Platformer with Level Editor - Code with Joe"
+
 
                             GameState = AppState.Editing
 
@@ -1935,6 +1942,8 @@ Public Class Form1
             If SaveFileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
 
                 SaveTestLevelFile(SaveFileDialog1.FileName)
+
+                Text = Path.GetFileName(SaveFileDialog1.FileName) & " - Platformer with Level Editor - Code with Joe"
 
             End If
 

@@ -1936,10 +1936,6 @@ Public Class Form1
 
                 SaveTestLevelFile(SaveFileDialog1.FileName)
 
-                LastFrame = Now
-
-                GameState = AppState.Playing
-
             End If
 
         End If

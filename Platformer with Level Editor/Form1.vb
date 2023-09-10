@@ -222,9 +222,9 @@ Public Class Form1
 
     Private Title As GameObject
 
-    Private TitlePlayButton As GameObject
+    Private TitleOpenButton As GameObject
 
-    Private TitleEditButton As GameObject
+    Private TitleNewButton As GameObject
 
     Private ScoreIndicators As GameObject
 
@@ -1232,9 +1232,9 @@ Public Class Form1
 
         DrawTitle()
 
-        DrawTitleEditButton()
+        DrawTitleNewButton()
 
-        DrawTitlePlayButton()
+        DrawTitleOpenButton()
 
     End Sub
 
@@ -1623,34 +1623,34 @@ Public Class Form1
 
     End Sub
 
-    Private Sub DrawTitlePlayButton()
+    Private Sub DrawTitleOpenButton()
 
         With Buffer.Graphics
 
             .FillRectangle(Brushes.Black,
-                           TitlePlayButton.Rect)
+                           TitleOpenButton.Rect)
 
-            .DrawString("Play",
+            .DrawString("Open",
                         FPSFont,
                         Brushes.White,
-                        TitlePlayButton.Rect,
+                        TitleOpenButton.Rect,
                         AlineCenterMiddle)
 
         End With
 
     End Sub
 
-    Private Sub DrawTitleEditButton()
+    Private Sub DrawTitleNewButton()
 
         With Buffer.Graphics
 
             .FillRectangle(Brushes.Black,
-                           TitleEditButton.Rect)
+                           TitleNewButton.Rect)
 
-            .DrawString("Edit",
+            .DrawString("New",
                         FPSFont,
                         Brushes.White,
-                        TitleEditButton.Rect,
+                        TitleNewButton.Rect,
                         AlineCenterMiddle)
 
         End With
@@ -1767,9 +1767,9 @@ Public Class Form1
 
         Title.Rect = New Rectangle(ClientRectangle.Left, ClientRectangle.Top, ClientRectangle.Width, ClientRectangle.Height)
 
-        TitleEditButton.Rect = New Rectangle(ClientRectangle.Width \ 2 - 200, ClientRectangle.Height \ 2 + 100, 150, 90)
+        TitleNewButton.Rect = New Rectangle(ClientRectangle.Width \ 2 - 200, ClientRectangle.Height \ 2 + 100, 150, 90)
 
-        TitlePlayButton.Rect = New Rectangle(ClientRectangle.Width \ 2 + 100, ClientRectangle.Height \ 2 + 100, 150, 90)
+        TitleOpenButton.Rect = New Rectangle(ClientRectangle.Width \ 2 + 100, ClientRectangle.Height \ 2 + 100, 150, 90)
 
         BufferGridLines()
 
@@ -1813,7 +1813,9 @@ Public Class Form1
 
     Private Sub MouseDownStart(e As MouseEventArgs)
 
-        If TitlePlayButton.Rect.Contains(e.Location) Then
+
+        'Open Button
+        If TitleOpenButton.Rect.Contains(e.Location) Then
 
             OpenFileDialog1.FileName = ""
             OpenFileDialog1.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
@@ -1835,42 +1837,48 @@ Public Class Form1
 
                 End If
 
-            Else
+                'Else
 
-                LastFrame = Now
+                '    LastFrame = Now
 
-                GameState = AppState.Playing
+                '    GameState = AppState.Playing
 
             End If
 
 
         End If
 
-        If TitleEditButton.Rect.Contains(e.Location) Then
+        'New Button
+        If TitleNewButton.Rect.Contains(e.Location) Then
 
-            OpenFileDialog1.FileName = ""
-            OpenFileDialog1.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
-            OpenFileDialog1.FilterIndex = 1
-            OpenFileDialog1.RestoreDirectory = True
+            LastFrame = Now
 
-            If OpenFileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
-
-                If My.Computer.FileSystem.FileExists(OpenFileDialog1.FileName) = True Then
-
-                    OpenTestLevelFile(OpenFileDialog1.FileName)
-
-                    Text = Path.GetFileName(OpenFileDialog1.FileName) & " - Platformer with Level Editor - Code with Joe"
+            GameState = AppState.Playing
 
 
-                    GameState = AppState.Editing
+            'OpenFileDialog1.FileName = ""
+            'OpenFileDialog1.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
+            'OpenFileDialog1.FilterIndex = 1
+            'OpenFileDialog1.RestoreDirectory = True
 
-                End If
+            'If OpenFileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
 
-            Else
+            '    If My.Computer.FileSystem.FileExists(OpenFileDialog1.FileName) = True Then
 
-                GameState = AppState.Editing
+            '        OpenTestLevelFile(OpenFileDialog1.FileName)
 
-            End If
+            '        Text = Path.GetFileName(OpenFileDialog1.FileName) & " - Platformer with Level Editor - Code with Joe"
+
+
+            '        GameState = AppState.Editing
+
+            '    End If
+
+            'Else
+
+            '    GameState = AppState.Editing
+
+            'End If
 
         End If
 

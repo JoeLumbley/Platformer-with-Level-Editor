@@ -392,7 +392,6 @@ Public Class Form1
 
         EditPlayButton.Rect = New Rectangle(ClientRectangle.Left + 210, ClientRectangle.Bottom - 90, 120, 100)
 
-
         SaveButton.Rect = New Rectangle(ClientRectangle.Right - 210,
                                         ClientRectangle.Bottom - 90,
                                         120,
@@ -425,21 +424,37 @@ Public Class Form1
 
     Private Sub UpdateFrame()
 
-        If GameState = AppState.Playing Then
+        Select Case GameState
 
-            UpdateControllerData()
+            Case AppState.Playing
 
-            UpdateDeltaTime()
+                UpdateControllerData()
 
-            UpdateOurHero()
+                UpdateDeltaTime()
 
-        End If
+                UpdateOurHero()
 
-        If GameState = AppState.Editing Then
+            Case AppState.Editing
 
-            UpdateControllerData()
+                UpdateControllerData()
 
-        End If
+        End Select
+
+        'If GameState = AppState.Playing Then
+
+        '    UpdateControllerData()
+
+        '    UpdateDeltaTime()
+
+        '    UpdateOurHero()
+
+        'End If
+
+        'If GameState = AppState.Editing Then
+
+        '    UpdateControllerData()
+
+        'End If
 
     End Sub
 

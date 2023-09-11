@@ -2563,22 +2563,27 @@ Public Class Form1
 
     Private Sub Form1_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
 
-        'Arrow right.
         Select Case e.KeyCode
 
+            'Has the player pressed the right arrow key down?
             Case Keys.Right
+                'Yes, the player has pressed the right arrow key down.
 
                 RightArrowDown = True
 
                 LeftArrowDown = False
 
+            'Has the player pressed the left arrow key down?
             Case Keys.Left
+                'Yes, the player has pressed the left arrow key down.
 
                 LeftArrowDown = True
 
                 RightArrowDown = False
 
+            'Has the player pressed the B key down?
             Case Keys.B
+                'Yes, the player has pressed the B key down.
 
                 BDown = True
 
@@ -2588,7 +2593,6 @@ Public Class Form1
 
     Private Sub Form1_KeyUp(sender As Object, e As KeyEventArgs) Handles MyBase.KeyUp
 
-        'Arrow right.
         Select Case e.KeyCode
 
             Case Keys.Right
@@ -2604,15 +2608,6 @@ Public Class Form1
                 If Jumped = True Then Jumped = False
 
                 BDown = False
-
-        End Select
-
-    End Sub
-
-    Private Sub Form1_KeyPress(sender As Object, e As KeyPressEventArgs) Handles MyBase.KeyPress
-
-        Select Case e.KeyChar
-            Case "b"
 
         End Select
 

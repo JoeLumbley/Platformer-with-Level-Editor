@@ -77,6 +77,49 @@ Public Class Form1
         Public wRightMotorSpeed As UShort
     End Structure
 
+    Private Enum AppState As Integer
+        Start
+        Playing
+        Editing
+    End Enum
+
+
+    Private Enum ObjectID As Integer
+        Level
+        Block
+        Bill
+        Bush
+        Cloud
+    End Enum
+
+    Private Enum Tools As Integer
+        Pointer
+        Block
+        Bill
+    End Enum
+
+    Private Structure GameObject
+
+        Public ID As ObjectID
+
+        Public Position As Vector2
+
+        Public Acceleration As Vector2
+
+        Public Velocity As Vector2
+
+        Public MaxVelocity As Vector2
+
+        Public Rect As Rectangle
+
+        Public Text As String
+
+        Public Collected As Boolean
+
+    End Structure
+
+    Private GameState As AppState = AppState.Start
+
     'The start of the thumbstick neutral zone.
     Private Const NeutralStart As Short = -16256 'Signed 16-bit (2-byte) integer range -32,768 through 32,767.
 
@@ -136,42 +179,6 @@ Public Class Form1
     '500 slippery 1000 grippy
     Private Friction As Single = 1500
 
-    Private Enum AppState As Integer
-        Start
-        Playing
-        Editing
-    End Enum
-
-    Private GameState As AppState = AppState.Start
-
-    Private Enum ObjectID As Integer
-        Level
-        Block
-        Bill
-        Bush
-        Cloud
-    End Enum
-
-    Private Structure GameObject
-
-        Public ID As ObjectID
-
-        Public Position As Vector2
-
-        Public Acceleration As Vector2
-
-        Public Velocity As Vector2
-
-        Public MaxVelocity As Vector2
-
-        Public Rect As Rectangle
-
-        Public Text As String
-
-        Public Collected As Boolean
-
-    End Structure
-
     Private OurHero As GameObject
 
     Private Platforms() As GameObject
@@ -186,11 +193,9 @@ Public Class Form1
 
     Private FileObjects() As GameObject
 
-
     Private EditPlayButton As GameObject
 
     Private SaveButton As GameObject
-
 
     Private ToolBarBackground As GameObject
 
@@ -199,12 +204,6 @@ Public Class Form1
     Private BlockToolButton As GameObject
 
     Private BlockToolIcon As GameObject
-
-    Private Enum Tools As Integer
-        Pointer
-        Block
-        Bill
-    End Enum
 
     Private SelectedTool As Tools = Tools.Pointer
 
@@ -222,9 +221,9 @@ Public Class Form1
 
     Private Title As GameObject
 
-    Private TitleOpenButton As GameObject
+    Private StartScreenOpenButton As GameObject
 
-    Private TitleNewButton As GameObject
+    Private StartScreenNewButton As GameObject
 
     Private ScoreIndicators As GameObject
 
@@ -440,22 +439,6 @@ Public Class Form1
 
         End Select
 
-        'If GameState = AppState.Playing Then
-
-        '    UpdateControllerData()
-
-        '    UpdateDeltaTime()
-
-        '    UpdateOurHero()
-
-        'End If
-
-        'If GameState = AppState.Editing Then
-
-        '    UpdateControllerData()
-
-        'End If
-
     End Sub
 
     Private Sub UpdateControllerData()
@@ -506,297 +489,6 @@ Public Class Form1
             End Try
 
         Next
-
-    End Sub
-
-    Private Sub UpdateButtonPosition()
-        'The range of buttons is 0 to 65,535. Unsigned 16-bit (2-byte) integer.
-
-        'What buttons are down?
-        Select Case ControllerPosition.Gamepad.wButtons
-            Case 0 'All the buttons are up.
-
-                If ControllerJumped = True Then ControllerJumped = False
-
-                ControllerA = False
-
-                ControllerB = False
-
-                ControllerRight = False
-
-                ControllerLeft = False
-
-            Case 1 'Up
-                ControllerLeft = False
-
-                ControllerRight = False
-
-                If ControllerJumped = True Then ControllerJumped = False
-
-                ControllerA = False
-
-                ControllerB = False
-            Case 2 'Down
-                ControllerLeft = False
-
-                ControllerRight = False
-
-                If ControllerJumped = True Then ControllerJumped = False
-
-                ControllerA = False
-
-                ControllerB = False
-            Case 4 'Left
-
-                ControllerLeft = True
-
-                ControllerRight = False
-
-                If ControllerJumped = True Then ControllerJumped = False
-
-                ControllerA = False
-
-                ControllerB = False
-
-            Case 5 'Up+Left
-                ControllerLeft = True
-
-                ControllerRight = False
-
-                If ControllerJumped = True Then ControllerJumped = False
-
-                ControllerA = False
-
-                ControllerB = False
-            Case 6 'Down+Left
-                ControllerLeft = True
-
-                ControllerRight = False
-
-                If ControllerJumped = True Then ControllerJumped = False
-
-                ControllerA = False
-
-                ControllerB = False
-            Case 8 'Right
-
-                ControllerRight = True
-
-                ControllerLeft = False
-
-                If ControllerJumped = True Then ControllerJumped = False
-
-                ControllerA = False
-
-                ControllerB = False
-
-            Case 9 'Up+Right
-                ControllerLeft = False
-
-                ControllerRight = True
-
-                If ControllerJumped = True Then ControllerJumped = False
-
-                ControllerA = False
-
-                ControllerB = False
-            Case 10 'Down+Right
-
-                ControllerLeft = False
-
-                ControllerRight = True
-
-                If ControllerJumped = True Then ControllerJumped = False
-
-                ControllerA = False
-
-                ControllerB = False
-
-            Case 16 'Start
-            Case 32 'Back
-            Case 64 'Left Stick
-            Case 128 'Right Stick
-            Case 256 'Left bumper
-            Case 512 'Right bumper
-            Case 4096 'A
-
-                ControllerA = True
-
-                ControllerLeft = False
-
-                ControllerRight = False
-
-                'If ControllerJumped = True Then ControllerJumped = False
-
-                ControllerB = False
-
-            Case 8192 'B
-
-                ControllerB = True
-
-                If ControllerJumped = True Then ControllerJumped = False
-
-                ControllerA = False
-
-                ControllerLeft = False
-
-                ControllerRight = False
-
-            Case 16384 'X
-            Case 32768 'Y
-            Case 48 'Start+Back
-            Case 192 'Left+Right Sticks
-            Case 768 'Left+Right Bumpers
-            Case 12288 'A+B
-            Case 20480 'A+X
-            Case 36864 'A+Y
-            Case 24576 'B+X
-            Case 40960 'B+Y
-            Case 49152 'X+Y
-            Case 28672 'A+B+X
-            Case 45056 'A+B+Y
-            Case 53248 'A+X+Y
-            Case 57344 'B+X+Y
-            Case 61440 'A+B+X+Y
-            Case 4097 'Up+A
-                ControllerA = True
-
-                ControllerLeft = True
-
-                ControllerRight = False
-
-                ControllerB = False
-            Case 4098 'Down+A
-                ControllerA = True
-
-                ControllerLeft = True
-
-                ControllerRight = False
-
-                ControllerB = False
-            Case 4100 'Left+A
-
-                ControllerA = True
-
-                ControllerLeft = True
-
-                ControllerRight = False
-
-                ControllerB = False
-
-            Case 4104 'Right+A
-
-                ControllerA = True
-
-                ControllerRight = True
-
-                ControllerLeft = False
-
-                ControllerB = False
-
-            Case 4105 'Up+Right+A
-                ControllerA = True
-
-                ControllerRight = True
-
-                ControllerLeft = False
-
-                ControllerB = False
-            Case 4101 'Up+Left+A
-                ControllerA = True
-
-                ControllerLeft = True
-
-                ControllerRight = False
-
-                ControllerB = False
-            Case 4106 'Down+Right+A
-                ControllerA = True
-
-                ControllerRight = True
-
-                ControllerLeft = False
-
-                ControllerB = False
-            Case 4102 'Down+Left+A
-                ControllerA = True
-
-                ControllerLeft = True
-
-                ControllerRight = False
-
-                ControllerB = False
-
-            Case 8196 'Left+B
-
-                ControllerLeft = True
-
-                ControllerRight = False
-
-                ControllerA = False
-
-                ControllerB = True
-
-            Case 8200 'Right+B
-
-                ControllerRight = True
-
-                ControllerLeft = False
-
-                ControllerA = False
-
-                ControllerB = True
-
-            Case 8198 'Left+Down+B
-
-                ControllerRight = False
-
-                ControllerLeft = True
-
-                ControllerB = True
-            Case 8202 'Right+Down+B
-                ControllerRight = True
-
-                ControllerLeft = False
-
-                ControllerA = False
-
-                ControllerB = True
-
-            Case 8201 'Right+Up+B
-                ControllerRight = True
-
-                ControllerLeft = False
-
-                ControllerB = True
-
-            Case 8197 'Left+Up+B
-                ControllerRight = False
-
-                ControllerLeft = True
-
-                ControllerA = False
-
-                ControllerB = True
-            Case 8194 'Down+B
-                ControllerRight = False
-
-                ControllerLeft = False
-
-                ControllerA = False
-
-                ControllerB = True
-            Case 8193 'Up+B
-                ControllerRight = False
-
-                ControllerLeft = False
-
-                ControllerA = False
-
-                ControllerB = True
-            Case Else 'Any buttons not handled yet.
-                Debug.Print(ControllerPosition.Gamepad.wButtons.ToString)
-        End Select
 
     End Sub
 
@@ -887,23 +579,6 @@ Public Class Form1
 
     End Sub
 
-    Private Sub Wraparound()
-
-        'When our hero exits the bottom side of the client area.
-        If OurHero.Position.Y > ClientRectangle.Bottom Then
-
-            OurHero.Velocity.Y = 0F
-            OurHero.Velocity.X = 0F
-
-            OurHero.Position.X = 1500.0F
-
-            'Our hero reappears on the top side the client area.
-            OurHero.Position.Y = ClientRectangle.Top - OurHero.Rect.Height
-
-        End If
-
-    End Sub
-
     Private Sub UpdateHeroMovement()
 
         'Move our hero horizontally.
@@ -919,69 +594,6 @@ Public Class Form1
         OurHero.Rect.Y = Math.Round(OurHero.Position.Y)
 
     End Sub
-
-    Private Function IsOnPlatform() As Integer
-
-        If Platforms IsNot Nothing Then
-
-            For Each Plateform In Platforms
-
-                If OurHero.Rect.IntersectsWith(Plateform.Rect) = True Then
-
-                    'return index of Plateform
-                    Return Array.IndexOf(Platforms, Plateform)
-
-                End If
-
-            Next
-
-        End If
-
-        Return -1
-
-    End Function
-
-    Private Function IsOnBlock() As Integer
-
-        If Blocks IsNot Nothing Then
-
-            For Each Block In Blocks
-
-                If OurHero.Rect.IntersectsWith(Block.Rect) = True Then
-
-                    'return index of Plateform
-                    Return Array.IndexOf(Blocks, Block)
-
-                End If
-
-            Next
-
-        End If
-
-        Return -1
-
-    End Function
-
-    Private Function IsOnBill() As Integer
-
-        If Cash IsNot Nothing Then
-
-            For Each Bill In Cash
-
-                If OurHero.Rect.IntersectsWith(Bill.Rect) = True Then
-
-                    'return index of Plateform
-                    Return Array.IndexOf(Cash, Bill)
-
-                End If
-
-            Next
-
-        End If
-
-        Return -1
-
-    End Function
 
     Private Sub UpdateBlocks()
 
@@ -1247,9 +859,9 @@ Public Class Form1
 
         DrawTitle()
 
-        DrawTitleNewButton()
+        DrawStartScreenNewButton()
 
-        DrawTitleOpenButton()
+        DrawStartScreenOpenButton()
 
     End Sub
 
@@ -1310,6 +922,210 @@ Public Class Form1
         DrawPointerToolButton()
 
         DrawBlockToolButton()
+
+    End Sub
+
+    Private Sub DrawOurHero()
+
+        With Buffer.Graphics
+
+            .FillRectangle(Brushes.Red, OurHero.Rect)
+
+            .DrawString("Hero", CWJFont, Brushes.White, OurHero.Rect, AlineCenterMiddle)
+
+            'Draw hero position
+            .DrawString("X: " & OurHero.Position.X.ToString & vbCrLf & "Y: " & OurHero.Position.Y.ToString,
+                        CWJFont, Brushes.White,
+                        OurHero.Rect.X,
+                        OurHero.Rect.Y - 50,
+                        New StringFormat With {.Alignment = StringAlignment.Near})
+
+        End With
+
+    End Sub
+
+    Private Sub DrawBlocks()
+
+        With Buffer.Graphics
+
+            If Blocks IsNot Nothing Then
+
+                For Each Block In Blocks
+
+                    .FillRectangle(Brushes.Chocolate, Block.Rect)
+
+                    If SelectedBlock = Array.IndexOf(Blocks, Block) Then
+
+                        'Draw selection rectangle.
+                        .DrawRectangle(New Pen(Color.Red, 6), Block.Rect)
+
+                        'Position sizing handle.
+                        SizingHandle.X = Block.Rect.Right - SizingHandle.Width \ 2
+                        SizingHandle.Y = Block.Rect.Bottom - SizingHandle.Height \ 2
+
+                        'Draw sizing handle.
+                        .FillRectangle(Brushes.Black,
+                                       SizingHandle)
+
+                    End If
+
+                Next
+
+            End If
+
+        End With
+
+    End Sub
+
+    Private Sub DrawBushes()
+
+        With Buffer.Graphics
+
+            If Bushes IsNot Nothing Then
+
+                For Each Bush In Bushes
+
+                    .FillRectangle(Brushes.GreenYellow, Bush.Rect)
+
+                    .DrawLine(SeaGreenPen, Bush.Rect.Right - 10, Bush.Rect.Top + 10, Bush.Rect.Right - 10, Bush.Rect.Bottom - 10)
+
+                    .DrawLine(SeaGreenPen, Bush.Rect.Left + 10, Bush.Rect.Bottom - 10, Bush.Rect.Right - 10, Bush.Rect.Bottom - 10)
+
+                    .DrawRectangle(OutinePen, Bush.Rect)
+
+                    If SelectedBush = Array.IndexOf(Bushes, Bush) Then
+
+                        'Draw selection rectangle.
+                        .DrawRectangle(New Pen(Color.Red, 6), Bush.Rect)
+
+                        'Position sizing handle.
+                        SizingHandle.X = Bush.Rect.Right - SizingHandle.Width \ 2
+                        SizingHandle.Y = Bush.Rect.Bottom - SizingHandle.Height \ 2
+
+                        'Draw sizing handle.
+                        .FillRectangle(Brushes.Black,
+                                       SizingHandle)
+
+                    End If
+
+                Next
+
+            End If
+
+        End With
+
+    End Sub
+
+    Private Sub DrawClouds()
+
+        With Buffer.Graphics
+
+            If Clouds IsNot Nothing Then
+
+                For Each Cloud In Clouds
+
+                    .FillRectangle(Brushes.White, Cloud.Rect)
+
+                    .DrawLine(LightSkyBluePen, Cloud.Rect.Right - 10, Cloud.Rect.Top + 10, Cloud.Rect.Right - 10, Cloud.Rect.Bottom - 10)
+
+                    .DrawLine(LightSkyBluePen, Cloud.Rect.Left + 10, Cloud.Rect.Bottom - 10, Cloud.Rect.Right - 10, Cloud.Rect.Bottom - 10)
+
+                    .DrawRectangle(OutinePen, Cloud.Rect)
+
+                    If SelectedCloud = Array.IndexOf(Clouds, Cloud) Then
+
+                        'Draw selection rectangle.
+                        .DrawRectangle(New Pen(Color.Red, 6), Cloud.Rect)
+
+                        'Position sizing handle.
+                        SizingHandle.X = Cloud.Rect.Right - SizingHandle.Width \ 2
+                        SizingHandle.Y = Cloud.Rect.Bottom - SizingHandle.Height \ 2
+
+                        'Draw sizing handle.
+                        .FillRectangle(Brushes.Black,
+                                       SizingHandle)
+
+                    End If
+
+                Next
+
+            End If
+
+        End With
+
+    End Sub
+
+    Private Sub DrawCash()
+
+        With Buffer.Graphics
+
+            If Cash IsNot Nothing Then
+
+                For Each Bill In Cash
+
+                    Select Case GameState
+
+                        Case AppState.Playing
+
+                            If Bill.Collected = False Then
+
+                                .FillRectangle(Brushes.Goldenrod, Bill.Rect)
+
+                                .DrawString("$", FPSFont, Brushes.OrangeRed, Bill.Rect, AlineCenterMiddle)
+
+                            End If
+
+                        Case AppState.Editing
+
+                            .FillRectangle(Brushes.Goldenrod, Bill.Rect)
+
+                            .DrawString("$", FPSFont, Brushes.OrangeRed, Bill.Rect, AlineCenterMiddle)
+
+                            If SelectedBill = Array.IndexOf(Cash, Bill) Then
+
+                                'Draw selection rectangle.
+                                .DrawRectangle(New Pen(Color.Red, 6), Bill.Rect)
+
+                            End If
+
+                    End Select
+
+                Next
+
+            End If
+
+        End With
+
+    End Sub
+
+    Private Sub DrawCollectedCash()
+
+        With Buffer.Graphics
+
+            'Draw drop shadow.
+            .DrawString("$" & CashCollected.ToString,
+                    FPSFont,
+                    New SolidBrush(Color.FromArgb(255, Color.Black)),
+                    CashCollectedPostion.X + 2,
+                    CashCollectedPostion.Y + 2)
+
+            .DrawString("$" & CashCollected.ToString, FPSFont, Brushes.White, CashCollectedPostion)
+
+        End With
+
+    End Sub
+
+    Private Sub DrawToolPreview()
+
+        With Buffer.Graphics
+
+            If ShowToolPreview = True Then
+
+                .FillRectangle(Brushes.Chocolate, ToolPreview)
+
+            End If
+
+        End With
 
     End Sub
 
@@ -1413,131 +1229,6 @@ Public Class Form1
 
     End Sub
 
-    Private Sub DrawCollectedCash()
-
-        With Buffer.Graphics
-
-            'Draw drop shadow.
-            .DrawString("$" & CashCollected.ToString,
-                    FPSFont,
-                    New SolidBrush(Color.FromArgb(255, Color.Black)),
-                    CashCollectedPostion.X + 2, CashCollectedPostion.Y + 2)
-
-            .DrawString("$" & CashCollected.ToString, FPSFont, Brushes.White, CashCollectedPostion)
-
-        End With
-
-    End Sub
-
-    Private Sub DrawOurHero()
-
-        With Buffer.Graphics
-
-            .FillRectangle(Brushes.Red, OurHero.Rect)
-
-            .DrawString("Hero", CWJFont, Brushes.White, OurHero.Rect, AlineCenterMiddle)
-
-            'Draw hero position
-            .DrawString("X: " & OurHero.Position.X.ToString & vbCrLf & "Y: " & OurHero.Position.Y.ToString,
-                        CWJFont, Brushes.White,
-                        OurHero.Rect.X,
-                        OurHero.Rect.Y - 50,
-                        New StringFormat With {.Alignment = StringAlignment.Near})
-
-        End With
-
-    End Sub
-
-    Private Sub DrawCash()
-
-        With Buffer.Graphics
-
-            If Cash IsNot Nothing Then
-
-                For Each Bill In Cash
-
-                    Select Case GameState
-
-                        Case AppState.Playing
-
-                            If Bill.Collected = False Then
-
-                                .FillRectangle(Brushes.Goldenrod, Bill.Rect)
-
-                                .DrawString("$", FPSFont, Brushes.OrangeRed, Bill.Rect, AlineCenterMiddle)
-
-                            End If
-
-                        Case AppState.Editing
-
-                            .FillRectangle(Brushes.Goldenrod, Bill.Rect)
-
-                            .DrawString("$", FPSFont, Brushes.OrangeRed, Bill.Rect, AlineCenterMiddle)
-
-                            If SelectedBill = Array.IndexOf(Cash, Bill) Then
-
-                                'Draw selection rectangle.
-                                .DrawRectangle(New Pen(Color.Red, 6), Bill.Rect)
-
-                            End If
-
-                    End Select
-
-                Next
-
-            End If
-
-        End With
-
-    End Sub
-
-    Private Sub DrawBlocks()
-
-        With Buffer.Graphics
-
-            If Blocks IsNot Nothing Then
-
-                For Each Block In Blocks
-
-                    .FillRectangle(Brushes.Chocolate, Block.Rect)
-
-                    If SelectedBlock = Array.IndexOf(Blocks, Block) Then
-
-                        'Draw selection rectangle.
-                        .DrawRectangle(New Pen(Color.Red, 6), Block.Rect)
-
-                        'Position sizing handle.
-                        SizingHandle.X = Block.Rect.Right - SizingHandle.Width \ 2
-                        SizingHandle.Y = Block.Rect.Bottom - SizingHandle.Height \ 2
-
-                        'Draw sizing handle.
-                        .FillRectangle(Brushes.Black,
-                                       SizingHandle)
-
-                    End If
-
-                Next
-
-            End If
-
-        End With
-
-    End Sub
-
-    Private Sub DrawToolPreview()
-
-        With Buffer.Graphics
-
-            If ShowToolPreview = True Then
-
-                .FillRectangle(Brushes.Chocolate, ToolPreview)
-
-            End If
-
-        End With
-
-    End Sub
-
     Private Sub AddBlock(Location As Point)
 
         If Blocks IsNot Nothing Then
@@ -1560,112 +1251,34 @@ Public Class Form1
 
     End Sub
 
-    Private Sub DrawBushes()
-
-        With Buffer.Graphics
-
-            If Bushes IsNot Nothing Then
-
-                For Each Bush In Bushes
-
-                    .FillRectangle(Brushes.GreenYellow, Bush.Rect)
-
-                    .DrawLine(SeaGreenPen, Bush.Rect.Right - 10, Bush.Rect.Top + 10, Bush.Rect.Right - 10, Bush.Rect.Bottom - 10)
-
-                    .DrawLine(SeaGreenPen, Bush.Rect.Left + 10, Bush.Rect.Bottom - 10, Bush.Rect.Right - 10, Bush.Rect.Bottom - 10)
-
-                    .DrawRectangle(OutinePen, Bush.Rect)
-
-                    If SelectedBush = Array.IndexOf(Bushes, Bush) Then
-
-                        'Draw selection rectangle.
-                        .DrawRectangle(New Pen(Color.Red, 6), Bush.Rect)
-
-                        'Position sizing handle.
-                        SizingHandle.X = Bush.Rect.Right - SizingHandle.Width \ 2
-                        SizingHandle.Y = Bush.Rect.Bottom - SizingHandle.Height \ 2
-
-                        'Draw sizing handle.
-                        .FillRectangle(Brushes.Black,
-                                       SizingHandle)
-
-                    End If
-
-                Next
-
-            End If
-
-        End With
-
-    End Sub
-
-    Private Sub DrawClouds()
-
-        With Buffer.Graphics
-
-            If Clouds IsNot Nothing Then
-
-                For Each Cloud In Clouds
-
-                    .FillRectangle(Brushes.White, Cloud.Rect)
-
-                    .DrawLine(LightSkyBluePen, Cloud.Rect.Right - 10, Cloud.Rect.Top + 10, Cloud.Rect.Right - 10, Cloud.Rect.Bottom - 10)
-
-                    .DrawLine(LightSkyBluePen, Cloud.Rect.Left + 10, Cloud.Rect.Bottom - 10, Cloud.Rect.Right - 10, Cloud.Rect.Bottom - 10)
-
-                    .DrawRectangle(OutinePen, Cloud.Rect)
-
-                    If SelectedCloud = Array.IndexOf(Clouds, Cloud) Then
-
-                        'Draw selection rectangle.
-                        .DrawRectangle(New Pen(Color.Red, 6), Cloud.Rect)
-
-                        'Position sizing handle.
-                        SizingHandle.X = Cloud.Rect.Right - SizingHandle.Width \ 2
-                        SizingHandle.Y = Cloud.Rect.Bottom - SizingHandle.Height \ 2
-
-                        'Draw sizing handle.
-                        .FillRectangle(Brushes.Black,
-                                       SizingHandle)
-
-                    End If
-
-                Next
-
-            End If
-
-        End With
-
-    End Sub
-
-    Private Sub DrawTitleOpenButton()
+    Private Sub DrawStartScreenOpenButton()
 
         With Buffer.Graphics
 
             .FillRectangle(Brushes.Black,
-                           TitleOpenButton.Rect)
+                           StartScreenOpenButton.Rect)
 
             .DrawString("Open",
                         FPSFont,
                         Brushes.White,
-                        TitleOpenButton.Rect,
+                        StartScreenOpenButton.Rect,
                         AlineCenterMiddle)
 
         End With
 
     End Sub
 
-    Private Sub DrawTitleNewButton()
+    Private Sub DrawStartScreenNewButton()
 
         With Buffer.Graphics
 
             .FillRectangle(Brushes.Black,
-                           TitleNewButton.Rect)
+                           StartScreenNewButton.Rect)
 
             .DrawString("New",
                         FPSFont,
                         Brushes.White,
-                        TitleNewButton.Rect,
+                        StartScreenNewButton.Rect,
                         AlineCenterMiddle)
 
         End With
@@ -1782,9 +1395,9 @@ Public Class Form1
 
         Title.Rect = New Rectangle(ClientRectangle.Left, ClientRectangle.Top, ClientRectangle.Width, ClientRectangle.Height)
 
-        TitleNewButton.Rect = New Rectangle(ClientRectangle.Width \ 2 - 200, ClientRectangle.Height \ 2 + 100, 150, 90)
+        StartScreenNewButton.Rect = New Rectangle(ClientRectangle.Width \ 2 - 200, ClientRectangle.Height \ 2 + 100, 150, 90)
 
-        TitleOpenButton.Rect = New Rectangle(ClientRectangle.Width \ 2 + 100, ClientRectangle.Height \ 2 + 100, 150, 90)
+        StartScreenOpenButton.Rect = New Rectangle(ClientRectangle.Width \ 2 + 100, ClientRectangle.Height \ 2 + 100, 150, 90)
 
         BufferGridLines()
 
@@ -1829,7 +1442,7 @@ Public Class Form1
     Private Sub MouseDownStart(e As MouseEventArgs)
 
         'Open Button
-        If TitleOpenButton.Rect.Contains(e.Location) Then
+        If StartScreenOpenButton.Rect.Contains(e.Location) Then
 
             OpenFileDialog1.FileName = ""
             OpenFileDialog1.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
@@ -1855,7 +1468,7 @@ Public Class Form1
         End If
 
         'New Button
-        If TitleNewButton.Rect.Contains(e.Location) Then
+        If StartScreenNewButton.Rect.Contains(e.Location) Then
 
             LastFrame = Now
 
@@ -2625,6 +2238,377 @@ Public Class Form1
                 BDown = False
 
         End Select
+
+    End Sub
+
+    Private Sub UpdateButtonPosition()
+        'The range of buttons is 0 to 65,535. Unsigned 16-bit (2-byte) integer.
+
+        'What buttons are down?
+        Select Case ControllerPosition.Gamepad.wButtons
+            Case 0 'All the buttons are up.
+
+                If ControllerJumped = True Then ControllerJumped = False
+
+                ControllerA = False
+
+                ControllerB = False
+
+                ControllerRight = False
+
+                ControllerLeft = False
+
+            Case 1 'Up
+                ControllerLeft = False
+
+                ControllerRight = False
+
+                If ControllerJumped = True Then ControllerJumped = False
+
+                ControllerA = False
+
+                ControllerB = False
+            Case 2 'Down
+                ControllerLeft = False
+
+                ControllerRight = False
+
+                If ControllerJumped = True Then ControllerJumped = False
+
+                ControllerA = False
+
+                ControllerB = False
+            Case 4 'Left
+
+                ControllerLeft = True
+
+                ControllerRight = False
+
+                If ControllerJumped = True Then ControllerJumped = False
+
+                ControllerA = False
+
+                ControllerB = False
+
+            Case 5 'Up+Left
+                ControllerLeft = True
+
+                ControllerRight = False
+
+                If ControllerJumped = True Then ControllerJumped = False
+
+                ControllerA = False
+
+                ControllerB = False
+            Case 6 'Down+Left
+                ControllerLeft = True
+
+                ControllerRight = False
+
+                If ControllerJumped = True Then ControllerJumped = False
+
+                ControllerA = False
+
+                ControllerB = False
+            Case 8 'Right
+
+                ControllerRight = True
+
+                ControllerLeft = False
+
+                If ControllerJumped = True Then ControllerJumped = False
+
+                ControllerA = False
+
+                ControllerB = False
+
+            Case 9 'Up+Right
+                ControllerLeft = False
+
+                ControllerRight = True
+
+                If ControllerJumped = True Then ControllerJumped = False
+
+                ControllerA = False
+
+                ControllerB = False
+            Case 10 'Down+Right
+
+                ControllerLeft = False
+
+                ControllerRight = True
+
+                If ControllerJumped = True Then ControllerJumped = False
+
+                ControllerA = False
+
+                ControllerB = False
+
+            Case 16 'Start
+            Case 32 'Back
+            Case 64 'Left Stick
+            Case 128 'Right Stick
+            Case 256 'Left bumper
+            Case 512 'Right bumper
+            Case 4096 'A
+
+                ControllerA = True
+
+                ControllerLeft = False
+
+                ControllerRight = False
+
+                'If ControllerJumped = True Then ControllerJumped = False
+
+                ControllerB = False
+
+            Case 8192 'B
+
+                ControllerB = True
+
+                If ControllerJumped = True Then ControllerJumped = False
+
+                ControllerA = False
+
+                ControllerLeft = False
+
+                ControllerRight = False
+
+            Case 16384 'X
+            Case 32768 'Y
+            Case 48 'Start+Back
+            Case 192 'Left+Right Sticks
+            Case 768 'Left+Right Bumpers
+            Case 12288 'A+B
+            Case 20480 'A+X
+            Case 36864 'A+Y
+            Case 24576 'B+X
+            Case 40960 'B+Y
+            Case 49152 'X+Y
+            Case 28672 'A+B+X
+            Case 45056 'A+B+Y
+            Case 53248 'A+X+Y
+            Case 57344 'B+X+Y
+            Case 61440 'A+B+X+Y
+            Case 4097 'Up+A
+                ControllerA = True
+
+                ControllerLeft = True
+
+                ControllerRight = False
+
+                ControllerB = False
+            Case 4098 'Down+A
+                ControllerA = True
+
+                ControllerLeft = True
+
+                ControllerRight = False
+
+                ControllerB = False
+            Case 4100 'Left+A
+
+                ControllerA = True
+
+                ControllerLeft = True
+
+                ControllerRight = False
+
+                ControllerB = False
+
+            Case 4104 'Right+A
+
+                ControllerA = True
+
+                ControllerRight = True
+
+                ControllerLeft = False
+
+                ControllerB = False
+
+            Case 4105 'Up+Right+A
+                ControllerA = True
+
+                ControllerRight = True
+
+                ControllerLeft = False
+
+                ControllerB = False
+            Case 4101 'Up+Left+A
+                ControllerA = True
+
+                ControllerLeft = True
+
+                ControllerRight = False
+
+                ControllerB = False
+            Case 4106 'Down+Right+A
+                ControllerA = True
+
+                ControllerRight = True
+
+                ControllerLeft = False
+
+                ControllerB = False
+            Case 4102 'Down+Left+A
+                ControllerA = True
+
+                ControllerLeft = True
+
+                ControllerRight = False
+
+                ControllerB = False
+
+            Case 8196 'Left+B
+
+                ControllerLeft = True
+
+                ControllerRight = False
+
+                ControllerA = False
+
+                ControllerB = True
+
+            Case 8200 'Right+B
+
+                ControllerRight = True
+
+                ControllerLeft = False
+
+                ControllerA = False
+
+                ControllerB = True
+
+            Case 8198 'Left+Down+B
+
+                ControllerRight = False
+
+                ControllerLeft = True
+
+                ControllerB = True
+            Case 8202 'Right+Down+B
+                ControllerRight = True
+
+                ControllerLeft = False
+
+                ControllerA = False
+
+                ControllerB = True
+
+            Case 8201 'Right+Up+B
+                ControllerRight = True
+
+                ControllerLeft = False
+
+                ControllerB = True
+
+            Case 8197 'Left+Up+B
+                ControllerRight = False
+
+                ControllerLeft = True
+
+                ControllerA = False
+
+                ControllerB = True
+            Case 8194 'Down+B
+                ControllerRight = False
+
+                ControllerLeft = False
+
+                ControllerA = False
+
+                ControllerB = True
+            Case 8193 'Up+B
+                ControllerRight = False
+
+                ControllerLeft = False
+
+                ControllerA = False
+
+                ControllerB = True
+            Case Else 'Any buttons not handled yet.
+                Debug.Print(ControllerPosition.Gamepad.wButtons.ToString)
+        End Select
+
+    End Sub
+
+    Private Function IsOnPlatform() As Integer
+
+        If Platforms IsNot Nothing Then
+
+            For Each Plateform In Platforms
+
+                If OurHero.Rect.IntersectsWith(Plateform.Rect) = True Then
+
+                    'return index of Plateform
+                    Return Array.IndexOf(Platforms, Plateform)
+
+                End If
+
+            Next
+
+        End If
+
+        Return -1
+
+    End Function
+
+    Private Function IsOnBlock() As Integer
+
+        If Blocks IsNot Nothing Then
+
+            For Each Block In Blocks
+
+                If OurHero.Rect.IntersectsWith(Block.Rect) = True Then
+
+                    'return index of Plateform
+                    Return Array.IndexOf(Blocks, Block)
+
+                End If
+
+            Next
+
+        End If
+
+        Return -1
+
+    End Function
+
+    Private Function IsOnBill() As Integer
+
+        If Cash IsNot Nothing Then
+
+            For Each Bill In Cash
+
+                If OurHero.Rect.IntersectsWith(Bill.Rect) = True Then
+
+                    'return index of Plateform
+                    Return Array.IndexOf(Cash, Bill)
+
+                End If
+
+            Next
+
+        End If
+
+        Return -1
+
+    End Function
+
+    Private Sub Wraparound()
+
+        'When our hero exits the bottom side of the client area.
+        If OurHero.Position.Y > ClientRectangle.Bottom Then
+
+            OurHero.Velocity.Y = 0F
+            OurHero.Velocity.X = 0F
+
+            OurHero.Position.X = 1500.0F
+
+            'Our hero reappears on the top side the client area.
+            OurHero.Position.Y = ClientRectangle.Top - OurHero.Rect.Height
+
+        End If
 
     End Sub
 

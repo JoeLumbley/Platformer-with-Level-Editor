@@ -42,47 +42,11 @@ Imports System.Threading
 
 Public Class Form1
 
-    <DllImport("XInput1_4.dll")>
-    Private Shared Function XInputGetState(dwUserIndex As Integer, ByRef pState As XINPUT_STATE) As Integer
-    End Function
-
-    'XInput1_4.dll seems to be the current version
-    'XInput9_1_0.dll is maintained primarily for backward compatibility. 
-
-    <StructLayout(LayoutKind.Explicit)>
-    Public Structure XINPUT_STATE
-        <FieldOffset(0)>
-        Public dwPacketNumber As UInteger 'Unsigned 32-bit (4-byte) integer range 0 through 4,294,967,295.
-        <FieldOffset(4)>
-        Public Gamepad As XINPUT_GAMEPAD
-    End Structure
-
-    <StructLayout(LayoutKind.Sequential)>
-    Public Structure XINPUT_GAMEPAD
-        Public wButtons As UShort 'Unsigned 16-bit (2-byte) integer range 0 through 65,535.
-        Public bLeftTrigger As Byte 'Unsigned 8-bit (1-byte) integer range 0 through 255.
-        Public bRightTrigger As Byte
-        Public sThumbLX As Short 'Signed 16-bit (2-byte) integer range -32,768 through 32,767.
-        Public sThumbLY As Short
-        Public sThumbRX As Short
-        Public sThumbRY As Short
-    End Structure
-
-    <DllImport("XInput1_4.dll")>
-    Private Shared Function XInputSetState(playerIndex As Integer, ByRef vibration As XINPUT_VIBRATION) As Integer
-    End Function
-
-    Public Structure XINPUT_VIBRATION
-        Public wLeftMotorSpeed As UShort
-        Public wRightMotorSpeed As UShort
-    End Structure
-
     Private Enum AppState As Integer
         Start
         Playing
         Editing
     End Enum
-
 
     Private Enum ObjectID As Integer
         Level
@@ -119,34 +83,6 @@ Public Class Form1
     End Structure
 
     Private GameState As AppState = AppState.Start
-
-    'The start of the thumbstick neutral zone.
-    Private Const NeutralStart As Short = -16256 'Signed 16-bit (2-byte) integer range -32,768 through 32,767.
-
-    'The end of the thumbstick neutral zone.
-    Private Const NeutralEnd As Short = 16256
-
-    'Set the trigger threshold to 64 or 1/4 pull.
-    Private Const TriggerThreshold As Byte = 64 '63.75 = 255 / 4
-    'The trigger position must be greater than the trigger threshold to register as pressed.
-
-    Private ReadOnly Connected(0 To 3) As Boolean 'True or False
-
-    Private ControllerNumber As Integer = 0
-
-    Private ControllerPosition As XINPUT_STATE
-
-    Private Vibration As XINPUT_VIBRATION
-
-    Private ControllerA As Boolean = False
-
-    Private ControllerB As Boolean = False
-
-    Private ControllerRight As Boolean = False
-
-    Private ControllerLeft As Boolean = False
-
-    Private ControllerJumped As Boolean = False
 
     Private Context As New BufferedGraphicsContext
 
@@ -209,16 +145,6 @@ Public Class Form1
 
     Private ShowToolPreview As Boolean = False
 
-    Private ToolPreview As Rectangle
-
-    Private CharcoalGrey As Color = Color.FromArgb(255, 60, 65, 66)
-
-    Private DarkCharcoalGrey As Color = Color.FromArgb(255, 48, 52, 53)
-
-    Private CharcoalGreyBrush As New SolidBrush(CharcoalGrey)
-
-    Private DarkCharcoalGreyBrush As New SolidBrush(DarkCharcoalGrey)
-
     Private Title As GameObject
 
     Private StartScreenOpenButton As GameObject
@@ -226,6 +152,8 @@ Public Class Form1
     Private StartScreenNewButton As GameObject
 
     Private ScoreIndicators As GameObject
+
+    Private ToolPreview As Rectangle
 
     Private SelectedCloud As Integer = -1
 
@@ -237,38 +165,19 @@ Public Class Form1
 
     Private SelectedBush As Integer = -1
 
-    Private ReadOnly AlineCenter As New StringFormat With {.Alignment = StringAlignment.Center}
-
-    Private ReadOnly AlineCenterMiddle As New StringFormat With {.Alignment = StringAlignment.Center,
-                                                                 .LineAlignment = StringAlignment.Center}
-
-    Private GameLoopCancellationToken As New CancellationTokenSource()
-
-    Private ReadOnly CWJFont As New Font(FontFamily.GenericSansSerif, 12, FontStyle.Bold)
-
     Private RightArrowDown As Boolean = False
 
     Private LeftArrowDown As Boolean = False
 
     Private BDown As Boolean = False
 
+    Private DeleteDown As Boolean = False
+
     Private BUp As Boolean = False
 
     Private BPress As Boolean = False
 
     Private Jumped As Boolean = False
-
-    Private OutinePen As New Pen(Color.Black, 4)
-
-    Private ReadOnly PointerToolFont As New Font(New FontFamily("Wingdings"), 25, FontStyle.Bold)
-
-    Private ReadOnly TitleFont As New Font(New FontFamily("Bahnschrift"), 38, FontStyle.Bold)
-
-    Private LightSkyBluePen As New Pen(Color.LightSkyBlue, 4)
-
-    Private LawnGreenPen As New Pen(Color.LawnGreen, 4)
-
-    Private SeaGreenPen As New Pen(Color.SeaGreen, 4)
 
     Private GridSize As Integer = 64
 
@@ -285,6 +194,98 @@ Public Class Form1
     Private CashCollected As Integer = 0
 
     Private CashCollectedPostion As New Point(0, 0)
+
+    Private ReadOnly PointerToolFont As New Font(New FontFamily("Wingdings"), 25, FontStyle.Bold)
+
+    Private ReadOnly TitleFont As New Font(New FontFamily("Bahnschrift"), 38, FontStyle.Bold)
+
+    Private OutinePen As New Pen(Color.Black, 4)
+
+    Private LightSkyBluePen As New Pen(Color.LightSkyBlue, 4)
+
+    Private LawnGreenPen As New Pen(Color.LawnGreen, 4)
+
+    Private SeaGreenPen As New Pen(Color.SeaGreen, 4)
+
+    Private CharcoalGrey As Color = Color.FromArgb(255, 60, 65, 66)
+
+    Private DarkCharcoalGrey As Color = Color.FromArgb(255, 48, 52, 53)
+
+    Private CharcoalGreyBrush As New SolidBrush(CharcoalGrey)
+
+    Private DarkCharcoalGreyBrush As New SolidBrush(DarkCharcoalGrey)
+
+    Private ReadOnly AlineCenter As New StringFormat With {.Alignment = StringAlignment.Center}
+
+    Private ReadOnly AlineCenterMiddle As New StringFormat With {.Alignment = StringAlignment.Center,
+                                                                 .LineAlignment = StringAlignment.Center}
+
+    Private ReadOnly CWJFont As New Font(FontFamily.GenericSansSerif, 12, FontStyle.Bold)
+
+    Private GameLoopCancellationToken As New CancellationTokenSource()
+
+    <DllImport("XInput1_4.dll")>
+    Private Shared Function XInputGetState(dwUserIndex As Integer, ByRef pState As XINPUT_STATE) As Integer
+    End Function
+
+    'XInput1_4.dll seems to be the current version
+    'XInput9_1_0.dll is maintained primarily for backward compatibility. 
+
+    <StructLayout(LayoutKind.Explicit)>
+    Public Structure XINPUT_STATE
+        <FieldOffset(0)>
+        Public dwPacketNumber As UInteger 'Unsigned 32-bit (4-byte) integer range 0 through 4,294,967,295.
+        <FieldOffset(4)>
+        Public Gamepad As XINPUT_GAMEPAD
+    End Structure
+
+    <StructLayout(LayoutKind.Sequential)>
+    Public Structure XINPUT_GAMEPAD
+        Public wButtons As UShort 'Unsigned 16-bit (2-byte) integer range 0 through 65,535.
+        Public bLeftTrigger As Byte 'Unsigned 8-bit (1-byte) integer range 0 through 255.
+        Public bRightTrigger As Byte
+        Public sThumbLX As Short 'Signed 16-bit (2-byte) integer range -32,768 through 32,767.
+        Public sThumbLY As Short
+        Public sThumbRX As Short
+        Public sThumbRY As Short
+    End Structure
+
+    <DllImport("XInput1_4.dll")>
+    Private Shared Function XInputSetState(playerIndex As Integer, ByRef vibration As XINPUT_VIBRATION) As Integer
+    End Function
+
+    Public Structure XINPUT_VIBRATION
+        Public wLeftMotorSpeed As UShort
+        Public wRightMotorSpeed As UShort
+    End Structure
+
+    'The start of the thumbstick neutral zone.
+    Private Const NeutralStart As Short = -16256 'Signed 16-bit (2-byte) integer range -32,768 through 32,767.
+
+    'The end of the thumbstick neutral zone.
+    Private Const NeutralEnd As Short = 16256
+
+    'Set the trigger threshold to 64 or 1/4 pull.
+    Private Const TriggerThreshold As Byte = 64 '63.75 = 255 / 4
+    'The trigger position must be greater than the trigger threshold to register as pressed.
+
+    Private ReadOnly Connected(0 To 3) As Boolean 'True or False
+
+    Private ControllerNumber As Integer = 0
+
+    Private ControllerPosition As XINPUT_STATE
+
+    Private Vibration As XINPUT_VIBRATION
+
+    Private ControllerA As Boolean = False
+
+    Private ControllerB As Boolean = False
+
+    Private ControllerRight As Boolean = False
+
+    Private ControllerLeft As Boolean = False
+
+    Private ControllerJumped As Boolean = False
 
     Private GameLoopTask As Task =
         Task.Factory.StartNew(Sub()
@@ -337,6 +338,38 @@ Public Class Form1
 
     Private Sub InitializeApp()
 
+        InitializeGameObjects()
+
+        InitializeToolBarButtons()
+
+        InitializeForm()
+
+        InitializeBuffer()
+
+        Title.Text = "Platformer" & vbCrLf & "with Level Editor"
+
+        OutinePen.LineJoin = Drawing2D.LineJoin.Round
+
+        My.Computer.Audio.Play(My.Resources.level,
+        AudioPlayMode.BackgroundLoop)
+
+    End Sub
+
+    Private Sub InitializeToolBarButtons()
+
+        EditPlayButton.Rect = New Rectangle(ClientRectangle.Left + 210,
+                                                    ClientRectangle.Bottom - 90,
+                                                    120,
+                                                    100)
+
+        SaveButton.Rect = New Rectangle(ClientRectangle.Right - 210,
+                                        ClientRectangle.Bottom - 90,
+                                        120,
+                                        100)
+    End Sub
+
+    Private Sub InitializeGameObjects()
+
         OurHero.Rect = New Rectangle(100, 500, 64, 64)
 
         OurHero.Position = New PointF(OurHero.Rect.X, OurHero.Rect.Y)
@@ -386,24 +419,6 @@ Public Class Form1
         Array.Resize(Cash, Cash.Length + 1)
         Cash(Cash.Length - 1).Rect = New Rectangle(1472, 64, 64, 64)
         Cash(Cash.Length - 1).Collected = False
-
-        OutinePen.LineJoin = Drawing2D.LineJoin.Round
-
-        EditPlayButton.Rect = New Rectangle(ClientRectangle.Left + 210, ClientRectangle.Bottom - 90, 120, 100)
-
-        SaveButton.Rect = New Rectangle(ClientRectangle.Right - 210,
-                                        ClientRectangle.Bottom - 90,
-                                        120,
-                                        100)
-
-        Title.Text = "Platformer" & vbCrLf & "with Level Editor"
-
-        InitializeForm()
-
-        InitializeBuffer()
-
-        My.Computer.Audio.Play(My.Resources.level,
-        AudioPlayMode.BackgroundLoop)
 
     End Sub
 
@@ -1251,6 +1266,35 @@ Public Class Form1
 
     End Sub
 
+    Private Sub RemoveBlock(Index As Integer)
+
+        'Remove the block from blocks.
+        Blocks = Blocks.Where(Function(e, i) i <> Index).ToArray()
+
+    End Sub
+
+
+    Private Sub RemoveBill(Index As Integer)
+
+        'Remove the bill from cash.
+        Cash = Cash.Where(Function(e, i) i <> Index).ToArray()
+
+    End Sub
+
+    Private Sub RemoveBush(Index As Integer)
+
+        'Remove the bush from bushes.
+        Bushes = Bushes.Where(Function(e, i) i <> Index).ToArray()
+
+    End Sub
+
+    Private Sub RemoveCloud(Index As Integer)
+
+        'Remove the cloud from clouds.
+        Clouds = Clouds.Where(Function(e, i) i <> Index).ToArray()
+
+    End Sub
+
     Private Sub DrawStartScreenOpenButton()
 
         With Buffer.Graphics
@@ -1293,8 +1337,11 @@ Public Class Form1
             .DrawString(Title.Text,
                     TitleFont,
                     New SolidBrush(Color.FromArgb(128, Color.Black)),
-                    New Rectangle(Title.Rect.X + 5, Title.Rect.Y + 5, Title.Rect.Width, Title.Rect.Height),
-                    AlineCenterMiddle)
+                    New Rectangle(Title.Rect.X + 5,
+                                  Title.Rect.Y + 5,
+                                  Title.Rect.Width,
+                                  Title.Rect.Height),
+                                  AlineCenterMiddle)
 
             'Draw title.
             .DrawString(Title.Text,
@@ -1899,7 +1946,19 @@ Public Class Form1
 
         FileClose(File_Number)
 
-        LoadGameObjects()
+        If FileObjects IsNot Nothing Then
+
+            LoadGameObjects()
+
+        Else
+
+            'Clear object arrays.
+            Blocks = Nothing
+            Cash = Nothing
+            Bushes = Nothing
+            Clouds = Nothing
+
+        End If
 
     End Sub
 
@@ -2215,6 +2274,38 @@ Public Class Form1
 
                 BDown = True
 
+                'Has the player pressed the delete key down?
+            Case Keys.Delete
+                'Yes, the player has pressed the delete key down.
+
+                If GameState = AppState.Editing Then
+
+                    If SelectedBlock > -1 Then
+
+                        RemoveBlock(SelectedBlock)
+
+                    End If
+
+                    If SelectedBill > -1 Then
+
+                        RemoveBill(SelectedBill)
+
+                    End If
+
+                    If SelectedBush > -1 Then
+
+                        RemoveBush(SelectedBush)
+
+                    End If
+
+                    If SelectedCloud > -1 Then
+
+                        RemoveCloud(SelectedCloud)
+
+                    End If
+
+                End If
+
         End Select
 
     End Sub
@@ -2236,6 +2327,12 @@ Public Class Form1
                 If Jumped = True Then Jumped = False
 
                 BDown = False
+
+                'Has the player let the delete key up?
+            Case Keys.Delete
+                'Yes, the player has let the delete key up.
+
+                DeleteDown = False
 
         End Select
 

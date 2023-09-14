@@ -287,6 +287,26 @@ Public Class Form1
 
     Private ControllerJumped As Boolean = False
 
+
+    <DllImport("user32.dll")>
+    Private Shared Sub mouse_event(dwFlags As UInteger, dx As UInteger, dy As UInteger, dwData As UInteger, dwExtraInfo As Integer)
+    End Sub
+
+    Private Const MOUSEEVENTF_LEFTDOWN As UInteger = &H2
+
+    Private Const MOUSEEVENTF_LEFTUP As UInteger = &H4
+
+    Public Shared Sub DoMouseDown()
+        ' Simulate a left mouse button down event
+        mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0)
+    End Sub
+
+    Public Shared Sub DoMouseUP()
+        ' Simulate a left mouse button down event
+        mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
+    End Sub
+
+
     Private GameLoopTask As Task =
         Task.Factory.StartNew(Sub()
                                   Try
@@ -1480,7 +1500,7 @@ Public Class Form1
 
             Case AppState.Editing
 
-                MouseDownEditing(e)
+                MouseDownEditing(e.Location)
 
         End Select
 
@@ -1525,7 +1545,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub MouseDownEditing(e As MouseEventArgs)
+    Private Sub MouseDownEditing(e As Point)
 
         MouseDownEditingSelection(e)
 
@@ -1533,10 +1553,10 @@ Public Class Form1
 
     End Sub
 
-    Private Sub MouseDownEditingButtons(e As MouseEventArgs)
+    Private Sub MouseDownEditingButtons(e As Point)
 
         'Is the player clicking the play button?
-        If EditPlayButton.Rect.Contains(e.Location) Then
+        If EditPlayButton.Rect.Contains(e) Then
             'Yes, the player is clicking the play button.
 
             'Deselect game objects.
@@ -1553,7 +1573,7 @@ Public Class Form1
         End If
 
         'Is the player clicking the pointer tool button?
-        If PointerToolButton.Rect.Contains(e.Location) Then
+        If PointerToolButton.Rect.Contains(e) Then
             'Yes, the player is clicking the pointer tool button.
 
             SelectedTool = Tools.Pointer
@@ -1563,7 +1583,7 @@ Public Class Form1
         End If
 
         'Is the player clicking the block tool button?
-        If BlockToolButton.Rect.Contains(e.Location) Then
+        If BlockToolButton.Rect.Contains(e) Then
             'Yes, the player is clicking the block tool button.
 
             'Deselect game objects.
@@ -1586,7 +1606,7 @@ Public Class Form1
         End If
 
         'Is the player clicking the save button?
-        If SaveButton.Rect.Contains(e.Location) Then
+        If SaveButton.Rect.Contains(e) Then
             'Yes, the player is clicking the save button.
 
             SaveFileDialog1.FileName = ""
@@ -1606,9 +1626,9 @@ Public Class Form1
 
     End Sub
 
-    Private Sub MouseDownEditingSelection(e As MouseEventArgs)
+    Private Sub MouseDownEditingSelection(e As Point)
 
-        If SizingHandle.Contains(e.Location) Then
+        If SizingHandle.Contains(e) Then
 
             SizingHandleSelected = True
 
@@ -1676,7 +1696,7 @@ Public Class Form1
                 'No, the player is selecting nothing.
 
                 'Is the player over the toolbar?
-                If ToolBarBackground.Rect.Contains(e.Location) = False Then
+                If ToolBarBackground.Rect.Contains(e) = False Then
                     'No, the player is NOT over the toolbar.
 
                     If SelectedTool = Tools.Block Then
@@ -1712,14 +1732,14 @@ Public Class Form1
 
     End Sub
 
-    Private Function CheckCloudSelection(e As MouseEventArgs) As Integer
+    Private Function CheckCloudSelection(e As Point) As Integer
 
         If Clouds IsNot Nothing Then
 
             For Each Cloud In Clouds
 
                 'Has the player selected a cloud?
-                If Cloud.Rect.Contains(e.Location) Then
+                If Cloud.Rect.Contains(e) Then
                     'Yes, the player has selected a cloud.
 
                     Return Array.IndexOf(Clouds, Cloud)
@@ -1736,14 +1756,14 @@ Public Class Form1
 
     End Function
 
-    Private Function CheckBlockSelection(e As MouseEventArgs) As Integer
+    Private Function CheckBlockSelection(e As Point) As Integer
 
         If Blocks IsNot Nothing Then
 
             For Each Block In Blocks
 
                 'Has the player selected a cloud?
-                If Block.Rect.Contains(e.Location) Then
+                If Block.Rect.Contains(e) Then
                     'Yes, the player has selected a cloud.
 
                     Return Array.IndexOf(Blocks, Block)
@@ -1760,14 +1780,14 @@ Public Class Form1
 
     End Function
 
-    Private Function CheckBillSelection(e As MouseEventArgs) As Integer
+    Private Function CheckBillSelection(e As Point) As Integer
 
         If Cash IsNot Nothing Then
 
             For Each Bill In Cash
 
                 'Has the player selected a cloud?
-                If Bill.Rect.Contains(e.Location) Then
+                If Bill.Rect.Contains(e) Then
                     'Yes, the player has selected a cloud.
 
                     Return Array.IndexOf(Cash, Bill)
@@ -1784,14 +1804,14 @@ Public Class Form1
 
     End Function
 
-    Private Function CheckBushSelection(e As MouseEventArgs) As Integer
+    Private Function CheckBushSelection(e As Point) As Integer
 
         If Bushes IsNot Nothing Then
 
             For Each Bush In Bushes
 
                 'Has the player selected a cloud?
-                If Bush.Rect.Contains(e.Location) Then
+                If Bush.Rect.Contains(e) Then
                     'Yes, the player has selected a cloud.
 
                     Return Array.IndexOf(Bushes, Bush)
@@ -2355,6 +2375,15 @@ Public Class Form1
 
                 ControllerLeft = False
 
+                If GameState = AppState.Editing Then
+
+                    DoMouseUP()
+
+
+                    'MouseDownEditing(Cursor.Position)
+
+                End If
+
             Case 1 'Up
                 ControllerLeft = False
 
@@ -2365,6 +2394,14 @@ Public Class Form1
                 ControllerA = False
 
                 ControllerB = False
+
+                If GameState = AppState.Editing Then
+
+                    'Move mouse pointer up.
+                    Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y - 5)
+
+                End If
+
             Case 2 'Down
                 ControllerLeft = False
 
@@ -2375,6 +2412,15 @@ Public Class Form1
                 ControllerA = False
 
                 ControllerB = False
+
+
+                If GameState = AppState.Editing Then
+
+                    'Move mouse pointer up.
+                    Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y + 5)
+
+                End If
+
             Case 4 'Left
 
                 ControllerLeft = True
@@ -2386,6 +2432,13 @@ Public Class Form1
                 ControllerA = False
 
                 ControllerB = False
+
+                If GameState = AppState.Editing Then
+
+                    'Move mouse pointer to the left.
+                    Cursor.Position = New Point(Cursor.Position.X - 5, Cursor.Position.Y)
+
+                End If
 
             Case 5 'Up+Left
                 ControllerLeft = True
@@ -2418,6 +2471,13 @@ Public Class Form1
                 ControllerA = False
 
                 ControllerB = False
+
+                If GameState = AppState.Editing Then
+
+                    'Move mouse pointer to the right.
+                    Cursor.Position = New Point(Cursor.Position.X + 5, Cursor.Position.Y)
+
+                End If
 
             Case 9 'Up+Right
                 ControllerLeft = False
@@ -2458,6 +2518,15 @@ Public Class Form1
                 'If ControllerJumped = True Then ControllerJumped = False
 
                 ControllerB = False
+
+                If GameState = AppState.Editing Then
+
+                    DoMouseDown()
+
+
+                    'MouseDownEditing(Cursor.Position)
+
+                End If
 
             Case 8192 'B
 
@@ -2522,6 +2591,22 @@ Public Class Form1
                 ControllerLeft = False
 
                 ControllerB = False
+
+
+
+                If GameState = AppState.Editing Then
+
+                    'DoMouseDown()
+
+
+                    'Move mouse pointer to the right.
+                    Cursor.Position = New Point(Cursor.Position.X + 5, Cursor.Position.Y)
+
+
+                End If
+
+
+
 
             Case 4105 'Up+Right+A
                 ControllerA = True

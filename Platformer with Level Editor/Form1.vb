@@ -39,6 +39,7 @@ Imports System.IO
 Imports System.Numerics
 Imports System.Runtime.InteropServices
 Imports System.Threading
+Imports System.Windows
 
 Public Class Form1
 
@@ -287,25 +288,79 @@ Public Class Form1
 
     Private ControllerJumped As Boolean = False
 
+    Private IsMouseDown As Boolean = False
 
-    <DllImport("user32.dll")>
-    Private Shared Sub mouse_event(dwFlags As UInteger, dx As UInteger, dy As UInteger, dwData As UInteger, dwExtraInfo As Integer)
-    End Sub
 
+    <StructLayout(LayoutKind.Sequential)>
+    Private Structure INPUTStruc
+        Public type As UInteger
+        Public union As InputUnion
+    End Structure
+
+    <StructLayout(LayoutKind.Explicit)>
+    Private Structure InputUnion
+        <FieldOffset(0)>
+        Public mi As MOUSEINPUT
+    End Structure
+
+    <StructLayout(LayoutKind.Sequential)>
+    Private Structure MOUSEINPUT
+        Public dx As Integer
+        Public dy As Integer
+        Public mouseData As UInteger
+        Public dwFlags As UInteger
+        Public time As UInteger
+        Public dwExtraInfo As IntPtr
+    End Structure
+
+    Private Const INPUT_MOUSE As UInteger = 0
     Private Const MOUSEEVENTF_LEFTDOWN As UInteger = &H2
-
     Private Const MOUSEEVENTF_LEFTUP As UInteger = &H4
 
-    Public Shared Sub DoMouseDown()
+    <DllImport("user32.dll")>
+    Private Shared Function SendInput(nInputs As UInteger, pInputs As INPUTStruc(), cbSize As Integer) As UInteger
+    End Function
+
+    Public Shared Sub ClickMouseLeft()
         ' Simulate a left mouse button down event
-        mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0)
+        Dim inputDown As New INPUTStruc()
+        inputDown.type = INPUT_MOUSE
+        inputDown.union.mi.dwFlags = MOUSEEVENTF_LEFTDOWN
+
+        ' Simulate a left mouse button up event
+        Dim inputUp As New INPUTStruc()
+        inputUp.type = INPUT_MOUSE
+        inputUp.union.mi.dwFlags = MOUSEEVENTF_LEFTUP
+
+        ' Send the input events using SendInput
+        Dim inputs As INPUTStruc() = {inputDown, inputUp}
+        SendInput(CUInt(inputs.Length), inputs, Marshal.SizeOf(GetType(INPUTStruc)))
+    End Sub
+    Public Shared Sub DoMouseLeftDown()
+
+        ' Simulate a left mouse button down event
+        Dim inputDown As New INPUTStruc()
+        inputDown.type = INPUT_MOUSE
+        inputDown.union.mi.dwFlags = MOUSEEVENTF_LEFTDOWN
+
+        ' Send the input events using SendInput
+        Dim inputs As INPUTStruc() = {inputDown}
+        SendInput(CUInt(inputs.Length), inputs, Marshal.SizeOf(GetType(INPUTStruc)))
+
     End Sub
 
-    Public Shared Sub DoMouseUP()
-        ' Simulate a left mouse button down event
-        mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
-    End Sub
+    Public Shared Sub DoMouseLeftUp()
 
+        ' Simulate a left mouse button up event
+        Dim inputUp As New INPUTStruc()
+        inputUp.type = INPUT_MOUSE
+        inputUp.union.mi.dwFlags = MOUSEEVENTF_LEFTUP
+
+        ' Send the input events using SendInput
+        Dim inputs As INPUTStruc() = {inputUp}
+        SendInput(CUInt(inputs.Length), inputs, Marshal.SizeOf(GetType(INPUTStruc)))
+
+    End Sub
 
     Private GameLoopTask As Task =
         Task.Factory.StartNew(Sub()
@@ -1946,19 +2001,19 @@ Public Class Form1
             With FileObjects(Index)
 
                 'Read ID
-                Input(File_Number, .ID)
+                FileSystem.Input(File_Number, .ID)
 
                 'Read Position
-                Input(File_Number, .Rect.X)
+                FileSystem.Input(File_Number, .Rect.X)
 
-                Input(File_Number, .Rect.Y)
+                FileSystem.Input(File_Number, .Rect.Y)
 
                 'Read Size
-                Input(File_Number, .Rect.Width)
+                FileSystem.Input(File_Number, .Rect.Width)
 
-                Input(File_Number, .Rect.Height)
+                FileSystem.Input(File_Number, .Rect.Height)
 
-                Input(File_Number, .Text)
+                FileSystem.Input(File_Number, .Text)
 
             End With
 
@@ -2377,10 +2432,13 @@ Public Class Form1
 
                 If GameState = AppState.Editing Then
 
-                    DoMouseUP()
+                    If IsMouseDown = True Then
 
+                        IsMouseDown = False
 
-                    'MouseDownEditing(Cursor.Position)
+                        DoMouseLeftUp()
+
+                    End If
 
                 End If
 
@@ -2397,8 +2455,16 @@ Public Class Form1
 
                 If GameState = AppState.Editing Then
 
+                    If IsMouseDown = True Then
+
+                        IsMouseDown = False
+
+                        DoMouseLeftUp()
+
+                    End If
+
                     'Move mouse pointer up.
-                    Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y - 5)
+                    Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y - 2)
 
                 End If
 
@@ -2416,8 +2482,16 @@ Public Class Form1
 
                 If GameState = AppState.Editing Then
 
-                    'Move mouse pointer up.
-                    Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y + 5)
+                    If IsMouseDown = True Then
+
+                        IsMouseDown = False
+
+                        DoMouseLeftUp()
+
+                    End If
+
+                    'Move mouse pointer down.
+                    Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y + 2)
 
                 End If
 
@@ -2435,8 +2509,16 @@ Public Class Form1
 
                 If GameState = AppState.Editing Then
 
+                    If IsMouseDown = True Then
+
+                        IsMouseDown = False
+
+                        DoMouseLeftUp()
+
+                    End If
+
                     'Move mouse pointer to the left.
-                    Cursor.Position = New Point(Cursor.Position.X - 5, Cursor.Position.Y)
+                    Cursor.Position = New Point(Cursor.Position.X - 2, Cursor.Position.Y)
 
                 End If
 
@@ -2450,6 +2532,22 @@ Public Class Form1
                 ControllerA = False
 
                 ControllerB = False
+
+                If GameState = AppState.Editing Then
+
+                    If IsMouseDown = True Then
+
+                        IsMouseDown = False
+
+                        DoMouseLeftUp()
+
+                    End If
+
+                    'Move mouse pointer up.
+                    Cursor.Position = New Point(Cursor.Position.X - 2, Cursor.Position.Y - 2)
+
+                End If
+
             Case 6 'Down+Left
                 ControllerLeft = True
 
@@ -2460,6 +2558,22 @@ Public Class Form1
                 ControllerA = False
 
                 ControllerB = False
+
+                If GameState = AppState.Editing Then
+
+                    If IsMouseDown = True Then
+
+                        IsMouseDown = False
+
+                        DoMouseLeftUp()
+
+                    End If
+
+                    'Move mouse pointer to the right.
+                    Cursor.Position = New Point(Cursor.Position.X - 2, Cursor.Position.Y + 2)
+
+                End If
+
             Case 8 'Right
 
                 ControllerRight = True
@@ -2474,8 +2588,16 @@ Public Class Form1
 
                 If GameState = AppState.Editing Then
 
+                    If IsMouseDown = True Then
+
+                        IsMouseDown = False
+
+                        DoMouseLeftUp()
+
+                    End If
+
                     'Move mouse pointer to the right.
-                    Cursor.Position = New Point(Cursor.Position.X + 5, Cursor.Position.Y)
+                    Cursor.Position = New Point(Cursor.Position.X + 2, Cursor.Position.Y)
 
                 End If
 
@@ -2489,6 +2611,22 @@ Public Class Form1
                 ControllerA = False
 
                 ControllerB = False
+
+                If GameState = AppState.Editing Then
+
+                    If IsMouseDown = True Then
+
+                        IsMouseDown = False
+
+                        DoMouseLeftUp()
+
+                    End If
+
+                    'Move mouse pointer up.
+                    Cursor.Position = New Point(Cursor.Position.X + 2, Cursor.Position.Y - 2)
+
+                End If
+
             Case 10 'Down+Right
 
                 ControllerLeft = False
@@ -2500,6 +2638,21 @@ Public Class Form1
                 ControllerA = False
 
                 ControllerB = False
+
+                If GameState = AppState.Editing Then
+
+                    If IsMouseDown = True Then
+
+                        IsMouseDown = False
+
+                        DoMouseLeftUp()
+
+                    End If
+
+                    'Move mouse pointer to the right.
+                    Cursor.Position = New Point(Cursor.Position.X + 2, Cursor.Position.Y + 2)
+
+                End If
 
             Case 16 'Start
             Case 32 'Back
@@ -2521,10 +2674,13 @@ Public Class Form1
 
                 If GameState = AppState.Editing Then
 
-                    DoMouseDown()
+                    If IsMouseDown = False Then
 
+                        IsMouseDown = True
 
-                    'MouseDownEditing(Cursor.Position)
+                        DoMouseLeftDown()
+
+                    End If
 
                 End If
 
@@ -2564,6 +2720,22 @@ Public Class Form1
                 ControllerRight = False
 
                 ControllerB = False
+
+                If GameState = AppState.Editing Then
+
+                    If IsMouseDown = False Then
+
+                        IsMouseDown = True
+
+                        DoMouseLeftDown()
+
+                    End If
+
+                    'Move mouse pointer down.
+                    Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y - 2)
+
+                End If
+
             Case 4098 'Down+A
                 ControllerA = True
 
@@ -2572,6 +2744,22 @@ Public Class Form1
                 ControllerRight = False
 
                 ControllerB = False
+
+                If GameState = AppState.Editing Then
+
+                    If IsMouseDown = False Then
+
+                        IsMouseDown = True
+
+                        DoMouseLeftDown()
+
+                    End If
+
+                    'Move mouse pointer down.
+                    Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y + 2)
+
+                End If
+
             Case 4100 'Left+A
 
                 ControllerA = True
@@ -2581,6 +2769,21 @@ Public Class Form1
                 ControllerRight = False
 
                 ControllerB = False
+
+                If GameState = AppState.Editing Then
+
+                    If IsMouseDown = False Then
+
+                        IsMouseDown = True
+
+                        DoMouseLeftDown()
+
+                    End If
+
+                    'Move mouse pointer to the left.
+                    Cursor.Position = New Point(Cursor.Position.X - 2, Cursor.Position.Y)
+
+                End If
 
             Case 4104 'Right+A
 
@@ -2592,21 +2795,20 @@ Public Class Form1
 
                 ControllerB = False
 
-
-
                 If GameState = AppState.Editing Then
 
-                    'DoMouseDown()
+                    If IsMouseDown = False Then
 
+                        IsMouseDown = True
+
+                        DoMouseLeftDown()
+
+                    End If
 
                     'Move mouse pointer to the right.
-                    Cursor.Position = New Point(Cursor.Position.X + 5, Cursor.Position.Y)
-
+                    Cursor.Position = New Point(Cursor.Position.X + 2, Cursor.Position.Y)
 
                 End If
-
-
-
 
             Case 4105 'Up+Right+A
                 ControllerA = True
@@ -2616,6 +2818,22 @@ Public Class Form1
                 ControllerLeft = False
 
                 ControllerB = False
+
+                If GameState = AppState.Editing Then
+
+                    If IsMouseDown = False Then
+
+                        IsMouseDown = True
+
+                        DoMouseLeftDown()
+
+                    End If
+
+                    'Move mouse pointer to the right.
+                    Cursor.Position = New Point(Cursor.Position.X + 2, Cursor.Position.Y - 2)
+
+                End If
+
             Case 4101 'Up+Left+A
                 ControllerA = True
 
@@ -2624,6 +2842,22 @@ Public Class Form1
                 ControllerRight = False
 
                 ControllerB = False
+
+                If GameState = AppState.Editing Then
+
+                    If IsMouseDown = False Then
+
+                        IsMouseDown = True
+
+                        DoMouseLeftDown()
+
+                    End If
+
+                    'Move mouse pointer to the left.
+                    Cursor.Position = New Point(Cursor.Position.X - 2, Cursor.Position.Y - 2)
+
+                End If
+
             Case 4106 'Down+Right+A
                 ControllerA = True
 
@@ -2632,6 +2866,22 @@ Public Class Form1
                 ControllerLeft = False
 
                 ControllerB = False
+
+                If GameState = AppState.Editing Then
+
+                    If IsMouseDown = False Then
+
+                        IsMouseDown = True
+
+                        DoMouseLeftDown()
+
+                    End If
+
+                    'Move mouse pointer to the right.
+                    Cursor.Position = New Point(Cursor.Position.X + 2, Cursor.Position.Y + 2)
+
+                End If
+
             Case 4102 'Down+Left+A
                 ControllerA = True
 
@@ -2640,6 +2890,22 @@ Public Class Form1
                 ControllerRight = False
 
                 ControllerB = False
+
+
+                If GameState = AppState.Editing Then
+                    If IsMouseDown = False Then
+
+                        IsMouseDown = True
+
+                        DoMouseLeftDown()
+
+                    End If
+
+                    'Move mouse pointer to the left.
+                    Cursor.Position = New Point(Cursor.Position.X - 2, Cursor.Position.Y + 2)
+
+
+                End If
 
             Case 8196 'Left+B
 

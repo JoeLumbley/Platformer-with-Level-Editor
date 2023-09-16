@@ -551,7 +551,7 @@ Public Class Form1
 
                     UpdateButtonPosition()
 
-                    'UpdateLeftThumbstickPosition()
+                    UpdateLeftThumbstickPosition()
 
                     'UpdateRightThumbstickPosition()
 
@@ -581,6 +581,99 @@ Public Class Form1
         Next
 
     End Sub
+
+
+
+
+    Private Sub UpdateLeftThumbstickPosition()
+        'The range on the X-axis is -32,768 through 32,767. Signed 16-bit (2-byte) integer.
+        'The range on the Y-axis is -32,768 through 32,767. Signed 16-bit (2-byte) integer.
+
+        'What position is the left thumbstick in on the X-axis?
+        If ControllerPosition.Gamepad.sThumbLX <= NeutralStart Then
+            'The left thumbstick is in the left position.
+
+            'Move mouse pointer to the left.
+            Cursor.Position = New Point(Cursor.Position.X - 10, Cursor.Position.Y)
+
+
+            'LabelLeftThumbX.Text = "Controller: " & ControllerNumber.ToString & " Left Thumbstick: Left"
+
+            'Timer2.Start()
+
+
+
+
+
+        ElseIf ControllerPosition.Gamepad.sThumbLX >= NeutralEnd Then
+            'The left thumbstick is in the right position.
+
+
+            'Move mouse pointer to the right.
+            Cursor.Position = New Point(Cursor.Position.X + 10, Cursor.Position.Y)
+
+
+            'LabelLeftThumbX.Text = "Controller: " & ControllerNumber.ToString & " Left Thumbstick: Right"
+
+            'Timer2.Start()
+
+
+
+
+
+        Else
+            'The left thumbstick is in the neutral position.
+
+        End If
+
+        'What position is the left thumbstick in on the Y-axis?
+        If ControllerPosition.Gamepad.sThumbLY <= NeutralStart Then
+            'The left thumbstick is in the down position.
+
+
+
+            'Move mouse pointer down.
+            Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y + 10)
+
+
+            'LabelLeftThumbY.Text = "Controller: " & ControllerNumber.ToString & " Left Thumbstick: Down"
+
+            'Timer2.Start()
+
+
+
+
+
+        ElseIf ControllerPosition.Gamepad.sThumbLY >= NeutralEnd Then
+            'The left thumbstick is in the up position.
+
+
+            'Move mouse pointer down.
+            Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y - 10)
+
+
+            'LabelLeftThumbY.Text = "Controller: " & ControllerNumber.ToString & " Left Thumbstick: Up"
+
+            'Timer2.Start()
+
+
+
+
+
+
+
+        Else
+            'The left thumbstick is in the neutral position.
+
+        End If
+
+    End Sub
+
+
+
+
+
+
 
     Private Sub UpdateDeltaTime()
         'Delta time (Δt) is the elapsed time since the last frame.
@@ -2418,6 +2511,7 @@ Public Class Form1
 
         'What buttons are down?
         Select Case ControllerPosition.Gamepad.wButtons
+
             Case 0 'All the buttons are up.
 
                 If ControllerJumped = True Then ControllerJumped = False
@@ -2443,6 +2537,7 @@ Public Class Form1
                 End If
 
             Case 1 'Up
+
                 ControllerLeft = False
 
                 ControllerRight = False
@@ -2469,6 +2564,7 @@ Public Class Form1
                 End If
 
             Case 2 'Down
+
                 ControllerLeft = False
 
                 ControllerRight = False
@@ -2523,6 +2619,7 @@ Public Class Form1
                 End If
 
             Case 5 'Up+Left
+
                 ControllerLeft = True
 
                 ControllerRight = False
@@ -2549,6 +2646,7 @@ Public Class Form1
                 End If
 
             Case 6 'Down+Left
+
                 ControllerLeft = True
 
                 ControllerRight = False
@@ -2602,6 +2700,7 @@ Public Class Form1
                 End If
 
             Case 9 'Up+Right
+
                 ControllerLeft = False
 
                 ControllerRight = True
@@ -2713,6 +2812,7 @@ Public Class Form1
             Case 57344 'B+X+Y
             Case 61440 'A+B+X+Y
             Case 4097 'Up+A
+
                 ControllerA = True
 
                 ControllerLeft = True
@@ -2737,6 +2837,7 @@ Public Class Form1
                 End If
 
             Case 4098 'Down+A
+
                 ControllerA = True
 
                 ControllerLeft = True
@@ -2811,6 +2912,7 @@ Public Class Form1
                 End If
 
             Case 4105 'Up+Right+A
+
                 ControllerA = True
 
                 ControllerRight = True
@@ -2835,6 +2937,7 @@ Public Class Form1
                 End If
 
             Case 4101 'Up+Left+A
+
                 ControllerA = True
 
                 ControllerLeft = True
@@ -2859,6 +2962,7 @@ Public Class Form1
                 End If
 
             Case 4106 'Down+Right+A
+
                 ControllerA = True
 
                 ControllerRight = True
@@ -2883,6 +2987,7 @@ Public Class Form1
                 End If
 
             Case 4102 'Down+Left+A
+
                 ControllerA = True
 
                 ControllerLeft = True

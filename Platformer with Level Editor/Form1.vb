@@ -593,33 +593,22 @@ Public Class Form1
         If ControllerPosition.Gamepad.sThumbLX <= NeutralStart Then
             'The left thumbstick is in the left position.
 
-            'Move mouse pointer to the left.
-            Cursor.Position = New Point(Cursor.Position.X - 10, Cursor.Position.Y)
+            If GameState = AppState.Editing Then
 
+                'Move mouse pointer to the left.
+                Cursor.Position = New Point(Cursor.Position.X - 10, Cursor.Position.Y)
 
-            'LabelLeftThumbX.Text = "Controller: " & ControllerNumber.ToString & " Left Thumbstick: Left"
-
-            'Timer2.Start()
-
-
-
-
+            End If
 
         ElseIf ControllerPosition.Gamepad.sThumbLX >= NeutralEnd Then
             'The left thumbstick is in the right position.
 
+            If GameState = AppState.Editing Then
 
-            'Move mouse pointer to the right.
-            Cursor.Position = New Point(Cursor.Position.X + 10, Cursor.Position.Y)
+                'Move mouse pointer to the right.
+                Cursor.Position = New Point(Cursor.Position.X + 10, Cursor.Position.Y)
 
-
-            'LabelLeftThumbX.Text = "Controller: " & ControllerNumber.ToString & " Left Thumbstick: Right"
-
-            'Timer2.Start()
-
-
-
-
+            End If
 
         Else
             'The left thumbstick is in the neutral position.
@@ -630,37 +619,22 @@ Public Class Form1
         If ControllerPosition.Gamepad.sThumbLY <= NeutralStart Then
             'The left thumbstick is in the down position.
 
+            If GameState = AppState.Editing Then
 
+                'Move mouse pointer down.
+                Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y + 10)
 
-            'Move mouse pointer down.
-            Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y + 10)
-
-
-            'LabelLeftThumbY.Text = "Controller: " & ControllerNumber.ToString & " Left Thumbstick: Down"
-
-            'Timer2.Start()
-
-
-
-
+            End If
 
         ElseIf ControllerPosition.Gamepad.sThumbLY >= NeutralEnd Then
             'The left thumbstick is in the up position.
 
+            If GameState = AppState.Editing Then
 
-            'Move mouse pointer down.
-            Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y - 10)
+                'Move mouse pointer down.
+                Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y - 10)
 
-
-            'LabelLeftThumbY.Text = "Controller: " & ControllerNumber.ToString & " Left Thumbstick: Up"
-
-            'Timer2.Start()
-
-
-
-
-
-
+            End If
 
         Else
             'The left thumbstick is in the neutral position.
@@ -668,6 +642,7 @@ Public Class Form1
         End If
 
     End Sub
+
 
 
 

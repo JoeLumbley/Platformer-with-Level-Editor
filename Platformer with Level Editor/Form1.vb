@@ -2459,25 +2459,19 @@ Public Class Form1
                 'Mute
 
                 If IsBackgroundLoopPlaying = True Then
+
                     My.Computer.Audio.Stop()
 
                     IsBackgroundLoopPlaying = False
 
                 Else
+
                     My.Computer.Audio.Play(My.Resources.level,
-        AudioPlayMode.BackgroundLoop)
+                                           AudioPlayMode.BackgroundLoop)
 
                     IsBackgroundLoopPlaying = True
+
                 End If
-
-
-
-
-
-
-
-
-
 
         End Select
 

@@ -292,6 +292,7 @@ Public Class Form1
 
     Private IsStartDown As Boolean = False
 
+    Private IsBackgroundLoopPlaying As Boolean = False
 
 
     <StructLayout(LayoutKind.Sequential)>
@@ -430,6 +431,8 @@ Public Class Form1
 
         My.Computer.Audio.Play(My.Resources.level,
         AudioPlayMode.BackgroundLoop)
+
+        IsBackgroundLoopPlaying = True
 
     End Sub
 
@@ -2451,6 +2454,30 @@ Public Class Form1
                     End If
 
                 End If
+
+            Case Keys.M
+                'Mute
+
+                If IsBackgroundLoopPlaying = True Then
+                    My.Computer.Audio.Stop()
+
+                    IsBackgroundLoopPlaying = False
+
+                Else
+                    My.Computer.Audio.Play(My.Resources.level,
+        AudioPlayMode.BackgroundLoop)
+
+                    IsBackgroundLoopPlaying = True
+                End If
+
+
+
+
+
+
+
+
+
 
         End Select
 

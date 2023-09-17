@@ -290,6 +290,9 @@ Public Class Form1
 
     Private IsMouseDown As Boolean = False
 
+    Private IsStartDown As Boolean = False
+
+
 
     <StructLayout(LayoutKind.Sequential)>
     Private Structure INPUTStruc
@@ -2509,7 +2512,17 @@ Public Class Form1
 
                     End If
 
+
+
                 End If
+
+                If IsStartDown = True Then
+
+                    IsStartDown = False
+
+                End If
+
+
 
             Case 1 'Up
 
@@ -2729,6 +2742,38 @@ Public Class Form1
                 End If
 
             Case 16 'Start
+
+
+
+
+                Select Case GameState
+
+                    Case AppState.Playing
+
+                        If IsStartDown = False Then
+
+                            IsStartDown = True
+
+                            GameState = AppState.Editing
+
+                        End If
+
+                    Case AppState.Editing
+
+                        If IsStartDown = False Then
+
+                            IsStartDown = True
+
+                            'Resume Play
+                            LastFrame = Now
+
+                            GameState = AppState.Playing
+
+                        End If
+
+                End Select
+
+
             Case 32 'Back
             Case 64 'Left Stick
             Case 128 'Right Stick

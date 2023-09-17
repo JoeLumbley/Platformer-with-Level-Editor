@@ -1118,18 +1118,22 @@ Public Class Form1
 
                     .FillRectangle(Brushes.Chocolate, Block.Rect)
 
-                    If SelectedBlock = Array.IndexOf(Blocks, Block) Then
+                    If GameState = AppState.Editing Then
 
-                        'Draw selection rectangle.
-                        .DrawRectangle(New Pen(Color.Red, 6), Block.Rect)
+                        If SelectedBlock = Array.IndexOf(Blocks, Block) Then
 
-                        'Position sizing handle.
-                        SizingHandle.X = Block.Rect.Right - SizingHandle.Width \ 2
-                        SizingHandle.Y = Block.Rect.Bottom - SizingHandle.Height \ 2
+                            'Draw selection rectangle.
+                            .DrawRectangle(New Pen(Color.Red, 6), Block.Rect)
 
-                        'Draw sizing handle.
-                        .FillRectangle(Brushes.Black,
-                                       SizingHandle)
+                            'Position sizing handle.
+                            SizingHandle.X = Block.Rect.Right - SizingHandle.Width \ 2
+                            SizingHandle.Y = Block.Rect.Bottom - SizingHandle.Height \ 2
+
+                            'Draw sizing handle.
+                            .FillRectangle(Brushes.Black,
+                                           SizingHandle)
+
+                        End If
 
                     End If
 
@@ -1157,18 +1161,22 @@ Public Class Form1
 
                     .DrawRectangle(OutinePen, Bush.Rect)
 
-                    If SelectedBush = Array.IndexOf(Bushes, Bush) Then
+                    If GameState = AppState.Editing Then
 
-                        'Draw selection rectangle.
-                        .DrawRectangle(New Pen(Color.Red, 6), Bush.Rect)
+                        If SelectedBush = Array.IndexOf(Bushes, Bush) Then
 
-                        'Position sizing handle.
-                        SizingHandle.X = Bush.Rect.Right - SizingHandle.Width \ 2
-                        SizingHandle.Y = Bush.Rect.Bottom - SizingHandle.Height \ 2
+                            'Draw selection rectangle.
+                            .DrawRectangle(New Pen(Color.Red, 6), Bush.Rect)
 
-                        'Draw sizing handle.
-                        .FillRectangle(Brushes.Black,
-                                       SizingHandle)
+                            'Position sizing handle.
+                            SizingHandle.X = Bush.Rect.Right - SizingHandle.Width \ 2
+                            SizingHandle.Y = Bush.Rect.Bottom - SizingHandle.Height \ 2
+
+                            'Draw sizing handle.
+                            .FillRectangle(Brushes.Black,
+                                           SizingHandle)
+
+                        End If
 
                     End If
 
@@ -1196,18 +1204,22 @@ Public Class Form1
 
                     .DrawRectangle(OutinePen, Cloud.Rect)
 
-                    If SelectedCloud = Array.IndexOf(Clouds, Cloud) Then
+                    If GameState = AppState.Editing Then
 
-                        'Draw selection rectangle.
-                        .DrawRectangle(New Pen(Color.Red, 6), Cloud.Rect)
+                        If SelectedCloud = Array.IndexOf(Clouds, Cloud) Then
 
-                        'Position sizing handle.
-                        SizingHandle.X = Cloud.Rect.Right - SizingHandle.Width \ 2
-                        SizingHandle.Y = Cloud.Rect.Bottom - SizingHandle.Height \ 2
+                            'Draw selection rectangle.
+                            .DrawRectangle(New Pen(Color.Red, 6), Cloud.Rect)
 
-                        'Draw sizing handle.
-                        .FillRectangle(Brushes.Black,
-                                       SizingHandle)
+                            'Position sizing handle.
+                            SizingHandle.X = Cloud.Rect.Right - SizingHandle.Width \ 2
+                            SizingHandle.Y = Cloud.Rect.Bottom - SizingHandle.Height \ 2
+
+                            'Draw sizing handle.
+                            .FillRectangle(Brushes.Black,
+                                           SizingHandle)
+
+                        End If
 
                     End If
 
@@ -2433,11 +2445,15 @@ Public Class Form1
 
                         RemoveBlock(SelectedBlock)
 
+                        SelectedBlock = -1
+
                     End If
 
                     If SelectedBill > -1 Then
 
                         RemoveBill(SelectedBill)
+
+                        SelectedBill = -1
 
                     End If
 
@@ -2445,11 +2461,15 @@ Public Class Form1
 
                         RemoveBush(SelectedBush)
 
+                        SelectedBush = -1
+
                     End If
 
                     If SelectedCloud > -1 Then
 
                         RemoveCloud(SelectedCloud)
+
+                        SelectedCloud = -1
 
                     End If
 
@@ -2799,7 +2819,82 @@ Public Class Form1
             Case 64 'Left Stick
             Case 128 'Right Stick
             Case 256 'Left bumper
+
+                If GameState = AppState.Editing Then
+
+                    If SelectedBlock > -1 Then
+
+                        RemoveBlock(SelectedBlock)
+
+                        SelectedBlock = -1
+
+                    End If
+
+                    If SelectedBill > -1 Then
+
+                        RemoveBill(SelectedBill)
+
+                        SelectedBill = -1
+
+                    End If
+
+                    If SelectedBush > -1 Then
+
+                        RemoveBush(SelectedBush)
+
+                        SelectedBush = -1
+
+                    End If
+
+                    If SelectedCloud > -1 Then
+
+                        RemoveCloud(SelectedCloud)
+
+                        SelectedCloud = -1
+
+                    End If
+
+                End If
+
+
             Case 512 'Right bumper
+
+                If GameState = AppState.Editing Then
+
+                    If SelectedBlock > -1 Then
+
+                        RemoveBlock(SelectedBlock)
+
+                        SelectedBlock = -1
+
+                    End If
+
+                    If SelectedBill > -1 Then
+
+                        RemoveBill(SelectedBill)
+
+                        SelectedBill = -1
+
+                    End If
+
+                    If SelectedBush > -1 Then
+
+                        RemoveBush(SelectedBush)
+
+                        SelectedBush = -1
+
+                    End If
+
+                    If SelectedCloud > -1 Then
+
+                        RemoveCloud(SelectedCloud)
+
+                        SelectedCloud = -1
+
+                    End If
+
+                End If
+
             Case 4096 'A
 
                 ControllerA = True

@@ -2144,10 +2144,12 @@ Public Class Form1
             'Load Blocks
             If FileObject.ID = ObjectID.Block Then
 
-                BlockIndex += 1 'Add a block to the blocks array.
+                BlockIndex += 1
 
-                ReDim Preserve Blocks(BlockIndex) 'Resize the blocks array.
+                'Resize blocks array
+                ReDim Preserve Blocks(BlockIndex)
 
+                'Copy file object data to the blocks array.
                 Blocks(BlockIndex).ID = FileObject.ID
 
 
@@ -2171,9 +2173,13 @@ Public Class Form1
             End If
 
             'Load Bills
+            'Is the file object a bill?
             If FileObject.ID = ObjectID.Bill Then
+                'Yes, the file object is a bill.
 
-                BillIndex += 1 'Add a bill to the cash array.
+                'Add a bill to the cash array.
+
+                BillIndex += 1
 
                 ReDim Preserve Cash(BillIndex) 'Resize the cash array.
 
@@ -2363,7 +2369,7 @@ Public Class Form1
 
             If e.Button = MouseButtons.Left Then
 
-                'Move bill snap to grid.
+                'Move bill, snap to grid.
                 Cash(SelectedBill).Rect.X = CInt(Math.Round((e.X - SelectionOffset.X) / GridSize)) * GridSize
                 Cash(SelectedBill).Rect.Y = CInt(Math.Round((e.Y - SelectionOffset.Y) / GridSize)) * GridSize
 
@@ -2397,7 +2403,7 @@ Public Class Form1
                     'No, the player is not resizing the bush.
                     'The player is moving the bush.
 
-                    'Move bush snap to grid
+                    'Move bush, snap to grid
                     Bushes(SelectedBush).Rect.X = CInt(Math.Round((e.X - SelectionOffset.X) / GridSize)) * GridSize
                     Bushes(SelectedBush).Rect.Y = CInt(Math.Round((e.Y - SelectionOffset.Y) / GridSize)) * GridSize
 
@@ -2858,6 +2864,7 @@ Public Class Form1
 
 
             Case 512 'Right bumper
+                'The player pushed the right bumper down.
 
                 If GameState = AppState.Editing Then
 

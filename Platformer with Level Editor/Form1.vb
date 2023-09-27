@@ -2077,7 +2077,7 @@ Public Class Form1
 
         FileOpen(File_Number, FilePath, OpenMode.Input)
 
-        'Read Objects from File
+        'Read objects from file
         Do Until EOF(File_Number)
 
             Index += 1
@@ -2091,12 +2091,10 @@ Public Class Form1
 
                 'Read Position
                 FileSystem.Input(File_Number, .Rect.X)
-
                 FileSystem.Input(File_Number, .Rect.Y)
 
                 'Read Size
                 FileSystem.Input(File_Number, .Rect.Width)
-
                 FileSystem.Input(File_Number, .Rect.Height)
 
                 FileSystem.Input(File_Number, .Text)
@@ -2125,12 +2123,10 @@ Public Class Form1
 
     Private Sub LoadGameObjects()
 
+        'Init array indexs.
         Dim BlockIndex As Integer = -1
-
         Dim BillIndex As Integer = -1
-
         Dim BushIndex As Integer = -1
-
         Dim CloudIndex As Integer = -1
 
         'Clear object arrays.
@@ -2141,130 +2137,224 @@ Public Class Form1
 
         For Each FileObject In FileObjects
 
-            'Load Blocks
-            If FileObject.ID = ObjectID.Block Then
+            Select Case FileObject.ID
 
-                BlockIndex += 1
+                Case ObjectID.Block
 
-                'Resize blocks array
-                ReDim Preserve Blocks(BlockIndex)
+                    'Add a Block to Blocks
+                    BlockIndex += 1
 
-                'Copy file object data to the blocks array.
-                Blocks(BlockIndex).ID = FileObject.ID
+                    'Resize Blocks
+                    ReDim Preserve Blocks(BlockIndex)
 
+                    'Load ID
+                    Blocks(BlockIndex).ID = FileObject.ID
 
-                Blocks(BlockIndex).Rect.X = FileObject.Rect.X
+                    'Load Position
+                    Blocks(BlockIndex).Rect.X = FileObject.Rect.X
+                    Blocks(BlockIndex).Rect.Y = FileObject.Rect.Y
 
-                Blocks(BlockIndex).Rect.Y = FileObject.Rect.Y
+                    'Load Position
+                    Blocks(BlockIndex).Position.X = FileObject.Rect.X
+                    Blocks(BlockIndex).Position.Y = FileObject.Rect.Y
 
+                    'Load Size
+                    Blocks(BlockIndex).Rect.Width = FileObject.Rect.Width
+                    Blocks(BlockIndex).Rect.Height = FileObject.Rect.Height
 
-                Blocks(BlockIndex).Position.X = FileObject.Rect.X
+                    Blocks(BlockIndex).Text = FileObject.Text
 
-                Blocks(BlockIndex).Position.Y = FileObject.Rect.Y
+                Case ObjectID.Bill
 
+                    'Add a Bill to Cash
+                    BillIndex += 1
 
-                Blocks(BlockIndex).Rect.Width = FileObject.Rect.Width
+                    'Resize cash array
+                    ReDim Preserve Cash(BillIndex)
 
-                Blocks(BlockIndex).Rect.Height = FileObject.Rect.Height
+                    'Load ID
+                    Cash(BillIndex).ID = FileObject.ID
 
+                    'Load Position
+                    Cash(BillIndex).Rect.X = FileObject.Rect.X
+                    Cash(BillIndex).Rect.Y = FileObject.Rect.Y
 
-                Blocks(BlockIndex).Text = FileObject.Text
+                    'Load Position
+                    Cash(BillIndex).Position.X = FileObject.Rect.X
+                    Cash(BillIndex).Position.Y = FileObject.Rect.Y
 
-            End If
+                    'Load Size
+                    Cash(BillIndex).Rect.Width = FileObject.Rect.Width
+                    Cash(BillIndex).Rect.Height = FileObject.Rect.Height
 
-            'Load Bills
-            'Is the file object a bill?
-            If FileObject.ID = ObjectID.Bill Then
-                'Yes, the file object is a bill.
+                    Cash(BillIndex).Text = FileObject.Text
 
-                'Add a bill to the cash array.
+                    Cash(BillIndex).Collected = False
 
-                BillIndex += 1
+                Case ObjectID.Bush
 
-                ReDim Preserve Cash(BillIndex) 'Resize the cash array.
+                    BushIndex += 1
 
-                Cash(BillIndex).ID = FileObject.ID
+                    'Resize the bushes array
+                    ReDim Preserve Bushes(BushIndex)
 
+                    Bushes(BushIndex).ID = FileObject.ID
 
-                Cash(BillIndex).Rect.X = FileObject.Rect.X
+                    Bushes(BushIndex).Rect.X = FileObject.Rect.X
+                    Bushes(BushIndex).Rect.Y = FileObject.Rect.Y
 
-                Cash(BillIndex).Rect.Y = FileObject.Rect.Y
+                    Bushes(BushIndex).Position.X = FileObject.Rect.X
+                    Bushes(BushIndex).Position.Y = FileObject.Rect.Y
 
+                    Bushes(BushIndex).Rect.Width = FileObject.Rect.Width
+                    Bushes(BushIndex).Rect.Height = FileObject.Rect.Height
 
-                Cash(BillIndex).Position.X = FileObject.Rect.X
+                    Bushes(BushIndex).Text = FileObject.Text
 
-                Cash(BillIndex).Position.Y = FileObject.Rect.Y
+                Case ObjectID.Cloud
 
+                    CloudIndex += 1 'Add a cloud to the clouds array.
 
-                Cash(BillIndex).Rect.Width = FileObject.Rect.Width
+                    ReDim Preserve Clouds(CloudIndex) 'Resize the clouds array.
 
-                Cash(BillIndex).Rect.Height = FileObject.Rect.Height
+                    Clouds(CloudIndex).ID = FileObject.ID
 
+                    Clouds(CloudIndex).Rect.X = FileObject.Rect.X
+                    Clouds(CloudIndex).Rect.Y = FileObject.Rect.Y
 
-                Cash(BillIndex).Text = FileObject.Text
+                    Clouds(CloudIndex).Position.X = FileObject.Rect.X
+                    Clouds(CloudIndex).Position.Y = FileObject.Rect.Y
 
+                    Clouds(CloudIndex).Rect.Width = FileObject.Rect.Width
+                    Clouds(CloudIndex).Rect.Height = FileObject.Rect.Height
 
-                Cash(BillIndex).Collected = False
+                    Clouds(CloudIndex).Text = FileObject.Text
 
-            End If
+            End Select
 
-            'Load Bushes
-            If FileObject.ID = ObjectID.Bush Then
 
-                BushIndex += 1 'Add a bush to the bushes array.
 
-                ReDim Preserve Bushes(BushIndex) 'Resize the bushes array.
 
-                Bushes(BushIndex).ID = FileObject.ID
+            ''Load Blocks
+            ''Is the file object a block?
+            'If FileObject.ID = ObjectID.Block Then
+            '    'Yes, the file object is a block.
 
+            '    'Add a Block to Blocks
+            '    BlockIndex += 1
 
-                Bushes(BushIndex).Rect.X = FileObject.Rect.X
+            '    'Resize Blocks
+            '    ReDim Preserve Blocks(BlockIndex)
 
-                Bushes(BushIndex).Rect.Y = FileObject.Rect.Y
+            '    'Load ID
+            '    Blocks(BlockIndex).ID = FileObject.ID
 
+            '    'Load Position
+            '    Blocks(BlockIndex).Rect.X = FileObject.Rect.X
+            '    Blocks(BlockIndex).Rect.Y = FileObject.Rect.Y
 
-                Bushes(BushIndex).Position.X = FileObject.Rect.X
+            '    'Load Position
+            '    Blocks(BlockIndex).Position.X = FileObject.Rect.X
+            '    Blocks(BlockIndex).Position.Y = FileObject.Rect.Y
 
-                Bushes(BushIndex).Position.Y = FileObject.Rect.Y
+            '    'Load Size
+            '    Blocks(BlockIndex).Rect.Width = FileObject.Rect.Width
+            '    Blocks(BlockIndex).Rect.Height = FileObject.Rect.Height
 
+            '    Blocks(BlockIndex).Text = FileObject.Text
 
-                Bushes(BushIndex).Rect.Width = FileObject.Rect.Width
+            'End If
 
-                Bushes(BushIndex).Rect.Height = FileObject.Rect.Height
+            ''Load Bills
+            ''Is the file object a bill?
+            'If FileObject.ID = ObjectID.Bill Then
+            '    'Yes, the file object is a bill.
 
+            '    'Add a Bill to Cash
+            '    BillIndex += 1
 
-                Bushes(BushIndex).Text = FileObject.Text
+            '    'Resize cash array
+            '    ReDim Preserve Cash(BillIndex)
 
-            End If
+            '    'Load ID
+            '    Cash(BillIndex).ID = FileObject.ID
 
-            'Load Clouds
-            If FileObject.ID = ObjectID.Cloud Then
+            '    'Load Position
+            '    Cash(BillIndex).Rect.X = FileObject.Rect.X
+            '    Cash(BillIndex).Rect.Y = FileObject.Rect.Y
 
-                CloudIndex += 1 'Add a cloud to the clouds array.
+            '    'Load Position
+            '    Cash(BillIndex).Position.X = FileObject.Rect.X
+            '    Cash(BillIndex).Position.Y = FileObject.Rect.Y
 
-                ReDim Preserve Clouds(CloudIndex) 'Resize the clouds array.
+            '    'Load Size
+            '    Cash(BillIndex).Rect.Width = FileObject.Rect.Width
+            '    Cash(BillIndex).Rect.Height = FileObject.Rect.Height
 
-                Clouds(CloudIndex).ID = FileObject.ID
+            '    Cash(BillIndex).Text = FileObject.Text
 
+            '    Cash(BillIndex).Collected = False
 
-                Clouds(CloudIndex).Rect.X = FileObject.Rect.X
+            'End If
 
-                Clouds(CloudIndex).Rect.Y = FileObject.Rect.Y
+            ''Load Bushes
+            'If FileObject.ID = ObjectID.Bush Then
 
+            '    BushIndex += 1
 
-                Clouds(CloudIndex).Position.X = FileObject.Rect.X
+            '    'Resize the bushes array
+            '    ReDim Preserve Bushes(BushIndex)
 
-                Clouds(CloudIndex).Position.Y = FileObject.Rect.Y
+            '    Bushes(BushIndex).ID = FileObject.ID
 
 
-                Clouds(CloudIndex).Rect.Width = FileObject.Rect.Width
+            '    Bushes(BushIndex).Rect.X = FileObject.Rect.X
 
-                Clouds(CloudIndex).Rect.Height = FileObject.Rect.Height
+            '    Bushes(BushIndex).Rect.Y = FileObject.Rect.Y
 
 
-                Clouds(CloudIndex).Text = FileObject.Text
+            '    Bushes(BushIndex).Position.X = FileObject.Rect.X
 
-            End If
+            '    Bushes(BushIndex).Position.Y = FileObject.Rect.Y
+
+
+            '    Bushes(BushIndex).Rect.Width = FileObject.Rect.Width
+
+            '    Bushes(BushIndex).Rect.Height = FileObject.Rect.Height
+
+
+            '    Bushes(BushIndex).Text = FileObject.Text
+
+            'End If
+
+            ''Load Clouds
+            'If FileObject.ID = ObjectID.Cloud Then
+
+            '    CloudIndex += 1 'Add a cloud to the clouds array.
+
+            '    ReDim Preserve Clouds(CloudIndex) 'Resize the clouds array.
+
+            '    Clouds(CloudIndex).ID = FileObject.ID
+
+
+            '    Clouds(CloudIndex).Rect.X = FileObject.Rect.X
+
+            '    Clouds(CloudIndex).Rect.Y = FileObject.Rect.Y
+
+
+            '    Clouds(CloudIndex).Position.X = FileObject.Rect.X
+
+            '    Clouds(CloudIndex).Position.Y = FileObject.Rect.Y
+
+
+            '    Clouds(CloudIndex).Rect.Width = FileObject.Rect.Width
+
+            '    Clouds(CloudIndex).Rect.Height = FileObject.Rect.Height
+
+
+            '    Clouds(CloudIndex).Text = FileObject.Text
+
+            'End If
 
         Next
 

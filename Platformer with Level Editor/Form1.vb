@@ -225,6 +225,8 @@ Public Class Form1
 
     Private GameLoopCancellationToken As New CancellationTokenSource()
 
+    Private IsFileLoaded As Boolean = False
+
     <DllImport("XInput1_4.dll")>
     Private Shared Function XInputGetState(dwUserIndex As Integer, ByRef pState As XINPUT_STATE) As Integer
     End Function
@@ -1663,7 +1665,15 @@ Public Class Form1
 
                     OpenTestLevelFile(OpenFileDialog1.FileName)
 
-                    Text = Path.GetFileName(OpenFileDialog1.FileName) & " - Platformer with Level Editor - Code with Joe"
+                    If IsFileLoaded = True Then
+
+                        Text = Path.GetFileName(OpenFileDialog1.FileName) & " - Platformer with Level Editor - Code with Joe"
+
+                    Else
+
+                        Text = "Platformer with Level Editor - Code with Joe"
+
+                    End If
 
                     LastFrame = Now
 
@@ -2077,6 +2087,8 @@ Public Class Form1
 
         FileOpen(File_Number, FilePath, OpenMode.Input)
 
+        IsFileLoaded = True
+
         'Read objects from file
         Do Until EOF(File_Number)
 
@@ -2086,18 +2098,31 @@ Public Class Form1
 
             With FileObjects(Index)
 
-                'Read ID
-                FileSystem.Input(File_Number, .ID)
+                Try
 
-                'Read Position
-                FileSystem.Input(File_Number, .Rect.X)
-                FileSystem.Input(File_Number, .Rect.Y)
+                    'Read ID
+                    FileSystem.Input(File_Number, .ID)
 
-                'Read Size
-                FileSystem.Input(File_Number, .Rect.Width)
-                FileSystem.Input(File_Number, .Rect.Height)
+                    'Read Position
+                    FileSystem.Input(File_Number, .Rect.X)
+                    FileSystem.Input(File_Number, .Rect.Y)
 
-                FileSystem.Input(File_Number, .Text)
+                    'Read Size
+                    FileSystem.Input(File_Number, .Rect.Width)
+                    FileSystem.Input(File_Number, .Rect.Height)
+
+                    'Read Text
+                    FileSystem.Input(File_Number, .Text)
+
+                Catch ex As Exception
+
+                    IsFileLoaded = False
+
+                    MsgBox("Invaild File Structure", MsgBoxStyle.Critical, "File Error")
+
+                    Exit Do
+
+                End Try
 
             End With
 
@@ -2111,7 +2136,7 @@ Public Class Form1
 
         Else
 
-            'Clear object arrays.
+            'Clear Objects
             Blocks = Nothing
             Cash = Nothing
             Bushes = Nothing
@@ -2123,13 +2148,13 @@ Public Class Form1
 
     Private Sub LoadGameObjects()
 
-        'Init array indexs.
+        'Initialize Indices
         Dim BlockIndex As Integer = -1
         Dim BillIndex As Integer = -1
         Dim BushIndex As Integer = -1
         Dim CloudIndex As Integer = -1
 
-        'Clear object arrays.
+        'Clear Objects
         Blocks = Nothing
         Cash = Nothing
         Bushes = Nothing
@@ -2162,6 +2187,7 @@ Public Class Form1
                     Blocks(BlockIndex).Rect.Width = FileObject.Rect.Width
                     Blocks(BlockIndex).Rect.Height = FileObject.Rect.Height
 
+                    'Load Text
                     Blocks(BlockIndex).Text = FileObject.Text
 
                 Case ObjectID.Bill
@@ -2169,65 +2195,80 @@ Public Class Form1
                     'Add a Bill to Cash
                     BillIndex += 1
 
-                    'Resize cash array
+                    'Resize Cash
                     ReDim Preserve Cash(BillIndex)
 
                     'Load ID
                     Cash(BillIndex).ID = FileObject.ID
 
-                    'Load Position
+                    'Load Rect Position
                     Cash(BillIndex).Rect.X = FileObject.Rect.X
                     Cash(BillIndex).Rect.Y = FileObject.Rect.Y
 
-                    'Load Position
+                    'Load Vec2 Position
                     Cash(BillIndex).Position.X = FileObject.Rect.X
                     Cash(BillIndex).Position.Y = FileObject.Rect.Y
 
-                    'Load Size
+                    'Load Rect Size
                     Cash(BillIndex).Rect.Width = FileObject.Rect.Width
                     Cash(BillIndex).Rect.Height = FileObject.Rect.Height
 
+                    'Load Text
                     Cash(BillIndex).Text = FileObject.Text
 
+                    'Initialize Collected
                     Cash(BillIndex).Collected = False
 
                 Case ObjectID.Bush
 
+                    'Add a Bush to Bushes
                     BushIndex += 1
 
-                    'Resize the bushes array
+                    'Resize Bushes
                     ReDim Preserve Bushes(BushIndex)
 
+                    'Load ID
                     Bushes(BushIndex).ID = FileObject.ID
 
+                    'Load Rect Position
                     Bushes(BushIndex).Rect.X = FileObject.Rect.X
                     Bushes(BushIndex).Rect.Y = FileObject.Rect.Y
 
+                    'Load Vec2 Position
                     Bushes(BushIndex).Position.X = FileObject.Rect.X
                     Bushes(BushIndex).Position.Y = FileObject.Rect.Y
 
+                    'Load Rect Size
                     Bushes(BushIndex).Rect.Width = FileObject.Rect.Width
                     Bushes(BushIndex).Rect.Height = FileObject.Rect.Height
 
+                    'Load Text
                     Bushes(BushIndex).Text = FileObject.Text
 
                 Case ObjectID.Cloud
 
-                    CloudIndex += 1 'Add a cloud to the clouds array.
+                    'Add a Cloud to Clouds
+                    CloudIndex += 1
 
-                    ReDim Preserve Clouds(CloudIndex) 'Resize the clouds array.
+                    'Resize Clouds
+                    ReDim Preserve Clouds(CloudIndex)
 
+                    'Load ID
                     Clouds(CloudIndex).ID = FileObject.ID
 
+                    'Load Rect Position
                     Clouds(CloudIndex).Rect.X = FileObject.Rect.X
                     Clouds(CloudIndex).Rect.Y = FileObject.Rect.Y
 
+                    'Load Vec2 Position
                     Clouds(CloudIndex).Position.X = FileObject.Rect.X
                     Clouds(CloudIndex).Position.Y = FileObject.Rect.Y
 
+                    'Load Rect Size
                     Clouds(CloudIndex).Rect.Width = FileObject.Rect.Width
                     Clouds(CloudIndex).Rect.Height = FileObject.Rect.Height
 
+                    'Load Text
                     Clouds(CloudIndex).Text = FileObject.Text
 
             End Select

@@ -327,7 +327,7 @@ Public Class Form1
     Private Shared Function SendInput(nInputs As UInteger, pInputs As INPUTStruc(), cbSize As Integer) As UInteger
     End Function
 
-    Public Shared Sub ClickMouseLeft()
+    Private Shared Sub ClickMouseLeft()
         ' Simulate a left mouse button down event
         Dim inputDown As New INPUTStruc()
         inputDown.type = INPUT_MOUSE
@@ -342,7 +342,7 @@ Public Class Form1
         Dim inputs As INPUTStruc() = {inputDown, inputUp}
         SendInput(CUInt(inputs.Length), inputs, Marshal.SizeOf(GetType(INPUTStruc)))
     End Sub
-    Public Shared Sub DoMouseLeftDown()
+    Private Shared Sub DoMouseLeftDown()
 
         ' Simulate a left mouse button down event
         Dim inputDown As New INPUTStruc()
@@ -355,7 +355,7 @@ Public Class Form1
 
     End Sub
 
-    Public Shared Sub DoMouseLeftUp()
+    Private Shared Sub DoMouseLeftUp()
 
         ' Simulate a left mouse button up event
         Dim inputUp As New INPUTStruc()
@@ -441,9 +441,9 @@ Public Class Form1
     Private Sub InitializeToolBarButtons()
 
         EditPlayButton.Rect = New Rectangle(ClientRectangle.Left + 210,
-                                                    ClientRectangle.Bottom - 90,
-                                                    120,
-                                                    100)
+                                            ClientRectangle.Bottom - 90,
+                                            120,
+                                            100)
 
         SaveButton.Rect = New Rectangle(ClientRectangle.Right - 210,
                                         ClientRectangle.Bottom - 90,
@@ -590,9 +590,6 @@ Public Class Form1
 
     End Sub
 
-
-
-
     Private Sub UpdateLeftThumbstickPosition()
         'The range on the X-axis is -32,768 through 32,767. Signed 16-bit (2-byte) integer.
         'The range on the Y-axis is -32,768 through 32,767. Signed 16-bit (2-byte) integer.
@@ -650,13 +647,6 @@ Public Class Form1
         End If
 
     End Sub
-
-
-
-
-
-
-
 
     Private Sub UpdateDeltaTime()
         'Delta time (Δt) is the elapsed time since the last frame.
@@ -2089,7 +2079,7 @@ Public Class Form1
 
         IsFileLoaded = True
 
-        'Read objects from file
+        'Read Objects from File
         Do Until EOF(File_Number)
 
             Index += 1

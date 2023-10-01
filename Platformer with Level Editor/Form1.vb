@@ -142,6 +142,11 @@ Public Class Form1
 
     Private BlockToolIcon As GameObject
 
+    Private BillToolButton As GameObject
+
+    Private BillToolIcon As GameObject
+
+
     Private SelectedTool As Tools = Tools.Pointer
 
     Private ShowToolPreview As Boolean = False
@@ -197,6 +202,13 @@ Public Class Form1
     Private CashCollectedPostion As New Point(0, 0)
 
     Private ReadOnly PointerToolFont As New Font(New FontFamily("Wingdings"), 25, FontStyle.Bold)
+
+
+
+
+    Private ReadOnly BillIconFont As New Font(FontFamily.GenericSansSerif, 16, FontStyle.Regular)
+
+
 
     Private ReadOnly TitleFont As New Font(New FontFamily("Bahnschrift"), 38, FontStyle.Bold)
 
@@ -296,7 +308,6 @@ Public Class Form1
 
     Private IsBackgroundLoopPlaying As Boolean = False
 
-
     <StructLayout(LayoutKind.Sequential)>
     Private Structure INPUTStruc
         Public type As UInteger
@@ -358,7 +369,7 @@ Public Class Form1
     Private Shared Sub DoMouseLeftUp()
 
         ' Simulate a left mouse button up event
-        Dim inputUp As New INPUTStruc()
+        Dim inputUp As New INPUTStruc
         inputUp.type = INPUT_MOUSE
         inputUp.union.mi.dwFlags = MOUSEEVENTF_LEFTUP
 
@@ -1079,6 +1090,9 @@ Public Class Form1
 
         DrawBlockToolButton()
 
+        DrawBillToolButton()
+
+
     End Sub
 
     Private Sub DrawOurHero()
@@ -1289,7 +1303,19 @@ Public Class Form1
 
             If ShowToolPreview = True Then
 
-                .FillRectangle(Brushes.Chocolate, ToolPreview)
+                Select Case SelectedTool
+
+                    Case Tools.Block
+
+                        .FillRectangle(Brushes.Chocolate, ToolPreview)
+
+                    Case Tools.Bill
+
+                        .FillRectangle(Brushes.Goldenrod, ToolPreview)
+
+                        .DrawString("$", FPSFont, Brushes.OrangeRed, ToolPreview, AlineCenterMiddle)
+
+                End Select
 
             End If
 
@@ -1343,6 +1369,32 @@ Public Class Form1
                 .FillRectangle(Brushes.Black, BlockToolButton.Rect)
 
                 .FillRectangle(Brushes.Chocolate, BlockToolIcon.Rect)
+
+            End If
+
+        End With
+
+    End Sub
+
+    Private Sub DrawBillToolButton()
+
+        With Buffer.Graphics
+
+            If SelectedTool = Tools.Bill Then
+
+                .FillRectangle(DarkCharcoalGreyBrush, BillToolButton.Rect)
+
+                .FillRectangle(Brushes.Goldenrod, BillToolIcon.Rect)
+
+                .DrawString("$", BillIconFont, Brushes.OrangeRed, BillToolButton.Rect, AlineCenterMiddle)
+
+            Else
+
+                .FillRectangle(Brushes.Black, BillToolButton.Rect)
+
+                .FillRectangle(Brushes.Goldenrod, BillToolIcon.Rect)
+
+                .DrawString("$", BillIconFont, Brushes.OrangeRed, BillToolIcon.Rect, AlineCenterMiddle)
 
             End If
 
@@ -1416,6 +1468,31 @@ Public Class Form1
 
         Blocks(Blocks.Length - 1).Position.X = Location.X
         Blocks(Blocks.Length - 1).Position.Y = Location.Y
+
+    End Sub
+
+
+    Private Sub AddBill(Location As Point)
+
+        If Cash IsNot Nothing Then
+
+            Array.Resize(Cash, Cash.Length + 1)
+
+        Else
+
+            ReDim Cash(0)
+
+        End If
+
+        'Init Bill
+        Cash(Cash.Length - 1).Rect.Location = Location
+
+        Cash(Cash.Length - 1).Rect.Size = New Size(GridSize, GridSize)
+
+        Cash(Cash.Length - 1).Position.X = Location.X
+        Cash(Cash.Length - 1).Position.Y = Location.Y
+
+        Cash(Cash.Length - 1).Collected = False
 
     End Sub
 
@@ -1593,6 +1670,13 @@ Public Class Form1
 
         BlockToolIcon.Rect = New Rectangle(ClientRectangle.Left + 447, ClientRectangle.Bottom - 65, 40, 40)
 
+
+        BillToolButton.Rect = New Rectangle(ClientRectangle.Left + 513, ClientRectangle.Bottom - 90, 90, 90)
+
+        BillToolIcon.Rect = New Rectangle(ClientRectangle.Left + 538, ClientRectangle.Bottom - 65, 40, 40)
+
+
+
         Title.Rect = New Rectangle(ClientRectangle.Left, ClientRectangle.Top, ClientRectangle.Width, ClientRectangle.Height)
 
         StartScreenNewButton.Rect = New Rectangle(ClientRectangle.Width \ 2 - 200, ClientRectangle.Height \ 2 + 100, 150, 90)
@@ -1746,6 +1830,40 @@ Public Class Form1
 
         End If
 
+        If BillToolButton.Rect.Contains(e) Then
+
+            'Deselect game objects.
+            SelectedBlock = -1
+            SelectedBill = -1
+            SelectedCloud = -1
+            SelectedBush = -1
+
+            'Snap preview to grid.
+            ToolPreview.X = CInt(Math.Round(e.X / GridSize)) * GridSize
+            ToolPreview.Y = CInt(Math.Round(e.Y / GridSize)) * GridSize
+
+            ToolPreview.Width = GridSize
+            ToolPreview.Height = GridSize
+
+            SelectedTool = Tools.Bill
+
+            ShowToolPreview = True
+
+
+        End If
+
+
+
+
+
+
+
+
+
+
+
+
+
         'Is the player clicking the save button?
         If SaveButton.Rect.Contains(e) Then
             'Yes, the player is clicking the save button.
@@ -1840,30 +1958,75 @@ Public Class Form1
                 If ToolBarBackground.Rect.Contains(e) = False Then
                     'No, the player is NOT over the toolbar.
 
-                    If SelectedTool = Tools.Block Then
 
-                        'Snap block to grid.
-                        AddBlock(New Point(CInt(Math.Round(e.X / GridSize) * GridSize),
-                                   CInt(Math.Round(e.Y / GridSize) * GridSize)))
+                    Select Case SelectedTool
 
-                        'Change tool to the mouse pointer.
-                        SelectedTool = Tools.Pointer
+                        Case Tools.Block
 
-                        'Turn tool preview off.
-                        ShowToolPreview = False
+                            'Snap block to grid.
+                            AddBlock(New Point(CInt(Math.Round(e.X / GridSize) * GridSize),
+                                       CInt(Math.Round(e.Y / GridSize) * GridSize)))
 
-                        'Select the newly created block.
-                        SelectedBlock = Blocks.Length - 1
+                            'Change tool to the mouse pointer.
+                            SelectedTool = Tools.Pointer
 
-                    Else
+                            'Turn tool preview off.
+                            ShowToolPreview = False
 
-                        'Deselect game objects.
-                        SelectedBlock = -1
-                        SelectedBill = -1
-                        SelectedCloud = -1
-                        SelectedBush = -1
+                            'Select the newly created block.
+                            SelectedBlock = Blocks.Length - 1
 
-                    End If
+                        Case Tools.Bill
+
+                            'Snap block to grid.
+                            AddBill(New Point(CInt(Math.Round(e.X / GridSize) * GridSize),
+                                       CInt(Math.Round(e.Y / GridSize) * GridSize)))
+
+                            'Change tool to the mouse pointer.
+                            SelectedTool = Tools.Pointer
+
+                            'Turn tool preview off.
+                            ShowToolPreview = False
+
+                            'Select the newly created bill.
+                            SelectedBill = Cash.Length - 1
+
+                        Case Else
+
+                            'Deselect game objects.
+                            SelectedBlock = -1
+                            SelectedBill = -1
+                            SelectedCloud = -1
+                            SelectedBush = -1
+
+                    End Select
+
+
+
+                    'If SelectedTool = Tools.Block Then
+
+                    '    'Snap block to grid.
+                    '    AddBlock(New Point(CInt(Math.Round(e.X / GridSize) * GridSize),
+                    '               CInt(Math.Round(e.Y / GridSize) * GridSize)))
+
+                    '    'Change tool to the mouse pointer.
+                    '    SelectedTool = Tools.Pointer
+
+                    '    'Turn tool preview off.
+                    '    ShowToolPreview = False
+
+                    '    'Select the newly created block.
+                    '    SelectedBlock = Blocks.Length - 1
+
+                    'Else
+
+                    '    'Deselect game objects.
+                    '    SelectedBlock = -1
+                    '    SelectedBill = -1
+                    '    SelectedCloud = -1
+                    '    SelectedBush = -1
+
+                    'End If
 
                 End If
 
@@ -2281,22 +2444,56 @@ Public Class Form1
 
         If e.Button = MouseButtons.None Then
 
-            If SelectedTool = Tools.Block Then
+            Select Case SelectedTool
 
-                If ToolBarBackground.Rect.Contains(e.Location) = False Then
+                Case Tools.Block
 
-                    ShowToolPreview = True
+                    If ToolBarBackground.Rect.Contains(e.Location) = False Then
 
-                    ToolPreview.X = CInt(Math.Round(e.X / GridSize)) * GridSize
-                    ToolPreview.Y = CInt(Math.Round(e.Y / GridSize)) * GridSize
+                        ShowToolPreview = True
 
-                Else
+                        ToolPreview.X = CInt(Math.Round(e.X / GridSize)) * GridSize
+                        ToolPreview.Y = CInt(Math.Round(e.Y / GridSize)) * GridSize
 
-                    ShowToolPreview = False
+                    Else
 
-                End If
+                        ShowToolPreview = False
 
-            End If
+                    End If
+
+                Case Tools.Bill
+
+                    If ToolBarBackground.Rect.Contains(e.Location) = False Then
+
+                        ShowToolPreview = True
+
+                        ToolPreview.X = CInt(Math.Round(e.X / GridSize)) * GridSize
+                        ToolPreview.Y = CInt(Math.Round(e.Y / GridSize)) * GridSize
+
+                    Else
+
+                        ShowToolPreview = False
+
+                    End If
+
+            End Select
+
+            'If SelectedTool = Tools.Block Then
+
+            '    If ToolBarBackground.Rect.Contains(e.Location) = False Then
+
+            '        ShowToolPreview = True
+
+            '        ToolPreview.X = CInt(Math.Round(e.X / GridSize)) * GridSize
+            '        ToolPreview.Y = CInt(Math.Round(e.Y / GridSize)) * GridSize
+
+            '    Else
+
+            '        ShowToolPreview = False
+
+            '    End If
+
+            'End If
 
         End If
 

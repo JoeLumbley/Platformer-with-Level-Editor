@@ -39,7 +39,6 @@ Imports System.IO
 Imports System.Numerics
 Imports System.Runtime.InteropServices
 Imports System.Threading
-Imports System.Windows
 
 Public Class Form1
 
@@ -146,7 +145,6 @@ Public Class Form1
 
     Private BillToolIcon As GameObject
 
-
     Private SelectedTool As Tools = Tools.Pointer
 
     Private ShowToolPreview As Boolean = False
@@ -203,12 +201,7 @@ Public Class Form1
 
     Private ReadOnly PointerToolFont As New Font(New FontFamily("Wingdings"), 25, FontStyle.Bold)
 
-
-
-
     Private ReadOnly BillIconFont As New Font(FontFamily.GenericSansSerif, 16, FontStyle.Regular)
-
-
 
     Private ReadOnly TitleFont As New Font(New FontFamily("Bahnschrift"), 38, FontStyle.Bold)
 
@@ -2001,33 +1994,6 @@ Public Class Form1
 
                     End Select
 
-
-
-                    'If SelectedTool = Tools.Block Then
-
-                    '    'Snap block to grid.
-                    '    AddBlock(New Point(CInt(Math.Round(e.X / GridSize) * GridSize),
-                    '               CInt(Math.Round(e.Y / GridSize) * GridSize)))
-
-                    '    'Change tool to the mouse pointer.
-                    '    SelectedTool = Tools.Pointer
-
-                    '    'Turn tool preview off.
-                    '    ShowToolPreview = False
-
-                    '    'Select the newly created block.
-                    '    SelectedBlock = Blocks.Length - 1
-
-                    'Else
-
-                    '    'Deselect game objects.
-                    '    SelectedBlock = -1
-                    '    SelectedBill = -1
-                    '    SelectedCloud = -1
-                    '    SelectedBush = -1
-
-                    'End If
-
                 End If
 
             End If
@@ -2477,23 +2443,6 @@ Public Class Form1
                     End If
 
             End Select
-
-            'If SelectedTool = Tools.Block Then
-
-            '    If ToolBarBackground.Rect.Contains(e.Location) = False Then
-
-            '        ShowToolPreview = True
-
-            '        ToolPreview.X = CInt(Math.Round(e.X / GridSize)) * GridSize
-            '        ToolPreview.Y = CInt(Math.Round(e.Y / GridSize)) * GridSize
-
-            '    Else
-
-            '        ShowToolPreview = False
-
-            '    End If
-
-            'End If
 
         End If
 

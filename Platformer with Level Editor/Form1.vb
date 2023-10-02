@@ -1085,7 +1085,6 @@ Public Class Form1
 
         DrawBillToolButton()
 
-
     End Sub
 
     Private Sub DrawOurHero()
@@ -1464,7 +1463,6 @@ Public Class Form1
 
     End Sub
 
-
     Private Sub AddBill(Location As Point)
 
         If Cash IsNot Nothing Then
@@ -1495,7 +1493,6 @@ Public Class Form1
         Blocks = Blocks.Where(Function(e, i) i <> Index).ToArray()
 
     End Sub
-
 
     Private Sub RemoveBill(Index As Integer)
 
@@ -1663,12 +1660,9 @@ Public Class Form1
 
         BlockToolIcon.Rect = New Rectangle(ClientRectangle.Left + 447, ClientRectangle.Bottom - 65, 40, 40)
 
-
         BillToolButton.Rect = New Rectangle(ClientRectangle.Left + 513, ClientRectangle.Bottom - 90, 90, 90)
 
         BillToolIcon.Rect = New Rectangle(ClientRectangle.Left + 538, ClientRectangle.Bottom - 65, 40, 40)
-
-
 
         Title.Rect = New Rectangle(ClientRectangle.Left, ClientRectangle.Top, ClientRectangle.Width, ClientRectangle.Height)
 
@@ -1844,18 +1838,6 @@ Public Class Form1
 
 
         End If
-
-
-
-
-
-
-
-
-
-
-
-
 
         'Is the player clicking the save button?
         If SaveButton.Rect.Contains(e) Then
@@ -2702,8 +2684,6 @@ Public Class Form1
 
                     End If
 
-
-
                 End If
 
                 If IsStartDown = True Then
@@ -2711,8 +2691,6 @@ Public Class Form1
                     IsStartDown = False
 
                 End If
-
-
 
             Case 1 'Up
 
@@ -2933,9 +2911,6 @@ Public Class Form1
 
             Case 16 'Start
 
-
-
-
                 Select Case GameState
 
                     Case AppState.Playing
@@ -2962,7 +2937,6 @@ Public Class Form1
                         End If
 
                 End Select
-
 
             Case 32 'Back
             Case 64 'Left Stick
@@ -3004,7 +2978,6 @@ Public Class Form1
                     End If
 
                 End If
-
 
             Case 512 'Right bumper
                 'The player pushed the right bumper down.
@@ -3282,7 +3255,6 @@ Public Class Form1
 
                 ControllerB = False
 
-
                 If GameState = AppState.Editing Then
                     If IsMouseDown = False Then
 
@@ -3294,7 +3266,6 @@ Public Class Form1
 
                     'Move mouse pointer to the left.
                     Cursor.Position = New Point(Cursor.Position.X - 2, Cursor.Position.Y + 2)
-
 
                 End If
 

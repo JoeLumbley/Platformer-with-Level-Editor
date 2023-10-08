@@ -122,12 +122,7 @@ Public Class Form1
 
     Private OurHero As GameObject
 
-
-
     Private Goal As GameObject
-
-
-
 
     Private Platforms() As GameObject
 
@@ -213,12 +208,9 @@ Public Class Form1
 
     Private ReadOnly PointerToolFont As New Font(New FontFamily("Wingdings"), 25, FontStyle.Bold)
 
+    Private ReadOnly GoalToolFont As New Font(New FontFamily("Wingdings"), 25, FontStyle.Bold)
 
-    Private ReadOnly GoalToolFont As New Font(New FontFamily("Wingdings"), 25, FontStyle.Bold) 'O
-
-    Private ReadOnly GoalFont As New Font(New FontFamily("Wingdings"), 35, FontStyle.Regular) 'O
-
-
+    Private ReadOnly GoalFont As New Font(New FontFamily("Wingdings"), 35, FontStyle.Regular)
 
     Private ReadOnly BillIconFont As New Font(FontFamily.GenericSansSerif, 16, FontStyle.Regular)
 
@@ -325,8 +317,6 @@ Public Class Form1
     Private ClearScreenTimerStart As DateTime
 
     Private StopClearScreenTimer As Boolean = True
-
-
 
     <StructLayout(LayoutKind.Sequential)>
     Private Structure INPUTStruc
@@ -450,8 +440,6 @@ Public Class Form1
 
     Private Sub InitializeApp()
 
-        'InitializeGameObjects()
-
         InitializeToolBarButtons()
 
         InitializeForm()
@@ -461,11 +449,6 @@ Public Class Form1
         Title.Text = "Platformer" & vbCrLf & "with Level Editor"
 
         OutinePen.LineJoin = Drawing2D.LineJoin.Round
-
-        'My.Computer.Audio.Play(My.Resources.level,
-        'AudioPlayMode.BackgroundLoop)
-
-        'IsBackgroundLoopPlaying = True
 
     End Sub
 
@@ -494,13 +477,7 @@ Public Class Form1
 
         OurHero.Acceleration = New PointF(300, 300)
 
-
-
         Goal.Rect = New Rectangle(1500, 768, 64, 64)
-
-
-
-
 
         ReDim Blocks(0)
         Blocks(Blocks.Length - 1).Rect = New Rectangle(0, 832, 2000, 64)
@@ -630,7 +607,6 @@ Public Class Form1
         End If
 
     End Sub
-
 
     Private Sub UpdateControllerData()
 
@@ -824,17 +800,11 @@ Public Class Form1
 
         If OurHero.Rect.IntersectsWith(Goal.Rect) = True Then
 
-            'Text
-
             If GameState = AppState.Playing Then
-
-
 
                 ClearScreenTimerStart = Now
 
                 StopClearScreenTimer = False
-
-
 
                 If IsBackgroundLoopPlaying = True Then
 
@@ -844,9 +814,7 @@ Public Class Form1
 
                 End If
 
-
                 GameState = AppState.Clear
-
 
             End If
 
@@ -1145,11 +1113,7 @@ Public Class Form1
 
         DrawOurHero()
 
-
     End Sub
-
-
-
 
     Private Sub DrawStartScreen()
 
@@ -1175,15 +1139,7 @@ Public Class Form1
 
         DrawCash()
 
-
-
-
-
         DrawGoal()
-
-
-
-
 
         DrawOurHero()
 
@@ -1255,16 +1211,6 @@ Public Class Form1
 
     End Sub
 
-
-
-
-
-
-
-
-
-
-
     Private Sub DrawGoal()
 
         If Buffer.Graphics IsNot Nothing Then
@@ -1306,15 +1252,6 @@ Public Class Form1
         End If
 
     End Sub
-
-
-
-
-
-
-
-
-
 
     Private Sub DrawBlocks()
 
@@ -1627,7 +1564,6 @@ Public Class Form1
         End With
 
     End Sub
-
 
     Private Sub DrawSaveButton()
 
@@ -1952,7 +1888,6 @@ Public Class Form1
 
             InitializeGameObjects()
 
-
             OpenFileDialog1.FileName = ""
             OpenFileDialog1.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
             OpenFileDialog1.FilterIndex = 1
@@ -1972,21 +1907,11 @@ Public Class Form1
 
                         Text = "Platformer with Level Editor - Code with Joe"
 
-                        'InitializeGameObjects()
-
-
                     End If
 
                     LastFrame = Now
 
                     CashCollected = 0
-
-                    'For Each Bill In Cash
-
-                    '    Bill.Collected = False
-
-                    'Next
-
 
                     GameState = AppState.Playing
 
@@ -2004,8 +1929,6 @@ Public Class Form1
         'New Button
         If StartScreenNewButton.Rect.Contains(e.Location) Then
 
-            'Text = "Platformer with Level Editor - Code with Joe"
-
             InitializeGameObjects()
 
             LastFrame = Now
@@ -2020,7 +1943,6 @@ Public Class Form1
             IsBackgroundLoopPlaying = True
 
             Text = "Platformer with Level Editor - Code with Joe"
-
 
         End If
 
@@ -2104,7 +2026,6 @@ Public Class Form1
             SelectedTool = Tools.Bill
 
             ShowToolPreview = True
-
 
         End If
 
@@ -2443,11 +2364,6 @@ Public Class Form1
 
         End If
 
-
-
-
-
-
         'Write Goal to File
         'Write ID
         Write(File_Number, ObjectID.Goal)
@@ -2461,10 +2377,6 @@ Public Class Form1
         Write(File_Number, Goal.Rect.Height)
 
         Write(File_Number, "Goal")
-
-
-
-
 
         FileClose(File_Number)
 
@@ -3715,5 +3627,3 @@ Public Class Form1
     End Sub
 
 End Class
-
-

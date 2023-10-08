@@ -46,6 +46,7 @@ Public Class Form1
         Start
         Playing
         Editing
+        Clear
     End Enum
 
     Private Enum ObjectID As Integer
@@ -54,12 +55,16 @@ Public Class Form1
         Bill
         Bush
         Cloud
+        Goal
     End Enum
 
     Private Enum Tools As Integer
         Pointer
         Block
         Bill
+        Bush
+        Cloud
+        Goal
     End Enum
 
     Private Structure GameObject
@@ -116,6 +121,13 @@ Public Class Form1
     Private Friction As Single = 1500
 
     Private OurHero As GameObject
+
+
+
+    Private Goal As GameObject
+
+
+
 
     Private Platforms() As GameObject
 
@@ -200,6 +212,13 @@ Public Class Form1
     Private CashCollectedPostion As New Point(0, 0)
 
     Private ReadOnly PointerToolFont As New Font(New FontFamily("Wingdings"), 25, FontStyle.Bold)
+
+
+    Private ReadOnly GoalToolFont As New Font(New FontFamily("Wingdings"), 25, FontStyle.Bold) 'O
+
+    Private ReadOnly GoalFont As New Font(New FontFamily("Wingdings"), 35, FontStyle.Regular) 'O
+
+
 
     Private ReadOnly BillIconFont As New Font(FontFamily.GenericSansSerif, 16, FontStyle.Regular)
 
@@ -300,6 +319,14 @@ Public Class Form1
     Private IsStartDown As Boolean = False
 
     Private IsBackgroundLoopPlaying As Boolean = False
+
+    Private ClearScreenTimer As TimeSpan
+
+    Private ClearScreenTimerStart As DateTime
+
+    Private StopClearScreenTimer As Boolean = True
+
+
 
     <StructLayout(LayoutKind.Sequential)>
     Private Structure INPUTStruc
@@ -423,7 +450,7 @@ Public Class Form1
 
     Private Sub InitializeApp()
 
-        InitializeGameObjects()
+        'InitializeGameObjects()
 
         InitializeToolBarButtons()
 
@@ -435,10 +462,10 @@ Public Class Form1
 
         OutinePen.LineJoin = Drawing2D.LineJoin.Round
 
-        My.Computer.Audio.Play(My.Resources.level,
-        AudioPlayMode.BackgroundLoop)
+        'My.Computer.Audio.Play(My.Resources.level,
+        'AudioPlayMode.BackgroundLoop)
 
-        IsBackgroundLoopPlaying = True
+        'IsBackgroundLoopPlaying = True
 
     End Sub
 
@@ -466,6 +493,14 @@ Public Class Form1
         OurHero.MaxVelocity = New PointF(400, 1000)
 
         OurHero.Acceleration = New PointF(300, 300)
+
+
+
+        Goal.Rect = New Rectangle(1500, 768, 64, 64)
+
+
+
+
 
         ReDim Blocks(0)
         Blocks(Blocks.Length - 1).Rect = New Rectangle(0, 832, 2000, 64)
@@ -539,9 +574,63 @@ Public Class Form1
 
                 UpdateControllerData()
 
+            Case AppState.Clear
+
+                'UpdateControllerData()
+
+                UpdateClearScreenTimer()
+
         End Select
 
     End Sub
+
+    Private Sub UpdateClearScreenTimer()
+
+        If StopClearScreenTimer = False Then
+
+            ClearScreenTimer = Now - ClearScreenTimerStart
+
+            If ClearScreenTimer.TotalMilliseconds > 2000 Then
+
+                StopClearScreenTimer = True
+
+                CashCollected = 0
+
+                Dim BillIndex As Integer = -1
+
+                For Each Bill In Cash
+
+                    BillIndex += 1
+
+                    If Bill.Collected = True Then
+
+                        Cash(BillIndex).Collected = False
+
+                    End If
+
+                Next
+
+                LastFrame = Now
+
+                OurHero.Rect = New Rectangle(100, 500, 64, 64)
+
+                OurHero.Position = New PointF(OurHero.Rect.X, OurHero.Rect.Y)
+
+                OurHero.Velocity = New PointF(0, 0)
+
+                GameState = AppState.Playing
+
+                My.Computer.Audio.Play(My.Resources.level,
+                                               AudioPlayMode.BackgroundLoop)
+
+                IsBackgroundLoopPlaying = True
+
+            End If
+
+        End If
+
+    End Sub
+
 
     Private Sub UpdateControllerData()
 
@@ -728,6 +817,36 @@ Public Class Form1
                 Cash(IsOnBill).Collected = True
 
                 CashCollected += 100
+
+            End If
+
+        End If
+
+        If OurHero.Rect.IntersectsWith(Goal.Rect) = True Then
+
+            'Text
+
+            If GameState = AppState.Playing Then
+
+
+
+                ClearScreenTimerStart = Now
+
+                StopClearScreenTimer = False
+
+
+
+                If IsBackgroundLoopPlaying = True Then
+
+                    My.Computer.Audio.Stop()
+
+                    IsBackgroundLoopPlaying = False
+
+                End If
+
+
+                GameState = AppState.Clear
+
 
             End If
 
@@ -1009,13 +1128,32 @@ Public Class Form1
 
                 DrawEditing()
 
+
+            Case AppState.Clear
+
+                DrawClearScreen
+
         End Select
 
     End Sub
 
+    Private Sub DrawClearScreen()
+
+        DrawBackground(Color.Black)
+
+        DrawClearTitle()
+
+        DrawOurHero()
+
+
+    End Sub
+
+
+
+
     Private Sub DrawStartScreen()
 
-        DrawBackground()
+        DrawBackground(Color.LightSkyBlue)
 
         DrawTitle()
 
@@ -1027,7 +1165,7 @@ Public Class Form1
 
     Private Sub DrawPlaying()
 
-        DrawBackground()
+        DrawBackground(Color.LightSkyBlue)
 
         DrawClouds()
 
@@ -1036,6 +1174,16 @@ Public Class Form1
         DrawBlocks()
 
         DrawCash()
+
+
+
+
+
+        DrawGoal()
+
+
+
+
 
         DrawOurHero()
 
@@ -1049,7 +1197,7 @@ Public Class Form1
 
     Private Sub DrawEditing()
 
-        DrawBackground()
+        DrawBackground(Color.LightSkyBlue)
 
         DrawGridLines()
 
@@ -1097,7 +1245,8 @@ Public Class Form1
 
             'Draw hero position
             .DrawString("X: " & OurHero.Position.X.ToString & vbCrLf & "Y: " & OurHero.Position.Y.ToString,
-                        CWJFont, Brushes.White,
+                        CWJFont,
+                        Brushes.White,
                         OurHero.Rect.X,
                         OurHero.Rect.Y - 50,
                         New StringFormat With {.Alignment = StringAlignment.Near})
@@ -1105,6 +1254,67 @@ Public Class Form1
         End With
 
     End Sub
+
+
+
+
+
+
+
+
+
+
+
+    Private Sub DrawGoal()
+
+        If Buffer.Graphics IsNot Nothing Then
+
+            With Buffer.Graphics
+
+                .FillRectangle(Brushes.White, Goal.Rect)
+
+                '' Define the rectangle to be filled
+                'Dim rect As RectangleF = Goal.Rect
+
+                '' Define the center point of the gradient
+                'Dim center As New PointF(rect.Left + rect.Width / 2.0F, rect.Top + rect.Height / 2.0F)
+
+                '' Define the colors for the gradient stops
+                'Dim colors() As Color = {Color.Yellow, Color.White}
+
+                '' Create the path for the gradient brush
+                'Dim path As New GraphicsPath()
+                'path.AddEllipse(rect)
+
+                '' Create the gradient brush
+                'Dim brush As New PathGradientBrush(path) With {
+                '    .CenterPoint = center,
+                '    .CenterColor = colors(0),
+                '    .SurroundColors = New Color() {colors(1)}
+                '}
+
+                '.FillRectangle(br, Goal.Rect)
+
+                .DrawString("«",
+                            GoalFont,
+                            Brushes.Green,
+                            Goal.Rect,
+                            AlineCenterMiddle)
+
+            End With
+
+        End If
+
+    End Sub
+
+
+
+
+
+
+
+
+
 
     Private Sub DrawBlocks()
 
@@ -1574,11 +1784,36 @@ Public Class Form1
 
     End Sub
 
-    Private Sub DrawBackground()
+    Private Sub DrawClearTitle()
 
         With Buffer.Graphics
 
-            .Clear(Color.LightSkyBlue)
+            'Draw drop shadow.
+            .DrawString("Level Clear!",
+                    TitleFont,
+                    New SolidBrush(Color.FromArgb(128, Color.White)),
+                    New Rectangle(Title.Rect.X + 5,
+                                  Title.Rect.Y + 5,
+                                  Title.Rect.Width,
+                                  Title.Rect.Height),
+                                  AlineCenterMiddle)
+
+            'Draw title.
+            .DrawString("Level Clear!",
+                    TitleFont,
+                    Brushes.White,
+                    Title.Rect,
+                    AlineCenterMiddle)
+
+        End With
+
+    End Sub
+
+    Private Sub DrawBackground(Color As Color)
+
+        With Buffer.Graphics
+
+            .Clear(Color) 'LightSkyBlue
 
         End With
 
@@ -1715,6 +1950,9 @@ Public Class Form1
         'Open Button
         If StartScreenOpenButton.Rect.Contains(e.Location) Then
 
+            InitializeGameObjects()
+
+
             OpenFileDialog1.FileName = ""
             OpenFileDialog1.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
             OpenFileDialog1.FilterIndex = 1
@@ -1734,11 +1972,28 @@ Public Class Form1
 
                         Text = "Platformer with Level Editor - Code with Joe"
 
+                        'InitializeGameObjects()
+
+
                     End If
 
                     LastFrame = Now
 
+                    CashCollected = 0
+
+                    'For Each Bill In Cash
+
+                    '    Bill.Collected = False
+
+                    'Next
+
+
                     GameState = AppState.Playing
+
+                    My.Computer.Audio.Play(My.Resources.level,
+                                           AudioPlayMode.BackgroundLoop)
+
+                    IsBackgroundLoopPlaying = True
 
                 End If
 
@@ -1749,9 +2004,23 @@ Public Class Form1
         'New Button
         If StartScreenNewButton.Rect.Contains(e.Location) Then
 
+            'Text = "Platformer with Level Editor - Code with Joe"
+
+            InitializeGameObjects()
+
             LastFrame = Now
 
+            CashCollected = 0
+
             GameState = AppState.Playing
+
+            My.Computer.Audio.Play(My.Resources.level,
+                                   AudioPlayMode.BackgroundLoop)
+
+            IsBackgroundLoopPlaying = True
+
+            Text = "Platformer with Level Editor - Code with Joe"
+
 
         End If
 
@@ -2173,6 +2442,29 @@ Public Class Form1
             Next
 
         End If
+
+
+
+
+
+
+        'Write Goal to File
+        'Write ID
+        Write(File_Number, ObjectID.Goal)
+
+        'Write Position
+        Write(File_Number, Goal.Rect.X)
+        Write(File_Number, Goal.Rect.Y)
+
+        'Write Size
+        Write(File_Number, Goal.Rect.Width)
+        Write(File_Number, Goal.Rect.Height)
+
+        Write(File_Number, "Goal")
+
+
+
+
 
         FileClose(File_Number)
 

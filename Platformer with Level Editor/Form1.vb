@@ -1822,7 +1822,7 @@ Public Class Form1
         GridLineBuffer.Clear(Color.Transparent)
 
         ' Draw vertical lines  |
-        For x As Integer = 0 To ClientSize.Width Step GridSize
+        For x As Integer = -1 To ClientSize.Width Step GridSize
             'Buffer.Graphics.DrawLine(Pens.Black, x, 0, x, ClientSize.Height)
 
             GridLineBuffer.DrawLine(Pens.Black, x, 0, x, ClientSize.Height)
@@ -1830,7 +1830,7 @@ Public Class Form1
         Next
 
         ' Draw horizontal lines ---
-        For y As Integer = 0 To ClientSize.Width Step GridSize
+        For y As Integer = -1 To ClientSize.Width Step GridSize
             'Buffer.Graphics.DrawLine(Pens.Black, 0, y, ClientSize.Width, y)
 
             GridLineBuffer.DrawLine(Pens.Black, 0, y, ClientSize.Width, y)

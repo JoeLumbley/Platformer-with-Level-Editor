@@ -2649,12 +2649,6 @@ Public Class Form1
 
                 Case ObjectID.Goal
 
-                    'Add a Cloud to Clouds
-                    'CloudIndex += 1
-
-                    'Resize Clouds
-                    'ReDim Preserve Clouds(CloudIndex)
-
                     'Load ID
                     Goal.ID = FileObject.ID
 
@@ -2672,8 +2666,6 @@ Public Class Form1
 
                     'Load Text
                     Goal.Text = FileObject.Text
-
-
 
             End Select
 

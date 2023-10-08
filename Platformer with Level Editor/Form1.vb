@@ -35,6 +35,7 @@
 '
 
 Imports System.ComponentModel
+Imports System.Drawing.Drawing2D
 Imports System.IO
 Imports System.Numerics
 Imports System.Runtime.InteropServices
@@ -113,7 +114,7 @@ Public Class Form1
 
     Private DeltaTime As TimeSpan
 
-    Private Gravity As Single = 3000
+    Private Gravity As Single = 2000
 
     Private AirResistance As Single = 100.0F
 
@@ -318,6 +319,9 @@ Public Class Form1
 
     Private StopClearScreenTimer As Boolean = True
 
+
+    Private GoalSelected As Boolean = False
+
     <StructLayout(LayoutKind.Sequential)>
     Private Structure INPUTStruc
         Public type As UInteger
@@ -467,15 +471,15 @@ Public Class Form1
 
     Private Sub InitializeGameObjects()
 
-        OurHero.Rect = New Rectangle(100, 500, 64, 64)
+        OurHero.Rect = New Rectangle(128, 768, 64, 64)
 
         OurHero.Position = New PointF(OurHero.Rect.X, OurHero.Rect.Y)
 
         OurHero.Velocity = New PointF(0, 0)
 
-        OurHero.MaxVelocity = New PointF(400, 1000)
+        OurHero.MaxVelocity = New PointF(400, 600)
 
-        OurHero.Acceleration = New PointF(300, 300)
+        OurHero.Acceleration = New PointF(300, 25)
 
         Goal.Rect = New Rectangle(1500, 768, 64, 64)
 
@@ -589,7 +593,7 @@ Public Class Form1
 
                 LastFrame = Now
 
-                OurHero.Rect = New Rectangle(100, 500, 64, 64)
+                OurHero.Rect = New Rectangle(128, 768, 64, 64)
 
                 OurHero.Position = New PointF(OurHero.Rect.X, OurHero.Rect.Y)
 
@@ -743,10 +747,15 @@ Public Class Form1
             If OurHero.Velocity.Y >= 0 Then
                 'Apply gravity to our hero. FALLING.
 
-                OurHero.Velocity.Y += Gravity * DeltaTime.TotalSeconds
+                If OurHero.Velocity.Y <= OurHero.MaxVelocity.Y Then
 
-                'Max falling speed.
-                If OurHero.Velocity.Y > OurHero.MaxVelocity.Y Then OurHero.Velocity.Y = OurHero.MaxVelocity.Y
+                    OurHero.Velocity.Y += Gravity * DeltaTime.TotalSeconds
+
+                Else
+
+                    OurHero.Velocity.Y = OurHero.MaxVelocity.Y
+
+                End If
 
                 'Skydive steering
                 If RightArrowDown = True Or ControllerRight = True Then
@@ -980,7 +989,7 @@ Public Class Form1
 
                                 If Jumped = False Then
 
-                                    OurHero.Velocity.Y += -1300.0F
+                                    OurHero.Velocity.Y += -1100.0F
 
                                     Jumped = True
 
@@ -992,7 +1001,7 @@ Public Class Form1
 
                                 If ControllerJumped = False Then
 
-                                    OurHero.Velocity.Y += -1300.0F
+                                    OurHero.Velocity.Y += -1100.0F
 
                                     ControllerJumped = True
 
@@ -1165,6 +1174,8 @@ Public Class Form1
 
         DrawCash()
 
+        DrawGoal()
+
         DrawOurHero()
 
         DrawToolPreview()
@@ -1219,33 +1230,74 @@ Public Class Form1
 
                 .FillRectangle(Brushes.White, Goal.Rect)
 
-                '' Define the rectangle to be filled
-                'Dim rect As RectangleF = Goal.Rect
+                ' Define the rectangle to be filled
+                Dim rect As RectangleF = Goal.Rect
 
-                '' Define the center point of the gradient
-                'Dim center As New PointF(rect.Left + rect.Width / 2.0F, rect.Top + rect.Height / 2.0F)
+                rect.Inflate(10, 10)
 
-                '' Define the colors for the gradient stops
-                'Dim colors() As Color = {Color.Yellow, Color.White}
+                ' Define the center point of the gradient
+                Dim center As New PointF(rect.Left + rect.Width / 2.0F, rect.Top + rect.Height / 2.0F)
 
-                '' Create the path for the gradient brush
-                'Dim path As New GraphicsPath()
-                'path.AddEllipse(rect)
+                ' Define the colors for the gradient stops
+                Dim colors() As Color = {Color.Yellow, Color.White}
 
-                '' Create the gradient brush
-                'Dim brush As New PathGradientBrush(path) With {
-                '    .CenterPoint = center,
-                '    .CenterColor = colors(0),
-                '    .SurroundColors = New Color() {colors(1)}
-                '}
+                ' Create the path for the gradient brush
+                Dim GradPath As New GraphicsPath()
+                GradPath.AddEllipse(rect)
 
-                '.FillRectangle(br, Goal.Rect)
+                ' Create the gradient brush
+                Dim GradBrush As New PathGradientBrush(GradPath) With {
+                    .CenterPoint = center,
+                    .CenterColor = colors(0),
+                    .SurroundColors = New Color() {colors(1)}
+                }
 
-                .DrawString("«",
-                            GoalFont,
+                .FillRectangle(GradBrush, Goal.Rect)
+
+                'Dim Font As New Font
+
+                If Goal.Rect.Width <= Goal.Rect.Height Then
+                    Dim Font As New Font(New FontFamily("Wingdings"), Goal.Rect.Width \ 2, FontStyle.Regular)
+
+                    .DrawString("«",
+                            Font,
                             Brushes.Green,
                             Goal.Rect,
                             AlineCenterMiddle)
+
+
+                Else
+                    Dim Font As New Font(New FontFamily("Wingdings"), Goal.Rect.Height \ 2, FontStyle.Regular)
+
+                    .DrawString("«",
+                            Font,
+                            Brushes.Green,
+                            Goal.Rect,
+                            AlineCenterMiddle)
+
+                End If
+
+
+
+
+                If GameState = AppState.Editing Then
+
+                    If GoalSelected = True Then
+
+                        'Draw selection rectangle.
+                        .DrawRectangle(New Pen(Color.Red, 6), Goal.Rect)
+
+                        'Position sizing handle.
+                        SizingHandle.X = Goal.Rect.Right - SizingHandle.Width \ 2
+                        SizingHandle.Y = Goal.Rect.Bottom - SizingHandle.Height \ 2
+
+                        'Draw sizing handle.
+                        .FillRectangle(Brushes.Black,
+                                       SizingHandle)
+
+                    End If
+
+                End If
 
             End With
 
@@ -2073,6 +2125,7 @@ Public Class Form1
                 SelectedBill = -1
                 SelectedCloud = -1
                 SelectedBush = -1
+                GoalSelected = False
 
                 'Is the player selecting a bill?
             ElseIf CheckBillSelection(e) > -1 Then
@@ -2087,6 +2140,7 @@ Public Class Form1
                 SelectedBlock = -1
                 SelectedCloud = -1
                 SelectedBush = -1
+                GoalSelected = False
 
                 'Is the player selecting a cloud?
             ElseIf CheckCloudSelection(e) > -1 Then
@@ -2101,6 +2155,7 @@ Public Class Form1
                 SelectedBlock = -1
                 SelectedBill = -1
                 SelectedBush = -1
+                GoalSelected = False
 
                 'Is the player selecting a bush?
             ElseIf CheckBushSelection(e) > -1 Then
@@ -2115,6 +2170,20 @@ Public Class Form1
                 SelectedBlock = -1
                 SelectedBill = -1
                 SelectedCloud = -1
+                GoalSelected = False
+
+            ElseIf Goal.Rect.Contains(e) Then
+
+                GoalSelected = True
+
+                SelectionOffset.X = e.X - Goal.Rect.X
+                SelectionOffset.Y = e.Y - Goal.Rect.Y
+
+                'Deselect other game objects.
+                SelectedBlock = -1
+                SelectedBill = -1
+                SelectedCloud = -1
+                SelectedBush = -1
 
             Else
                 'No, the player is selecting nothing.
@@ -2163,6 +2232,8 @@ Public Class Form1
                             SelectedBill = -1
                             SelectedCloud = -1
                             SelectedBush = -1
+                            GoalSelected = False
+
 
                     End Select
 
@@ -2576,6 +2647,34 @@ Public Class Form1
                     'Load Text
                     Clouds(CloudIndex).Text = FileObject.Text
 
+                Case ObjectID.Goal
+
+                    'Add a Cloud to Clouds
+                    'CloudIndex += 1
+
+                    'Resize Clouds
+                    'ReDim Preserve Clouds(CloudIndex)
+
+                    'Load ID
+                    Goal.ID = FileObject.ID
+
+                    'Load Rect Position
+                    Goal.Rect.X = FileObject.Rect.X
+                    Goal.Rect.Y = FileObject.Rect.Y
+
+                    'Load Vec2 Position
+                    Goal.Position.X = FileObject.Rect.X
+                    Goal.Position.Y = FileObject.Rect.Y
+
+                    'Load Rect Size
+                    Goal.Rect.Width = FileObject.Rect.Width
+                    Goal.Rect.Height = FileObject.Rect.Height
+
+                    'Load Text
+                    Goal.Text = FileObject.Text
+
+
+
             End Select
 
         Next
@@ -2741,6 +2840,51 @@ Public Class Form1
             End If
 
         End If
+
+
+        If GoalSelected = True Then
+
+            If e.Button = MouseButtons.Left Then
+
+
+                If SizingHandleSelected = True Then
+
+                    'Snap bush width to grid.
+                    Goal.Rect.Width = CInt(Math.Round((e.X - Goal.Rect.X) / GridSize)) * GridSize
+
+                    'Limit smallest bush width to one grid width.
+                    If Goal.Rect.Width < GridSize Then Goal.Rect.Width = GridSize
+
+                    'Snap bush height to grid.
+                    Goal.Rect.Height = CInt(Math.Round((e.Y - Goal.Rect.Y) / GridSize)) * GridSize
+
+                    'Limit smallest bush height to one grid height.
+                    If Goal.Rect.Height < GridSize Then Goal.Rect.Height = GridSize
+
+
+                Else
+
+                    'Move Goal, snap to grid
+                    Goal.Rect.X = CInt(Math.Round((e.X - SelectionOffset.X) / GridSize)) * GridSize
+                    Goal.Rect.Y = CInt(Math.Round((e.Y - SelectionOffset.Y) / GridSize)) * GridSize
+
+                End If
+
+
+
+
+
+            End If
+
+
+
+
+
+
+            End If
+
+
+
 
     End Sub
 
@@ -3625,5 +3769,6 @@ Public Class Form1
         End If
 
     End Sub
+
 
 End Class

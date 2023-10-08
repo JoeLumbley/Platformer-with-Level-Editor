@@ -481,7 +481,7 @@ Public Class Form1
 
         OurHero.Acceleration = New PointF(300, 25)
 
-        Goal.Rect = New Rectangle(1500, 768, 64, 64)
+        Goal.Rect = New Rectangle(1472, 768, 64, 64)
 
         ReDim Blocks(0)
         Blocks(Blocks.Length - 1).Rect = New Rectangle(0, 832, 2000, 64)

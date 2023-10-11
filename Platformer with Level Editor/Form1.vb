@@ -38,6 +38,7 @@ Imports System.ComponentModel
 Imports System.Drawing.Drawing2D
 Imports System.IO
 Imports System.Numerics
+Imports System.Reflection.Emit
 Imports System.Runtime.InteropServices
 Imports System.Threading
 
@@ -164,6 +165,8 @@ Public Class Form1
     Private StartScreenNewButton As GameObject
 
     Private ScoreIndicators As GameObject
+
+    Private Level As GameObject
 
     Private ToolPreview As Rectangle
 
@@ -319,7 +322,6 @@ Public Class Form1
 
     Private StopClearScreenTimer As Boolean = True
 
-
     Private GoalSelected As Boolean = False
 
     <StructLayout(LayoutKind.Sequential)>
@@ -471,13 +473,15 @@ Public Class Form1
 
     Private Sub InitializeGameObjects()
 
-        OurHero.Rect = New Rectangle(128, 768, 64, 64)
+        Level.Rect = New Rectangle(0, 0, 1920, 1080)
+
+        OurHero.Rect = New Rectangle(128, 769, 64, 64)
 
         OurHero.Position = New PointF(OurHero.Rect.X, OurHero.Rect.Y)
 
         OurHero.Velocity = New PointF(0, 0)
 
-        OurHero.MaxVelocity = New PointF(400, 600)
+        OurHero.MaxVelocity = New PointF(400, 500)
 
         OurHero.Acceleration = New PointF(300, 25)
 
@@ -593,7 +597,7 @@ Public Class Form1
 
                 LastFrame = Now
 
-                OurHero.Rect = New Rectangle(128, 768, 64, 64)
+                OurHero.Rect = New Rectangle(128, 769, 64, 64)
 
                 OurHero.Position = New PointF(OurHero.Rect.X, OurHero.Rect.Y)
 
@@ -1108,7 +1112,7 @@ Public Class Form1
 
             Case AppState.Clear
 
-                DrawClearScreen
+                DrawClearScreen()
 
         End Select
 
@@ -2873,7 +2877,7 @@ Public Class Form1
 
 
 
-            End If
+        End If
 
 
 
@@ -3747,20 +3751,19 @@ Public Class Form1
 
     Private Sub Wraparound()
 
-        'When our hero exits the bottom side of the client area.
-        If OurHero.Position.Y > ClientRectangle.Bottom Then
+        'When our hero exits the bottom side of the level.
+        If OurHero.Position.Y > Level.Rect.Bottom Then
 
             OurHero.Velocity.Y = 0F
             OurHero.Velocity.X = 0F
 
             OurHero.Position.X = 1500.0F
 
-            'Our hero reappears on the top side the client area.
-            OurHero.Position.Y = ClientRectangle.Top - OurHero.Rect.Height
+            'Our hero reappears on the top side the level.
+            OurHero.Position.Y = Level.Rect.Top - OurHero.Rect.Height
 
         End If
 
     End Sub
-
 
 End Class

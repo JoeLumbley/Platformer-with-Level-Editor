@@ -2453,6 +2453,23 @@ Public Class Form1
 
         Write(File_Number, "Goal")
 
+
+        'Write Level to File
+        'Write ID
+        Write(File_Number, ObjectID.Level)
+
+        'Write Position
+        Write(File_Number, Level.Rect.X)
+        Write(File_Number, Level.Rect.Y)
+
+        'Write Size
+        Write(File_Number, Level.Rect.Width)
+        Write(File_Number, Level.Rect.Height)
+
+        Write(File_Number, "Level")
+
+
+
         FileClose(File_Number)
 
     End Sub

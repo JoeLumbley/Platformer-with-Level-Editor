@@ -2453,7 +2453,6 @@ Public Class Form1
 
         Write(File_Number, "Goal")
 
-
         'Write Level to File
         'Write ID
         Write(File_Number, ObjectID.Level)
@@ -2467,8 +2466,6 @@ Public Class Form1
         Write(File_Number, Level.Rect.Height)
 
         Write(File_Number, "Level")
-
-
 
         FileClose(File_Number)
 
@@ -2687,6 +2684,27 @@ Public Class Form1
 
                     'Load Text
                     Goal.Text = FileObject.Text
+
+
+                Case ObjectID.Level
+
+                    'Load ID
+                    Level.ID = FileObject.ID
+
+                    'Load Rect Position
+                    Level.Rect.X = FileObject.Rect.X
+                    Level.Rect.Y = FileObject.Rect.Y
+
+                    'Load Vec2 Position
+                    Level.Position.X = FileObject.Rect.X
+                    Level.Position.Y = FileObject.Rect.Y
+
+                    'Load Rect Size
+                    Level.Rect.Width = FileObject.Rect.Width
+                    Level.Rect.Height = FileObject.Rect.Height
+
+                    'Load Text
+                    Level.Text = FileObject.Text
 
             End Select
 

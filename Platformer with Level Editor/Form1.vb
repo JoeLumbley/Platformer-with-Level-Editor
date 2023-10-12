@@ -481,7 +481,7 @@ Public Class Form1
 
         OurHero.Velocity = New PointF(0, 0)
 
-        OurHero.MaxVelocity = New PointF(400, 500)
+        OurHero.MaxVelocity = New PointF(400, 1000)
 
         OurHero.Acceleration = New PointF(300, 25)
 

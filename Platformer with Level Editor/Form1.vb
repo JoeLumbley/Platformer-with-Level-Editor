@@ -872,6 +872,7 @@ Public Class Form1
                         'Stop the fall.
                         OurHero.Velocity.Y = 0
 
+
                         'Is our hero above the block?
                         If OurHero.Position.Y <= Block.Rect.Top - OurHero.Rect.Height \ 2 Then
                             'Yes, our hero is above the block.
@@ -895,6 +896,8 @@ Public Class Form1
                         OurHero.Velocity.Y = 0
                         OurHero.Velocity.X = 0
 
+                        VibrateRight(0, 65535)
+
                         If OurHero.Position.Y > Block.Rect.Bottom - OurHero.Rect.Height \ 2 Then
                             'Under
 
@@ -908,15 +911,10 @@ Public Class Form1
 
                                 OurHero.Position.X = Block.Rect.Right
 
-                                VibrateRight(0, 65535)
-
-
                             Else
                                 'Left
 
                                 OurHero.Position.X = Block.Rect.Left - OurHero.Rect.Width
-
-                                VibrateLeft(0, 65535)
 
                             End If
 
@@ -1023,6 +1021,9 @@ Public Class Form1
 
                             'Stop the move
                             OurHero.Velocity.X = 0
+
+                            VibrateRight(0, 65535)
+
 
                             'Is our hero on the right side of the block?
                             If OurHero.Position.X > Block.Rect.Left Then

@@ -872,7 +872,6 @@ Public Class Form1
                         'Stop the fall.
                         OurHero.Velocity.Y = 0
 
-
                         'Is our hero above the block?
                         If OurHero.Position.Y <= Block.Rect.Top - OurHero.Rect.Height \ 2 Then
                             'Yes, our hero is above the block.
@@ -2116,8 +2115,21 @@ Public Class Form1
 
             SizingHandleSelected = False
 
-            'Is the player selecting a block?
-            If CheckBlockSelection(e) > -1 Then
+            If Goal.Rect.Contains(e) Then
+
+                GoalSelected = True
+
+                SelectionOffset.X = e.X - Goal.Rect.X
+                SelectionOffset.Y = e.Y - Goal.Rect.Y
+
+                'Deselect other game objects.
+                SelectedBlock = -1
+                SelectedBill = -1
+                SelectedCloud = -1
+                SelectedBush = -1
+
+                'Is the player selecting a block?
+            ElseIf CheckBlockSelection(e) > -1 Then
                 'Yes, the player is selecting a block.
 
                 SelectedBlock = CheckBlockSelection(e)
@@ -2176,26 +2188,12 @@ Public Class Form1
                 SelectedCloud = -1
                 GoalSelected = False
 
-            ElseIf Goal.Rect.Contains(e) Then
-
-                GoalSelected = True
-
-                SelectionOffset.X = e.X - Goal.Rect.X
-                SelectionOffset.Y = e.Y - Goal.Rect.Y
-
-                'Deselect other game objects.
-                SelectedBlock = -1
-                SelectedBill = -1
-                SelectedCloud = -1
-                SelectedBush = -1
-
             Else
                 'No, the player is selecting nothing.
 
                 'Is the player over the toolbar?
                 If ToolBarBackground.Rect.Contains(e) = False Then
                     'No, the player is NOT over the toolbar.
-
 
                     Select Case SelectedTool
 

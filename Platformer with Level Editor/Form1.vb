@@ -1237,7 +1237,7 @@ Public Class Form1
                 ' Define the rectangle to be filled
                 Dim rect As RectangleF = Goal.Rect
 
-                rect.Inflate(10, 10)
+                rect.Inflate(rect.Width / 6.4F, rect.Height / 6.4F)
 
                 ' Define the center point of the gradient
                 Dim center As New PointF(rect.Left + rect.Width / 2.0F, rect.Top + rect.Height / 2.0F)
@@ -1258,8 +1258,6 @@ Public Class Form1
 
                 .FillRectangle(GradBrush, Goal.Rect)
 
-                'Dim Font As New Font
-
                 If Goal.Rect.Width <= Goal.Rect.Height Then
                     Dim Font As New Font(New FontFamily("Wingdings"), Goal.Rect.Width \ 2, FontStyle.Regular)
 
@@ -1268,7 +1266,6 @@ Public Class Form1
                             Brushes.Green,
                             Goal.Rect,
                             AlineCenterMiddle)
-
 
                 Else
                     Dim Font As New Font(New FontFamily("Wingdings"), Goal.Rect.Height \ 2, FontStyle.Regular)
@@ -1280,9 +1277,6 @@ Public Class Form1
                             AlineCenterMiddle)
 
                 End If
-
-
-
 
                 If GameState = AppState.Editing Then
 
@@ -2238,7 +2232,6 @@ Public Class Form1
                             SelectedBush = -1
                             GoalSelected = False
 
-
                     End Select
 
                 End If
@@ -2685,7 +2678,6 @@ Public Class Form1
                     'Load Text
                     Goal.Text = FileObject.Text
 
-
                 Case ObjectID.Level
 
                     'Load ID
@@ -2872,11 +2864,9 @@ Public Class Form1
 
         End If
 
-
         If GoalSelected = True Then
 
             If e.Button = MouseButtons.Left Then
-
 
                 If SizingHandleSelected = True Then
 
@@ -2892,7 +2882,6 @@ Public Class Form1
                     'Limit smallest bush height to one grid height.
                     If Goal.Rect.Height < GridSize Then Goal.Rect.Height = GridSize
 
-
                 Else
 
                     'Move Goal, snap to grid
@@ -2901,21 +2890,9 @@ Public Class Form1
 
                 End If
 
-
-
-
-
             End If
 
-
-
-
-
-
         End If
-
-
-
 
     End Sub
 

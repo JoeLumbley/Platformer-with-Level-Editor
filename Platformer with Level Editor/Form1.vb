@@ -908,10 +908,15 @@ Public Class Form1
 
                                 OurHero.Position.X = Block.Rect.Right
 
+                                VibrateRight(0, 65535)
+
+
                             Else
                                 'Left
 
                                 OurHero.Position.X = Block.Rect.Left - OurHero.Rect.Width
+
+                                VibrateLeft(0, 65535)
 
                             End If
 
@@ -3695,6 +3700,57 @@ Public Class Form1
             Case Else 'Any buttons not handled yet.
                 Debug.Print(ControllerPosition.Gamepad.wButtons.ToString)
         End Select
+
+    End Sub
+
+    Private Sub VibrateLeft(ControllerNumber As Integer, Speed As UShort)
+        'The range of speed is 0 through 65,535. Unsigned 16-bit (2-byte) integer.
+        'The left motor is the low-frequency rumble motor.
+
+        'Turn right motor off (set zero speed).
+        Vibration.wRightMotorSpeed = 0
+
+        'Set left motor speed.
+        Vibration.wLeftMotorSpeed = Speed
+
+        Vibrate(ControllerNumber)
+
+    End Sub
+
+    Private Sub VibrateRight(ControllerNumber As Integer, Speed As UShort)
+        'The range of speed is 0 through 65,535. Unsigned 16-bit (2-byte) integer.
+        'The right motor is the high-frequency rumble motor.
+
+        'Turn left motor off (set zero speed).
+        Vibration.wLeftMotorSpeed = 0
+
+        'Set right motor speed.
+        Vibration.wRightMotorSpeed = Speed
+
+        Vibrate(ControllerNumber)
+
+    End Sub
+
+    Private Sub Vibrate(ControllerNumber As Integer)
+
+        Try
+
+            'Turn motor on.
+            If XInputSetState(ControllerNumber, Vibration) = 0 Then
+                'Success
+                'Text = XInputSetState(ControllerNumber, vibration).ToString
+            Else
+                'Fail
+                'Text = XInputSetState(ControllerNumber, vibration).ToString
+            End If
+
+        Catch ex As Exception
+
+            MsgBox(ex.ToString)
+
+            Exit Sub
+
+        End Try
 
     End Sub
 

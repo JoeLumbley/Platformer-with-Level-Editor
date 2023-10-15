@@ -38,7 +38,6 @@ Imports System.ComponentModel
 Imports System.Drawing.Drawing2D
 Imports System.IO
 Imports System.Numerics
-Imports System.Reflection.Emit
 Imports System.Runtime.InteropServices
 Imports System.Threading
 
@@ -154,11 +153,9 @@ Public Class Form1
 
     Private BillToolIcon As GameObject
 
-
     Private CloudToolButton As GameObject
 
     Private CloundToolIcon As GameObject
-
 
     Private SelectedTool As Tools = Tools.Pointer
 
@@ -230,13 +227,9 @@ Public Class Form1
 
     Private CloundToolIconOutinePen As New Pen(Color.Black, 3)
 
-
     Private LightSkyBluePen As New Pen(Color.LightSkyBlue, 4)
 
-
     Private CloundToolIconPen As New Pen(Color.LightSkyBlue, 3)
-
-
 
     Private LawnGreenPen As New Pen(Color.LawnGreen, 4)
 
@@ -1630,7 +1623,6 @@ Public Class Form1
 
                 .FillRectangle(DarkCharcoalGreyBrush, CloudToolButton.Rect)
 
-
                 .FillRectangle(Brushes.White, CloundToolIcon.Rect)
 
                 .DrawLine(CloundToolIconPen, CloundToolIcon.Rect.Right - 6, CloundToolIcon.Rect.Top + 6, CloundToolIcon.Rect.Right - 6, CloundToolIcon.Rect.Bottom - 6)
@@ -1642,7 +1634,6 @@ Public Class Form1
             Else
 
                 .FillRectangle(Brushes.Black, CloudToolButton.Rect)
-
 
                 .FillRectangle(Brushes.White, CloundToolIcon.Rect)
 
@@ -1750,9 +1741,6 @@ Public Class Form1
 
     End Sub
 
-
-
-
     Private Sub AddCloud(Location As Point)
 
         If Clouds IsNot Nothing Then
@@ -1774,13 +1762,6 @@ Public Class Form1
         Clouds(Clouds.Length - 1).Position.Y = Location.Y
 
     End Sub
-
-
-
-
-
-
-
 
     Private Sub RemoveBlock(Index As Integer)
 
@@ -1984,15 +1965,9 @@ Public Class Form1
 
         BillToolIcon.Rect = New Rectangle(ClientRectangle.Left + 538, ClientRectangle.Bottom - 65, 40, 40)
 
-
-
         CloudToolButton.Rect = New Rectangle(ClientRectangle.Left + 604, ClientRectangle.Bottom - 90, 90, 90)
 
         CloundToolIcon.Rect = New Rectangle(ClientRectangle.Left + 629, ClientRectangle.Bottom - 65, 40, 40)
-
-
-
-
 
         Title.Rect = New Rectangle(ClientRectangle.Left, ClientRectangle.Top, ClientRectangle.Width, ClientRectangle.Height)
 
@@ -2187,7 +2162,6 @@ Public Class Form1
             ShowToolPreview = True
 
         End If
-
 
         If CloudToolButton.Rect.Contains(e) Then
 

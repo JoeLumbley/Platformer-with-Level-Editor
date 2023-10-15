@@ -154,6 +154,12 @@ Public Class Form1
 
     Private BillToolIcon As GameObject
 
+
+    Private CloudToolButton As GameObject
+
+    Private CloundToolIcon As GameObject
+
+
     Private SelectedTool As Tools = Tools.Pointer
 
     Private ShowToolPreview As Boolean = False
@@ -222,7 +228,15 @@ Public Class Form1
 
     Private OutinePen As New Pen(Color.Black, 4)
 
+    Private CloundToolIconOutinePen As New Pen(Color.Black, 3)
+
+
     Private LightSkyBluePen As New Pen(Color.LightSkyBlue, 4)
+
+
+    Private CloundToolIconPen As New Pen(Color.LightSkyBlue, 3)
+
+
 
     Private LawnGreenPen As New Pen(Color.LawnGreen, 4)
 
@@ -1209,6 +1223,8 @@ Public Class Form1
 
         DrawBillToolButton()
 
+        DrawCloudToolButton()
+
     End Sub
 
     Private Sub DrawOurHero()
@@ -1509,6 +1525,16 @@ Public Class Form1
 
                         .DrawString("$", FPSFont, Brushes.OrangeRed, ToolPreview, AlineCenterMiddle)
 
+                    Case Tools.Cloud
+
+                        .FillRectangle(Brushes.White, ToolPreview)
+
+                        .DrawLine(LightSkyBluePen, ToolPreview.Right - 10, ToolPreview.Top + 10, ToolPreview.Right - 10, ToolPreview.Bottom - 10)
+
+                        .DrawLine(LightSkyBluePen, ToolPreview.Left + 10, ToolPreview.Bottom - 10, ToolPreview.Right - 10, ToolPreview.Bottom - 10)
+
+                        .DrawRectangle(OutinePen, ToolPreview)
+
                 End Select
 
             End If
@@ -1580,7 +1606,7 @@ Public Class Form1
 
                 .FillRectangle(Brushes.Goldenrod, BillToolIcon.Rect)
 
-                .DrawString("$", BillIconFont, Brushes.OrangeRed, BillToolButton.Rect, AlineCenterMiddle)
+                .DrawString("$", BillIconFont, Brushes.OrangeRed, BillToolIcon.Rect, AlineCenterMiddle)
 
             Else
 
@@ -1589,6 +1615,42 @@ Public Class Form1
                 .FillRectangle(Brushes.Goldenrod, BillToolIcon.Rect)
 
                 .DrawString("$", BillIconFont, Brushes.OrangeRed, BillToolIcon.Rect, AlineCenterMiddle)
+
+            End If
+
+        End With
+
+    End Sub
+
+    Private Sub DrawCloudToolButton()
+
+        With Buffer.Graphics
+
+            If SelectedTool = Tools.Cloud Then
+
+                .FillRectangle(DarkCharcoalGreyBrush, CloudToolButton.Rect)
+
+
+                .FillRectangle(Brushes.White, CloundToolIcon.Rect)
+
+                .DrawLine(CloundToolIconPen, CloundToolIcon.Rect.Right - 6, CloundToolIcon.Rect.Top + 6, CloundToolIcon.Rect.Right - 6, CloundToolIcon.Rect.Bottom - 6)
+
+                .DrawLine(CloundToolIconPen, CloundToolIcon.Rect.Left + 6, CloundToolIcon.Rect.Bottom - 6, CloundToolIcon.Rect.Right - 6, CloundToolIcon.Rect.Bottom - 6)
+
+                .DrawRectangle(CloundToolIconOutinePen, CloundToolIcon.Rect)
+
+            Else
+
+                .FillRectangle(Brushes.Black, CloudToolButton.Rect)
+
+
+                .FillRectangle(Brushes.White, CloundToolIcon.Rect)
+
+                .DrawLine(CloundToolIconPen, CloundToolIcon.Rect.Right - 6, CloundToolIcon.Rect.Top + 6, CloundToolIcon.Rect.Right - 6, CloundToolIcon.Rect.Bottom - 6)
+
+                .DrawLine(CloundToolIconPen, CloundToolIcon.Rect.Left + 6, CloundToolIcon.Rect.Bottom - 6, CloundToolIcon.Rect.Right - 6, CloundToolIcon.Rect.Bottom - 6)
+
+                .DrawRectangle(CloundToolIconOutinePen, CloundToolIcon.Rect)
 
             End If
 
@@ -1687,6 +1749,38 @@ Public Class Form1
         Cash(Cash.Length - 1).Collected = False
 
     End Sub
+
+
+
+
+    Private Sub AddCloud(Location As Point)
+
+        If Clouds IsNot Nothing Then
+
+            Array.Resize(Clouds, Clouds.Length + 1)
+
+        Else
+
+            ReDim Clouds(0)
+
+        End If
+
+        'Init Cloud
+        Clouds(Clouds.Length - 1).Rect.Location = Location
+
+        Clouds(Clouds.Length - 1).Rect.Size = New Size(GridSize, GridSize)
+
+        Clouds(Clouds.Length - 1).Position.X = Location.X
+        Clouds(Clouds.Length - 1).Position.Y = Location.Y
+
+    End Sub
+
+
+
+
+
+
+
 
     Private Sub RemoveBlock(Index As Integer)
 
@@ -1890,6 +1984,16 @@ Public Class Form1
 
         BillToolIcon.Rect = New Rectangle(ClientRectangle.Left + 538, ClientRectangle.Bottom - 65, 40, 40)
 
+
+
+        CloudToolButton.Rect = New Rectangle(ClientRectangle.Left + 604, ClientRectangle.Bottom - 90, 90, 90)
+
+        CloundToolIcon.Rect = New Rectangle(ClientRectangle.Left + 629, ClientRectangle.Bottom - 65, 40, 40)
+
+
+
+
+
         Title.Rect = New Rectangle(ClientRectangle.Left, ClientRectangle.Top, ClientRectangle.Width, ClientRectangle.Height)
 
         StartScreenNewButton.Rect = New Rectangle(ClientRectangle.Width \ 2 - 200, ClientRectangle.Height \ 2 + 100, 150, 90)
@@ -2084,6 +2188,28 @@ Public Class Form1
 
         End If
 
+
+        If CloudToolButton.Rect.Contains(e) Then
+
+            'Deselect game objects.
+            SelectedBlock = -1
+            SelectedBill = -1
+            SelectedCloud = -1
+            SelectedBush = -1
+
+            'Snap preview to grid.
+            ToolPreview.X = CInt(Math.Round(e.X / GridSize)) * GridSize
+            ToolPreview.Y = CInt(Math.Round(e.Y / GridSize)) * GridSize
+
+            ToolPreview.Width = GridSize
+            ToolPreview.Height = GridSize
+
+            SelectedTool = Tools.Cloud
+
+            ShowToolPreview = True
+
+        End If
+
         'Is the player clicking the save button?
         If SaveButton.Rect.Contains(e) Then
             'Yes, the player is clicking the save button.
@@ -2226,6 +2352,25 @@ Public Class Form1
 
                             'Select the newly created bill.
                             SelectedBill = Cash.Length - 1
+
+
+                        Case Tools.Cloud
+
+                            'Snap block to grid.
+                            AddCloud(New Point(CInt(Math.Round(e.X / GridSize) * GridSize),
+                                       CInt(Math.Round(e.Y / GridSize) * GridSize)))
+
+                            'Change tool to the mouse pointer.
+                            SelectedTool = Tools.Pointer
+
+                            'Turn tool preview off.
+                            ShowToolPreview = False
+
+                            'Select the newly created bill.
+                            SelectedCloud = Clouds.Length - 1
+
+
+
 
                         Case Else
 
@@ -2740,6 +2885,22 @@ Public Class Form1
                     End If
 
                 Case Tools.Bill
+
+                    If ToolBarBackground.Rect.Contains(e.Location) = False Then
+
+                        ShowToolPreview = True
+
+                        ToolPreview.X = CInt(Math.Round(e.X / GridSize)) * GridSize
+                        ToolPreview.Y = CInt(Math.Round(e.Y / GridSize)) * GridSize
+
+                    Else
+
+                        ShowToolPreview = False
+
+                    End If
+
+
+                Case Tools.Cloud
 
                     If ToolBarBackground.Rect.Contains(e.Location) = False Then
 

@@ -2964,6 +2964,16 @@ Public Class Form1
 
                     End If
 
+                    If GoalSelected = True Then
+
+                        'Place goal off level.
+                        Goal.Rect.X = -100
+                        Goal.Rect.Y = -100
+
+                        GoalSelected = False
+
+                    End If
+
                 End If
 
             Case Keys.M
@@ -3337,6 +3347,16 @@ Public Class Form1
 
                     End If
 
+                    If GoalSelected = True Then
+
+                        'Place goal off level.
+                        Goal.Rect.X = -100
+                        Goal.Rect.Y = -100
+
+                        GoalSelected = False
+
+                    End If
+
                 End If
 
             Case 512 'Right bumper
@@ -3373,6 +3393,16 @@ Public Class Form1
                         RemoveCloud(SelectedCloud)
 
                         SelectedCloud = -1
+
+                    End If
+
+                    If GoalSelected = True Then
+
+                        'Place goal off level.
+                        Goal.Rect.X = -100
+                        Goal.Rect.Y = -100
+
+                        GoalSelected = False
 
                     End If
 

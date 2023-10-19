@@ -1,8 +1,8 @@
 ﻿'Platformer with Level Editor
-'
-'Platformer with level editor is a game where the player controls a character that
-'jumps and runs through a level while avoiding obstacles and enemies.
-'The level editor allows players to create their own custom levels.
+
+'Help our hero navigate through a level by jumping on platforms,
+'collecting cash and eliminating enemies.
+'Create your own level with the editor.
 
 'MIT License
 'Copyright(c) 2023 Joseph W. Lumbley
@@ -32,7 +32,6 @@
 
 'I'm making a video to explain the code on my YouTube channel.
 'https://www.youtube.com/@codewithjoe6074
-'
 
 Imports System.ComponentModel
 Imports System.Drawing.Drawing2D

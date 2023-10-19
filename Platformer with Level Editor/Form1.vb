@@ -157,6 +157,10 @@ Public Class Form1
 
     Private CloundToolIcon As GameObject
 
+    Private BushToolButton As GameObject
+
+    Private BushToolIcon As GameObject
+
     Private SelectedTool As Tools = Tools.Pointer
 
     Private ShowToolPreview As Boolean = False
@@ -227,9 +231,13 @@ Public Class Form1
 
     Private CloundToolIconOutinePen As New Pen(Color.Black, 3)
 
+    Private BushToolIconOutinePen As New Pen(Color.Black, 3)
+
     Private LightSkyBluePen As New Pen(Color.LightSkyBlue, 4)
 
     Private CloundToolIconPen As New Pen(Color.LightSkyBlue, 3)
+
+    Private BushToolIconPen As New Pen(Color.SeaGreen, 3)
 
     Private LawnGreenPen As New Pen(Color.LawnGreen, 4)
 
@@ -1218,6 +1226,8 @@ Public Class Form1
 
         DrawCloudToolButton()
 
+        DrawBushesToolButton()
+
     End Sub
 
     Private Sub DrawOurHero()
@@ -1528,6 +1538,17 @@ Public Class Form1
 
                         .DrawRectangle(OutinePen, ToolPreview)
 
+
+                    Case Tools.Bush
+
+                        .FillRectangle(Brushes.GreenYellow, ToolPreview)
+
+                        .DrawLine(SeaGreenPen, ToolPreview.Right - 10, ToolPreview.Top + 10, ToolPreview.Right - 10, ToolPreview.Bottom - 10)
+
+                        .DrawLine(SeaGreenPen, ToolPreview.Left + 10, ToolPreview.Bottom - 10, ToolPreview.Right - 10, ToolPreview.Bottom - 10)
+
+                        .DrawRectangle(OutinePen, ToolPreview)
+
                 End Select
 
             End If
@@ -1649,6 +1670,40 @@ Public Class Form1
 
     End Sub
 
+    Private Sub DrawBushesToolButton()
+
+        With Buffer.Graphics
+
+            If SelectedTool = Tools.Bush Then
+
+                .FillRectangle(DarkCharcoalGreyBrush, BushToolButton.Rect)
+
+                .FillRectangle(Brushes.GreenYellow, BushToolIcon.Rect)
+
+                .DrawLine(BushToolIconPen, BushToolIcon.Rect.Right - 6, BushToolIcon.Rect.Top + 6, BushToolIcon.Rect.Right - 6, BushToolIcon.Rect.Bottom - 6)
+
+                .DrawLine(BushToolIconPen, BushToolIcon.Rect.Left + 6, BushToolIcon.Rect.Bottom - 6, BushToolIcon.Rect.Right - 6, BushToolIcon.Rect.Bottom - 6)
+
+                .DrawRectangle(BushToolIconOutinePen, BushToolIcon.Rect)
+
+            Else
+
+                .FillRectangle(Brushes.Black, BushToolButton.Rect)
+
+                .FillRectangle(Brushes.GreenYellow, BushToolIcon.Rect)
+
+                .DrawLine(BushToolIconPen, BushToolIcon.Rect.Right - 6, BushToolIcon.Rect.Top + 6, BushToolIcon.Rect.Right - 6, BushToolIcon.Rect.Bottom - 6)
+
+                .DrawLine(BushToolIconPen, BushToolIcon.Rect.Left + 6, BushToolIcon.Rect.Bottom - 6, BushToolIcon.Rect.Right - 6, BushToolIcon.Rect.Bottom - 6)
+
+                .DrawRectangle(BushToolIconOutinePen, BushToolIcon.Rect)
+
+            End If
+
+        End With
+
+    End Sub
+
     Private Sub DrawPlayButton()
 
         With Buffer.Graphics
@@ -1760,6 +1815,28 @@ Public Class Form1
 
         Clouds(Clouds.Length - 1).Position.X = Location.X
         Clouds(Clouds.Length - 1).Position.Y = Location.Y
+
+    End Sub
+
+    Private Sub AddBush(Location As Point)
+
+        If Bushes IsNot Nothing Then
+
+            Array.Resize(Bushes, Bushes.Length + 1)
+
+        Else
+
+            ReDim Bushes(0)
+
+        End If
+
+        'Init Bush
+        Bushes(Bushes.Length - 1).Rect.Location = Location
+
+        Bushes(Bushes.Length - 1).Rect.Size = New Size(GridSize, GridSize)
+
+        Bushes(Bushes.Length - 1).Position.X = Location.X
+        Bushes(Bushes.Length - 1).Position.Y = Location.Y
 
     End Sub
 
@@ -1968,6 +2045,10 @@ Public Class Form1
         CloudToolButton.Rect = New Rectangle(ClientRectangle.Left + 604, ClientRectangle.Bottom - 90, 90, 90)
 
         CloundToolIcon.Rect = New Rectangle(ClientRectangle.Left + 629, ClientRectangle.Bottom - 65, 40, 40)
+
+        BushToolButton.Rect = New Rectangle(ClientRectangle.Left + 695, ClientRectangle.Bottom - 90, 90, 90)
+
+        BushToolIcon.Rect = New Rectangle(ClientRectangle.Left + 720, ClientRectangle.Bottom - 65, 40, 40)
 
         Title.Rect = New Rectangle(ClientRectangle.Left, ClientRectangle.Top, ClientRectangle.Width, ClientRectangle.Height)
 
@@ -2184,6 +2265,27 @@ Public Class Form1
 
         End If
 
+        If BushToolButton.Rect.Contains(e) Then
+
+            'Deselect game objects.
+            SelectedBlock = -1
+            SelectedBill = -1
+            SelectedCloud = -1
+            SelectedBush = -1
+
+            'Snap preview to grid.
+            ToolPreview.X = CInt(Math.Round(e.X / GridSize)) * GridSize
+            ToolPreview.Y = CInt(Math.Round(e.Y / GridSize)) * GridSize
+
+            ToolPreview.Width = GridSize
+            ToolPreview.Height = GridSize
+
+            SelectedTool = Tools.Bush
+
+            ShowToolPreview = True
+
+        End If
+
         'Is the player clicking the save button?
         If SaveButton.Rect.Contains(e) Then
             'Yes, the player is clicking the save button.
@@ -2343,8 +2445,20 @@ Public Class Form1
                             'Select the newly created bill.
                             SelectedCloud = Clouds.Length - 1
 
+                        Case Tools.Bush
 
+                            'Snap block to grid.
+                            AddBush(New Point(CInt(Math.Round(e.X / GridSize) * GridSize),
+                                       CInt(Math.Round(e.Y / GridSize) * GridSize)))
 
+                            'Change tool to the mouse pointer.
+                            SelectedTool = Tools.Pointer
+
+                            'Turn tool preview off.
+                            ShowToolPreview = False
+
+                            'Select the newly created bill.
+                            SelectedBush = Bushes.Length - 1
 
                         Case Else
 
@@ -2873,8 +2987,22 @@ Public Class Form1
 
                     End If
 
-
                 Case Tools.Cloud
+
+                    If ToolBarBackground.Rect.Contains(e.Location) = False Then
+
+                        ShowToolPreview = True
+
+                        ToolPreview.X = CInt(Math.Round(e.X / GridSize)) * GridSize
+                        ToolPreview.Y = CInt(Math.Round(e.Y / GridSize)) * GridSize
+
+                    Else
+
+                        ShowToolPreview = False
+
+                    End If
+
+                Case Tools.Bush
 
                     If ToolBarBackground.Rect.Contains(e.Location) = False Then
 

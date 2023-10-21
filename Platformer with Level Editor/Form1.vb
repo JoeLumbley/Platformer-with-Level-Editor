@@ -609,13 +609,13 @@ Public Class Form1
 
                 Next
 
-                LastFrame = Now
-
                 OurHero.Rect = New Rectangle(128, 769, 64, 64)
 
                 OurHero.Position = New PointF(OurHero.Rect.X, OurHero.Rect.Y)
 
                 OurHero.Velocity = New PointF(0, 0)
+
+                LastFrame = Now
 
                 GameState = AppState.Playing
 

@@ -160,6 +160,10 @@ Public Class Form1
 
     Private BushToolIcon As GameObject
 
+    Private GoalToolButton As GameObject
+
+    Private GoalToolIcon As GameObject
+
     Private SelectedTool As Tools = Tools.Pointer
 
     Private ShowToolPreview As Boolean = False
@@ -1227,6 +1231,8 @@ Public Class Form1
 
         DrawBushesToolButton()
 
+        DrawGoalToolButton()
+
     End Sub
 
     Private Sub DrawOurHero()
@@ -1548,6 +1554,54 @@ Public Class Form1
 
                         .DrawRectangle(OutinePen, ToolPreview)
 
+                    Case Tools.Goal
+
+                        .FillRectangle(Brushes.White, ToolPreview)
+
+                        ' Define the rectangle to be filled
+                        Dim rect As RectangleF = ToolPreview
+
+                        rect.Inflate(rect.Width / 6.4F, rect.Height / 6.4F)
+
+                        ' Define the center point of the gradient
+                        Dim center As New PointF(rect.Left + rect.Width / 2.0F, rect.Top + rect.Height / 2.0F)
+
+                        ' Define the colors for the gradient stops
+                        Dim colors() As Color = {Color.Yellow, Color.White}
+
+                        ' Create the path for the gradient brush
+                        Dim GradPath As New GraphicsPath()
+                        GradPath.AddEllipse(rect)
+
+                        ' Create the gradient brush
+                        Dim GradBrush As New PathGradientBrush(GradPath) With {
+                            .CenterPoint = center,
+                            .CenterColor = colors(0),
+                            .SurroundColors = New Color() {colors(1)}
+                        }
+
+                        .FillRectangle(GradBrush, ToolPreview)
+
+                        If ToolPreview.Width <= ToolPreview.Height Then
+                            Dim Font As New Font(New FontFamily("Wingdings"), ToolPreview.Width \ 2, FontStyle.Regular)
+
+                            .DrawString("«",
+                                    Font,
+                                    Brushes.Green,
+                                    ToolPreview,
+                                    AlineCenterMiddle)
+
+                        Else
+                            Dim Font As New Font(New FontFamily("Wingdings"), ToolPreview.Height \ 2, FontStyle.Regular)
+
+                            .DrawString("«",
+                                    Font,
+                                    Brushes.Green,
+                                    ToolPreview,
+                                    AlineCenterMiddle)
+
+                        End If
+
                 End Select
 
             End If
@@ -1696,6 +1750,92 @@ Public Class Form1
                 .DrawLine(BushToolIconPen, BushToolIcon.Rect.Left + 6, BushToolIcon.Rect.Bottom - 6, BushToolIcon.Rect.Right - 6, BushToolIcon.Rect.Bottom - 6)
 
                 .DrawRectangle(BushToolIconOutinePen, BushToolIcon.Rect)
+
+            End If
+
+        End With
+
+    End Sub
+
+    Private Sub DrawGoalToolButton()
+
+        With Buffer.Graphics
+
+            If SelectedTool = Tools.Goal Then
+
+                .FillRectangle(DarkCharcoalGreyBrush, GoalToolButton.Rect)
+
+                .FillRectangle(Brushes.White, GoalToolIcon.Rect)
+
+                ' Define the rectangle to be filled
+                Dim rect As RectangleF = GoalToolIcon.Rect
+
+                rect.Inflate(rect.Width / 6.4F, rect.Height / 6.4F)
+
+                ' Define the center point of the gradient
+                Dim center As New PointF(rect.Left + rect.Width / 2.0F, rect.Top + rect.Height / 2.0F)
+
+                ' Define the colors for the gradient stops
+                Dim colors() As Color = {Color.Yellow, Color.White}
+
+                ' Create the path for the gradient brush
+                Dim GradPath As New GraphicsPath()
+                GradPath.AddEllipse(rect)
+
+                ' Create the gradient brush
+                Dim GradBrush As New PathGradientBrush(GradPath) With {
+                    .CenterPoint = center,
+                    .CenterColor = colors(0),
+                    .SurroundColors = New Color() {colors(1)}
+                }
+
+                .FillRectangle(GradBrush, GoalToolIcon.Rect)
+
+                Dim Font As New Font(New FontFamily("Wingdings"), GoalToolIcon.Rect.Width \ 2, FontStyle.Regular)
+
+                .DrawString("«",
+                        Font,
+                        Brushes.Green,
+                        GoalToolIcon.Rect,
+                        AlineCenterMiddle)
+
+            Else
+
+                .FillRectangle(Brushes.Black, GoalToolButton.Rect)
+
+                .FillRectangle(Brushes.White, GoalToolIcon.Rect)
+
+                ' Define the rectangle to be filled
+                Dim rect As RectangleF = GoalToolIcon.Rect
+
+                rect.Inflate(rect.Width / 6.4F, rect.Height / 6.4F)
+
+                ' Define the center point of the gradient
+                Dim center As New PointF(rect.Left + rect.Width / 2.0F, rect.Top + rect.Height / 2.0F)
+
+                ' Define the colors for the gradient stops
+                Dim colors() As Color = {Color.Yellow, Color.White}
+
+                ' Create the path for the gradient brush
+                Dim GradPath As New GraphicsPath()
+                GradPath.AddEllipse(rect)
+
+                ' Create the gradient brush
+                Dim GradBrush As New PathGradientBrush(GradPath) With {
+                    .CenterPoint = center,
+                    .CenterColor = colors(0),
+                    .SurroundColors = New Color() {colors(1)}
+                }
+
+                .FillRectangle(GradBrush, GoalToolIcon.Rect)
+
+                Dim Font As New Font(New FontFamily("Wingdings"), GoalToolIcon.Rect.Width \ 2, FontStyle.Regular)
+
+                .DrawString("«",
+                        Font,
+                        Brushes.Green,
+                        GoalToolIcon.Rect,
+                        AlineCenterMiddle)
 
             End If
 
@@ -2049,6 +2189,10 @@ Public Class Form1
 
         BushToolIcon.Rect = New Rectangle(ClientRectangle.Left + 720, ClientRectangle.Bottom - 65, 40, 40)
 
+        GoalToolButton.Rect = New Rectangle(ClientRectangle.Left + 786, ClientRectangle.Bottom - 90, 90, 90)
+
+        GoalToolIcon.Rect = New Rectangle(ClientRectangle.Left + 811, ClientRectangle.Bottom - 65, 40, 40)
+
         Title.Rect = New Rectangle(ClientRectangle.Left, ClientRectangle.Top, ClientRectangle.Width, ClientRectangle.Height)
 
         StartScreenNewButton.Rect = New Rectangle(ClientRectangle.Width \ 2 - 200, ClientRectangle.Height \ 2 + 100, 150, 90)
@@ -2181,6 +2325,7 @@ Public Class Form1
             SelectedBill = -1
             SelectedCloud = -1
             SelectedBush = -1
+            GoalSelected = False
 
             'Resume Play
             LastFrame = Now
@@ -2208,6 +2353,7 @@ Public Class Form1
             SelectedBill = -1
             SelectedCloud = -1
             SelectedBush = -1
+            GoalSelected = False
 
             'Snap preview to grid.
             ToolPreview.X = CInt(Math.Round(e.X / GridSize)) * GridSize
@@ -2229,6 +2375,7 @@ Public Class Form1
             SelectedBill = -1
             SelectedCloud = -1
             SelectedBush = -1
+            GoalSelected = False
 
             'Snap preview to grid.
             ToolPreview.X = CInt(Math.Round(e.X / GridSize)) * GridSize
@@ -2250,6 +2397,7 @@ Public Class Form1
             SelectedBill = -1
             SelectedCloud = -1
             SelectedBush = -1
+            GoalSelected = False
 
             'Snap preview to grid.
             ToolPreview.X = CInt(Math.Round(e.X / GridSize)) * GridSize
@@ -2271,6 +2419,7 @@ Public Class Form1
             SelectedBill = -1
             SelectedCloud = -1
             SelectedBush = -1
+            GoalSelected = False
 
             'Snap preview to grid.
             ToolPreview.X = CInt(Math.Round(e.X / GridSize)) * GridSize
@@ -2280,6 +2429,28 @@ Public Class Form1
             ToolPreview.Height = GridSize
 
             SelectedTool = Tools.Bush
+
+            ShowToolPreview = True
+
+        End If
+
+        If GoalToolButton.Rect.Contains(e) Then
+
+            'Deselect game objects.
+            SelectedBlock = -1
+            SelectedBill = -1
+            SelectedCloud = -1
+            SelectedBush = -1
+            GoalSelected = False
+
+            'Snap preview to grid.
+            ToolPreview.X = CInt(Math.Round(e.X / GridSize)) * GridSize
+            ToolPreview.Y = CInt(Math.Round(e.Y / GridSize)) * GridSize
+
+            ToolPreview.Width = GridSize
+            ToolPreview.Height = GridSize
+
+            SelectedTool = Tools.Goal
 
             ShowToolPreview = True
 
@@ -2448,7 +2619,7 @@ Public Class Form1
 
                             'Snap block to grid.
                             AddBush(New Point(CInt(Math.Round(e.X / GridSize) * GridSize),
-                                       CInt(Math.Round(e.Y / GridSize) * GridSize)))
+                                              CInt(Math.Round(e.Y / GridSize) * GridSize)))
 
                             'Change tool to the mouse pointer.
                             SelectedTool = Tools.Pointer
@@ -2458,6 +2629,22 @@ Public Class Form1
 
                             'Select the newly created bill.
                             SelectedBush = Bushes.Length - 1
+
+                        Case Tools.Goal
+
+                            Goal.Rect.Location = New Point(CInt(Math.Round(e.X / GridSize) * GridSize),
+                                                           CInt(Math.Round(e.Y / GridSize) * GridSize))
+
+                            Goal.Rect.Size = New Size(GridSize, GridSize)
+
+                            'Change tool to the mouse pointer.
+                            SelectedTool = Tools.Pointer
+
+                            'Turn tool preview off.
+                            ShowToolPreview = False
+
+                            'Select the goal.
+                            GoalSelected = True
 
                         Case Else
 
@@ -3002,6 +3189,21 @@ Public Class Form1
                     End If
 
                 Case Tools.Bush
+
+                    If ToolBarBackground.Rect.Contains(e.Location) = False Then
+
+                        ShowToolPreview = True
+
+                        ToolPreview.X = CInt(Math.Round(e.X / GridSize)) * GridSize
+                        ToolPreview.Y = CInt(Math.Round(e.Y / GridSize)) * GridSize
+
+                    Else
+
+                        ShowToolPreview = False
+
+                    End If
+
+                Case Tools.Goal
 
                     If ToolBarBackground.Rect.Contains(e.Location) = False Then
 

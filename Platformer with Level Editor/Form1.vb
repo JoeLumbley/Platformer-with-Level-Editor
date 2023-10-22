@@ -2125,6 +2125,8 @@ Public Class Form1
 
         Cash(Cash.Length - 1).Collected = False
 
+        AutoSizeLevel(Cash(Cash.Length - 1).Rect)
+
     End Sub
 
     Private Sub AddCloud(Location As Point)
@@ -2147,6 +2149,8 @@ Public Class Form1
         Clouds(Clouds.Length - 1).Position.X = Location.X
         Clouds(Clouds.Length - 1).Position.Y = Location.Y
 
+        AutoSizeLevel(Clouds(Clouds.Length - 1).Rect)
+
     End Sub
 
     Private Sub AddBush(Location As Point)
@@ -2168,6 +2172,8 @@ Public Class Form1
 
         Bushes(Bushes.Length - 1).Position.X = Location.X
         Bushes(Bushes.Length - 1).Position.Y = Location.Y
+
+        AutoSizeLevel(Bushes(Bushes.Length - 1).Rect)
 
     End Sub
 
@@ -2844,6 +2850,8 @@ Public Class Form1
 
                             Goal.Rect.Size = New Size(GridSize, GridSize)
 
+                            AutoSizeLevel(Goal.Rect)
+
                             'Change tool to the mouse pointer.
                             SelectedTool = Tools.Pointer
 
@@ -3454,11 +3462,15 @@ Public Class Form1
                     'Limit smallest cloud height to one grid height.
                     If Clouds(SelectedCloud).Rect.Height < GridSize Then Clouds(SelectedCloud).Rect.Height = GridSize
 
+                    AutoSizeLevel(Clouds(SelectedCloud).Rect)
+
                 Else
 
                     'Snap cloud to grid
                     Clouds(SelectedCloud).Rect.X = CInt(Math.Round((pointOffset.X - SelectionOffset.X) / GridSize)) * GridSize
                     Clouds(SelectedCloud).Rect.Y = CInt(Math.Round((pointOffset.Y - SelectionOffset.Y) / GridSize)) * GridSize
+
+                    AutoSizeLevel(Clouds(SelectedCloud).Rect)
 
                 End If
 
@@ -3510,6 +3522,8 @@ Public Class Form1
                 Cash(SelectedBill).Rect.X = CInt(Math.Round((pointOffset.X - SelectionOffset.X) / GridSize)) * GridSize
                 Cash(SelectedBill).Rect.Y = CInt(Math.Round((pointOffset.Y - SelectionOffset.Y) / GridSize)) * GridSize
 
+                AutoSizeLevel(Cash(SelectedBill).Rect)
+
             End If
 
         End If
@@ -3536,6 +3550,8 @@ Public Class Form1
                     'Limit smallest bush height to one grid height.
                     If Bushes(SelectedBush).Rect.Height < GridSize Then Bushes(SelectedBush).Rect.Height = GridSize
 
+                    AutoSizeLevel(Bushes(SelectedBush).Rect)
+
                 Else
                     'No, the player is not resizing the bush.
                     'The player is moving the bush.
@@ -3543,6 +3559,8 @@ Public Class Form1
                     'Move bush, snap to grid
                     Bushes(SelectedBush).Rect.X = CInt(Math.Round((pointOffset.X - SelectionOffset.X) / GridSize)) * GridSize
                     Bushes(SelectedBush).Rect.Y = CInt(Math.Round((pointOffset.Y - SelectionOffset.Y) / GridSize)) * GridSize
+
+                    AutoSizeLevel(Bushes(SelectedBush).Rect)
 
                 End If
 
@@ -3568,11 +3586,15 @@ Public Class Form1
                     'Limit smallest bush height to one grid height.
                     If Goal.Rect.Height < GridSize Then Goal.Rect.Height = GridSize
 
+                    AutoSizeLevel(Goal.Rect)
+
                 Else
 
                     'Move Goal, snap to grid
                     Goal.Rect.X = CInt(Math.Round((pointOffset.X - SelectionOffset.X) / GridSize)) * GridSize
                     Goal.Rect.Y = CInt(Math.Round((pointOffset.Y - SelectionOffset.Y) / GridSize)) * GridSize
+
+                    AutoSizeLevel(Goal.Rect)
 
                 End If
 

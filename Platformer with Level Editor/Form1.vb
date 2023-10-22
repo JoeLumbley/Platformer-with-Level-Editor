@@ -2562,8 +2562,8 @@ Public Class Form1
             GoalSelected = False
 
             'Snap preview to grid.
-            ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize)) * GridSize
-            ToolPreview.Y = CInt(Math.Round(pointOffset.Y / GridSize)) * GridSize
+            ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize) * GridSize)
+            ToolPreview.Y = CInt(Math.Round(pointOffset.Y / GridSize) * GridSize)
 
             ToolPreview.Width = GridSize
             ToolPreview.Height = GridSize
@@ -2584,8 +2584,8 @@ Public Class Form1
             GoalSelected = False
 
             'Snap preview to grid.
-            ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize)) * GridSize
-            ToolPreview.Y = CInt(Math.Round(pointOffset.Y / GridSize)) * GridSize
+            ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize) * GridSize)
+            ToolPreview.Y = CInt(Math.Round(pointOffset.Y / GridSize) * GridSize)
 
             ToolPreview.Width = GridSize
             ToolPreview.Height = GridSize
@@ -2606,8 +2606,8 @@ Public Class Form1
             GoalSelected = False
 
             'Snap preview to grid.
-            ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize)) * GridSize
-            ToolPreview.Y = CInt(Math.Round(pointOffset.Y / GridSize)) * GridSize
+            ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize) * GridSize)
+            ToolPreview.Y = CInt(Math.Round(pointOffset.Y / GridSize) * GridSize)
 
             ToolPreview.Width = GridSize
             ToolPreview.Height = GridSize
@@ -2628,8 +2628,8 @@ Public Class Form1
             GoalSelected = False
 
             'Snap preview to grid.
-            ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize)) * GridSize
-            ToolPreview.Y = CInt(Math.Round(pointOffset.Y / GridSize)) * GridSize
+            ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize) * GridSize)
+            ToolPreview.Y = CInt(Math.Round(pointOffset.Y / GridSize) * GridSize)
 
             ToolPreview.Width = GridSize
             ToolPreview.Height = GridSize
@@ -2650,8 +2650,8 @@ Public Class Form1
             GoalSelected = False
 
             'Snap preview to grid.
-            ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize)) * GridSize
-            ToolPreview.Y = CInt(Math.Round(pointOffset.Y / GridSize)) * GridSize
+            ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize) * GridSize)
+            ToolPreview.Y = CInt(Math.Round(pointOffset.Y / GridSize) * GridSize)
 
             ToolPreview.Width = GridSize
             ToolPreview.Height = GridSize
@@ -2690,7 +2690,6 @@ Public Class Form1
         pointOffset.X = (Camera.Rect.X * -1) + e.X
 
         pointOffset.Y = (Camera.Rect.Y * -1) + e.Y
-
 
         If SizingHandle.Contains(e) Then
 

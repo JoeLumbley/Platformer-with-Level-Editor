@@ -838,18 +838,20 @@ Public Class Form1
 
     Private Sub LookAhead()
 
-        'Is hero past the 40% to the right side of the frame?
+        'Is our hero near the right side of the frame?
         If OurHero.Rect.X > (Camera.Rect.X * -1) + Camera.Rect.Width / 1.5 Then
+            'Yes, our hero is near the right side of the frame.
 
             'Move camera to the right.
             Camera.Rect.X = OurHero.Rect.Left * -1 + Camera.Rect.Width / 1.5
 
         End If
 
-        'Is hero past the 40% to the right side of the frame?
+        'Is our hero near the left side of the frame?
         If OurHero.Rect.X < (Camera.Rect.X * -1) + Camera.Rect.Width / 4 Then
+            'Yes, our hero is near the left side of the frame.
 
-            'Move camera to the right.
+            'Move camera to the left.
             Camera.Rect.X = OurHero.Rect.Left * -1 + Camera.Rect.Width / 4
 
         End If

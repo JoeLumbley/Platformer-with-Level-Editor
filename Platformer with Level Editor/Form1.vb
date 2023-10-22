@@ -3484,17 +3484,66 @@ Public Class Form1
             Case Keys.Right
                 'Yes, the player has pressed the right arrow key down.
 
-                RightArrowDown = True
+                If GameState = AppState.Playing Then
 
-                LeftArrowDown = False
+                    RightArrowDown = True
+
+                    LeftArrowDown = False
+
+                End If
+
+                If GameState = AppState.Editing Then
+
+                    'Move Viewport to the right.
+                    Camera.Rect.X -= 10
+
+                    BufferGridLines()
+
+                End If
 
             'Has the player pressed the left arrow key down?
             Case Keys.Left
                 'Yes, the player has pressed the left arrow key down.
 
-                LeftArrowDown = True
+                If GameState = AppState.Playing Then
 
-                RightArrowDown = False
+                    LeftArrowDown = True
+
+                    RightArrowDown = False
+
+                End If
+
+                If GameState = AppState.Editing Then
+
+                    'Move Camera to the left.
+                    Camera.Rect.X += 10
+
+                    BufferGridLines()
+
+                End If
+
+
+            Case Keys.Up
+
+                If GameState = AppState.Editing Then
+
+                    'Move Camera up.
+                    Camera.Rect.Y += 10
+
+                    BufferGridLines()
+
+                End If
+
+            Case Keys.Down
+
+                If GameState = AppState.Editing Then
+
+                    'Move Camera down.
+                    Camera.Rect.Y -= 10
+
+                    BufferGridLines()
+
+                End If
 
             'Has the player pressed the B key down?
             Case Keys.B

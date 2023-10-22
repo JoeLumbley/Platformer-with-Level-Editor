@@ -178,6 +178,8 @@ Public Class Form1
 
     Private Level As GameObject
 
+    Private Camera As GameObject
+
     Private ToolPreview As Rectangle
 
     Private SelectedCloud As Integer = -1
@@ -491,6 +493,8 @@ Public Class Form1
 
     Private Sub InitializeGameObjects()
 
+        Camera.Rect.Location = New Point(0, 0)
+
         Level.Rect = New Rectangle(0, 0, 1920, 1080)
 
         OurHero.Rect = New Rectangle(128, 769, 64, 64)
@@ -544,6 +548,8 @@ Public Class Form1
         Array.Resize(Cash, Cash.Length + 1)
         Cash(Cash.Length - 1).Rect = New Rectangle(1472, 64, 64, 64)
         Cash(Cash.Length - 1).Collected = False
+
+        BufferGridLines()
 
     End Sub
 
@@ -656,7 +662,7 @@ Public Class Form1
 
                     UpdateLeftThumbstickPosition()
 
-                    'UpdateRightThumbstickPosition()
+                    UpdateRightThumbstickPosition()
 
                     'UpdateLeftTriggerPosition()
 
@@ -740,6 +746,72 @@ Public Class Form1
             'The left thumbstick is in the neutral position.
 
         End If
+
+    End Sub
+
+    Private Sub UpdateRightThumbstickPosition()
+        'The range on the X-axis is -32,768 through 32,767. Signed 16-bit (2-byte) integer.
+        'The range on the Y-axis is -32,768 through 32,767. Signed 16-bit (2-byte) integer.
+
+        'What position is the right thumbstick in on the X-axis?
+        If ControllerPosition.Gamepad.sThumbRX <= NeutralStart Then
+            'The right thumbstick is in the left position.
+
+            If GameState = AppState.Editing Then
+
+                'Move Viewport to the left.
+                Camera.Rect.X += 10
+
+                BufferGridLines()
+
+            End If
+
+        ElseIf ControllerPosition.Gamepad.sThumbRX >= NeutralEnd Then
+            'The right thumbstick is in the right position.
+
+            If GameState = AppState.Editing Then
+
+                'Move Viewport to the left.
+                Camera.Rect.X -= 10
+
+                BufferGridLines()
+
+            End If
+
+        Else
+            'The right thumbstick is in the neutral position.
+
+        End If
+
+        'What position is the right thumbstick in on the Y-axis?
+        If ControllerPosition.Gamepad.sThumbRY <= NeutralStart Then
+            'The right thumbstick is in the up position.
+
+            If GameState = AppState.Editing Then
+
+                'Move Viewport to the up.
+                Camera.Rect.Y -= 10
+
+                BufferGridLines()
+
+            End If
+
+        ElseIf ControllerPosition.Gamepad.sThumbRY >= NeutralEnd Then
+            'The right thumbstick is in the down position.
+
+            If GameState = AppState.Editing Then
+
+                'Move Viewport to the down.
+                Camera.Rect.Y += 10
+
+                BufferGridLines()
+
+            End If
+
+        Else
+                'The right thumbstick is in the neutral position.
+
+            End If
 
     End Sub
 
@@ -1239,16 +1311,20 @@ Public Class Form1
 
         With Buffer.Graphics
 
-            .FillRectangle(Brushes.Red, OurHero.Rect)
+            Dim rectOffset As Rectangle = OurHero.Rect
 
-            .DrawString("Hero", CWJFont, Brushes.White, OurHero.Rect, AlineCenterMiddle)
+            rectOffset.Offset(Camera.Rect.Location)
+
+            .FillRectangle(Brushes.Red, rectOffset)
+
+            .DrawString("Hero", CWJFont, Brushes.White, rectOffset, AlineCenterMiddle)
 
             'Draw hero position
             .DrawString("X: " & OurHero.Position.X.ToString & vbCrLf & "Y: " & OurHero.Position.Y.ToString,
                         CWJFont,
                         Brushes.White,
-                        OurHero.Rect.X,
-                        OurHero.Rect.Y - 50,
+                        rectOffset.X,
+                        rectOffset.Y - 50,
                         New StringFormat With {.Alignment = StringAlignment.Near})
 
         End With
@@ -1261,10 +1337,14 @@ Public Class Form1
 
             With Buffer.Graphics
 
-                .FillRectangle(Brushes.White, Goal.Rect)
+                Dim rectOffset As Rectangle = Goal.Rect
+
+                rectOffset.Offset(Camera.Rect.Location)
+
+                .FillRectangle(Brushes.White, rectOffset)
 
                 ' Define the rectangle to be filled
-                Dim rect As RectangleF = Goal.Rect
+                Dim rect As RectangleF = rectOffset
 
                 rect.Inflate(rect.Width / 6.4F, rect.Height / 6.4F)
 
@@ -1285,7 +1365,7 @@ Public Class Form1
                     .SurroundColors = New Color() {colors(1)}
                 }
 
-                .FillRectangle(GradBrush, Goal.Rect)
+                .FillRectangle(GradBrush, rectOffset)
 
                 If Goal.Rect.Width <= Goal.Rect.Height Then
                     Dim Font As New Font(New FontFamily("Wingdings"), Goal.Rect.Width \ 2, FontStyle.Regular)
@@ -1293,7 +1373,7 @@ Public Class Form1
                     .DrawString("«",
                             Font,
                             Brushes.Green,
-                            Goal.Rect,
+                            rectOffset,
                             AlineCenterMiddle)
 
                 Else
@@ -1302,7 +1382,7 @@ Public Class Form1
                     .DrawString("«",
                             Font,
                             Brushes.Green,
-                            Goal.Rect,
+                            rectOffset,
                             AlineCenterMiddle)
 
                 End If
@@ -1312,11 +1392,11 @@ Public Class Form1
                     If GoalSelected = True Then
 
                         'Draw selection rectangle.
-                        .DrawRectangle(New Pen(Color.Red, 6), Goal.Rect)
+                        .DrawRectangle(New Pen(Color.Red, 6), rectOffset)
 
                         'Position sizing handle.
-                        SizingHandle.X = Goal.Rect.Right - SizingHandle.Width \ 2
-                        SizingHandle.Y = Goal.Rect.Bottom - SizingHandle.Height \ 2
+                        SizingHandle.X = rectOffset.Right - SizingHandle.Width \ 2
+                        SizingHandle.Y = rectOffset.Bottom - SizingHandle.Height \ 2
 
                         'Draw sizing handle.
                         .FillRectangle(Brushes.Black,
@@ -1340,18 +1420,22 @@ Public Class Form1
 
                 For Each Block In Blocks
 
-                    .FillRectangle(Brushes.Chocolate, Block.Rect)
+                    Dim rectOffset As Rectangle = Block.Rect
+
+                    rectOffset.Offset(Camera.Rect.Location)
+
+                    .FillRectangle(Brushes.Chocolate, rectOffset)
 
                     If GameState = AppState.Editing Then
 
                         If SelectedBlock = Array.IndexOf(Blocks, Block) Then
 
                             'Draw selection rectangle.
-                            .DrawRectangle(New Pen(Color.Red, 6), Block.Rect)
+                            .DrawRectangle(New Pen(Color.Red, 6), rectOffset)
 
                             'Position sizing handle.
-                            SizingHandle.X = Block.Rect.Right - SizingHandle.Width \ 2
-                            SizingHandle.Y = Block.Rect.Bottom - SizingHandle.Height \ 2
+                            SizingHandle.X = rectOffset.Right - SizingHandle.Width \ 2
+                            SizingHandle.Y = rectOffset.Bottom - SizingHandle.Height \ 2
 
                             'Draw sizing handle.
                             .FillRectangle(Brushes.Black,
@@ -1377,24 +1461,28 @@ Public Class Form1
 
                 For Each Bush In Bushes
 
-                    .FillRectangle(Brushes.GreenYellow, Bush.Rect)
+                    Dim rectOffset As Rectangle = Bush.Rect
 
-                    .DrawLine(SeaGreenPen, Bush.Rect.Right - 10, Bush.Rect.Top + 10, Bush.Rect.Right - 10, Bush.Rect.Bottom - 10)
+                    rectOffset.Offset(Camera.Rect.Location)
 
-                    .DrawLine(SeaGreenPen, Bush.Rect.Left + 10, Bush.Rect.Bottom - 10, Bush.Rect.Right - 10, Bush.Rect.Bottom - 10)
+                    .FillRectangle(Brushes.GreenYellow, rectOffset)
 
-                    .DrawRectangle(OutinePen, Bush.Rect)
+                    .DrawLine(SeaGreenPen, rectOffset.Right - 10, rectOffset.Top + 10, rectOffset.Right - 10, rectOffset.Bottom - 10)
+
+                    .DrawLine(SeaGreenPen, rectOffset.Left + 10, rectOffset.Bottom - 10, rectOffset.Right - 10, rectOffset.Bottom - 10)
+
+                    .DrawRectangle(OutinePen, rectOffset)
 
                     If GameState = AppState.Editing Then
 
                         If SelectedBush = Array.IndexOf(Bushes, Bush) Then
 
                             'Draw selection rectangle.
-                            .DrawRectangle(New Pen(Color.Red, 6), Bush.Rect)
+                            .DrawRectangle(New Pen(Color.Red, 6), rectOffset)
 
                             'Position sizing handle.
-                            SizingHandle.X = Bush.Rect.Right - SizingHandle.Width \ 2
-                            SizingHandle.Y = Bush.Rect.Bottom - SizingHandle.Height \ 2
+                            SizingHandle.X = rectOffset.Right - SizingHandle.Width \ 2
+                            SizingHandle.Y = rectOffset.Bottom - SizingHandle.Height \ 2
 
                             'Draw sizing handle.
                             .FillRectangle(Brushes.Black,
@@ -1420,24 +1508,28 @@ Public Class Form1
 
                 For Each Cloud In Clouds
 
-                    .FillRectangle(Brushes.White, Cloud.Rect)
+                    Dim rectOffset As Rectangle = Cloud.Rect
 
-                    .DrawLine(LightSkyBluePen, Cloud.Rect.Right - 10, Cloud.Rect.Top + 10, Cloud.Rect.Right - 10, Cloud.Rect.Bottom - 10)
+                    rectOffset.Offset(Camera.Rect.Location)
 
-                    .DrawLine(LightSkyBluePen, Cloud.Rect.Left + 10, Cloud.Rect.Bottom - 10, Cloud.Rect.Right - 10, Cloud.Rect.Bottom - 10)
+                    .FillRectangle(Brushes.White, rectOffset)
 
-                    .DrawRectangle(OutinePen, Cloud.Rect)
+                    .DrawLine(LightSkyBluePen, rectOffset.Right - 10, rectOffset.Top + 10, rectOffset.Right - 10, rectOffset.Bottom - 10)
+
+                    .DrawLine(LightSkyBluePen, rectOffset.Left + 10, rectOffset.Bottom - 10, rectOffset.Right - 10, rectOffset.Bottom - 10)
+
+                    .DrawRectangle(OutinePen, rectOffset)
 
                     If GameState = AppState.Editing Then
 
                         If SelectedCloud = Array.IndexOf(Clouds, Cloud) Then
 
                             'Draw selection rectangle.
-                            .DrawRectangle(New Pen(Color.Red, 6), Cloud.Rect)
+                            .DrawRectangle(New Pen(Color.Red, 6), rectOffset)
 
                             'Position sizing handle.
-                            SizingHandle.X = Cloud.Rect.Right - SizingHandle.Width \ 2
-                            SizingHandle.Y = Cloud.Rect.Bottom - SizingHandle.Height \ 2
+                            SizingHandle.X = rectOffset.Right - SizingHandle.Width \ 2
+                            SizingHandle.Y = rectOffset.Bottom - SizingHandle.Height \ 2
 
                             'Draw sizing handle.
                             .FillRectangle(Brushes.Black,
@@ -1463,28 +1555,32 @@ Public Class Form1
 
                 For Each Bill In Cash
 
+                    Dim rectOffset As Rectangle = Bill.Rect
+
+                    rectOffset.Offset(Camera.Rect.Location)
+
                     Select Case GameState
 
                         Case AppState.Playing
 
                             If Bill.Collected = False Then
 
-                                .FillRectangle(Brushes.Goldenrod, Bill.Rect)
+                                .FillRectangle(Brushes.Goldenrod, rectOffset)
 
-                                .DrawString("$", FPSFont, Brushes.OrangeRed, Bill.Rect, AlineCenterMiddle)
+                                .DrawString("$", FPSFont, Brushes.OrangeRed, rectOffset, AlineCenterMiddle)
 
                             End If
 
                         Case AppState.Editing
 
-                            .FillRectangle(Brushes.Goldenrod, Bill.Rect)
+                            .FillRectangle(Brushes.Goldenrod, rectOffset)
 
-                            .DrawString("$", FPSFont, Brushes.OrangeRed, Bill.Rect, AlineCenterMiddle)
+                            .DrawString("$", FPSFont, Brushes.OrangeRed, rectOffset, AlineCenterMiddle)
 
                             If SelectedBill = Array.IndexOf(Cash, Bill) Then
 
                                 'Draw selection rectangle.
-                                .DrawRectangle(New Pen(Color.Red, 6), Bill.Rect)
+                                .DrawRectangle(New Pen(Color.Red, 6), rectOffset)
 
                             End If
 
@@ -2116,18 +2212,16 @@ Public Class Form1
         GridLineBuffer.Clear(Color.Transparent)
 
         ' Draw vertical lines  |
-        For x As Integer = -1 To ClientSize.Width Step GridSize
-            'Buffer.Graphics.DrawLine(Pens.Black, x, 0, x, ClientSize.Height)
+        For x As Integer = Camera.Rect.X - 1 To Camera.Rect.X + Level.Rect.Width Step GridSize
 
-            GridLineBuffer.DrawLine(Pens.Black, x, 0, x, ClientSize.Height)
+            GridLineBuffer.DrawLine(Pens.Black, x, Camera.Rect.Y, x, Camera.Rect.Y + Level.Rect.Height)
 
         Next
 
         ' Draw horizontal lines ---
-        For y As Integer = -1 To ClientSize.Width Step GridSize
-            'Buffer.Graphics.DrawLine(Pens.Black, 0, y, ClientSize.Width, y)
+        For y As Integer = Camera.Rect.Y - 1 To Camera.Rect.Y + Level.Rect.Height Step GridSize
 
-            GridLineBuffer.DrawLine(Pens.Black, 0, y, ClientSize.Width, y)
+            GridLineBuffer.DrawLine(Pens.Black, Camera.Rect.X, y, Camera.Rect.X + Level.Rect.Width, y)
 
         Next
 
@@ -2198,6 +2292,10 @@ Public Class Form1
         StartScreenNewButton.Rect = New Rectangle(ClientRectangle.Width \ 2 - 200, ClientRectangle.Height \ 2 + 100, 150, 90)
 
         StartScreenOpenButton.Rect = New Rectangle(ClientRectangle.Width \ 2 + 100, ClientRectangle.Height \ 2 + 100, 150, 90)
+
+
+
+        Camera.Rect.Size = ClientRectangle.Size
 
         BufferGridLines()
 
@@ -2479,6 +2577,13 @@ Public Class Form1
 
     Private Sub MouseDownEditingSelection(e As Point)
 
+        Dim pointOffset As Point = e
+
+        pointOffset.X = (Camera.Rect.X * -1) + e.X
+
+        pointOffset.Y = (Camera.Rect.Y * -1) + e.Y
+
+
         If SizingHandle.Contains(e) Then
 
             SizingHandleSelected = True
@@ -2487,12 +2592,12 @@ Public Class Form1
 
             SizingHandleSelected = False
 
-            If Goal.Rect.Contains(e) Then
+            If Goal.Rect.Contains(pointOffset) Then
 
                 GoalSelected = True
 
-                SelectionOffset.X = e.X - Goal.Rect.X
-                SelectionOffset.Y = e.Y - Goal.Rect.Y
+                SelectionOffset.X = pointOffset.X - Goal.Rect.X
+                SelectionOffset.Y = pointOffset.Y - Goal.Rect.Y
 
                 'Deselect other game objects.
                 SelectedBlock = -1
@@ -2501,13 +2606,13 @@ Public Class Form1
                 SelectedBush = -1
 
                 'Is the player selecting a block?
-            ElseIf CheckBlockSelection(e) > -1 Then
+            ElseIf CheckBlockSelection(pointOffset) > -1 Then
                 'Yes, the player is selecting a block.
 
-                SelectedBlock = CheckBlockSelection(e)
+                SelectedBlock = CheckBlockSelection(pointOffset)
 
-                SelectionOffset.X = e.X - Blocks(SelectedBlock).Rect.X
-                SelectionOffset.Y = e.Y - Blocks(SelectedBlock).Rect.Y
+                SelectionOffset.X = pointOffset.X - Blocks(SelectedBlock).Rect.X
+                SelectionOffset.Y = pointOffset.Y - Blocks(SelectedBlock).Rect.Y
 
                 'Deselect other game objects.
                 SelectedBill = -1
@@ -2516,13 +2621,13 @@ Public Class Form1
                 GoalSelected = False
 
                 'Is the player selecting a bill?
-            ElseIf CheckBillSelection(e) > -1 Then
+            ElseIf CheckBillSelection(pointOffset) > -1 Then
                 'Yes, the player is selecting a bill.
 
-                SelectedBill = CheckBillSelection(e)
+                SelectedBill = CheckBillSelection(pointOffset)
 
-                SelectionOffset.X = e.X - Cash(SelectedBill).Rect.X
-                SelectionOffset.Y = e.Y - Cash(SelectedBill).Rect.Y
+                SelectionOffset.X = pointOffset.X - Cash(SelectedBill).Rect.X
+                SelectionOffset.Y = pointOffset.Y - Cash(SelectedBill).Rect.Y
 
                 'Deselect other game objects.
                 SelectedBlock = -1
@@ -2531,13 +2636,13 @@ Public Class Form1
                 GoalSelected = False
 
                 'Is the player selecting a cloud?
-            ElseIf CheckCloudSelection(e) > -1 Then
+            ElseIf CheckCloudSelection(pointOffset) > -1 Then
                 'Yes, the player is selecting a cloud.
 
-                SelectedCloud = CheckCloudSelection(e)
+                SelectedCloud = CheckCloudSelection(pointOffset)
 
-                SelectionOffset.X = e.X - Clouds(SelectedCloud).Rect.X
-                SelectionOffset.Y = e.Y - Clouds(SelectedCloud).Rect.Y
+                SelectionOffset.X = pointOffset.X - Clouds(SelectedCloud).Rect.X
+                SelectionOffset.Y = pointOffset.Y - Clouds(SelectedCloud).Rect.Y
 
                 'Deselect other game objects.
                 SelectedBlock = -1
@@ -2546,13 +2651,13 @@ Public Class Form1
                 GoalSelected = False
 
                 'Is the player selecting a bush?
-            ElseIf CheckBushSelection(e) > -1 Then
+            ElseIf CheckBushSelection(pointOffset) > -1 Then
                 'Yes, the player is selecting a bush.
 
-                SelectedBush = CheckBushSelection(e)
+                SelectedBush = CheckBushSelection(pointOffset)
 
-                SelectionOffset.X = e.X - Bushes(SelectedBush).Rect.X
-                SelectionOffset.Y = e.Y - Bushes(SelectedBush).Rect.Y
+                SelectionOffset.X = pointOffset.X - Bushes(SelectedBush).Rect.X
+                SelectionOffset.Y = pointOffset.Y - Bushes(SelectedBush).Rect.Y
 
                 'Deselect other game objects.
                 SelectedBlock = -1
@@ -3139,6 +3244,13 @@ Public Class Form1
 
     Private Sub MouseMoveEditing(e As MouseEventArgs)
 
+        Dim pointOffset As Point = e.Location
+
+        pointOffset.X = (Camera.Rect.X * -1) + e.X
+
+        pointOffset.Y = (Camera.Rect.Y * -1) + e.Y
+
+
         If e.Button = MouseButtons.None Then
 
             Select Case SelectedTool
@@ -3229,13 +3341,13 @@ Public Class Form1
                 If SizingHandleSelected = True Then
 
                     'Snap cloud width to grid.
-                    Clouds(SelectedCloud).Rect.Width = CInt(Math.Round((e.X - Clouds(SelectedCloud).Rect.X) / GridSize)) * GridSize
+                    Clouds(SelectedCloud).Rect.Width = CInt(Math.Round((pointOffset.X - Clouds(SelectedCloud).Rect.X) / GridSize)) * GridSize
 
                     'Limit smallest cloud width to one grid width.
                     If Clouds(SelectedCloud).Rect.Width < GridSize Then Clouds(SelectedCloud).Rect.Width = GridSize
 
                     'Snap cloud height to grid.
-                    Clouds(SelectedCloud).Rect.Height = CInt(Math.Round((e.Y - Clouds(SelectedCloud).Rect.Y) / GridSize)) * GridSize
+                    Clouds(SelectedCloud).Rect.Height = CInt(Math.Round((pointOffset.Y - Clouds(SelectedCloud).Rect.Y) / GridSize)) * GridSize
 
                     'Limit smallest cloud height to one grid height.
                     If Clouds(SelectedCloud).Rect.Height < GridSize Then Clouds(SelectedCloud).Rect.Height = GridSize
@@ -3243,8 +3355,8 @@ Public Class Form1
                 Else
 
                     'Snap cloud to grid
-                    Clouds(SelectedCloud).Rect.X = CInt(Math.Round((e.X - SelectionOffset.X) / GridSize)) * GridSize
-                    Clouds(SelectedCloud).Rect.Y = CInt(Math.Round((e.Y - SelectionOffset.Y) / GridSize)) * GridSize
+                    Clouds(SelectedCloud).Rect.X = CInt(Math.Round((pointOffset.X - SelectionOffset.X) / GridSize)) * GridSize
+                    Clouds(SelectedCloud).Rect.Y = CInt(Math.Round((pointOffset.Y - SelectionOffset.Y) / GridSize)) * GridSize
 
                 End If
 
@@ -3261,13 +3373,13 @@ Public Class Form1
                     'Yes, the player is resizing the block.
 
                     'Snap block width to grid.
-                    Blocks(SelectedBlock).Rect.Width = CInt(Math.Round((e.X - Blocks(SelectedBlock).Rect.X) / GridSize)) * GridSize
+                    Blocks(SelectedBlock).Rect.Width = CInt(Math.Round((pointOffset.X - Blocks(SelectedBlock).Rect.X) / GridSize)) * GridSize
 
                     'Limit smallest block width to one grid width.
                     If Blocks(SelectedBlock).Rect.Width < GridSize Then Blocks(SelectedBlock).Rect.Width = GridSize
 
                     'Snap block height to grid.
-                    Blocks(SelectedBlock).Rect.Height = CInt(Math.Round((e.Y - Blocks(SelectedBlock).Rect.Y) / GridSize)) * GridSize
+                    Blocks(SelectedBlock).Rect.Height = CInt(Math.Round((pointOffset.Y - Blocks(SelectedBlock).Rect.Y) / GridSize)) * GridSize
 
                     'Limit smallest block height to one grid height.
                     If Blocks(SelectedBlock).Rect.Height < GridSize Then Blocks(SelectedBlock).Rect.Height = GridSize
@@ -3275,8 +3387,8 @@ Public Class Form1
                 Else
 
                     'Snap block to grid
-                    Blocks(SelectedBlock).Rect.X = CInt(Math.Round((e.X - SelectionOffset.X) / GridSize)) * GridSize
-                    Blocks(SelectedBlock).Rect.Y = CInt(Math.Round((e.Y - SelectionOffset.Y) / GridSize)) * GridSize
+                    Blocks(SelectedBlock).Rect.X = CInt(Math.Round((pointOffset.X - SelectionOffset.X) / GridSize)) * GridSize
+                    Blocks(SelectedBlock).Rect.Y = CInt(Math.Round((pointOffset.Y - SelectionOffset.Y) / GridSize)) * GridSize
 
                 End If
 
@@ -3289,8 +3401,8 @@ Public Class Form1
             If e.Button = MouseButtons.Left Then
 
                 'Move bill, snap to grid.
-                Cash(SelectedBill).Rect.X = CInt(Math.Round((e.X - SelectionOffset.X) / GridSize)) * GridSize
-                Cash(SelectedBill).Rect.Y = CInt(Math.Round((e.Y - SelectionOffset.Y) / GridSize)) * GridSize
+                Cash(SelectedBill).Rect.X = CInt(Math.Round((pointOffset.X - SelectionOffset.X) / GridSize)) * GridSize
+                Cash(SelectedBill).Rect.Y = CInt(Math.Round((pointOffset.Y - SelectionOffset.Y) / GridSize)) * GridSize
 
             End If
 
@@ -3307,13 +3419,13 @@ Public Class Form1
                     'Yes, the player is resizing the bush.
 
                     'Snap bush width to grid.
-                    Bushes(SelectedBush).Rect.Width = CInt(Math.Round((e.X - Bushes(SelectedBush).Rect.X) / GridSize)) * GridSize
+                    Bushes(SelectedBush).Rect.Width = CInt(Math.Round((pointOffset.X - Bushes(SelectedBush).Rect.X) / GridSize)) * GridSize
 
                     'Limit smallest bush width to one grid width.
                     If Bushes(SelectedBush).Rect.Width < GridSize Then Bushes(SelectedBush).Rect.Width = GridSize
 
                     'Snap bush height to grid.
-                    Bushes(SelectedBush).Rect.Height = CInt(Math.Round((e.Y - Bushes(SelectedBush).Rect.Y) / GridSize)) * GridSize
+                    Bushes(SelectedBush).Rect.Height = CInt(Math.Round((pointOffset.Y - Bushes(SelectedBush).Rect.Y) / GridSize)) * GridSize
 
                     'Limit smallest bush height to one grid height.
                     If Bushes(SelectedBush).Rect.Height < GridSize Then Bushes(SelectedBush).Rect.Height = GridSize
@@ -3323,8 +3435,8 @@ Public Class Form1
                     'The player is moving the bush.
 
                     'Move bush, snap to grid
-                    Bushes(SelectedBush).Rect.X = CInt(Math.Round((e.X - SelectionOffset.X) / GridSize)) * GridSize
-                    Bushes(SelectedBush).Rect.Y = CInt(Math.Round((e.Y - SelectionOffset.Y) / GridSize)) * GridSize
+                    Bushes(SelectedBush).Rect.X = CInt(Math.Round((pointOffset.X - SelectionOffset.X) / GridSize)) * GridSize
+                    Bushes(SelectedBush).Rect.Y = CInt(Math.Round((pointOffset.Y - SelectionOffset.Y) / GridSize)) * GridSize
 
                 End If
 
@@ -3339,13 +3451,13 @@ Public Class Form1
                 If SizingHandleSelected = True Then
 
                     'Snap bush width to grid.
-                    Goal.Rect.Width = CInt(Math.Round((e.X - Goal.Rect.X) / GridSize)) * GridSize
+                    Goal.Rect.Width = CInt(Math.Round((pointOffset.X - Goal.Rect.X) / GridSize)) * GridSize
 
                     'Limit smallest bush width to one grid width.
                     If Goal.Rect.Width < GridSize Then Goal.Rect.Width = GridSize
 
                     'Snap bush height to grid.
-                    Goal.Rect.Height = CInt(Math.Round((e.Y - Goal.Rect.Y) / GridSize)) * GridSize
+                    Goal.Rect.Height = CInt(Math.Round((pointOffset.Y - Goal.Rect.Y) / GridSize)) * GridSize
 
                     'Limit smallest bush height to one grid height.
                     If Goal.Rect.Height < GridSize Then Goal.Rect.Height = GridSize
@@ -3353,8 +3465,8 @@ Public Class Form1
                 Else
 
                     'Move Goal, snap to grid
-                    Goal.Rect.X = CInt(Math.Round((e.X - SelectionOffset.X) / GridSize)) * GridSize
-                    Goal.Rect.Y = CInt(Math.Round((e.Y - SelectionOffset.Y) / GridSize)) * GridSize
+                    Goal.Rect.X = CInt(Math.Round((pointOffset.X - SelectionOffset.X) / GridSize)) * GridSize
+                    Goal.Rect.Y = CInt(Math.Round((pointOffset.Y - SelectionOffset.Y) / GridSize)) * GridSize
 
                 End If
 

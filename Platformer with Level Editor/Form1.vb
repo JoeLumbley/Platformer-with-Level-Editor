@@ -1617,45 +1617,49 @@ Public Class Form1
 
             If ShowToolPreview = True Then
 
+                Dim rectOffset As Rectangle = ToolPreview
+
+                rectOffset.Offset(Camera.Rect.Location)
+
                 Select Case SelectedTool
 
                     Case Tools.Block
 
-                        .FillRectangle(Brushes.Chocolate, ToolPreview)
+                        .FillRectangle(Brushes.Chocolate, rectOffset)
 
                     Case Tools.Bill
 
-                        .FillRectangle(Brushes.Goldenrod, ToolPreview)
+                        .FillRectangle(Brushes.Goldenrod, rectOffset)
 
-                        .DrawString("$", FPSFont, Brushes.OrangeRed, ToolPreview, AlineCenterMiddle)
+                        .DrawString("$", FPSFont, Brushes.OrangeRed, rectOffset, AlineCenterMiddle)
 
                     Case Tools.Cloud
 
-                        .FillRectangle(Brushes.White, ToolPreview)
+                        .FillRectangle(Brushes.White, rectOffset)
 
-                        .DrawLine(LightSkyBluePen, ToolPreview.Right - 10, ToolPreview.Top + 10, ToolPreview.Right - 10, ToolPreview.Bottom - 10)
+                        .DrawLine(LightSkyBluePen, rectOffset.Right - 10, rectOffset.Top + 10, rectOffset.Right - 10, rectOffset.Bottom - 10)
 
-                        .DrawLine(LightSkyBluePen, ToolPreview.Left + 10, ToolPreview.Bottom - 10, ToolPreview.Right - 10, ToolPreview.Bottom - 10)
+                        .DrawLine(LightSkyBluePen, rectOffset.Left + 10, rectOffset.Bottom - 10, rectOffset.Right - 10, rectOffset.Bottom - 10)
 
-                        .DrawRectangle(OutinePen, ToolPreview)
+                        .DrawRectangle(OutinePen, rectOffset)
 
 
                     Case Tools.Bush
 
-                        .FillRectangle(Brushes.GreenYellow, ToolPreview)
+                        .FillRectangle(Brushes.GreenYellow, rectOffset)
 
-                        .DrawLine(SeaGreenPen, ToolPreview.Right - 10, ToolPreview.Top + 10, ToolPreview.Right - 10, ToolPreview.Bottom - 10)
+                        .DrawLine(SeaGreenPen, rectOffset.Right - 10, rectOffset.Top + 10, rectOffset.Right - 10, rectOffset.Bottom - 10)
 
-                        .DrawLine(SeaGreenPen, ToolPreview.Left + 10, ToolPreview.Bottom - 10, ToolPreview.Right - 10, ToolPreview.Bottom - 10)
+                        .DrawLine(SeaGreenPen, rectOffset.Left + 10, rectOffset.Bottom - 10, rectOffset.Right - 10, rectOffset.Bottom - 10)
 
-                        .DrawRectangle(OutinePen, ToolPreview)
+                        .DrawRectangle(OutinePen, rectOffset)
 
                     Case Tools.Goal
 
-                        .FillRectangle(Brushes.White, ToolPreview)
+                        .FillRectangle(Brushes.White, rectOffset)
 
                         ' Define the rectangle to be filled
-                        Dim rect As RectangleF = ToolPreview
+                        Dim rect As RectangleF = rectOffset
 
                         rect.Inflate(rect.Width / 6.4F, rect.Height / 6.4F)
 
@@ -1676,24 +1680,24 @@ Public Class Form1
                             .SurroundColors = New Color() {colors(1)}
                         }
 
-                        .FillRectangle(GradBrush, ToolPreview)
+                        .FillRectangle(GradBrush, rectOffset)
 
-                        If ToolPreview.Width <= ToolPreview.Height Then
-                            Dim Font As New Font(New FontFamily("Wingdings"), ToolPreview.Width \ 2, FontStyle.Regular)
+                        If rectOffset.Width <= rectOffset.Height Then
+                            Dim Font As New Font(New FontFamily("Wingdings"), rectOffset.Width \ 2, FontStyle.Regular)
 
                             .DrawString("«",
                                     Font,
                                     Brushes.Green,
-                                    ToolPreview,
+                                    rectOffset,
                                     AlineCenterMiddle)
 
                         Else
-                            Dim Font As New Font(New FontFamily("Wingdings"), ToolPreview.Height \ 2, FontStyle.Regular)
+                            Dim Font As New Font(New FontFamily("Wingdings"), rectOffset.Height \ 2, FontStyle.Regular)
 
                             .DrawString("«",
                                     Font,
                                     Brushes.Green,
-                                    ToolPreview,
+                                    rectOffset,
                                     AlineCenterMiddle)
 
                         End If
@@ -2414,6 +2418,12 @@ Public Class Form1
 
     Private Sub MouseDownEditingButtons(e As Point)
 
+        Dim pointOffset As Point = e
+
+        pointOffset.X = (Camera.Rect.X * -1) + e.X
+
+        pointOffset.Y = (Camera.Rect.Y * -1) + e.Y
+
         'Is the player clicking the play button?
         If EditPlayButton.Rect.Contains(e) Then
             'Yes, the player is clicking the play button.
@@ -2454,8 +2464,8 @@ Public Class Form1
             GoalSelected = False
 
             'Snap preview to grid.
-            ToolPreview.X = CInt(Math.Round(e.X / GridSize)) * GridSize
-            ToolPreview.Y = CInt(Math.Round(e.Y / GridSize)) * GridSize
+            ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize)) * GridSize
+            ToolPreview.Y = CInt(Math.Round(pointOffset.Y / GridSize)) * GridSize
 
             ToolPreview.Width = GridSize
             ToolPreview.Height = GridSize
@@ -2476,8 +2486,8 @@ Public Class Form1
             GoalSelected = False
 
             'Snap preview to grid.
-            ToolPreview.X = CInt(Math.Round(e.X / GridSize)) * GridSize
-            ToolPreview.Y = CInt(Math.Round(e.Y / GridSize)) * GridSize
+            ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize)) * GridSize
+            ToolPreview.Y = CInt(Math.Round(pointOffset.Y / GridSize)) * GridSize
 
             ToolPreview.Width = GridSize
             ToolPreview.Height = GridSize
@@ -2498,8 +2508,8 @@ Public Class Form1
             GoalSelected = False
 
             'Snap preview to grid.
-            ToolPreview.X = CInt(Math.Round(e.X / GridSize)) * GridSize
-            ToolPreview.Y = CInt(Math.Round(e.Y / GridSize)) * GridSize
+            ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize)) * GridSize
+            ToolPreview.Y = CInt(Math.Round(pointOffset.Y / GridSize)) * GridSize
 
             ToolPreview.Width = GridSize
             ToolPreview.Height = GridSize
@@ -2520,8 +2530,8 @@ Public Class Form1
             GoalSelected = False
 
             'Snap preview to grid.
-            ToolPreview.X = CInt(Math.Round(e.X / GridSize)) * GridSize
-            ToolPreview.Y = CInt(Math.Round(e.Y / GridSize)) * GridSize
+            ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize)) * GridSize
+            ToolPreview.Y = CInt(Math.Round(pointOffset.Y / GridSize)) * GridSize
 
             ToolPreview.Width = GridSize
             ToolPreview.Height = GridSize
@@ -2542,8 +2552,8 @@ Public Class Form1
             GoalSelected = False
 
             'Snap preview to grid.
-            ToolPreview.X = CInt(Math.Round(e.X / GridSize)) * GridSize
-            ToolPreview.Y = CInt(Math.Round(e.Y / GridSize)) * GridSize
+            ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize)) * GridSize
+            ToolPreview.Y = CInt(Math.Round(pointOffset.Y / GridSize)) * GridSize
 
             ToolPreview.Width = GridSize
             ToolPreview.Height = GridSize
@@ -2677,8 +2687,8 @@ Public Class Form1
                         Case Tools.Block
 
                             'Snap block to grid.
-                            AddBlock(New Point(CInt(Math.Round(e.X / GridSize) * GridSize),
-                                       CInt(Math.Round(e.Y / GridSize) * GridSize)))
+                            AddBlock(New Point(CInt(Math.Round(pointOffset.X / GridSize) * GridSize),
+                                       CInt(Math.Round(pointOffset.Y / GridSize) * GridSize)))
 
                             'Change tool to the mouse pointer.
                             SelectedTool = Tools.Pointer
@@ -2692,8 +2702,8 @@ Public Class Form1
                         Case Tools.Bill
 
                             'Snap block to grid.
-                            AddBill(New Point(CInt(Math.Round(e.X / GridSize) * GridSize),
-                                       CInt(Math.Round(e.Y / GridSize) * GridSize)))
+                            AddBill(New Point(CInt(Math.Round(pointOffset.X / GridSize) * GridSize),
+                                       CInt(Math.Round(pointOffset.Y / GridSize) * GridSize)))
 
                             'Change tool to the mouse pointer.
                             SelectedTool = Tools.Pointer
@@ -2708,8 +2718,8 @@ Public Class Form1
                         Case Tools.Cloud
 
                             'Snap block to grid.
-                            AddCloud(New Point(CInt(Math.Round(e.X / GridSize) * GridSize),
-                                       CInt(Math.Round(e.Y / GridSize) * GridSize)))
+                            AddCloud(New Point(CInt(Math.Round(pointOffset.X / GridSize) * GridSize),
+                                       CInt(Math.Round(pointOffset.Y / GridSize) * GridSize)))
 
                             'Change tool to the mouse pointer.
                             SelectedTool = Tools.Pointer
@@ -2723,8 +2733,8 @@ Public Class Form1
                         Case Tools.Bush
 
                             'Snap block to grid.
-                            AddBush(New Point(CInt(Math.Round(e.X / GridSize) * GridSize),
-                                              CInt(Math.Round(e.Y / GridSize) * GridSize)))
+                            AddBush(New Point(CInt(Math.Round(pointOffset.X / GridSize) * GridSize),
+                                              CInt(Math.Round(pointOffset.Y / GridSize) * GridSize)))
 
                             'Change tool to the mouse pointer.
                             SelectedTool = Tools.Pointer
@@ -2737,8 +2747,8 @@ Public Class Form1
 
                         Case Tools.Goal
 
-                            Goal.Rect.Location = New Point(CInt(Math.Round(e.X / GridSize) * GridSize),
-                                                           CInt(Math.Round(e.Y / GridSize) * GridSize))
+                            Goal.Rect.Location = New Point(CInt(Math.Round(pointOffset.X / GridSize) * GridSize),
+                                                           CInt(Math.Round(pointOffset.Y / GridSize) * GridSize))
 
                             Goal.Rect.Size = New Size(GridSize, GridSize)
 
@@ -3261,8 +3271,8 @@ Public Class Form1
 
                         ShowToolPreview = True
 
-                        ToolPreview.X = CInt(Math.Round(e.X / GridSize)) * GridSize
-                        ToolPreview.Y = CInt(Math.Round(e.Y / GridSize)) * GridSize
+                        ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize) * GridSize)
+                        ToolPreview.Y = CInt(Math.Round(pointOffset.Y / GridSize) * GridSize)
 
                     Else
 
@@ -3276,8 +3286,8 @@ Public Class Form1
 
                         ShowToolPreview = True
 
-                        ToolPreview.X = CInt(Math.Round(e.X / GridSize)) * GridSize
-                        ToolPreview.Y = CInt(Math.Round(e.Y / GridSize)) * GridSize
+                        ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize) * GridSize)
+                        ToolPreview.Y = CInt(Math.Round(pointOffset.Y / GridSize) * GridSize)
 
                     Else
 
@@ -3289,10 +3299,10 @@ Public Class Form1
 
                     If ToolBarBackground.Rect.Contains(e.Location) = False Then
 
-                        ShowToolPreview = True
+                        ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize) * GridSize)
+                        ToolPreview.Y = CInt(Math.Round(pointOffset.Y / GridSize) * GridSize)
 
-                        ToolPreview.X = CInt(Math.Round(e.X / GridSize)) * GridSize
-                        ToolPreview.Y = CInt(Math.Round(e.Y / GridSize)) * GridSize
+                        ShowToolPreview = True
 
                     Else
 
@@ -3306,8 +3316,8 @@ Public Class Form1
 
                         ShowToolPreview = True
 
-                        ToolPreview.X = CInt(Math.Round(e.X / GridSize)) * GridSize
-                        ToolPreview.Y = CInt(Math.Round(e.Y / GridSize)) * GridSize
+                        ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize) * GridSize)
+                        ToolPreview.Y = CInt(Math.Round(pointOffset.Y / GridSize) * GridSize)
 
                     Else
 
@@ -3321,8 +3331,8 @@ Public Class Form1
 
                         ShowToolPreview = True
 
-                        ToolPreview.X = CInt(Math.Round(e.X / GridSize)) * GridSize
-                        ToolPreview.Y = CInt(Math.Round(e.Y / GridSize)) * GridSize
+                        ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize) * GridSize)
+                        ToolPreview.Y = CInt(Math.Round(pointOffset.Y / GridSize) * GridSize)
 
                     Else
 

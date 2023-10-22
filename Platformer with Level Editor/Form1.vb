@@ -860,7 +860,7 @@ Public Class Form1
 
     Private Sub KeepCameraOnTheLevel()
 
-        'Is the Camera off to left side of the level? Ckecked
+        'Is the Camera off to left side of the level? checked
         If (Camera.Rect.X * -1) < Level.Rect.Left Then
             'Yes, the Camera is off the level.
 
@@ -869,7 +869,7 @@ Public Class Form1
 
         End If
 
-        'Is the Camera off to right side of the level?
+        'Is the Camera off to right side of the level? checked
         If (Camera.Rect.X * -1) + Camera.Rect.Width > Level.Rect.Right Then
             'Yes, the Camera is off the level.
 
@@ -878,16 +878,16 @@ Public Class Form1
 
         End If
 
-        'Is the Camera off to top side of the level?
+        'Is the Camera off to top side of the level? checked
         If (Camera.Rect.Y * -1) < Level.Rect.Top Then
             'Yes, the Camera is off the level.
 
-            'Aline camera to the top side of the level. checked
+            'Aline camera to the top side of the level. 
             Camera.Rect.Y = Level.Rect.Top * -1
 
         End If
 
-        'Is the Camera off to bottom side of the level?
+        'Is the Camera off to bottom side of the level? checked
         If (Camera.Rect.Y * -1) + Camera.Rect.Height > Level.Rect.Bottom Then
             'Yes, the Camera is off the level.
 

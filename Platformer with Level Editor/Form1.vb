@@ -495,7 +495,7 @@ Public Class Form1
 
         Camera.Rect.Location = New Point(0, 0)
 
-        Level.Rect = New Rectangle(0, 0, 5000, 1080)
+        Level.Rect = New Rectangle(0, 0, 1920, 1080)
 
         OurHero.Rect = New Rectangle(128, 769, 64, 64)
 
@@ -2087,6 +2087,20 @@ Public Class Form1
         Blocks(Blocks.Length - 1).Position.X = Location.X
         Blocks(Blocks.Length - 1).Position.Y = Location.Y
 
+        AutoSizeLevel(Blocks(Blocks.Length - 1).Rect)
+
+    End Sub
+
+    Private Sub AutoSizeLevel(Rect As Rectangle)
+
+        If Rect.Right > Level.Rect.Right Then
+
+            Level.Rect.Width = Rect.Right
+
+            BufferGridLines()
+
+        End If
+
     End Sub
 
     Private Sub AddBill(Location As Point)
@@ -3472,11 +3486,15 @@ Public Class Form1
                     'Limit smallest block height to one grid height.
                     If Blocks(SelectedBlock).Rect.Height < GridSize Then Blocks(SelectedBlock).Rect.Height = GridSize
 
+                    AutoSizeLevel(Blocks(SelectedBlock).Rect)
+
                 Else
 
                     'Snap block to grid
                     Blocks(SelectedBlock).Rect.X = CInt(Math.Round((pointOffset.X - SelectionOffset.X) / GridSize)) * GridSize
                     Blocks(SelectedBlock).Rect.Y = CInt(Math.Round((pointOffset.Y - SelectionOffset.Y) / GridSize)) * GridSize
+
+                    AutoSizeLevel(Blocks(SelectedBlock).Rect)
 
                 End If
 

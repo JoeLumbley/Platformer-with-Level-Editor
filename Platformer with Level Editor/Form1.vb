@@ -830,6 +830,12 @@ Public Class Form1
 
     Private Sub UpdateCamera()
 
+        KeepCameraOnTheLevel()
+
+    End Sub
+
+    Private Sub KeepCameraOnTheLevel()
+
         'Is the Camera off to left side of the level? Ckecked
         If (Camera.Rect.X * -1) < Level.Rect.Left Then
             'Yes, the Camera is off the level.

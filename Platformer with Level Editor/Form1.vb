@@ -579,6 +579,8 @@ Public Class Form1
 
                 UpdateOurHero()
 
+                UpdateCamera()
+
             Case AppState.Editing
 
                 UpdateControllerData()
@@ -823,6 +825,47 @@ Public Class Form1
         DeltaTime = CurrentFrame - LastFrame 'Calculate delta time
 
         LastFrame = CurrentFrame 'Update last frame time
+
+    End Sub
+
+    Private Sub UpdateCamera()
+
+        'Is the Camera off to left side of the level? Ckecked
+        If (Camera.Rect.X * -1) < Level.Rect.Left Then
+            'Yes, the Camera is off the level.
+
+            'Aline camera to the left side of the level.
+            Camera.Rect.X = Level.Rect.Left * -1
+
+        End If
+
+        'Is the Camera off to right side of the level?
+        If (Camera.Rect.X * -1) + Camera.Rect.Width > Level.Rect.Right Then
+            'Yes, the Camera is off the level.
+
+            'Aline camera to the right side of the level.
+            Camera.Rect.X = Level.Rect.Right * -1 + Camera.Rect.Width
+
+        End If
+
+
+        'Is the Camera off to top side of the level?
+        If (Camera.Rect.Y * -1) < Level.Rect.Top Then
+            'Yes, the Camera is off the level.
+
+            'Aline camera to the top side of the level. checked
+            Camera.Rect.Y = Level.Rect.Top * -1
+
+        End If
+
+        'Is the Camera off to bottom side of the level?
+        If (Camera.Rect.Y * -1) + Camera.Rect.Height > Level.Rect.Bottom Then
+            'Yes, the Camera is off the level.
+
+            'Aline camera to the bottom side of the level.
+            Camera.Rect.Y = (Level.Rect.Bottom * -1) + Camera.Rect.Height
+
+        End If
 
     End Sub
 
@@ -1985,6 +2028,10 @@ Public Class Form1
 
             .DrawString(FPS.ToString & " FPS", FPSFont, Brushes.White, FPS_Postion)
 
+            '.DrawString(Camera.Rect.ToString, FPSFont, Brushes.White, FPS_Postion)
+            'debug
+
+
         End With
 
     End Sub
@@ -2297,8 +2344,6 @@ Public Class Form1
 
         StartScreenOpenButton.Rect = New Rectangle(ClientRectangle.Width \ 2 + 100, ClientRectangle.Height \ 2 + 100, 150, 90)
 
-
-
         Camera.Rect.Size = ClientRectangle.Size
 
         BufferGridLines()
@@ -2328,6 +2373,8 @@ Public Class Form1
             Case AppState.Playing
 
                 If EditPlayButton.Rect.Contains(e.Location) Then
+
+                    BufferGridLines()
 
                     GameState = AppState.Editing
 
@@ -3923,6 +3970,8 @@ Public Class Form1
                         If IsStartDown = False Then
 
                             IsStartDown = True
+
+                            BufferGridLines()
 
                             GameState = AppState.Editing
 

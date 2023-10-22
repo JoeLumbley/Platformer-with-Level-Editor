@@ -495,7 +495,7 @@ Public Class Form1
 
         Camera.Rect.Location = New Point(0, 0)
 
-        Level.Rect = New Rectangle(0, 0, 1920, 1080)
+        Level.Rect = New Rectangle(0, 0, 5000, 1080)
 
         OurHero.Rect = New Rectangle(128, 769, 64, 64)
 
@@ -830,7 +830,29 @@ Public Class Form1
 
     Private Sub UpdateCamera()
 
+        LookAhead()
+
         KeepCameraOnTheLevel()
+
+    End Sub
+
+    Private Sub LookAhead()
+
+        'Is hero past the 40% to the right side of the frame?
+        If OurHero.Rect.X > (Camera.Rect.X * -1) + Camera.Rect.Width / 1.5 Then
+
+            'Move camera to the right.
+            Camera.Rect.X = OurHero.Rect.Left * -1 + Camera.Rect.Width / 1.5
+
+        End If
+
+        'Is hero past the 40% to the right side of the frame?
+        If OurHero.Rect.X < (Camera.Rect.X * -1) + Camera.Rect.Width / 4 Then
+
+            'Move camera to the right.
+            Camera.Rect.X = OurHero.Rect.Left * -1 + Camera.Rect.Width / 4
+
+        End If
 
     End Sub
 
@@ -853,7 +875,6 @@ Public Class Form1
             Camera.Rect.X = Level.Rect.Right * -1 + Camera.Rect.Width
 
         End If
-
 
         'Is the Camera off to top side of the level?
         If (Camera.Rect.Y * -1) < Level.Rect.Top Then
@@ -972,7 +993,9 @@ Public Class Form1
 
         End If
 
-        Wraparound()
+        'Wraparound()
+
+        FellOffLevel()
 
         UpdateHeroMovement()
 
@@ -4548,6 +4571,37 @@ Public Class Form1
 
             'Our hero reappears on the top side the level.
             OurHero.Position.Y = Level.Rect.Top - OurHero.Rect.Height
+
+        End If
+
+    End Sub
+
+    Private Sub FellOffLevel()
+
+        'When our hero exits the bottom side of the level.
+        If OurHero.Position.Y > Level.Rect.Bottom Then
+
+            CashCollected = 0
+
+            Dim BillIndex As Integer = -1
+
+            For Each Bill In Cash
+
+                BillIndex += 1
+
+                If Bill.Collected = True Then
+
+                    Cash(BillIndex).Collected = False
+
+                End If
+
+            Next
+
+            OurHero.Rect = New Rectangle(128, 769, 64, 64)
+
+            OurHero.Position = New PointF(OurHero.Rect.X, OurHero.Rect.Y)
+
+            OurHero.Velocity = New PointF(0, 0)
 
         End If
 

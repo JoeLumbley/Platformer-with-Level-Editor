@@ -811,9 +811,9 @@ Public Class Form1
             End If
 
         Else
-                'The right thumbstick is in the neutral position.
+            'The right thumbstick is in the neutral position.
 
-            End If
+        End If
 
     End Sub
 
@@ -1278,7 +1278,6 @@ Public Class Form1
 
                 DrawEditing()
 
-
             Case AppState.Clear
 
                 DrawClearScreen()
@@ -1717,7 +1716,6 @@ Public Class Form1
 
                         .DrawRectangle(OutinePen, rectOffset)
 
-
                     Case Tools.Bush
 
                         .FillRectangle(Brushes.GreenYellow, rectOffset)
@@ -1805,6 +1803,7 @@ Public Class Form1
                 .DrawString("ë", PointerToolFont, Brushes.White, PointerToolButton.Rect, AlineCenterMiddle)
 
             Else
+
                 .FillRectangle(Brushes.Black, PointerToolButton.Rect)
 
                 .DrawString("ë", PointerToolFont, Brushes.White, PointerToolButton.Rect, AlineCenterMiddle)
@@ -2058,10 +2057,6 @@ Public Class Form1
         With Buffer.Graphics
 
             .DrawString(FPS.ToString & " FPS", FPSFont, Brushes.White, FPS_Postion)
-
-            '.DrawString(Camera.Rect.ToString, FPSFont, Brushes.White, FPS_Postion)
-            'debug
-
 
         End With
 
@@ -2811,7 +2806,6 @@ Public Class Form1
                             'Select the newly created bill.
                             SelectedBill = Cash.Length - 1
 
-
                         Case Tools.Cloud
 
                             'Snap block to grid.
@@ -3359,7 +3353,6 @@ Public Class Form1
 
         pointOffset.Y = (Camera.Rect.Y * -1) + e.Y
 
-
         If e.Button = MouseButtons.None Then
 
             Select Case SelectedTool
@@ -3649,7 +3642,6 @@ Public Class Form1
 
                 End If
 
-
             Case Keys.Up
 
                 If GameState = AppState.Editing Then
@@ -3852,7 +3844,6 @@ Public Class Form1
                 ControllerA = False
 
                 ControllerB = False
-
 
                 If GameState = AppState.Editing Then
 
@@ -4169,8 +4160,6 @@ Public Class Form1
                 ControllerLeft = False
 
                 ControllerRight = False
-
-                'If ControllerJumped = True Then ControllerJumped = False
 
                 ControllerB = False
 

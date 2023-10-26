@@ -607,17 +607,9 @@ Public Class Form1
 
                 CashCollected = 0
 
-                Dim BillIndex As Integer = -1
-
                 For Each Bill In Cash
 
-                    BillIndex += 1
-
-                    If Bill.Collected = True Then
-
-                        Cash(BillIndex).Collected = False
-
-                    End If
+                    Cash(Array.IndexOf(Cash, Bill)).Collected = False
 
                 Next
 
@@ -4613,17 +4605,9 @@ Public Class Form1
 
             CashCollected = 0
 
-            Dim BillIndex As Integer = -1
-
             For Each Bill In Cash
 
-                BillIndex += 1
-
-                If Bill.Collected = True Then
-
-                    Cash(BillIndex).Collected = False
-
-                End If
+                Cash(Array.IndexOf(Cash, Bill)).Collected = False
 
             Next
 

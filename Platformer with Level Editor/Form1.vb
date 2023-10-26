@@ -344,6 +344,9 @@ Public Class Form1
 
     Private GoalSelected As Boolean = False
 
+    Private LevelSelected As Boolean = False
+
+
     <StructLayout(LayoutKind.Sequential)>
     Private Structure INPUTStruc
         Public type As UInteger
@@ -2698,6 +2701,7 @@ Public Class Form1
                 SelectedBill = -1
                 SelectedCloud = -1
                 SelectedBush = -1
+                LevelSelected = False
 
                 'Is the player selecting a block?
             ElseIf CheckBlockSelection(pointOffset) > -1 Then
@@ -2713,6 +2717,7 @@ Public Class Form1
                 SelectedCloud = -1
                 SelectedBush = -1
                 GoalSelected = False
+                LevelSelected = False
 
                 'Is the player selecting a bill?
             ElseIf CheckBillSelection(pointOffset) > -1 Then
@@ -2728,6 +2733,7 @@ Public Class Form1
                 SelectedCloud = -1
                 SelectedBush = -1
                 GoalSelected = False
+                LevelSelected = False
 
                 'Is the player selecting a cloud?
             ElseIf CheckCloudSelection(pointOffset) > -1 Then
@@ -2743,6 +2749,7 @@ Public Class Form1
                 SelectedBill = -1
                 SelectedBush = -1
                 GoalSelected = False
+                LevelSelected = False
 
                 'Is the player selecting a bush?
             ElseIf CheckBushSelection(pointOffset) > -1 Then
@@ -2758,9 +2765,11 @@ Public Class Form1
                 SelectedBill = -1
                 SelectedCloud = -1
                 GoalSelected = False
+                LevelSelected = False
+
 
             Else
-                'No, the player is selecting nothing.
+                'No, the player is not selecting a game object.
 
                 'Is the player over the toolbar?
                 If ToolBarBackground.Rect.Contains(e) = False Then
@@ -2846,7 +2855,12 @@ Public Class Form1
                             'Select the goal.
                             GoalSelected = True
 
-                        Case Else
+                        Case Tools.Pointer
+
+                            LevelSelected = True
+
+                            SelectionOffset.X = pointOffset.X - Level.Rect.X
+                            SelectionOffset.Y = pointOffset.Y - Level.Rect.Y
 
                             'Deselect game objects.
                             SelectedBlock = -1
@@ -3581,6 +3595,20 @@ Public Class Form1
                     AutoSizeLevel(Goal.Rect)
 
                 End If
+
+            End If
+
+        End If
+
+        If LevelSelected = True Then
+
+            If e.Button = MouseButtons.Left Then
+
+                Camera.Rect.X = e.X - SelectionOffset.X
+
+                Camera.Rect.Y = e.Y - SelectionOffset.Y
+
+                BufferGridLines()
 
             End If
 

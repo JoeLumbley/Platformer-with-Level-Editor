@@ -2522,6 +2522,7 @@ Public Class Form1
             SelectedCloud = -1
             SelectedBush = -1
             GoalSelected = False
+            LevelSelected = False
 
             'Resume Play
             LastFrame = Now
@@ -2550,6 +2551,7 @@ Public Class Form1
             SelectedCloud = -1
             SelectedBush = -1
             GoalSelected = False
+            LevelSelected = False
 
             'Snap preview to grid.
             ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize) * GridSize)
@@ -2572,6 +2574,7 @@ Public Class Form1
             SelectedCloud = -1
             SelectedBush = -1
             GoalSelected = False
+            LevelSelected = False
 
             'Snap preview to grid.
             ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize) * GridSize)
@@ -2594,6 +2597,7 @@ Public Class Form1
             SelectedCloud = -1
             SelectedBush = -1
             GoalSelected = False
+            LevelSelected = False
 
             'Snap preview to grid.
             ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize) * GridSize)
@@ -2616,6 +2620,7 @@ Public Class Form1
             SelectedCloud = -1
             SelectedBush = -1
             GoalSelected = False
+            LevelSelected = False
 
             'Snap preview to grid.
             ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize) * GridSize)
@@ -2638,6 +2643,7 @@ Public Class Form1
             SelectedCloud = -1
             SelectedBush = -1
             GoalSelected = False
+            LevelSelected = False
 
             'Snap preview to grid.
             ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize) * GridSize)

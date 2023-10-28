@@ -142,6 +142,10 @@ Public Class Form1
 
     Private ToolBarBackground As GameObject
 
+    Private MenuBackground As GameObject
+
+    Private MenuButton As GameObject
+
     Private PointerToolButton As GameObject
 
     Private BlockToolButton As GameObject
@@ -168,11 +172,19 @@ Public Class Form1
 
     Private ShowToolPreview As Boolean = False
 
+    Private ShowMenu As Boolean = False
+
     Private Title As GameObject
 
     Private StartScreenOpenButton As GameObject
 
     Private StartScreenNewButton As GameObject
+
+    Private OpenButton As GameObject
+
+    Private NewButton As GameObject
+
+    Private ExitButton As GameObject
 
     Private ScoreIndicators As GameObject
 
@@ -1351,9 +1363,25 @@ Public Class Form1
 
         DrawPlayButton()
 
-        DrawSaveButton()
+        DrawMenuButton()
+
+        'DrawSaveButton()
 
         DrawFPS()
+
+        If ShowMenu = True Then
+
+            DrawMenuBackground()
+
+            DrawSaveButton()
+
+            DrawNewButton()
+
+            DrawOpenButton()
+
+            DrawExitButton()
+
+        End If
 
     End Sub
 
@@ -1787,6 +1815,16 @@ Public Class Form1
 
     End Sub
 
+    Private Sub DrawMenuBackground()
+
+        With Buffer.Graphics
+
+            .FillRectangle(Brushes.Black, MenuBackground.Rect)
+
+        End With
+
+    End Sub
+
     Private Sub DrawPointerToolButton()
 
         With Buffer.Graphics
@@ -2042,6 +2080,54 @@ Public Class Form1
             .FillRectangle(Brushes.Black, SaveButton.Rect)
 
             .DrawString("Save", FPSFont, Brushes.White, SaveButton.Rect, AlineCenterMiddle)
+
+        End With
+
+    End Sub
+
+    Private Sub DrawNewButton()
+
+        With Buffer.Graphics
+
+            .FillRectangle(Brushes.Black, NewButton.Rect)
+
+            .DrawString("New", FPSFont, Brushes.White, NewButton.Rect, AlineCenterMiddle)
+
+        End With
+
+    End Sub
+
+    Private Sub DrawExitButton()
+
+        With Buffer.Graphics
+
+            .FillRectangle(Brushes.Black, ExitButton.Rect)
+
+            .DrawString("X", FPSFont, Brushes.White, ExitButton.Rect, AlineCenterMiddle)
+
+        End With
+
+    End Sub
+
+    Private Sub DrawOpenButton()
+
+        With Buffer.Graphics
+
+            .FillRectangle(Brushes.Black, OpenButton.Rect)
+
+            .DrawString("Open", FPSFont, Brushes.White, OpenButton.Rect, AlineCenterMiddle)
+
+        End With
+
+    End Sub
+
+    Private Sub DrawMenuButton()
+
+        With Buffer.Graphics
+
+            .FillRectangle(Brushes.Black, MenuButton.Rect)
+
+            .DrawString("Menu", FPSFont, Brushes.White, MenuButton.Rect, AlineCenterMiddle)
 
         End With
 
@@ -2350,12 +2436,47 @@ Public Class Form1
 
         EditPlayButton.Rect = New Rectangle(ClientRectangle.Left + 210, ClientRectangle.Bottom - 90, 120, 90)
 
-        SaveButton.Rect = New Rectangle(ClientRectangle.Right - 152,
-                                        ClientRectangle.Bottom - 90,
+
+
+        ToolBarBackground.Rect = New Rectangle(ClientRectangle.Left, ClientRectangle.Bottom - 90, ClientRectangle.Width, 100)
+
+        MenuBackground.Rect = New Rectangle(ClientRectangle.Width \ 2 - MenuBackground.Rect.Width \ 2,
+                                            ClientRectangle.Height \ 2 - MenuBackground.Rect.Height \ 2,
+                                            150,
+                                            91 * 3)
+
+        SaveButton.Rect = New Rectangle(MenuBackground.Rect.Left,
+                                        MenuBackground.Rect.Top,
                                         150,
                                         100)
 
-        ToolBarBackground.Rect = New Rectangle(ClientRectangle.Left, ClientRectangle.Bottom - 90, ClientRectangle.Width, 100)
+        OpenButton.Rect = New Rectangle(MenuBackground.Rect.Left,
+                                        MenuBackground.Rect.Top + 91,
+                                        150,
+                                        90)
+
+        NewButton.Rect = New Rectangle(MenuBackground.Rect.Left,
+                                       MenuBackground.Rect.Top + 91 * 2,
+                                       150,
+                                       90)
+
+
+        ExitButton.Rect = New Rectangle(MenuBackground.Rect.Left,
+                                       MenuBackground.Rect.Top + 91 * 3,
+                                       150,
+                                       90)
+
+
+
+
+
+
+
+
+        MenuButton.Rect = New Rectangle(ClientRectangle.Right - 152,
+                                        ClientRectangle.Bottom - 90,
+                                        150,
+                                        100)
 
         PointerToolButton.Rect = New Rectangle(ClientRectangle.Left + 331, ClientRectangle.Bottom - 90, 90, 90)
 
@@ -2384,6 +2505,8 @@ Public Class Form1
         StartScreenNewButton.Rect = New Rectangle(ClientRectangle.Width \ 2 - 200, ClientRectangle.Height \ 2 + 100, 150, 90)
 
         StartScreenOpenButton.Rect = New Rectangle(ClientRectangle.Width \ 2 + 100, ClientRectangle.Height \ 2 + 100, 150, 90)
+
+
 
         Camera.Rect.Size = ClientRectangle.Size
 
@@ -2498,9 +2621,124 @@ Public Class Form1
 
     Private Sub MouseDownEditing(e As Point)
 
-        MouseDownEditingSelection(e)
+        If ShowMenu = False Then
 
-        MouseDownEditingButtons(e)
+            MouseDownEditingSelection(e)
+
+            MouseDownEditingButtons(e)
+
+        Else
+
+            MouseDownEditingMenuButtons(e)
+
+        End If
+
+    End Sub
+
+    Private Sub MouseDownEditingMenuButtons(e As Point)
+
+        'Is the player clicking the save button?
+        If SaveButton.Rect.Contains(e) Then
+            'Yes, the player is clicking the save button.
+
+            SaveFileDialog1.FileName = ""
+            SaveFileDialog1.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
+            SaveFileDialog1.FilterIndex = 1
+            SaveFileDialog1.RestoreDirectory = True
+
+            If SaveFileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+
+                SaveTestLevelFile(SaveFileDialog1.FileName)
+
+                Text = Path.GetFileName(SaveFileDialog1.FileName) & " - Platformer with Level Editor - Code with Joe"
+
+            End If
+
+            ShowMenu = False
+
+        End If
+
+        'Open Button
+        If OpenButton.Rect.Contains(e) Then
+
+            'InitializeGameObjects()
+
+            If MsgBox("Do you want to save this level?", MsgBoxStyle.YesNo, "Save?") = MsgBoxResult.No Then
+
+                OpenFileDialog1.FileName = ""
+                OpenFileDialog1.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
+                OpenFileDialog1.FilterIndex = 1
+                OpenFileDialog1.RestoreDirectory = True
+
+                If OpenFileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+
+                    If My.Computer.FileSystem.FileExists(OpenFileDialog1.FileName) = True Then
+
+                        OpenTestLevelFile(OpenFileDialog1.FileName)
+
+                        If IsFileLoaded = True Then
+
+                            Text = Path.GetFileName(OpenFileDialog1.FileName) & " - Platformer with Level Editor - Code with Joe"
+
+                        Else
+
+                            Text = "Platformer with Level Editor - Code with Joe"
+
+                        End If
+
+                        LastFrame = Now
+
+                        CashCollected = 0
+
+                        GameState = AppState.Editing
+
+                        My.Computer.Audio.Play(My.Resources.level,
+                                           AudioPlayMode.BackgroundLoop)
+
+                        IsBackgroundLoopPlaying = True
+
+                    End If
+
+                End If
+
+                ShowMenu = False
+
+            End If
+
+        End If
+
+        'New Button
+        If NewButton.Rect.Contains(e) Then
+
+            If MsgBox("Do you want to save this level?", MsgBoxStyle.YesNo, "Save?") = MsgBoxResult.No Then
+
+                InitializeGameObjects()
+
+                LastFrame = Now
+
+                CashCollected = 0
+
+                GameState = AppState.Editing
+
+                My.Computer.Audio.Play(My.Resources.level,
+                                       AudioPlayMode.BackgroundLoop)
+
+                IsBackgroundLoopPlaying = True
+
+                Text = "Platformer with Level Editor - Code with Joe"
+
+                ShowMenu = False
+
+            End If
+
+        End If
+
+        'Exit Button
+        If ExitButton.Rect.Contains(e) Then
+
+            ShowMenu = False
+
+        End If
 
     End Sub
 
@@ -2658,22 +2896,14 @@ Public Class Form1
 
         End If
 
-        'Is the player clicking the save button?
-        If SaveButton.Rect.Contains(e) Then
-            'Yes, the player is clicking the save button.
 
-            SaveFileDialog1.FileName = ""
-            SaveFileDialog1.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
-            SaveFileDialog1.FilterIndex = 1
-            SaveFileDialog1.RestoreDirectory = True
 
-            If SaveFileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
 
-                SaveTestLevelFile(SaveFileDialog1.FileName)
+        'Is the player clicking the menu button?
+        If MenuButton.Rect.Contains(e) Then
+            'Yes, the player is clicking the menu button.
 
-                Text = Path.GetFileName(SaveFileDialog1.FileName) & " - Platformer with Level Editor - Code with Joe"
-
-            End If
+            ShowMenu = True
 
         End If
 
@@ -4639,11 +4869,15 @@ Public Class Form1
 
             CashCollected = 0
 
-            For Each Bill In Cash
+            If Cash IsNot Nothing Then
 
-                Cash(Array.IndexOf(Cash, Bill)).Collected = False
+                For Each Bill In Cash
 
-            Next
+                    Cash(Array.IndexOf(Cash, Bill)).Collected = False
+
+                Next
+
+            End If
 
             OurHero.Rect = New Rectangle(128, 769, 64, 64)
 

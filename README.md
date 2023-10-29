@@ -2,16 +2,30 @@
 
 ![029](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/5f513987-2b94-4911-9725-f62b9c319913)
 
+![035](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/101a9e2e-d44f-4fb0-838a-833831c59c69)
 
-![033](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/1b0fde3d-44e8-480c-8d2a-364222ae2922)
-
-
-![023](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/5e5cb958-86e1-4af4-a98d-1f7ab0937586)
+![034](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/1cd291d9-d508-433b-8c81-d3f846e0657d)
 
 
 
+![036](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/40a1476e-0240-45cd-822b-104b60a6ed59)
 
-![030](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/92151ade-3663-42e6-829b-c18266c81aae)
+
+
+
+
+
+
+
+
+![037](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/eec4e1c0-d248-4f7f-a629-3a5790173754)
+
+
+
+
+
+
+
 
 
 

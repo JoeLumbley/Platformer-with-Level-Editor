@@ -2441,9 +2441,9 @@ Public Class Form1
         ToolBarBackground.Rect = New Rectangle(ClientRectangle.Left, ClientRectangle.Bottom - 90, ClientRectangle.Width, 100)
 
         MenuBackground.Rect = New Rectangle(ClientRectangle.Width \ 2 - MenuBackground.Rect.Width \ 2,
-                                            ClientRectangle.Height \ 2 - MenuBackground.Rect.Height \ 2,
+                                            (ClientRectangle.Height \ 2) - MenuBackground.Rect.Height \ 2,
                                             150,
-                                            91 * 3)
+                                            91 * 4)
 
         SaveButton.Rect = New Rectangle(MenuBackground.Rect.Left,
                                         MenuBackground.Rect.Top,

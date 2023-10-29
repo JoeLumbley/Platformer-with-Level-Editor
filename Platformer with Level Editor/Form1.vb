@@ -2390,14 +2390,14 @@ Public Class Form1
         GridLineBuffer.Clear(Color.Transparent)
 
         ' Draw vertical lines  |
-        For x As Integer = Camera.Rect.X - 1 To Camera.Rect.X + Level.Rect.Width Step GridSize
+        For x As Integer = Camera.Rect.X To Camera.Rect.X + Level.Rect.Width Step GridSize
 
             GridLineBuffer.DrawLine(Pens.Black, x, Camera.Rect.Y, x, Camera.Rect.Y + Level.Rect.Height)
 
         Next
 
         ' Draw horizontal lines ---
-        For y As Integer = Camera.Rect.Y - 1 To Camera.Rect.Y + Level.Rect.Height Step GridSize
+        For y As Integer = Camera.Rect.Y To Camera.Rect.Y + Level.Rect.Height Step GridSize
 
             GridLineBuffer.DrawLine(Pens.Black, Camera.Rect.X, y, Camera.Rect.X + Level.Rect.Width, y)
 

@@ -56,6 +56,7 @@ Public Class Form1
         Bush
         Cloud
         Goal
+        Enemy
     End Enum
 
     Private Enum Tools As Integer
@@ -65,6 +66,11 @@ Public Class Form1
         Bush
         Cloud
         Goal
+    End Enum
+
+    Private Enum Direction As Integer
+        Right
+        Left
     End Enum
 
     Private Structure GameObject
@@ -84,6 +90,14 @@ Public Class Form1
         Public Text As String
 
         Public Collected As Boolean
+
+        Public PatrolA As Vector2
+
+        Public PatrolB As Vector2
+
+        Public PatrolDirection As Direction
+
+        Public Eliminated As Boolean
 
     End Structure
 
@@ -133,6 +147,8 @@ Public Class Form1
     Private Bushes() As GameObject
 
     Private Cash() As GameObject
+
+    Private Enemies() As GameObject
 
     Private FileObjects() As GameObject
 
@@ -204,6 +220,8 @@ Public Class Form1
 
     Private SelectedBush As Integer = -1
 
+    Private SelectedEnemy As Integer = -1
+
     Private RightArrowDown As Boolean = False
 
     Private LeftArrowDown As Boolean = False
@@ -274,6 +292,8 @@ Public Class Form1
                                                                  .LineAlignment = StringAlignment.Center}
 
     Private ReadOnly CWJFont As New Font(FontFamily.GenericSansSerif, 12, FontStyle.Bold)
+
+    Private ReadOnly EnemyFont As New Font(FontFamily.GenericSansSerif, 25, FontStyle.Bold)
 
     Private GameLoopCancellationToken As New CancellationTokenSource()
 
@@ -564,6 +584,8 @@ Public Class Form1
         Cash(Cash.Length - 1).Rect = New Rectangle(1472, 64, 64, 64)
         Cash(Cash.Length - 1).Collected = False
 
+        AddEnemy(New Point(500, 769))
+
         BufferGridLines()
 
     End Sub
@@ -596,6 +618,8 @@ Public Class Form1
 
                 UpdateCamera()
 
+                UpdateEnemies()
+
             Case AppState.Editing
 
                 UpdateControllerData()
@@ -622,11 +646,15 @@ Public Class Form1
 
                 CashCollected = 0
 
-                For Each Bill In Cash
+                If Cash IsNot Nothing Then
 
-                    Cash(Array.IndexOf(Cash, Bill)).Collected = False
+                    For Each Bill In Cash
 
-                Next
+                        Cash(Array.IndexOf(Cash, Bill)).Collected = False
+
+                    Next
+
+                End If
 
                 OurHero.Rect = New Rectangle(128, 769, 64, 64)
 
@@ -634,12 +662,22 @@ Public Class Form1
 
                 OurHero.Velocity = New PointF(0, 0)
 
+                If Enemies IsNot Nothing Then
+
+                    For Each Enemy In Enemies
+
+                        Enemies(Array.IndexOf(Enemies, Enemy)).Eliminated = False
+
+                    Next
+
+                End If
+
                 LastFrame = Now
 
                 GameState = AppState.Playing
 
                 My.Computer.Audio.Play(My.Resources.level,
-                                               AudioPlayMode.BackgroundLoop)
+                                                   AudioPlayMode.BackgroundLoop)
 
                 IsBackgroundLoopPlaying = True
 
@@ -648,6 +686,7 @@ Public Class Form1
         End If
 
     End Sub
+
 
     Private Sub UpdateControllerData()
 
@@ -1002,6 +1041,65 @@ Public Class Form1
 
         End If
 
+        If IsOnEnemy() > -1 Then
+
+            If Enemies IsNot Nothing Then
+
+                For Each Enemy In Enemies
+
+                    If Enemy.Eliminated = False Then
+
+                        Dim Index As Integer = Array.IndexOf(Enemies, Enemy)
+
+                        'Is our hero colliding with the Enemy?
+                        If OurHero.Rect.IntersectsWith(Enemy.Rect) = True Then
+                            'Yes, our hero is colliding with the Enemy.
+
+                            'Is our hero falling?
+                            If OurHero.Velocity.Y > 0 Then
+
+                                'Is our hero above the Enemy?
+                                If OurHero.Position.Y <= Enemy.Rect.Top - OurHero.Rect.Height \ 2 Then
+
+                                    Enemies(Index).Eliminated = True
+
+                                End If
+
+                            Else
+
+                                CashCollected = 0
+
+                                If Cash IsNot Nothing Then
+
+                                    For Each Bill In Cash
+
+                                        Cash(Array.IndexOf(Cash, Bill)).Collected = False
+
+                                    Next
+
+                                End If
+
+                                OurHero.Rect = New Rectangle(128, 769, 64, 64)
+
+                                OurHero.Position = New PointF(OurHero.Rect.X, OurHero.Rect.Y)
+
+                                OurHero.Velocity = New PointF(0, 0)
+
+
+
+                            End If
+
+                        End If
+
+                    End If
+
+                Next
+
+            End If
+
+        End If
+
+
         'Wraparound()
 
         FellOffLevel()
@@ -1023,6 +1121,149 @@ Public Class Form1
         'Displacement = Velocity x Delta Time
 
         OurHero.Rect.Y = Math.Round(OurHero.Position.Y)
+
+    End Sub
+
+    Private Sub UpdateEnemies()
+
+        If Enemies IsNot Nothing Then
+
+            For Each Enemy In Enemies
+
+                'If Enemy.Position.X >= Enemy.PatrolB.X Then
+
+                '    Enemy.PatrolDirection = Direction.Left
+
+                'End If
+
+                'If Enemy.Position.X <= Enemy.PatrolA.X Then
+
+                '    Enemy.PatrolDirection = Direction.Right
+
+                'End If
+
+                'If Enemy.PatrolDirection = Direction.Right Then
+
+                '    'Is Enemy moving to the left?
+                '    If Enemy.Velocity.X < 0 Then
+
+                '        'Stop the move before change in direction.
+                '        Enemies(Array.IndexOf(Enemies, Enemy)).Velocity.X = 0 'Zero speed.
+
+                '    End If
+
+                '    'Move Enemy to the right.
+                '    Enemies(Array.IndexOf(Enemies, Enemy)).Velocity.X += Enemy.Acceleration.X * DeltaTime.TotalSeconds
+
+                '    'Limit Enemy velocity to the max.
+                '    If Enemy.Velocity.X > Enemy.MaxVelocity.X Then
+
+                '        Enemies(Array.IndexOf(Enemies, Enemy)).Velocity.X = Enemy.MaxVelocity.X
+
+                '    End If
+
+                'Else
+
+                '    'Is Enemy moving to the right?
+                '    If Enemy.Velocity.X > 0 Then
+
+                '        'Stop the move before change in direction.
+                '        Enemies(Array.IndexOf(Enemies, Enemy)).Velocity.X = 0 'Zero speed.
+
+                '    End If
+
+                '    'Move Enemy to the left.
+                '    Enemies(Array.IndexOf(Enemies, Enemy)).Velocity.X += -Enemy.Acceleration.X * DeltaTime.TotalSeconds
+
+                '    'Limit Enemy velocity to the max.
+                '    If Enemy.Velocity.X < -Enemy.MaxVelocity.X Then
+
+                '        Enemies(Array.IndexOf(Enemies, Enemy)).Velocity.X = -Enemy.MaxVelocity.X
+
+                '    End If
+
+                'End If
+
+                'Move Enemy to the right.
+                'Enemies(Array.IndexOf(Enemies, Enemy)).Velocity.X += Enemy.Acceleration.X * DeltaTime.TotalSeconds
+
+                'Move Enemy horizontally.
+                'Enemies(Array.IndexOf(Enemies, Enemy)).Position.X += Enemies(Array.IndexOf(Enemies, Enemy)).Velocity.X * DeltaTime.TotalSeconds 'Δs = V * Δt
+                'Displacement = Velocity x Delta Time
+
+                If Enemy.Eliminated = False Then
+
+                    Dim Index As Integer = Array.IndexOf(Enemies, Enemy)
+
+                    If Enemy.Position.X >= Enemy.PatrolB.X Then
+
+                        Enemies(Index).PatrolDirection = Direction.Left
+
+                    End If
+
+                    If Enemy.Position.X <= Enemy.PatrolA.X Then
+
+                        Enemies(Index).PatrolDirection = Direction.Right
+
+                    End If
+
+                    If Enemy.PatrolDirection = Direction.Right Then
+
+                        'Is Enemy moving to the left?
+                        If Enemy.Velocity.X < 0 Then
+
+                            'Stop the move before change in direction.
+                            Enemies(Index).Velocity.X = 0 'Zero speed.
+
+                        End If
+
+                        'Move Enemy to the right.
+                        Enemies(Index).Velocity.X += Enemy.Acceleration.X * DeltaTime.TotalSeconds
+
+                        'Limit Enemy velocity to the max.
+                        If Enemy.Velocity.X > Enemy.MaxVelocity.X Then
+
+                            Enemies(Index).Velocity.X = Enemy.MaxVelocity.X
+
+                        End If
+
+                    Else
+
+                        'Is Enemy moving to the right?
+                        If Enemy.Velocity.X > 0 Then
+
+                            'Stop the move before change in direction.
+                            Enemies(Array.IndexOf(Enemies, Enemy)).Velocity.X = 0 'Zero speed.
+
+                        End If
+
+                        'Move Enemy to the left.
+                        Enemies(Index).Velocity.X += -Enemy.Acceleration.X * DeltaTime.TotalSeconds
+
+                        'Limit Enemy velocity to the max.
+                        If Enemy.Velocity.X < -Enemy.MaxVelocity.X Then
+
+                            Enemies(Index).Velocity.X = -Enemy.MaxVelocity.X
+
+                        End If
+
+                    End If
+
+                    Enemies(Index).Position.X += Enemy.Velocity.X * DeltaTime.TotalSeconds
+
+                    Enemies(Index).Rect.X = Math.Round(Enemy.Position.X)
+
+                End If
+
+                ''Move our hero vertically.
+                'Enemies(Array.IndexOf(Enemies, Enemy)).Position.Y += Enemies(Array.IndexOf(Enemies, Enemy)).Velocity.Y * DeltaTime.TotalSeconds 'Δs = V * Δt
+                ''Displacement = Velocity x Delta Time
+
+                'Enemies(Array.IndexOf(Enemies, Enemy)).Rect.Y = Math.Round(Enemies(Array.IndexOf(Enemies, Enemy)).Position.Y)
+
+            Next
+
+        End If
 
     End Sub
 
@@ -1329,6 +1570,8 @@ Public Class Form1
 
         DrawGoal()
 
+        DrawEnemies()
+
         DrawOurHero()
 
         DrawCollectedCash()
@@ -1422,6 +1665,53 @@ Public Class Form1
                         rectOffset.X,
                         rectOffset.Y - 50,
                         New StringFormat With {.Alignment = StringAlignment.Near})
+
+        End With
+
+    End Sub
+
+    Private Sub DrawEnemies()
+
+        With Buffer.Graphics
+
+            If Enemies IsNot Nothing Then
+
+                For Each Enemy In Enemies
+
+                    If Enemy.Eliminated = False Then
+
+                        Dim rectOffset As Rectangle = Enemy.Rect
+
+                        rectOffset.Offset(Camera.Rect.Location)
+
+                        .FillRectangle(Brushes.Chocolate, rectOffset)
+
+                        .DrawString("E", EnemyFont, Brushes.PaleGoldenrod, rectOffset, AlineCenterMiddle)
+
+                        If GameState = AppState.Editing Then
+
+                            If SelectedEnemy = Array.IndexOf(Enemies, Enemy) Then
+
+                                'Draw selection rectangle.
+                                .DrawRectangle(New Pen(Color.Red, 6), rectOffset)
+
+                                'Position sizing handle.
+                                SizingHandle.X = rectOffset.Right - SizingHandle.Width \ 2
+                                SizingHandle.Y = rectOffset.Bottom - SizingHandle.Height \ 2
+
+                                'Draw sizing handle.
+                                .FillRectangle(Brushes.Black,
+                                               SizingHandle)
+
+                            End If
+
+                        End If
+
+                    End If
+
+                Next
+
+            End If
 
         End With
 
@@ -2205,6 +2495,48 @@ Public Class Form1
 
     End Sub
 
+    Private Sub AddEnemy(Location As Point)
+
+        If Enemies IsNot Nothing Then
+
+            Array.Resize(Enemies, Enemies.Length + 1)
+
+        Else
+
+            ReDim Enemies(0)
+
+        End If
+
+        'Init Enemy
+        Enemies(Enemies.Length - 1).Rect.Location = Location
+
+        Enemies(Enemies.Length - 1).Rect.Size = New Size(GridSize, GridSize)
+
+        Enemies(Enemies.Length - 1).Position.X = Location.X
+        Enemies(Enemies.Length - 1).Position.Y = Location.Y
+
+        Enemies(Enemies.Length - 1).PatrolA.X = Location.X
+        Enemies(Enemies.Length - 1).PatrolA.Y = Location.Y
+
+        Enemies(Enemies.Length - 1).PatrolB.X = Location.X + GridSize * 3
+        Enemies(Enemies.Length - 1).PatrolB.Y = Location.Y + GridSize * 3
+
+        Enemies(Enemies.Length - 1).PatrolDirection = Direction.Right
+
+        Enemies(Enemies.Length - 1).Eliminated = False
+
+        Enemies(Enemies.Length - 1).Acceleration.X = 100
+        Enemies(Enemies.Length - 1).MaxVelocity.X = 75
+        Enemies(Enemies.Length - 1).Velocity.X = 0
+
+
+        AutoSizeLevel(New Rectangle(Enemies(Enemies.Length - 1).PatrolB.X,
+                                    Enemies(Enemies.Length - 1).PatrolB.Y,
+                                    GridSize,
+                                    GridSize))
+
+    End Sub
+
     Private Sub AddCloud(Location As Point)
 
         If Clouds IsNot Nothing Then
@@ -2661,8 +2993,6 @@ Public Class Form1
         'Open Button
         If OpenButton.Rect.Contains(e) Then
 
-            'InitializeGameObjects()
-
             If MsgBox("Do you want to save this level?", MsgBoxStyle.YesNo, "Save?") = MsgBoxResult.No Then
 
                 OpenFileDialog1.FileName = ""
@@ -2686,7 +3016,7 @@ Public Class Form1
 
                         End If
 
-                        LastFrame = Now
+                        'LastFrame = Now
 
                         CashCollected = 0
 
@@ -2712,11 +3042,18 @@ Public Class Form1
 
             If MsgBox("Do you want to save this level?", MsgBoxStyle.YesNo, "Save?") = MsgBoxResult.No Then
 
+                'Clear Objects
+                Blocks = Nothing
+                Cash = Nothing
+                Bushes = Nothing
+                Clouds = Nothing
+                Enemies = Nothing
+
                 InitializeGameObjects()
 
-                LastFrame = Now
-
                 CashCollected = 0
+
+                'LastFrame = Now
 
                 GameState = AppState.Editing
 
@@ -3401,6 +3738,7 @@ Public Class Form1
             Cash = Nothing
             Bushes = Nothing
             Clouds = Nothing
+            Enemies = Nothing
 
         End If
 
@@ -3413,12 +3751,14 @@ Public Class Form1
         Dim BillIndex As Integer = -1
         Dim BushIndex As Integer = -1
         Dim CloudIndex As Integer = -1
+        Dim EnemyIndex As Integer = -1
 
         'Clear Objects
         Blocks = Nothing
         Cash = Nothing
         Bushes = Nothing
         Clouds = Nothing
+        Enemies = Nothing
 
         For Each FileObject In FileObjects
 
@@ -3570,6 +3910,32 @@ Public Class Form1
 
                     'Load Text
                     Level.Text = FileObject.Text
+
+                Case ObjectID.Enemy
+
+                    'Add a Enemy to Enemies
+                    EnemyIndex += 1
+
+                    'Resize Enemies
+                    ReDim Preserve Enemies(EnemyIndex)
+
+                    'Load ID
+                    Enemies(EnemyIndex).ID = FileObject.ID
+
+                    'Load Rect Position
+                    Enemies(EnemyIndex).Rect.X = FileObject.Rect.X
+                    Enemies(EnemyIndex).Rect.Y = FileObject.Rect.Y
+
+                    'Load Vec2 Position
+                    Enemies(EnemyIndex).Position.X = FileObject.Rect.X
+                    Enemies(EnemyIndex).Position.Y = FileObject.Rect.Y
+
+                    'Load Rect Size
+                    Enemies(EnemyIndex).Rect.Width = FileObject.Rect.Width
+                    Enemies(EnemyIndex).Rect.Height = FileObject.Rect.Height
+
+                    'Load Text
+                    Enemies(EnemyIndex).Text = FileObject.Text
 
             End Select
 
@@ -4845,6 +5211,27 @@ Public Class Form1
 
     End Function
 
+    Private Function IsOnEnemy() As Integer
+
+        If Enemies IsNot Nothing Then
+
+            For Each Enemy In Enemies
+
+                If OurHero.Rect.IntersectsWith(Enemy.Rect) = True Then
+
+                    'return index of Plateform
+                    Return Array.IndexOf(Enemies, Enemy)
+
+                End If
+
+            Next
+
+        End If
+
+        Return -1
+
+    End Function
+
     Private Sub Wraparound()
 
         'When our hero exits the bottom side of the level.
@@ -4874,6 +5261,16 @@ Public Class Form1
                 For Each Bill In Cash
 
                     Cash(Array.IndexOf(Cash, Bill)).Collected = False
+
+                Next
+
+            End If
+
+            If Enemies IsNot Nothing Then
+
+                For Each Enemy In Enemies
+
+                    Enemies(Array.IndexOf(Enemies, Enemy)).Eliminated = False
 
                 Next
 

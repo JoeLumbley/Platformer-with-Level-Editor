@@ -570,21 +570,36 @@ Public Class Form1
         Array.Resize(Clouds, Clouds.Length + 1)
         Clouds(Clouds.Length - 1).Rect = New Rectangle(1728, 64, 128, 64)
 
-        ReDim Bushes(0)
-        Bushes(Bushes.Length - 1).Rect = New Rectangle(768, 768, 320, 64)
+        'ReDim Bushes(0)
+        'Bushes(Bushes.Length - 1).Rect = New Rectangle(768, 768, 320, 64)
 
-        Array.Resize(Bushes, Bushes.Length + 1)
-        Bushes(Bushes.Length - 1).Rect = New Rectangle(1600, 768, 64, 64)
+        AddBush(New Rectangle(768, 768, 320, 64))
 
-        ReDim Cash(0)
-        Cash(Cash.Length - 1).Rect = New Rectangle(1088, 320, 64, 64)
-        Cash(Cash.Length - 1).Collected = False
 
-        Array.Resize(Cash, Cash.Length + 1)
-        Cash(Cash.Length - 1).Rect = New Rectangle(1472, 64, 64, 64)
-        Cash(Cash.Length - 1).Collected = False
+        'Array.Resize(Bushes, Bushes.Length + 1)
+        'Bushes(Bushes.Length - 1).Rect = New Rectangle(1600, 768, 64, 64)
 
-        AddEnemy(New Point(500, 769))
+        AddBush(New Rectangle(1600, 768, 64, 64))
+
+
+        'ReDim Cash(0)
+        'Cash(Cash.Length - 1).Rect = New Rectangle(1088, 320, 64, 64)
+        'Cash(Cash.Length - 1).Collected = False
+
+        AddBill(New Point(1088, 320))
+
+
+        'Array.Resize(Cash, Cash.Length + 1)
+        'Cash(Cash.Length - 1).Rect = New Rectangle(1472, 64, 64, 64)
+        'Cash(Cash.Length - 1).Collected = False
+
+        AddBill(New Point(1472, 64))
+
+
+        'Enemies(Enemies.Length - 1).PatrolB.X = Location.X + GridSize * 3
+        'Enemies(Enemies.Length - 1).PatrolB.Y = Location.Y + GridSize * 3
+
+        AddEnemy(New Point(500, 769), New Point(500, 769), New Point(564, 769))
 
         BufferGridLines()
 
@@ -1195,17 +1210,7 @@ Public Class Form1
 
                     Dim Index As Integer = Array.IndexOf(Enemies, Enemy)
 
-                    If Enemy.Position.X >= Enemy.PatrolB.X Then
 
-                        Enemies(Index).PatrolDirection = Direction.Left
-
-                    End If
-
-                    If Enemy.Position.X <= Enemy.PatrolA.X Then
-
-                        Enemies(Index).PatrolDirection = Direction.Right
-
-                    End If
 
                     If Enemy.PatrolDirection = Direction.Right Then
 
@@ -1233,7 +1238,7 @@ Public Class Form1
                         If Enemy.Velocity.X > 0 Then
 
                             'Stop the move before change in direction.
-                            Enemies(Array.IndexOf(Enemies, Enemy)).Velocity.X = 0 'Zero speed.
+                            Enemies(Index).Velocity.X = 0 'Zero speed.
 
                         End If
 
@@ -1252,6 +1257,18 @@ Public Class Form1
                     Enemies(Index).Position.X += Enemy.Velocity.X * DeltaTime.TotalSeconds
 
                     Enemies(Index).Rect.X = Math.Round(Enemy.Position.X)
+
+                    If Enemy.Position.X >= Enemy.PatrolB.X Then
+
+                        Enemies(Index).PatrolDirection = Direction.Left
+
+                    End If
+
+                    If Enemy.Position.X <= Enemy.PatrolA.X Then
+
+                        Enemies(Index).PatrolDirection = Direction.Right
+
+                    End If
 
                 End If
 
@@ -1586,7 +1603,6 @@ Public Class Form1
 
         DrawBackground(Color.LightSkyBlue)
 
-        DrawGridLines()
 
         DrawClouds()
 
@@ -1599,6 +1615,9 @@ Public Class Form1
         DrawGoal()
 
         DrawOurHero()
+
+        DrawGridLines()
+
 
         DrawToolPreview()
 
@@ -2495,7 +2514,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub AddEnemy(Location As Point)
+    Private Sub AddEnemy(Location As Point, PatrolA As Point, PatrolB As Point)
 
         If Enemies IsNot Nothing Then
 
@@ -2515,11 +2534,14 @@ Public Class Form1
         Enemies(Enemies.Length - 1).Position.X = Location.X
         Enemies(Enemies.Length - 1).Position.Y = Location.Y
 
-        Enemies(Enemies.Length - 1).PatrolA.X = Location.X
-        Enemies(Enemies.Length - 1).PatrolA.Y = Location.Y
+        Enemies(Enemies.Length - 1).PatrolA.X = PatrolA.X
+        Enemies(Enemies.Length - 1).PatrolA.Y = PatrolA.Y
 
-        Enemies(Enemies.Length - 1).PatrolB.X = Location.X + GridSize * 3
-        Enemies(Enemies.Length - 1).PatrolB.Y = Location.Y + GridSize * 3
+        'Enemies(Enemies.Length - 1).PatrolB.X = Location.X + GridSize * 3
+        'Enemies(Enemies.Length - 1).PatrolB.Y = Location.Y + GridSize * 3
+
+        Enemies(Enemies.Length - 1).PatrolB.X = PatrolB.X
+        Enemies(Enemies.Length - 1).PatrolB.Y = PatrolB.Y
 
         Enemies(Enemies.Length - 1).PatrolDirection = Direction.Right
 
@@ -2561,7 +2583,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub AddBush(Location As Point)
+    Private Sub AddBush(Rect As Rectangle)
 
         If Bushes IsNot Nothing Then
 
@@ -2574,12 +2596,12 @@ Public Class Form1
         End If
 
         'Init Bush
-        Bushes(Bushes.Length - 1).Rect.Location = Location
+        Bushes(Bushes.Length - 1).Rect = Rect
 
-        Bushes(Bushes.Length - 1).Rect.Size = New Size(GridSize, GridSize)
+        'Bushes(Bushes.Length - 1).Rect.Size = New Size(GridSize, GridSize)
 
-        Bushes(Bushes.Length - 1).Position.X = Location.X
-        Bushes(Bushes.Length - 1).Position.Y = Location.Y
+        Bushes(Bushes.Length - 1).Position.X = Rect.X
+        Bushes(Bushes.Length - 1).Position.Y = Rect.Y
 
         AutoSizeLevel(Bushes(Bushes.Length - 1).Rect)
 
@@ -2889,7 +2911,6 @@ Public Class Form1
         'Open Button
         If StartScreenOpenButton.Rect.Contains(e.Location) Then
 
-            InitializeGameObjects()
 
             OpenFileDialog1.FileName = ""
             OpenFileDialog1.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
@@ -2900,28 +2921,42 @@ Public Class Form1
 
                 If My.Computer.FileSystem.FileExists(OpenFileDialog1.FileName) = True Then
 
+                    InitializeGameObjects()
+
                     OpenTestLevelFile(OpenFileDialog1.FileName)
 
                     If IsFileLoaded = True Then
 
                         Text = Path.GetFileName(OpenFileDialog1.FileName) & " - Platformer with Level Editor - Code with Joe"
 
+                        LastFrame = Now
+
+                        CashCollected = 0
+
+                        GameState = AppState.Playing
+
+                        My.Computer.Audio.Play(My.Resources.level,
+                                               AudioPlayMode.BackgroundLoop)
+
+                        IsBackgroundLoopPlaying = True
+
+
                     Else
 
-                        Text = "Platformer with Level Editor - Code with Joe"
+                        'Text = "Platformer with Level Editor - Code with Joe"
 
                     End If
 
-                    LastFrame = Now
+                    'LastFrame = Now
 
-                    CashCollected = 0
+                    'CashCollected = 0
 
-                    GameState = AppState.Playing
+                    'GameState = AppState.Playing
 
-                    My.Computer.Audio.Play(My.Resources.level,
-                                           AudioPlayMode.BackgroundLoop)
+                    'My.Computer.Audio.Play(My.Resources.level,
+                    '                       AudioPlayMode.BackgroundLoop)
 
-                    IsBackgroundLoopPlaying = True
+                    'IsBackgroundLoopPlaying = True
 
                 End If
 
@@ -3398,8 +3433,12 @@ Public Class Form1
                         Case Tools.Bush
 
                             'Snap block to grid.
-                            AddBush(New Point(CInt(Math.Round(pointOffset.X / GridSize) * GridSize),
-                                              CInt(Math.Round(pointOffset.Y / GridSize) * GridSize)))
+                            'AddBush(New Point(CInt(Math.Round(pointOffset.X / GridSize) * GridSize),
+                            '                  CInt(Math.Round(pointOffset.Y / GridSize) * GridSize)))
+                            Dim SnapPoint As New Point(CInt(Math.Round(pointOffset.X / GridSize) * GridSize),
+                                                       CInt(Math.Round(pointOffset.Y / GridSize) * GridSize))
+
+                            AddBush(New Rectangle(SnapPoint, New Drawing.Size(GridSize, GridSize)))
 
                             'Change tool to the mouse pointer.
                             SelectedTool = Tools.Pointer
@@ -3570,13 +3609,21 @@ Public Class Form1
                 Write(File_Number, Block.Rect.Width)
                 Write(File_Number, Block.Rect.Height)
 
+                'Write PatrolA
+                Write(File_Number, Block.PatrolA.X)
+                Write(File_Number, Block.PatrolA.Y)
+
+                'Write PatrolB
+                Write(File_Number, Block.PatrolB.X)
+                Write(File_Number, Block.PatrolB.Y)
+
                 Write(File_Number, "Block")
 
             Next
 
         End If
 
-        'Write Bills to File
+        'Write Cash to File
         If Cash IsNot Nothing Then
 
             For Each Bill In Cash
@@ -3592,7 +3639,19 @@ Public Class Form1
                 Write(File_Number, Bill.Rect.Width)
                 Write(File_Number, Bill.Rect.Height)
 
+                'Write PatrolA
+                Write(File_Number, Bill.PatrolA.X)
+                Write(File_Number, Bill.PatrolA.Y)
+
+                'Write PatrolB
+                Write(File_Number, Bill.PatrolB.X)
+                Write(File_Number, Bill.PatrolB.Y)
+
                 Write(File_Number, "Bill")
+
+
+
+
 
             Next
 
@@ -3614,7 +3673,18 @@ Public Class Form1
                 Write(File_Number, Bush.Rect.Width)
                 Write(File_Number, Bush.Rect.Height)
 
+                'Write PatrolA
+                Write(File_Number, Bush.PatrolA.X)
+                Write(File_Number, Bush.PatrolA.Y)
+
+                'Write PatrolB
+                Write(File_Number, Bush.PatrolB.X)
+                Write(File_Number, Bush.PatrolB.Y)
+
                 Write(File_Number, "Bush")
+
+
+
 
             Next
 
@@ -3636,8 +3706,47 @@ Public Class Form1
                 Write(File_Number, Cloud.Rect.Width)
                 Write(File_Number, Cloud.Rect.Height)
 
+                'Write PatrolA
+                Write(File_Number, Cloud.PatrolA.X)
+                Write(File_Number, Cloud.PatrolA.Y)
+
+                'Write PatrolB
+                Write(File_Number, Cloud.PatrolB.X)
+                Write(File_Number, Cloud.PatrolB.Y)
+
                 Write(File_Number, "Cloud")
 
+            Next
+
+        End If
+
+        'Write Enemies to File
+        If Enemies IsNot Nothing Then
+
+            For Each Enemy In Enemies
+
+                'Write ID
+                Write(File_Number, ObjectID.Enemy)
+
+                'Write Position
+                Write(File_Number, Enemy.Rect.X)
+                Write(File_Number, Enemy.Rect.Y)
+
+                'Write Size
+                Write(File_Number, Enemy.Rect.Width)
+                Write(File_Number, Enemy.Rect.Height)
+
+                'Write PatrolA
+                Write(File_Number, Enemy.PatrolA.X)
+                Write(File_Number, Enemy.PatrolA.Y)
+
+                'Write PatrolB
+                Write(File_Number, Enemy.PatrolB.X)
+                Write(File_Number, Enemy.PatrolB.Y)
+
+                Write(File_Number, "Enemy")
+
+                'TODO: Add patrol points
             Next
 
         End If
@@ -3654,7 +3763,19 @@ Public Class Form1
         Write(File_Number, Goal.Rect.Width)
         Write(File_Number, Goal.Rect.Height)
 
+        'Write PatrolA
+        Write(File_Number, Goal.PatrolA.X)
+        Write(File_Number, Goal.PatrolA.Y)
+
+        'Write PatrolB
+        Write(File_Number, Goal.PatrolB.X)
+        Write(File_Number, Goal.PatrolB.Y)
+
         Write(File_Number, "Goal")
+
+
+
+
 
         'Write Level to File
         'Write ID
@@ -3668,7 +3789,18 @@ Public Class Form1
         Write(File_Number, Level.Rect.Width)
         Write(File_Number, Level.Rect.Height)
 
+        'Write PatrolA
+        Write(File_Number, Level.PatrolA.X)
+        Write(File_Number, Level.PatrolA.Y)
+
+        'Write PatrolB
+        Write(File_Number, Level.PatrolB.X)
+        Write(File_Number, Level.PatrolB.Y)
+
         Write(File_Number, "Level")
+
+
+
 
         FileClose(File_Number)
 
@@ -3708,8 +3840,20 @@ Public Class Form1
                     FileSystem.Input(File_Number, .Rect.Width)
                     FileSystem.Input(File_Number, .Rect.Height)
 
+                    'Read PatrolA
+                    FileSystem.Input(File_Number, .PatrolA.X)
+                    FileSystem.Input(File_Number, .PatrolA.Y)
+
+                    'Read PatrolB
+                    FileSystem.Input(File_Number, .PatrolB.X)
+                    FileSystem.Input(File_Number, .PatrolB.Y)
+
                     'Read Text
                     FileSystem.Input(File_Number, .Text)
+
+
+
+
 
                 Catch ex As Exception
 
@@ -3787,8 +3931,22 @@ Public Class Form1
                     Blocks(BlockIndex).Rect.Width = FileObject.Rect.Width
                     Blocks(BlockIndex).Rect.Height = FileObject.Rect.Height
 
+                    'Load PatrolA
+                    Blocks(BlockIndex).PatrolA.X = FileObject.PatrolA.X
+                    Blocks(BlockIndex).PatrolA.Y = FileObject.PatrolA.Y
+
+                    'Load PatrolB
+                    Blocks(BlockIndex).PatrolB.X = FileObject.PatrolB.X
+                    Blocks(BlockIndex).PatrolB.Y = FileObject.PatrolB.Y
+
                     'Load Text
                     Blocks(BlockIndex).Text = FileObject.Text
+
+
+
+
+
+
 
                 Case ObjectID.Bill
 
@@ -3813,11 +3971,24 @@ Public Class Form1
                     Cash(BillIndex).Rect.Width = FileObject.Rect.Width
                     Cash(BillIndex).Rect.Height = FileObject.Rect.Height
 
+                    'Load PatrolA
+                    Cash(BillIndex).PatrolA.X = FileObject.PatrolA.X
+                    Cash(BillIndex).PatrolA.Y = FileObject.PatrolA.Y
+
+                    'Load PatrolB
+                    Cash(BillIndex).PatrolB.X = FileObject.PatrolB.X
+                    Cash(BillIndex).PatrolB.Y = FileObject.PatrolB.Y
+
                     'Load Text
                     Cash(BillIndex).Text = FileObject.Text
 
                     'Initialize Collected
                     Cash(BillIndex).Collected = False
+
+
+
+
+
 
                 Case ObjectID.Bush
 
@@ -3842,8 +4013,20 @@ Public Class Form1
                     Bushes(BushIndex).Rect.Width = FileObject.Rect.Width
                     Bushes(BushIndex).Rect.Height = FileObject.Rect.Height
 
+                    'Load PatrolA
+                    Bushes(BushIndex).PatrolA.X = FileObject.PatrolA.X
+                    Bushes(BushIndex).PatrolA.Y = FileObject.PatrolA.Y
+
+                    'Load PatrolB
+                    Bushes(BushIndex).PatrolB.X = FileObject.PatrolB.X
+                    Bushes(BushIndex).PatrolB.Y = FileObject.PatrolB.Y
+
                     'Load Text
                     Bushes(BushIndex).Text = FileObject.Text
+
+
+
+
 
                 Case ObjectID.Cloud
 
@@ -3868,8 +4051,21 @@ Public Class Form1
                     Clouds(CloudIndex).Rect.Width = FileObject.Rect.Width
                     Clouds(CloudIndex).Rect.Height = FileObject.Rect.Height
 
+                    'Load PatrolA
+                    Clouds(CloudIndex).PatrolA.X = FileObject.PatrolA.X
+                    Clouds(CloudIndex).PatrolA.Y = FileObject.PatrolA.Y
+
+                    'Load PatrolB
+                    Clouds(CloudIndex).PatrolB.X = FileObject.PatrolB.X
+                    Clouds(CloudIndex).PatrolB.Y = FileObject.PatrolB.Y
+
                     'Load Text
                     Clouds(CloudIndex).Text = FileObject.Text
+
+
+
+
+
 
                 Case ObjectID.Goal
 
@@ -3888,8 +4084,20 @@ Public Class Form1
                     Goal.Rect.Width = FileObject.Rect.Width
                     Goal.Rect.Height = FileObject.Rect.Height
 
+                    'Load PatrolA
+                    Goal.PatrolA.X = FileObject.PatrolA.X
+                    Goal.PatrolA.Y = FileObject.PatrolA.Y
+
+                    'Load PatrolB
+                    Goal.PatrolB.X = FileObject.PatrolB.X
+                    Goal.PatrolB.Y = FileObject.PatrolB.Y
+
                     'Load Text
                     Goal.Text = FileObject.Text
+
+
+
+
 
                 Case ObjectID.Level
 
@@ -3908,8 +4116,21 @@ Public Class Form1
                     Level.Rect.Width = FileObject.Rect.Width
                     Level.Rect.Height = FileObject.Rect.Height
 
+                    'Load PatrolA
+                    Level.PatrolA.X = FileObject.PatrolA.X
+                    Level.PatrolA.Y = FileObject.PatrolA.Y
+
+                    'Load PatrolB
+                    Level.PatrolB.X = FileObject.PatrolB.X
+                    Level.PatrolB.Y = FileObject.PatrolB.Y
+
                     'Load Text
                     Level.Text = FileObject.Text
+
+
+
+
+
 
                 Case ObjectID.Enemy
 
@@ -3933,6 +4154,22 @@ Public Class Form1
                     'Load Rect Size
                     Enemies(EnemyIndex).Rect.Width = FileObject.Rect.Width
                     Enemies(EnemyIndex).Rect.Height = FileObject.Rect.Height
+
+                    'Load PatrolA
+                    Enemies(EnemyIndex).PatrolA.X = FileObject.PatrolA.X
+                    Enemies(EnemyIndex).PatrolA.Y = FileObject.PatrolA.Y
+
+                    'Load PatrolB
+                    Enemies(EnemyIndex).PatrolB.X = FileObject.PatrolB.X
+                    Enemies(EnemyIndex).PatrolB.Y = FileObject.PatrolB.Y
+
+                    'Initialize Eliminated
+                    Enemies(EnemyIndex).Eliminated = False
+
+                    'Initialize
+                    Enemies(EnemyIndex).Acceleration.X = 100
+                    Enemies(EnemyIndex).MaxVelocity.X = 75
+                    Enemies(EnemyIndex).Velocity.X = 0
 
                     'Load Text
                     Enemies(EnemyIndex).Text = FileObject.Text

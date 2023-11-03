@@ -657,7 +657,7 @@ Public Class Form1
                 GameState = AppState.Playing
 
                 My.Computer.Audio.Play(My.Resources.level,
-                                                   AudioPlayMode.BackgroundLoop)
+                                       AudioPlayMode.BackgroundLoop)
 
                 IsBackgroundLoopPlaying = True
 

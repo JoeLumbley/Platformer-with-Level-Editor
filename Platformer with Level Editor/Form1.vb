@@ -544,60 +544,25 @@ Public Class Form1
 
         Goal.Rect = New Rectangle(1472, 768, 64, 64)
 
-        ReDim Blocks(0)
-        Blocks(Blocks.Length - 1).Rect = New Rectangle(0, 832, 2000, 64)
+        AddBlock(New Rectangle(0, 832, 1984, 64))
 
-        Blocks(0).Position = New PointF(Blocks(0).Rect.X, Blocks(0).Rect.Y)
+        AddBlock(New Rectangle(1088, 576, 64, 64))
 
-        Array.Resize(Blocks, Blocks.Length + 1)
-        Blocks(Blocks.Length - 1).Rect = New Rectangle(1088, 576, 64, 64)
+        AddBlock(New Rectangle(1344, 576, 320, 64))
 
-        Blocks(Blocks.Length - 1).Position = New PointF(Blocks(Blocks.Length - 1).Rect.X, Blocks(Blocks.Length - 1).Rect.Y)
+        AddBlock(New Rectangle(1472, 320, 64, 64))
 
-        Array.Resize(Blocks, Blocks.Length + 1)
-        Blocks(Blocks.Length - 1).Rect = New Rectangle(1344, 576, 320, 64)
+        AddCloud(New Rectangle(512, 64, 192, 128))
 
-        Blocks(Blocks.Length - 1).Position = New PointF(Blocks(Blocks.Length - 1).Rect.X, Blocks(Blocks.Length - 1).Rect.Y)
-
-        Array.Resize(Blocks, Blocks.Length + 1)
-        Blocks(Blocks.Length - 1).Rect = New Rectangle(1472, 320, 64, 64)
-
-        Blocks(Blocks.Length - 1).Position = New PointF(Blocks(Blocks.Length - 1).Rect.X, Blocks(Blocks.Length - 1).Rect.Y)
-
-        ReDim Clouds(0)
-        Clouds(Clouds.Length - 1).Rect = New Rectangle(512, 64, 192, 128)
-
-        Array.Resize(Clouds, Clouds.Length + 1)
-        Clouds(Clouds.Length - 1).Rect = New Rectangle(1728, 64, 128, 64)
-
-        'ReDim Bushes(0)
-        'Bushes(Bushes.Length - 1).Rect = New Rectangle(768, 768, 320, 64)
+        AddCloud(New Rectangle(1728, 64, 128, 64))
 
         AddBush(New Rectangle(768, 768, 320, 64))
 
-
-        'Array.Resize(Bushes, Bushes.Length + 1)
-        'Bushes(Bushes.Length - 1).Rect = New Rectangle(1600, 768, 64, 64)
-
         AddBush(New Rectangle(1600, 768, 64, 64))
-
-
-        'ReDim Cash(0)
-        'Cash(Cash.Length - 1).Rect = New Rectangle(1088, 320, 64, 64)
-        'Cash(Cash.Length - 1).Collected = False
 
         AddBill(New Point(1088, 320))
 
-
-        'Array.Resize(Cash, Cash.Length + 1)
-        'Cash(Cash.Length - 1).Rect = New Rectangle(1472, 64, 64, 64)
-        'Cash(Cash.Length - 1).Collected = False
-
         AddBill(New Point(1472, 64))
-
-
-        'Enemies(Enemies.Length - 1).PatrolB.X = Location.X + GridSize * 3
-        'Enemies(Enemies.Length - 1).PatrolB.Y = Location.Y + GridSize * 3
 
         AddEnemy(New Point(500, 769), New Point(500, 769), New Point(564, 769))
 
@@ -2452,7 +2417,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub AddBlock(Location As Point)
+    Private Sub AddBlock(Rect As Rectangle)
 
         If Blocks IsNot Nothing Then
 
@@ -2464,15 +2429,15 @@ Public Class Form1
 
         End If
 
+        Dim Index As Integer = Blocks.Length - 1
+
         'Init block
-        Blocks(Blocks.Length - 1).Rect.Location = Location
+        Blocks(Index).Rect = Rect
 
-        Blocks(Blocks.Length - 1).Rect.Size = New Size(GridSize, GridSize)
+        Blocks(Index).Position.X = Rect.X
+        Blocks(Index).Position.Y = Rect.Y
 
-        Blocks(Blocks.Length - 1).Position.X = Location.X
-        Blocks(Blocks.Length - 1).Position.Y = Location.Y
-
-        AutoSizeLevel(Blocks(Blocks.Length - 1).Rect)
+        AutoSizeLevel(Blocks(Index).Rect)
 
     End Sub
 
@@ -2500,17 +2465,19 @@ Public Class Form1
 
         End If
 
+        Dim Index As Integer = Cash.Length - 1
+
         'Init Bill
-        Cash(Cash.Length - 1).Rect.Location = Location
+        Cash(Index).Rect.Location = Location
 
-        Cash(Cash.Length - 1).Rect.Size = New Size(GridSize, GridSize)
+        Cash(Index).Rect.Size = New Size(GridSize, GridSize)
 
-        Cash(Cash.Length - 1).Position.X = Location.X
-        Cash(Cash.Length - 1).Position.Y = Location.Y
+        Cash(Index).Position.X = Location.X
+        Cash(Index).Position.Y = Location.Y
 
-        Cash(Cash.Length - 1).Collected = False
+        Cash(Index).Collected = False
 
-        AutoSizeLevel(Cash(Cash.Length - 1).Rect)
+        AutoSizeLevel(Cash(Index).Rect)
 
     End Sub
 
@@ -2526,41 +2493,44 @@ Public Class Form1
 
         End If
 
+        Dim Index As Integer = Enemies.Length - 1
+
         'Init Enemy
-        Enemies(Enemies.Length - 1).Rect.Location = Location
+        Enemies(Index).Rect.Location = Location
 
-        Enemies(Enemies.Length - 1).Rect.Size = New Size(GridSize, GridSize)
+        Enemies(Index).Rect.Size = New Size(GridSize, GridSize)
 
-        Enemies(Enemies.Length - 1).Position.X = Location.X
-        Enemies(Enemies.Length - 1).Position.Y = Location.Y
+        Enemies(Index).Position.X = Location.X
+        Enemies(Index).Position.Y = Location.Y
 
-        Enemies(Enemies.Length - 1).PatrolA.X = PatrolA.X
-        Enemies(Enemies.Length - 1).PatrolA.Y = PatrolA.Y
+        Enemies(Index).PatrolA.X = PatrolA.X
+        Enemies(Index).PatrolA.Y = PatrolA.Y
 
         'Enemies(Enemies.Length - 1).PatrolB.X = Location.X + GridSize * 3
         'Enemies(Enemies.Length - 1).PatrolB.Y = Location.Y + GridSize * 3
 
-        Enemies(Enemies.Length - 1).PatrolB.X = PatrolB.X
-        Enemies(Enemies.Length - 1).PatrolB.Y = PatrolB.Y
+        Enemies(Index).PatrolB.X = PatrolB.X
+        Enemies(Index).PatrolB.Y = PatrolB.Y
 
-        Enemies(Enemies.Length - 1).PatrolDirection = Direction.Right
+        Enemies(Index).PatrolDirection = Direction.Right
 
-        Enemies(Enemies.Length - 1).Eliminated = False
+        Enemies(Index).Eliminated = False
 
-        Enemies(Enemies.Length - 1).Acceleration.X = 100
-        Enemies(Enemies.Length - 1).MaxVelocity.X = 75
-        Enemies(Enemies.Length - 1).Velocity.X = 0
+        Enemies(Index).Acceleration.X = 100
+        Enemies(Index).MaxVelocity.X = 75
+        Enemies(Index).Velocity.X = 0
 
 
-        AutoSizeLevel(New Rectangle(Enemies(Enemies.Length - 1).PatrolB.X,
-                                    Enemies(Enemies.Length - 1).PatrolB.Y,
+        AutoSizeLevel(New Rectangle(Enemies(Index).PatrolB.X,
+                                    Enemies(Index).PatrolB.Y,
                                     GridSize,
                                     GridSize))
 
     End Sub
 
-    Private Sub AddCloud(Location As Point)
+    Private Sub AddCloud(Rect As Rectangle)
 
+        'Add the cloud to clouds
         If Clouds IsNot Nothing Then
 
             Array.Resize(Clouds, Clouds.Length + 1)
@@ -2571,15 +2541,15 @@ Public Class Form1
 
         End If
 
-        'Init Cloud
-        Clouds(Clouds.Length - 1).Rect.Location = Location
+        Dim Index As Integer = Clouds.Length - 1
 
-        Clouds(Clouds.Length - 1).Rect.Size = New Size(GridSize, GridSize)
+        'Init the cloud
+        Clouds(Index).Rect = Rect
 
-        Clouds(Clouds.Length - 1).Position.X = Location.X
-        Clouds(Clouds.Length - 1).Position.Y = Location.Y
+        Clouds(Index).Position.X = Rect.X
+        Clouds(Index).Position.Y = Rect.Y
 
-        AutoSizeLevel(Clouds(Clouds.Length - 1).Rect)
+        AutoSizeLevel(Clouds(Index).Rect)
 
     End Sub
 
@@ -2595,15 +2565,15 @@ Public Class Form1
 
         End If
 
+        Dim Index As Integer = Bushes.Length - 1
+
         'Init Bush
-        Bushes(Bushes.Length - 1).Rect = Rect
+        Bushes(Index).Rect = Rect
 
-        'Bushes(Bushes.Length - 1).Rect.Size = New Size(GridSize, GridSize)
+        Bushes(Index).Position.X = Rect.X
+        Bushes(Index).Position.Y = Rect.Y
 
-        Bushes(Bushes.Length - 1).Position.X = Rect.X
-        Bushes(Bushes.Length - 1).Position.Y = Rect.Y
-
-        AutoSizeLevel(Bushes(Bushes.Length - 1).Rect)
+        AutoSizeLevel(Bushes(Index).Rect)
 
     End Sub
 
@@ -3388,8 +3358,10 @@ Public Class Form1
                         Case Tools.Block
 
                             'Snap block to grid.
-                            AddBlock(New Point(CInt(Math.Round(pointOffset.X / GridSize) * GridSize),
-                                       CInt(Math.Round(pointOffset.Y / GridSize) * GridSize)))
+                            Dim SnapPoint As New Point(CInt(Math.Round(pointOffset.X / GridSize) * GridSize),
+                                                       CInt(Math.Round(pointOffset.Y / GridSize) * GridSize))
+
+                            AddBlock(New Rectangle(SnapPoint, New Drawing.Size(GridSize, GridSize)))
 
                             'Change tool to the mouse pointer.
                             SelectedTool = Tools.Pointer
@@ -3418,8 +3390,10 @@ Public Class Form1
                         Case Tools.Cloud
 
                             'Snap block to grid.
-                            AddCloud(New Point(CInt(Math.Round(pointOffset.X / GridSize) * GridSize),
-                                       CInt(Math.Round(pointOffset.Y / GridSize) * GridSize)))
+                            Dim SnapPoint As New Point(CInt(Math.Round(pointOffset.X / GridSize) * GridSize),
+                                                       CInt(Math.Round(pointOffset.Y / GridSize) * GridSize))
+
+                            AddCloud(New Rectangle(SnapPoint, New Drawing.Size(GridSize, GridSize)))
 
                             'Change tool to the mouse pointer.
                             SelectedTool = Tools.Pointer
@@ -3427,14 +3401,12 @@ Public Class Form1
                             'Turn tool preview off.
                             ShowToolPreview = False
 
-                            'Select the newly created bill.
+                            'Select the newly created cloud.
                             SelectedCloud = Clouds.Length - 1
 
                         Case Tools.Bush
 
                             'Snap block to grid.
-                            'AddBush(New Point(CInt(Math.Round(pointOffset.X / GridSize) * GridSize),
-                            '                  CInt(Math.Round(pointOffset.Y / GridSize) * GridSize)))
                             Dim SnapPoint As New Point(CInt(Math.Round(pointOffset.X / GridSize) * GridSize),
                                                        CInt(Math.Round(pointOffset.Y / GridSize) * GridSize))
 

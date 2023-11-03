@@ -667,7 +667,6 @@ Public Class Form1
 
     End Sub
 
-
     Private Sub UpdateControllerData()
 
         UpdateControllerPosition()

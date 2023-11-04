@@ -3344,10 +3344,6 @@ Public Class Form1
                 Else
                     'No, the player is not selecting a game object.
 
-                    'Is the player over the toolbar?
-                    'If ToolBarBackground.Rect.Contains(e) = False Then
-                    'No, the player is NOT over the toolbar.
-
                     Select Case SelectedTool
 
                         Case Tools.Block
@@ -3449,17 +3445,6 @@ Public Class Form1
                             GoalSelected = False
 
                     End Select
-
-                    'Else
-                    '    'Deselect game objects.
-                    '    SelectedBlock = -1
-                    '    SelectedBill = -1
-                    '    SelectedCloud = -1
-                    '    SelectedBush = -1
-                    '    GoalSelected = False
-                    '    LevelSelected = False
-
-                    'End If
 
                 End If
 
@@ -3638,10 +3623,6 @@ Public Class Form1
 
                 Write(File_Number, "Bill")
 
-
-
-
-
             Next
 
         End If
@@ -3671,9 +3652,6 @@ Public Class Form1
                 Write(File_Number, Bush.PatrolB.Y)
 
                 Write(File_Number, "Bush")
-
-
-
 
             Next
 
@@ -3735,7 +3713,6 @@ Public Class Form1
 
                 Write(File_Number, "Enemy")
 
-                'TODO: Add patrol points
             Next
 
         End If
@@ -3762,10 +3739,6 @@ Public Class Form1
 
         Write(File_Number, "Goal")
 
-
-
-
-
         'Write Level to File
         'Write ID
         Write(File_Number, ObjectID.Level)
@@ -3787,9 +3760,6 @@ Public Class Form1
         Write(File_Number, Level.PatrolB.Y)
 
         Write(File_Number, "Level")
-
-
-
 
         FileClose(File_Number)
 
@@ -3840,10 +3810,6 @@ Public Class Form1
                     'Read Text
                     FileSystem.Input(File_Number, .Text)
 
-
-
-
-
                 Catch ex As Exception
 
                     IsFileLoaded = False
@@ -3877,9 +3843,7 @@ Public Class Form1
 
             End If
 
-
         End If
-
 
     End Sub
 
@@ -3937,12 +3901,6 @@ Public Class Form1
                     'Load Text
                     Blocks(BlockIndex).Text = FileObject.Text
 
-
-
-
-
-
-
                 Case ObjectID.Bill
 
                     'Add a Bill to Cash
@@ -3980,11 +3938,6 @@ Public Class Form1
                     'Initialize Collected
                     Cash(BillIndex).Collected = False
 
-
-
-
-
-
                 Case ObjectID.Bush
 
                     'Add a Bush to Bushes
@@ -4018,10 +3971,6 @@ Public Class Form1
 
                     'Load Text
                     Bushes(BushIndex).Text = FileObject.Text
-
-
-
-
 
                 Case ObjectID.Cloud
 
@@ -4057,11 +4006,6 @@ Public Class Form1
                     'Load Text
                     Clouds(CloudIndex).Text = FileObject.Text
 
-
-
-
-
-
                 Case ObjectID.Goal
 
                     'Load ID
@@ -4090,10 +4034,6 @@ Public Class Form1
                     'Load Text
                     Goal.Text = FileObject.Text
 
-
-
-
-
                 Case ObjectID.Level
 
                     'Load ID
@@ -4121,11 +4061,6 @@ Public Class Form1
 
                     'Load Text
                     Level.Text = FileObject.Text
-
-
-
-
-
 
                 Case ObjectID.Enemy
 

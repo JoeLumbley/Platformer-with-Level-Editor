@@ -2763,8 +2763,6 @@ Public Class Form1
 
         EditPlayButton.Rect = New Rectangle(ClientRectangle.Left + 210, ClientRectangle.Bottom - 90, 120, 90)
 
-
-
         ToolBarBackground.Rect = New Rectangle(ClientRectangle.Left, ClientRectangle.Bottom - 90, ClientRectangle.Width, 100)
 
         MenuBackground.Rect = New Rectangle(ClientRectangle.Width \ 2 - MenuBackground.Rect.Width \ 2,
@@ -2792,13 +2790,6 @@ Public Class Form1
                                        MenuBackground.Rect.Top + 91 * 3,
                                        150,
                                        90)
-
-
-
-
-
-
-
 
         MenuButton.Rect = New Rectangle(ClientRectangle.Right - 152,
                                         ClientRectangle.Bottom - 90,
@@ -2832,8 +2823,6 @@ Public Class Form1
         StartScreenNewButton.Rect = New Rectangle(ClientRectangle.Width \ 2 - 200, ClientRectangle.Height \ 2 + 100, 150, 90)
 
         StartScreenOpenButton.Rect = New Rectangle(ClientRectangle.Width \ 2 + 100, ClientRectangle.Height \ 2 + 100, 150, 90)
-
-
 
         Camera.Rect.Size = ClientRectangle.Size
 
@@ -3014,8 +3003,6 @@ Public Class Form1
 
                         CashCollected = 0
 
-                        'GameState = AppState.Editing
-
                         My.Computer.Audio.Play(My.Resources.level,
                                            AudioPlayMode.BackgroundLoop)
 
@@ -3041,8 +3028,6 @@ Public Class Form1
                 CreateNewLevel()
 
                 CashCollected = 0
-
-                GameState = AppState.Editing
 
                 My.Computer.Audio.Play(My.Resources.level,
                                        AudioPlayMode.BackgroundLoop)
@@ -4403,7 +4388,7 @@ Public Class Form1
 
                 If GameState = AppState.Editing Then
 
-                    'Move Viewport to the right.
+                    'Move Camera to the right.
                     Camera.Rect.X -= 10
 
                     BufferGridLines()

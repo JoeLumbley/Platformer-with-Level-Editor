@@ -2920,8 +2920,9 @@ Public Class Form1
 
         End If
 
-        'New Button
+        'Is the player selecting the new button?
         If StartScreenNewButton.Rect.Contains(e.Location) Then
+            'Yes, the player is selecting the new button.
 
             InitializeObjects()
 
@@ -3001,6 +3002,8 @@ Public Class Form1
 
                         If IsFileLoaded = True Then
 
+                            ShowMenu = False
+
                             Text = Path.GetFileName(OpenFileDialog1.FileName) & " - Platformer with Level Editor - Code with Joe"
 
                         Else
@@ -3011,7 +3014,7 @@ Public Class Form1
 
                         CashCollected = 0
 
-                        GameState = AppState.Editing
+                        'GameState = AppState.Editing
 
                         My.Computer.Audio.Play(My.Resources.level,
                                            AudioPlayMode.BackgroundLoop)
@@ -3021,8 +3024,6 @@ Public Class Form1
                     End If
 
                 End If
-
-                ShowMenu = False
 
             End If
 
@@ -3244,104 +3245,107 @@ Public Class Form1
 
     Private Sub MouseDownEditingSelection(e As Point)
 
-        Dim pointOffset As Point = e
+        'Is the player over the toolbar?
+        If ToolBarBackground.Rect.Contains(e) = False Then
+            'No, the player is NOT over the toolbar.
 
-        pointOffset.X = (Camera.Rect.X * -1) + e.X
+            Dim pointOffset As Point = e
 
-        pointOffset.Y = (Camera.Rect.Y * -1) + e.Y
+            pointOffset.X = (Camera.Rect.X * -1) + e.X
 
-        If SizingHandle.Contains(e) Then
+            pointOffset.Y = (Camera.Rect.Y * -1) + e.Y
 
-            SizingHandleSelected = True
+            If SizingHandle.Contains(e) Then
 
-        Else
-
-            SizingHandleSelected = False
-
-            If Goal.Rect.Contains(pointOffset) Then
-
-                GoalSelected = True
-
-                SelectionOffset.X = pointOffset.X - Goal.Rect.X
-                SelectionOffset.Y = pointOffset.Y - Goal.Rect.Y
-
-                'Deselect other game objects.
-                SelectedBlock = -1
-                SelectedBill = -1
-                SelectedCloud = -1
-                SelectedBush = -1
-                LevelSelected = False
-
-                'Is the player selecting a block?
-            ElseIf CheckBlockSelection(pointOffset) > -1 Then
-                'Yes, the player is selecting a block.
-
-                SelectedBlock = CheckBlockSelection(pointOffset)
-
-                SelectionOffset.X = pointOffset.X - Blocks(SelectedBlock).Rect.X
-                SelectionOffset.Y = pointOffset.Y - Blocks(SelectedBlock).Rect.Y
-
-                'Deselect other game objects.
-                SelectedBill = -1
-                SelectedCloud = -1
-                SelectedBush = -1
-                GoalSelected = False
-                LevelSelected = False
-
-                'Is the player selecting a bill?
-            ElseIf CheckBillSelection(pointOffset) > -1 Then
-                'Yes, the player is selecting a bill.
-
-                SelectedBill = CheckBillSelection(pointOffset)
-
-                SelectionOffset.X = pointOffset.X - Cash(SelectedBill).Rect.X
-                SelectionOffset.Y = pointOffset.Y - Cash(SelectedBill).Rect.Y
-
-                'Deselect other game objects.
-                SelectedBlock = -1
-                SelectedCloud = -1
-                SelectedBush = -1
-                GoalSelected = False
-                LevelSelected = False
-
-                'Is the player selecting a cloud?
-            ElseIf CheckCloudSelection(pointOffset) > -1 Then
-                'Yes, the player is selecting a cloud.
-
-                SelectedCloud = CheckCloudSelection(pointOffset)
-
-                SelectionOffset.X = pointOffset.X - Clouds(SelectedCloud).Rect.X
-                SelectionOffset.Y = pointOffset.Y - Clouds(SelectedCloud).Rect.Y
-
-                'Deselect other game objects.
-                SelectedBlock = -1
-                SelectedBill = -1
-                SelectedBush = -1
-                GoalSelected = False
-                LevelSelected = False
-
-                'Is the player selecting a bush?
-            ElseIf CheckBushSelection(pointOffset) > -1 Then
-                'Yes, the player is selecting a bush.
-
-                SelectedBush = CheckBushSelection(pointOffset)
-
-                SelectionOffset.X = pointOffset.X - Bushes(SelectedBush).Rect.X
-                SelectionOffset.Y = pointOffset.Y - Bushes(SelectedBush).Rect.Y
-
-                'Deselect other game objects.
-                SelectedBlock = -1
-                SelectedBill = -1
-                SelectedCloud = -1
-                GoalSelected = False
-                LevelSelected = False
-
+                SizingHandleSelected = True
 
             Else
-                'No, the player is not selecting a game object.
 
-                'Is the player over the toolbar?
-                If ToolBarBackground.Rect.Contains(e) = False Then
+                SizingHandleSelected = False
+
+                If Goal.Rect.Contains(pointOffset) Then
+
+                    GoalSelected = True
+
+                    SelectionOffset.X = pointOffset.X - Goal.Rect.X
+                    SelectionOffset.Y = pointOffset.Y - Goal.Rect.Y
+
+                    'Deselect other game objects.
+                    SelectedBlock = -1
+                    SelectedBill = -1
+                    SelectedCloud = -1
+                    SelectedBush = -1
+                    LevelSelected = False
+
+                    'Is the player selecting a block?
+                ElseIf CheckBlockSelection(pointOffset) > -1 Then
+                    'Yes, the player is selecting a block.
+
+                    SelectedBlock = CheckBlockSelection(pointOffset)
+
+                    SelectionOffset.X = pointOffset.X - Blocks(SelectedBlock).Rect.X
+                    SelectionOffset.Y = pointOffset.Y - Blocks(SelectedBlock).Rect.Y
+
+                    'Deselect other game objects.
+                    SelectedBill = -1
+                    SelectedCloud = -1
+                    SelectedBush = -1
+                    GoalSelected = False
+                    LevelSelected = False
+
+                    'Is the player selecting a bill?
+                ElseIf CheckBillSelection(pointOffset) > -1 Then
+                    'Yes, the player is selecting a bill.
+
+                    SelectedBill = CheckBillSelection(pointOffset)
+
+                    SelectionOffset.X = pointOffset.X - Cash(SelectedBill).Rect.X
+                    SelectionOffset.Y = pointOffset.Y - Cash(SelectedBill).Rect.Y
+
+                    'Deselect other game objects.
+                    SelectedBlock = -1
+                    SelectedCloud = -1
+                    SelectedBush = -1
+                    GoalSelected = False
+                    LevelSelected = False
+
+                    'Is the player selecting a cloud?
+                ElseIf CheckCloudSelection(pointOffset) > -1 Then
+                    'Yes, the player is selecting a cloud.
+
+                    SelectedCloud = CheckCloudSelection(pointOffset)
+
+                    SelectionOffset.X = pointOffset.X - Clouds(SelectedCloud).Rect.X
+                    SelectionOffset.Y = pointOffset.Y - Clouds(SelectedCloud).Rect.Y
+
+                    'Deselect other game objects.
+                    SelectedBlock = -1
+                    SelectedBill = -1
+                    SelectedBush = -1
+                    GoalSelected = False
+                    LevelSelected = False
+
+                    'Is the player selecting a bush?
+                ElseIf CheckBushSelection(pointOffset) > -1 Then
+                    'Yes, the player is selecting a bush.
+
+                    SelectedBush = CheckBushSelection(pointOffset)
+
+                    SelectionOffset.X = pointOffset.X - Bushes(SelectedBush).Rect.X
+                    SelectionOffset.Y = pointOffset.Y - Bushes(SelectedBush).Rect.Y
+
+                    'Deselect other game objects.
+                    SelectedBlock = -1
+                    SelectedBill = -1
+                    SelectedCloud = -1
+                    GoalSelected = False
+                    LevelSelected = False
+
+                Else
+                    'No, the player is not selecting a game object.
+
+                    'Is the player over the toolbar?
+                    'If ToolBarBackground.Rect.Contains(e) = False Then
                     'No, the player is NOT over the toolbar.
 
                     Select Case SelectedTool
@@ -3350,7 +3354,7 @@ Public Class Form1
 
                             'Snap block to grid.
                             Dim SnapPoint As New Point(CInt(Math.Round(pointOffset.X / GridSize) * GridSize),
-                                                       CInt(Math.Round(pointOffset.Y / GridSize) * GridSize))
+                                                           CInt(Math.Round(pointOffset.Y / GridSize) * GridSize))
 
                             AddBlock(New Rectangle(SnapPoint, New Drawing.Size(GridSize, GridSize)))
 
@@ -3367,7 +3371,7 @@ Public Class Form1
 
                             'Snap block to grid.
                             AddBill(New Point(CInt(Math.Round(pointOffset.X / GridSize) * GridSize),
-                                       CInt(Math.Round(pointOffset.Y / GridSize) * GridSize)))
+                                           CInt(Math.Round(pointOffset.Y / GridSize) * GridSize)))
 
                             'Change tool to the mouse pointer.
                             SelectedTool = Tools.Pointer
@@ -3382,7 +3386,7 @@ Public Class Form1
 
                             'Snap block to grid.
                             Dim SnapPoint As New Point(CInt(Math.Round(pointOffset.X / GridSize) * GridSize),
-                                                       CInt(Math.Round(pointOffset.Y / GridSize) * GridSize))
+                                                           CInt(Math.Round(pointOffset.Y / GridSize) * GridSize))
 
                             AddCloud(New Rectangle(SnapPoint, New Drawing.Size(GridSize, GridSize)))
 
@@ -3399,7 +3403,7 @@ Public Class Form1
 
                             'Snap block to grid.
                             Dim SnapPoint As New Point(CInt(Math.Round(pointOffset.X / GridSize) * GridSize),
-                                                       CInt(Math.Round(pointOffset.Y / GridSize) * GridSize))
+                                                           CInt(Math.Round(pointOffset.Y / GridSize) * GridSize))
 
                             AddBush(New Rectangle(SnapPoint, New Drawing.Size(GridSize, GridSize)))
 
@@ -3415,7 +3419,7 @@ Public Class Form1
                         Case Tools.Goal
 
                             Goal.Rect.Location = New Point(CInt(Math.Round(pointOffset.X / GridSize) * GridSize),
-                                                           CInt(Math.Round(pointOffset.Y / GridSize) * GridSize))
+                                                               CInt(Math.Round(pointOffset.Y / GridSize) * GridSize))
 
                             Goal.Rect.Size = New Size(GridSize, GridSize)
 
@@ -3446,9 +3450,31 @@ Public Class Form1
 
                     End Select
 
+                    'Else
+                    '    'Deselect game objects.
+                    '    SelectedBlock = -1
+                    '    SelectedBill = -1
+                    '    SelectedCloud = -1
+                    '    SelectedBush = -1
+                    '    GoalSelected = False
+                    '    LevelSelected = False
+
+                    'End If
+
                 End If
 
             End If
+
+        Else
+            'Yes, the player is over the toolbar.
+
+            'Deselect game objects.
+            SelectedBlock = -1
+            SelectedBill = -1
+            SelectedCloud = -1
+            SelectedBush = -1
+            GoalSelected = False
+            LevelSelected = False
 
         End If
 
@@ -3834,20 +3860,26 @@ Public Class Form1
 
         FileClose(File_Number)
 
-        If FileObjects IsNot Nothing Then
+        If IsFileLoaded = True Then
 
-            LoadGameObjects()
+            If FileObjects IsNot Nothing Then
 
-        Else
+                LoadGameObjects()
 
-            'Clear Objects
-            Blocks = Nothing
-            Cash = Nothing
-            Bushes = Nothing
-            Clouds = Nothing
-            Enemies = Nothing
+            Else
+
+                'Clear Objects
+                Blocks = Nothing
+                Cash = Nothing
+                Bushes = Nothing
+                Clouds = Nothing
+                Enemies = Nothing
+
+            End If
+
 
         End If
+
 
     End Sub
 

@@ -526,7 +526,7 @@ Public Class Form1
                                         100)
     End Sub
 
-    Private Sub InitializeGameObjects()
+    Private Sub InitializeObjects()
 
         Camera.Rect.Location = New Point(0, 0)
 
@@ -541,6 +541,11 @@ Public Class Form1
         OurHero.MaxVelocity = New PointF(400, 1000)
 
         OurHero.Acceleration = New PointF(300, 25)
+
+        BufferGridLines()
+
+    End Sub
+    Private Sub CreateNewLevel()
 
         Goal.Rect = New Rectangle(1472, 768, 64, 64)
 
@@ -566,9 +571,8 @@ Public Class Form1
 
         AddEnemy(New Point(500, 769), New Point(500, 769), New Point(564, 769))
 
-        BufferGridLines()
-
     End Sub
+
 
     Private Sub InitializeForm()
 
@@ -2880,7 +2884,6 @@ Public Class Form1
         'Open Button
         If StartScreenOpenButton.Rect.Contains(e.Location) Then
 
-
             OpenFileDialog1.FileName = ""
             OpenFileDialog1.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
             OpenFileDialog1.FilterIndex = 1
@@ -2890,7 +2893,7 @@ Public Class Form1
 
                 If My.Computer.FileSystem.FileExists(OpenFileDialog1.FileName) = True Then
 
-                    InitializeGameObjects()
+                    InitializeObjects()
 
                     OpenTestLevelFile(OpenFileDialog1.FileName)
 
@@ -2898,9 +2901,9 @@ Public Class Form1
 
                         Text = Path.GetFileName(OpenFileDialog1.FileName) & " - Platformer with Level Editor - Code with Joe"
 
-                        LastFrame = Now
-
                         CashCollected = 0
+
+                        LastFrame = Now
 
                         GameState = AppState.Playing
 
@@ -2909,23 +2912,7 @@ Public Class Form1
 
                         IsBackgroundLoopPlaying = True
 
-
-                    Else
-
-                        'Text = "Platformer with Level Editor - Code with Joe"
-
                     End If
-
-                    'LastFrame = Now
-
-                    'CashCollected = 0
-
-                    'GameState = AppState.Playing
-
-                    'My.Computer.Audio.Play(My.Resources.level,
-                    '                       AudioPlayMode.BackgroundLoop)
-
-                    'IsBackgroundLoopPlaying = True
 
                 End If
 
@@ -2936,11 +2923,13 @@ Public Class Form1
         'New Button
         If StartScreenNewButton.Rect.Contains(e.Location) Then
 
-            InitializeGameObjects()
+            InitializeObjects()
 
-            LastFrame = Now
+            CreateNewLevel()
 
             CashCollected = 0
+
+            LastFrame = Now
 
             GameState = AppState.Playing
 
@@ -3020,8 +3009,6 @@ Public Class Form1
 
                         End If
 
-                        'LastFrame = Now
-
                         CashCollected = 0
 
                         GameState = AppState.Editing
@@ -3044,20 +3031,15 @@ Public Class Form1
         'New Button
         If NewButton.Rect.Contains(e) Then
 
-            If MsgBox("Do you want to save this level?", MsgBoxStyle.YesNo, "Save?") = MsgBoxResult.No Then
+            If MsgBox("Do you want to save this level?", MsgBoxStyle.YesNo, "Save Level?") = MsgBoxResult.No Then
 
-                'Clear Objects
-                Blocks = Nothing
-                Cash = Nothing
-                Bushes = Nothing
-                Clouds = Nothing
-                Enemies = Nothing
+                ClearObjects()
 
-                InitializeGameObjects()
+                InitializeObjects()
+
+                CreateNewLevel()
 
                 CashCollected = 0
-
-                'LastFrame = Now
 
                 GameState = AppState.Editing
 
@@ -3080,6 +3062,16 @@ Public Class Form1
             ShowMenu = False
 
         End If
+
+    End Sub
+
+    Private Sub ClearObjects()
+
+        Blocks = Nothing
+        Cash = Nothing
+        Bushes = Nothing
+        Clouds = Nothing
+        Enemies = Nothing
 
     End Sub
 

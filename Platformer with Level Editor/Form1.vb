@@ -3768,7 +3768,6 @@ Public Class Form1
 
         IsFileLoaded = True
 
-
         'Read Objects from File
         Do Until EOF(File_Number)
 
@@ -3820,35 +3819,21 @@ Public Class Form1
 
         If IsFileLoaded = True Then
 
+            ClearObjects()
+
             If FileObjects IsNot Nothing Then
 
                 LoadGameObjects()
 
-                BufferGridLines()
-
-            Else
-
-                'Clear Objects
-                Blocks = Nothing
-                Cash = Nothing
-                Bushes = Nothing
-                Clouds = Nothing
-                Enemies = Nothing
-
             End If
+
+            BufferGridLines()
 
         End If
 
     End Sub
 
     Private Sub LoadGameObjects()
-
-        'Clear Objects
-        Blocks = Nothing
-        Cash = Nothing
-        Bushes = Nothing
-        Clouds = Nothing
-        Enemies = Nothing
 
         'Set min level size
         Level.Rect.Width = ClientRectangle.Width

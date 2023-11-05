@@ -3821,6 +3821,10 @@ Public Class Form1
 
             ClearObjects()
 
+            'Set min level size
+            Level.Rect.Width = ClientRectangle.Width
+            Level.Rect.Height = ClientRectangle.Height
+
             If FileObjects IsNot Nothing Then
 
                 LoadGameObjects()
@@ -3834,10 +3838,6 @@ Public Class Form1
     End Sub
 
     Private Sub LoadGameObjects()
-
-        'Set min level size
-        Level.Rect.Width = ClientRectangle.Width
-        Level.Rect.Height = ClientRectangle.Height
 
         For Each FileObject In FileObjects
 

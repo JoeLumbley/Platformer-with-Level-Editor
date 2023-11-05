@@ -2509,9 +2509,6 @@ Public Class Form1
         Enemies(Index).PatrolA.X = PatrolA.X
         Enemies(Index).PatrolA.Y = PatrolA.Y
 
-        'Enemies(Enemies.Length - 1).PatrolB.X = Location.X + GridSize * 3
-        'Enemies(Enemies.Length - 1).PatrolB.Y = Location.Y + GridSize * 3
-
         Enemies(Index).PatrolB.X = PatrolB.X
         Enemies(Index).PatrolB.Y = PatrolB.Y
 
@@ -3003,10 +3000,10 @@ Public Class Form1
 
                         CashCollected = 0
 
-                        My.Computer.Audio.Play(My.Resources.level,
-                                           AudioPlayMode.BackgroundLoop)
+                        'My.Computer.Audio.Play(My.Resources.level,
+                        '                   AudioPlayMode.BackgroundLoop)
 
-                        IsBackgroundLoopPlaying = True
+                        'IsBackgroundLoopPlaying = True
 
                     End If
 
@@ -3023,16 +3020,28 @@ Public Class Form1
 
                 ClearObjects()
 
-                InitializeObjects()
+                Level.Rect = New Rectangle(0, 0, 1920, 1080)
+
+                OurHero.Rect = New Rectangle(128, 769, 64, 64)
+
+                OurHero.Position = New PointF(OurHero.Rect.X, OurHero.Rect.Y)
+
+                OurHero.Velocity = New PointF(0, 0)
+
+                'OurHero.MaxVelocity = New PointF(400, 1000)
+
+                'OurHero.Acceleration = New PointF(300, 25)
+
+                BufferGridLines()
 
                 CreateNewLevel()
 
                 CashCollected = 0
 
-                My.Computer.Audio.Play(My.Resources.level,
-                                       AudioPlayMode.BackgroundLoop)
+                'My.Computer.Audio.Play(My.Resources.level,
+                '                       AudioPlayMode.BackgroundLoop)
 
-                IsBackgroundLoopPlaying = True
+                'IsBackgroundLoopPlaying = True
 
                 Text = "Platformer with Level Editor - Code with Joe"
 
@@ -3215,9 +3224,6 @@ Public Class Form1
 
         End If
 
-
-
-
         'Is the player clicking the menu button?
         If MenuButton.Rect.Contains(e) Then
             'Yes, the player is clicking the menu button.
@@ -3234,9 +3240,9 @@ Public Class Form1
         If ToolBarBackground.Rect.Contains(e) = False Then
             'No, the player is NOT over the toolbar.
 
-            Dim pointOffset As Point = e
+            Dim PointOffset As Point = e
 
-            pointOffset.X = (Camera.Rect.X * -1) + e.X
+            PointOffset.X = (Camera.Rect.X * -1) + e.X
 
             pointOffset.Y = (Camera.Rect.Y * -1) + e.Y
 
@@ -3420,7 +3426,7 @@ Public Class Form1
                             LevelSelected = True
 
                             SelectionOffset.X = pointOffset.X - Level.Rect.X
-                            SelectionOffset.Y = pointOffset.Y - Level.Rect.Y
+                            SelectionOffset.Y = PointOffset.Y - Level.Rect.Y
 
                             'Deselect game objects.
                             SelectedBlock = -1
@@ -3551,6 +3557,28 @@ Public Class Form1
         Dim File_Number As Integer = FreeFile()
 
         FileOpen(File_Number, FilePath, OpenMode.Output)
+
+        'Write Level to File
+        'Write ID
+        Write(File_Number, ObjectID.Level)
+
+        'Write Position
+        Write(File_Number, Level.Rect.X)
+        Write(File_Number, Level.Rect.Y)
+
+        'Write Size
+        Write(File_Number, Level.Rect.Width)
+        Write(File_Number, Level.Rect.Height)
+
+        'Write PatrolA
+        Write(File_Number, Level.PatrolA.X)
+        Write(File_Number, Level.PatrolA.Y)
+
+        'Write PatrolB
+        Write(File_Number, Level.PatrolB.X)
+        Write(File_Number, Level.PatrolB.Y)
+
+        Write(File_Number, "Level")
 
         'Write Blocks to File
         If Blocks IsNot Nothing Then
@@ -3724,28 +3752,6 @@ Public Class Form1
 
         Write(File_Number, "Goal")
 
-        'Write Level to File
-        'Write ID
-        Write(File_Number, ObjectID.Level)
-
-        'Write Position
-        Write(File_Number, Level.Rect.X)
-        Write(File_Number, Level.Rect.Y)
-
-        'Write Size
-        Write(File_Number, Level.Rect.Width)
-        Write(File_Number, Level.Rect.Height)
-
-        'Write PatrolA
-        Write(File_Number, Level.PatrolA.X)
-        Write(File_Number, Level.PatrolA.Y)
-
-        'Write PatrolB
-        Write(File_Number, Level.PatrolB.X)
-        Write(File_Number, Level.PatrolB.Y)
-
-        Write(File_Number, "Level")
-
         FileClose(File_Number)
 
     End Sub
@@ -3761,6 +3767,7 @@ Public Class Form1
         FileOpen(File_Number, FilePath, OpenMode.Input)
 
         IsFileLoaded = True
+
 
         'Read Objects from File
         Do Until EOF(File_Number)
@@ -3835,11 +3842,11 @@ Public Class Form1
     Private Sub LoadGameObjects()
 
         'Initialize Indices
-        Dim BlockIndex As Integer = -1
-        Dim BillIndex As Integer = -1
-        Dim BushIndex As Integer = -1
-        Dim CloudIndex As Integer = -1
-        Dim EnemyIndex As Integer = -1
+        'Dim BlockIndex As Integer = -1
+        'Dim BillIndex As Integer = -1
+        'Dim BushIndex As Integer = -1
+        'Dim CloudIndex As Integer = -1
+        'Dim EnemyIndex As Integer = -1
 
         'Clear Objects
         Blocks = Nothing
@@ -3852,144 +3859,186 @@ Public Class Form1
 
             Select Case FileObject.ID
 
-                Case ObjectID.Block
-
-                    'Add a Block to Blocks
-                    BlockIndex += 1
-
-                    'Resize Blocks
-                    ReDim Preserve Blocks(BlockIndex)
+                Case ObjectID.Level
 
                     'Load ID
-                    Blocks(BlockIndex).ID = FileObject.ID
+                    Level.ID = FileObject.ID
 
-                    'Load Position
-                    Blocks(BlockIndex).Rect.X = FileObject.Rect.X
-                    Blocks(BlockIndex).Rect.Y = FileObject.Rect.Y
+                    'Load Rect Position
+                    Level.Rect.X = FileObject.Rect.X
+                    Level.Rect.Y = FileObject.Rect.Y
 
-                    'Load Position
-                    Blocks(BlockIndex).Position.X = FileObject.Rect.X
-                    Blocks(BlockIndex).Position.Y = FileObject.Rect.Y
+                    'Load Vec2 Position
+                    Level.Position.X = FileObject.Rect.X
+                    Level.Position.Y = FileObject.Rect.Y
 
-                    'Load Size
-                    Blocks(BlockIndex).Rect.Width = FileObject.Rect.Width
-                    Blocks(BlockIndex).Rect.Height = FileObject.Rect.Height
+                    'Load Rect Size
+                    Level.Rect.Width = 1000
+
+                    'Level.Rect.Width = FileObject.Rect.Width
+                    Level.Rect.Height = FileObject.Rect.Height
 
                     'Load PatrolA
-                    Blocks(BlockIndex).PatrolA.X = FileObject.PatrolA.X
-                    Blocks(BlockIndex).PatrolA.Y = FileObject.PatrolA.Y
+                    Level.PatrolA.X = FileObject.PatrolA.X
+                    Level.PatrolA.Y = FileObject.PatrolA.Y
 
                     'Load PatrolB
-                    Blocks(BlockIndex).PatrolB.X = FileObject.PatrolB.X
-                    Blocks(BlockIndex).PatrolB.Y = FileObject.PatrolB.Y
+                    Level.PatrolB.X = FileObject.PatrolB.X
+                    Level.PatrolB.Y = FileObject.PatrolB.Y
 
                     'Load Text
-                    Blocks(BlockIndex).Text = FileObject.Text
+                    Level.Text = FileObject.Text
+
+                Case ObjectID.Block
+
+
+                    AddBlock(FileObject.Rect)
+
+                    ''Add a Block to Blocks
+                    'BlockIndex += 1
+
+                    ''Resize Blocks
+                    'ReDim Preserve Blocks(BlockIndex)
+
+                    ''Load ID
+                    'Blocks(BlockIndex).ID = FileObject.ID
+
+                    ''Load Position
+                    'Blocks(BlockIndex).Rect.X = FileObject.Rect.X
+                    'Blocks(BlockIndex).Rect.Y = FileObject.Rect.Y
+
+                    ''Load Position
+                    'Blocks(BlockIndex).Position.X = FileObject.Rect.X
+                    'Blocks(BlockIndex).Position.Y = FileObject.Rect.Y
+
+                    ''Load Size
+                    'Blocks(BlockIndex).Rect.Width = FileObject.Rect.Width
+                    'Blocks(BlockIndex).Rect.Height = FileObject.Rect.Height
+
+                    ''Load PatrolA
+                    'Blocks(BlockIndex).PatrolA.X = FileObject.PatrolA.X
+                    'Blocks(BlockIndex).PatrolA.Y = FileObject.PatrolA.Y
+
+                    ''Load PatrolB
+                    'Blocks(BlockIndex).PatrolB.X = FileObject.PatrolB.X
+                    'Blocks(BlockIndex).PatrolB.Y = FileObject.PatrolB.Y
+
+                    ''Load Text
+                    'Blocks(BlockIndex).Text = FileObject.Text
 
                 Case ObjectID.Bill
 
-                    'Add a Bill to Cash
-                    BillIndex += 1
+                    AddBill(FileObject.Rect.Location)
 
-                    'Resize Cash
-                    ReDim Preserve Cash(BillIndex)
 
-                    'Load ID
-                    Cash(BillIndex).ID = FileObject.ID
+                    ''Add a Bill to Cash
+                    'BillIndex += 1
 
-                    'Load Rect Position
-                    Cash(BillIndex).Rect.X = FileObject.Rect.X
-                    Cash(BillIndex).Rect.Y = FileObject.Rect.Y
+                    ''Resize Cash
+                    'ReDim Preserve Cash(BillIndex)
 
-                    'Load Vec2 Position
-                    Cash(BillIndex).Position.X = FileObject.Rect.X
-                    Cash(BillIndex).Position.Y = FileObject.Rect.Y
+                    ''Load ID
+                    'Cash(BillIndex).ID = FileObject.ID
 
-                    'Load Rect Size
-                    Cash(BillIndex).Rect.Width = FileObject.Rect.Width
-                    Cash(BillIndex).Rect.Height = FileObject.Rect.Height
+                    ''Load Rect Position
+                    'Cash(BillIndex).Rect.X = FileObject.Rect.X
+                    'Cash(BillIndex).Rect.Y = FileObject.Rect.Y
 
-                    'Load PatrolA
-                    Cash(BillIndex).PatrolA.X = FileObject.PatrolA.X
-                    Cash(BillIndex).PatrolA.Y = FileObject.PatrolA.Y
+                    ''Load Vec2 Position
+                    'Cash(BillIndex).Position.X = FileObject.Rect.X
+                    'Cash(BillIndex).Position.Y = FileObject.Rect.Y
 
-                    'Load PatrolB
-                    Cash(BillIndex).PatrolB.X = FileObject.PatrolB.X
-                    Cash(BillIndex).PatrolB.Y = FileObject.PatrolB.Y
+                    ''Load Rect Size
+                    'Cash(BillIndex).Rect.Width = FileObject.Rect.Width
+                    'Cash(BillIndex).Rect.Height = FileObject.Rect.Height
 
-                    'Load Text
-                    Cash(BillIndex).Text = FileObject.Text
+                    ''Load PatrolA
+                    'Cash(BillIndex).PatrolA.X = FileObject.PatrolA.X
+                    'Cash(BillIndex).PatrolA.Y = FileObject.PatrolA.Y
 
-                    'Initialize Collected
-                    Cash(BillIndex).Collected = False
+                    ''Load PatrolB
+                    'Cash(BillIndex).PatrolB.X = FileObject.PatrolB.X
+                    'Cash(BillIndex).PatrolB.Y = FileObject.PatrolB.Y
+
+                    ''Load Text
+                    'Cash(BillIndex).Text = FileObject.Text
+
+                    ''Initialize Collected
+                    'Cash(BillIndex).Collected = False
 
                 Case ObjectID.Bush
 
-                    'Add a Bush to Bushes
-                    BushIndex += 1
+                    AddBush(FileObject.Rect)
 
-                    'Resize Bushes
-                    ReDim Preserve Bushes(BushIndex)
 
-                    'Load ID
-                    Bushes(BushIndex).ID = FileObject.ID
+                    ''Add a Bush to Bushes
+                    'BushIndex += 1
 
-                    'Load Rect Position
-                    Bushes(BushIndex).Rect.X = FileObject.Rect.X
-                    Bushes(BushIndex).Rect.Y = FileObject.Rect.Y
+                    ''Resize Bushes
+                    'ReDim Preserve Bushes(BushIndex)
 
-                    'Load Vec2 Position
-                    Bushes(BushIndex).Position.X = FileObject.Rect.X
-                    Bushes(BushIndex).Position.Y = FileObject.Rect.Y
+                    ''Load ID
+                    'Bushes(BushIndex).ID = FileObject.ID
 
-                    'Load Rect Size
-                    Bushes(BushIndex).Rect.Width = FileObject.Rect.Width
-                    Bushes(BushIndex).Rect.Height = FileObject.Rect.Height
+                    ''Load Rect Position
+                    'Bushes(BushIndex).Rect.X = FileObject.Rect.X
+                    'Bushes(BushIndex).Rect.Y = FileObject.Rect.Y
 
-                    'Load PatrolA
-                    Bushes(BushIndex).PatrolA.X = FileObject.PatrolA.X
-                    Bushes(BushIndex).PatrolA.Y = FileObject.PatrolA.Y
+                    ''Load Vec2 Position
+                    'Bushes(BushIndex).Position.X = FileObject.Rect.X
+                    'Bushes(BushIndex).Position.Y = FileObject.Rect.Y
 
-                    'Load PatrolB
-                    Bushes(BushIndex).PatrolB.X = FileObject.PatrolB.X
-                    Bushes(BushIndex).PatrolB.Y = FileObject.PatrolB.Y
+                    ''Load Rect Size
+                    'Bushes(BushIndex).Rect.Width = FileObject.Rect.Width
+                    'Bushes(BushIndex).Rect.Height = FileObject.Rect.Height
 
-                    'Load Text
-                    Bushes(BushIndex).Text = FileObject.Text
+                    ''Load PatrolA
+                    'Bushes(BushIndex).PatrolA.X = FileObject.PatrolA.X
+                    'Bushes(BushIndex).PatrolA.Y = FileObject.PatrolA.Y
+
+                    ''Load PatrolB
+                    'Bushes(BushIndex).PatrolB.X = FileObject.PatrolB.X
+                    'Bushes(BushIndex).PatrolB.Y = FileObject.PatrolB.Y
+
+                    ''Load Text
+                    'Bushes(BushIndex).Text = FileObject.Text
 
                 Case ObjectID.Cloud
 
-                    'Add a Cloud to Clouds
-                    CloudIndex += 1
+                    AddCloud(FileObject.Rect)
 
-                    'Resize Clouds
-                    ReDim Preserve Clouds(CloudIndex)
 
-                    'Load ID
-                    Clouds(CloudIndex).ID = FileObject.ID
+                    ''Add a Cloud to Clouds
+                    'CloudIndex += 1
 
-                    'Load Rect Position
-                    Clouds(CloudIndex).Rect.X = FileObject.Rect.X
-                    Clouds(CloudIndex).Rect.Y = FileObject.Rect.Y
+                    ''Resize Clouds
+                    'ReDim Preserve Clouds(CloudIndex)
 
-                    'Load Vec2 Position
-                    Clouds(CloudIndex).Position.X = FileObject.Rect.X
-                    Clouds(CloudIndex).Position.Y = FileObject.Rect.Y
+                    ''Load ID
+                    'Clouds(CloudIndex).ID = FileObject.ID
 
-                    'Load Rect Size
-                    Clouds(CloudIndex).Rect.Width = FileObject.Rect.Width
-                    Clouds(CloudIndex).Rect.Height = FileObject.Rect.Height
+                    ''Load Rect Position
+                    'Clouds(CloudIndex).Rect.X = FileObject.Rect.X
+                    'Clouds(CloudIndex).Rect.Y = FileObject.Rect.Y
 
-                    'Load PatrolA
-                    Clouds(CloudIndex).PatrolA.X = FileObject.PatrolA.X
-                    Clouds(CloudIndex).PatrolA.Y = FileObject.PatrolA.Y
+                    ''Load Vec2 Position
+                    'Clouds(CloudIndex).Position.X = FileObject.Rect.X
+                    'Clouds(CloudIndex).Position.Y = FileObject.Rect.Y
 
-                    'Load PatrolB
-                    Clouds(CloudIndex).PatrolB.X = FileObject.PatrolB.X
-                    Clouds(CloudIndex).PatrolB.Y = FileObject.PatrolB.Y
+                    ''Load Rect Size
+                    'Clouds(CloudIndex).Rect.Width = FileObject.Rect.Width
+                    'Clouds(CloudIndex).Rect.Height = FileObject.Rect.Height
 
-                    'Load Text
-                    Clouds(CloudIndex).Text = FileObject.Text
+                    ''Load PatrolA
+                    'Clouds(CloudIndex).PatrolA.X = FileObject.PatrolA.X
+                    'Clouds(CloudIndex).PatrolA.Y = FileObject.PatrolA.Y
+
+                    ''Load PatrolB
+                    'Clouds(CloudIndex).PatrolB.X = FileObject.PatrolB.X
+                    'Clouds(CloudIndex).PatrolB.Y = FileObject.PatrolB.Y
+
+                    ''Load Text
+                    'Clouds(CloudIndex).Text = FileObject.Text
 
                 Case ObjectID.Goal
 
@@ -4019,75 +4068,53 @@ Public Class Form1
                     'Load Text
                     Goal.Text = FileObject.Text
 
-                Case ObjectID.Level
 
-                    'Load ID
-                    Level.ID = FileObject.ID
-
-                    'Load Rect Position
-                    Level.Rect.X = FileObject.Rect.X
-                    Level.Rect.Y = FileObject.Rect.Y
-
-                    'Load Vec2 Position
-                    Level.Position.X = FileObject.Rect.X
-                    Level.Position.Y = FileObject.Rect.Y
-
-                    'Load Rect Size
-                    Level.Rect.Width = FileObject.Rect.Width
-                    Level.Rect.Height = FileObject.Rect.Height
-
-                    'Load PatrolA
-                    Level.PatrolA.X = FileObject.PatrolA.X
-                    Level.PatrolA.Y = FileObject.PatrolA.Y
-
-                    'Load PatrolB
-                    Level.PatrolB.X = FileObject.PatrolB.X
-                    Level.PatrolB.Y = FileObject.PatrolB.Y
-
-                    'Load Text
-                    Level.Text = FileObject.Text
 
                 Case ObjectID.Enemy
 
-                    'Add a Enemy to Enemies
-                    EnemyIndex += 1
+                    AddEnemy(FileObject.Rect.Location,
+                             New Point(FileObject.PatrolA.X, FileObject.PatrolA.Y),
+                             New Point(FileObject.PatrolB.X, FileObject.PatrolB.Y))
 
-                    'Resize Enemies
-                    ReDim Preserve Enemies(EnemyIndex)
+                    ''Add a Enemy to Enemies
+                    'EnemyIndex += 1
 
-                    'Load ID
-                    Enemies(EnemyIndex).ID = FileObject.ID
+                    ''Resize Enemies
+                    'ReDim Preserve Enemies(EnemyIndex)
 
-                    'Load Rect Position
-                    Enemies(EnemyIndex).Rect.X = FileObject.Rect.X
-                    Enemies(EnemyIndex).Rect.Y = FileObject.Rect.Y
+                    ''Load ID
+                    'Enemies(EnemyIndex).ID = FileObject.ID
 
-                    'Load Vec2 Position
-                    Enemies(EnemyIndex).Position.X = FileObject.Rect.X
-                    Enemies(EnemyIndex).Position.Y = FileObject.Rect.Y
+                    ''Load Rect Position
+                    'Enemies(EnemyIndex).Rect.X = FileObject.Rect.X
+                    'Enemies(EnemyIndex).Rect.Y = FileObject.Rect.Y
 
-                    'Load Rect Size
-                    Enemies(EnemyIndex).Rect.Width = FileObject.Rect.Width
-                    Enemies(EnemyIndex).Rect.Height = FileObject.Rect.Height
+                    ''Load Vec2 Position
+                    'Enemies(EnemyIndex).Position.X = FileObject.Rect.X
+                    'Enemies(EnemyIndex).Position.Y = FileObject.Rect.Y
 
-                    'Load PatrolA
-                    Enemies(EnemyIndex).PatrolA.X = FileObject.PatrolA.X
-                    Enemies(EnemyIndex).PatrolA.Y = FileObject.PatrolA.Y
+                    ''Load Rect Size
+                    'Enemies(EnemyIndex).Rect.Width = FileObject.Rect.Width
+                    'Enemies(EnemyIndex).Rect.Height = FileObject.Rect.Height
 
-                    'Load PatrolB
-                    Enemies(EnemyIndex).PatrolB.X = FileObject.PatrolB.X
-                    Enemies(EnemyIndex).PatrolB.Y = FileObject.PatrolB.Y
+                    ''Load PatrolA
+                    'Enemies(EnemyIndex).PatrolA.X = FileObject.PatrolA.X
+                    'Enemies(EnemyIndex).PatrolA.Y = FileObject.PatrolA.Y
 
-                    'Initialize Eliminated
-                    Enemies(EnemyIndex).Eliminated = False
+                    ''Load PatrolB
+                    'Enemies(EnemyIndex).PatrolB.X = FileObject.PatrolB.X
+                    'Enemies(EnemyIndex).PatrolB.Y = FileObject.PatrolB.Y
 
-                    'Initialize
-                    Enemies(EnemyIndex).Acceleration.X = 100
-                    Enemies(EnemyIndex).MaxVelocity.X = 75
-                    Enemies(EnemyIndex).Velocity.X = 0
+                    ''Initialize Eliminated
+                    'Enemies(EnemyIndex).Eliminated = False
 
-                    'Load Text
-                    Enemies(EnemyIndex).Text = FileObject.Text
+                    ''Initialize
+                    'Enemies(EnemyIndex).Acceleration.X = 100
+                    'Enemies(EnemyIndex).MaxVelocity.X = 75
+                    'Enemies(EnemyIndex).Velocity.X = 0
+
+                    ''Load Text
+                    'Enemies(EnemyIndex).Text = FileObject.Text
 
             End Select
 
@@ -4121,10 +4148,10 @@ Public Class Form1
 
                     If ToolBarBackground.Rect.Contains(e.Location) = False Then
 
-                        ShowToolPreview = True
-
                         ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize) * GridSize)
                         ToolPreview.Y = CInt(Math.Round(pointOffset.Y / GridSize) * GridSize)
+
+                        ShowToolPreview = True
 
                     Else
 
@@ -4136,10 +4163,10 @@ Public Class Form1
 
                     If ToolBarBackground.Rect.Contains(e.Location) = False Then
 
-                        ShowToolPreview = True
-
                         ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize) * GridSize)
                         ToolPreview.Y = CInt(Math.Round(pointOffset.Y / GridSize) * GridSize)
+
+                        ShowToolPreview = True
 
                     Else
 
@@ -4166,10 +4193,10 @@ Public Class Form1
 
                     If ToolBarBackground.Rect.Contains(e.Location) = False Then
 
-                        ShowToolPreview = True
-
                         ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize) * GridSize)
                         ToolPreview.Y = CInt(Math.Round(pointOffset.Y / GridSize) * GridSize)
+
+                        ShowToolPreview = True
 
                     Else
 
@@ -4181,10 +4208,10 @@ Public Class Form1
 
                     If ToolBarBackground.Rect.Contains(e.Location) = False Then
 
-                        ShowToolPreview = True
-
                         ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize) * GridSize)
                         ToolPreview.Y = CInt(Math.Round(pointOffset.Y / GridSize) * GridSize)
+
+                        ShowToolPreview = True
 
                     Else
 

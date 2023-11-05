@@ -3011,11 +3011,11 @@ Public Class Form1
         'New Button
         If NewButton.Rect.Contains(e) Then
 
-            If MsgBox("Do you want to save this level?", MsgBoxStyle.YesNo, "Save Level?") = MsgBoxResult.No Then
+            If MsgBox("Do you want to save this level?", MsgBoxStyle.YesNo, "Save ?") = MsgBoxResult.No Then
 
                 ClearObjects()
 
-                Level.Rect = New Rectangle(0, 0, 1920, 1080)
+                SetMinLevelSize()
 
                 OurHero.Rect = New Rectangle(128, 769, 64, 64)
 
@@ -3023,20 +3023,11 @@ Public Class Form1
 
                 OurHero.Velocity = New PointF(0, 0)
 
-                'OurHero.MaxVelocity = New PointF(400, 1000)
-
-                'OurHero.Acceleration = New PointF(300, 25)
+                CreateNewLevel()
 
                 BufferGridLines()
 
-                CreateNewLevel()
-
                 CashCollected = 0
-
-                'My.Computer.Audio.Play(My.Resources.level,
-                '                       AudioPlayMode.BackgroundLoop)
-
-                'IsBackgroundLoopPlaying = True
 
                 Text = "Platformer with Level Editor - Code with Joe"
 
@@ -3052,6 +3043,13 @@ Public Class Form1
             ShowMenu = False
 
         End If
+
+    End Sub
+
+    Private Sub SetMinLevelSize()
+
+        Level.Rect.Width = ClientRectangle.Width
+        Level.Rect.Height = ClientRectangle.Height
 
     End Sub
 
@@ -3816,9 +3814,7 @@ Public Class Form1
 
             ClearObjects()
 
-            'Set min level size
-            Level.Rect.Width = ClientRectangle.Width
-            Level.Rect.Height = ClientRectangle.Height
+            SetMinLevelSize()
 
             If FileObjects IsNot Nothing Then
 

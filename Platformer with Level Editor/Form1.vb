@@ -2970,10 +2970,13 @@ Public Class Form1
 
         End If
 
-        'Open Button
+        'Is the player clicking the open button?
         If OpenButton.Rect.Contains(e) Then
+            'Yes, the player is clicking the open button.
 
+            'Does the player want to save this level before opening a level?
             If MsgBox("Do you want to save this level?", MsgBoxStyle.YesNo, "Platformer with Level Editor") = MsgBoxResult.No Then
+                'No, the player doesn't want to save this level before opening a level?
 
                 OpenFileDialog1.FileName = ""
                 OpenFileDialog1.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
@@ -3008,10 +3011,13 @@ Public Class Form1
 
         End If
 
-        'New Button
+        'Is the player clicking the new button?
         If NewButton.Rect.Contains(e) Then
+            'Yes, the player is clicking the new button.
 
+            'Does the player want to save this level before creating a new level?
             If MsgBox("Do you want to save this level?", MsgBoxStyle.YesNo, "Platformer with Level Editor") = MsgBoxResult.No Then
+                'No, the player doesn't want to save this level before creating a new level?
 
                 ClearObjects()
 
@@ -3037,8 +3043,9 @@ Public Class Form1
 
         End If
 
-        'Exit Button
+        'Is the player clicking the exit button?
         If ExitButton.Rect.Contains(e) Then
+            'Yes, the player is clicking the exit button.
 
             ShowMenu = False
 

@@ -2973,7 +2973,7 @@ Public Class Form1
         'Open Button
         If OpenButton.Rect.Contains(e) Then
 
-            If MsgBox("Do you want to save this level?", MsgBoxStyle.YesNo, "Save?") = MsgBoxResult.No Then
+            If MsgBox("Do you want to save this level?", MsgBoxStyle.YesNo, "Save ?") = MsgBoxResult.No Then
 
                 OpenFileDialog1.FileName = ""
                 OpenFileDialog1.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
@@ -2999,11 +2999,6 @@ Public Class Form1
                         End If
 
                         CashCollected = 0
-
-                        'My.Computer.Audio.Play(My.Resources.level,
-                        '                   AudioPlayMode.BackgroundLoop)
-
-                        'IsBackgroundLoopPlaying = True
 
                     End If
 

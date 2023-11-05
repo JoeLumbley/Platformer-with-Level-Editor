@@ -3878,16 +3878,16 @@ Public Class Form1
                     'Level.Rect.Width = FileObject.Rect.Width
                     Level.Rect.Height = FileObject.Rect.Height
 
-                    'Load PatrolA
-                    Level.PatrolA.X = FileObject.PatrolA.X
-                    Level.PatrolA.Y = FileObject.PatrolA.Y
+                    ''Load PatrolA
+                    'Level.PatrolA.X = FileObject.PatrolA.X
+                    'Level.PatrolA.Y = FileObject.PatrolA.Y
 
-                    'Load PatrolB
-                    Level.PatrolB.X = FileObject.PatrolB.X
-                    Level.PatrolB.Y = FileObject.PatrolB.Y
+                    ''Load PatrolB
+                    'Level.PatrolB.X = FileObject.PatrolB.X
+                    'Level.PatrolB.Y = FileObject.PatrolB.Y
 
-                    'Load Text
-                    Level.Text = FileObject.Text
+                    ''Load Text
+                    'Level.Text = FileObject.Text
 
                 Case ObjectID.Block
 

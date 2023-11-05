@@ -8,17 +8,6 @@
 
 
 
-![036](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/40a1476e-0240-45cd-822b-104b60a6ed59)
-
-
-
-
-
-
-
-
-
-![037](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/eec4e1c0-d248-4f7f-a629-3a5790173754)
 
 
 
@@ -31,11 +20,17 @@
 
 
 
-![018](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/52137110-0248-475e-8eb8-b4dbfe7a12e7)
 
-![019](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/d65bd916-7d60-4667-a995-1ee4f0d8a474)
 
-![020](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/0a485917-c0ff-4f2f-8ea6-8682dcf76b21)
+
+
+
+
+
+
+
+
+
 
 
 

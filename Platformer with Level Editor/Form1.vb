@@ -380,6 +380,9 @@ Public Class Form1
 
     Private LevelName As String = "Untitled"
 
+    Private IsBDown As Boolean = False
+
+    Private ScreenOffset As Point
 
     <StructLayout(LayoutKind.Sequential)>
     Private Structure INPUTStruc
@@ -457,6 +460,7 @@ Public Class Form1
                                   Try
 
                                       Thread.CurrentThread.Priority = ThreadPriority.Normal
+                                      'Thread.CurrentThread.SetApartmentState(ApartmentState.STA)
 
                                       Do While Not GameLoopCancellationToken.IsCancellationRequested
 
@@ -677,6 +681,8 @@ Public Class Form1
 
         UpdateControllerPosition()
 
+        'UpdateEditingMenuSave()
+
         'UpdateBatteryInfo()
 
     End Sub
@@ -699,7 +705,7 @@ Public Class Form1
 
                     'UpdateLeftTriggerPosition()
 
-                    'UpdateRightTriggerPosition()
+                    UpdateRightTriggerPosition()
 
                     Connected(ControllerNumber) = True
 
@@ -777,6 +783,40 @@ Public Class Form1
 
         Else
             'The left thumbstick is in the neutral position.
+
+        End If
+
+    End Sub
+
+    Private Sub UpdateRightTriggerPosition()
+        'The range of right trigger is 0 to 255. Unsigned 8-bit (1-byte) integer.
+        'The trigger position must be greater than the trigger threshold to register as pressed.
+
+        'What position is the right trigger in?
+        If ControllerPosition.Gamepad.bRightTrigger > TriggerThreshold Then
+            'The right trigger is in the down position. Trigger Break. Bang!
+
+            If GameState = AppState.Editing Then
+
+                If ShowMenu = True Then
+
+                    Cursor.Position = New Point(ScreenOffset.X + NewButton.Rect.X, ScreenOffset.Y + NewButton.Rect.Y)
+
+
+                    If IsMouseDown = False Then
+
+                        IsMouseDown = True
+
+                        DoMouseLeftDown()
+
+                    End If
+
+                End If
+
+            End If
+
+        Else
+            'The right trigger is in the neutral position. Pre-Travel.
 
         End If
 
@@ -2358,7 +2398,7 @@ Public Class Form1
 
             .FillRectangle(Brushes.Black, SaveButton.Rect)
 
-            .DrawString("Save", FPSFont, Brushes.White, SaveButton.Rect, AlineCenterMiddle)
+            .DrawString("Save B", FPSFont, Brushes.White, SaveButton.Rect, AlineCenterMiddle)
 
         End With
 
@@ -2370,7 +2410,7 @@ Public Class Form1
 
             .FillRectangle(Brushes.Black, NewButton.Rect)
 
-            .DrawString("New", FPSFont, Brushes.White, NewButton.Rect, AlineCenterMiddle)
+            .DrawString("New RT", FPSFont, Brushes.White, NewButton.Rect, AlineCenterMiddle)
 
         End With
 
@@ -2394,7 +2434,7 @@ Public Class Form1
 
             .FillRectangle(Brushes.Black, OpenButton.Rect)
 
-            .DrawString("Open", FPSFont, Brushes.White, OpenButton.Rect, AlineCenterMiddle)
+            .DrawString("Open Y", FPSFont, Brushes.White, OpenButton.Rect, AlineCenterMiddle)
 
         End With
 
@@ -2766,28 +2806,28 @@ Public Class Form1
 
         MenuBackground.Rect = New Rectangle(ClientRectangle.Width \ 2 - MenuBackground.Rect.Width \ 2,
                                             (ClientRectangle.Height \ 2) - MenuBackground.Rect.Height \ 2,
-                                            150,
-                                            91 * 4)
+                                            300,
+                                            92 * 4)
 
         SaveButton.Rect = New Rectangle(MenuBackground.Rect.Left,
                                         MenuBackground.Rect.Top,
-                                        150,
-                                        100)
+                                        300,
+                                        90)
 
         OpenButton.Rect = New Rectangle(MenuBackground.Rect.Left,
-                                        MenuBackground.Rect.Top + 91,
-                                        150,
+                                        MenuBackground.Rect.Top + 92,
+                                        300,
                                         90)
 
         NewButton.Rect = New Rectangle(MenuBackground.Rect.Left,
-                                       MenuBackground.Rect.Top + 91 * 2,
-                                       150,
+                                       MenuBackground.Rect.Top + 92 * 2,
+                                       300,
                                        90)
 
 
         ExitButton.Rect = New Rectangle(MenuBackground.Rect.Left,
-                                       MenuBackground.Rect.Top + 91 * 3,
-                                       150,
+                                       MenuBackground.Rect.Top + 92 * 3,
+                                       300,
                                        90)
 
         MenuButton.Rect = New Rectangle(ClientRectangle.Right - 152,
@@ -2963,15 +3003,24 @@ Public Class Form1
         If SaveButton.Rect.Contains(e) Then
             'Yes, the player is clicking the save button.
 
-            'TODO
-            SaveFileDialog1.FileName = LevelName
+            'IsBDown = True
 
+            'UpdateEditingMenuSave()
+
+            'TODO
+
+            ' Center the dialog on the screen
+            'SaveFileDialog1.StartPosition = FormStartPosition.CenterScreen
+
+            SaveFileDialog1.FileName = LevelName
+            'SaveFileDialog1.
             'SaveFileDialog1.FileName = ""
             SaveFileDialog1.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
             SaveFileDialog1.FilterIndex = 1
             SaveFileDialog1.RestoreDirectory = True
+            'SaveFileDialog1.
 
-            If SaveFileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+            If SaveFileDialog1.ShowDialog(Me.) = System.Windows.Forms.DialogResult.OK Then
 
                 SaveTestLevelFile(SaveFileDialog1.FileName)
 
@@ -3077,6 +3126,40 @@ Public Class Form1
         End If
 
     End Sub
+
+    Private Sub UpdateEditingMenuSave()
+
+        'If IsBDown = True Then
+
+        '    IsBDown = False
+
+        'TODO
+        SaveFileDialog1.FileName = LevelName
+
+        'SaveFileDialog1.FileName = ""
+        SaveFileDialog1.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
+        SaveFileDialog1.FilterIndex = 1
+        SaveFileDialog1.RestoreDirectory = True
+        'SaveFileDialog1.
+
+        If SaveFileDialog1.ShowDialog(Me) = System.Windows.Forms.DialogResult.OK Then
+
+            SaveTestLevelFile(SaveFileDialog1.FileName)
+
+            'TODO
+            LevelName = Path.GetFileName(SaveFileDialog1.FileName)
+            Text = LevelName & " - Platformer with Level Editor - Code with Joe"
+
+            'Text = Path.GetFileName(SaveFileDialog1.FileName) & " - Platformer with Level Editor - Code with Joe"
+
+        End If
+
+        ShowMenu = False
+
+        'End If
+
+    End Sub
+
 
     Private Sub SetMinLevelSize()
 
@@ -3269,7 +3352,7 @@ Public Class Form1
 
             PointOffset.X = (Camera.Rect.X * -1) + e.X
 
-            pointOffset.Y = (Camera.Rect.Y * -1) + e.Y
+            PointOffset.Y = (Camera.Rect.Y * -1) + e.Y
 
             If SizingHandle.Contains(e) Then
 
@@ -3279,12 +3362,12 @@ Public Class Form1
 
                 SizingHandleSelected = False
 
-                If Goal.Rect.Contains(pointOffset) Then
+                If Goal.Rect.Contains(PointOffset) Then
 
                     GoalSelected = True
 
-                    SelectionOffset.X = pointOffset.X - Goal.Rect.X
-                    SelectionOffset.Y = pointOffset.Y - Goal.Rect.Y
+                    SelectionOffset.X = PointOffset.X - Goal.Rect.X
+                    SelectionOffset.Y = PointOffset.Y - Goal.Rect.Y
 
                     'Deselect other game objects.
                     SelectedBlock = -1
@@ -3294,13 +3377,13 @@ Public Class Form1
                     LevelSelected = False
 
                     'Is the player selecting a block?
-                ElseIf CheckBlockSelection(pointOffset) > -1 Then
+                ElseIf CheckBlockSelection(PointOffset) > -1 Then
                     'Yes, the player is selecting a block.
 
-                    SelectedBlock = CheckBlockSelection(pointOffset)
+                    SelectedBlock = CheckBlockSelection(PointOffset)
 
-                    SelectionOffset.X = pointOffset.X - Blocks(SelectedBlock).Rect.X
-                    SelectionOffset.Y = pointOffset.Y - Blocks(SelectedBlock).Rect.Y
+                    SelectionOffset.X = PointOffset.X - Blocks(SelectedBlock).Rect.X
+                    SelectionOffset.Y = PointOffset.Y - Blocks(SelectedBlock).Rect.Y
 
                     'Deselect other game objects.
                     SelectedBill = -1
@@ -3310,13 +3393,13 @@ Public Class Form1
                     LevelSelected = False
 
                     'Is the player selecting a bill?
-                ElseIf CheckBillSelection(pointOffset) > -1 Then
+                ElseIf CheckBillSelection(PointOffset) > -1 Then
                     'Yes, the player is selecting a bill.
 
-                    SelectedBill = CheckBillSelection(pointOffset)
+                    SelectedBill = CheckBillSelection(PointOffset)
 
-                    SelectionOffset.X = pointOffset.X - Cash(SelectedBill).Rect.X
-                    SelectionOffset.Y = pointOffset.Y - Cash(SelectedBill).Rect.Y
+                    SelectionOffset.X = PointOffset.X - Cash(SelectedBill).Rect.X
+                    SelectionOffset.Y = PointOffset.Y - Cash(SelectedBill).Rect.Y
 
                     'Deselect other game objects.
                     SelectedBlock = -1
@@ -3326,13 +3409,13 @@ Public Class Form1
                     LevelSelected = False
 
                     'Is the player selecting a cloud?
-                ElseIf CheckCloudSelection(pointOffset) > -1 Then
+                ElseIf CheckCloudSelection(PointOffset) > -1 Then
                     'Yes, the player is selecting a cloud.
 
-                    SelectedCloud = CheckCloudSelection(pointOffset)
+                    SelectedCloud = CheckCloudSelection(PointOffset)
 
-                    SelectionOffset.X = pointOffset.X - Clouds(SelectedCloud).Rect.X
-                    SelectionOffset.Y = pointOffset.Y - Clouds(SelectedCloud).Rect.Y
+                    SelectionOffset.X = PointOffset.X - Clouds(SelectedCloud).Rect.X
+                    SelectionOffset.Y = PointOffset.Y - Clouds(SelectedCloud).Rect.Y
 
                     'Deselect other game objects.
                     SelectedBlock = -1
@@ -3342,13 +3425,13 @@ Public Class Form1
                     LevelSelected = False
 
                     'Is the player selecting a bush?
-                ElseIf CheckBushSelection(pointOffset) > -1 Then
+                ElseIf CheckBushSelection(PointOffset) > -1 Then
                     'Yes, the player is selecting a bush.
 
-                    SelectedBush = CheckBushSelection(pointOffset)
+                    SelectedBush = CheckBushSelection(PointOffset)
 
-                    SelectionOffset.X = pointOffset.X - Bushes(SelectedBush).Rect.X
-                    SelectionOffset.Y = pointOffset.Y - Bushes(SelectedBush).Rect.Y
+                    SelectionOffset.X = PointOffset.X - Bushes(SelectedBush).Rect.X
+                    SelectionOffset.Y = PointOffset.Y - Bushes(SelectedBush).Rect.Y
 
                     'Deselect other game objects.
                     SelectedBlock = -1
@@ -3365,8 +3448,8 @@ Public Class Form1
                         Case Tools.Block
 
                             'Snap block to grid.
-                            Dim SnapPoint As New Point(CInt(Math.Round(pointOffset.X / GridSize) * GridSize),
-                                                           CInt(Math.Round(pointOffset.Y / GridSize) * GridSize))
+                            Dim SnapPoint As New Point(CInt(Math.Round(PointOffset.X / GridSize) * GridSize),
+                                                           CInt(Math.Round(PointOffset.Y / GridSize) * GridSize))
 
                             AddBlock(New Rectangle(SnapPoint, New Drawing.Size(GridSize, GridSize)))
 
@@ -3382,8 +3465,8 @@ Public Class Form1
                         Case Tools.Bill
 
                             'Snap block to grid.
-                            AddBill(New Point(CInt(Math.Round(pointOffset.X / GridSize) * GridSize),
-                                           CInt(Math.Round(pointOffset.Y / GridSize) * GridSize)))
+                            AddBill(New Point(CInt(Math.Round(PointOffset.X / GridSize) * GridSize),
+                                           CInt(Math.Round(PointOffset.Y / GridSize) * GridSize)))
 
                             'Change tool to the mouse pointer.
                             SelectedTool = Tools.Pointer
@@ -3397,8 +3480,8 @@ Public Class Form1
                         Case Tools.Cloud
 
                             'Snap block to grid.
-                            Dim SnapPoint As New Point(CInt(Math.Round(pointOffset.X / GridSize) * GridSize),
-                                                           CInt(Math.Round(pointOffset.Y / GridSize) * GridSize))
+                            Dim SnapPoint As New Point(CInt(Math.Round(PointOffset.X / GridSize) * GridSize),
+                                                           CInt(Math.Round(PointOffset.Y / GridSize) * GridSize))
 
                             AddCloud(New Rectangle(SnapPoint, New Drawing.Size(GridSize, GridSize)))
 
@@ -3414,8 +3497,8 @@ Public Class Form1
                         Case Tools.Bush
 
                             'Snap block to grid.
-                            Dim SnapPoint As New Point(CInt(Math.Round(pointOffset.X / GridSize) * GridSize),
-                                                           CInt(Math.Round(pointOffset.Y / GridSize) * GridSize))
+                            Dim SnapPoint As New Point(CInt(Math.Round(PointOffset.X / GridSize) * GridSize),
+                                                           CInt(Math.Round(PointOffset.Y / GridSize) * GridSize))
 
                             AddBush(New Rectangle(SnapPoint, New Drawing.Size(GridSize, GridSize)))
 
@@ -3430,8 +3513,8 @@ Public Class Form1
 
                         Case Tools.Goal
 
-                            Goal.Rect.Location = New Point(CInt(Math.Round(pointOffset.X / GridSize) * GridSize),
-                                                               CInt(Math.Round(pointOffset.Y / GridSize) * GridSize))
+                            Goal.Rect.Location = New Point(CInt(Math.Round(PointOffset.X / GridSize) * GridSize),
+                                                               CInt(Math.Round(PointOffset.Y / GridSize) * GridSize))
 
                             Goal.Rect.Size = New Size(GridSize, GridSize)
 
@@ -3450,7 +3533,7 @@ Public Class Form1
 
                             LevelSelected = True
 
-                            SelectionOffset.X = pointOffset.X - Level.Rect.X
+                            SelectionOffset.X = PointOffset.X - Level.Rect.X
                             SelectionOffset.Y = PointOffset.Y - Level.Rect.Y
 
                             'Deselect game objects.
@@ -3932,6 +4015,12 @@ Public Class Form1
 
         pointOffset.Y = (Camera.Rect.Y * -1) + e.Y
 
+        Dim ScreenPoint = PointToScreen(New Point(e.X, e.Y))
+
+        ScreenOffset.X = ScreenPoint.X - e.X
+        ScreenOffset.Y = ScreenPoint.Y - e.Y
+
+
         If e.Button = MouseButtons.None Then
 
             Select Case SelectedTool
@@ -4391,6 +4480,12 @@ Public Class Form1
 
                     End If
 
+                    If IsBDown = True Then
+
+                        IsBDown = False
+
+                    End If
+
                 End If
 
                 If IsStartDown = True Then
@@ -4791,6 +4886,25 @@ Public Class Form1
 
                 ControllerRight = False
 
+                If GameState = AppState.Editing Then
+
+                    If ShowMenu = True Then
+
+                        Cursor.Position = New Point(ScreenOffset.X + SaveButton.Rect.X, ScreenOffset.Y + SaveButton.Rect.Y)
+
+
+                        If IsMouseDown = False Then
+
+                            IsMouseDown = True
+
+                            DoMouseLeftDown()
+
+                        End If
+
+                    End If
+
+                End If
+
             Case 16384 'X
 
                 If GameState = AppState.Editing Then
@@ -4804,6 +4918,26 @@ Public Class Form1
                 End If
 
             Case 32768 'Y
+
+                If GameState = AppState.Editing Then
+
+                    If ShowMenu = True Then
+
+                        Cursor.Position = New Point(ScreenOffset.X + OpenButton.Rect.X, ScreenOffset.Y + OpenButton.Rect.Y)
+
+
+                        If IsMouseDown = False Then
+
+                            IsMouseDown = True
+
+                            DoMouseLeftDown()
+
+                        End If
+
+                    End If
+
+                End If
+
             Case 48 'Start+Back
             Case 192 'Left+Right Sticks
             Case 768 'Left+Right Bumpers
@@ -5276,6 +5410,15 @@ Public Class Form1
             OurHero.Velocity = New PointF(0, 0)
 
         End If
+
+    End Sub
+
+    Private Sub Form1_Move(sender As Object, e As EventArgs) Handles Me.Move
+
+        Dim ScreenPoint = PointToScreen(New Point(0, 0))
+
+        ScreenOffset.X = ScreenPoint.X - 0
+        ScreenOffset.Y = ScreenPoint.Y - 0
 
     End Sub
 

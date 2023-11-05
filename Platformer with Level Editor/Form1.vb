@@ -3824,6 +3824,8 @@ Public Class Form1
 
                 LoadGameObjects()
 
+                BufferGridLines()
+
             Else
 
                 'Clear Objects
@@ -3841,13 +3843,6 @@ Public Class Form1
 
     Private Sub LoadGameObjects()
 
-        'Initialize Indices
-        'Dim BlockIndex As Integer = -1
-        'Dim BillIndex As Integer = -1
-        'Dim BushIndex As Integer = -1
-        'Dim CloudIndex As Integer = -1
-        'Dim EnemyIndex As Integer = -1
-
         'Clear Objects
         Blocks = Nothing
         Cash = Nothing
@@ -3855,190 +3850,35 @@ Public Class Form1
         Clouds = Nothing
         Enemies = Nothing
 
+        'Set min level size
+        Level.Rect.Width = ClientRectangle.Width
+        Level.Rect.Height = ClientRectangle.Height
+
         For Each FileObject In FileObjects
 
             Select Case FileObject.ID
 
-                Case ObjectID.Level
-
-                    'Load ID
-                    Level.ID = FileObject.ID
-
-                    'Load Rect Position
-                    Level.Rect.X = FileObject.Rect.X
-                    Level.Rect.Y = FileObject.Rect.Y
-
-                    'Load Vec2 Position
-                    Level.Position.X = FileObject.Rect.X
-                    Level.Position.Y = FileObject.Rect.Y
-
-                    'Load Rect Size
-                    Level.Rect.Width = 1000
-
-                    'Level.Rect.Width = FileObject.Rect.Width
-                    Level.Rect.Height = FileObject.Rect.Height
-
-                    ''Load PatrolA
-                    'Level.PatrolA.X = FileObject.PatrolA.X
-                    'Level.PatrolA.Y = FileObject.PatrolA.Y
-
-                    ''Load PatrolB
-                    'Level.PatrolB.X = FileObject.PatrolB.X
-                    'Level.PatrolB.Y = FileObject.PatrolB.Y
-
-                    ''Load Text
-                    'Level.Text = FileObject.Text
-
                 Case ObjectID.Block
 
-
                     AddBlock(FileObject.Rect)
-
-                    ''Add a Block to Blocks
-                    'BlockIndex += 1
-
-                    ''Resize Blocks
-                    'ReDim Preserve Blocks(BlockIndex)
-
-                    ''Load ID
-                    'Blocks(BlockIndex).ID = FileObject.ID
-
-                    ''Load Position
-                    'Blocks(BlockIndex).Rect.X = FileObject.Rect.X
-                    'Blocks(BlockIndex).Rect.Y = FileObject.Rect.Y
-
-                    ''Load Position
-                    'Blocks(BlockIndex).Position.X = FileObject.Rect.X
-                    'Blocks(BlockIndex).Position.Y = FileObject.Rect.Y
-
-                    ''Load Size
-                    'Blocks(BlockIndex).Rect.Width = FileObject.Rect.Width
-                    'Blocks(BlockIndex).Rect.Height = FileObject.Rect.Height
-
-                    ''Load PatrolA
-                    'Blocks(BlockIndex).PatrolA.X = FileObject.PatrolA.X
-                    'Blocks(BlockIndex).PatrolA.Y = FileObject.PatrolA.Y
-
-                    ''Load PatrolB
-                    'Blocks(BlockIndex).PatrolB.X = FileObject.PatrolB.X
-                    'Blocks(BlockIndex).PatrolB.Y = FileObject.PatrolB.Y
-
-                    ''Load Text
-                    'Blocks(BlockIndex).Text = FileObject.Text
 
                 Case ObjectID.Bill
 
                     AddBill(FileObject.Rect.Location)
 
-
-                    ''Add a Bill to Cash
-                    'BillIndex += 1
-
-                    ''Resize Cash
-                    'ReDim Preserve Cash(BillIndex)
-
-                    ''Load ID
-                    'Cash(BillIndex).ID = FileObject.ID
-
-                    ''Load Rect Position
-                    'Cash(BillIndex).Rect.X = FileObject.Rect.X
-                    'Cash(BillIndex).Rect.Y = FileObject.Rect.Y
-
-                    ''Load Vec2 Position
-                    'Cash(BillIndex).Position.X = FileObject.Rect.X
-                    'Cash(BillIndex).Position.Y = FileObject.Rect.Y
-
-                    ''Load Rect Size
-                    'Cash(BillIndex).Rect.Width = FileObject.Rect.Width
-                    'Cash(BillIndex).Rect.Height = FileObject.Rect.Height
-
-                    ''Load PatrolA
-                    'Cash(BillIndex).PatrolA.X = FileObject.PatrolA.X
-                    'Cash(BillIndex).PatrolA.Y = FileObject.PatrolA.Y
-
-                    ''Load PatrolB
-                    'Cash(BillIndex).PatrolB.X = FileObject.PatrolB.X
-                    'Cash(BillIndex).PatrolB.Y = FileObject.PatrolB.Y
-
-                    ''Load Text
-                    'Cash(BillIndex).Text = FileObject.Text
-
-                    ''Initialize Collected
-                    'Cash(BillIndex).Collected = False
-
                 Case ObjectID.Bush
 
                     AddBush(FileObject.Rect)
-
-
-                    ''Add a Bush to Bushes
-                    'BushIndex += 1
-
-                    ''Resize Bushes
-                    'ReDim Preserve Bushes(BushIndex)
-
-                    ''Load ID
-                    'Bushes(BushIndex).ID = FileObject.ID
-
-                    ''Load Rect Position
-                    'Bushes(BushIndex).Rect.X = FileObject.Rect.X
-                    'Bushes(BushIndex).Rect.Y = FileObject.Rect.Y
-
-                    ''Load Vec2 Position
-                    'Bushes(BushIndex).Position.X = FileObject.Rect.X
-                    'Bushes(BushIndex).Position.Y = FileObject.Rect.Y
-
-                    ''Load Rect Size
-                    'Bushes(BushIndex).Rect.Width = FileObject.Rect.Width
-                    'Bushes(BushIndex).Rect.Height = FileObject.Rect.Height
-
-                    ''Load PatrolA
-                    'Bushes(BushIndex).PatrolA.X = FileObject.PatrolA.X
-                    'Bushes(BushIndex).PatrolA.Y = FileObject.PatrolA.Y
-
-                    ''Load PatrolB
-                    'Bushes(BushIndex).PatrolB.X = FileObject.PatrolB.X
-                    'Bushes(BushIndex).PatrolB.Y = FileObject.PatrolB.Y
-
-                    ''Load Text
-                    'Bushes(BushIndex).Text = FileObject.Text
 
                 Case ObjectID.Cloud
 
                     AddCloud(FileObject.Rect)
 
+                Case ObjectID.Enemy
 
-                    ''Add a Cloud to Clouds
-                    'CloudIndex += 1
-
-                    ''Resize Clouds
-                    'ReDim Preserve Clouds(CloudIndex)
-
-                    ''Load ID
-                    'Clouds(CloudIndex).ID = FileObject.ID
-
-                    ''Load Rect Position
-                    'Clouds(CloudIndex).Rect.X = FileObject.Rect.X
-                    'Clouds(CloudIndex).Rect.Y = FileObject.Rect.Y
-
-                    ''Load Vec2 Position
-                    'Clouds(CloudIndex).Position.X = FileObject.Rect.X
-                    'Clouds(CloudIndex).Position.Y = FileObject.Rect.Y
-
-                    ''Load Rect Size
-                    'Clouds(CloudIndex).Rect.Width = FileObject.Rect.Width
-                    'Clouds(CloudIndex).Rect.Height = FileObject.Rect.Height
-
-                    ''Load PatrolA
-                    'Clouds(CloudIndex).PatrolA.X = FileObject.PatrolA.X
-                    'Clouds(CloudIndex).PatrolA.Y = FileObject.PatrolA.Y
-
-                    ''Load PatrolB
-                    'Clouds(CloudIndex).PatrolB.X = FileObject.PatrolB.X
-                    'Clouds(CloudIndex).PatrolB.Y = FileObject.PatrolB.Y
-
-                    ''Load Text
-                    'Clouds(CloudIndex).Text = FileObject.Text
+                    AddEnemy(FileObject.Rect.Location,
+                             New Point(FileObject.PatrolA.X, FileObject.PatrolA.Y),
+                             New Point(FileObject.PatrolB.X, FileObject.PatrolB.Y))
 
                 Case ObjectID.Goal
 
@@ -4057,64 +3897,8 @@ Public Class Form1
                     Goal.Rect.Width = FileObject.Rect.Width
                     Goal.Rect.Height = FileObject.Rect.Height
 
-                    'Load PatrolA
-                    Goal.PatrolA.X = FileObject.PatrolA.X
-                    Goal.PatrolA.Y = FileObject.PatrolA.Y
-
-                    'Load PatrolB
-                    Goal.PatrolB.X = FileObject.PatrolB.X
-                    Goal.PatrolB.Y = FileObject.PatrolB.Y
-
                     'Load Text
                     Goal.Text = FileObject.Text
-
-
-
-                Case ObjectID.Enemy
-
-                    AddEnemy(FileObject.Rect.Location,
-                             New Point(FileObject.PatrolA.X, FileObject.PatrolA.Y),
-                             New Point(FileObject.PatrolB.X, FileObject.PatrolB.Y))
-
-                    ''Add a Enemy to Enemies
-                    'EnemyIndex += 1
-
-                    ''Resize Enemies
-                    'ReDim Preserve Enemies(EnemyIndex)
-
-                    ''Load ID
-                    'Enemies(EnemyIndex).ID = FileObject.ID
-
-                    ''Load Rect Position
-                    'Enemies(EnemyIndex).Rect.X = FileObject.Rect.X
-                    'Enemies(EnemyIndex).Rect.Y = FileObject.Rect.Y
-
-                    ''Load Vec2 Position
-                    'Enemies(EnemyIndex).Position.X = FileObject.Rect.X
-                    'Enemies(EnemyIndex).Position.Y = FileObject.Rect.Y
-
-                    ''Load Rect Size
-                    'Enemies(EnemyIndex).Rect.Width = FileObject.Rect.Width
-                    'Enemies(EnemyIndex).Rect.Height = FileObject.Rect.Height
-
-                    ''Load PatrolA
-                    'Enemies(EnemyIndex).PatrolA.X = FileObject.PatrolA.X
-                    'Enemies(EnemyIndex).PatrolA.Y = FileObject.PatrolA.Y
-
-                    ''Load PatrolB
-                    'Enemies(EnemyIndex).PatrolB.X = FileObject.PatrolB.X
-                    'Enemies(EnemyIndex).PatrolB.Y = FileObject.PatrolB.Y
-
-                    ''Initialize Eliminated
-                    'Enemies(EnemyIndex).Eliminated = False
-
-                    ''Initialize
-                    'Enemies(EnemyIndex).Acceleration.X = 100
-                    'Enemies(EnemyIndex).MaxVelocity.X = 75
-                    'Enemies(EnemyIndex).Velocity.X = 0
-
-                    ''Load Text
-                    'Enemies(EnemyIndex).Text = FileObject.Text
 
             End Select
 

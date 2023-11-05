@@ -378,6 +378,8 @@ Public Class Form1
 
     Private LevelSelected As Boolean = False
 
+    Private LevelName As String = "Untitled"
+
 
     <StructLayout(LayoutKind.Sequential)>
     Private Structure INPUTStruc
@@ -2885,7 +2887,11 @@ Public Class Form1
 
                     If IsFileLoaded = True Then
 
-                        Text = Path.GetFileName(OpenFileDialog1.FileName) & " - Platformer with Level Editor - Code with Joe"
+                        'TODO
+                        LevelName = Path.GetFileName(OpenFileDialog1.FileName)
+                        Text = LevelName & " - Platformer with Level Editor - Code with Joe"
+
+                        'Text = Path.GetFileName(OpenFileDialog1.FileName) & " - Platformer with Level Editor - Code with Joe"
 
                         CashCollected = 0
 
@@ -2920,12 +2926,16 @@ Public Class Form1
 
             GameState = AppState.Playing
 
+            'TODO
+            LevelName = "Untitled"
+            Text = LevelName & " - Platformer with Level Editor - Code with Joe"
+
+            'Text = "Platformer with Level Editor - Code with Joe"
+
             My.Computer.Audio.Play(My.Resources.level,
                                    AudioPlayMode.BackgroundLoop)
 
             IsBackgroundLoopPlaying = True
-
-            Text = "Platformer with Level Editor - Code with Joe"
 
         End If
 
@@ -2953,7 +2963,10 @@ Public Class Form1
         If SaveButton.Rect.Contains(e) Then
             'Yes, the player is clicking the save button.
 
-            SaveFileDialog1.FileName = ""
+            'TODO
+            SaveFileDialog1.FileName = LevelName
+
+            'SaveFileDialog1.FileName = ""
             SaveFileDialog1.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
             SaveFileDialog1.FilterIndex = 1
             SaveFileDialog1.RestoreDirectory = True
@@ -2962,7 +2975,11 @@ Public Class Form1
 
                 SaveTestLevelFile(SaveFileDialog1.FileName)
 
-                Text = Path.GetFileName(SaveFileDialog1.FileName) & " - Platformer with Level Editor - Code with Joe"
+                'TODO
+                LevelName = Path.GetFileName(SaveFileDialog1.FileName)
+                Text = LevelName & " - Platformer with Level Editor - Code with Joe"
+
+                'Text = Path.GetFileName(SaveFileDialog1.FileName) & " - Platformer with Level Editor - Code with Joe"
 
             End If
 
@@ -2975,7 +2992,7 @@ Public Class Form1
             'Yes, the player is clicking the open button.
 
             'Does the player want to save this level before opening a level?
-            If MsgBox("Do you want to save this level?", MsgBoxStyle.YesNo, "Platformer with Level Editor") = MsgBoxResult.No Then
+            If MsgBox("Save " & LevelName & " before opening a different level?", MsgBoxStyle.YesNo, "Platformer with Level Editor") = MsgBoxResult.No Then
                 'No, the player doesn't want to save this level before opening a level?
 
                 OpenFileDialog1.FileName = ""
@@ -2993,7 +3010,11 @@ Public Class Form1
 
                             ShowMenu = False
 
-                            Text = Path.GetFileName(OpenFileDialog1.FileName) & " - Platformer with Level Editor - Code with Joe"
+                            'TODO
+                            LevelName = Path.GetFileName(OpenFileDialog1.FileName)
+                            Text = LevelName & " - Platformer with Level Editor - Code with Joe"
+
+                            'Text = Path.GetFileName(OpenFileDialog1.FileName) & " - Platformer with Level Editor - Code with Joe"
 
                         Else
 
@@ -3016,7 +3037,7 @@ Public Class Form1
             'Yes, the player is clicking the new button.
 
             'Does the player want to save this level before creating a new level?
-            If MsgBox("Do you want to save this level?", MsgBoxStyle.YesNo, "Platformer with Level Editor") = MsgBoxResult.No Then
+            If MsgBox("Save " & LevelName & " before creating a new level?", MsgBoxStyle.YesNo, "Platformer with Level Editor") = MsgBoxResult.No Then
                 'No, the player doesn't want to save this level before creating a new level?
 
                 ClearObjects()
@@ -3035,7 +3056,11 @@ Public Class Form1
 
                 CashCollected = 0
 
-                Text = "Platformer with Level Editor - Code with Joe"
+                'TODO
+                LevelName = "Untitled"
+                Text = LevelName & " - Platformer with Level Editor - Code with Joe"
+
+                'Text = "Platformer with Level Editor - Code with Joe"
 
                 ShowMenu = False
 
@@ -4622,6 +4647,17 @@ Public Class Form1
                 End Select
 
             Case 32 'Back
+
+                If GameState = AppState.Editing Then
+
+                    If ShowMenu = False Then
+
+                        ShowMenu = True
+
+                    End If
+
+                End If
+
             Case 64 'Left Stick
             Case 128 'Right Stick
             Case 256 'Left bumper
@@ -4756,6 +4792,17 @@ Public Class Form1
                 ControllerRight = False
 
             Case 16384 'X
+
+                If GameState = AppState.Editing Then
+
+                    If ShowMenu = True Then
+
+                        ShowMenu = False
+
+                    End If
+
+                End If
+
             Case 32768 'Y
             Case 48 'Start+Back
             Case 192 'Left+Right Sticks

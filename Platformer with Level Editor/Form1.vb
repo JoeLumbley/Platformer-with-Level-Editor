@@ -530,7 +530,7 @@ Public Class Form1
 
         Camera.Rect.Location = New Point(0, 0)
 
-        Level.Rect = New Rectangle(0, 0, 1920, 1080)
+        SetMinLevelSize()
 
         OurHero.Rect = New Rectangle(128, 769, 64, 64)
 
@@ -549,7 +549,7 @@ Public Class Form1
 
         Goal.Rect = New Rectangle(1472, 768, 64, 64)
 
-        AddBlock(New Rectangle(0, 832, 1984, 64))
+        AddBlock(New Rectangle(0, 832, 1920, 64))
 
         AddBlock(New Rectangle(1088, 576, 64, 64))
 

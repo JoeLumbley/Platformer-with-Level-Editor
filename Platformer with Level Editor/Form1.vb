@@ -3003,32 +3003,17 @@ Public Class Form1
         If SaveButton.Rect.Contains(e) Then
             'Yes, the player is clicking the save button.
 
-            'IsBDown = True
-
-            'UpdateEditingMenuSave()
-
-            'TODO
-
-            ' Center the dialog on the screen
-            'SaveFileDialog1.StartPosition = FormStartPosition.CenterScreen
-
             SaveFileDialog1.FileName = LevelName
-            'SaveFileDialog1.
-            'SaveFileDialog1.FileName = ""
             SaveFileDialog1.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
             SaveFileDialog1.FilterIndex = 1
             SaveFileDialog1.RestoreDirectory = True
-            'SaveFileDialog1.
 
             If SaveFileDialog1.ShowDialog(Me) = System.Windows.Forms.DialogResult.OK Then
 
                 SaveTestLevelFile(SaveFileDialog1.FileName)
 
-                'TODO
                 LevelName = Path.GetFileName(SaveFileDialog1.FileName)
                 Text = LevelName & " - Platformer with Level Editor - Code with Joe"
-
-                'Text = Path.GetFileName(SaveFileDialog1.FileName) & " - Platformer with Level Editor - Code with Joe"
 
             End If
 
@@ -3059,11 +3044,8 @@ Public Class Form1
 
                             ShowMenu = False
 
-                            'TODO
                             LevelName = Path.GetFileName(OpenFileDialog1.FileName)
                             Text = LevelName & " - Platformer with Level Editor - Code with Joe"
-
-                            'Text = Path.GetFileName(OpenFileDialog1.FileName) & " - Platformer with Level Editor - Code with Joe"
 
                         Else
 
@@ -3105,11 +3087,8 @@ Public Class Form1
 
                 CashCollected = 0
 
-                'TODO
                 LevelName = "Untitled"
                 Text = LevelName & " - Platformer with Level Editor - Code with Joe"
-
-                'Text = "Platformer with Level Editor - Code with Joe"
 
                 ShowMenu = False
 
@@ -3129,37 +3108,23 @@ Public Class Form1
 
     Private Sub UpdateEditingMenuSave()
 
-        'If IsBDown = True Then
-
-        '    IsBDown = False
-
-        'TODO
         SaveFileDialog1.FileName = LevelName
-
-        'SaveFileDialog1.FileName = ""
         SaveFileDialog1.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
         SaveFileDialog1.FilterIndex = 1
         SaveFileDialog1.RestoreDirectory = True
-        'SaveFileDialog1.
 
         If SaveFileDialog1.ShowDialog(Me) = System.Windows.Forms.DialogResult.OK Then
 
             SaveTestLevelFile(SaveFileDialog1.FileName)
 
-            'TODO
             LevelName = Path.GetFileName(SaveFileDialog1.FileName)
             Text = LevelName & " - Platformer with Level Editor - Code with Joe"
-
-            'Text = Path.GetFileName(SaveFileDialog1.FileName) & " - Platformer with Level Editor - Code with Joe"
 
         End If
 
         ShowMenu = False
 
-        'End If
-
     End Sub
-
 
     Private Sub SetMinLevelSize()
 
@@ -4732,7 +4697,6 @@ Public Class Form1
 
                             IsStartDown = True
 
-                            'Resume Play
                             LastFrame = Now
 
                             GameState = AppState.Playing
@@ -4892,7 +4856,6 @@ Public Class Form1
 
                         Cursor.Position = New Point(ScreenOffset.X + SaveButton.Rect.X, ScreenOffset.Y + SaveButton.Rect.Y)
 
-
                         If IsMouseDown = False Then
 
                             IsMouseDown = True
@@ -4924,7 +4887,6 @@ Public Class Form1
                     If ShowMenu = True Then
 
                         Cursor.Position = New Point(ScreenOffset.X + OpenButton.Rect.X, ScreenOffset.Y + OpenButton.Rect.Y)
-
 
                         If IsMouseDown = False Then
 

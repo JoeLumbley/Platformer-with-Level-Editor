@@ -1549,6 +1549,8 @@ Public Class Form1
 
         DrawGoal()
 
+        DrawEnemies()
+
         DrawOurHero()
 
         DrawGridLines()

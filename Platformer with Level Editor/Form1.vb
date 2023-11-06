@@ -2854,8 +2854,7 @@ Public Class Form1
 
                         CashCollected = 0
 
-                        'Move mouse pointer off screen.
-                        Cursor.Position = New Point(Screen.PrimaryScreen.WorkingArea.Right, Screen.PrimaryScreen.WorkingArea.Height \ 2)
+                        MovePointerOffScreen()
 
                         LastFrame = Now
 
@@ -2884,8 +2883,7 @@ Public Class Form1
 
             CashCollected = 0
 
-            'Move mouse pointer off screen.
-            Cursor.Position = New Point(Screen.PrimaryScreen.WorkingArea.Right, Screen.PrimaryScreen.WorkingArea.Height \ 2)
+            MovePointerOffScreen()
 
             LastFrame = Now
 
@@ -2900,6 +2898,13 @@ Public Class Form1
             IsBackgroundLoopPlaying = True
 
         End If
+
+    End Sub
+
+    Private Shared Sub MovePointerOffScreen()
+        'Move mouse pointer off screen.
+
+        Cursor.Position = New Point(Screen.PrimaryScreen.WorkingArea.Right, Screen.PrimaryScreen.WorkingArea.Height \ 2)
 
     End Sub
 
@@ -4599,8 +4604,7 @@ Public Class Form1
 
                             IsStartDown = True
 
-                            'Move mouse pointer off screen.
-                            Cursor.Position = New Point(Screen.PrimaryScreen.WorkingArea.Right, Screen.PrimaryScreen.WorkingArea.Height \ 2)
+                            MovePointerOffScreen()
 
                             LastFrame = Now
 

@@ -2972,6 +2972,7 @@ Public Class Form1
                             ShowMenu = False
 
                             LevelName = Path.GetFileName(OpenFileDialog1.FileName)
+
                             Text = LevelName & " - Platformer with Level Editor - Code with Joe"
 
                         Else
@@ -3015,6 +3016,7 @@ Public Class Form1
                 CashCollected = 0
 
                 LevelName = "Untitled"
+
                 Text = LevelName & " - Platformer with Level Editor - Code with Joe"
 
                 ShowMenu = False
@@ -3036,6 +3038,7 @@ Public Class Form1
     Private Sub SetMinLevelSize()
 
         Level.Rect.Width = ClientRectangle.Width
+
         Level.Rect.Height = ClientRectangle.Height
 
     End Sub
@@ -3043,9 +3046,13 @@ Public Class Form1
     Private Sub ClearObjects()
 
         Blocks = Nothing
+
         Cash = Nothing
+
         Bushes = Nothing
+
         Clouds = Nothing
+
         Enemies = Nothing
 
     End Sub

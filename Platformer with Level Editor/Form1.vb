@@ -551,6 +551,7 @@ Public Class Form1
         BufferGridLines()
 
     End Sub
+
     Private Sub CreateNewLevel()
 
         Goal.Rect = New Rectangle(1472, 768, 64, 64)
@@ -578,7 +579,6 @@ Public Class Form1
         AddEnemy(New Point(500, 769), New Point(500, 769), New Point(564, 769))
 
     End Sub
-
 
     Private Sub InitializeForm()
 
@@ -800,8 +800,8 @@ Public Class Form1
 
                 If ShowMenu = True Then
 
+                    'Move cursor over the new button.
                     Cursor.Position = New Point(ScreenOffset.X + NewButton.Rect.X, ScreenOffset.Y + NewButton.Rect.Y)
-
 
                     If IsMouseDown = False Then
 
@@ -832,7 +832,7 @@ Public Class Form1
 
             If GameState = AppState.Editing Then
 
-                'Move Viewport to the left.
+                'Move Camera to the left.
                 Camera.Rect.X += 10
 
                 BufferGridLines()
@@ -844,7 +844,7 @@ Public Class Form1
 
             If GameState = AppState.Editing Then
 
-                'Move Viewport to the left.
+                'Move Camera to the left.
                 Camera.Rect.X -= 10
 
                 BufferGridLines()
@@ -862,7 +862,7 @@ Public Class Form1
 
             If GameState = AppState.Editing Then
 
-                'Move Viewport to the up.
+                'Move Camera to the up.
                 Camera.Rect.Y -= 10
 
                 BufferGridLines()
@@ -874,7 +874,7 @@ Public Class Form1
 
             If GameState = AppState.Editing Then
 
-                'Move Viewport to the down.
+                'Move Camera to the down.
                 Camera.Rect.Y += 10
 
                 BufferGridLines()
@@ -1110,8 +1110,6 @@ Public Class Form1
 
                                 OurHero.Velocity = New PointF(0, 0)
 
-
-
                             End If
 
                         End If
@@ -1123,9 +1121,6 @@ Public Class Form1
             End If
 
         End If
-
-
-        'Wraparound()
 
         FellOffLevel()
 
@@ -1155,72 +1150,9 @@ Public Class Form1
 
             For Each Enemy In Enemies
 
-                'If Enemy.Position.X >= Enemy.PatrolB.X Then
-
-                '    Enemy.PatrolDirection = Direction.Left
-
-                'End If
-
-                'If Enemy.Position.X <= Enemy.PatrolA.X Then
-
-                '    Enemy.PatrolDirection = Direction.Right
-
-                'End If
-
-                'If Enemy.PatrolDirection = Direction.Right Then
-
-                '    'Is Enemy moving to the left?
-                '    If Enemy.Velocity.X < 0 Then
-
-                '        'Stop the move before change in direction.
-                '        Enemies(Array.IndexOf(Enemies, Enemy)).Velocity.X = 0 'Zero speed.
-
-                '    End If
-
-                '    'Move Enemy to the right.
-                '    Enemies(Array.IndexOf(Enemies, Enemy)).Velocity.X += Enemy.Acceleration.X * DeltaTime.TotalSeconds
-
-                '    'Limit Enemy velocity to the max.
-                '    If Enemy.Velocity.X > Enemy.MaxVelocity.X Then
-
-                '        Enemies(Array.IndexOf(Enemies, Enemy)).Velocity.X = Enemy.MaxVelocity.X
-
-                '    End If
-
-                'Else
-
-                '    'Is Enemy moving to the right?
-                '    If Enemy.Velocity.X > 0 Then
-
-                '        'Stop the move before change in direction.
-                '        Enemies(Array.IndexOf(Enemies, Enemy)).Velocity.X = 0 'Zero speed.
-
-                '    End If
-
-                '    'Move Enemy to the left.
-                '    Enemies(Array.IndexOf(Enemies, Enemy)).Velocity.X += -Enemy.Acceleration.X * DeltaTime.TotalSeconds
-
-                '    'Limit Enemy velocity to the max.
-                '    If Enemy.Velocity.X < -Enemy.MaxVelocity.X Then
-
-                '        Enemies(Array.IndexOf(Enemies, Enemy)).Velocity.X = -Enemy.MaxVelocity.X
-
-                '    End If
-
-                'End If
-
-                'Move Enemy to the right.
-                'Enemies(Array.IndexOf(Enemies, Enemy)).Velocity.X += Enemy.Acceleration.X * DeltaTime.TotalSeconds
-
-                'Move Enemy horizontally.
-                'Enemies(Array.IndexOf(Enemies, Enemy)).Position.X += Enemies(Array.IndexOf(Enemies, Enemy)).Velocity.X * DeltaTime.TotalSeconds 'Δs = V * Δt
-                'Displacement = Velocity x Delta Time
-
                 If Enemy.Eliminated = False Then
 
                     Dim Index As Integer = Array.IndexOf(Enemies, Enemy)
-
-
 
                     If Enemy.PatrolDirection = Direction.Right Then
 
@@ -1281,12 +1213,6 @@ Public Class Form1
                     End If
 
                 End If
-
-                ''Move our hero vertically.
-                'Enemies(Array.IndexOf(Enemies, Enemy)).Position.Y += Enemies(Array.IndexOf(Enemies, Enemy)).Velocity.Y * DeltaTime.TotalSeconds 'Δs = V * Δt
-                ''Displacement = Velocity x Delta Time
-
-                'Enemies(Array.IndexOf(Enemies, Enemy)).Rect.Y = Math.Round(Enemies(Array.IndexOf(Enemies, Enemy)).Position.Y)
 
             Next
 
@@ -1613,7 +1539,6 @@ Public Class Form1
 
         DrawBackground(Color.LightSkyBlue)
 
-
         DrawClouds()
 
         DrawBushes()
@@ -1628,7 +1553,6 @@ Public Class Form1
 
         DrawGridLines()
 
-
         DrawToolPreview()
 
         DrawToolBar()
@@ -1636,8 +1560,6 @@ Public Class Form1
         DrawPlayButton()
 
         DrawMenuButton()
-
-        'DrawSaveButton()
 
         DrawFPS()
 
@@ -2927,13 +2849,13 @@ Public Class Form1
 
                     If IsFileLoaded = True Then
 
-                        'TODO
                         LevelName = Path.GetFileName(OpenFileDialog1.FileName)
                         Text = LevelName & " - Platformer with Level Editor - Code with Joe"
 
-                        'Text = Path.GetFileName(OpenFileDialog1.FileName) & " - Platformer with Level Editor - Code with Joe"
-
                         CashCollected = 0
+
+                        'Move mouse pointer off screen.
+                        Cursor.Position = New Point(Screen.PrimaryScreen.WorkingArea.Right, Screen.PrimaryScreen.WorkingArea.Height \ 2)
 
                         LastFrame = Now
 
@@ -2962,15 +2884,15 @@ Public Class Form1
 
             CashCollected = 0
 
+            'Move mouse pointer off screen.
+            Cursor.Position = New Point(Screen.PrimaryScreen.WorkingArea.Right, Screen.PrimaryScreen.WorkingArea.Height \ 2)
+
             LastFrame = Now
 
             GameState = AppState.Playing
 
-            'TODO
             LevelName = "Untitled"
             Text = LevelName & " - Platformer with Level Editor - Code with Joe"
-
-            'Text = "Platformer with Level Editor - Code with Joe"
 
             My.Computer.Audio.Play(My.Resources.level,
                                    AudioPlayMode.BackgroundLoop)
@@ -3103,26 +3025,6 @@ Public Class Form1
             ShowMenu = False
 
         End If
-
-    End Sub
-
-    Private Sub UpdateEditingMenuSave()
-
-        SaveFileDialog1.FileName = LevelName
-        SaveFileDialog1.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
-        SaveFileDialog1.FilterIndex = 1
-        SaveFileDialog1.RestoreDirectory = True
-
-        If SaveFileDialog1.ShowDialog(Me) = System.Windows.Forms.DialogResult.OK Then
-
-            SaveTestLevelFile(SaveFileDialog1.FileName)
-
-            LevelName = Path.GetFileName(SaveFileDialog1.FileName)
-            Text = LevelName & " - Platformer with Level Editor - Code with Joe"
-
-        End If
-
-        ShowMenu = False
 
     End Sub
 
@@ -4696,6 +4598,9 @@ Public Class Form1
                         If IsStartDown = False Then
 
                             IsStartDown = True
+
+                            'Move mouse pointer off screen.
+                            Cursor.Position = New Point(Screen.PrimaryScreen.WorkingArea.Right, Screen.PrimaryScreen.WorkingArea.Height \ 2)
 
                             LastFrame = Now
 

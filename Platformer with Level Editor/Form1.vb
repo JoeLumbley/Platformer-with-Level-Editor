@@ -3020,7 +3020,7 @@ Public Class Form1
             SaveFileDialog1.RestoreDirectory = True
             'SaveFileDialog1.
 
-            If SaveFileDialog1.ShowDialog(Me.) = System.Windows.Forms.DialogResult.OK Then
+            If SaveFileDialog1.ShowDialog(Me) = System.Windows.Forms.DialogResult.OK Then
 
                 SaveTestLevelFile(SaveFileDialog1.FileName)
 

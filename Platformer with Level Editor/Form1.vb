@@ -3896,12 +3896,6 @@ Public Class Form1
 
         pointOffset.Y = (Camera.Rect.Y * -1) + e.Y
 
-        Dim ScreenPoint = PointToScreen(New Point(e.X, e.Y))
-
-        ScreenOffset.X = ScreenPoint.X - e.X
-        ScreenOffset.Y = ScreenPoint.Y - e.Y
-
-
         If e.Button = MouseButtons.None Then
 
             Select Case SelectedTool
@@ -5295,10 +5289,7 @@ Public Class Form1
 
     Private Sub Form1_Move(sender As Object, e As EventArgs) Handles Me.Move
 
-        Dim ScreenPoint = PointToScreen(New Point(0, 0))
-
-        ScreenOffset.X = ScreenPoint.X - 0
-        ScreenOffset.Y = ScreenPoint.Y - 0
+        ScreenOffset = PointToScreen(New Point(0, 0))
 
     End Sub
 

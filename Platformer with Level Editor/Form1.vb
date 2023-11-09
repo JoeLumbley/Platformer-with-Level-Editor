@@ -576,7 +576,7 @@ Public Class Form1
 
         AddBill(New Point(1472, 64))
 
-        AddEnemy(New Point(500, 769), New Point(500, 769), New Point(564, 769))
+        AddEnemy(New Point(500, 769), New Point(512, 769), New Point(576, 769))
 
     End Sub
 
@@ -1631,26 +1631,54 @@ Public Class Form1
 
                 For Each Enemy In Enemies
 
-                    If Enemy.Eliminated = False Then
+                    Select Case GameState
 
-                        Dim rectOffset As Rectangle = Enemy.Rect
+                        Case AppState.Playing
 
-                        rectOffset.Offset(Camera.Rect.Location)
+                            If Enemy.Eliminated = False Then
 
-                        .FillRectangle(Brushes.Chocolate, rectOffset)
+                                Dim rectOffset As Rectangle = Enemy.Rect
 
-                        .DrawString("E", EnemyFont, Brushes.PaleGoldenrod, rectOffset, AlineCenterMiddle)
+                                rectOffset.Offset(Camera.Rect.Location)
 
-                        If GameState = AppState.Editing Then
+                                .FillRectangle(Brushes.Chocolate, rectOffset)
+
+                                .DrawString("E", EnemyFont, Brushes.PaleGoldenrod, rectOffset, AlineCenterMiddle)
+
+                            End If
+
+                        Case AppState.Editing
+
+                            Dim PatrolAOffset As New Rectangle(New Point(Enemy.PatrolA.X, Enemy.PatrolA.Y), New Drawing.Size(GridSize, GridSize))
+
+                            PatrolAOffset.Offset(Camera.Rect.Location)
+
+                            .FillRectangle(Brushes.Chocolate, PatrolAOffset)
+
+                            .DrawString("E", EnemyFont, Brushes.PaleGoldenrod, PatrolAOffset, AlineCenterMiddle)
+
+                            Dim PatrolBOffset As New Rectangle(New Point(Enemy.PatrolB.X, Enemy.PatrolB.Y), New Drawing.Size(GridSize, GridSize))
+
+                            PatrolBOffset.Offset(Camera.Rect.Location)
+
+                            .FillRectangle(New SolidBrush(Color.FromArgb(128, Color.Chocolate)), PatrolBOffset)
+
+                            .DrawString("E", EnemyFont, New SolidBrush(Color.FromArgb(128, Color.PaleGoldenrod)), PatrolBOffset, AlineCenterMiddle)
 
                             If SelectedEnemy = Array.IndexOf(Enemies, Enemy) Then
 
+                                Dim SelectionSize As New Size((Enemy.PatrolB.X + GridSize) - Enemy.PatrolA.X, GridSize)
+
+                                Dim SelectionOffset As New Rectangle(New Point(Enemy.PatrolA.X, Enemy.PatrolA.Y), SelectionSize)
+
+                                SelectionOffset.Offset(Camera.Rect.Location)
+
                                 'Draw selection rectangle.
-                                .DrawRectangle(New Pen(Color.Red, 6), rectOffset)
+                                .DrawRectangle(New Pen(Color.Red, 6), SelectionOffset)
 
                                 'Position sizing handle.
-                                SizingHandle.X = rectOffset.Right - SizingHandle.Width \ 2
-                                SizingHandle.Y = rectOffset.Bottom - SizingHandle.Height \ 2
+                                SizingHandle.X = SelectionOffset.Right - SizingHandle.Width \ 2
+                                SizingHandle.Y = SelectionOffset.Bottom - SizingHandle.Height \ 2
 
                                 'Draw sizing handle.
                                 .FillRectangle(Brushes.Black,
@@ -1658,9 +1686,7 @@ Public Class Form1
 
                             End If
 
-                        End If
-
-                    End If
+                    End Select
 
                 Next
 
@@ -3321,6 +3347,24 @@ Public Class Form1
                     GoalSelected = False
                     LevelSelected = False
 
+
+                    'Is the player selecting a Enemy?
+                ElseIf CheckEnemySelection(PointOffset) > -1 Then
+                    'Yes, the player is selecting a Enemy.
+
+                    SelectedEnemy = CheckEnemySelection(PointOffset)
+
+                    SelectionOffset.X = PointOffset.X - Bushes(SelectedEnemy).Rect.X
+                    SelectionOffset.Y = PointOffset.Y - Bushes(SelectedEnemy).Rect.Y
+
+                    'Deselect other game objects.
+                    SelectedBlock = -1
+                    SelectedBill = -1
+                    SelectedCloud = -1
+                    GoalSelected = False
+                    LevelSelected = False
+
+
                 Else
                     'No, the player is not selecting a game object.
 
@@ -3528,6 +3572,30 @@ Public Class Form1
                     'Yes, the player has selected a cloud.
 
                     Return Array.IndexOf(Bushes, Bush)
+
+                    Exit Function
+
+                End If
+
+            Next
+
+        End If
+
+        Return -1
+
+    End Function
+
+    Private Function CheckEnemySelection(e As Point) As Integer
+
+        If Enemies IsNot Nothing Then
+
+            For Each Enemy In Enemies
+
+                'Has the player selected a Enemy?
+                If Enemy.Rect.Contains(e) Then
+                    'Yes, the player has selected a Enemy.
+
+                    Return Array.IndexOf(Enemies, Enemy)
 
                     Exit Function
 
@@ -4136,6 +4204,75 @@ Public Class Form1
             End If
 
         End If
+
+
+        'Has the player selected a Enemy?
+        If SelectedEnemy > -1 Then
+            'Yes, the player has selected a Enemy.
+
+            If e.Button = MouseButtons.Left Then
+
+                'Is the player resizing the Enemy Patrol?
+                If SizingHandleSelected = True Then
+                    'Yes, the player is resizing the Enemy patrol.
+
+                    ' W = B + G - A
+                    Dim RightSidePatrolB As Integer = Enemies(SelectedEnemy).PatrolB.X + GridSize
+                    Dim PatrolWidth As Integer = RightSidePatrolB - Enemies(SelectedEnemy).PatrolA.X
+
+
+                    Dim PatrolRect As New Rectangle(Enemies(SelectedEnemy).PatrolA.X,
+                                                    Enemies(SelectedEnemy).PatrolA.Y,
+                                                    Enemies(SelectedEnemy).PatrolB.X + GridSize,
+                                                    Enemies(SelectedEnemy).PatrolB.Y + GridSize)
+
+                    Dim rectOffset As Rectangle = PatrolRect
+
+                    rectOffset.Offset(Camera.Rect.Location)
+
+
+                    'Snap patrol width to grid.
+                    PatrolRect.Width = CInt(Math.Round((pointOffset.X - PatrolRect.X) / GridSize)) * GridSize
+
+
+                    Enemies(SelectedEnemy).PatrolB.X = PatrolRect.Right - GridSize
+
+
+
+
+
+
+                    ''Snap Enemy width to grid.
+                    'Enemies(SelectedEnemy).Rect.Width = CInt(Math.Round((pointOffset.X - Enemies(SelectedEnemy).Rect.X) / GridSize)) * GridSize
+
+                    ''Limit smallest Enemy width to one grid width.
+                    'If Enemies(SelectedEnemy).Rect.Width < GridSize Then Enemies(SelectedEnemy).Rect.Width = GridSize
+
+                    ''Snap Enemy height to grid.
+                    'Enemies(SelectedEnemy).Rect.Height = CInt(Math.Round((pointOffset.Y - Enemies(SelectedEnemy).Rect.Y) / GridSize)) * GridSize
+
+                    ''Limit smallest Enemy height to one grid height.
+                    'If Enemies(SelectedEnemy).Rect.Height < GridSize Then Enemies(SelectedEnemy).Rect.Height = GridSize
+
+                    'AutoSizeLevel(Enemies(SelectedEnemy).Rect)
+
+                Else
+                    'No, the player is not resizing the Enemy.
+                    'The player is moving the Enemy.
+
+                    ''Move Enemy, snap to grid
+                    'Enemies(SelectedEnemy).Rect.X = CInt(Math.Round((pointOffset.X - SelectionOffset.X) / GridSize)) * GridSize
+                    'Enemies(SelectedEnemy).Rect.Y = CInt(Math.Round((pointOffset.Y - SelectionOffset.Y) / GridSize)) * GridSize
+
+                    'AutoSizeLevel(Enemies(SelectedEnemy).Rect)
+
+                End If
+
+            End If
+
+        End If
+
+
 
         If LevelSelected = True Then
 

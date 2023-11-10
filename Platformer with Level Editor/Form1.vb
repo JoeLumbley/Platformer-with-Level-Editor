@@ -3354,8 +3354,8 @@ Public Class Form1
 
                     SelectedEnemy = CheckEnemySelection(PointOffset)
 
-                    SelectionOffset.X = PointOffset.X - Bushes(SelectedEnemy).Rect.X
-                    SelectionOffset.Y = PointOffset.Y - Bushes(SelectedEnemy).Rect.Y
+                    SelectionOffset.X = PointOffset.X - Enemies(SelectedEnemy).Rect.X
+                    SelectionOffset.Y = PointOffset.Y - Enemies(SelectedEnemy).Rect.Y
 
                     'Deselect other game objects.
                     SelectedBlock = -1
@@ -3467,6 +3467,7 @@ Public Class Form1
                             SelectedCloud = -1
                             SelectedBush = -1
                             GoalSelected = False
+                            SelectedEnemy = -1
 
                     End Select
 
@@ -3591,8 +3592,13 @@ Public Class Form1
 
             For Each Enemy In Enemies
 
+                Dim PatrolRect As New Rectangle(Enemy.PatrolA.X,
+                                                Enemy.PatrolA.Y,
+                                                Enemy.PatrolB.X + GridSize - Enemy.PatrolA.X,
+                                                GridSize)
+
                 'Has the player selected a Enemy?
-                If Enemy.Rect.Contains(e) Then
+                If PatrolRect.Contains(e) Then
                     'Yes, the player has selected a Enemy.
 
                     Return Array.IndexOf(Enemies, Enemy)
@@ -4216,25 +4222,20 @@ Public Class Form1
                 If SizingHandleSelected = True Then
                     'Yes, the player is resizing the Enemy patrol.
 
-                    ' W = B + G - A
-                    Dim RightSidePatrolB As Integer = Enemies(SelectedEnemy).PatrolB.X + GridSize
-                    Dim PatrolWidth As Integer = RightSidePatrolB - Enemies(SelectedEnemy).PatrolA.X
-
+                    Dim PatrolWidth As Integer = Enemies(SelectedEnemy).PatrolB.X + GridSize - Enemies(SelectedEnemy).PatrolA.X
 
                     Dim PatrolRect As New Rectangle(Enemies(SelectedEnemy).PatrolA.X,
                                                     Enemies(SelectedEnemy).PatrolA.Y,
-                                                    Enemies(SelectedEnemy).PatrolB.X + GridSize,
-                                                    Enemies(SelectedEnemy).PatrolB.Y + GridSize)
-
-                    Dim rectOffset As Rectangle = PatrolRect
-
-                    rectOffset.Offset(Camera.Rect.Location)
-
+                                                    PatrolWidth,
+                                                    GridSize)
 
                     'Snap patrol width to grid.
                     PatrolRect.Width = CInt(Math.Round((pointOffset.X - PatrolRect.X) / GridSize)) * GridSize
 
+                    'Limit smallest Enemy width to two grid widths.
+                    If PatrolRect.Width < GridSize * 2 Then PatrolRect.Width = GridSize * 2
 
+                    'Move patrol point B.
                     Enemies(SelectedEnemy).PatrolB.X = PatrolRect.Right - GridSize
 
 

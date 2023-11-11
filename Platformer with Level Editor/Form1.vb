@@ -4232,9 +4232,9 @@ Public Class Form1
 
             If e.Button = MouseButtons.Left Then
 
-                'Is the player resizing the Enemy Patrol?
+                'Is the player resizing the enemy Patrol?
                 If SizingHandleSelected = True Then
-                    'Yes, the player is resizing the Enemy patrol.
+                    'Yes, the player is resizing the enemy patrol width.
 
                     'W = B + G - A
                     Dim PatrolWidth As Integer = Enemies(SelectedEnemy).PatrolB.X + GridSize - Enemies(SelectedEnemy).PatrolA.X
@@ -4253,29 +4253,34 @@ Public Class Form1
                     'Move patrol point B.
                     Enemies(SelectedEnemy).PatrolB.X = PatrolRect.Right - GridSize
 
-
                     AutoSizeLevel(PatrolRect)
-
-
-
-
-                    ''Snap Enemy width to grid.
-                    'Enemies(SelectedEnemy).Rect.Width = CInt(Math.Round((pointOffset.X - Enemies(SelectedEnemy).Rect.X) / GridSize)) * GridSize
-
-                    ''Limit smallest Enemy width to one grid width.
-                    'If Enemies(SelectedEnemy).Rect.Width < GridSize Then Enemies(SelectedEnemy).Rect.Width = GridSize
-
-                    ''Snap Enemy height to grid.
-                    'Enemies(SelectedEnemy).Rect.Height = CInt(Math.Round((pointOffset.Y - Enemies(SelectedEnemy).Rect.Y) / GridSize)) * GridSize
-
-                    ''Limit smallest Enemy height to one grid height.
-                    'If Enemies(SelectedEnemy).Rect.Height < GridSize Then Enemies(SelectedEnemy).Rect.Height = GridSize
-
-                    'AutoSizeLevel(Enemies(SelectedEnemy).Rect)
 
                 Else
                     'No, the player is not resizing the Enemy.
-                    'The player is moving the Enemy.
+                    'The player is moving the Enemy patrol.
+
+                    Dim PatrolWidth As Integer = Enemies(SelectedEnemy).PatrolB.X + GridSize - Enemies(SelectedEnemy).PatrolA.X
+
+                    'Move enemy patrol, snap to grid
+                    Enemies(SelectedEnemy).Rect.X = CInt(Math.Round((pointOffset.X - SelectionOffset.X) / GridSize)) * GridSize
+                    Enemies(SelectedEnemy).Rect.Y = CInt(Math.Round((pointOffset.Y - SelectionOffset.Y) / GridSize)) * GridSize
+
+                    Enemies(SelectedEnemy).Position.X = CInt(Math.Round((pointOffset.X - SelectionOffset.X) / GridSize)) * GridSize
+                    Enemies(SelectedEnemy).Position.Y = CInt(Math.Round((pointOffset.Y - SelectionOffset.Y) / GridSize)) * GridSize
+
+                    Enemies(SelectedEnemy).PatrolA.X = CInt(Math.Round((pointOffset.X - SelectionOffset.X) / GridSize)) * GridSize
+                    Enemies(SelectedEnemy).PatrolA.Y = CInt(Math.Round((pointOffset.Y - SelectionOffset.Y) / GridSize)) * GridSize
+
+
+                    Enemies(SelectedEnemy).PatrolB.X = Enemies(SelectedEnemy).PatrolA.X + PatrolWidth - GridSize
+                    Enemies(SelectedEnemy).PatrolB.Y = Enemies(SelectedEnemy).PatrolA.Y
+
+                    Dim PatrolRect As New Rectangle(Enemies(SelectedEnemy).PatrolA.X,
+                                                    Enemies(SelectedEnemy).PatrolA.Y,
+                                                    PatrolWidth,
+                                                    GridSize)
+
+                    AutoSizeLevel(PatrolRect)
 
                     ''Move Enemy, snap to grid
                     'Enemies(SelectedEnemy).Rect.X = CInt(Math.Round((pointOffset.X - SelectionOffset.X) / GridSize)) * GridSize

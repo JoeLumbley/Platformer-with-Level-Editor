@@ -1665,6 +1665,20 @@ Public Class Form1
 
                             .DrawString("E", EnemyFont, New SolidBrush(Color.FromArgb(128, Color.PaleGoldenrod)), PatrolBOffset, AlineCenterMiddle)
 
+
+
+
+                            Dim SpanWidth As Integer = Enemy.PatrolB.X - Enemy.PatrolA.X - GridSize
+
+                            Dim SpanOffset As New Rectangle(New Point(Enemy.PatrolA.X + GridSize, Enemy.PatrolA.Y), New Drawing.Size(SpanWidth, GridSize))
+
+                            SpanOffset.Offset(Camera.Rect.Location)
+
+                            .FillRectangle(New SolidBrush(Color.FromArgb(128, Color.Chocolate)), SpanOffset)
+
+
+
+
                             If SelectedEnemy = Array.IndexOf(Enemies, Enemy) Then
 
                                 Dim SelectionSize As New Size((Enemy.PatrolB.X + GridSize) - Enemy.PatrolA.X, GridSize)
@@ -4222,6 +4236,7 @@ Public Class Form1
                 If SizingHandleSelected = True Then
                     'Yes, the player is resizing the Enemy patrol.
 
+                    'W = B + G - A
                     Dim PatrolWidth As Integer = Enemies(SelectedEnemy).PatrolB.X + GridSize - Enemies(SelectedEnemy).PatrolA.X
 
                     Dim PatrolRect As New Rectangle(Enemies(SelectedEnemy).PatrolA.X,
@@ -4232,13 +4247,14 @@ Public Class Form1
                     'Snap patrol width to grid.
                     PatrolRect.Width = CInt(Math.Round((pointOffset.X - PatrolRect.X) / GridSize)) * GridSize
 
-                    'Limit smallest Enemy width to two grid widths.
+                    'Limit smallest patrol width to two grid widths.
                     If PatrolRect.Width < GridSize * 2 Then PatrolRect.Width = GridSize * 2
 
                     'Move patrol point B.
                     Enemies(SelectedEnemy).PatrolB.X = PatrolRect.Right - GridSize
 
 
+                    AutoSizeLevel(PatrolRect)
 
 
 

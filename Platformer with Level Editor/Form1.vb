@@ -1665,9 +1665,6 @@ Public Class Form1
 
                             .DrawString("E", EnemyFont, New SolidBrush(Color.FromArgb(128, Color.PaleGoldenrod)), PatrolBOffset, AlineCenterMiddle)
 
-
-
-
                             Dim SpanWidth As Integer = Enemy.PatrolB.X - Enemy.PatrolA.X - GridSize
 
                             Dim SpanOffset As New Rectangle(New Point(Enemy.PatrolA.X + GridSize, Enemy.PatrolA.Y), New Drawing.Size(SpanWidth, GridSize))
@@ -1675,9 +1672,6 @@ Public Class Form1
                             SpanOffset.Offset(Camera.Rect.Location)
 
                             .FillRectangle(New SolidBrush(Color.FromArgb(128, Color.Chocolate)), SpanOffset)
-
-
-
 
                             If SelectedEnemy = Array.IndexOf(Enemies, Enemy) Then
 
@@ -4225,7 +4219,6 @@ Public Class Form1
 
         End If
 
-
         'Has the player selected a Enemy?
         If SelectedEnemy > -1 Then
             'Yes, the player has selected a Enemy.
@@ -4256,8 +4249,9 @@ Public Class Form1
                     AutoSizeLevel(PatrolRect)
 
                 Else
-                    'No, the player is not resizing the Enemy.
-                    'The player is moving the Enemy patrol.
+                    'No, the player is not resizing the enemy.
+
+                    'The player is moving the enemy patrol.
 
                     Dim PatrolWidth As Integer = Enemies(SelectedEnemy).PatrolB.X + GridSize - Enemies(SelectedEnemy).PatrolA.X
 
@@ -4271,7 +4265,7 @@ Public Class Form1
                     Enemies(SelectedEnemy).PatrolA.X = CInt(Math.Round((pointOffset.X - SelectionOffset.X) / GridSize)) * GridSize
                     Enemies(SelectedEnemy).PatrolA.Y = CInt(Math.Round((pointOffset.Y - SelectionOffset.Y) / GridSize)) * GridSize
 
-
+                    'Move patrol point B.
                     Enemies(SelectedEnemy).PatrolB.X = Enemies(SelectedEnemy).PatrolA.X + PatrolWidth - GridSize
                     Enemies(SelectedEnemy).PatrolB.Y = Enemies(SelectedEnemy).PatrolA.Y
 
@@ -4282,19 +4276,11 @@ Public Class Form1
 
                     AutoSizeLevel(PatrolRect)
 
-                    ''Move Enemy, snap to grid
-                    'Enemies(SelectedEnemy).Rect.X = CInt(Math.Round((pointOffset.X - SelectionOffset.X) / GridSize)) * GridSize
-                    'Enemies(SelectedEnemy).Rect.Y = CInt(Math.Round((pointOffset.Y - SelectionOffset.Y) / GridSize)) * GridSize
-
-                    'AutoSizeLevel(Enemies(SelectedEnemy).Rect)
-
                 End If
 
             End If
 
         End If
-
-
 
         If LevelSelected = True Then
 

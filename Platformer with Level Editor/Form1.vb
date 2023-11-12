@@ -2629,6 +2629,13 @@ Public Class Form1
 
     End Sub
 
+    Private Sub RemoveEnemy(Index As Integer)
+
+        'Remove the Enemy from Enemies.
+        Enemies = Enemies.Where(Function(e, i) i <> Index).ToArray()
+
+    End Sub
+
     Private Sub RemoveCloud(Index As Integer)
 
         'Remove the cloud from clouds.
@@ -4441,6 +4448,14 @@ Public Class Form1
 
                     End If
 
+                    If SelectedEnemy > -1 Then
+
+                        RemoveEnemy(SelectedEnemy)
+
+                        SelectedEnemy = -1
+
+                    End If
+
                     If GoalSelected = True Then
 
                         'Place goal off level.
@@ -4893,6 +4908,14 @@ Public Class Form1
                         RemoveCloud(SelectedCloud)
 
                         SelectedCloud = -1
+
+                    End If
+
+                    If SelectedEnemy > -1 Then
+
+                        RemoveEnemy(SelectedEnemy)
+
+                        SelectedEnemy = -1
 
                     End If
 

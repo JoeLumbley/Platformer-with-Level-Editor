@@ -277,6 +277,9 @@ Public Class Form1
 
     Private OutinePen As New Pen(Color.Black, 4)
 
+    Private MenuOutinePen As New Pen(Color.White, 8)
+
+
     Private CloundToolIconOutinePen As New Pen(Color.Black, 3)
 
     Private BushToolIconOutinePen As New Pen(Color.Black, 3)
@@ -2160,6 +2163,14 @@ Public Class Form1
     Private Sub DrawMenuBackground()
 
         With Buffer.Graphics
+
+            Dim Shadow As Rectangle = MenuBackground.Rect
+
+            Shadow.Offset(10, 10)
+
+            .FillRectangle(New SolidBrush(Color.FromArgb(128, Color.Black)), Shadow)
+
+            .DrawRectangle(MenuOutinePen, MenuBackground.Rect)
 
             .FillRectangle(Brushes.Black, MenuBackground.Rect)
 

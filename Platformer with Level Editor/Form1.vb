@@ -279,6 +279,9 @@ Public Class Form1
 
     Private MenuOutinePen As New Pen(Color.White, 8)
 
+    Private MenuShadowPen As New Pen(Color.FromArgb(128, Color.Black), 8)
+
+
 
     Private CloundToolIconOutinePen As New Pen(Color.Black, 3)
 
@@ -534,6 +537,10 @@ Public Class Form1
         Title.Text = "Platformer" & vbCrLf & "with Level Editor"
 
         OutinePen.LineJoin = Drawing2D.LineJoin.Round
+
+        MenuOutinePen.LineJoin = Drawing2D.LineJoin.Round
+
+        MenuShadowPen.LineJoin = Drawing2D.LineJoin.Round
 
     End Sub
 
@@ -2166,9 +2173,11 @@ Public Class Form1
 
             Dim Shadow As Rectangle = MenuBackground.Rect
 
-            Shadow.Offset(10, 10)
+            Shadow.Offset(6, 6)
 
-            .FillRectangle(New SolidBrush(Color.FromArgb(128, Color.Black)), Shadow)
+            '.FillRectangle(New SolidBrush(Color.FromArgb(128, Color.Black)), Shadow)
+
+            .DrawRectangle(MenuShadowPen, Shadow)
 
             .DrawRectangle(MenuOutinePen, MenuBackground.Rect)
 

@@ -66,6 +66,7 @@ Public Class Form1
         Bush
         Cloud
         Goal
+        Enemy
     End Enum
 
     Private Enum Direction As Integer
@@ -184,6 +185,10 @@ Public Class Form1
 
     Private GoalToolIcon As GameObject
 
+    Private EnemyToolButton As GameObject
+
+    Private EnemyToolIcon As GameObject
+
     Private SelectedTool As Tools = Tools.Pointer
 
     Private ShowToolPreview As Boolean = False
@@ -259,6 +264,14 @@ Public Class Form1
     Private ReadOnly GoalFont As New Font(New FontFamily("Wingdings"), 35, FontStyle.Regular)
 
     Private ReadOnly BillIconFont As New Font(FontFamily.GenericSansSerif, 16, FontStyle.Regular)
+
+
+
+
+    Private ReadOnly EnemyIconFont As New Font(FontFamily.GenericSansSerif, 16, FontStyle.Regular)
+
+
+
 
     Private ReadOnly TitleFont As New Font(New FontFamily("Bahnschrift"), 38, FontStyle.Bold)
 
@@ -663,6 +676,8 @@ Public Class Form1
                     Next
 
                 End If
+
+                MovePointerOffScreen()
 
                 LastFrame = Now
 
@@ -1628,6 +1643,8 @@ Public Class Form1
 
         DrawGoalToolButton()
 
+        DrawEnemyToolButton()
+
     End Sub
 
     Private Sub DrawOurHero()
@@ -2057,6 +2074,23 @@ Public Class Form1
 
                         .DrawRectangle(OutinePen, rectOffset)
 
+                    Case Tools.Enemy
+
+                        .FillRectangle(Brushes.Chocolate, rectOffset)
+
+                        .DrawString("E", EnemyFont, Brushes.PaleGoldenrod, rectOffset, AlineCenterMiddle)
+
+                        Dim PatrolB As New Rectangle(rectOffset.X + GridSize, rectOffset.Y, GridSize, GridSize)
+
+                        .FillRectangle(New SolidBrush(Color.FromArgb(128, Color.Chocolate)), PatrolB)
+
+                        .DrawString("E", EnemyFont, New SolidBrush(Color.FromArgb(128, Color.PaleGoldenrod)), PatrolB, AlineCenterMiddle)
+
+
+                        '.FillRectangle(Brushes.Goldenrod, rectOffset)
+
+                        '.DrawString("$", FPSFont, Brushes.OrangeRed, rectOffset, AlineCenterMiddle)
+
                     Case Tools.Goal
 
                         .FillRectangle(Brushes.White, rectOffset)
@@ -2264,6 +2298,32 @@ Public Class Form1
                 .DrawLine(BushToolIconPen, BushToolIcon.Rect.Left + 6, BushToolIcon.Rect.Bottom - 6, BushToolIcon.Rect.Right - 6, BushToolIcon.Rect.Bottom - 6)
 
                 .DrawRectangle(BushToolIconOutinePen, BushToolIcon.Rect)
+
+            End If
+
+        End With
+
+    End Sub
+
+    Private Sub DrawEnemyToolButton()
+
+        With Buffer.Graphics
+
+            If SelectedTool = Tools.Enemy Then
+
+                .FillRectangle(DarkCharcoalGreyBrush, EnemyToolButton.Rect)
+
+                .FillRectangle(Brushes.Chocolate, EnemyToolIcon.Rect)
+
+                .DrawString("E", EnemyIconFont, Brushes.PaleGoldenrod, EnemyToolIcon.Rect, AlineCenterMiddle)
+
+            Else
+
+                .FillRectangle(Brushes.Black, EnemyToolButton.Rect)
+
+                .FillRectangle(Brushes.Chocolate, EnemyToolIcon.Rect)
+
+                .DrawString("E", EnemyIconFont, Brushes.PaleGoldenrod, EnemyToolIcon.Rect, AlineCenterMiddle)
 
             End If
 
@@ -2853,6 +2913,17 @@ Public Class Form1
 
         GoalToolIcon.Rect = New Rectangle(ClientRectangle.Left + 811, ClientRectangle.Bottom - 65, 40, 40)
 
+
+
+
+        EnemyToolButton.Rect = New Rectangle(ClientRectangle.Left + 877, ClientRectangle.Bottom - 90, 90, 90)
+
+        EnemyToolIcon.Rect = New Rectangle(ClientRectangle.Left + 902, ClientRectangle.Bottom - 65, 40, 40)
+
+
+
+
+
         Title.Rect = New Rectangle(ClientRectangle.Left, ClientRectangle.Top, ClientRectangle.Width, ClientRectangle.Height)
 
         StartScreenNewButton.Rect = New Rectangle(ClientRectangle.Width \ 2 - 200, ClientRectangle.Height \ 2 + 100, 150, 90)
@@ -3143,13 +3214,7 @@ Public Class Form1
         If EditPlayButton.Rect.Contains(e) Then
             'Yes, the player is clicking the play button.
 
-            'Deselect game objects.
-            SelectedBlock = -1
-            SelectedBill = -1
-            SelectedCloud = -1
-            SelectedBush = -1
-            GoalSelected = False
-            LevelSelected = False
+            DeselectObjects()
 
             'Resume Play
             LastFrame = Now
@@ -3172,13 +3237,7 @@ Public Class Form1
         If BlockToolButton.Rect.Contains(e) Then
             'Yes, the player is clicking the block tool button.
 
-            'Deselect game objects.
-            SelectedBlock = -1
-            SelectedBill = -1
-            SelectedCloud = -1
-            SelectedBush = -1
-            GoalSelected = False
-            LevelSelected = False
+            DeselectObjects()
 
             'Snap preview to grid.
             ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize) * GridSize)
@@ -3195,13 +3254,7 @@ Public Class Form1
 
         If BillToolButton.Rect.Contains(e) Then
 
-            'Deselect game objects.
-            SelectedBlock = -1
-            SelectedBill = -1
-            SelectedCloud = -1
-            SelectedBush = -1
-            GoalSelected = False
-            LevelSelected = False
+            DeselectObjects()
 
             'Snap preview to grid.
             ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize) * GridSize)
@@ -3218,13 +3271,7 @@ Public Class Form1
 
         If CloudToolButton.Rect.Contains(e) Then
 
-            'Deselect game objects.
-            SelectedBlock = -1
-            SelectedBill = -1
-            SelectedCloud = -1
-            SelectedBush = -1
-            GoalSelected = False
-            LevelSelected = False
+            DeselectObjects()
 
             'Snap preview to grid.
             ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize) * GridSize)
@@ -3241,13 +3288,7 @@ Public Class Form1
 
         If BushToolButton.Rect.Contains(e) Then
 
-            'Deselect game objects.
-            SelectedBlock = -1
-            SelectedBill = -1
-            SelectedCloud = -1
-            SelectedBush = -1
-            GoalSelected = False
-            LevelSelected = False
+            DeselectObjects()
 
             'Snap preview to grid.
             ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize) * GridSize)
@@ -3262,15 +3303,26 @@ Public Class Form1
 
         End If
 
+        If EnemyToolButton.Rect.Contains(e) Then
+
+            DeselectObjects()
+
+            'Snap preview to grid.
+            ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize) * GridSize)
+            ToolPreview.Y = CInt(Math.Round(pointOffset.Y / GridSize) * GridSize)
+
+            ToolPreview.Width = GridSize
+            ToolPreview.Height = GridSize
+
+            SelectedTool = Tools.Enemy
+
+            ShowToolPreview = True
+
+        End If
+
         If GoalToolButton.Rect.Contains(e) Then
 
-            'Deselect game objects.
-            SelectedBlock = -1
-            SelectedBill = -1
-            SelectedCloud = -1
-            SelectedBush = -1
-            GoalSelected = False
-            LevelSelected = False
+            DeselectObjects()
 
             'Snap preview to grid.
             ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize) * GridSize)
@@ -3292,6 +3344,25 @@ Public Class Form1
             ShowMenu = True
 
         End If
+
+    End Sub
+
+    Private Sub DeselectObjects()
+        'Deselect game objects.
+
+        SelectedBlock = -1
+
+        SelectedBill = -1
+
+        SelectedCloud = -1
+
+        SelectedBush = -1
+
+        SelectedEnemy = -1
+
+        GoalSelected = False
+
+        LevelSelected = False
 
     End Sub
 
@@ -3327,6 +3398,7 @@ Public Class Form1
                     SelectedBill = -1
                     SelectedCloud = -1
                     SelectedBush = -1
+                    SelectedEnemy = -1
                     LevelSelected = False
 
                     'Is the player selecting a block?
@@ -3342,6 +3414,7 @@ Public Class Form1
                     SelectedBill = -1
                     SelectedCloud = -1
                     SelectedBush = -1
+                    SelectedEnemy = -1
                     GoalSelected = False
                     LevelSelected = False
 
@@ -3358,6 +3431,7 @@ Public Class Form1
                     SelectedBlock = -1
                     SelectedCloud = -1
                     SelectedBush = -1
+                    SelectedEnemy = -1
                     GoalSelected = False
                     LevelSelected = False
 
@@ -3374,6 +3448,7 @@ Public Class Form1
                     SelectedBlock = -1
                     SelectedBill = -1
                     SelectedBush = -1
+                    SelectedEnemy = -1
                     GoalSelected = False
                     LevelSelected = False
 
@@ -3390,6 +3465,7 @@ Public Class Form1
                     SelectedBlock = -1
                     SelectedBill = -1
                     SelectedCloud = -1
+                    SelectedEnemy = -1
                     GoalSelected = False
                     LevelSelected = False
 
@@ -3481,6 +3557,26 @@ Public Class Form1
 
                             'Select the newly created bill.
                             SelectedBush = Bushes.Length - 1
+
+
+                        Case Tools.Enemy
+
+                            'Snap block to grid.
+                            Dim SnapPoint As New Point(CInt(Math.Round(PointOffset.X / GridSize) * GridSize),
+                                                       CInt(Math.Round(PointOffset.Y / GridSize) * GridSize))
+
+                            Dim SnapPointB As New Point(SnapPoint.X + GridSize, SnapPoint.Y)
+
+                            AddEnemy(SnapPoint, SnapPoint, SnapPointB)
+
+                            'Change tool to the mouse pointer.
+                            SelectedTool = Tools.Pointer
+
+                            'Turn tool preview off.
+                            ShowToolPreview = False
+
+                            'Select the newly created enemy.
+                            SelectedEnemy = Enemies.Length - 1
 
                         Case Tools.Goal
 
@@ -4018,84 +4114,22 @@ Public Class Form1
 
         If e.Button = MouseButtons.None Then
 
-            Select Case SelectedTool
+            If SelectedTool <> Tools.Pointer Then
 
-                Case Tools.Block
+                If ToolBarBackground.Rect.Contains(e.Location) = False Then
 
-                    If ToolBarBackground.Rect.Contains(e.Location) = False Then
+                    ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize) * GridSize)
+                    ToolPreview.Y = CInt(Math.Round(pointOffset.Y / GridSize) * GridSize)
 
-                        ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize) * GridSize)
-                        ToolPreview.Y = CInt(Math.Round(pointOffset.Y / GridSize) * GridSize)
+                    ShowToolPreview = True
 
-                        ShowToolPreview = True
+                Else
 
-                    Else
+                    ShowToolPreview = False
 
-                        ShowToolPreview = False
+                End If
 
-                    End If
-
-                Case Tools.Bill
-
-                    If ToolBarBackground.Rect.Contains(e.Location) = False Then
-
-                        ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize) * GridSize)
-                        ToolPreview.Y = CInt(Math.Round(pointOffset.Y / GridSize) * GridSize)
-
-                        ShowToolPreview = True
-
-                    Else
-
-                        ShowToolPreview = False
-
-                    End If
-
-                Case Tools.Cloud
-
-                    If ToolBarBackground.Rect.Contains(e.Location) = False Then
-
-                        ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize) * GridSize)
-                        ToolPreview.Y = CInt(Math.Round(pointOffset.Y / GridSize) * GridSize)
-
-                        ShowToolPreview = True
-
-                    Else
-
-                        ShowToolPreview = False
-
-                    End If
-
-                Case Tools.Bush
-
-                    If ToolBarBackground.Rect.Contains(e.Location) = False Then
-
-                        ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize) * GridSize)
-                        ToolPreview.Y = CInt(Math.Round(pointOffset.Y / GridSize) * GridSize)
-
-                        ShowToolPreview = True
-
-                    Else
-
-                        ShowToolPreview = False
-
-                    End If
-
-                Case Tools.Goal
-
-                    If ToolBarBackground.Rect.Contains(e.Location) = False Then
-
-                        ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize) * GridSize)
-                        ToolPreview.Y = CInt(Math.Round(pointOffset.Y / GridSize) * GridSize)
-
-                        ShowToolPreview = True
-
-                    Else
-
-                        ShowToolPreview = False
-
-                    End If
-
-            End Select
+            End If
 
         End If
 

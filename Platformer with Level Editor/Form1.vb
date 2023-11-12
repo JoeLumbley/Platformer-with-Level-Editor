@@ -384,6 +384,8 @@ Public Class Form1
 
     Private ScreenOffset As Point
 
+    Private IsMuted As Boolean = False
+
     <StructLayout(LayoutKind.Sequential)>
     Private Structure INPUTStruc
         Public type As UInteger
@@ -666,10 +668,15 @@ Public Class Form1
 
                 GameState = AppState.Playing
 
-                My.Computer.Audio.Play(My.Resources.level,
-                                       AudioPlayMode.BackgroundLoop)
+                If IsMuted = False Then
 
-                IsBackgroundLoopPlaying = True
+                    'Restart the level music.
+                    My.Computer.Audio.Play(My.Resources.level,
+                                           AudioPlayMode.BackgroundLoop)
+
+                    IsBackgroundLoopPlaying = True
+
+                End If
 
             End If
 
@@ -1156,13 +1163,13 @@ Public Class Form1
 
                     If Enemy.PatrolDirection = Direction.Right Then
 
-                        'Is Enemy moving to the left?
-                        If Enemy.Velocity.X < 0 Then
+                        ''Is Enemy moving to the left?
+                        'If Enemy.Velocity.X < 0 Then
 
-                            'Stop the move before change in direction.
-                            Enemies(Index).Velocity.X = 0 'Zero speed.
+                        '    'Stop the move before change in direction.
+                        '    Enemies(Index).Velocity.X = 0 'Zero speed.
 
-                        End If
+                        'End If
 
                         'Move Enemy to the right.
                         Enemies(Index).Velocity.X += Enemy.Acceleration.X * DeltaTime.TotalSeconds
@@ -1176,13 +1183,13 @@ Public Class Form1
 
                     Else
 
-                        'Is Enemy moving to the right?
-                        If Enemy.Velocity.X > 0 Then
+                        ''Is Enemy moving to the right?
+                        'If Enemy.Velocity.X > 0 Then
 
-                            'Stop the move before change in direction.
-                            Enemies(Index).Velocity.X = 0 'Zero speed.
+                        '    'Stop the move before change in direction.
+                        '    Enemies(Index).Velocity.X = 0 'Zero speed.
 
-                        End If
+                        'End If
 
                         'Move Enemy to the left.
                         Enemies(Index).Velocity.X += -Enemy.Acceleration.X * DeltaTime.TotalSeconds
@@ -1196,11 +1203,20 @@ Public Class Form1
 
                     End If
 
-                    Enemies(Index).Position.X += Enemy.Velocity.X * DeltaTime.TotalSeconds
 
-                    Enemies(Index).Rect.X = Math.Round(Enemy.Position.X)
 
                     If Enemy.Position.X >= Enemy.PatrolB.X Then
+
+                        'Is Enemy moving to the right?
+                        If Enemy.Velocity.X > 0 Then
+
+                            'Stop the move before change in direction.
+                            Enemies(Index).Velocity.X = 0 'Zero speed.
+
+                            'Aline the enemy to the patrol b point.
+                            Enemy.Position.X = Enemy.PatrolB.X
+
+                        End If
 
                         Enemies(Index).PatrolDirection = Direction.Left
 
@@ -1208,9 +1224,24 @@ Public Class Form1
 
                     If Enemy.Position.X <= Enemy.PatrolA.X Then
 
+                        'Is Enemy moving to the left?
+                        If Enemy.Velocity.X < 0 Then
+
+                            'Stop the move before change in direction.
+                            Enemies(Index).Velocity.X = 0 'Zero speed.
+
+                            'Aline the enemy to the patrol b point.
+                            Enemy.Position.X = Enemy.PatrolA.X
+
+                        End If
+
                         Enemies(Index).PatrolDirection = Direction.Right
 
                     End If
+
+                    Enemies(Index).Position.X += Enemy.Velocity.X * DeltaTime.TotalSeconds
+
+                    Enemies(Index).Rect.X = Math.Round(Enemy.Position.X)
 
                 End If
 
@@ -3780,8 +3811,8 @@ Public Class Form1
                 Write(File_Number, ObjectID.Enemy)
 
                 'Write Position
-                Write(File_Number, Enemy.Rect.X)
-                Write(File_Number, Enemy.Rect.Y)
+                Write(File_Number, Enemy.PatrolA.X)
+                Write(File_Number, Enemy.PatrolA.Y)
 
                 'Write Size
                 Write(File_Number, Enemy.Rect.Width)
@@ -4427,11 +4458,15 @@ Public Class Form1
 
                 If IsBackgroundLoopPlaying = True Then
 
+                    IsMuted = True
+
                     My.Computer.Audio.Stop()
 
                     IsBackgroundLoopPlaying = False
 
                 Else
+
+                    IsMuted = False
 
                     My.Computer.Audio.Play(My.Resources.level,
                                            AudioPlayMode.BackgroundLoop)

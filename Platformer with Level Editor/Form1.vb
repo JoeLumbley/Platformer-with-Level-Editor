@@ -277,9 +277,9 @@ Public Class Form1
 
     Private OutinePen As New Pen(Color.Black, 4)
 
-    Private MenuOutinePen As New Pen(Color.White, 8)
+    Private MenuOutinePen As New Pen(Color.White, 16)
 
-    Private MenuShadowPen As New Pen(Color.FromArgb(128, Color.Black), 8)
+    Private MenuShadowPen As New Pen(Color.FromArgb(128, Color.Black), 16)
 
 
 
@@ -1135,6 +1135,17 @@ Public Class Form1
                                     Next
 
                                 End If
+
+                                If Enemies IsNot Nothing Then
+
+                                    For Each EnemyB In Enemies
+
+                                        Enemies(Array.IndexOf(Enemies, EnemyB)).Eliminated = False
+
+                                    Next
+
+                                End If
+
 
                                 OurHero.Rect = New Rectangle(128, 769, 64, 64)
 
@@ -2173,7 +2184,7 @@ Public Class Form1
 
             Dim Shadow As Rectangle = MenuBackground.Rect
 
-            Shadow.Offset(6, 6)
+            Shadow.Offset(9, 9)
 
             '.FillRectangle(New SolidBrush(Color.FromArgb(128, Color.Black)), Shadow)
 

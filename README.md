@@ -4,7 +4,7 @@
 
 ![043](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/e0437978-e22c-4d35-9bd3-4d28541c9773)
 
-![046](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/ae22da6c-4189-40cd-a6d3-727722b21019)
+![047](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/9e97796e-27cb-4865-b3c6-3f41004ce12e)
 
 
 ![003](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/9ad10840-2c31-4bf2-8d92-1f5aab2b8312)

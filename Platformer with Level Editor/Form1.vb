@@ -5552,6 +5552,8 @@ Public Class Form1
 
             OurHero.Velocity = New PointF(0, 0)
 
+            MovePointerOffScreen()
+
         End If
 
     End Sub

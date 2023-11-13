@@ -3514,6 +3514,7 @@ Public Class Form1
                     SelectedBlock = -1
                     SelectedBill = -1
                     SelectedCloud = -1
+                    SelectedBush = -1
                     GoalSelected = False
                     LevelSelected = False
 

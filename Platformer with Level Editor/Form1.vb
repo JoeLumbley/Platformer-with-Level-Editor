@@ -649,6 +649,232 @@ Public Class Form1
 
     End Sub
 
+    Private Sub UpdateControllerData()
+
+        UpdateControllerPosition()
+
+    End Sub
+
+    Private Sub UpdateDeltaTime()
+        'Delta time (Δt) is the elapsed time since the last frame.
+
+        CurrentFrame = Now
+
+        DeltaTime = CurrentFrame - LastFrame 'Calculate delta time
+
+        LastFrame = CurrentFrame 'Update last frame time
+
+    End Sub
+
+    Private Sub UpdateOurHero()
+
+        If IsOnBlock() > -1 Then
+
+            UpdateBlocks()
+
+        ElseIf IsOnPlatform() > -1 Then
+
+            'UpdatePlatform
+
+        Else
+
+            If OurHero.Velocity.Y >= 0 Then
+                'Apply gravity to our hero. FALLING.
+
+                If OurHero.Velocity.Y <= OurHero.MaxVelocity.Y Then
+
+                    OurHero.Velocity.Y += Gravity * DeltaTime.TotalSeconds
+
+                Else
+
+                    OurHero.Velocity.Y = OurHero.MaxVelocity.Y
+
+                End If
+
+                'Skydive steering
+                If RightArrowDown = True Or ControllerRight = True Then
+
+                    OurHero.Velocity.X += 25.5F * DeltaTime.TotalSeconds
+
+                ElseIf LeftArrowDown = True Or ControllerLeft = True Then
+
+                    OurHero.Velocity.X += -25.5F * DeltaTime.TotalSeconds
+
+                End If
+
+            Else
+                'Apply gravity to our hero. JUMPING.
+
+                OurHero.Velocity.Y += Gravity * DeltaTime.TotalSeconds
+
+                'Max falling speed.
+                If OurHero.Velocity.Y > OurHero.MaxVelocity.Y Then OurHero.Velocity.Y = OurHero.MaxVelocity.Y
+
+                'air resistance
+                If OurHero.Velocity.X >= 0 Then
+
+                    OurHero.Velocity.X += -AirResistance * DeltaTime.TotalSeconds
+
+                    If OurHero.Velocity.X < 0 Then OurHero.Velocity.X = 0
+
+                Else
+
+                    OurHero.Velocity.X += AirResistance * DeltaTime.TotalSeconds
+
+                    If OurHero.Velocity.X > 0 Then OurHero.Velocity.X = 0
+
+                End If
+
+            End If
+
+        End If
+
+        If IsOnBill() > -1 Then
+
+            If Cash(IsOnBill).Collected = False Then
+
+                Cash(IsOnBill).Collected = True
+
+                CashCollected += 100
+
+            End If
+
+        End If
+
+        If OurHero.Rect.IntersectsWith(Goal.Rect) = True Then
+
+            DoGoalCollision()
+
+        End If
+
+        If IsOnEnemy() > -1 Then
+
+            DoEnemyCollision()
+
+        End If
+
+        FellOffLevel()
+
+        UpdateHeroMovement()
+
+    End Sub
+
+    Private Sub DoGoalCollision()
+
+        If GameState = AppState.Playing Then
+
+            ClearScreenTimerStart = Now
+
+            StopClearScreenTimer = False
+
+            If IsBackgroundLoopPlaying = True Then
+
+                My.Computer.Audio.Stop()
+
+                IsBackgroundLoopPlaying = False
+
+            End If
+
+            GameState = AppState.Clear
+
+        End If
+
+    End Sub
+
+    Private Sub DoEnemyCollision()
+
+        If Enemies IsNot Nothing Then
+
+            For Each Enemy In Enemies
+
+                If Enemy.Eliminated = False Then
+
+                    Dim Index As Integer = Array.IndexOf(Enemies, Enemy)
+
+                    'Is our hero colliding with the Enemy?
+                    If OurHero.Rect.IntersectsWith(Enemy.Rect) = True Then
+                        'Yes, our hero is colliding with the Enemy.
+
+                        'Is our hero falling?
+                        If OurHero.Velocity.Y > 0 Then
+                            'Yes, our hero is falling.
+
+                            'Is our hero above the Enemy?
+                            If OurHero.Position.Y <= Enemy.Rect.Top - OurHero.Rect.Height \ 2 Then
+                                'Yes, our hero is above the enemy.
+
+                                Enemies(Index).Eliminated = True
+
+                            End If
+
+                        Else
+
+                            ResetCash()
+
+                            ResurrectEnemies()
+
+                            ResetOurHero()
+
+                        End If
+
+                    End If
+
+                End If
+
+            Next
+
+        End If
+
+    End Sub
+
+    Private Sub ResetOurHero()
+
+        OurHero.Rect = New Rectangle(128, 769, 64, 64)
+
+        OurHero.Position = New PointF(OurHero.Rect.X, OurHero.Rect.Y)
+
+        OurHero.Velocity = New PointF(0, 0)
+
+    End Sub
+
+    Private Sub ResetCash()
+
+        CashCollected = 0
+
+        If Cash IsNot Nothing Then
+
+            For Each Bill In Cash
+
+                Cash(Array.IndexOf(Cash, Bill)).Collected = False
+
+            Next
+
+        End If
+
+    End Sub
+
+    Private Sub ResurrectEnemies()
+
+        If Enemies IsNot Nothing Then
+
+            For Each Enemy In Enemies
+
+                Enemies(Array.IndexOf(Enemies, Enemy)).Eliminated = False
+
+            Next
+
+        End If
+
+    End Sub
+
+    Private Sub UpdateCamera()
+
+        LookAhead()
+
+        KeepCameraOnTheLevel()
+
+    End Sub
+
     Private Sub UpdateClearScreenTimer()
 
         If StopClearScreenTimer = False Then
@@ -659,17 +885,20 @@ Public Class Form1
 
                 StopClearScreenTimer = True
 
-                CashCollected = 0
+                ResetCash()
 
-                If Cash IsNot Nothing Then
 
-                    For Each Bill In Cash
+                'CashCollected = 0
 
-                        Cash(Array.IndexOf(Cash, Bill)).Collected = False
+                'If Cash IsNot Nothing Then
 
-                    Next
+                '    For Each Bill In Cash
 
-                End If
+                '        Cash(Array.IndexOf(Cash, Bill)).Collected = False
+
+                '    Next
+
+                'End If
 
                 OurHero.Rect = New Rectangle(128, 769, 64, 64)
 
@@ -709,15 +938,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub UpdateControllerData()
 
-        UpdateControllerPosition()
-
-        'UpdateEditingMenuSave()
-
-        'UpdateBatteryInfo()
-
-    End Sub
 
     Private Sub UpdateControllerPosition()
 
@@ -920,25 +1141,6 @@ Public Class Form1
 
     End Sub
 
-    Private Sub UpdateDeltaTime()
-        'Delta time (Δt) is the elapsed time since the last frame.
-
-        CurrentFrame = Now
-
-        DeltaTime = CurrentFrame - LastFrame 'Calculate delta time
-
-        LastFrame = CurrentFrame 'Update last frame time
-
-    End Sub
-
-    Private Sub UpdateCamera()
-
-        LookAhead()
-
-        KeepCameraOnTheLevel()
-
-    End Sub
-
     Private Sub LookAhead()
 
         'Is our hero near the right side of the frame?
@@ -1000,177 +1202,6 @@ Public Class Form1
         End If
 
     End Sub
-
-    Private Sub UpdateOurHero()
-
-        If IsOnBlock() > -1 Then
-
-            UpdateBlocks()
-
-        ElseIf IsOnPlatform() > -1 Then
-
-            'UpdatePlatform
-
-        Else
-
-            If OurHero.Velocity.Y >= 0 Then
-                'Apply gravity to our hero. FALLING.
-
-                If OurHero.Velocity.Y <= OurHero.MaxVelocity.Y Then
-
-                    OurHero.Velocity.Y += Gravity * DeltaTime.TotalSeconds
-
-                Else
-
-                    OurHero.Velocity.Y = OurHero.MaxVelocity.Y
-
-                End If
-
-                'Skydive steering
-                If RightArrowDown = True Or ControllerRight = True Then
-
-                    OurHero.Velocity.X += 25.5F * DeltaTime.TotalSeconds
-
-                ElseIf LeftArrowDown = True Or ControllerLeft = True Then
-
-                    OurHero.Velocity.X += -25.5F * DeltaTime.TotalSeconds
-
-                End If
-
-            Else
-                'Apply gravity to our hero. JUMPING.
-
-                OurHero.Velocity.Y += Gravity * DeltaTime.TotalSeconds
-
-                'Max falling speed.
-                If OurHero.Velocity.Y > OurHero.MaxVelocity.Y Then OurHero.Velocity.Y = OurHero.MaxVelocity.Y
-
-                'air resistance
-                If OurHero.Velocity.X >= 0 Then
-
-                    OurHero.Velocity.X += -AirResistance * DeltaTime.TotalSeconds
-
-                    If OurHero.Velocity.X < 0 Then OurHero.Velocity.X = 0
-
-                Else
-
-                    OurHero.Velocity.X += AirResistance * DeltaTime.TotalSeconds
-
-                    If OurHero.Velocity.X > 0 Then OurHero.Velocity.X = 0
-
-                End If
-
-            End If
-
-        End If
-
-        If IsOnBill() > -1 Then
-
-            If Cash(IsOnBill).Collected = False Then
-
-                Cash(IsOnBill).Collected = True
-
-                CashCollected += 100
-
-            End If
-
-        End If
-
-        If OurHero.Rect.IntersectsWith(Goal.Rect) = True Then
-
-            If GameState = AppState.Playing Then
-
-                ClearScreenTimerStart = Now
-
-                StopClearScreenTimer = False
-
-                If IsBackgroundLoopPlaying = True Then
-
-                    My.Computer.Audio.Stop()
-
-                    IsBackgroundLoopPlaying = False
-
-                End If
-
-                GameState = AppState.Clear
-
-            End If
-
-        End If
-
-        If IsOnEnemy() > -1 Then
-
-            If Enemies IsNot Nothing Then
-
-                For Each Enemy In Enemies
-
-                    If Enemy.Eliminated = False Then
-
-                        Dim Index As Integer = Array.IndexOf(Enemies, Enemy)
-
-                        'Is our hero colliding with the Enemy?
-                        If OurHero.Rect.IntersectsWith(Enemy.Rect) = True Then
-                            'Yes, our hero is colliding with the Enemy.
-
-                            'Is our hero falling?
-                            If OurHero.Velocity.Y > 0 Then
-
-                                'Is our hero above the Enemy?
-                                If OurHero.Position.Y <= Enemy.Rect.Top - OurHero.Rect.Height \ 2 Then
-
-                                    Enemies(Index).Eliminated = True
-
-                                End If
-
-                            Else
-
-                                CashCollected = 0
-
-                                If Cash IsNot Nothing Then
-
-                                    For Each Bill In Cash
-
-                                        Cash(Array.IndexOf(Cash, Bill)).Collected = False
-
-                                    Next
-
-                                End If
-
-                                If Enemies IsNot Nothing Then
-
-                                    For Each EnemyB In Enemies
-
-                                        Enemies(Array.IndexOf(Enemies, EnemyB)).Eliminated = False
-
-                                    Next
-
-                                End If
-
-
-                                OurHero.Rect = New Rectangle(128, 769, 64, 64)
-
-                                OurHero.Position = New PointF(OurHero.Rect.X, OurHero.Rect.Y)
-
-                                OurHero.Velocity = New PointF(0, 0)
-
-                            End If
-
-                        End If
-
-                    End If
-
-                Next
-
-            End If
-
-        End If
-
-        FellOffLevel()
-
-        UpdateHeroMovement()
-
-    End Sub
-
     Private Sub UpdateHeroMovement()
 
         'Move our hero horizontally.
@@ -5524,27 +5555,32 @@ Public Class Form1
         'When our hero exits the bottom side of the level.
         If OurHero.Position.Y > Level.Rect.Bottom Then
 
-            CashCollected = 0
+            ResetCash()
 
-            If Cash IsNot Nothing Then
 
-                For Each Bill In Cash
+            'CashCollected = 0
 
-                    Cash(Array.IndexOf(Cash, Bill)).Collected = False
+            'If Cash IsNot Nothing Then
 
-                Next
+            '    For Each Bill In Cash
 
-            End If
+            '        Cash(Array.IndexOf(Cash, Bill)).Collected = False
 
-            If Enemies IsNot Nothing Then
+            '    Next
 
-                For Each Enemy In Enemies
+            'End If
 
-                    Enemies(Array.IndexOf(Enemies, Enemy)).Eliminated = False
+            ResurrectEnemies()
 
-                Next
+            'If Enemies IsNot Nothing Then
 
-            End If
+            '    For Each Enemy In Enemies
+
+            '        Enemies(Array.IndexOf(Enemies, Enemy)).Eliminated = False
+
+            '    Next
+
+            'End If
 
             OurHero.Rect = New Rectangle(128, 769, 64, 64)
 

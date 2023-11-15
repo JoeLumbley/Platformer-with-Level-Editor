@@ -918,6 +918,8 @@ Public Class Form1
 
             Catch ex As Exception
 
+                IsBackgroundLoopPlaying = False
+
             End Try
 
         End If
@@ -3051,10 +3053,7 @@ Public Class Form1
 
                         GameState = AppState.Playing
 
-                        My.Computer.Audio.Play(My.Resources.level,
-                                               AudioPlayMode.BackgroundLoop)
-
-                        IsBackgroundLoopPlaying = True
+                        PlayLevelMusic()
 
                     End If
 
@@ -3083,10 +3082,7 @@ Public Class Form1
             LevelName = "Untitled"
             Text = LevelName & " - Platformer with Level Editor - Code with Joe"
 
-            My.Computer.Audio.Play(My.Resources.level,
-                                   AudioPlayMode.BackgroundLoop)
-
-            IsBackgroundLoopPlaying = True
+            PlayLevelMusic()
 
         End If
 
@@ -4564,10 +4560,7 @@ Public Class Form1
 
                     IsMuted = False
 
-                    My.Computer.Audio.Play(My.Resources.level,
-                                           AudioPlayMode.BackgroundLoop)
-
-                    IsBackgroundLoopPlaying = True
+                    PlayLevelMusic()
 
                 End If
 

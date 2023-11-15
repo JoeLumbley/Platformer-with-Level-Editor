@@ -887,34 +887,9 @@ Public Class Form1
 
                 ResetCash()
 
+                ResurrectEnemies()
 
-                'CashCollected = 0
-
-                'If Cash IsNot Nothing Then
-
-                '    For Each Bill In Cash
-
-                '        Cash(Array.IndexOf(Cash, Bill)).Collected = False
-
-                '    Next
-
-                'End If
-
-                OurHero.Rect = New Rectangle(128, 769, 64, 64)
-
-                OurHero.Position = New PointF(OurHero.Rect.X, OurHero.Rect.Y)
-
-                OurHero.Velocity = New PointF(0, 0)
-
-                If Enemies IsNot Nothing Then
-
-                    For Each Enemy In Enemies
-
-                        Enemies(Array.IndexOf(Enemies, Enemy)).Eliminated = False
-
-                    Next
-
-                End If
+                ResetOurHero()
 
                 MovePointerOffScreen()
 
@@ -922,15 +897,7 @@ Public Class Form1
 
                 GameState = AppState.Playing
 
-                If IsMuted = False Then
-
-                    'Restart the level music.
-                    My.Computer.Audio.Play(My.Resources.level,
-                                           AudioPlayMode.BackgroundLoop)
-
-                    IsBackgroundLoopPlaying = True
-
-                End If
+                PlayLevelMusic()
 
             End If
 
@@ -938,7 +905,24 @@ Public Class Form1
 
     End Sub
 
+    Private Sub PlayLevelMusic()
 
+        If IsMuted = False Then
+
+            Try
+
+                My.Computer.Audio.Play(My.Resources.level,
+                                       AudioPlayMode.BackgroundLoop)
+
+                IsBackgroundLoopPlaying = True
+
+            Catch ex As Exception
+
+            End Try
+
+        End If
+
+    End Sub
 
     Private Sub UpdateControllerPosition()
 
@@ -5557,38 +5541,9 @@ Public Class Form1
 
             ResetCash()
 
-
-            'CashCollected = 0
-
-            'If Cash IsNot Nothing Then
-
-            '    For Each Bill In Cash
-
-            '        Cash(Array.IndexOf(Cash, Bill)).Collected = False
-
-            '    Next
-
-            'End If
-
             ResurrectEnemies()
 
-            'If Enemies IsNot Nothing Then
-
-            '    For Each Enemy In Enemies
-
-            '        Enemies(Array.IndexOf(Enemies, Enemy)).Eliminated = False
-
-            '    Next
-
-            'End If
-
             ResetOurHero()
-
-            'OurHero.Rect = New Rectangle(128, 769, 64, 64)
-
-            'OurHero.Position = New PointF(OurHero.Rect.X, OurHero.Rect.Y)
-
-            'OurHero.Velocity = New PointF(0, 0)
 
             MovePointerOffScreen()
 

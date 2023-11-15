@@ -5582,11 +5582,13 @@ Public Class Form1
 
             'End If
 
-            OurHero.Rect = New Rectangle(128, 769, 64, 64)
+            ResetOurHero()
 
-            OurHero.Position = New PointF(OurHero.Rect.X, OurHero.Rect.Y)
+            'OurHero.Rect = New Rectangle(128, 769, 64, 64)
 
-            OurHero.Velocity = New PointF(0, 0)
+            'OurHero.Position = New PointF(OurHero.Rect.X, OurHero.Rect.Y)
+
+            'OurHero.Velocity = New PointF(0, 0)
 
             MovePointerOffScreen()
 

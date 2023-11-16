@@ -2762,7 +2762,7 @@ Public Class Form1
             .FillRectangle(Brushes.Black,
                            StartScreenOpenButton.Rect)
 
-            .DrawString("Open",
+            .DrawString("Open Y",
                         FPSFont,
                         Brushes.White,
                         StartScreenOpenButton.Rect,
@@ -2779,7 +2779,7 @@ Public Class Form1
             .FillRectangle(Brushes.Black,
                            StartScreenNewButton.Rect)
 
-            .DrawString("New",
+            .DrawString("New B",
                         FPSFont,
                         Brushes.White,
                         StartScreenNewButton.Rect,
@@ -2978,9 +2978,13 @@ Public Class Form1
 
         Title.Rect = New Rectangle(ClientRectangle.Left, ClientRectangle.Top, ClientRectangle.Width, ClientRectangle.Height)
 
-        StartScreenNewButton.Rect = New Rectangle(ClientRectangle.Width \ 2 - 200, ClientRectangle.Height \ 2 + 100, 150, 90)
 
-        StartScreenOpenButton.Rect = New Rectangle(ClientRectangle.Width \ 2 + 100, ClientRectangle.Height \ 2 + 100, 150, 90)
+
+        StartScreenNewButton.Rect = New Rectangle(ClientRectangle.Width \ 2 - 320, ClientRectangle.Height \ 2 + 100, 300, 90)
+
+        StartScreenOpenButton.Rect = New Rectangle(ClientRectangle.Width \ 2 + 20, ClientRectangle.Height \ 2 + 100, 300, 90)
+
+
 
         Camera.Rect.Size = ClientRectangle.Size
 
@@ -5061,6 +5065,20 @@ Public Class Form1
 
                 End If
 
+                If GameState = AppState.Start Then
+
+                    Cursor.Position = New Point(ScreenOffset.X + StartScreenNewButton.Rect.X, ScreenOffset.Y + StartScreenNewButton.Rect.Y)
+
+                    If IsMouseDown = False Then
+
+                        IsMouseDown = True
+
+                        DoMouseLeftDown()
+
+                    End If
+
+                End If
+
             Case 16384 'X
 
                 If GameState = AppState.Editing Then
@@ -5088,6 +5106,20 @@ Public Class Form1
                             DoMouseLeftDown()
 
                         End If
+
+                    End If
+
+                End If
+
+                If GameState = AppState.Start Then
+
+                    Cursor.Position = New Point(ScreenOffset.X + StartScreenOpenButton.Rect.X, ScreenOffset.Y + StartScreenOpenButton.Rect.Y)
+
+                    If IsMouseDown = False Then
+
+                        IsMouseDown = True
+
+                        DoMouseLeftDown()
 
                     End If
 

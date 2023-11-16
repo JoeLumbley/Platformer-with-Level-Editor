@@ -265,13 +265,7 @@ Public Class Form1
 
     Private ReadOnly BillIconFont As New Font(FontFamily.GenericSansSerif, 16, FontStyle.Regular)
 
-
-
-
     Private ReadOnly EnemyIconFont As New Font(FontFamily.GenericSansSerif, 16, FontStyle.Regular)
-
-
-
 
     Private ReadOnly TitleFont As New Font(New FontFamily("Bahnschrift"), 38, FontStyle.Bold)
 
@@ -280,8 +274,6 @@ Public Class Form1
     Private MenuOutinePen As New Pen(Color.White, 16)
 
     Private MenuShadowPen As New Pen(Color.FromArgb(128, Color.Black), 16)
-
-
 
     Private CloundToolIconOutinePen As New Pen(Color.Black, 3)
 
@@ -1220,14 +1212,6 @@ Public Class Form1
 
                     If Enemy.PatrolDirection = Direction.Right Then
 
-                        ''Is Enemy moving to the left?
-                        'If Enemy.Velocity.X < 0 Then
-
-                        '    'Stop the move before change in direction.
-                        '    Enemies(Index).Velocity.X = 0 'Zero speed.
-
-                        'End If
-
                         'Move Enemy to the right.
                         Enemies(Index).Velocity.X += Enemy.Acceleration.X * DeltaTime.TotalSeconds
 
@@ -1239,14 +1223,6 @@ Public Class Form1
                         End If
 
                     Else
-
-                        ''Is Enemy moving to the right?
-                        'If Enemy.Velocity.X > 0 Then
-
-                        '    'Stop the move before change in direction.
-                        '    Enemies(Index).Velocity.X = 0 'Zero speed.
-
-                        'End If
 
                         'Move Enemy to the left.
                         Enemies(Index).Velocity.X += -Enemy.Acceleration.X * DeltaTime.TotalSeconds
@@ -1260,7 +1236,7 @@ Public Class Form1
 
                     End If
 
-
+                    Enemies(Index).Position.X += Enemy.Velocity.X * DeltaTime.TotalSeconds
 
                     If Enemy.Position.X >= Enemy.PatrolB.X Then
 
@@ -1273,9 +1249,9 @@ Public Class Form1
                             'Aline the enemy to the patrol b point.
                             Enemy.Position.X = Enemy.PatrolB.X
 
-                        End If
+                            Enemies(Index).PatrolDirection = Direction.Left
 
-                        Enemies(Index).PatrolDirection = Direction.Left
+                        End If
 
                     End If
 
@@ -1287,16 +1263,14 @@ Public Class Form1
                             'Stop the move before change in direction.
                             Enemies(Index).Velocity.X = 0 'Zero speed.
 
-                            'Aline the enemy to the patrol b point.
+                            'Aline the enemy to the patrol a point.
                             Enemy.Position.X = Enemy.PatrolA.X
+
+                            Enemies(Index).PatrolDirection = Direction.Right
 
                         End If
 
-                        Enemies(Index).PatrolDirection = Direction.Right
-
                     End If
-
-                    Enemies(Index).Position.X += Enemy.Velocity.X * DeltaTime.TotalSeconds
 
                     Enemies(Index).Rect.X = Math.Round(Enemy.Position.X)
 
@@ -1419,7 +1393,6 @@ Public Class Form1
                             Else
                                 'No,the player is NOT holding down the right arrow key.
                                 'No, the player is NOT holding down the left arrow key.
-
 
                                 'Is our hero moving to the right?
                                 If OurHero.Velocity.X > 0F Then
@@ -2127,11 +2100,6 @@ Public Class Form1
                         .FillRectangle(New SolidBrush(Color.FromArgb(128, Color.Chocolate)), PatrolB)
 
                         .DrawString("E", EnemyFont, New SolidBrush(Color.FromArgb(128, Color.PaleGoldenrod)), PatrolB, AlineCenterMiddle)
-
-
-                        '.FillRectangle(Brushes.Goldenrod, rectOffset)
-
-                        '.DrawString("$", FPSFont, Brushes.OrangeRed, rectOffset, AlineCenterMiddle)
 
                     Case Tools.Goal
 
@@ -2965,26 +2933,15 @@ Public Class Form1
 
         GoalToolIcon.Rect = New Rectangle(ClientRectangle.Left + 811, ClientRectangle.Bottom - 65, 40, 40)
 
-
-
-
         EnemyToolButton.Rect = New Rectangle(ClientRectangle.Left + 877, ClientRectangle.Bottom - 90, 90, 90)
 
         EnemyToolIcon.Rect = New Rectangle(ClientRectangle.Left + 902, ClientRectangle.Bottom - 65, 40, 40)
 
-
-
-
-
         Title.Rect = New Rectangle(ClientRectangle.Left, ClientRectangle.Top, ClientRectangle.Width, ClientRectangle.Height)
-
-
 
         StartScreenNewButton.Rect = New Rectangle(ClientRectangle.Width \ 2 - 320, ClientRectangle.Height \ 2 + 100, 300, 90)
 
         StartScreenOpenButton.Rect = New Rectangle(ClientRectangle.Width \ 2 + 20, ClientRectangle.Height \ 2 + 100, 300, 90)
-
-
 
         Camera.Rect.Size = ClientRectangle.Size
 

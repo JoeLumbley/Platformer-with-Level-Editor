@@ -518,99 +518,6 @@ Public Class Form1
 
     End Sub
 
-    Private Sub InitializeApp()
-
-        InitializeToolBarButtons()
-
-        InitializeForm()
-
-        InitializeBuffer()
-
-        Title.Text = "Platformer" & vbCrLf & "with Level Editor"
-
-        OutinePen.LineJoin = Drawing2D.LineJoin.Round
-
-        MenuOutinePen.LineJoin = Drawing2D.LineJoin.Round
-
-        MenuShadowPen.LineJoin = Drawing2D.LineJoin.Round
-
-    End Sub
-
-    Private Sub InitializeToolBarButtons()
-
-        EditPlayButton.Rect = New Rectangle(ClientRectangle.Left + 210,
-                                            ClientRectangle.Bottom - 90,
-                                            120,
-                                            100)
-
-        SaveButton.Rect = New Rectangle(ClientRectangle.Right - 210,
-                                        ClientRectangle.Bottom - 90,
-                                        120,
-                                        100)
-    End Sub
-
-    Private Sub InitializeObjects()
-
-        Camera.Rect.Location = New Point(0, 0)
-
-        SetMinLevelSize()
-
-        OurHero.Rect = New Rectangle(128, 769, 64, 64)
-
-        OurHero.Position = New PointF(OurHero.Rect.X, OurHero.Rect.Y)
-
-        OurHero.Velocity = New PointF(0, 0)
-
-        OurHero.MaxVelocity = New PointF(400, 1000)
-
-        OurHero.Acceleration = New PointF(300, 25)
-
-        BufferGridLines()
-
-    End Sub
-
-    Private Sub CreateNewLevel()
-
-        Goal.Rect = New Rectangle(1472, 768, 64, 64)
-
-        AddBlock(New Rectangle(0, 832, 1920, 64))
-
-        AddBlock(New Rectangle(1088, 576, 64, 64))
-
-        AddBlock(New Rectangle(1344, 576, 320, 64))
-
-        AddBlock(New Rectangle(1472, 320, 64, 64))
-
-        AddCloud(New Rectangle(512, 64, 192, 128))
-
-        AddCloud(New Rectangle(1728, 64, 128, 64))
-
-        AddBush(New Rectangle(768, 768, 320, 64))
-
-        AddBush(New Rectangle(1600, 768, 64, 64))
-
-        AddBill(New Point(1088, 320))
-
-        AddBill(New Point(1472, 64))
-
-        AddEnemy(New Point(500, 769), New Point(512, 769), New Point(576, 769))
-
-    End Sub
-
-    Private Sub InitializeForm()
-
-        Me.WindowState = FormWindowState.Maximized
-
-        Text = "Platformer with Level Editor - Code with Joe"
-
-        SetStyle(ControlStyles.UserPaint, True)
-
-        SetStyle(ControlStyles.OptimizedDoubleBuffer, True)
-
-        SetStyle(ControlStyles.AllPaintingInWmPaint, True)
-
-    End Sub
-
     Private Sub UpdateFrame()
 
         Select Case GameState
@@ -637,9 +544,65 @@ Public Class Form1
 
             Case AppState.Clear
 
-                'UpdateControllerData()
-
                 UpdateClearScreenTimer()
+
+        End Select
+
+    End Sub
+
+    Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
+
+        DrawFrame()
+
+        'Show buffer on form.
+        Buffer.Render(e.Graphics)
+
+        'Release memory used by buffer.
+        Buffer.Dispose()
+        Buffer = Nothing
+
+        'Create new buffer.
+        Buffer = Context.Allocate(CreateGraphics(), ClientRectangle)
+
+        'Use these settings when drawing to the backbuffer.
+        With Buffer.Graphics
+
+            'Bug Fix
+            .CompositingMode = Drawing2D.CompositingMode.SourceOver 'Don't Change.
+            'To fix draw string error with anti aliasing: "Parameters not valid."
+            'Set the compositing mode to source over.
+
+            .TextRenderingHint = Drawing.Text.TextRenderingHint.AntiAliasGridFit
+            .SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
+            .CompositingQuality = Drawing2D.CompositingQuality.HighQuality
+            .InterpolationMode = Drawing2D.InterpolationMode.HighQualityBicubic
+            .PixelOffsetMode = Drawing2D.PixelOffsetMode.HighQuality
+
+        End With
+
+        UpdateFrameCounter()
+
+    End Sub
+
+    Private Sub DrawFrame()
+
+        Select Case GameState
+
+            Case AppState.Start
+
+                DrawStartScreen()
+
+            Case AppState.Playing
+
+                DrawPlaying()
+
+            Case AppState.Editing
+
+                DrawEditing()
+
+            Case AppState.Clear
+
+                DrawClearScreen()
 
         End Select
 
@@ -659,6 +622,128 @@ Public Class Form1
         DeltaTime = CurrentFrame - LastFrame 'Calculate delta time
 
         LastFrame = CurrentFrame 'Update last frame time
+
+    End Sub
+
+    Private Sub UpdateCamera()
+
+        LookAhead()
+
+        KeepCameraOnTheLevel()
+
+    End Sub
+
+    Private Sub DrawClearScreen()
+
+        DrawBackground(Color.Black)
+
+        DrawClearTitle()
+
+        DrawOurHero()
+
+    End Sub
+
+    Private Sub DrawStartScreen()
+
+        DrawBackground(Color.LightSkyBlue)
+
+        DrawTitle()
+
+        DrawStartScreenNewButton()
+
+        DrawStartScreenOpenButton()
+
+    End Sub
+
+    Private Sub DrawPlaying()
+
+        DrawBackground(Color.LightSkyBlue)
+
+        DrawClouds()
+
+        DrawBushes()
+
+        DrawBlocks()
+
+        DrawCash()
+
+        DrawGoal()
+
+        DrawEnemies()
+
+        DrawOurHero()
+
+        DrawCollectedCash()
+
+        DrawFPS()
+
+        DrawEditButton()
+
+    End Sub
+
+    Private Sub DrawEditing()
+
+        DrawBackground(Color.LightSkyBlue)
+
+        DrawClouds()
+
+        DrawBushes()
+
+        DrawBlocks()
+
+        DrawCash()
+
+        DrawGoal()
+
+        DrawEnemies()
+
+        DrawOurHero()
+
+        DrawGridLines()
+
+        DrawToolPreview()
+
+        DrawToolBar()
+
+        DrawPlayButton()
+
+        DrawMenuButton()
+
+        DrawFPS()
+
+        If ShowMenu = True Then
+
+            DrawMenuBackground()
+
+            DrawSaveButton()
+
+            DrawNewButton()
+
+            DrawOpenButton()
+
+            DrawExitButton()
+
+        End If
+
+    End Sub
+
+    Private Sub DrawToolBar()
+
+        DrawToolbarBackground()
+
+        DrawPointerToolButton()
+
+        DrawBlockToolButton()
+
+        DrawBillToolButton()
+
+        DrawCloudToolButton()
+
+        DrawBushesToolButton()
+
+        DrawGoalToolButton()
+
+        DrawEnemyToolButton()
 
     End Sub
 
@@ -860,14 +945,6 @@ Public Class Form1
             Next
 
         End If
-
-    End Sub
-
-    Private Sub UpdateCamera()
-
-        LookAhead()
-
-        KeepCameraOnTheLevel()
 
     End Sub
 
@@ -1500,191 +1577,6 @@ Public Class Form1
             Next
 
         End If
-
-    End Sub
-
-    Private Sub InitializeBuffer()
-
-        'Set context to the context of this app.
-        Context = BufferedGraphicsManager.Current
-
-        'Set buffer size to the primary working area.
-        Context.MaximumBuffer = Screen.PrimaryScreen.WorkingArea.Size
-
-        'Create buffer.
-        Buffer = Context.Allocate(CreateGraphics(), ClientRectangle)
-
-    End Sub
-
-    Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
-
-        DrawFrame()
-
-        'Show buffer on form.
-        Buffer.Render(e.Graphics)
-
-        'Release memory used by buffer.
-        Buffer.Dispose()
-        Buffer = Nothing
-
-        'Create new buffer.
-        Buffer = Context.Allocate(CreateGraphics(), ClientRectangle)
-
-        'Use these settings when drawing to the backbuffer.
-        With Buffer.Graphics
-
-            'Bug Fix
-            .CompositingMode = Drawing2D.CompositingMode.SourceOver 'Don't Change.
-            'To fix draw string error with anti aliasing: "Parameters not valid."
-            'Set the compositing mode to source over.
-
-            .TextRenderingHint = Drawing.Text.TextRenderingHint.AntiAliasGridFit
-            .SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
-            .CompositingQuality = Drawing2D.CompositingQuality.HighQuality
-            .InterpolationMode = Drawing2D.InterpolationMode.HighQualityBicubic
-            .PixelOffsetMode = Drawing2D.PixelOffsetMode.HighQuality
-
-        End With
-
-        UpdateFrameCounter()
-
-    End Sub
-
-    Private Sub DrawFrame()
-
-        Select Case GameState
-
-            Case AppState.Start
-
-                DrawStartScreen()
-
-            Case AppState.Playing
-
-                DrawPlaying()
-
-            Case AppState.Editing
-
-                DrawEditing()
-
-            Case AppState.Clear
-
-                DrawClearScreen()
-
-        End Select
-
-    End Sub
-
-    Private Sub DrawClearScreen()
-
-        DrawBackground(Color.Black)
-
-        DrawClearTitle()
-
-        DrawOurHero()
-
-    End Sub
-
-    Private Sub DrawStartScreen()
-
-        DrawBackground(Color.LightSkyBlue)
-
-        DrawTitle()
-
-        DrawStartScreenNewButton()
-
-        DrawStartScreenOpenButton()
-
-    End Sub
-
-    Private Sub DrawPlaying()
-
-        DrawBackground(Color.LightSkyBlue)
-
-        DrawClouds()
-
-        DrawBushes()
-
-        DrawBlocks()
-
-        DrawCash()
-
-        DrawGoal()
-
-        DrawEnemies()
-
-        DrawOurHero()
-
-        DrawCollectedCash()
-
-        DrawFPS()
-
-        DrawEditButton()
-
-    End Sub
-
-    Private Sub DrawEditing()
-
-        DrawBackground(Color.LightSkyBlue)
-
-        DrawClouds()
-
-        DrawBushes()
-
-        DrawBlocks()
-
-        DrawCash()
-
-        DrawGoal()
-
-        DrawEnemies()
-
-        DrawOurHero()
-
-        DrawGridLines()
-
-        DrawToolPreview()
-
-        DrawToolBar()
-
-        DrawPlayButton()
-
-        DrawMenuButton()
-
-        DrawFPS()
-
-        If ShowMenu = True Then
-
-            DrawMenuBackground()
-
-            DrawSaveButton()
-
-            DrawNewButton()
-
-            DrawOpenButton()
-
-            DrawExitButton()
-
-        End If
-
-    End Sub
-
-    Private Sub DrawToolBar()
-
-        DrawToolbarBackground()
-
-        DrawPointerToolButton()
-
-        DrawBlockToolButton()
-
-        DrawBillToolButton()
-
-        DrawCloudToolButton()
-
-        DrawBushesToolButton()
-
-        DrawGoalToolButton()
-
-        DrawEnemyToolButton()
 
     End Sub
 
@@ -2892,6 +2784,112 @@ Public Class Form1
             StartTime = Now
 
         End If
+
+    End Sub
+
+    Private Sub InitializeApp()
+
+        InitializeToolBarButtons()
+
+        InitializeForm()
+
+        InitializeBuffer()
+
+        Title.Text = "Platformer" & vbCrLf & "with Level Editor"
+
+        OutinePen.LineJoin = Drawing2D.LineJoin.Round
+
+        MenuOutinePen.LineJoin = Drawing2D.LineJoin.Round
+
+        MenuShadowPen.LineJoin = Drawing2D.LineJoin.Round
+
+    End Sub
+
+    Private Sub InitializeToolBarButtons()
+
+        EditPlayButton.Rect = New Rectangle(ClientRectangle.Left + 210,
+                                            ClientRectangle.Bottom - 90,
+                                            120,
+                                            100)
+
+        SaveButton.Rect = New Rectangle(ClientRectangle.Right - 210,
+                                        ClientRectangle.Bottom - 90,
+                                        120,
+                                        100)
+    End Sub
+
+    Private Sub InitializeObjects()
+
+        Camera.Rect.Location = New Point(0, 0)
+
+        SetMinLevelSize()
+
+        OurHero.Rect = New Rectangle(128, 769, 64, 64)
+
+        OurHero.Position = New PointF(OurHero.Rect.X, OurHero.Rect.Y)
+
+        OurHero.Velocity = New PointF(0, 0)
+
+        OurHero.MaxVelocity = New PointF(400, 1000)
+
+        OurHero.Acceleration = New PointF(300, 25)
+
+        BufferGridLines()
+
+    End Sub
+
+    Private Sub InitializeForm()
+
+        Me.WindowState = FormWindowState.Maximized
+
+        Text = "Platformer with Level Editor - Code with Joe"
+
+        SetStyle(ControlStyles.UserPaint, True)
+
+        SetStyle(ControlStyles.OptimizedDoubleBuffer, True)
+
+        SetStyle(ControlStyles.AllPaintingInWmPaint, True)
+
+    End Sub
+
+    Private Sub InitializeBuffer()
+
+        'Set context to the context of this app.
+        Context = BufferedGraphicsManager.Current
+
+        'Set buffer size to the primary working area.
+        Context.MaximumBuffer = Screen.PrimaryScreen.WorkingArea.Size
+
+        'Create buffer.
+        Buffer = Context.Allocate(CreateGraphics(), ClientRectangle)
+
+    End Sub
+
+    Private Sub CreateNewLevel()
+
+        Goal.Rect = New Rectangle(1472, 768, 64, 64)
+
+        AddBlock(New Rectangle(0, 832, 1920, 64))
+
+        AddBlock(New Rectangle(1088, 576, 64, 64))
+
+        AddBlock(New Rectangle(1344, 576, 320, 64))
+
+        AddBlock(New Rectangle(1472, 320, 64, 64))
+
+        AddCloud(New Rectangle(512, 64, 192, 128))
+
+        AddCloud(New Rectangle(1728, 64, 128, 64))
+
+        AddBush(New Rectangle(768, 768, 320, 64))
+
+        AddBush(New Rectangle(1600, 768, 64, 64))
+
+        AddBill(New Point(1088, 320))
+
+        AddBill(New Point(1472, 64))
+
+        AddEnemy(New Point(500, 769), New Point(512, 769), New Point(576, 769))
 
     End Sub
 

@@ -625,6 +625,99 @@ Public Class Form1
 
     End Sub
 
+    Private Sub UpdateOurHero()
+
+        If IsOnBlock() > -1 Then
+
+            UpdateBlocks()
+
+        ElseIf IsOnPlatform() > -1 Then
+
+            'UpdatePlatform
+
+        Else
+
+            If OurHero.Velocity.Y >= 0 Then
+                'Apply gravity to our hero. FALLING.
+
+                If OurHero.Velocity.Y <= OurHero.MaxVelocity.Y Then
+
+                    OurHero.Velocity.Y += Gravity * DeltaTime.TotalSeconds
+
+                Else
+
+                    OurHero.Velocity.Y = OurHero.MaxVelocity.Y
+
+                End If
+
+                'Skydive steering
+                If RightArrowDown = True Or ControllerRight = True Then
+
+                    OurHero.Velocity.X += 25.5F * DeltaTime.TotalSeconds
+
+                ElseIf LeftArrowDown = True Or ControllerLeft = True Then
+
+                    OurHero.Velocity.X += -25.5F * DeltaTime.TotalSeconds
+
+                End If
+
+            Else
+                'Apply gravity to our hero. JUMPING.
+
+                OurHero.Velocity.Y += Gravity * DeltaTime.TotalSeconds
+
+                'Max falling speed.
+                If OurHero.Velocity.Y > OurHero.MaxVelocity.Y Then OurHero.Velocity.Y = OurHero.MaxVelocity.Y
+
+                'air resistance
+                If OurHero.Velocity.X >= 0 Then
+
+                    OurHero.Velocity.X += -AirResistance * DeltaTime.TotalSeconds
+
+                    If OurHero.Velocity.X < 0 Then OurHero.Velocity.X = 0
+
+                Else
+
+                    OurHero.Velocity.X += AirResistance * DeltaTime.TotalSeconds
+
+                    If OurHero.Velocity.X > 0 Then OurHero.Velocity.X = 0
+
+                End If
+
+            End If
+
+        End If
+
+        If IsOnBill() > -1 Then
+
+            If Cash(IsOnBill).Collected = False Then
+
+                Cash(IsOnBill).Collected = True
+
+                CashCollected += 100
+
+            End If
+
+        End If
+
+        If OurHero.Rect.IntersectsWith(Goal.Rect) = True Then
+
+            DoGoalCollision()
+
+        End If
+
+        If IsOnEnemy() > -1 Then
+
+            DoEnemyCollision()
+
+        End If
+
+        FellOffLevel()
+
+        UpdateHeroMovement()
+
+    End Sub
+
     Private Sub UpdateCamera()
 
         LookAhead()
@@ -633,13 +726,71 @@ Public Class Form1
 
     End Sub
 
-    Private Sub DrawClearScreen()
+    Private Sub DoGoalCollision()
 
-        DrawBackground(Color.Black)
+        If GameState = AppState.Playing Then
 
-        DrawClearTitle()
+            ClearScreenTimerStart = Now
 
-        DrawOurHero()
+            StopClearScreenTimer = False
+
+            If IsBackgroundLoopPlaying = True Then
+
+                My.Computer.Audio.Stop()
+
+                IsBackgroundLoopPlaying = False
+
+            End If
+
+            GameState = AppState.Clear
+
+        End If
+
+    End Sub
+
+    Private Sub DoEnemyCollision()
+
+        If Enemies IsNot Nothing Then
+
+            For Each Enemy In Enemies
+
+                If Enemy.Eliminated = False Then
+
+                    Dim Index As Integer = Array.IndexOf(Enemies, Enemy)
+
+                    'Is our hero colliding with the Enemy?
+                    If OurHero.Rect.IntersectsWith(Enemy.Rect) = True Then
+                        'Yes, our hero is colliding with the Enemy.
+
+                        'Is our hero falling?
+                        If OurHero.Velocity.Y > 0 Then
+                            'Yes, our hero is falling.
+
+                            'Is our hero above the Enemy?
+                            If OurHero.Position.Y <= Enemy.Rect.Top - OurHero.Rect.Height \ 2 Then
+                                'Yes, our hero is above the enemy.
+
+                                Enemies(Index).Eliminated = True
+
+                            End If
+
+                        Else
+
+                            ResetCash()
+
+                            ResurrectEnemies()
+
+                            ResetOurHero()
+
+                        End If
+
+                    End If
+
+                End If
+
+            Next
+
+        End If
 
     End Sub
 
@@ -747,164 +898,13 @@ Public Class Form1
 
     End Sub
 
-    Private Sub UpdateOurHero()
+    Private Sub DrawClearScreen()
 
-        If IsOnBlock() > -1 Then
+        DrawBackground(Color.Black)
 
-            UpdateBlocks()
+        DrawClearTitle()
 
-        ElseIf IsOnPlatform() > -1 Then
-
-            'UpdatePlatform
-
-        Else
-
-            If OurHero.Velocity.Y >= 0 Then
-                'Apply gravity to our hero. FALLING.
-
-                If OurHero.Velocity.Y <= OurHero.MaxVelocity.Y Then
-
-                    OurHero.Velocity.Y += Gravity * DeltaTime.TotalSeconds
-
-                Else
-
-                    OurHero.Velocity.Y = OurHero.MaxVelocity.Y
-
-                End If
-
-                'Skydive steering
-                If RightArrowDown = True Or ControllerRight = True Then
-
-                    OurHero.Velocity.X += 25.5F * DeltaTime.TotalSeconds
-
-                ElseIf LeftArrowDown = True Or ControllerLeft = True Then
-
-                    OurHero.Velocity.X += -25.5F * DeltaTime.TotalSeconds
-
-                End If
-
-            Else
-                'Apply gravity to our hero. JUMPING.
-
-                OurHero.Velocity.Y += Gravity * DeltaTime.TotalSeconds
-
-                'Max falling speed.
-                If OurHero.Velocity.Y > OurHero.MaxVelocity.Y Then OurHero.Velocity.Y = OurHero.MaxVelocity.Y
-
-                'air resistance
-                If OurHero.Velocity.X >= 0 Then
-
-                    OurHero.Velocity.X += -AirResistance * DeltaTime.TotalSeconds
-
-                    If OurHero.Velocity.X < 0 Then OurHero.Velocity.X = 0
-
-                Else
-
-                    OurHero.Velocity.X += AirResistance * DeltaTime.TotalSeconds
-
-                    If OurHero.Velocity.X > 0 Then OurHero.Velocity.X = 0
-
-                End If
-
-            End If
-
-        End If
-
-        If IsOnBill() > -1 Then
-
-            If Cash(IsOnBill).Collected = False Then
-
-                Cash(IsOnBill).Collected = True
-
-                CashCollected += 100
-
-            End If
-
-        End If
-
-        If OurHero.Rect.IntersectsWith(Goal.Rect) = True Then
-
-            DoGoalCollision()
-
-        End If
-
-        If IsOnEnemy() > -1 Then
-
-            DoEnemyCollision()
-
-        End If
-
-        FellOffLevel()
-
-        UpdateHeroMovement()
-
-    End Sub
-
-    Private Sub DoGoalCollision()
-
-        If GameState = AppState.Playing Then
-
-            ClearScreenTimerStart = Now
-
-            StopClearScreenTimer = False
-
-            If IsBackgroundLoopPlaying = True Then
-
-                My.Computer.Audio.Stop()
-
-                IsBackgroundLoopPlaying = False
-
-            End If
-
-            GameState = AppState.Clear
-
-        End If
-
-    End Sub
-
-    Private Sub DoEnemyCollision()
-
-        If Enemies IsNot Nothing Then
-
-            For Each Enemy In Enemies
-
-                If Enemy.Eliminated = False Then
-
-                    Dim Index As Integer = Array.IndexOf(Enemies, Enemy)
-
-                    'Is our hero colliding with the Enemy?
-                    If OurHero.Rect.IntersectsWith(Enemy.Rect) = True Then
-                        'Yes, our hero is colliding with the Enemy.
-
-                        'Is our hero falling?
-                        If OurHero.Velocity.Y > 0 Then
-                            'Yes, our hero is falling.
-
-                            'Is our hero above the Enemy?
-                            If OurHero.Position.Y <= Enemy.Rect.Top - OurHero.Rect.Height \ 2 Then
-                                'Yes, our hero is above the enemy.
-
-                                Enemies(Index).Eliminated = True
-
-                            End If
-
-                        Else
-
-                            ResetCash()
-
-                            ResurrectEnemies()
-
-                            ResetOurHero()
-
-                        End If
-
-                    End If
-
-                End If
-
-            Next
-
-        End If
+        DrawOurHero()
 
     End Sub
 

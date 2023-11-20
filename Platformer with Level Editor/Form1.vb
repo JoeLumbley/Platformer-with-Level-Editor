@@ -3406,7 +3406,6 @@ Public Class Form1
             Dim PointOffset As Point = e
 
             PointOffset.X = (Camera.Rect.X * -1) + e.X
-
             PointOffset.Y = (Camera.Rect.Y * -1) + e.Y
 
             If SizingHandle.Contains(e) Then
@@ -3587,7 +3586,6 @@ Public Class Form1
 
                             'Select the newly created bill.
                             SelectedBush = Bushes.Length - 1
-
 
                         Case Tools.Enemy
 

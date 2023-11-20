@@ -3426,9 +3426,6 @@ Public Class Form1
                     SelectionOffset.X = PointOffset.X - Enemies(SelectedEnemy).PatrolA.X
                     SelectionOffset.Y = PointOffset.Y - Enemies(SelectedEnemy).PatrolA.Y
 
-                    'SelectionOffset.X = PointOffset.X - Enemies(SelectedEnemy).Rect.X
-                    'SelectionOffset.Y = PointOffset.Y - Enemies(SelectedEnemy).Rect.Y
-
                     'Deselect other game objects.
                     SelectedBlock = -1
                     SelectedBill = -1
@@ -3519,27 +3516,6 @@ Public Class Form1
                     SelectedEnemy = -1
                     GoalSelected = False
                     LevelSelected = False
-
-
-                    '    'Is the player selecting a Enemy?
-                    'ElseIf CheckEnemySelection(PointOffset) > -1 Then
-                    '    'Yes, the player is selecting a Enemy.
-
-                    '    SelectedEnemy = CheckEnemySelection(PointOffset)
-
-                    '    SelectionOffset.X = PointOffset.X - Enemies(SelectedEnemy).PatrolA.X
-                    '    SelectionOffset.Y = PointOffset.Y - Enemies(SelectedEnemy).PatrolA.Y
-
-                    '    'SelectionOffset.X = PointOffset.X - Enemies(SelectedEnemy).Rect.X
-                    '    'SelectionOffset.Y = PointOffset.Y - Enemies(SelectedEnemy).Rect.Y
-
-                    '    'Deselect other game objects.
-                    '    SelectedBlock = -1
-                    '    SelectedBill = -1
-                    '    SelectedCloud = -1
-                    '    SelectedBush = -1
-                    '    GoalSelected = False
-                    '    LevelSelected = False
 
                 Else
                     'No, the player is not selecting a game object.

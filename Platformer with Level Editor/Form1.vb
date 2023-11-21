@@ -267,7 +267,7 @@ Public Class Form1
 
     Private ReadOnly EnemyIconFont As New Font(FontFamily.GenericSansSerif, 16, FontStyle.Regular)
 
-    Private ReadOnly TitleFont As New Font(New FontFamily("Bahnschrift"), 38, FontStyle.Bold)
+    Private ReadOnly TitleFont As New Font(New FontFamily("Bahnschrift"), 52, FontStyle.Bold)
 
     Private OutinePen As New Pen(Color.Black, 4)
 
@@ -798,9 +798,29 @@ Public Class Form1
 
         DrawBackground(Color.LightSkyBlue)
 
+        DrawClouds()
+
+        DrawBushes()
+
+        DrawBlocks()
+
+        DrawCash()
+
+        DrawGoal()
+
+        DrawEnemies()
+
+        DrawOurHero()
+
+        DrawCollectedCash()
+
         DrawTitle()
 
+        DrawStartScreenNewButtonBackground()
+
         DrawStartScreenNewButton()
+
+        DrawStartScreenOpenButtonBackground()
 
         DrawStartScreenOpenButton()
 
@@ -1915,6 +1935,16 @@ Public Class Form1
 
                     Select Case GameState
 
+                        Case AppState.Start
+
+                            If Bill.Collected = False Then
+
+                                .FillRectangle(Brushes.Goldenrod, rectOffset)
+
+                                .DrawString("$", FPSFont, Brushes.OrangeRed, rectOffset, AlineCenterMiddle)
+
+                            End If
+
                         Case AppState.Playing
 
                             If Bill.Collected = False Then
@@ -2100,6 +2130,42 @@ Public Class Form1
             .DrawRectangle(MenuOutinePen, MenuBackground.Rect)
 
             .FillRectangle(Brushes.Black, MenuBackground.Rect)
+
+        End With
+
+    End Sub
+
+    Private Sub DrawStartScreenNewButtonBackground()
+
+        With Buffer.Graphics
+
+            Dim Shadow As Rectangle = StartScreenNewButton.Rect
+
+            Shadow.Offset(9, 9)
+
+            .DrawRectangle(MenuShadowPen, Shadow)
+
+            .DrawRectangle(MenuOutinePen, StartScreenNewButton.Rect)
+
+            .FillRectangle(Brushes.Black, StartScreenNewButton.Rect)
+
+        End With
+
+    End Sub
+
+    Private Sub DrawStartScreenOpenButtonBackground()
+
+        With Buffer.Graphics
+
+            Dim Shadow As Rectangle = StartScreenOpenButton.Rect
+
+            Shadow.Offset(9, 9)
+
+            .DrawRectangle(MenuShadowPen, Shadow)
+
+            .DrawRectangle(MenuOutinePen, StartScreenOpenButton.Rect)
+
+            .FillRectangle(Brushes.Black, StartScreenOpenButton.Rect)
 
         End With
 
@@ -2803,6 +2869,14 @@ Public Class Form1
 
         MenuShadowPen.LineJoin = Drawing2D.LineJoin.Round
 
+        InitializeObjects()
+
+        'CreateNewLevel()
+
+        CreateStartScreenLevel()
+
+        CashCollected = 0
+
     End Sub
 
     Private Sub InitializeToolBarButtons()
@@ -2893,6 +2967,30 @@ Public Class Form1
 
     End Sub
 
+    Private Sub CreateStartScreenLevel()
+
+        Goal.Rect = New Rectangle(-100, -100, 64, 64)
+
+        AddBlock(New Rectangle(0, 832, 1920, 64))
+
+        AddBlock(New Rectangle(1472, 576, 384, 64))
+
+        AddBlock(New Rectangle(1536, 256, 256, 64))
+
+        AddBlock(New Rectangle(0, 896, 1920, 64))
+
+        AddBlock(New Rectangle(0, 960, 1920, 128))
+
+        AddBush(New Rectangle(256, 768, 320, 64))
+
+        AddBush(New Rectangle(1408, 768, 512, 64))
+
+        AddCloud(New Rectangle(64, 128, 192, 64))
+
+        AddCloud(New Rectangle(1728, 64, 128, 64))
+
+    End Sub
+
     Private Sub Form1_Resize(sender As Object, e As EventArgs) Handles MyBase.Resize
 
         'Place the FPS display at the bottom of the client area.
@@ -2961,11 +3059,11 @@ Public Class Form1
 
         EnemyToolIcon.Rect = New Rectangle(ClientRectangle.Left + 902, ClientRectangle.Bottom - 65, 40, 40)
 
-        Title.Rect = New Rectangle(ClientRectangle.Left, ClientRectangle.Top, ClientRectangle.Width, ClientRectangle.Height)
+        Title.Rect = New Rectangle(ClientRectangle.Width \ 2 - 425, ClientRectangle.Height \ 2 - 245, 850, 245)
 
-        StartScreenNewButton.Rect = New Rectangle(ClientRectangle.Width \ 2 - 320, ClientRectangle.Height \ 2 + 100, 300, 90)
+        StartScreenNewButton.Rect = New Rectangle(ClientRectangle.Width \ 2 - 230, ClientRectangle.Height \ 2 + 100, 210, 90)
 
-        StartScreenOpenButton.Rect = New Rectangle(ClientRectangle.Width \ 2 + 20, ClientRectangle.Height \ 2 + 100, 300, 90)
+        StartScreenOpenButton.Rect = New Rectangle(ClientRectangle.Width \ 2 + 20, ClientRectangle.Height \ 2 + 100, 210, 90)
 
         Camera.Rect.Size = ClientRectangle.Size
 
@@ -3055,6 +3153,8 @@ Public Class Form1
         'Is the player selecting the new button?
         If StartScreenNewButton.Rect.Contains(e.Location) Then
             'Yes, the player is selecting the new button.
+
+            ClearObjects()
 
             InitializeObjects()
 

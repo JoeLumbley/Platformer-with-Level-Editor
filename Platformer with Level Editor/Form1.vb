@@ -275,6 +275,8 @@ Public Class Form1
 
     Private MenuShadowPen As New Pen(Color.FromArgb(128, Color.Black), 16)
 
+    Private ButtonIconOutinePen As New Pen(Color.Red, 3)
+
     Private CloundToolIconOutinePen As New Pen(Color.Black, 3)
 
     Private BushToolIconOutinePen As New Pen(Color.Black, 3)
@@ -2731,10 +2733,18 @@ Public Class Form1
             .FillRectangle(Brushes.Black,
                            StartScreenNewButton.Rect)
 
-            .DrawString("New B",
+            .DrawEllipse(ButtonIconOutinePen, New Rectangle(StartScreenNewButton.Rect.X + 140, StartScreenNewButton.Rect.Y + 20, 52, 52))
+
+            .DrawString("New",
                         FPSFont,
                         Brushes.White,
-                        StartScreenNewButton.Rect,
+                        New Rectangle(StartScreenNewButton.Rect.X + 5, StartScreenNewButton.Rect.Y + 24, 120, 50),
+                        AlineCenterMiddle)
+
+            .DrawString("B",
+                        FPSFont,
+                        Brushes.White,
+                        New Rectangle(StartScreenNewButton.Rect.X + 144, StartScreenNewButton.Rect.Y + 24, 50, 50),
                         AlineCenterMiddle)
 
         End With

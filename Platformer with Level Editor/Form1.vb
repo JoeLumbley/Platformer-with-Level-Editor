@@ -275,7 +275,12 @@ Public Class Form1
 
     Private MenuShadowPen As New Pen(Color.FromArgb(128, Color.Black), 16)
 
-    Private ButtonIconOutinePen As New Pen(Color.Red, 3)
+    Private BButtonIconOutinePen As New Pen(Color.Red, 3)
+
+    Private YButtonIconOutinePen As New Pen(Color.Yellow, 3)
+
+
+    Private ReadOnly ButtonIconFont As New Font(FontFamily.GenericSansSerif, 20)
 
     Private CloundToolIconOutinePen As New Pen(Color.Black, 3)
 
@@ -2716,10 +2721,19 @@ Public Class Form1
             .FillRectangle(Brushes.Black,
                            StartScreenOpenButton.Rect)
 
-            .DrawString("Open Y",
+            .DrawEllipse(YButtonIconOutinePen, New Rectangle(StartScreenOpenButton.Rect.X + 142, StartScreenOpenButton.Rect.Y + 20, 52, 52))
+
+
+            .DrawString("Open",
                         FPSFont,
                         Brushes.White,
-                        StartScreenOpenButton.Rect,
+                        New Rectangle(StartScreenOpenButton.Rect.X, StartScreenOpenButton.Rect.Y + 24, 150, 50),
+                        AlineCenterMiddle)
+
+            .DrawString("Y",
+                        ButtonIconFont,
+                        Brushes.White,
+                        New Rectangle(StartScreenOpenButton.Rect.X + 144, StartScreenOpenButton.Rect.Y + 25, 50, 50),
                         AlineCenterMiddle)
 
         End With
@@ -2733,7 +2747,7 @@ Public Class Form1
             .FillRectangle(Brushes.Black,
                            StartScreenNewButton.Rect)
 
-            .DrawEllipse(ButtonIconOutinePen, New Rectangle(StartScreenNewButton.Rect.X + 140, StartScreenNewButton.Rect.Y + 20, 52, 52))
+            .DrawEllipse(BButtonIconOutinePen, New Rectangle(StartScreenNewButton.Rect.X + 140, StartScreenNewButton.Rect.Y + 20, 52, 52))
 
             .DrawString("New",
                         FPSFont,
@@ -2742,9 +2756,9 @@ Public Class Form1
                         AlineCenterMiddle)
 
             .DrawString("B",
-                        FPSFont,
+                        ButtonIconFont,
                         Brushes.White,
-                        New Rectangle(StartScreenNewButton.Rect.X + 144, StartScreenNewButton.Rect.Y + 24, 50, 50),
+                        New Rectangle(StartScreenNewButton.Rect.X + 143, StartScreenNewButton.Rect.Y + 24, 50, 50),
                         AlineCenterMiddle)
 
         End With

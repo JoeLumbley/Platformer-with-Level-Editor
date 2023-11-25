@@ -269,6 +269,8 @@ Public Class Form1
 
     Private ReadOnly TitleFont As New Font(New FontFamily("Bahnschrift"), 52, FontStyle.Bold)
 
+    Private ReadOnly NewButtonIconFont As New Font(New FontFamily("Yu Gothic"), 25, FontStyle.Regular)
+
     Private OutinePen As New Pen(Color.Black, 4)
 
     Private MenuOutinePen As New Pen(Color.White, 16)
@@ -279,8 +281,12 @@ Public Class Form1
 
     Private YButtonIconOutinePen As New Pen(Color.Yellow, 3)
 
+    Private XButtonIconOutinePen As New Pen(Color.Blue, 3)
 
     Private ReadOnly ButtonIconFont As New Font(FontFamily.GenericSansSerif, 20)
+
+    Private ReadOnly RightTriggerIconFont As New Font(FontFamily.GenericSansSerif, 20)
+
 
     Private CloundToolIconOutinePen As New Pen(Color.Black, 3)
 
@@ -2458,7 +2464,21 @@ Public Class Form1
 
             .FillRectangle(Brushes.Black, SaveButton.Rect)
 
-            .DrawString("Save B", FPSFont, Brushes.White, SaveButton.Rect, AlineCenterMiddle)
+            .DrawEllipse(BButtonIconOutinePen,
+                         New Rectangle(SaveButton.Rect.X + 197, SaveButton.Rect.Y + 20, 52, 52))
+
+
+            .DrawString("Save",
+                        FPSFont,
+                        Brushes.White,
+                        New Rectangle(SaveButton.Rect.X + 22, SaveButton.Rect.Y + 24, 145, 50),
+                        AlineCenterMiddle)
+
+            .DrawString("B",
+                        RightTriggerIconFont,
+                        Brushes.White,
+                        New Rectangle(SaveButton.Rect.X + 175, SaveButton.Rect.Y + 24, 100, 50),
+                        AlineCenterMiddle)
 
         End With
 
@@ -2470,7 +2490,24 @@ Public Class Form1
 
             .FillRectangle(Brushes.Black, NewButton.Rect)
 
-            .DrawString("New RT", FPSFont, Brushes.White, NewButton.Rect, AlineCenterMiddle)
+            '.DrawString("乁",
+            '            NewButtonIconFont,
+            '            Brushes.White,
+            '            New Rectangle(NewButton.Rect.X + 225, NewButton.Rect.Y + 9, 52, 95),
+            '            AlineCenterMiddle)
+
+
+
+            .DrawString("New", FPSFont,
+                        Brushes.White,
+                        New Rectangle(NewButton.Rect.X + 25, NewButton.Rect.Y + 24, 120, 50),
+                        AlineCenterMiddle)
+
+            .DrawString("RT",
+                        RightTriggerIconFont,
+                        Brushes.White,
+                        New Rectangle(NewButton.Rect.X + 175, NewButton.Rect.Y + 24, 100, 50),
+                        AlineCenterMiddle)
 
         End With
 
@@ -2482,7 +2519,10 @@ Public Class Form1
 
             .FillRectangle(Brushes.Black, ExitButton.Rect)
 
-            .DrawString("X", FPSFont, Brushes.White, ExitButton.Rect, AlineCenterMiddle)
+            .DrawEllipse(XButtonIconOutinePen, New Rectangle(ExitButton.Rect.X + 124, ExitButton.Rect.Y + 16, 52, 52))
+
+
+            .DrawString("X", ButtonIconFont, Brushes.White, ExitButton.Rect, AlineCenterMiddle)
 
         End With
 
@@ -2494,7 +2534,22 @@ Public Class Form1
 
             .FillRectangle(Brushes.Black, OpenButton.Rect)
 
-            .DrawString("Open Y", FPSFont, Brushes.White, OpenButton.Rect, AlineCenterMiddle)
+            .DrawEllipse(YButtonIconOutinePen,
+                         New Rectangle(OpenButton.Rect.X + 197, OpenButton.Rect.Y + 20, 52, 52))
+
+
+            .DrawString("Open",
+                        FPSFont,
+                        Brushes.White,
+                        New Rectangle(OpenButton.Rect.X + 24, OpenButton.Rect.Y + 24, 145, 50),
+                        AlineCenterMiddle)
+
+            .DrawString("Y",
+                        ButtonIconFont,
+                        Brushes.White,
+                        New Rectangle(OpenButton.Rect.X + 174, OpenButton.Rect.Y + 24, 100, 50),
+                        AlineCenterMiddle)
+
 
         End With
 

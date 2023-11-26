@@ -2458,6 +2458,18 @@ Public Class Form1
 
     End Sub
 
+    Private Sub DrawMenuButton()
+
+        With Buffer.Graphics
+
+            .FillRectangle(Brushes.Black, MenuButton.Rect)
+
+            .DrawString("Menu", FPSFont, Brushes.White, MenuButton.Rect, AlineCenterMiddle)
+
+        End With
+
+    End Sub
+
     Private Sub DrawSaveButton()
 
         With Buffer.Graphics
@@ -2466,7 +2478,6 @@ Public Class Form1
 
             .DrawEllipse(BButtonIconOutinePen,
                          New Rectangle(SaveButton.Rect.X + 197, SaveButton.Rect.Y + 20, 52, 52))
-
 
             .DrawString("Save",
                         FPSFont,
@@ -2484,19 +2495,36 @@ Public Class Form1
 
     End Sub
 
+    Private Sub DrawOpenButton()
+
+        With Buffer.Graphics
+
+            .FillRectangle(Brushes.Black, OpenButton.Rect)
+
+            .DrawEllipse(YButtonIconOutinePen,
+                         New Rectangle(OpenButton.Rect.X + 197, OpenButton.Rect.Y + 20, 52, 52))
+
+            .DrawString("Open",
+                        FPSFont,
+                        Brushes.White,
+                        New Rectangle(OpenButton.Rect.X + 24, OpenButton.Rect.Y + 24, 145, 50),
+                        AlineCenterMiddle)
+
+            .DrawString("Y",
+                        ButtonIconFont,
+                        Brushes.White,
+                        New Rectangle(OpenButton.Rect.X + 174, OpenButton.Rect.Y + 24, 100, 50),
+                        AlineCenterMiddle)
+
+        End With
+
+    End Sub
+
     Private Sub DrawNewButton()
 
         With Buffer.Graphics
 
             .FillRectangle(Brushes.Black, NewButton.Rect)
-
-            '.DrawString("乁",
-            '            NewButtonIconFont,
-            '            Brushes.White,
-            '            New Rectangle(NewButton.Rect.X + 225, NewButton.Rect.Y + 9, 52, 95),
-            '            AlineCenterMiddle)
-
-
 
             .DrawString("New", FPSFont,
                         Brushes.White,
@@ -2521,47 +2549,7 @@ Public Class Form1
 
             .DrawEllipse(XButtonIconOutinePen, New Rectangle(ExitButton.Rect.X + 124, ExitButton.Rect.Y + 16, 52, 52))
 
-
             .DrawString("X", ButtonIconFont, Brushes.White, ExitButton.Rect, AlineCenterMiddle)
-
-        End With
-
-    End Sub
-
-    Private Sub DrawOpenButton()
-
-        With Buffer.Graphics
-
-            .FillRectangle(Brushes.Black, OpenButton.Rect)
-
-            .DrawEllipse(YButtonIconOutinePen,
-                         New Rectangle(OpenButton.Rect.X + 197, OpenButton.Rect.Y + 20, 52, 52))
-
-
-            .DrawString("Open",
-                        FPSFont,
-                        Brushes.White,
-                        New Rectangle(OpenButton.Rect.X + 24, OpenButton.Rect.Y + 24, 145, 50),
-                        AlineCenterMiddle)
-
-            .DrawString("Y",
-                        ButtonIconFont,
-                        Brushes.White,
-                        New Rectangle(OpenButton.Rect.X + 174, OpenButton.Rect.Y + 24, 100, 50),
-                        AlineCenterMiddle)
-
-
-        End With
-
-    End Sub
-
-    Private Sub DrawMenuButton()
-
-        With Buffer.Graphics
-
-            .FillRectangle(Brushes.Black, MenuButton.Rect)
-
-            .DrawString("Menu", FPSFont, Brushes.White, MenuButton.Rect, AlineCenterMiddle)
 
         End With
 

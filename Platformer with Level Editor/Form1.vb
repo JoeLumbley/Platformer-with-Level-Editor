@@ -991,6 +991,11 @@ Public Class Form1
 
                 StopClearScreenTimer = True
 
+                Camera.Rect.X = 0
+                Camera.Rect.Y = 0
+
+                BufferGridLines()
+
                 ResetCash()
 
                 ResurrectEnemies()
@@ -1268,6 +1273,9 @@ Public Class Form1
             'Move camera to the right.
             Camera.Rect.X = OurHero.Rect.Left * -1 + Camera.Rect.Width / 1.5
 
+            'BufferGridLines()
+
+
         End If
 
         'Is our hero near the left side of the frame?
@@ -1276,6 +1284,34 @@ Public Class Form1
 
             'Move camera to the left.
             Camera.Rect.X = OurHero.Rect.Left * -1 + Camera.Rect.Width / 4
+
+            'BufferGridLines()
+
+
+        End If
+
+        'Is our hero near the bottom side of the frame?
+        If OurHero.Rect.Y > (Camera.Rect.Y * -1) + Camera.Rect.Height / 1.25 Then
+            'Yes, our hero is near the bottom side of the frame.
+
+            'Move camera down.
+            Camera.Rect.Y = OurHero.Rect.Top * -1 + Camera.Rect.Height / 1.25
+
+            'BufferGridLines()
+
+
+        End If
+
+
+        'Is our hero near the top side of the frame?
+        If OurHero.Rect.Y < (Camera.Rect.Y * -1) + Camera.Rect.Height / 6 Then
+            'Yes, our hero is near the top side of the frame.
+
+            'Move camera up.
+            Camera.Rect.Y = OurHero.Rect.Top * -1 + Camera.Rect.Height / 6
+
+            'BufferGridLines()
+
 
         End If
 
@@ -1290,6 +1326,9 @@ Public Class Form1
             'Aline camera to the left side of the level.
             Camera.Rect.X = Level.Rect.Left * -1
 
+            'BufferGridLines()
+
+
         End If
 
         'Is the Camera off to right side of the level? checked
@@ -1298,6 +1337,9 @@ Public Class Form1
 
             'Aline camera to the right side of the level.
             Camera.Rect.X = Level.Rect.Right * -1 + Camera.Rect.Width
+
+            'BufferGridLines()
+
 
         End If
 
@@ -1308,6 +1350,8 @@ Public Class Form1
             'Aline camera to the top side of the level. 
             Camera.Rect.Y = Level.Rect.Top * -1
 
+            'BufferGridLines()
+
         End If
 
         'Is the Camera off to bottom side of the level? checked
@@ -1317,7 +1361,12 @@ Public Class Form1
             'Aline camera to the bottom side of the level.
             Camera.Rect.Y = (Level.Rect.Bottom * -1) + Camera.Rect.Height
 
+            'BufferGridLines()
+
+
         End If
+
+
 
     End Sub
     Private Sub UpdateHeroMovement()
@@ -2594,6 +2643,14 @@ Public Class Form1
         If Rect.Right > Level.Rect.Right Then
 
             Level.Rect.Width = Rect.Right
+
+            BufferGridLines()
+
+        End If
+
+        If Rect.Bottom > Level.Rect.Bottom Then
+
+            Level.Rect.Height = Rect.Bottom
 
             BufferGridLines()
 
@@ -5005,9 +5062,9 @@ Public Class Form1
 
                             IsStartDown = True
 
-                            BufferGridLines()
-
                             GameState = AppState.Editing
+
+                            BufferGridLines()
 
                         End If
 
@@ -5700,6 +5757,11 @@ Public Class Form1
 
         'When our hero exits the bottom side of the level.
         If OurHero.Position.Y > Level.Rect.Bottom Then
+
+            Camera.Rect.X = 0
+            Camera.Rect.Y = 0
+
+
 
             ResetCash()
 

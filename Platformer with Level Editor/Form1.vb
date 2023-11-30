@@ -213,6 +213,8 @@ Public Class Form1
 
     Private Camera As GameObject
 
+    Private CameraPlayPostion As Point
+
     Private ToolPreview As Rectangle
 
     Private SelectedCloud As Integer = -1
@@ -1369,6 +1371,7 @@ Public Class Form1
 
 
     End Sub
+
     Private Sub UpdateHeroMovement()
 
         'Move our hero horizontally.
@@ -3207,9 +3210,14 @@ Public Class Form1
 
                 If EditPlayButton.Rect.Contains(e.Location) Then
 
-                    BufferGridLines()
+                    'Remember the cameras in game position before opening the editor.
+                    CameraPlayPostion.X = Camera.Rect.X
+                    CameraPlayPostion.Y = Camera.Rect.Y
+
 
                     GameState = AppState.Editing
+
+                    BufferGridLines()
 
                 End If
 
@@ -3459,7 +3467,12 @@ Public Class Form1
 
             DeselectObjects()
 
-            'Resume Play
+            'Restore the cameras in game position.
+            Camera.Rect.X = CameraPlayPostion.X
+            Camera.Rect.Y = CameraPlayPostion.Y
+
+            MovePointerOffScreen()
+
             LastFrame = Now
 
             GameState = AppState.Playing
@@ -5062,6 +5075,10 @@ Public Class Form1
 
                             IsStartDown = True
 
+                            'Remember the cameras in game position before opening the editor.
+                            CameraPlayPostion.X = Camera.Rect.X
+                            CameraPlayPostion.Y = Camera.Rect.Y
+
                             GameState = AppState.Editing
 
                             BufferGridLines()
@@ -5073,6 +5090,12 @@ Public Class Form1
                         If IsStartDown = False Then
 
                             IsStartDown = True
+
+                            DeselectObjects()
+
+                            'Restore the cameras in game position.
+                            Camera.Rect.X = CameraPlayPostion.X
+                            Camera.Rect.Y = CameraPlayPostion.Y
 
                             MovePointerOffScreen()
 

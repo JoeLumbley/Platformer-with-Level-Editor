@@ -791,6 +791,11 @@ Public Class Form1
 
                         Else
 
+                            Camera.Rect.X = 0
+                            Camera.Rect.Y = 0
+
+                            BufferGridLines()
+
                             ResetCash()
 
                             ResurrectEnemies()
@@ -5784,6 +5789,7 @@ Public Class Form1
             Camera.Rect.X = 0
             Camera.Rect.Y = 0
 
+            BufferGridLines()
 
 
             ResetCash()
@@ -5792,7 +5798,7 @@ Public Class Form1
 
             ResetOurHero()
 
-            MovePointerOffScreen()
+            'MovePointerOffScreen()
 
         End If
 

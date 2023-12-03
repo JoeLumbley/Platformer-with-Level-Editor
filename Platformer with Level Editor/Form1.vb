@@ -5625,6 +5625,7 @@ Public Class Form1
                 ControllerB = True
             Case Else 'Any buttons not handled yet.
                 Debug.Print(ControllerPosition.Gamepad.wButtons.ToString)
+
         End Select
 
     End Sub
@@ -5684,12 +5685,12 @@ Public Class Form1
 
         If Platforms IsNot Nothing Then
 
-            For Each Plateform In Platforms
+            For Each Platform In Platforms
 
-                If OurHero.Rect.IntersectsWith(Plateform.Rect) = True Then
+                'Is our hero colliding with the platform?
+                If OurHero.Rect.IntersectsWith(Platform.Rect) = True Then
 
-                    'return index of Plateform
-                    Return Array.IndexOf(Platforms, Plateform)
+                    Return Array.IndexOf(Platforms, Platform)
 
                 End If
 
@@ -5707,9 +5708,10 @@ Public Class Form1
 
             For Each Block In Blocks
 
+                'Is our hero colliding with the block?
                 If OurHero.Rect.IntersectsWith(Block.Rect) = True Then
+                    'Yes, our hero is colliding with the block.
 
-                    'return index of Plateform
                     Return Array.IndexOf(Blocks, Block)
 
                 End If
@@ -5728,9 +5730,10 @@ Public Class Form1
 
             For Each Bill In Cash
 
+                'Is our hero colliding with the bill?
                 If OurHero.Rect.IntersectsWith(Bill.Rect) = True Then
+                    'Yes, our hero is colliding with the bill.
 
-                    'return index of Plateform
                     Return Array.IndexOf(Cash, Bill)
 
                 End If
@@ -5749,9 +5752,10 @@ Public Class Form1
 
             For Each Enemy In Enemies
 
+                'Is our hero colliding with the enemy?
                 If OurHero.Rect.IntersectsWith(Enemy.Rect) = True Then
+                    'Yes, our hero is colliding with the enemy.
 
-                    'return index of Plateform
                     Return Array.IndexOf(Enemies, Enemy)
 
                 End If

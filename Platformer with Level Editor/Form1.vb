@@ -5689,6 +5689,7 @@ Public Class Form1
 
                 'Is our hero colliding with the platform?
                 If OurHero.Rect.IntersectsWith(Platform.Rect) = True Then
+                    'Yes, our hero is colliding with the platform.
 
                     Return Array.IndexOf(Platforms, Platform)
 

@@ -1098,8 +1098,15 @@ Public Class Form1
             Select Case GameState
                 Case AppState.Start
 
+                    Dim Delta As Integer = (ControllerPosition.Gamepad.sThumbLX - NeutralStart) / -1651.1
+
+
                     'Move mouse pointer to the left.
-                    Cursor.Position = New Point(Cursor.Position.X - 10, Cursor.Position.Y)
+                    'Cursor.Position = New Point(Cursor.Position.X - 10, Cursor.Position.Y)
+
+
+                    Cursor.Position = New Point(Cursor.Position.X - Delta, Cursor.Position.Y)
+
 
                 Case AppState.Playing
 
@@ -1122,8 +1129,19 @@ Public Class Form1
             Select Case GameState
                 Case AppState.Start
 
+
+
+                    Dim Delta As Integer = (ControllerPosition.Gamepad.sThumbLX - NeutralEnd) / 1651.1
+
+
+
                     'Move mouse pointer to the right.
-                    Cursor.Position = New Point(Cursor.Position.X + 10, Cursor.Position.Y)
+                    'Cursor.Position = New Point(Cursor.Position.X + 10, Cursor.Position.Y)
+
+                    Cursor.Position = New Point(Cursor.Position.X + Delta, Cursor.Position.Y)
+
+
+
 
                 Case AppState.Playing
 
@@ -1149,8 +1167,15 @@ Public Class Form1
 
             If GameState = AppState.Start Or GameState = AppState.Editing Then
 
+                Dim Delta As Integer = (ControllerPosition.Gamepad.sThumbLY - NeutralStart) / -1651.1
+
+
                 'Move mouse pointer down.
-                Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y + 10)
+                'Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y + 10)
+
+                Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y + Delta)
+
+
 
             End If
 
@@ -1159,8 +1184,15 @@ Public Class Form1
 
             If GameState = AppState.Start Or GameState = AppState.Editing Then
 
+                Dim Delta As Integer = (ControllerPosition.Gamepad.sThumbLY - NeutralEnd) / 1651.1
+
+
                 'Move mouse pointer down.
-                Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y - 10)
+                'Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y - 10)
+
+
+                Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y - Delta)
+
 
             End If
 
@@ -1513,9 +1545,9 @@ Public Class Form1
 
                         'Stop the jump.
                         OurHero.Velocity.Y = 0
-                        OurHero.Velocity.X = 0
+                        'OurHero.Velocity.X = 0
 
-                        VibrateRight(0, 65535)
+                        'VibrateRight(0, 65535)
 
                         If OurHero.Position.Y > Block.Rect.Bottom - OurHero.Rect.Height \ 2 Then
                             'Under
@@ -1648,13 +1680,13 @@ Public Class Form1
                                 'Yes, our hero is on the right side of the block.
 
                                 'Aline our hero to the right of the block.
-                                OurHero.Position.X = Block.Rect.Right
+                                OurHero.Position.X = Block.Rect.Right + 1
 
                             Else
                                 'No, our hero is on the left side of the block.
 
                                 'Aline our hero to the left of the block.
-                                OurHero.Position.X = Block.Rect.Left - OurHero.Rect.Width
+                                OurHero.Position.X = Block.Rect.Left - OurHero.Rect.Width - 1
 
                             End If
 
@@ -5624,6 +5656,7 @@ Public Class Form1
 
                 ControllerB = True
             Case Else 'Any buttons not handled yet.
+
                 Debug.Print(ControllerPosition.Gamepad.wButtons.ToString)
 
         End Select

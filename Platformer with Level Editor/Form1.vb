@@ -128,6 +128,12 @@ Public Class Form1
 
     Private DeltaTime As TimeSpan
 
+    Private EditorCurrentFrame As DateTime
+
+    Private EditorLastFrame As DateTime
+
+    Private EditorDeltaTime As TimeSpan
+
     Private Gravity As Single = 2000
 
     Private AirResistance As Single = 100.0F
@@ -557,6 +563,8 @@ Public Class Form1
 
                 UpdateControllerData()
 
+                UpdateEditorDeltaTime()
+
             Case AppState.Clear
 
                 UpdateClearScreenTimer()
@@ -640,6 +648,17 @@ Public Class Form1
 
     End Sub
 
+    Private Sub UpdateEditorDeltaTime()
+        'Delta time (Δt) is the elapsed time since the last frame.
+
+        EditorCurrentFrame = Now
+
+        EditorDeltaTime = EditorCurrentFrame - EditorLastFrame 'Calculate delta time
+
+        EditorLastFrame = EditorCurrentFrame 'Update last frame time
+
+    End Sub
+
     Private Sub UpdateOurHero()
 
         If IsOnBlock() > -1 Then
@@ -665,16 +684,16 @@ Public Class Form1
 
                 End If
 
-                'Skydive steering
-                If RightArrowDown = True Or ControllerRight = True Then
+                ''Skydive steering
+                'If RightArrowDown = True Or ControllerRight = True Then
 
-                    OurHero.Velocity.X += 25.5F * DeltaTime.TotalSeconds
+                '    OurHero.Velocity.X += 25.5F * DeltaTime.TotalSeconds
 
-                ElseIf LeftArrowDown = True Or ControllerLeft = True Then
+                'ElseIf LeftArrowDown = True Or ControllerLeft = True Then
 
-                    OurHero.Velocity.X += -25.5F * DeltaTime.TotalSeconds
+                '    OurHero.Velocity.X += -25.5F * DeltaTime.TotalSeconds
 
-                End If
+                'End If
 
             Else
                 'Apply gravity to our hero. JUMPING.
@@ -1117,8 +1136,14 @@ Public Class Form1
 
                 Case AppState.Editing
 
+                    Dim Delta As Integer = (ControllerPosition.Gamepad.sThumbLX - NeutralStart) / -1651.1
+
+
                     'Move mouse pointer to the left.
-                    Cursor.Position = New Point(Cursor.Position.X - 10, Cursor.Position.Y)
+                    'Cursor.Position = New Point(Cursor.Position.X - 10, Cursor.Position.Y)
+
+                    Cursor.Position = New Point(Cursor.Position.X - Delta, Cursor.Position.Y)
+
 
             End Select
 
@@ -1151,8 +1176,15 @@ Public Class Form1
 
                 Case AppState.Editing
 
+
+                    Dim Delta As Integer = (ControllerPosition.Gamepad.sThumbLX - NeutralEnd) / 1651.1
+
                     'Move mouse pointer to the right.
-                    Cursor.Position = New Point(Cursor.Position.X + 10, Cursor.Position.Y)
+                    'Cursor.Position = New Point(Cursor.Position.X + 10, Cursor.Position.Y)
+
+
+                    Cursor.Position = New Point(Cursor.Position.X + Delta, Cursor.Position.Y)
+
 
             End Select
 
@@ -1549,7 +1581,7 @@ Public Class Form1
 
                         'VibrateRight(0, 65535)
 
-                        If OurHero.Position.Y > Block.Rect.Bottom - OurHero.Rect.Height \ 2 Then
+                        If OurHero.Position.Y > Block.Rect.Bottom - 10 Then
                             'Under
 
                             OurHero.Position.Y = Block.Rect.Bottom
@@ -1672,7 +1704,7 @@ Public Class Form1
                             'Stop the move
                             OurHero.Velocity.X = 0
 
-                            VibrateRight(0, 65535)
+                            'VibrateRight(0, 65535)
 
 
                             'Is our hero on the right side of the block?
@@ -1680,13 +1712,13 @@ Public Class Form1
                                 'Yes, our hero is on the right side of the block.
 
                                 'Aline our hero to the right of the block.
-                                OurHero.Position.X = Block.Rect.Right + 1
+                                OurHero.Position.X = Block.Rect.Right
 
                             Else
                                 'No, our hero is on the left side of the block.
 
                                 'Aline our hero to the left of the block.
-                                OurHero.Position.X = Block.Rect.Left - OurHero.Rect.Width - 1
+                                OurHero.Position.X = Block.Rect.Left - OurHero.Rect.Width
 
                             End If
 

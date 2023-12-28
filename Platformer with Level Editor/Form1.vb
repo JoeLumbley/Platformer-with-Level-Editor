@@ -1073,17 +1073,25 @@ Public Class Form1
                 If XInputGetState(ControllerNumber, ControllerPosition) = 0 Then
                     ' The function call was successful, so you can access the controller state now
 
-                    UpdateButtonPosition()
 
-                    UpdateLeftThumbstickPosition()
-
-                    UpdateRightThumbstickPosition()
-
-                    'UpdateLeftTriggerPosition()
-
-                    UpdateRightTriggerPosition()
 
                     Connected(ControllerNumber) = True
+
+                    If Connected(0) = True AndAlso ControllerNumber = 0 Then
+
+                        UpdateButtonPosition()
+
+                        UpdateLeftThumbstickPosition()
+
+                        UpdateRightThumbstickPosition()
+
+                        'UpdateLeftTriggerPosition()
+
+                        UpdateRightTriggerPosition()
+
+
+
+                    End If
 
                 Else
                     ' The function call failed, so you cannot access the controller state

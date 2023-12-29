@@ -1089,16 +1089,28 @@ Public Class Form1
 
                         UpdateRightTriggerPosition()
 
+                    End If
 
+                    If Connected(0) = False AndAlso Connected(1) = True AndAlso ControllerNumber = 1 Then
+
+                        UpdateButtonPosition()
+
+                        UpdateLeftThumbstickPosition()
+
+                        UpdateRightThumbstickPosition()
+
+                        'UpdateLeftTriggerPosition()
+
+                        UpdateRightTriggerPosition()
 
                     End If
 
                 Else
-                    ' The function call failed, so you cannot access the controller state
+                        ' The function call failed, so you cannot access the controller state
 
-                    'Text = "Failed to get controller state. Error code: " & XInputGetState(ControllerNumber, ControllerPosition).ToString
+                        'Text = "Failed to get controller state. Error code: " & XInputGetState(ControllerNumber, ControllerPosition).ToString
 
-                    Connected(ControllerNumber) = False
+                        Connected(ControllerNumber) = False
 
                 End If
 

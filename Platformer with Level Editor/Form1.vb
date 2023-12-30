@@ -1135,7 +1135,8 @@ Public Class Form1
             Select Case GameState
                 Case AppState.Start
 
-                    Dim Delta As Integer = (ControllerPosition.Gamepad.sThumbLX - NeutralStart) / -1651.1
+                    'Dim Delta As Integer = (ControllerPosition.Gamepad.sThumbLX - NeutralStart) / -4902.4
+                    Dim Delta As Integer = ControllerPosition.Gamepad.sThumbLX / -8000
 
 
                     'Move mouse pointer to the left.
@@ -1154,7 +1155,7 @@ Public Class Form1
 
                 Case AppState.Editing
 
-                    Dim Delta As Integer = (ControllerPosition.Gamepad.sThumbLX - NeutralStart) / -1651.1
+                    Dim Delta As Integer = ControllerPosition.Gamepad.sThumbLX / -8000
 
 
                     'Move mouse pointer to the left.
@@ -1174,7 +1175,7 @@ Public Class Form1
 
 
 
-                    Dim Delta As Integer = (ControllerPosition.Gamepad.sThumbLX - NeutralEnd) / 1651.1
+                    Dim Delta As Integer = ControllerPosition.Gamepad.sThumbLX / 8000
 
 
 
@@ -1195,7 +1196,7 @@ Public Class Form1
                 Case AppState.Editing
 
 
-                    Dim Delta As Integer = (ControllerPosition.Gamepad.sThumbLX - NeutralEnd) / 1651.1
+                    Dim Delta As Integer = ControllerPosition.Gamepad.sThumbLX / 8000
 
                     'Move mouse pointer to the right.
                     'Cursor.Position = New Point(Cursor.Position.X + 10, Cursor.Position.Y)
@@ -1217,7 +1218,7 @@ Public Class Form1
 
             If GameState = AppState.Start Or GameState = AppState.Editing Then
 
-                Dim Delta As Integer = (ControllerPosition.Gamepad.sThumbLY - NeutralStart) / -1651.1
+                Dim Delta As Integer = ControllerPosition.Gamepad.sThumbLY / -8000
 
 
                 'Move mouse pointer down.
@@ -1234,7 +1235,7 @@ Public Class Form1
 
             If GameState = AppState.Start Or GameState = AppState.Editing Then
 
-                Dim Delta As Integer = (ControllerPosition.Gamepad.sThumbLY - NeutralEnd) / 1651.1
+                Dim Delta As Integer = ControllerPosition.Gamepad.sThumbLY / 8000
 
 
                 'Move mouse pointer down.
@@ -3403,6 +3404,14 @@ Public Class Form1
 
     End Sub
 
+    Private Sub MovePointerCenterMenu()
+        'Move mouse pointer to the center of the menu.
+
+        Cursor.Position = New Point(MenuBackground.Rect.X + MenuBackground.Rect.Width / 2,
+                                    MenuBackground.Rect.Y + MenuBackground.Rect.Height / 2)
+
+    End Sub
+
     Private Sub MouseDownEditing(e As Point)
 
         If ShowMenu = False Then
@@ -5213,6 +5222,8 @@ Public Class Form1
                     If ShowMenu = False Then
 
                         ShowMenu = True
+
+                        MovePointerCenterMenu()
 
                     End If
 

@@ -1073,44 +1073,42 @@ Public Class Form1
                 If XInputGetState(ControllerNumber, ControllerPosition) = 0 Then
                     ' The function call was successful, so you can access the controller state now
 
-
-
                     Connected(ControllerNumber) = True
 
+                    'Is controller zero connected?
                     If Connected(0) = True AndAlso ControllerNumber = 0 Then
+                        'Yes, controller zero is connected.
+                        'Use controller zero
 
                         UpdateButtonPosition()
 
                         UpdateLeftThumbstickPosition()
 
                         UpdateRightThumbstickPosition()
-
-                        'UpdateLeftTriggerPosition()
 
                         UpdateRightTriggerPosition()
 
                     End If
 
+                    'Is controller zero disconnected and controller one connected?
                     If Connected(0) = False AndAlso Connected(1) = True AndAlso ControllerNumber = 1 Then
+                        'Yes, controller zero is disconnected and controller one is connected?
+                        'Use controller one
 
                         UpdateButtonPosition()
 
                         UpdateLeftThumbstickPosition()
 
                         UpdateRightThumbstickPosition()
-
-                        'UpdateLeftTriggerPosition()
 
                         UpdateRightTriggerPosition()
 
                     End If
 
                 Else
-                        ' The function call failed, so you cannot access the controller state
+                    ' The function call failed, so you cannot access the controller state
 
-                        'Text = "Failed to get controller state. Error code: " & XInputGetState(ControllerNumber, ControllerPosition).ToString
-
-                        Connected(ControllerNumber) = False
+                    Connected(ControllerNumber) = False
 
                 End If
 

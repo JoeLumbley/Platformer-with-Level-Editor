@@ -3707,6 +3707,8 @@ Public Class Form1
 
             ShowMenu = True
 
+            MovePointerCenterMenu()
+
         End If
 
     End Sub
@@ -4880,6 +4882,32 @@ Public Class Form1
                     IsMuted = False
 
                     PlayLevelMusic()
+
+                End If
+
+            Case Keys.X
+
+                If GameState = AppState.Editing Then
+
+                    If ShowMenu = True Then
+
+                        ShowMenu = False
+
+                    End If
+
+                End If
+
+            Case 93 'Context Menu
+
+                If GameState = AppState.Editing Then
+
+                    If ShowMenu = False Then
+
+                        ShowMenu = True
+
+                        MovePointerCenterMenu()
+
+                    End If
 
                 End If
 

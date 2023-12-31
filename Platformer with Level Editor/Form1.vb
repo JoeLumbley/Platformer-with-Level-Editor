@@ -3434,19 +3434,7 @@ Public Class Form1
         If SaveButton.Rect.Contains(e) Then
             'Yes, the player is clicking the save button.
 
-            SaveFileDialog1.FileName = LevelName
-            SaveFileDialog1.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
-            SaveFileDialog1.FilterIndex = 1
-            SaveFileDialog1.RestoreDirectory = True
-
-            If SaveFileDialog1.ShowDialog(Me) = System.Windows.Forms.DialogResult.OK Then
-
-                SaveTestLevelFile(SaveFileDialog1.FileName)
-
-                LevelName = Path.GetFileName(SaveFileDialog1.FileName)
-                Text = LevelName & " - Platformer with Level Editor - Code with Joe"
-
-            End If
+            ShowSaveLevelDialog()
 
             ShowMenu = False
 
@@ -3534,6 +3522,24 @@ Public Class Form1
             'Yes, the player is clicking the exit button.
 
             ShowMenu = False
+
+        End If
+
+    End Sub
+
+    Private Sub ShowSaveLevelDialog()
+
+        SaveFileDialog1.FileName = LevelName
+        SaveFileDialog1.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
+        SaveFileDialog1.FilterIndex = 1
+        SaveFileDialog1.RestoreDirectory = True
+
+        If SaveFileDialog1.ShowDialog(Me) = System.Windows.Forms.DialogResult.OK Then
+
+            SaveTestLevelFile(SaveFileDialog1.FileName)
+
+            LevelName = Path.GetFileName(SaveFileDialog1.FileName)
+            Text = LevelName & " - Platformer with Level Editor - Code with Joe"
 
         End If
 
@@ -4769,7 +4775,7 @@ Public Class Form1
                 End If
 
             'Has the player pressed the left arrow key down?
-                    Case Keys.Left
+            Case Keys.Left
                 'Yes, the player has pressed the left arrow key down.
 
                 If GameState = AppState.Playing Then
@@ -4992,15 +4998,20 @@ Public Class Form1
 
                     If ShowMenu = True Then
 
-                        Cursor.Position = New Point(ScreenOffset.X + SaveButton.Rect.X, ScreenOffset.Y + SaveButton.Rect.Y)
+                        ShowSaveLevelDialog()
 
-                        If IsMouseDown = False Then
+                        ShowMenu = False
 
-                            IsMouseDown = True
 
-                            DoMouseLeftDown()
+                        'Cursor.Position = New Point(ScreenOffset.X + SaveButton.Rect.X, ScreenOffset.Y + SaveButton.Rect.Y)
 
-                        End If
+                        'If IsMouseDown = False Then
+
+                        '    IsMouseDown = True
+
+                        '    DoMouseLeftDown()
+
+                        'End If
 
                     End If
 

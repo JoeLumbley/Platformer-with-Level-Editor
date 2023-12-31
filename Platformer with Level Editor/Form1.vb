@@ -4898,12 +4898,7 @@ Public Class Form1
             Case Keys.B
                 'Yes, the player has pressed the B key down.
 
-
-
                 BDown = True
-
-
-
 
                 If GameState = AppState.Editing Then
 
@@ -4912,16 +4907,6 @@ Public Class Form1
                         ShowSaveLevelDialog()
 
                         ShowMenu = False
-
-                        'Cursor.Position = New Point(ScreenOffset.X + SaveButton.Rect.X, ScreenOffset.Y + SaveButton.Rect.Y)
-
-                        'If IsMouseDown = False Then
-
-                        '    IsMouseDown = True
-
-                        '    DoMouseLeftDown()
-
-                        'End If
 
                     End If
 
@@ -4934,15 +4919,9 @@ Public Class Form1
 
                     If ShowMenu = True Then
 
-                        'Cursor.Position = New Point(ScreenOffset.X + OpenButton.Rect.X, ScreenOffset.Y + OpenButton.Rect.Y)
+                        ShowOpenLevelDialog()
 
-                        'If IsMouseDown = False Then
-
-                        '    IsMouseDown = True
-
-                        '    DoMouseLeftDown()
-
-                        'End If
+                        ShowMenu = False
 
                     End If
 
@@ -4954,21 +4933,9 @@ Public Class Form1
 
                     If ShowMenu = True Then
 
-
                         InitAndCreateNewLevel()
 
                         ShowMenu = False
-
-                        ''Move cursor over the new button.
-                        'Cursor.Position = New Point(ScreenOffset.X + NewButton.Rect.X, ScreenOffset.Y + NewButton.Rect.Y)
-
-                        'If IsMouseDown = False Then
-
-                        '    IsMouseDown = True
-
-                        '    DoMouseLeftDown()
-
-                        'End If
 
                     End If
 
@@ -4984,17 +4951,6 @@ Public Class Form1
 
                         ShowMenu = False
 
-                        ''Move cursor over the new button.
-                        'Cursor.Position = New Point(ScreenOffset.X + NewButton.Rect.X, ScreenOffset.Y + NewButton.Rect.Y)
-
-                        'If IsMouseDown = False Then
-
-                        '    IsMouseDown = True
-
-                        '    DoMouseLeftDown()
-
-                        'End If
-
                     End If
 
                 End If
@@ -5009,16 +4965,6 @@ Public Class Form1
 
                         ShowMenu = False
 
-                        'Cursor.Position = New Point(ScreenOffset.X + OpenButton.Rect.X, ScreenOffset.Y + OpenButton.Rect.Y)
-
-                        'If IsMouseDown = False Then
-
-                        '    IsMouseDown = True
-
-                        '    DoMouseLeftDown()
-
-                        'End If
-
                     End If
 
                 End If
@@ -5032,17 +4978,6 @@ Public Class Form1
                         ShowSaveLevelDialog()
 
                         ShowMenu = False
-
-
-                        'Cursor.Position = New Point(ScreenOffset.X + SaveButton.Rect.X, ScreenOffset.Y + SaveButton.Rect.Y)
-
-                        'If IsMouseDown = False Then
-
-                        '    IsMouseDown = True
-
-                        '    DoMouseLeftDown()
-
-                        'End If
 
                     End If
 

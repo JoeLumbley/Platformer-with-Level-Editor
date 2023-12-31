@@ -3464,25 +3464,7 @@ Public Class Form1
             If MsgBox("Save " & LevelName & " before creating a new level?", MsgBoxStyle.YesNo, "Platformer with Level Editor") = MsgBoxResult.No Then
                 'No, the player doesn't want to save this level before creating a new level?
 
-                ClearObjects()
-
-                SetMinLevelSize()
-
-                OurHero.Rect = New Rectangle(128, 769, 64, 64)
-
-                OurHero.Position = New PointF(OurHero.Rect.X, OurHero.Rect.Y)
-
-                OurHero.Velocity = New PointF(0, 0)
-
-                CreateNewLevel()
-
-                BufferGridLines()
-
-                CashCollected = 0
-
-                LevelName = "Untitled"
-
-                Text = LevelName & " - Platformer with Level Editor - Code with Joe"
+                InitAndCreateNewLevel()
 
                 ShowMenu = False
 
@@ -3497,6 +3479,30 @@ Public Class Form1
             ShowMenu = False
 
         End If
+
+    End Sub
+
+    Private Sub InitAndCreateNewLevel()
+
+        ClearObjects()
+
+        SetMinLevelSize()
+
+        OurHero.Rect = New Rectangle(128, 769, 64, 64)
+
+        OurHero.Position = New PointF(OurHero.Rect.X, OurHero.Rect.Y)
+
+        OurHero.Velocity = New PointF(0, 0)
+
+        CreateNewLevel()
+
+        BufferGridLines()
+
+        CashCollected = 0
+
+        LevelName = "Untitled"
+
+        Text = LevelName & " - Platformer with Level Editor - Code with Joe"
 
     End Sub
 
@@ -4928,15 +4934,15 @@ Public Class Form1
 
                     If ShowMenu = True Then
 
-                        Cursor.Position = New Point(ScreenOffset.X + OpenButton.Rect.X, ScreenOffset.Y + OpenButton.Rect.Y)
+                        'Cursor.Position = New Point(ScreenOffset.X + OpenButton.Rect.X, ScreenOffset.Y + OpenButton.Rect.Y)
 
-                        If IsMouseDown = False Then
+                        'If IsMouseDown = False Then
 
-                            IsMouseDown = True
+                        '    IsMouseDown = True
 
-                            DoMouseLeftDown()
+                        '    DoMouseLeftDown()
 
-                        End If
+                        'End If
 
                     End If
 
@@ -4948,16 +4954,21 @@ Public Class Form1
 
                     If ShowMenu = True Then
 
-                        'Move cursor over the new button.
-                        Cursor.Position = New Point(ScreenOffset.X + NewButton.Rect.X, ScreenOffset.Y + NewButton.Rect.Y)
 
-                        If IsMouseDown = False Then
+                        InitAndCreateNewLevel()
 
-                            IsMouseDown = True
+                        ShowMenu = False
 
-                            DoMouseLeftDown()
+                        ''Move cursor over the new button.
+                        'Cursor.Position = New Point(ScreenOffset.X + NewButton.Rect.X, ScreenOffset.Y + NewButton.Rect.Y)
 
-                        End If
+                        'If IsMouseDown = False Then
+
+                        '    IsMouseDown = True
+
+                        '    DoMouseLeftDown()
+
+                        'End If
 
                     End If
 
@@ -4969,16 +4980,20 @@ Public Class Form1
 
                     If ShowMenu = True Then
 
-                        'Move cursor over the new button.
-                        Cursor.Position = New Point(ScreenOffset.X + NewButton.Rect.X, ScreenOffset.Y + NewButton.Rect.Y)
+                        InitAndCreateNewLevel()
 
-                        If IsMouseDown = False Then
+                        ShowMenu = False
 
-                            IsMouseDown = True
+                        ''Move cursor over the new button.
+                        'Cursor.Position = New Point(ScreenOffset.X + NewButton.Rect.X, ScreenOffset.Y + NewButton.Rect.Y)
 
-                            DoMouseLeftDown()
+                        'If IsMouseDown = False Then
 
-                        End If
+                        '    IsMouseDown = True
+
+                        '    DoMouseLeftDown()
+
+                        'End If
 
                     End If
 
@@ -4990,15 +5005,19 @@ Public Class Form1
 
                     If ShowMenu = True Then
 
-                        Cursor.Position = New Point(ScreenOffset.X + OpenButton.Rect.X, ScreenOffset.Y + OpenButton.Rect.Y)
+                        ShowOpenLevelDialog()
 
-                        If IsMouseDown = False Then
+                        ShowMenu = False
 
-                            IsMouseDown = True
+                        'Cursor.Position = New Point(ScreenOffset.X + OpenButton.Rect.X, ScreenOffset.Y + OpenButton.Rect.Y)
 
-                            DoMouseLeftDown()
+                        'If IsMouseDown = False Then
 
-                        End If
+                        '    IsMouseDown = True
+
+                        '    DoMouseLeftDown()
+
+                        'End If
 
                     End If
 

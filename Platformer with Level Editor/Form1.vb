@@ -3448,36 +3448,9 @@ Public Class Form1
             If MsgBox("Save " & LevelName & " before opening a different level?", MsgBoxStyle.YesNo, "Platformer with Level Editor") = MsgBoxResult.No Then
                 'No, the player doesn't want to save this level before opening a level?
 
-                OpenFileDialog1.FileName = ""
-                OpenFileDialog1.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
-                OpenFileDialog1.FilterIndex = 1
-                OpenFileDialog1.RestoreDirectory = True
+                ShowOpenLevelDialog()
 
-                If OpenFileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
-
-                    If My.Computer.FileSystem.FileExists(OpenFileDialog1.FileName) = True Then
-
-                        OpenTestLevelFile(OpenFileDialog1.FileName)
-
-                        If IsFileLoaded = True Then
-
-                            ShowMenu = False
-
-                            LevelName = Path.GetFileName(OpenFileDialog1.FileName)
-
-                            Text = LevelName & " - Platformer with Level Editor - Code with Joe"
-
-                        Else
-
-                            Text = "Platformer with Level Editor - Code with Joe"
-
-                        End If
-
-                        CashCollected = 0
-
-                    End If
-
-                End If
+                ShowMenu = False
 
             End If
 
@@ -3522,6 +3495,41 @@ Public Class Form1
             'Yes, the player is clicking the exit button.
 
             ShowMenu = False
+
+        End If
+
+    End Sub
+
+    Private Sub ShowOpenLevelDialog()
+
+        OpenFileDialog1.FileName = ""
+        OpenFileDialog1.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
+        OpenFileDialog1.FilterIndex = 1
+        OpenFileDialog1.RestoreDirectory = True
+
+        If OpenFileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+
+            If My.Computer.FileSystem.FileExists(OpenFileDialog1.FileName) = True Then
+
+                OpenTestLevelFile(OpenFileDialog1.FileName)
+
+                If IsFileLoaded = True Then
+
+                    ShowMenu = False
+
+                    LevelName = Path.GetFileName(OpenFileDialog1.FileName)
+
+                    Text = LevelName & " - Platformer with Level Editor - Code with Joe"
+
+                Else
+
+                    Text = "Platformer with Level Editor - Code with Joe"
+
+                End If
+
+                CashCollected = 0
+
+            End If
 
         End If
 
@@ -4895,15 +4903,19 @@ Public Class Form1
 
                     If ShowMenu = True Then
 
-                        Cursor.Position = New Point(ScreenOffset.X + SaveButton.Rect.X, ScreenOffset.Y + SaveButton.Rect.Y)
+                        ShowSaveLevelDialog()
 
-                        If IsMouseDown = False Then
+                        ShowMenu = False
 
-                            IsMouseDown = True
+                        'Cursor.Position = New Point(ScreenOffset.X + SaveButton.Rect.X, ScreenOffset.Y + SaveButton.Rect.Y)
 
-                            DoMouseLeftDown()
+                        'If IsMouseDown = False Then
 
-                        End If
+                        '    IsMouseDown = True
+
+                        '    DoMouseLeftDown()
+
+                        'End If
 
                     End If
 

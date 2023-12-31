@@ -4752,15 +4752,24 @@ Public Class Form1
 
                 If GameState = AppState.Editing Then
 
-                    'Move Camera to the right.
-                    Camera.Rect.X -= 10
+                    If ShowMenu = False Then
 
-                    BufferGridLines()
+                        'Move Camera to the right.
+                        Camera.Rect.X -= 10
+
+                        BufferGridLines()
+
+                    Else
+
+                        'Move mouse pointer right.
+                        Cursor.Position = New Point(Cursor.Position.X + 2, Cursor.Position.Y)
+
+                    End If
 
                 End If
 
             'Has the player pressed the left arrow key down?
-            Case Keys.Left
+                    Case Keys.Left
                 'Yes, the player has pressed the left arrow key down.
 
                 If GameState = AppState.Playing Then
@@ -4773,10 +4782,19 @@ Public Class Form1
 
                 If GameState = AppState.Editing Then
 
-                    'Move Camera to the left.
-                    Camera.Rect.X += 10
+                    If ShowMenu = False Then
 
-                    BufferGridLines()
+                        'Move Camera to the left.
+                        Camera.Rect.X += 10
+
+                        BufferGridLines()
+
+                    Else
+
+                        'Move mouse pointer left.
+                        Cursor.Position = New Point(Cursor.Position.X - 2, Cursor.Position.Y)
+
+                    End If
 
                 End If
 
@@ -4784,10 +4802,19 @@ Public Class Form1
 
                 If GameState = AppState.Editing Then
 
-                    'Move Camera up.
-                    Camera.Rect.Y += 10
+                    If ShowMenu = False Then
 
-                    BufferGridLines()
+                        'Move Camera up.
+                        Camera.Rect.Y += 10
+
+                        BufferGridLines()
+
+                    Else
+
+                        'Move mouse pointer up.
+                        Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y - 2)
+
+                    End If
 
                 End If
 
@@ -4795,10 +4822,55 @@ Public Class Form1
 
                 If GameState = AppState.Editing Then
 
-                    'Move Camera down.
-                    Camera.Rect.Y -= 10
+                    If ShowMenu = False Then
 
-                    BufferGridLines()
+                        'Move Camera down.
+                        Camera.Rect.Y -= 10
+
+                        BufferGridLines()
+
+                    Else
+
+                        'Move mouse pointer up.
+                        Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y + 2)
+
+                    End If
+
+                End If
+
+            Case Keys.A
+
+                If GameState = AppState.Editing Then
+
+                    If ShowMenu = True Then
+
+                        If IsMouseDown = False Then
+
+                            IsMouseDown = True
+
+                            DoMouseLeftDown()
+
+                        End If
+
+                    End If
+
+                End If
+
+            Case Keys.Enter
+
+                If GameState = AppState.Editing Then
+
+                    If ShowMenu = True Then
+
+                        If IsMouseDown = False Then
+
+                            IsMouseDown = True
+
+                            DoMouseLeftDown()
+
+                        End If
+
+                    End If
 
                 End If
 
@@ -4806,7 +4878,158 @@ Public Class Form1
             Case Keys.B
                 'Yes, the player has pressed the B key down.
 
+
+
                 BDown = True
+
+
+
+
+                If GameState = AppState.Editing Then
+
+                    If ShowMenu = True Then
+
+                        Cursor.Position = New Point(ScreenOffset.X + SaveButton.Rect.X, ScreenOffset.Y + SaveButton.Rect.Y)
+
+                        If IsMouseDown = False Then
+
+                            IsMouseDown = True
+
+                            DoMouseLeftDown()
+
+                        End If
+
+                    End If
+
+                End If
+
+
+            Case Keys.Y
+
+                If GameState = AppState.Editing Then
+
+                    If ShowMenu = True Then
+
+                        Cursor.Position = New Point(ScreenOffset.X + OpenButton.Rect.X, ScreenOffset.Y + OpenButton.Rect.Y)
+
+                        If IsMouseDown = False Then
+
+                            IsMouseDown = True
+
+                            DoMouseLeftDown()
+
+                        End If
+
+                    End If
+
+                End If
+
+            Case Keys.N
+
+                If GameState = AppState.Editing Then
+
+                    If ShowMenu = True Then
+
+                        'Move cursor over the new button.
+                        Cursor.Position = New Point(ScreenOffset.X + NewButton.Rect.X, ScreenOffset.Y + NewButton.Rect.Y)
+
+                        If IsMouseDown = False Then
+
+                            IsMouseDown = True
+
+                            DoMouseLeftDown()
+
+                        End If
+
+                    End If
+
+                End If
+
+            Case Keys.R
+
+                If GameState = AppState.Editing Then
+
+                    If ShowMenu = True Then
+
+                        'Move cursor over the new button.
+                        Cursor.Position = New Point(ScreenOffset.X + NewButton.Rect.X, ScreenOffset.Y + NewButton.Rect.Y)
+
+                        If IsMouseDown = False Then
+
+                            IsMouseDown = True
+
+                            DoMouseLeftDown()
+
+                        End If
+
+                    End If
+
+                End If
+
+            Case Keys.O
+
+                If GameState = AppState.Editing Then
+
+                    If ShowMenu = True Then
+
+                        Cursor.Position = New Point(ScreenOffset.X + OpenButton.Rect.X, ScreenOffset.Y + OpenButton.Rect.Y)
+
+                        If IsMouseDown = False Then
+
+                            IsMouseDown = True
+
+                            DoMouseLeftDown()
+
+                        End If
+
+                    End If
+
+                End If
+
+            Case Keys.S
+
+                If GameState = AppState.Editing Then
+
+                    If ShowMenu = True Then
+
+                        Cursor.Position = New Point(ScreenOffset.X + SaveButton.Rect.X, ScreenOffset.Y + SaveButton.Rect.Y)
+
+                        If IsMouseDown = False Then
+
+                            IsMouseDown = True
+
+                            DoMouseLeftDown()
+
+                        End If
+
+                    End If
+
+                End If
+
+            Case Keys.C
+
+                If GameState = AppState.Editing Then
+
+                    If ShowMenu = True Then
+
+                        ShowMenu = False
+
+                    End If
+
+                End If
+
+            Case Keys.Escape
+
+                If GameState = AppState.Editing Then
+
+                    If ShowMenu = True Then
+
+                        ShowMenu = False
+
+                    End If
+
+                End If
+
 
                 'Has the player pressed the delete key down?
             Case Keys.Delete

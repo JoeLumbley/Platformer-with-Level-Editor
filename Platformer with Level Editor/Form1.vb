@@ -2200,7 +2200,11 @@ Public Class Form1
 
                         .FillRectangle(New SolidBrush(Color.FromArgb(128, Color.Chocolate)), PatrolB)
 
-                        .DrawString("E", EnemyFont, New SolidBrush(Color.FromArgb(128, Color.PaleGoldenrod)), PatrolB, AlineCenterMiddle)
+                        .DrawString("E",
+                                    EnemyFont,
+                                    New SolidBrush(Color.FromArgb(128, Color.PaleGoldenrod)),
+                                    PatrolB,
+                                    AlineCenterMiddle)
 
                     Case Tools.Goal
 
@@ -2332,13 +2336,21 @@ Public Class Form1
 
                 .FillRectangle(DarkCharcoalGreyBrush, PointerToolButton.Rect)
 
-                .DrawString("ë", PointerToolFont, Brushes.White, PointerToolButton.Rect, AlineCenterMiddle)
+                .DrawString("ë",
+                            PointerToolFont,
+                            Brushes.White,
+                            PointerToolButton.Rect,
+                            AlineCenterMiddle)
 
             Else
 
                 .FillRectangle(Brushes.Black, PointerToolButton.Rect)
 
-                .DrawString("ë", PointerToolFont, Brushes.White, PointerToolButton.Rect, AlineCenterMiddle)
+                .DrawString("ë",
+                            PointerToolFont,
+                            Brushes.White,
+                            PointerToolButton.Rect,
+                            AlineCenterMiddle)
 
             End If
 
@@ -2378,7 +2390,11 @@ Public Class Form1
 
                 .FillRectangle(Brushes.Goldenrod, BillToolIcon.Rect)
 
-                .DrawString("$", BillIconFont, Brushes.OrangeRed, BillToolIcon.Rect, AlineCenterMiddle)
+                .DrawString("$",
+                            BillIconFont,
+                            Brushes.OrangeRed,
+                            BillToolIcon.Rect,
+                            AlineCenterMiddle)
 
             Else
 
@@ -2386,7 +2402,11 @@ Public Class Form1
 
                 .FillRectangle(Brushes.Goldenrod, BillToolIcon.Rect)
 
-                .DrawString("$", BillIconFont, Brushes.OrangeRed, BillToolIcon.Rect, AlineCenterMiddle)
+                .DrawString("$",
+                            BillIconFont,
+                            Brushes.OrangeRed,
+                            BillToolIcon.Rect,
+                            AlineCenterMiddle)
 
             End If
 
@@ -2404,9 +2424,17 @@ Public Class Form1
 
                 .FillRectangle(Brushes.White, CloundToolIcon.Rect)
 
-                .DrawLine(CloundToolIconPen, CloundToolIcon.Rect.Right - 6, CloundToolIcon.Rect.Top + 6, CloundToolIcon.Rect.Right - 6, CloundToolIcon.Rect.Bottom - 6)
+                .DrawLine(CloundToolIconPen,
+                          CloundToolIcon.Rect.Right - 6,
+                          CloundToolIcon.Rect.Top + 6,
+                          CloundToolIcon.Rect.Right - 6,
+                          CloundToolIcon.Rect.Bottom - 6)
 
-                .DrawLine(CloundToolIconPen, CloundToolIcon.Rect.Left + 6, CloundToolIcon.Rect.Bottom - 6, CloundToolIcon.Rect.Right - 6, CloundToolIcon.Rect.Bottom - 6)
+                .DrawLine(CloundToolIconPen,
+                          CloundToolIcon.Rect.Left + 6,
+                          CloundToolIcon.Rect.Bottom - 6,
+                          CloundToolIcon.Rect.Right - 6,
+                          CloundToolIcon.Rect.Bottom - 6)
 
                 .DrawRectangle(CloundToolIconOutinePen, CloundToolIcon.Rect)
 
@@ -2416,9 +2444,17 @@ Public Class Form1
 
                 .FillRectangle(Brushes.White, CloundToolIcon.Rect)
 
-                .DrawLine(CloundToolIconPen, CloundToolIcon.Rect.Right - 6, CloundToolIcon.Rect.Top + 6, CloundToolIcon.Rect.Right - 6, CloundToolIcon.Rect.Bottom - 6)
+                .DrawLine(CloundToolIconPen,
+                          CloundToolIcon.Rect.Right - 6,
+                          CloundToolIcon.Rect.Top + 6,
+                          CloundToolIcon.Rect.Right - 6,
+                          CloundToolIcon.Rect.Bottom - 6)
 
-                .DrawLine(CloundToolIconPen, CloundToolIcon.Rect.Left + 6, CloundToolIcon.Rect.Bottom - 6, CloundToolIcon.Rect.Right - 6, CloundToolIcon.Rect.Bottom - 6)
+                .DrawLine(CloundToolIconPen,
+                          CloundToolIcon.Rect.Left + 6,
+                          CloundToolIcon.Rect.Bottom - 6,
+                          CloundToolIcon.Rect.Right - 6,
+                          CloundToolIcon.Rect.Bottom - 6)
 
                 .DrawRectangle(CloundToolIconOutinePen, CloundToolIcon.Rect)
 
@@ -2438,9 +2474,17 @@ Public Class Form1
 
                 .FillRectangle(Brushes.GreenYellow, BushToolIcon.Rect)
 
-                .DrawLine(BushToolIconPen, BushToolIcon.Rect.Right - 6, BushToolIcon.Rect.Top + 6, BushToolIcon.Rect.Right - 6, BushToolIcon.Rect.Bottom - 6)
+                .DrawLine(BushToolIconPen,
+                          BushToolIcon.Rect.Right - 6,
+                          BushToolIcon.Rect.Top + 6,
+                          BushToolIcon.Rect.Right - 6,
+                          BushToolIcon.Rect.Bottom - 6)
 
-                .DrawLine(BushToolIconPen, BushToolIcon.Rect.Left + 6, BushToolIcon.Rect.Bottom - 6, BushToolIcon.Rect.Right - 6, BushToolIcon.Rect.Bottom - 6)
+                .DrawLine(BushToolIconPen,
+                          BushToolIcon.Rect.Left + 6,
+                          BushToolIcon.Rect.Bottom - 6,
+                          BushToolIcon.Rect.Right - 6,
+                          BushToolIcon.Rect.Bottom - 6)
 
                 .DrawRectangle(BushToolIconOutinePen, BushToolIcon.Rect)
 
@@ -2450,9 +2494,17 @@ Public Class Form1
 
                 .FillRectangle(Brushes.GreenYellow, BushToolIcon.Rect)
 
-                .DrawLine(BushToolIconPen, BushToolIcon.Rect.Right - 6, BushToolIcon.Rect.Top + 6, BushToolIcon.Rect.Right - 6, BushToolIcon.Rect.Bottom - 6)
+                .DrawLine(BushToolIconPen,
+                          BushToolIcon.Rect.Right - 6,
+                          BushToolIcon.Rect.Top + 6,
+                          BushToolIcon.Rect.Right - 6,
+                          BushToolIcon.Rect.Bottom - 6)
 
-                .DrawLine(BushToolIconPen, BushToolIcon.Rect.Left + 6, BushToolIcon.Rect.Bottom - 6, BushToolIcon.Rect.Right - 6, BushToolIcon.Rect.Bottom - 6)
+                .DrawLine(BushToolIconPen,
+                          BushToolIcon.Rect.Left + 6,
+                          BushToolIcon.Rect.Bottom - 6,
+                          BushToolIcon.Rect.Right - 6,
+                          BushToolIcon.Rect.Bottom - 6)
 
                 .DrawRectangle(BushToolIconOutinePen, BushToolIcon.Rect)
 
@@ -2580,7 +2632,11 @@ Public Class Form1
 
             .FillRectangle(Brushes.Black, EditPlayButton.Rect)
 
-            .DrawString("Play", FPSFont, Brushes.White, EditPlayButton.Rect, AlineCenterMiddle)
+            .DrawString("Play",
+                        FPSFont,
+                        Brushes.White,
+                        EditPlayButton.Rect,
+                        AlineCenterMiddle)
 
         End With
 
@@ -2592,7 +2648,11 @@ Public Class Form1
 
             .FillRectangle(Brushes.Black, EditPlayButton.Rect)
 
-            .DrawString("Edit", FPSFont, Brushes.White, EditPlayButton.Rect, AlineCenterMiddle)
+            .DrawString("Edit",
+                        FPSFont,
+                        Brushes.White,
+                        EditPlayButton.Rect,
+                        AlineCenterMiddle)
 
         End With
 
@@ -2604,7 +2664,11 @@ Public Class Form1
 
             .FillRectangle(Brushes.Black, MenuButton.Rect)
 
-            .DrawString("Menu", FPSFont, Brushes.White, MenuButton.Rect, AlineCenterMiddle)
+            .DrawString("Menu",
+                        FPSFont,
+                        Brushes.White,
+                        MenuButton.Rect,
+                        AlineCenterMiddle)
 
         End With
 
@@ -2617,18 +2681,27 @@ Public Class Form1
             .FillRectangle(Brushes.Black, SaveButton.Rect)
 
             .DrawEllipse(BButtonIconOutinePen,
-                         New Rectangle(SaveButton.Rect.X + 197, SaveButton.Rect.Y + 20, 52, 52))
+                         New Rectangle(SaveButton.Rect.X + 197,
+                                       SaveButton.Rect.Y + 20,
+                                       52,
+                                       52))
 
             .DrawString("Save",
                         FPSFont,
                         Brushes.White,
-                        New Rectangle(SaveButton.Rect.X + 22, SaveButton.Rect.Y + 24, 145, 50),
+                        New Rectangle(SaveButton.Rect.X + 22,
+                                      SaveButton.Rect.Y + 24,
+                                      145,
+                                      50),
                         AlineCenterMiddle)
 
             .DrawString("B",
                         RightTriggerIconFont,
                         Brushes.White,
-                        New Rectangle(SaveButton.Rect.X + 175, SaveButton.Rect.Y + 24, 100, 50),
+                        New Rectangle(SaveButton.Rect.X + 175,
+                                      SaveButton.Rect.Y + 24,
+                                      100,
+                                      50),
                         AlineCenterMiddle)
 
         End With
@@ -2642,12 +2715,18 @@ Public Class Form1
             .FillRectangle(Brushes.Black, OpenButton.Rect)
 
             .DrawEllipse(YButtonIconOutinePen,
-                         New Rectangle(OpenButton.Rect.X + 197, OpenButton.Rect.Y + 20, 52, 52))
+                         New Rectangle(OpenButton.Rect.X + 197,
+                                       OpenButton.Rect.Y + 20,
+                                       52,
+                                       52))
 
             .DrawString("Open",
                         FPSFont,
                         Brushes.White,
-                        New Rectangle(OpenButton.Rect.X + 24, OpenButton.Rect.Y + 24, 145, 50),
+                        New Rectangle(OpenButton.Rect.X + 24,
+                                      OpenButton.Rect.Y + 24,
+                                      145,
+                                      50),
                         AlineCenterMiddle)
 
             .DrawString("Y",
@@ -2668,13 +2747,19 @@ Public Class Form1
 
             .DrawString("New", FPSFont,
                         Brushes.White,
-                        New Rectangle(NewButton.Rect.X + 25, NewButton.Rect.Y + 24, 120, 50),
+                        New Rectangle(NewButton.Rect.X + 25,
+                                      NewButton.Rect.Y + 24,
+                                      120,
+                                      50),
                         AlineCenterMiddle)
 
             .DrawString("RT",
                         RightTriggerIconFont,
                         Brushes.White,
-                        New Rectangle(NewButton.Rect.X + 175, NewButton.Rect.Y + 24, 100, 50),
+                        New Rectangle(NewButton.Rect.X + 175,
+                                      NewButton.Rect.Y + 24,
+                                      100,
+                                      50),
                         AlineCenterMiddle)
 
         End With
@@ -2687,9 +2772,17 @@ Public Class Form1
 
             .FillRectangle(Brushes.Black, ExitButton.Rect)
 
-            .DrawEllipse(XButtonIconOutinePen, New Rectangle(ExitButton.Rect.X + 124, ExitButton.Rect.Y + 16, 52, 52))
+            .DrawEllipse(XButtonIconOutinePen,
+                         New Rectangle(ExitButton.Rect.X + 124,
+                                       ExitButton.Rect.Y + 16,
+                                       52,
+                                       52))
 
-            .DrawString("X", ButtonIconFont, Brushes.White, ExitButton.Rect, AlineCenterMiddle)
+            .DrawString("X",
+                        ButtonIconFont,
+                        Brushes.White,
+                        ExitButton.Rect,
+                        AlineCenterMiddle)
 
         End With
 
@@ -2912,19 +3005,28 @@ Public Class Form1
             .FillRectangle(Brushes.Black,
                            StartScreenOpenButton.Rect)
 
-            .DrawEllipse(YButtonIconOutinePen, New Rectangle(StartScreenOpenButton.Rect.X + 142, StartScreenOpenButton.Rect.Y + 20, 52, 52))
-
+            .DrawEllipse(YButtonIconOutinePen,
+                         New Rectangle(StartScreenOpenButton.Rect.X + 142,
+                                       StartScreenOpenButton.Rect.Y + 20,
+                                       52,
+                                       52))
 
             .DrawString("Open",
                         FPSFont,
                         Brushes.White,
-                        New Rectangle(StartScreenOpenButton.Rect.X, StartScreenOpenButton.Rect.Y + 24, 150, 50),
+                        New Rectangle(StartScreenOpenButton.Rect.X,
+                                      StartScreenOpenButton.Rect.Y + 24,
+                                      150,
+                                      50),
                         AlineCenterMiddle)
 
             .DrawString("Y",
                         ButtonIconFont,
                         Brushes.White,
-                        New Rectangle(StartScreenOpenButton.Rect.X + 144, StartScreenOpenButton.Rect.Y + 25, 50, 50),
+                        New Rectangle(StartScreenOpenButton.Rect.X + 144,
+                                      StartScreenOpenButton.Rect.Y + 25,
+                                      50,
+                                      50),
                         AlineCenterMiddle)
 
         End With
@@ -2938,18 +3040,27 @@ Public Class Form1
             .FillRectangle(Brushes.Black,
                            StartScreenNewButton.Rect)
 
-            .DrawEllipse(BButtonIconOutinePen, New Rectangle(StartScreenNewButton.Rect.X + 140, StartScreenNewButton.Rect.Y + 20, 52, 52))
+            .DrawEllipse(BButtonIconOutinePen, New Rectangle(StartScreenNewButton.Rect.X + 140,
+                                                             StartScreenNewButton.Rect.Y + 20,
+                                                             52,
+                                                             52))
 
             .DrawString("New",
                         FPSFont,
                         Brushes.White,
-                        New Rectangle(StartScreenNewButton.Rect.X + 5, StartScreenNewButton.Rect.Y + 24, 120, 50),
+                        New Rectangle(StartScreenNewButton.Rect.X + 5,
+                                      StartScreenNewButton.Rect.Y + 24,
+                                      120,
+                                      50),
                         AlineCenterMiddle)
 
             .DrawString("B",
                         ButtonIconFont,
                         Brushes.White,
-                        New Rectangle(StartScreenNewButton.Rect.X + 143, StartScreenNewButton.Rect.Y + 24, 50, 50),
+                        New Rectangle(StartScreenNewButton.Rect.X + 143,
+                                      StartScreenNewButton.Rect.Y + 24,
+                                      50,
+                                      50),
                         AlineCenterMiddle)
 
         End With
@@ -3274,23 +3385,11 @@ Public Class Form1
 
         EnemyToolIcon.Rect = New Rectangle(ClientRectangle.Left + 902, ClientRectangle.Bottom - 65, 40, 40)
 
-
-
-
-
-
         Title.Rect = New Rectangle(ClientRectangle.Width \ 2 - 425, ClientRectangle.Height \ 2 - 175, 850, 245)
 
         StartScreenNewButton.Rect = New Rectangle(ClientRectangle.Width \ 2 - 230, ClientRectangle.Height \ 2 + 70, 210, 90)
 
         StartScreenOpenButton.Rect = New Rectangle(ClientRectangle.Width \ 2 + 20, ClientRectangle.Height \ 2 + 70, 210, 90)
-
-
-
-
-
-
-
 
         Camera.Rect.Size = ClientRectangle.Size
 

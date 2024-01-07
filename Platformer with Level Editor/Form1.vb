@@ -1135,15 +1135,28 @@ Public Class Form1
             Select Case GameState
                 Case AppState.Start
 
+
+                    If ControllerPosition.Gamepad.sThumbLX < -32000 Then
+
+
+                        Cursor.Position = New Point(Cursor.Position.X - 10, Cursor.Position.Y)
+
+                    Else
+
+                        Cursor.Position = New Point(Cursor.Position.X - 1, Cursor.Position.Y)
+
+                    End If
+
+
                     'Dim Delta As Integer = (ControllerPosition.Gamepad.sThumbLX - NeutralStart) / -4902.4
-                    Dim Delta As Integer = ControllerPosition.Gamepad.sThumbLX / -8000
+                    'Dim Delta As Integer = ControllerPosition.Gamepad.sThumbLX / -8000
 
 
                     'Move mouse pointer to the left.
                     'Cursor.Position = New Point(Cursor.Position.X - 10, Cursor.Position.Y)
 
 
-                    Cursor.Position = New Point(Cursor.Position.X - Delta, Cursor.Position.Y)
+                    'Cursor.Position = New Point(Cursor.Position.X - Delta, Cursor.Position.Y)
 
 
                 Case AppState.Playing
@@ -1175,14 +1188,26 @@ Public Class Form1
 
 
 
-                    Dim Delta As Integer = ControllerPosition.Gamepad.sThumbLX / 8000
+                    If ControllerPosition.Gamepad.sThumbLX > 32000 Then
+
+                        Cursor.Position = New Point(Cursor.Position.X + 10, Cursor.Position.Y)
+
+                    Else
+
+                        Cursor.Position = New Point(Cursor.Position.X + 1, Cursor.Position.Y)
+
+                    End If
+
+
+
+                    'Dim Delta As Integer = ControllerPosition.Gamepad.sThumbLX / 8000
 
 
 
                     'Move mouse pointer to the right.
                     'Cursor.Position = New Point(Cursor.Position.X + 10, Cursor.Position.Y)
 
-                    Cursor.Position = New Point(Cursor.Position.X + Delta, Cursor.Position.Y)
+                    'Cursor.Position = New Point(Cursor.Position.X + Delta, Cursor.Position.Y)
 
 
 
@@ -1218,13 +1243,31 @@ Public Class Form1
 
             If GameState = AppState.Start Or GameState = AppState.Editing Then
 
-                Dim Delta As Integer = ControllerPosition.Gamepad.sThumbLY / -8000
+
+                If ControllerPosition.Gamepad.sThumbLY < -32000 Then
+
+                    Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y + 8)
+
+
+                Else
+
+                    Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y + 1)
+
+                End If
+
+
+
+
+                'Dim Delta As Integer = ControllerPosition.Gamepad.sThumbLY / -8000
 
 
                 'Move mouse pointer down.
                 'Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y + 10)
 
-                Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y + Delta)
+
+                '1 = 1 5
+
+                'Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y + Delta)
 
 
 
@@ -1235,14 +1278,26 @@ Public Class Form1
 
             If GameState = AppState.Start Or GameState = AppState.Editing Then
 
-                Dim Delta As Integer = ControllerPosition.Gamepad.sThumbLY / 8000
+                If ControllerPosition.Gamepad.sThumbLY > 32000 Then
+
+                    Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y - 8)
 
 
-                'Move mouse pointer down.
-                'Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y - 10)
+                Else
+
+                    Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y - 1)
+
+                End If
 
 
-                Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y - Delta)
+                'Dim Delta As Integer = ControllerPosition.Gamepad.sThumbLY / 8000
+
+
+                ''Move mouse pointer down.
+                ''Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y - 10)
+
+
+                'Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y - Delta)
 
 
             End If
@@ -2725,7 +2780,10 @@ Public Class Form1
             .DrawString("Y",
                         ButtonIconFont,
                         Brushes.White,
-                        New Rectangle(OpenButton.Rect.X + 174, OpenButton.Rect.Y + 24, 100, 50),
+                        New Rectangle(OpenButton.Rect.X + 174,
+                                      OpenButton.Rect.Y + 24,
+                                      100,
+                                      50),
                         AlineCenterMiddle)
 
         End With
@@ -5004,7 +5062,6 @@ Public Class Form1
 
                 End If
 
-
             Case Keys.Y
 
                 If GameState = AppState.Editing Then
@@ -5099,7 +5156,6 @@ Public Class Form1
 
                 End If
 
-
                 'Has the player pressed the delete key down?
             Case Keys.Delete
                 'Yes, the player has pressed the delete key down.
@@ -5158,8 +5214,7 @@ Public Class Form1
 
                 End If
 
-            Case Keys.M
-                'Mute
+            Case Keys.M 'Mute
 
                 If IsBackgroundLoopPlaying = True Then
 
@@ -5968,6 +6023,7 @@ Public Class Form1
                 ControllerB = False
 
                 If GameState = AppState.Editing Then
+
                     If IsMouseDown = False Then
 
                         IsMouseDown = True
@@ -6222,14 +6278,11 @@ Public Class Form1
 
             BufferGridLines()
 
-
             ResetCash()
 
             ResurrectEnemies()
 
             ResetOurHero()
-
-            'MovePointerOffScreen()
 
         End If
 

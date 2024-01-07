@@ -1168,13 +1168,24 @@ Public Class Form1
 
                 Case AppState.Editing
 
-                    Dim Delta As Integer = ControllerPosition.Gamepad.sThumbLX / -8000
+                    If ControllerPosition.Gamepad.sThumbLX < -32000 Then
+
+
+                        Cursor.Position = New Point(Cursor.Position.X - 14, Cursor.Position.Y)
+
+                    Else
+
+                        Cursor.Position = New Point(Cursor.Position.X - 1, Cursor.Position.Y)
+
+                    End If
+
+                    'Dim Delta As Integer = ControllerPosition.Gamepad.sThumbLX / -8000
 
 
                     'Move mouse pointer to the left.
                     'Cursor.Position = New Point(Cursor.Position.X - 10, Cursor.Position.Y)
 
-                    Cursor.Position = New Point(Cursor.Position.X - Delta, Cursor.Position.Y)
+                    'Cursor.Position = New Point(Cursor.Position.X - Delta, Cursor.Position.Y)
 
 
             End Select
@@ -1220,14 +1231,23 @@ Public Class Form1
 
                 Case AppState.Editing
 
+                    If ControllerPosition.Gamepad.sThumbLX > 32000 Then
 
-                    Dim Delta As Integer = ControllerPosition.Gamepad.sThumbLX / 8000
+                        Cursor.Position = New Point(Cursor.Position.X + 14, Cursor.Position.Y)
+
+                    Else
+
+                        Cursor.Position = New Point(Cursor.Position.X + 1, Cursor.Position.Y)
+
+                    End If
+
+                    'Dim Delta As Integer = ControllerPosition.Gamepad.sThumbLX / 8000
 
                     'Move mouse pointer to the right.
                     'Cursor.Position = New Point(Cursor.Position.X + 10, Cursor.Position.Y)
 
 
-                    Cursor.Position = New Point(Cursor.Position.X + Delta, Cursor.Position.Y)
+                    'Cursor.Position = New Point(Cursor.Position.X + Delta, Cursor.Position.Y)
 
 
             End Select
@@ -5561,6 +5581,10 @@ Public Class Form1
                             'Remember the cameras in game position before opening the editor.
                             CameraPlayPostion.X = Camera.Rect.X
                             CameraPlayPostion.Y = Camera.Rect.Y
+
+                            'Move mouse pointer to the center of the client rctangle.
+                            Cursor.Position = New Point(ClientRectangle.X + ClientRectangle.Width / 2,
+                                                       ClientRectangle.Y + ClientRectangle.Height / 2)
 
                             GameState = AppState.Editing
 

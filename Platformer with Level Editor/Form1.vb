@@ -5677,15 +5677,23 @@ Public Class Form1
 
                     If ShowMenu = True Then
 
-                        Cursor.Position = New Point(ScreenOffset.X + SaveButton.Rect.X, ScreenOffset.Y + SaveButton.Rect.Y)
 
-                        If IsMouseDown = False Then
+                        'ShowSaveLevelDialog()
+                        Me.Invoke(Sub() Me.ShowSaveLevelDialog())
 
-                            IsMouseDown = True
+                        ShowMenu = False
 
-                            DoMouseLeftDown()
 
-                        End If
+
+                        'Cursor.Position = New Point(ScreenOffset.X + SaveButton.Rect.X, ScreenOffset.Y + SaveButton.Rect.Y)
+
+                        'If IsMouseDown = False Then
+
+                        '    IsMouseDown = True
+
+                        '    DoMouseLeftDown()
+
+                        'End If
 
                     End If
 

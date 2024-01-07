@@ -1298,10 +1298,14 @@ Public Class Form1
 
             If GameState = AppState.Editing Then
 
-                'Move Camera to the left.
-                Camera.Rect.X += 10
+                If ShowMenu = False Then
 
-                BufferGridLines()
+                    'Move Camera to the left.
+                    Camera.Rect.X += 10
+
+                    BufferGridLines()
+
+                End If
 
             End If
 
@@ -1310,10 +1314,14 @@ Public Class Form1
 
             If GameState = AppState.Editing Then
 
-                'Move Camera to the left.
-                Camera.Rect.X -= 10
+                If ShowMenu = False Then
 
-                BufferGridLines()
+                    'Move Camera to the left.
+                    Camera.Rect.X -= 10
+
+                    BufferGridLines()
+
+                End If
 
             End If
 
@@ -1328,10 +1336,14 @@ Public Class Form1
 
             If GameState = AppState.Editing Then
 
-                'Move Camera to the up.
-                Camera.Rect.Y -= 10
+                If ShowMenu = False Then
 
-                BufferGridLines()
+                    'Move Camera to the up.
+                    Camera.Rect.Y -= 10
+
+                    BufferGridLines()
+
+                End If
 
             End If
 
@@ -1340,10 +1352,18 @@ Public Class Form1
 
             If GameState = AppState.Editing Then
 
-                'Move Camera to the down.
-                Camera.Rect.Y += 10
+                If GameState = AppState.Editing Then
 
-                BufferGridLines()
+                    If ShowMenu = False Then
+
+                        'Move Camera to the down.
+                        Camera.Rect.Y += 10
+
+                        BufferGridLines()
+
+                    End If
+
+                End If
 
             End If
 

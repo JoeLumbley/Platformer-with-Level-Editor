@@ -1138,7 +1138,7 @@ Public Class Form1
 
                     If ControllerPosition.Gamepad.sThumbLX < -32000 Then
 
-                        Cursor.Position = New Point(Cursor.Position.X - 10, Cursor.Position.Y)
+                        Cursor.Position = New Point(Cursor.Position.X - 14, Cursor.Position.Y)
 
                     Else
 
@@ -1155,7 +1155,6 @@ Public Class Form1
                 Case AppState.Editing
 
                     If ControllerPosition.Gamepad.sThumbLX < -32000 Then
-
 
                         Cursor.Position = New Point(Cursor.Position.X - 14, Cursor.Position.Y)
 
@@ -1176,7 +1175,7 @@ Public Class Form1
 
                     If ControllerPosition.Gamepad.sThumbLX > 32000 Then
 
-                        Cursor.Position = New Point(Cursor.Position.X + 10, Cursor.Position.Y)
+                        Cursor.Position = New Point(Cursor.Position.X + 14, Cursor.Position.Y)
 
                     Else
 

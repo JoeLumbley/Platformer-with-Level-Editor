@@ -1133,11 +1133,10 @@ Public Class Form1
             'The left thumbstick is in the left position.
 
             Select Case GameState
+
                 Case AppState.Start
 
-
                     If ControllerPosition.Gamepad.sThumbLX < -32000 Then
-
 
                         Cursor.Position = New Point(Cursor.Position.X - 10, Cursor.Position.Y)
 
@@ -1147,24 +1146,11 @@ Public Class Form1
 
                     End If
 
-
-                    'Dim Delta As Integer = (ControllerPosition.Gamepad.sThumbLX - NeutralStart) / -4902.4
-                    'Dim Delta As Integer = ControllerPosition.Gamepad.sThumbLX / -8000
-
-
-                    'Move mouse pointer to the left.
-                    'Cursor.Position = New Point(Cursor.Position.X - 10, Cursor.Position.Y)
-
-
-                    'Cursor.Position = New Point(Cursor.Position.X - Delta, Cursor.Position.Y)
-
-
                 Case AppState.Playing
 
                     ControllerLeft = True
 
                     ControllerRight = False
-
 
                 Case AppState.Editing
 
@@ -1179,25 +1165,14 @@ Public Class Form1
 
                     End If
 
-                    'Dim Delta As Integer = ControllerPosition.Gamepad.sThumbLX / -8000
-
-
-                    'Move mouse pointer to the left.
-                    'Cursor.Position = New Point(Cursor.Position.X - 10, Cursor.Position.Y)
-
-                    'Cursor.Position = New Point(Cursor.Position.X - Delta, Cursor.Position.Y)
-
-
             End Select
 
         ElseIf ControllerPosition.Gamepad.sThumbLX >= NeutralEnd Then
             'The left thumbstick is in the right position.
 
-
             Select Case GameState
+
                 Case AppState.Start
-
-
 
                     If ControllerPosition.Gamepad.sThumbLX > 32000 Then
 
@@ -1208,20 +1183,6 @@ Public Class Form1
                         Cursor.Position = New Point(Cursor.Position.X + 1, Cursor.Position.Y)
 
                     End If
-
-
-
-                    'Dim Delta As Integer = ControllerPosition.Gamepad.sThumbLX / 8000
-
-
-
-                    'Move mouse pointer to the right.
-                    'Cursor.Position = New Point(Cursor.Position.X + 10, Cursor.Position.Y)
-
-                    'Cursor.Position = New Point(Cursor.Position.X + Delta, Cursor.Position.Y)
-
-
-
 
                 Case AppState.Playing
 
@@ -1241,15 +1202,6 @@ Public Class Form1
 
                     End If
 
-                    'Dim Delta As Integer = ControllerPosition.Gamepad.sThumbLX / 8000
-
-                    'Move mouse pointer to the right.
-                    'Cursor.Position = New Point(Cursor.Position.X + 10, Cursor.Position.Y)
-
-
-                    'Cursor.Position = New Point(Cursor.Position.X + Delta, Cursor.Position.Y)
-
-
             End Select
 
         Else
@@ -1263,33 +1215,15 @@ Public Class Form1
 
             If GameState = AppState.Start Or GameState = AppState.Editing Then
 
-
                 If ControllerPosition.Gamepad.sThumbLY < -32000 Then
 
-                    Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y + 8)
-
+                    Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y + 10)
 
                 Else
 
                     Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y + 1)
 
                 End If
-
-
-
-
-                'Dim Delta As Integer = ControllerPosition.Gamepad.sThumbLY / -8000
-
-
-                'Move mouse pointer down.
-                'Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y + 10)
-
-
-                '1 = 1 5
-
-                'Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y + Delta)
-
-
 
             End If
 
@@ -1300,25 +1234,13 @@ Public Class Form1
 
                 If ControllerPosition.Gamepad.sThumbLY > 32000 Then
 
-                    Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y - 8)
-
+                    Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y - 10)
 
                 Else
 
                     Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y - 1)
 
                 End If
-
-
-                'Dim Delta As Integer = ControllerPosition.Gamepad.sThumbLY / 8000
-
-
-                ''Move mouse pointer down.
-                ''Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y - 10)
-
-
-                'Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y - Delta)
-
 
             End If
 

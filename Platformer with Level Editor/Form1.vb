@@ -1352,16 +1352,12 @@ Public Class Form1
 
             If GameState = AppState.Editing Then
 
-                If GameState = AppState.Editing Then
+                If ShowMenu = False Then
 
-                    If ShowMenu = False Then
+                    'Move Camera to the down.
+                    Camera.Rect.Y += 10
 
-                        'Move Camera to the down.
-                        Camera.Rect.Y += 10
-
-                        BufferGridLines()
-
-                    End If
+                    BufferGridLines()
 
                 End If
 
@@ -1373,6 +1369,7 @@ Public Class Form1
         End If
 
     End Sub
+
 
     Private Sub LookAhead()
 

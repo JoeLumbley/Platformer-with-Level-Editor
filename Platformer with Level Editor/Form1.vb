@@ -1078,7 +1078,7 @@ Public Class Form1
                     'Is controller zero connected?
                     If Connected(0) = True AndAlso ControllerNumber = 0 Then
                         'Yes, controller zero is connected.
-                        'Use controller zero
+                        'Use controller zero.
 
                         UpdateButtonPosition()
 
@@ -1092,8 +1092,8 @@ Public Class Form1
 
                     'Is controller zero disconnected and controller one connected?
                     If Connected(0) = False AndAlso Connected(1) = True AndAlso ControllerNumber = 1 Then
-                        'Yes, controller zero is disconnected and controller one is connected?
-                        'Use controller one
+                        'Yes, controller zero is disconnected and controller one is connected.
+                        'Use controller one.
 
                         UpdateButtonPosition()
 
@@ -1363,9 +1363,6 @@ Public Class Form1
             'Move camera to the right.
             Camera.Rect.X = OurHero.Rect.Left * -1 + Camera.Rect.Width / 1.5
 
-            'BufferGridLines()
-
-
         End If
 
         'Is our hero near the left side of the frame?
@@ -1374,9 +1371,6 @@ Public Class Form1
 
             'Move camera to the left.
             Camera.Rect.X = OurHero.Rect.Left * -1 + Camera.Rect.Width / 4
-
-            'BufferGridLines()
-
 
         End If
 
@@ -1387,11 +1381,7 @@ Public Class Form1
             'Move camera down.
             Camera.Rect.Y = OurHero.Rect.Top * -1 + Camera.Rect.Height / 1.25
 
-            'BufferGridLines()
-
-
         End If
-
 
         'Is our hero near the top side of the frame?
         If OurHero.Rect.Y < (Camera.Rect.Y * -1) + Camera.Rect.Height / 6 Then
@@ -1399,9 +1389,6 @@ Public Class Form1
 
             'Move camera up.
             Camera.Rect.Y = OurHero.Rect.Top * -1 + Camera.Rect.Height / 6
-
-            'BufferGridLines()
-
 
         End If
 
@@ -1416,9 +1403,6 @@ Public Class Form1
             'Aline camera to the left side of the level.
             Camera.Rect.X = Level.Rect.Left * -1
 
-            'BufferGridLines()
-
-
         End If
 
         'Is the Camera off to right side of the level? checked
@@ -1427,9 +1411,6 @@ Public Class Form1
 
             'Aline camera to the right side of the level.
             Camera.Rect.X = Level.Rect.Right * -1 + Camera.Rect.Width
-
-            'BufferGridLines()
-
 
         End If
 
@@ -1440,8 +1421,6 @@ Public Class Form1
             'Aline camera to the top side of the level. 
             Camera.Rect.Y = Level.Rect.Top * -1
 
-            'BufferGridLines()
-
         End If
 
         'Is the Camera off to bottom side of the level? checked
@@ -1451,12 +1430,7 @@ Public Class Form1
             'Aline camera to the bottom side of the level.
             Camera.Rect.Y = (Level.Rect.Bottom * -1) + Camera.Rect.Height
 
-            'BufferGridLines()
-
-
         End If
-
-
 
     End Sub
 
@@ -2235,6 +2209,7 @@ Public Class Form1
                         .FillRectangle(GradBrush, rectOffset)
 
                         If rectOffset.Width <= rectOffset.Height Then
+
                             Dim Font As New Font(New FontFamily("Wingdings"), rectOffset.Width \ 2, FontStyle.Regular)
 
                             .DrawString("«",
@@ -2244,6 +2219,7 @@ Public Class Form1
                                     AlineCenterMiddle)
 
                         Else
+
                             Dim Font As New Font(New FontFamily("Wingdings"), rectOffset.Height \ 2, FontStyle.Regular)
 
                             .DrawString("«",

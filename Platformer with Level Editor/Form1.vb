@@ -239,6 +239,8 @@ Public Class Form1
 
     Private LeftArrowDown As Boolean = False
 
+    Private ADown As Boolean = False
+
     Private BDown As Boolean = False
 
     Private DeleteDown As Boolean = False
@@ -1680,7 +1682,7 @@ Public Class Form1
 
                             End If
 
-                            If BDown = True Then
+                            If ADown = True Then
 
                                 If Jumped = False Then
 
@@ -4951,6 +4953,8 @@ Public Class Form1
 
             Case Keys.A
 
+                ADown = True
+
                 If GameState = AppState.Editing Then
 
                     If ShowMenu = True Then
@@ -4962,6 +4966,24 @@ Public Class Form1
                             DoMouseLeftDown()
 
                         End If
+
+                    End If
+
+                End If
+
+                'Has the player pressed the B key down?
+            Case Keys.B
+                'Yes, the player has pressed the B key down.
+
+                BDown = True
+
+                If GameState = AppState.Editing Then
+
+                    If ShowMenu = True Then
+
+                        ShowSaveLevelDialog()
+
+                        ShowMenu = False
 
                     End If
 
@@ -4980,24 +5002,6 @@ Public Class Form1
                             DoMouseLeftDown()
 
                         End If
-
-                    End If
-
-                End If
-
-            'Has the player pressed the B key down?
-            Case Keys.B
-                'Yes, the player has pressed the B key down.
-
-                BDown = True
-
-                If GameState = AppState.Editing Then
-
-                    If ShowMenu = True Then
-
-                        ShowSaveLevelDialog()
-
-                        ShowMenu = False
 
                     End If
 
@@ -5214,6 +5218,12 @@ Public Class Form1
             Case Keys.Left
 
                 LeftArrowDown = False
+
+            Case Keys.A
+
+                If Jumped = True Then Jumped = False
+
+                ADown = False
 
             Case Keys.B
 

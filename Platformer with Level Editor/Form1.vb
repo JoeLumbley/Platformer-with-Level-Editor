@@ -3443,15 +3443,16 @@ Public Class Form1
                     If IsFileLoaded = True Then
 
                         LevelName = Path.GetFileName(OpenFileDialog1.FileName)
+
                         Text = LevelName & " - Platformer with Level Editor - Code with Joe"
 
                         CashCollected = 0
 
-                        MovePointerOffScreen()
-
                         LastFrame = Now
 
                         GameState = AppState.Playing
+
+                        MovePointerOffScreen()
 
                         PlayLevelMusic()
 
@@ -3473,16 +3474,17 @@ Public Class Form1
 
             CreateNewLevel()
 
-            CashCollected = 0
+            LevelName = "Untitled"
 
-            MovePointerOffScreen()
+            Text = LevelName & " - Platformer with Level Editor - Code with Joe"
+
+            CashCollected = 0
 
             LastFrame = Now
 
             GameState = AppState.Playing
 
-            LevelName = "Untitled"
-            Text = LevelName & " - Platformer with Level Editor - Code with Joe"
+            MovePointerOffScreen()
 
             PlayLevelMusic()
 

@@ -420,6 +420,9 @@ Public Class Form1
 
     Private IsMuted As Boolean = False
 
+    Private CameraOffset As New Point(0, 0)
+
+
     <StructLayout(LayoutKind.Sequential)>
     Private Structure INPUTStruc
         Public type As UInteger
@@ -815,6 +818,8 @@ Public Class Form1
                             Camera.Rect.X = 0
                             Camera.Rect.Y = 0
 
+                            UpdateCameraOffset()
+
                             BufferGridLines()
 
                             ResetCash()
@@ -832,6 +837,13 @@ Public Class Form1
             Next
 
         End If
+
+    End Sub
+
+    Private Sub UpdateCameraOffset()
+
+        CameraOffset.X = Camera.Rect.X * -1
+        CameraOffset.Y = Camera.Rect.Y * -1
 
     End Sub
 
@@ -1021,6 +1033,8 @@ Public Class Form1
 
                 Camera.Rect.X = 0
                 Camera.Rect.Y = 0
+
+                UpdateCameraOffset()
 
                 BufferGridLines()
 
@@ -1298,8 +1312,10 @@ Public Class Form1
 
                 If ShowMenu = False Then
 
-                    'Move Camera to the left.
-                    Camera.Rect.X += 10
+                    'Move camera to the left.
+                    Camera.Rect.X -= 10
+
+                    UpdateCameraOffset()
 
                     BufferGridLines()
 
@@ -1314,8 +1330,10 @@ Public Class Form1
 
                 If ShowMenu = False Then
 
-                    'Move Camera to the left.
-                    Camera.Rect.X -= 10
+                    'Move camera to the right.
+                    Camera.Rect.X += 10
+
+                    UpdateCameraOffset()
 
                     BufferGridLines()
 
@@ -1336,8 +1354,12 @@ Public Class Form1
 
                 If ShowMenu = False Then
 
-                    'Move Camera to the up.
-                    Camera.Rect.Y -= 10
+                    'Move camera up.
+                    Camera.Rect.Y += 10
+
+                    UpdateCameraOffset()
+
+
 
                     BufferGridLines()
 
@@ -1352,8 +1374,11 @@ Public Class Form1
 
                 If ShowMenu = False Then
 
-                    'Move Camera to the down.
-                    Camera.Rect.Y += 10
+                    'Move camera down.
+                    Camera.Rect.Y -= 10
+
+                    UpdateCameraOffset()
+
 
                     BufferGridLines()
 
@@ -1372,38 +1397,62 @@ Public Class Form1
     Private Sub LookAhead()
 
         'Is our hero near the right side of the frame?
-        If OurHero.Rect.X > (Camera.Rect.X * -1) + Camera.Rect.Width / 1.5 Then
+        If OurHero.Rect.X > Camera.Rect.X + Camera.Rect.Width / 1.5 Then
+            'If Hero.X > Camera.X + Camera.Width / 1.5 Then
             'Yes, our hero is near the right side of the frame.
 
             'Move camera to the right.
-            Camera.Rect.X = OurHero.Rect.Left * -1 + Camera.Rect.Width / 1.5
+            Camera.Rect.X = OurHero.Rect.Left - Camera.Rect.Width / 1.5
+            'Camera.X = Hero.Left - Camera.Width / 1.5
+
+            'Update camera offset.
+            CameraOffset.X = Camera.Rect.X * -1
 
         End If
 
         'Is our hero near the left side of the frame?
-        If OurHero.Rect.X < (Camera.Rect.X * -1) + Camera.Rect.Width / 4 Then
+        If OurHero.Rect.X < Camera.Rect.X + Camera.Rect.Width / 4 Then
+            'If Hero.X < Camera.X + Camera.Width / 4 Then
             'Yes, our hero is near the left side of the frame.
 
             'Move camera to the left.
-            Camera.Rect.X = OurHero.Rect.Left * -1 + Camera.Rect.Width / 4
+            Camera.Rect.X = OurHero.Rect.Left - Camera.Rect.Width / 4
+            'Camera.X = Hero.Left - Camera.Width / 4
+
+            'Update camera offset.
+            CameraOffset.X = Camera.Rect.X * -1
 
         End If
 
+
         'Is our hero near the bottom side of the frame?
-        If OurHero.Rect.Y > (Camera.Rect.Y * -1) + Camera.Rect.Height / 1.25 Then
+        If OurHero.Rect.Y > Camera.Rect.Y + Camera.Rect.Height / 1.25 Then
+            'If Hero.Y > Camera.Y + Camera.Height / 1.25 Then
             'Yes, our hero is near the bottom side of the frame.
 
             'Move camera down.
-            Camera.Rect.Y = OurHero.Rect.Top * -1 + Camera.Rect.Height / 1.25
+            Camera.Rect.Y = OurHero.Rect.Top - Camera.Rect.Height / 1.25
+            'Camera.Y = Hero.Top - Camera.Height / 1.25
+
+            'Update camera offset.
+            CameraOffset.Y = Camera.Rect.Y * -1
+
 
         End If
 
         'Is our hero near the top side of the frame?
-        If OurHero.Rect.Y < (Camera.Rect.Y * -1) + Camera.Rect.Height / 6 Then
+        If OurHero.Rect.Y < Camera.Rect.Y + Camera.Rect.Height / 6 Then
+            'If Hero.Y < Camera.Y + Camera.Height / 6 Then
+
             'Yes, our hero is near the top side of the frame.
 
             'Move camera up.
-            Camera.Rect.Y = OurHero.Rect.Top * -1 + Camera.Rect.Height / 6
+            Camera.Rect.Y = OurHero.Rect.Top - Camera.Rect.Height / 6
+            'Camera.Y = Hero.Top - Camera.Height / 6
+
+            'Update camera offset.
+            CameraOffset.Y = Camera.Rect.Y * -1
+
 
         End If
 
@@ -1412,40 +1461,68 @@ Public Class Form1
     Private Sub KeepCameraOnTheLevel()
 
         'Is the Camera off to left side of the level? checked
-        If (Camera.Rect.X * -1) < Level.Rect.Left Then
+        If Camera.Rect.X < Level.Rect.Left Then
+            'If Camera.X < Level.Left Then
             'Yes, the Camera is off the level.
 
             'Aline camera to the left side of the level.
-            Camera.Rect.X = Level.Rect.Left * -1
+            Camera.Rect.X = Level.Rect.Left
+            'Camera.X = Level.Left
+
+            'Update camera offset.
+            CameraOffset.X = Camera.Rect.X * -1
+
 
         End If
 
+
         'Is the Camera off to right side of the level? checked
-        If (Camera.Rect.X * -1) + Camera.Rect.Width > Level.Rect.Right Then
+        If Camera.Rect.X + Camera.Rect.Width > Level.Rect.Right Then
+            'If Camera.X + Camera.Width > Level.Right Then
             'Yes, the Camera is off the level.
 
             'Aline camera to the right side of the level.
-            Camera.Rect.X = Level.Rect.Right * -1 + Camera.Rect.Width
+            Camera.Rect.X = Level.Rect.Right - Camera.Rect.Width
+            'Camera.X = Level.Right - Camera.Width
+
+            'Update camera offset.
+            CameraOffset.X = Camera.Rect.X * -1
+
 
         End If
 
+
         'Is the Camera off to top side of the level? checked
-        If (Camera.Rect.Y * -1) < Level.Rect.Top Then
+        If Camera.Rect.Y < Level.Rect.Top Then
+            'If Camera.Y < Level.Top Then
+
             'Yes, the Camera is off the level.
 
             'Aline camera to the top side of the level. 
-            Camera.Rect.Y = Level.Rect.Top * -1
+            Camera.Rect.Y = Level.Rect.Top
+            'Camera.Y = Level.Top
+
+            'Update camera offset.
+            CameraOffset.Y = Camera.Rect.Y * -1
 
         End If
 
+
         'Is the Camera off to bottom side of the level? checked
-        If (Camera.Rect.Y * -1) + Camera.Rect.Height > Level.Rect.Bottom Then
+        If Camera.Rect.Y + Camera.Rect.Height > Level.Rect.Bottom Then
+            'If Camera.Y + Camera.Height > Level.Bottom Then
+
             'Yes, the Camera is off the level.
 
             'Aline camera to the bottom side of the level.
-            Camera.Rect.Y = (Level.Rect.Bottom * -1) + Camera.Rect.Height
+            Camera.Rect.Y = Level.Rect.Bottom - Camera.Rect.Height
+            'Camera.Y = Level.Bottom - Camera.Height
+
+            'Update camera offset.
+            CameraOffset.Y = Camera.Rect.Y * -1
 
         End If
+
 
     End Sub
 
@@ -1748,7 +1825,7 @@ Public Class Form1
 
             Dim rectOffset As Rectangle = OurHero.Rect
 
-            rectOffset.Offset(Camera.Rect.Location)
+            rectOffset.Offset(CameraOffset)
 
             .FillRectangle(Brushes.Red, rectOffset)
 
@@ -1782,7 +1859,7 @@ Public Class Form1
 
                                 Dim rectOffset As Rectangle = Enemy.Rect
 
-                                rectOffset.Offset(Camera.Rect.Location)
+                                rectOffset.Offset(CameraOffset)
 
                                 .FillRectangle(Brushes.Chocolate, rectOffset)
 
@@ -1794,7 +1871,7 @@ Public Class Form1
 
                             Dim PatrolAOffset As New Rectangle(New Point(Enemy.PatrolA.X, Enemy.PatrolA.Y), New Drawing.Size(GridSize, GridSize))
 
-                            PatrolAOffset.Offset(Camera.Rect.Location)
+                            PatrolAOffset.Offset(CameraOffset)
 
                             .FillRectangle(Brushes.Chocolate, PatrolAOffset)
 
@@ -1802,7 +1879,7 @@ Public Class Form1
 
                             Dim PatrolBOffset As New Rectangle(New Point(Enemy.PatrolB.X, Enemy.PatrolB.Y), New Drawing.Size(GridSize, GridSize))
 
-                            PatrolBOffset.Offset(Camera.Rect.Location)
+                            PatrolBOffset.Offset(CameraOffset)
 
                             .FillRectangle(New SolidBrush(Color.FromArgb(128, Color.Chocolate)), PatrolBOffset)
 
@@ -1812,7 +1889,7 @@ Public Class Form1
 
                             Dim SpanOffset As New Rectangle(New Point(Enemy.PatrolA.X + GridSize, Enemy.PatrolA.Y), New Drawing.Size(SpanWidth, GridSize))
 
-                            SpanOffset.Offset(Camera.Rect.Location)
+                            SpanOffset.Offset(CameraOffset)
 
                             .FillRectangle(New SolidBrush(Color.FromArgb(128, Color.Chocolate)), SpanOffset)
 
@@ -1822,7 +1899,7 @@ Public Class Form1
 
                                 Dim SelectionOffset As New Rectangle(New Point(Enemy.PatrolA.X, Enemy.PatrolA.Y), SelectionSize)
 
-                                SelectionOffset.Offset(Camera.Rect.Location)
+                                SelectionOffset.Offset(CameraOffset)
 
                                 'Draw selection rectangle.
                                 .DrawRectangle(New Pen(Color.Red, 6), SelectionOffset)
@@ -1855,7 +1932,7 @@ Public Class Form1
 
                 Dim rectOffset As Rectangle = Goal.Rect
 
-                rectOffset.Offset(Camera.Rect.Location)
+                rectOffset.Offset(CameraOffset)
 
                 .FillRectangle(Brushes.White, rectOffset)
 
@@ -1938,7 +2015,7 @@ Public Class Form1
 
                     Dim rectOffset As Rectangle = Block.Rect
 
-                    rectOffset.Offset(Camera.Rect.Location)
+                    rectOffset.Offset(CameraOffset)
 
                     .FillRectangle(Brushes.Chocolate, rectOffset)
 
@@ -1979,7 +2056,7 @@ Public Class Form1
 
                     Dim rectOffset As Rectangle = Bush.Rect
 
-                    rectOffset.Offset(Camera.Rect.Location)
+                    rectOffset.Offset(CameraOffset)
 
                     .FillRectangle(Brushes.GreenYellow, rectOffset)
 
@@ -2026,11 +2103,20 @@ Public Class Form1
 
                     Dim rectOffset As Rectangle = Cloud.Rect
 
-                    rectOffset.Offset(Camera.Rect.Location)
+                    rectOffset.Offset(CameraOffset)
+
+                    'TODO: CameraOffset
+                    'CameraOffset.X = Camera.Rect.X
+                    'rectOffset.Offset(CameraOffset)
+                    '
+
 
                     .FillRectangle(Brushes.White, rectOffset)
 
-                    .DrawLine(LightSkyBluePen, rectOffset.Right - 10, rectOffset.Top + 10, rectOffset.Right - 10, rectOffset.Bottom - 10)
+                    .DrawLine(LightSkyBluePen, rectOffset.Right - 10,
+                              rectOffset.Top + 10,
+                              rectOffset.Right - 10,
+                              rectOffset.Bottom - 10)
 
                     .DrawLine(LightSkyBluePen, rectOffset.Left + 10, rectOffset.Bottom - 10, rectOffset.Right - 10, rectOffset.Bottom - 10)
 
@@ -2073,7 +2159,7 @@ Public Class Form1
 
                     Dim rectOffset As Rectangle = Bill.Rect
 
-                    rectOffset.Offset(Camera.Rect.Location)
+                    rectOffset.Offset(CameraOffset)
 
                     Select Case GameState
 
@@ -2145,7 +2231,7 @@ Public Class Form1
 
                 Dim rectOffset As Rectangle = ToolPreview
 
-                rectOffset.Offset(Camera.Rect.Location)
+                rectOffset.Offset(CameraOffset)
 
                 Select Case SelectedTool
 
@@ -3136,16 +3222,19 @@ Public Class Form1
         GridLineBuffer.Clear(Color.Transparent)
 
         ' Draw vertical lines  |
-        For x As Integer = Camera.Rect.X To Camera.Rect.X + Level.Rect.Width Step GridSize
+        For x As Integer = CameraOffset.X To CameraOffset.X + Level.Rect.Width Step GridSize
+            'For x As Integer = CameraOffset.X To CameraOffset.X + Level.Width Step 64
 
-            GridLineBuffer.DrawLine(Pens.Black, x, Camera.Rect.Y, x, Camera.Rect.Y + Level.Rect.Height)
+
+            GridLineBuffer.DrawLine(Pens.Black, x, CameraOffset.Y, x, CameraOffset.Y + Level.Rect.Height)
 
         Next
 
-        ' Draw horizontal lines ---
-        For y As Integer = Camera.Rect.Y To Camera.Rect.Y + Level.Rect.Height Step GridSize
 
-            GridLineBuffer.DrawLine(Pens.Black, Camera.Rect.X, y, Camera.Rect.X + Level.Rect.Width, y)
+        ' Draw horizontal lines ---
+        For y As Integer = CameraOffset.Y To CameraOffset.Y + Level.Rect.Height Step GridSize
+
+            GridLineBuffer.DrawLine(Pens.Black, CameraOffset.X, y, CameraOffset.X + Level.Rect.Width, y)
 
         Next
 
@@ -3215,6 +3304,8 @@ Public Class Form1
     Private Sub InitializeObjects()
 
         Camera.Rect.Location = New Point(0, 0)
+
+        UpdateCameraOffset()
 
         SetMinLevelSize()
 
@@ -3680,9 +3771,9 @@ Public Class Form1
 
         Dim pointOffset As Point = e
 
-        pointOffset.X = (Camera.Rect.X * -1) + e.X
+        pointOffset.X = Camera.Rect.X + e.X
 
-        pointOffset.Y = (Camera.Rect.Y * -1) + e.Y
+        pointOffset.Y = Camera.Rect.Y + e.Y
 
         'Is the player clicking the play button?
         If EditPlayButton.Rect.Contains(e) Then
@@ -3693,6 +3784,8 @@ Public Class Form1
             'Restore the cameras in game position.
             Camera.Rect.X = CameraPlayPostion.X
             Camera.Rect.Y = CameraPlayPostion.Y
+
+            UpdateCameraOffset()
 
             MovePointerOffScreen()
 
@@ -3855,8 +3948,8 @@ Public Class Form1
 
             Dim PointOffset As Point = e
 
-            PointOffset.X = (Camera.Rect.X * -1) + e.X
-            PointOffset.Y = (Camera.Rect.Y * -1) + e.Y
+            PointOffset.X = Camera.Rect.X + e.X
+            PointOffset.Y = Camera.Rect.Y + e.Y
 
             If SizingHandle.Contains(e) Then
 
@@ -4587,9 +4680,9 @@ Public Class Form1
 
         Dim pointOffset As Point = e.Location
 
-        pointOffset.X = (Camera.Rect.X * -1) + e.X
+        pointOffset.X = Camera.Rect.X + e.X
 
-        pointOffset.Y = (Camera.Rect.Y * -1) + e.Y
+        pointOffset.Y = Camera.Rect.Y + e.Y
 
         If e.Button = MouseButtons.None Then
 
@@ -4837,9 +4930,12 @@ Public Class Form1
 
             If e.Button = MouseButtons.Left Then
 
-                Camera.Rect.X = e.X - SelectionOffset.X
+                Camera.Rect.X = SelectionOffset.X - e.X
 
-                Camera.Rect.Y = e.Y - SelectionOffset.Y
+                Camera.Rect.Y = SelectionOffset.Y - e.Y
+
+                UpdateCameraOffset()
+
 
                 BufferGridLines()
 
@@ -4870,7 +4966,10 @@ Public Class Form1
                     If ShowMenu = False Then
 
                         'Move Camera to the right.
-                        Camera.Rect.X -= 10
+                        Camera.Rect.X += 10
+
+                        UpdateCameraOffset()
+
 
                         BufferGridLines()
 
@@ -4900,7 +4999,9 @@ Public Class Form1
                     If ShowMenu = False Then
 
                         'Move Camera to the left.
-                        Camera.Rect.X += 10
+                        Camera.Rect.X -= 10
+
+                        UpdateCameraOffset()
 
                         BufferGridLines()
 
@@ -4920,7 +5021,9 @@ Public Class Form1
                     If ShowMenu = False Then
 
                         'Move Camera up.
-                        Camera.Rect.Y += 10
+                        Camera.Rect.Y -= 10
+
+                        UpdateCameraOffset()
 
                         BufferGridLines()
 
@@ -4940,7 +5043,10 @@ Public Class Form1
                     If ShowMenu = False Then
 
                         'Move Camera down.
-                        Camera.Rect.Y -= 10
+                        Camera.Rect.Y += 10
+
+                        UpdateCameraOffset()
+
 
                         BufferGridLines()
 
@@ -5536,6 +5642,8 @@ Public Class Form1
                             'Restore the cameras in game position.
                             Camera.Rect.X = CameraPlayPostion.X
                             Camera.Rect.Y = CameraPlayPostion.Y
+
+                            UpdateCameraOffset()
 
                             MovePointerOffScreen()
 
@@ -6232,6 +6340,8 @@ Public Class Form1
 
             Camera.Rect.X = 0
             Camera.Rect.Y = 0
+
+            UpdateCameraOffset()
 
             BufferGridLines()
 

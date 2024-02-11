@@ -291,12 +291,11 @@ Public Class Form1
 
     Private YButtonIconOutinePen As New Pen(Color.Yellow, 3)
 
-    Private XButtonIconOutinePen As New Pen(Color.Blue, 3)
+    Private XButtonIconOutinePen As New Pen(Color.DeepSkyBlue, 3)
 
     Private ReadOnly ButtonIconFont As New Font(FontFamily.GenericSansSerif, 20)
 
     Private ReadOnly RightTriggerIconFont As New Font(FontFamily.GenericSansSerif, 20)
-
 
     Private CloundToolIconOutinePen As New Pen(Color.Black, 3)
 
@@ -421,7 +420,6 @@ Public Class Form1
     Private IsMuted As Boolean = False
 
     Private CameraOffset As New Point(0, 0)
-
 
     <StructLayout(LayoutKind.Sequential)>
     Private Structure INPUTStruc
@@ -1359,8 +1357,6 @@ Public Class Form1
 
                     UpdateCameraOffset()
 
-
-
                     BufferGridLines()
 
                 End If
@@ -1379,7 +1375,6 @@ Public Class Form1
 
                     UpdateCameraOffset()
 
-
                     BufferGridLines()
 
                 End If
@@ -1392,7 +1387,6 @@ Public Class Form1
         End If
 
     End Sub
-
 
     Private Sub LookAhead()
 
@@ -1424,7 +1418,6 @@ Public Class Form1
 
         End If
 
-
         'Is our hero near the bottom side of the frame?
         If OurHero.Rect.Y > Camera.Rect.Y + Camera.Rect.Height / 1.25 Then
             'If Hero.Y > Camera.Y + Camera.Height / 1.25 Then
@@ -1436,7 +1429,6 @@ Public Class Form1
 
             'Update camera offset.
             CameraOffset.Y = Camera.Rect.Y * -1
-
 
         End If
 
@@ -1453,76 +1445,59 @@ Public Class Form1
             'Update camera offset.
             CameraOffset.Y = Camera.Rect.Y * -1
 
-
         End If
 
     End Sub
 
     Private Sub KeepCameraOnTheLevel()
 
-        'Is the Camera off to left side of the level? checked
+        'Has the camera moved passed the left side of the level?
         If Camera.Rect.X < Level.Rect.Left Then
-            'If Camera.X < Level.Left Then
-            'Yes, the Camera is off the level.
+            'Yes, the camera has moved pass the left side of the level.
 
-            'Aline camera to the left side of the level.
+            'Limit the camera movement to the left side of the level.
             Camera.Rect.X = Level.Rect.Left
-            'Camera.X = Level.Left
 
             'Update camera offset.
             CameraOffset.X = Camera.Rect.X * -1
 
-
         End If
 
-
-        'Is the Camera off to right side of the level? checked
+        'Has the camera moved passed the right side of the level?
         If Camera.Rect.X + Camera.Rect.Width > Level.Rect.Right Then
-            'If Camera.X + Camera.Width > Level.Right Then
-            'Yes, the Camera is off the level.
+            'Yes, the camera has moved pass the right side of the level.
 
-            'Aline camera to the right side of the level.
+            'Limit the camera movement to the right side of the level.
             Camera.Rect.X = Level.Rect.Right - Camera.Rect.Width
-            'Camera.X = Level.Right - Camera.Width
 
             'Update camera offset.
             CameraOffset.X = Camera.Rect.X * -1
 
-
         End If
 
-
-        'Is the Camera off to top side of the level? checked
+        'Has the camera moved passed the top side of the level?
         If Camera.Rect.Y < Level.Rect.Top Then
-            'If Camera.Y < Level.Top Then
+            'Yes, the camera has moved passed the top side of the level.
 
-            'Yes, the Camera is off the level.
-
-            'Aline camera to the top side of the level. 
+            'Limit camera movement to the top side of the level.
             Camera.Rect.Y = Level.Rect.Top
-            'Camera.Y = Level.Top
 
             'Update camera offset.
             CameraOffset.Y = Camera.Rect.Y * -1
 
         End If
 
-
-        'Is the Camera off to bottom side of the level? checked
+        'Has the camera moved passed the bottom side of the level?
         If Camera.Rect.Y + Camera.Rect.Height > Level.Rect.Bottom Then
-            'If Camera.Y + Camera.Height > Level.Bottom Then
+            'Yes, the camera has moved pass the bottom side of the level.
 
-            'Yes, the Camera is off the level.
-
-            'Aline camera to the bottom side of the level.
+            'Limit camera movement to the bottom of the level.
             Camera.Rect.Y = Level.Rect.Bottom - Camera.Rect.Height
-            'Camera.Y = Level.Bottom - Camera.Height
 
             'Update camera offset.
             CameraOffset.Y = Camera.Rect.Y * -1
 
         End If
-
 
     End Sub
 
@@ -2105,12 +2080,6 @@ Public Class Form1
 
                     rectOffset.Offset(CameraOffset)
 
-                    'TODO: CameraOffset
-                    'CameraOffset.X = Camera.Rect.X
-                    'rectOffset.Offset(CameraOffset)
-                    '
-
-
                     .FillRectangle(Brushes.White, rectOffset)
 
                     .DrawLine(LightSkyBluePen, rectOffset.Right - 10,
@@ -2356,8 +2325,6 @@ Public Class Form1
             Dim Shadow As Rectangle = MenuBackground.Rect
 
             Shadow.Offset(9, 9)
-
-            '.FillRectangle(New SolidBrush(Color.FromArgb(128, Color.Black)), Shadow)
 
             .DrawRectangle(MenuShadowPen, Shadow)
 
@@ -3098,7 +3065,7 @@ Public Class Form1
                                       StartScreenOpenButton.Rect.Y + 24,
                                       150,
                                       50),
-                        AlineCenterMiddle)
+                                      AlineCenterMiddle)
 
             .DrawString("Y",
                         ButtonIconFont,
@@ -3107,7 +3074,7 @@ Public Class Form1
                                       StartScreenOpenButton.Rect.Y + 25,
                                       50,
                                       50),
-                        AlineCenterMiddle)
+                                      AlineCenterMiddle)
 
         End With
 
@@ -3120,10 +3087,11 @@ Public Class Form1
             .FillRectangle(Brushes.Black,
                            StartScreenNewButton.Rect)
 
-            .DrawEllipse(BButtonIconOutinePen, New Rectangle(StartScreenNewButton.Rect.X + 140,
-                                                             StartScreenNewButton.Rect.Y + 20,
-                                                             52,
-                                                             52))
+            .DrawEllipse(BButtonIconOutinePen,
+                         New Rectangle(StartScreenNewButton.Rect.X + 140,
+                                       StartScreenNewButton.Rect.Y + 20,
+                                       52,
+                                       52))
 
             .DrawString("New",
                         FPSFont,
@@ -3141,7 +3109,7 @@ Public Class Form1
                                       StartScreenNewButton.Rect.Y + 24,
                                       50,
                                       50),
-                        AlineCenterMiddle)
+                                      AlineCenterMiddle)
 
         End With
 
@@ -3223,13 +3191,10 @@ Public Class Form1
 
         ' Draw vertical lines  |
         For x As Integer = CameraOffset.X To CameraOffset.X + Level.Rect.Width Step GridSize
-            'For x As Integer = CameraOffset.X To CameraOffset.X + Level.Width Step 64
-
 
             GridLineBuffer.DrawLine(Pens.Black, x, CameraOffset.Y, x, CameraOffset.Y + Level.Rect.Height)
 
         Next
-
 
         ' Draw horizontal lines ---
         For y As Integer = CameraOffset.Y To CameraOffset.Y + Level.Rect.Height Step GridSize
@@ -3497,7 +3462,6 @@ Public Class Form1
                     'Remember the cameras in game position before opening the editor.
                     CameraPlayPostion.X = Camera.Rect.X
                     CameraPlayPostion.Y = Camera.Rect.Y
-
 
                     GameState = AppState.Editing
 
@@ -5046,7 +5010,6 @@ Public Class Form1
                         Camera.Rect.Y += 10
 
                         UpdateCameraOffset()
-
 
                         BufferGridLines()
 

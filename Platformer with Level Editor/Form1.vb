@@ -1399,8 +1399,10 @@ Public Class Form1
             Camera.Rect.X = OurHero.Rect.Left - Camera.Rect.Width / 1.5
             'Camera.X = Hero.Left - Camera.Width / 1.5
 
+            UpdateCameraOffset()
+
             'Update camera offset.
-            CameraOffset.X = Camera.Rect.X * -1
+            'CameraOffset.X = Camera.Rect.X * -1
 
         End If
 
@@ -1413,8 +1415,10 @@ Public Class Form1
             Camera.Rect.X = OurHero.Rect.Left - Camera.Rect.Width / 4
             'Camera.X = Hero.Left - Camera.Width / 4
 
+            UpdateCameraOffset()
+
             'Update camera offset.
-            CameraOffset.X = Camera.Rect.X * -1
+            'CameraOffset.X = Camera.Rect.X * -1
 
         End If
 
@@ -1427,23 +1431,24 @@ Public Class Form1
             Camera.Rect.Y = OurHero.Rect.Top - Camera.Rect.Height / 1.25
             'Camera.Y = Hero.Top - Camera.Height / 1.25
 
+            UpdateCameraOffset()
+
             'Update camera offset.
-            CameraOffset.Y = Camera.Rect.Y * -1
+            'CameraOffset.Y = Camera.Rect.Y * -1
 
         End If
 
         'Is our hero near the top side of the frame?
         If OurHero.Rect.Y < Camera.Rect.Y + Camera.Rect.Height / 6 Then
-            'If Hero.Y < Camera.Y + Camera.Height / 6 Then
-
             'Yes, our hero is near the top side of the frame.
 
             'Move camera up.
             Camera.Rect.Y = OurHero.Rect.Top - Camera.Rect.Height / 6
-            'Camera.Y = Hero.Top - Camera.Height / 6
+
+            UpdateCameraOffset()
 
             'Update camera offset.
-            CameraOffset.Y = Camera.Rect.Y * -1
+            'CameraOffset.Y = Camera.Rect.Y * -1
 
         End If
 
@@ -1458,8 +1463,10 @@ Public Class Form1
             'Limit the camera movement to the left side of the level.
             Camera.Rect.X = Level.Rect.Left
 
+            UpdateCameraOffset()
+
             'Update camera offset.
-            CameraOffset.X = Camera.Rect.X * -1
+            'CameraOffset.X = Camera.Rect.X * -1
 
         End If
 
@@ -1470,8 +1477,10 @@ Public Class Form1
             'Limit the camera movement to the right side of the level.
             Camera.Rect.X = Level.Rect.Right - Camera.Rect.Width
 
+            UpdateCameraOffset()
+
             'Update camera offset.
-            CameraOffset.X = Camera.Rect.X * -1
+            'CameraOffset.X = Camera.Rect.X * -1
 
         End If
 
@@ -1482,8 +1491,10 @@ Public Class Form1
             'Limit camera movement to the top side of the level.
             Camera.Rect.Y = Level.Rect.Top
 
+            UpdateCameraOffset()
+
             'Update camera offset.
-            CameraOffset.Y = Camera.Rect.Y * -1
+            'CameraOffset.Y = Camera.Rect.Y * -1
 
         End If
 
@@ -1494,8 +1505,10 @@ Public Class Form1
             'Limit camera movement to the bottom of the level.
             Camera.Rect.Y = Level.Rect.Bottom - Camera.Rect.Height
 
+            UpdateCameraOffset()
+
             'Update camera offset.
-            CameraOffset.Y = Camera.Rect.Y * -1
+            'CameraOffset.Y = Camera.Rect.Y * -1
 
         End If
 
@@ -1598,7 +1611,6 @@ Public Class Form1
         End If
 
     End Sub
-
     Private Sub UpdateBlocks()
 
         If Blocks IsNot Nothing Then
@@ -1609,186 +1621,140 @@ Public Class Form1
                 If OurHero.Rect.IntersectsWith(Block.Rect) = True Then
                     'Yes, our hero is colliding with the block.
 
-                    'Is our hero falling?
-                    If OurHero.Velocity.Y > 0 Then
-                        'Yes, our hero is falling.
+                    'Is our hero on top of the block.
+                    If OurHero.Rect.Y = Block.Rect.Top - OurHero.Rect.Height + 1 Then
+                        'Yes, our hero is on top of the block.
 
-                        'Stop the fall.
-                        OurHero.Velocity.Y = 0
+                        'Is the player holding down the right arrow key?
+                        If RightArrowDown = True Or ControllerRight = True Then
+                            'Yes, the player is holding down the right arrow key.
 
-                        'Is our hero above the block?
-                        If OurHero.Position.Y <= Block.Rect.Top - OurHero.Rect.Height \ 2 Then
-                            'Yes, our hero is above the block.
+                            'Is our hero moving to the left?
+                            If OurHero.Velocity.X < 0 Then
 
-                            'Is our hero on top of the block?
-                            If OurHero.Position.Y <> Block.Rect.Top - OurHero.Rect.Height + 1 Then
-                                'No, our hero is NOT on top of the block.
+                                'Stop the move before change in direction.
+                                OurHero.Velocity.X = 0 'Zero speed.
 
-                                'Place our hero on top of the block.
-                                OurHero.Position.Y = Block.Rect.Top - OurHero.Rect.Height + 1
+                            End If
+
+                            'Move our hero the right.
+                            OurHero.Velocity.X += OurHero.Acceleration.X * DeltaTime.TotalSeconds
+
+                            'Limit our heros velocity to the max.
+                            If OurHero.Velocity.X > OurHero.MaxVelocity.X Then OurHero.Velocity.X = OurHero.MaxVelocity.X
+
+                            'Is the player holding down the left arrow key?
+                        ElseIf LeftArrowDown = True Or ControllerLeft = True Then
+                            'Yes, the player is holding down the left arrow key.
+
+                            'Is our hero moving to the right?
+                            If OurHero.Velocity.X > 0F Then
+                                'Yes, our hero is moving to the right.
+
+                                'Stop the move before change in direction.
+                                OurHero.Velocity.X = 0F 'Zero speed.
+
+                            End If
+
+                            'Move our hero the left.
+                            OurHero.Velocity.X += -OurHero.Acceleration.X * DeltaTime.TotalSeconds
+
+                            'Limit our heros velocity to the max.
+                            If OurHero.Velocity.X < -OurHero.MaxVelocity.X Then OurHero.Velocity.X = -OurHero.MaxVelocity.X
+
+                        Else
+                            'No,the player is NOT holding down the right arrow key.
+                            'No, the player is NOT holding down the left arrow key.
+
+                            'Is our hero moving to the right?
+                            If OurHero.Velocity.X > 0F Then
+                                'Yes, our hero is moving to the right.
+
+                                'Slow our hero down.
+                                OurHero.Velocity.X += -Friction * DeltaTime.TotalSeconds
+
+                                If OurHero.Velocity.X < 0F Then
+                                    OurHero.Velocity.X = 0F
+                                End If
+
+                            ElseIf OurHero.Velocity.X < 0F Then
+
+                                OurHero.Velocity.X += Friction * DeltaTime.TotalSeconds
+
+                                If OurHero.Velocity.X > 0F Then
+                                    OurHero.Velocity.X = 0F
+                                End If
 
                             End If
 
                         End If
 
-                        'Is our hero jumping?
-                    ElseIf OurHero.Velocity.Y < 0 Then
-                        'Yes, our hero is jumping.
+                        If ADown = True Then
 
-                        'Stop the jump.
-                        OurHero.Velocity.Y = 0
-                        'OurHero.Velocity.X = 0
+                            If Jumped = False Then
 
-                        'VibrateRight(0, 65535)
+                                OurHero.Velocity.Y += -1100.0F
 
-                        If OurHero.Position.Y > Block.Rect.Bottom - 10 Then
-                            'Under
+                                Jumped = True
 
-                            OurHero.Position.Y = Block.Rect.Bottom
+                            End If
 
-                        Else
-                            'Not under
+                        End If
 
-                            If OurHero.Position.X > Block.Rect.Left Then
-                                'Right
+                        If ControllerA = True Then
 
-                                OurHero.Position.X = Block.Rect.Right
+                            If ControllerJumped = False Then
 
-                            Else
-                                'Left
+                                OurHero.Velocity.Y += -1100.0F
 
-                                OurHero.Position.X = Block.Rect.Left - OurHero.Rect.Width
+                                ControllerJumped = True
 
                             End If
 
                         End If
 
                     Else
-                        'NOT FALLING OR JUMPING
 
-                        'Is our hero on top of the block.
-                        If OurHero.Position.Y = Block.Rect.Top - OurHero.Rect.Height + 1 Then
-                            'Yes, our hero is on top of the block.
-
-                            'Is the player holding down the right arrow key?
-                            If RightArrowDown = True Or ControllerRight = True Then
-                                'Yes, the player is holding down the right arrow key.
-
-                                'Is our hero moving to the left?
-                                If OurHero.Velocity.X < 0 Then
-
-                                    'Stop the move before change in direction.
-                                    OurHero.Velocity.X = 0 'Zero speed.
-
-                                End If
-
-                                'Move our hero the right.
-                                OurHero.Velocity.X += OurHero.Acceleration.X * DeltaTime.TotalSeconds
-
-                                'Limit our heros velocity to the max.
-                                If OurHero.Velocity.X > OurHero.MaxVelocity.X Then OurHero.Velocity.X = OurHero.MaxVelocity.X
-
-                                'Is the player holding down the left arrow key?
-                            ElseIf LeftArrowDown = True Or ControllerLeft = True Then
-                                'Yes, the player is holding down the left arrow key.
-
-                                'Is our hero moving to the right?
-                                If OurHero.Velocity.X > 0F Then
-                                    'Yes, our hero is moving to the right.
-
-                                    'Stop the move before change in direction.
-                                    OurHero.Velocity.X = 0F 'Zero speed.
-
-                                End If
-
-                                'Move our hero the left.
-                                OurHero.Velocity.X += -OurHero.Acceleration.X * DeltaTime.TotalSeconds
-
-                                'Limit our heros velocity to the max.
-                                If OurHero.Velocity.X < -OurHero.MaxVelocity.X Then OurHero.Velocity.X = -OurHero.MaxVelocity.X
-
-                            Else
-                                'No,the player is NOT holding down the right arrow key.
-                                'No, the player is NOT holding down the left arrow key.
-
-                                'Is our hero moving to the right?
-                                If OurHero.Velocity.X > 0F Then
-                                    'Yes, our hero is moving to the right.
-
-                                    'Slow our hero down.
-                                    OurHero.Velocity.X += -Friction * DeltaTime.TotalSeconds
-
-                                    If OurHero.Velocity.X < 0F Then
-                                        OurHero.Velocity.X = 0F
-                                    End If
-
-                                ElseIf OurHero.Velocity.X < 0F Then
-
-                                    OurHero.Velocity.X += Friction * DeltaTime.TotalSeconds
-
-                                    If OurHero.Velocity.X > 0F Then
-                                        OurHero.Velocity.X = 0F
-                                    End If
-
-                                End If
-
-                            End If
-
-                            If ADown = True Then
-
-                                If Jumped = False Then
-
-                                    OurHero.Velocity.Y += -1100.0F
-
-                                    Jumped = True
-
-                                End If
-
-                            End If
-
-                            If ControllerA = True Then
-
-                                If ControllerJumped = False Then
-
-                                    OurHero.Velocity.Y += -1100.0F
-
-                                    ControllerJumped = True
-
-                                End If
-
-                            End If
-
-                        Else
-                            'No, our hero is NOT on top of the block.
-
-                            'Stop the move
-                            OurHero.Velocity.X = 0
-
-                            'VibrateRight(0, 65535)
-
-
-                            'Is our hero on the right side of the block?
-                            If OurHero.Position.X > Block.Rect.Left Then
-                                'Yes, our hero is on the right side of the block.
-
-                                'Aline our hero to the right of the block.
-                                OurHero.Position.X = Block.Rect.Right
-
-                            Else
-                                'No, our hero is on the left side of the block.
-
-                                'Aline our hero to the left of the block.
-                                OurHero.Position.X = Block.Rect.Left - OurHero.Rect.Width
-
-                            End If
-
-                        End If
+                        DoCollision(Block.Rect)
 
                     End If
 
                 End If
 
             Next
+
+        End If
+
+    End Sub
+
+    Private Sub DoCollision(Block As Rectangle)
+
+        Dim combinedHalfWidths As Single = (OurHero.Rect.Width + Block.Width) / 2
+        Dim combinedHalfHeights As Single = ((OurHero.Rect.Height - 1) + Block.Height) / 2
+
+        Dim deltaX As Single = (Block.X + Block.Width / 2) - (OurHero.Rect.X + OurHero.Rect.Width / 2)
+        Dim deltaY As Single = (Block.Y + Block.Height / 2) - (OurHero.Rect.Y + (OurHero.Rect.Height - 1) / 2)
+
+        Dim overlapX As Single = combinedHalfWidths - Math.Abs(deltaX)
+        Dim overlapY As Single = combinedHalfHeights - Math.Abs(deltaY)
+
+        If overlapX > 0 And overlapY > 0 Then
+            ' Collision detected, resolve it
+
+            Dim resolveX As Single = If(overlapX <= overlapY, overlapX * Math.Sign(deltaX), 0)
+            Dim resolveY As Single = If(overlapY <= overlapX, overlapY * Math.Sign(deltaY), 0)
+
+            If resolveX <> 0 Then
+                OurHero.Velocity.X = 0F
+            End If
+
+            If resolveY <> 0 Then
+                OurHero.Velocity.Y = 0F
+            End If
+
+            OurHero.Position.X -= resolveX
+
+            OurHero.Position.Y -= resolveY
 
         End If
 

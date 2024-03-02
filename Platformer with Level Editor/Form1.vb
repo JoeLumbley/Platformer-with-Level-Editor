@@ -1715,7 +1715,7 @@ Public Class Form1
 
                     Else
 
-                        DoCollision(Block.Rect)
+                        DoBlockCollision(Block.Rect)
 
                     End If
 
@@ -1727,34 +1727,34 @@ Public Class Form1
 
     End Sub
 
-    Private Sub DoCollision(Block As Rectangle)
+    Private Sub DoBlockCollision(Block As Rectangle)
 
-        Dim combinedHalfWidths As Single = (OurHero.Rect.Width + Block.Width) / 2
-        Dim combinedHalfHeights As Single = ((OurHero.Rect.Height - 1) + Block.Height) / 2
+        Dim CombinedHalfWidths As Single = (OurHero.Rect.Width + Block.Width) / 2
+        Dim CombinedHalfHeights As Single = ((OurHero.Rect.Height - 1) + Block.Height) / 2
 
-        Dim deltaX As Single = (Block.X + Block.Width / 2) - (OurHero.Rect.X + OurHero.Rect.Width / 2)
-        Dim deltaY As Single = (Block.Y + Block.Height / 2) - (OurHero.Rect.Y + (OurHero.Rect.Height - 1) / 2)
+        Dim DeltaX As Single = (Block.X + Block.Width / 2) - (OurHero.Rect.X + OurHero.Rect.Width / 2)
+        Dim DeltaY As Single = (Block.Y + Block.Height / 2) - (OurHero.Rect.Y + (OurHero.Rect.Height - 1) / 2)
 
-        Dim overlapX As Single = combinedHalfWidths - Math.Abs(deltaX)
-        Dim overlapY As Single = combinedHalfHeights - Math.Abs(deltaY)
+        Dim OverlapX As Single = CombinedHalfWidths - Math.Abs(DeltaX)
+        Dim OverlapY As Single = CombinedHalfHeights - Math.Abs(DeltaY)
 
-        If overlapX > 0 And overlapY > 0 Then
+        If OverlapX > 0 And OverlapY > 0 Then
             ' Collision detected, resolve it
 
-            Dim resolveX As Single = If(overlapX <= overlapY, overlapX * Math.Sign(deltaX), 0)
-            Dim resolveY As Single = If(overlapY <= overlapX, overlapY * Math.Sign(deltaY), 0)
+            Dim ResolveX As Single = If(OverlapX <= OverlapY, OverlapX * Math.Sign(DeltaX), 0)
+            Dim ResolveY As Single = If(OverlapY <= OverlapX, OverlapY * Math.Sign(DeltaY), 0)
 
-            If resolveX <> 0 Then
+            If ResolveX <> 0 Then
                 OurHero.Velocity.X = 0F
             End If
 
-            If resolveY <> 0 Then
+            If ResolveY <> 0 Then
                 OurHero.Velocity.Y = 0F
             End If
 
-            OurHero.Position.X -= resolveX
+            OurHero.Position.X -= ResolveX
 
-            OurHero.Position.Y -= resolveY
+            OurHero.Position.Y -= ResolveY
 
         End If
 

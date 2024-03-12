@@ -6496,7 +6496,7 @@ Public Class Form1
 
     End Function
 
-    Public Function LoopSound(ByVal SoundName As String) As Boolean
+    Private Function LoopSound(ByVal SoundName As String) As Boolean
 
         If Sounds IsNot Nothing Then
 

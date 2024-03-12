@@ -38,7 +38,12 @@ Imports System.Drawing.Drawing2D
 Imports System.IO
 Imports System.Numerics
 Imports System.Runtime.InteropServices
+Imports System.Text
 Imports System.Threading
+
+'Imports Microsoft.DirectX
+'Imports Microsoft.DirectX.AudioVideoPlayback
+'Imports System.Windows.Controls.MediaElement
 
 Public Class Form1
 
@@ -492,49 +497,79 @@ Public Class Form1
 
     End Sub
 
-    Private GameLoopTask As Task =
-        Task.Factory.StartNew(Sub()
-                                  Try
 
-                                      Thread.CurrentThread.Priority = ThreadPriority.Normal
-                                      'Thread.CurrentThread.SetApartmentState(ApartmentState.STA)
+    'Set up Game Sound
+    'Private WithEvents GS As New GameSounds
 
-                                      Do While Not GameLoopCancellationToken.IsCancellationRequested
 
-                                          UpdateFrame()
+    Private Enum MCI_NOTIFY As Integer
+        SUCCESSFUL = &H1
+        SUPERSEDED = &H2
+        ABORTED = &H4
+        FAILURE = &H8
+    End Enum
 
-                                          'Refresh the form to trigger a redraw.
-                                          If Not Me.IsDisposed AndAlso Me.IsHandleCreated Then
+    'Import MM for playback of multiple audio files simultaneously
+    <DllImport("winmm.dll", EntryPoint:="mciSendStringW")>
+    Private Shared Function mciSendStringW(<MarshalAs(UnmanagedType.LPTStr)> ByVal lpszCommand As String,
+                                           <MarshalAs(UnmanagedType.LPWStr)> ByVal lpszReturnString As StringBuilder,
+                                           ByVal cchReturn As UInteger, ByVal hwndCallback As IntPtr) As Integer
+    End Function
 
-                                              Me.Invoke(Sub() Me.Refresh())
+    'Create array for sounds.
+    Private Sounds() As String
 
-                                          End If
+    'Private GameLoopTask As Task =
+    '    Task.Factory.StartNew(Sub()
+    '                              Try
 
-                                          ' Wait for next frame
-                                          Thread.Sleep(TimeSpan.Zero)
+    '                                  Thread.CurrentThread.Priority = ThreadPriority.Normal
+    '                                  'Thread.CurrentThread.SetApartmentState(ApartmentState.STA)
 
-                                          'For uncapped frame rate use TimeSpan.Zero
-                                          'Thread.Sleep(TimeSpan.Zero), the thread relinquishes the
-                                          'remainder of its time slice to any thread of equal priority
-                                          'that is ready to run. If there are no other threads of equal
-                                          'priority that are ready to run, execution of the current
-                                          'thread is not suspended.
+    '                                  Do While Not GameLoopCancellationToken.IsCancellationRequested
 
-                                          'For a capped frame rate set interval.
-                                          'For 60 FPS set sleep interval to 15 ms.
-                                          '1 second = 1000 milliseconds.
-                                          '16.66666666666667 ms = 1000 ms / 60 FPS
-                                          'Thread.Sleep(15)
+    '                                      UpdateFrame()
 
-                                      Loop
+    '                                      'Refresh the form to trigger a redraw.
+    '                                      If Not Me.IsDisposed AndAlso Me.IsHandleCreated Then
 
-                                  Catch ex As Exception
+    '                                          Me.Invoke(Sub() Me.Refresh())
 
-                                      Debug.WriteLine(ex.ToString())
+    '                                      End If
 
-                                  End Try
+    '                                      'If Me.IsPlaying("CashCollected") = False Then
+    '                                      '    Me.Invoke(Sub() Me.PlaySound("CashCollected"))
+    '                                      'End If
 
-                              End Sub)
+
+
+    '                                      '
+
+    '                                      ' Wait for next frame
+    '                                      Thread.Sleep(15)
+
+    '                                      'For uncapped frame rate use TimeSpan.Zero
+    '                                      'Thread.Sleep(TimeSpan.Zero), the thread relinquishes the
+    '                                      'remainder of its time slice to any thread of equal priority
+    '                                      'that is ready to run. If there are no other threads of equal
+    '                                      'priority that are ready to run, execution of the current
+    '                                      'thread is not suspended.
+
+    '                                      'For a capped frame rate set interval.
+    '                                      'For 60 FPS set sleep interval to 15 ms.
+    '                                      '1 second = 1000 milliseconds.
+    '                                      '16.66666666666667 ms = 1000 ms / 60 FPS
+    '                                      'Thread.Sleep(15)
+
+    '                                  Loop
+
+    '                              Catch ex As Exception
+
+    '                                  Debug.WriteLine(ex.ToString())
+
+    '                              End Try
+
+    '                          End Sub)
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
@@ -573,6 +608,9 @@ Public Class Form1
                 UpdateClearScreenTimer()
 
         End Select
+
+
+
 
     End Sub
 
@@ -729,9 +767,18 @@ Public Class Form1
 
             If Cash(IsOnBill).Collected = False Then
 
+
                 Cash(IsOnBill).Collected = True
 
                 CashCollected += 100
+
+                'GS.Play("CashCollected")
+
+                If IsPlaying("CashCollected") = False Then
+                    'Dim Debug As Boolean
+
+                    PlayOverlaping("CashCollected")
+                End If
 
             End If
 
@@ -1530,6 +1577,15 @@ Public Class Form1
 
     End Sub
 
+    Private Sub UpdateHeroPosition()
+
+        OurHero.Rect.X = Math.Round(OurHero.Position.X)
+
+        OurHero.Rect.Y = Math.Round(OurHero.Position.Y)
+
+    End Sub
+
+
     Private Sub UpdateEnemies()
 
         If Enemies IsNot Nothing Then
@@ -1756,6 +1812,8 @@ Public Class Form1
 
             OurHero.Position.Y -= ResolveY
 
+            UpdateHeroPosition()
+
         End If
 
     End Sub
@@ -1796,17 +1854,24 @@ Public Class Form1
 
                         Case AppState.Playing
 
+
                             If Enemy.Eliminated = False Then
 
                                 Dim rectOffset As Rectangle = Enemy.Rect
 
                                 rectOffset.Offset(CameraOffset)
 
-                                .FillRectangle(Brushes.Chocolate, rectOffset)
+                                If rectOffset.IntersectsWith(ClientRectangle) Then
 
-                                .DrawString("E", EnemyFont, Brushes.PaleGoldenrod, rectOffset, AlineCenterMiddle)
+                                    .FillRectangle(Brushes.Chocolate, rectOffset)
+
+                                    .DrawString("E", EnemyFont, Brushes.PaleGoldenrod, rectOffset, AlineCenterMiddle)
+
+                                End If
 
                             End If
+
+
 
                         Case AppState.Editing
 
@@ -1875,51 +1940,64 @@ Public Class Form1
 
                 rectOffset.Offset(CameraOffset)
 
-                .FillRectangle(Brushes.White, rectOffset)
+                If rectOffset.IntersectsWith(ClientRectangle) Then
 
-                ' Define the rectangle to be filled
-                Dim rect As RectangleF = rectOffset
 
-                rect.Inflate(rect.Width / 6.4F, rect.Height / 6.4F)
+                    .FillRectangle(Brushes.White, rectOffset)
 
-                ' Define the center point of the gradient
-                Dim center As New PointF(rect.Left + rect.Width / 2.0F, rect.Top + rect.Height / 2.0F)
+                    ' Define the rectangle to be filled
+                    Dim rect As RectangleF = rectOffset
 
-                ' Define the colors for the gradient stops
-                Dim colors() As Color = {Color.Yellow, Color.White}
+                    rect.Inflate(rect.Width / 6.4F, rect.Height / 6.4F)
 
-                ' Create the path for the gradient brush
-                Dim GradPath As New GraphicsPath()
-                GradPath.AddEllipse(rect)
+                    ' Define the center point of the gradient
+                    Dim center As New PointF(rect.Left + rect.Width / 2.0F, rect.Top + rect.Height / 2.0F)
 
-                ' Create the gradient brush
-                Dim GradBrush As New PathGradientBrush(GradPath) With {
-                    .CenterPoint = center,
-                    .CenterColor = colors(0),
-                    .SurroundColors = New Color() {colors(1)}
-                }
+                    ' Define the colors for the gradient stops
+                    Dim colors() As Color = {Color.Yellow, Color.White}
 
-                .FillRectangle(GradBrush, rectOffset)
+                    ' Create the path for the gradient brush
+                    Dim GradPath As New GraphicsPath()
+                    GradPath.AddEllipse(rect)
 
-                If Goal.Rect.Width <= Goal.Rect.Height Then
-                    Dim Font As New Font(New FontFamily("Wingdings"), Goal.Rect.Width \ 2, FontStyle.Regular)
+                    ' Create the gradient brush
+                    Dim GradBrush As New PathGradientBrush(GradPath) With {
+                        .CenterPoint = center,
+                        .CenterColor = colors(0),
+                        .SurroundColors = New Color() {colors(1)}
+                    }
 
-                    .DrawString("«",
-                            Font,
-                            Brushes.Green,
-                            rectOffset,
-                            AlineCenterMiddle)
+                    .FillRectangle(GradBrush, rectOffset)
 
-                Else
-                    Dim Font As New Font(New FontFamily("Wingdings"), Goal.Rect.Height \ 2, FontStyle.Regular)
+                    If Goal.Rect.Width <= Goal.Rect.Height Then
+                        Dim Font As New Font(New FontFamily("Wingdings"), Goal.Rect.Width \ 2, FontStyle.Regular)
 
-                    .DrawString("«",
-                            Font,
-                            Brushes.Green,
-                            rectOffset,
-                            AlineCenterMiddle)
+                        .DrawString("«",
+                                Font,
+                                Brushes.Green,
+                                rectOffset,
+                                AlineCenterMiddle)
+
+                    Else
+                        Dim Font As New Font(New FontFamily("Wingdings"), Goal.Rect.Height \ 2, FontStyle.Regular)
+
+                        .DrawString("«",
+                                Font,
+                                Brushes.Green,
+                                rectOffset,
+                                AlineCenterMiddle)
+
+                    End If
 
                 End If
+
+
+
+
+
+
+
+
 
                 If GameState = AppState.Editing Then
 
@@ -1958,7 +2036,18 @@ Public Class Form1
 
                     rectOffset.Offset(CameraOffset)
 
-                    .FillRectangle(Brushes.Chocolate, rectOffset)
+
+                    If rectOffset.IntersectsWith(ClientRectangle) Then
+
+                        .FillRectangle(Brushes.Chocolate, rectOffset)
+
+                    End If
+
+
+
+
+
+
 
                     If GameState = AppState.Editing Then
 
@@ -1999,13 +2088,26 @@ Public Class Form1
 
                     rectOffset.Offset(CameraOffset)
 
-                    .FillRectangle(Brushes.GreenYellow, rectOffset)
+                    If rectOffset.IntersectsWith(ClientRectangle) Then
 
-                    .DrawLine(SeaGreenPen, rectOffset.Right - 10, rectOffset.Top + 10, rectOffset.Right - 10, rectOffset.Bottom - 10)
+                        .FillRectangle(Brushes.GreenYellow, rectOffset)
 
-                    .DrawLine(SeaGreenPen, rectOffset.Left + 10, rectOffset.Bottom - 10, rectOffset.Right - 10, rectOffset.Bottom - 10)
+                        .DrawLine(SeaGreenPen, rectOffset.Right - 10, rectOffset.Top + 10, rectOffset.Right - 10, rectOffset.Bottom - 10)
 
-                    .DrawRectangle(OutinePen, rectOffset)
+                        .DrawLine(SeaGreenPen, rectOffset.Left + 10, rectOffset.Bottom - 10, rectOffset.Right - 10, rectOffset.Bottom - 10)
+
+                        .DrawRectangle(OutinePen, rectOffset)
+
+                    End If
+
+
+
+
+
+
+
+
+
 
                     If GameState = AppState.Editing Then
 
@@ -2046,16 +2148,30 @@ Public Class Form1
 
                     rectOffset.Offset(CameraOffset)
 
-                    .FillRectangle(Brushes.White, rectOffset)
 
-                    .DrawLine(LightSkyBluePen, rectOffset.Right - 10,
-                              rectOffset.Top + 10,
-                              rectOffset.Right - 10,
-                              rectOffset.Bottom - 10)
+                    If rectOffset.IntersectsWith(ClientRectangle) Then
 
-                    .DrawLine(LightSkyBluePen, rectOffset.Left + 10, rectOffset.Bottom - 10, rectOffset.Right - 10, rectOffset.Bottom - 10)
+                        .FillRectangle(Brushes.White, rectOffset)
 
-                    .DrawRectangle(OutinePen, rectOffset)
+                        .DrawLine(LightSkyBluePen, rectOffset.Right - 10,
+                                  rectOffset.Top + 10,
+                                  rectOffset.Right - 10,
+                                  rectOffset.Bottom - 10)
+
+                        .DrawLine(LightSkyBluePen, rectOffset.Left + 10, rectOffset.Bottom - 10, rectOffset.Right - 10, rectOffset.Bottom - 10)
+
+                        .DrawRectangle(OutinePen, rectOffset)
+
+                    End If
+
+
+
+
+
+
+
+
+
 
                     If GameState = AppState.Editing Then
 
@@ -2110,13 +2226,21 @@ Public Class Form1
 
                         Case AppState.Playing
 
-                            If Bill.Collected = False Then
+                            If rectOffset.IntersectsWith(ClientRectangle) Then
 
-                                .FillRectangle(Brushes.Goldenrod, rectOffset)
+                                If Bill.Collected = False Then
 
-                                .DrawString("$", FPSFont, Brushes.OrangeRed, rectOffset, AlineCenterMiddle)
+                                    .FillRectangle(Brushes.Goldenrod, rectOffset)
+
+                                    .DrawString("$", FPSFont, Brushes.OrangeRed, rectOffset, AlineCenterMiddle)
+
+                                End If
+
+
 
                             End If
+
+
 
                         Case AppState.Editing
 
@@ -3194,6 +3318,26 @@ Public Class Form1
     End Sub
 
     Private Sub InitializeApp()
+
+        CreateSoundFileFromResource()
+
+        'CreateSoundFileFromResource()
+
+        AddSound("Music", Application.StartupPath & "level.mp3")
+
+        SetVolume("Music", 300)
+
+        AddOverlaping("CashCollected", Application.StartupPath & "CashCollected.mp3")
+
+        SetVolumeOverlaping("CashCollected", 1000)
+
+        GameTimer.Start()
+        'MusicLoopTimer.Start()
+
+        If IsPlaying("Music") = False Then
+            LoopSound("Music")
+        End If
+
 
         InitializeToolBarButtons()
 
@@ -6284,7 +6428,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub Form1_Move(sender As Object, e As EventArgs) Handles Me.Move
+    Private Sub Form1_Move(sender As Object, e As EventArgs) Handles MyBase.Move
 
         ScreenOffset = PointToScreen(New Point(0, 0))
 
@@ -6294,6 +6438,8 @@ Public Class Form1
 
         GameLoopCancellationToken.Cancel(True)
 
+        CloseSounds()
+
     End Sub
 
     Protected Overrides Sub OnPaintBackground(ByVal e As PaintEventArgs)
@@ -6302,4 +6448,450 @@ Public Class Form1
 
     End Sub
 
+    Private Sub CreateSoundFileFromResource()
+
+        Dim file As String = Path.Combine(Application.StartupPath, "level.mp3")
+        If Not IO.File.Exists(file) Then
+            IO.File.WriteAllBytes(file, My.Resources.level)
+        End If
+
+        file = Path.Combine(Application.StartupPath, "CashCollected.mp3")
+        If Not IO.File.Exists(file) Then
+            IO.File.WriteAllBytes(file, My.Resources.CashCollected)
+        End If
+
+    End Sub
+
+    Private Sub GameTimer_Tick(sender As Object, e As EventArgs) Handles GameTimer.Tick
+
+        UpdateFrame()
+
+        Refresh()
+
+    End Sub
+
+    Private Sub PlayOverlaping(ByVal SoundName As String)
+
+        If IsPlaying(SoundName & "A") = False Then
+
+            PlaySound(SoundName & "A")
+
+        Else
+
+            If IsPlaying(SoundName & "B") = False Then
+
+                PlaySound(SoundName & "B")
+
+            Else
+
+                If IsPlaying(SoundName & "C") = False Then
+
+                    PlaySound(SoundName & "C")
+
+                Else
+
+                    If IsPlaying(SoundName & "D") = False Then
+
+                        PlaySound(SoundName & "D")
+
+                    End If
+
+                End If
+
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub AddOverlaping(ByVal SoundName As String, ByVal FilePath As String)
+
+        AddSound(SoundName & "A", FilePath)
+
+        AddSound(SoundName & "B", FilePath)
+
+        AddSound(SoundName & "C", FilePath)
+
+        AddSound(SoundName & "D", FilePath)
+
+    End Sub
+
+    Private Sub SetVolumeOverlaping(ByVal SoundName As String, ByVal Level As Integer)
+
+        SetVolume(SoundName & "A", Level)
+
+        SetVolume(SoundName & "B", Level)
+
+        SetVolume(SoundName & "C", Level)
+
+        SetVolume(SoundName & "D", Level)
+
+    End Sub
+
+    Private Function AddSound(ByVal SoundName As String, ByVal FilePath As String) As Boolean
+
+        Dim CommandOpen As String = "open " & Chr(34) & FilePath & Chr(34) & " alias " & SoundName
+
+        'Do we have a name and does the file exist?
+        If Not SoundName.Trim = String.Empty And IO.File.Exists(FilePath) Then
+            'Yes, we have a name and the file exists.
+
+            'Do we have sounds?
+            If Sounds IsNot Nothing Then
+                'Yes, we have sounds.
+
+                'Is the sound in the array already?
+                If Not Sounds.Contains(SoundName) Then
+                    'No, the sound is not in the array.
+
+                    'Did the sound file open?
+                    If mciSendStringW(CommandOpen, Nothing, 0, IntPtr.Zero) = 0 Then
+                        'Yes, the sound file did open.
+
+                        'Add the sound to the Sounds array.
+                        Array.Resize(Sounds, Sounds.Length + 1)
+                        Sounds(Sounds.Length - 1) = SoundName
+
+                        Return True
+
+                    End If
+
+                End If
+
+            Else
+                'No, we do not have sounds.
+
+                'Did the sound file open?
+                If mciSendStringW(CommandOpen, Nothing, 0, IntPtr.Zero) = 0 Then
+                    'Yes, the sound file did open.
+
+                    'Start the Sounds array with the sound.
+                    ReDim Sounds(0)
+                    Sounds(0) = SoundName
+
+                    Return True
+
+                End If
+
+            End If
+
+        End If
+
+        Return False
+
+    End Function
+
+    Private Function PlaySound(ByVal SoundName As String) As Boolean
+
+        Dim CommandFromStart As String = "seek " & SoundName & " to start"
+
+        Dim CommandPlay As String = "play " & SoundName & " notify"
+
+        If Sounds IsNot Nothing Then
+
+            If Sounds.Contains(SoundName) Then
+                'Play sound file from the start.
+
+                mciSendStringW(CommandFromStart, Nothing, 0, IntPtr.Zero)
+
+                If mciSendStringW(CommandPlay, Nothing, 0, Me.Handle) = 0 Then
+
+                    Return True
+
+                End If
+
+            End If
+
+        End If
+
+        Return False
+
+    End Function
+
+
+    Public Function LoopSound(ByVal SoundName As String) As Boolean
+
+        If Sounds IsNot Nothing Then
+
+            If Not Sounds.Contains(SoundName) Then
+
+                Return False
+
+            End If
+
+            mciSendStringW("seek " & SoundName & " to start", Nothing, 0, IntPtr.Zero)
+
+            If mciSendStringW("play " & SoundName & " repeat", Nothing, 0, Me.Handle) <> 0 Then
+
+                Return False
+
+            End If
+
+        End If
+
+        Return True
+
+    End Function
+
+    Private Function SetVolume(ByVal SoundName As String, ByVal Level As Integer) As Boolean
+
+        Dim CommandVolume As String = "setaudio " & SoundName & " volume to " & Level.ToString
+
+        'Do we have sounds?
+        If Sounds IsNot Nothing Then
+            'Yes, we have sounds.
+
+            'Is the sound in the sounds array?
+            If Sounds.Contains(SoundName) Then
+                'Yes, the sound is the sounds array.
+
+                'Is the level in the valid range?
+                If Level >= 0 And Level <= 1000 Then
+                    'Yes, the level is in range.
+
+                    'Was the volume set?
+                    If mciSendStringW(CommandVolume, Nothing, 0, IntPtr.Zero) = 0 Then
+
+                        Return True 'Yes, the volume was set.
+
+                    End If
+
+                End If
+
+            End If
+
+        End If
+
+        Return False 'The volume was not set.
+
+    End Function
+
+    Private Function IsPlaying(ByVal SoundName As String) As Boolean
+
+        Return (GetStatus(SoundName, "mode") = "playing")
+
+    End Function
+
+    Private Function GetStatus(ByVal SoundName As String, ByVal StatusType As String) As String
+
+        Dim CommandStatus As String = "status " & SoundName & " " & StatusType
+
+        Dim StatusReturn As New System.Text.StringBuilder(128)
+
+        If Sounds IsNot Nothing Then
+
+            If Sounds.Contains(SoundName) Then
+
+                mciSendStringW(CommandStatus, StatusReturn, 128, IntPtr.Zero)
+
+                Return StatusReturn.ToString.Trim.ToLower
+
+            End If
+
+        End If
+
+        Return String.Empty
+
+    End Function
+
+    Private Function CloseSounds()
+
+        If Sounds IsNot Nothing Then
+
+            For Each Sound In Sounds
+
+                If mciSendStringW("close " & Sound, Nothing, 0, IntPtr.Zero) <> 0 Then
+
+                    Return False
+
+                End If
+
+            Next
+
+        End If
+
+        Sounds = Nothing
+
+        Return True
+
+    End Function
+
 End Class
+
+
+
+
+
+
+
+
+
+
+
+
+
+'Public Enum MCI_NOTIFY As Integer
+'    SUCCESSFUL = &H1
+'    SUPERSEDED = &H2
+'    ABORTED = &H4
+'    FAILURE = &H8
+'End Enum
+
+'Public Class GameSounds
+'    'Game sounds class By IronRazer - https://www.dreamincode.net/forums/topic/378353-how-to-play-2-sounds-simultaneously/
+
+'    Inherits NativeWindow
+
+'    Public Event SoundEnded(ByVal SndName As String)
+'    Public Event SoundStopped(ByVal SndName As String)
+'    Private Snds As New Dictionary(Of String, String)
+'    Private sndcnt As Integer = 0
+'    Private Const MM_MCINOTIFY As Integer = &H3B9
+
+'    <DllImport("winmm.dll", EntryPoint:="mciSendStringW")>
+'    Private Shared Function mciSendStringW(<MarshalAs(UnmanagedType.LPTStr)> ByVal lpszCommand As String, <MarshalAs(UnmanagedType.LPWStr)> ByVal lpszReturnString As System.Text.StringBuilder, ByVal cchReturn As UInteger, ByVal hwndCallback As IntPtr) As Integer
+'    End Function
+
+'    Public Sub New()
+'        Me.CreateHandle(New CreateParams)
+'    End Sub
+
+'    ''' <summary>Adds and opens a (.wav) or (.mp3) sound file to the sound collection.</summary>
+'    ''' <param name="SoundName">A name to refer to the sound being added.</param>
+'    ''' <param name="SndFilePath">The full path and name to the sound file.</param>
+'    ''' <returns>True if the sound is successfully added.</returns>
+'    ''' <remarks>Name can only be used once. If another sound has the same name the file will not be added and the function returns False.</remarks>
+'    Public Function AddSound(ByVal SoundName As String, ByVal SndFilePath As String) As Boolean
+'        If SoundName.Trim = "" Or Not IO.File.Exists(SndFilePath) Then Return False
+'        If Snds.ContainsKey(SoundName) Then Return False
+'        If mciSendStringW("open " & Chr(34) & SndFilePath & Chr(34) & " alias " & "Snd_" & sndcnt.ToString, Nothing, 0, IntPtr.Zero) <> 0 Then Return False
+'        Snds.Add(SoundName, "Snd_" & sndcnt.ToString)
+'        sndcnt += 1
+'        Return True
+'    End Function
+
+'    ''' <summary>Closes the sound file and removes it from the sound collection.</summary>
+'    Public Sub RemoveSound(ByVal SoundName As String)
+'        If Not Snds.ContainsKey(SoundName) Then Exit Sub
+'        mciSendStringW("close " & Snds.Item(SoundName), Nothing, 0, IntPtr.Zero)
+'        Snds.Remove(SoundName)
+'    End Sub
+
+'    ''' <summary>Closes all sound files and removes them from the sound collection.</summary>
+'    Public Sub ClearSounds()
+'        For Each aliasname As String In Snds.Values
+'            mciSendStringW("close " & aliasname, Nothing, 0, IntPtr.Zero)
+'        Next
+'        Snds.Clear()
+'    End Sub
+
+'    ''' <summary>Plays the sound.</summary>
+'    ''' <param name="SoundName">The Name of the sound to play.</param>
+'    Public Function Play(ByVal SoundName As String) As Boolean
+'        If Not Snds.ContainsKey(SoundName) Then Return False
+'        mciSendStringW("seek " & Snds.Item(SoundName) & " to start", Nothing, 0, IntPtr.Zero)
+'        If mciSendStringW("play " & Snds.Item(SoundName) & " notify", Nothing, 0, Me.Handle) <> 0 Then Return False
+'        Return True
+'    End Function
+
+'    Public Function PlayRepeat(ByVal SoundName As String) As Boolean
+'        If Not Snds.ContainsKey(SoundName) Then Return False
+'        mciSendStringW("seek " & Snds.Item(SoundName) & " to start", Nothing, 0, IntPtr.Zero)
+'        If mciSendStringW("play " & Snds.Item(SoundName) & " repeat", Nothing, 0, Me.Handle) <> 0 Then Return False
+'        Return True
+'    End Function
+
+
+'    ''' <summary>Stops the sound.</summary>
+'    ''' <param name="SoundName">The Name of the sound to stop.</param>
+'    Public Function [Stop](ByVal SoundName As String) As Boolean
+'        If Not Snds.ContainsKey(SoundName) Then Return False
+'        If mciSendStringW("stop " & Snds.Item(SoundName), Nothing, 0, IntPtr.Zero) <> 0 Then Return False
+'        mciSendStringW("seek " & Snds.Item(SoundName) & " to start", Nothing, 0, IntPtr.Zero)
+'        Return True
+'    End Function
+
+'    ''' <summary>Pauses the sound.</summary>
+'    ''' <param name="SoundName">The Name of the sound to pause.</param>
+'    Public Function Pause(ByVal SoundName As String) As Boolean
+'        If Not Snds.ContainsKey(SoundName) Then Return False
+'        If IsPlaying(SoundName) Then
+'            If mciSendStringW("pause " & Snds.Item(SoundName), Nothing, 0, IntPtr.Zero) <> 0 Then Return False
+'            Return True
+'        End If
+'        Return False
+'    End Function
+
+'    ''' <summary>Resumes a paused sound.</summary>
+'    ''' <param name="SoundName">The Name of the sound to resume.</param>
+'    Public Function [Resume](ByVal SoundName As String) As Boolean
+'        If Not Snds.ContainsKey(SoundName) Then Return False
+'        If IsPaused(SoundName) Then
+'            If mciSendStringW("resume " & Snds.Item(SoundName), Nothing, 0, IntPtr.Zero) <> 0 Then Return False
+'            Return True
+'        End If
+'        Return False
+'    End Function
+
+'    ''' <summary>Checks the sounds playing status.</summary>
+'    ''' <param name="SoundName">The Name used to add and refer to the sound.</param>
+'    Public Function IsPlaying(ByVal SoundName As String) As Boolean
+'        Return (GetStatusString(SoundName, "mode") = "playing")
+'    End Function
+
+'    ''' <summary>Checks the sounds stopped status.</summary>
+'    ''' <param name="SoundName">The Name used to add and refer to the sound.</param>
+'    Public Function IsStopped(ByVal SoundName As String) As Boolean
+'        Return (GetStatusString(SoundName, "mode") = "stopped")
+'    End Function
+
+'    ''' <summary>Checks the sounds paused status.</summary>
+'    ''' <param name="SoundName">The Name used to add and refer to the sound.</param>
+'    Public Function IsPaused(ByVal SoundName As String) As Boolean
+'        Return (GetStatusString(SoundName, "mode") = "paused")
+'    End Function
+
+'    Private Function GetStatusString(ByVal sName As String, ByVal statustype As String) As String
+'        If Not Snds.ContainsKey(sName) Then Return String.Empty
+'        Dim buff As New System.Text.StringBuilder(128)
+'        mciSendStringW("status " & Snds.Item(sName) & " " & statustype, buff, 128, IntPtr.Zero)
+'        Return buff.ToString.Trim.ToLower
+'    End Function
+
+'    ''' <summary>Sets the Volume. Does not seem to work for (.wav) files. Works on mp3 though.</summary>
+'    ''' <param name="sName">The name of the sound.</param>
+'    ''' <param name="value">An integer value from 0 to 1000 to set the volume to.</param>
+'    Public Function SetVolume(ByVal sName As String, ByVal value As Integer) As Boolean
+'        If Not Snds.ContainsKey(sName) Then Return False
+'        If value < 0 Or value > 1000 Then Return False
+'        If mciSendStringW("setaudio " & Snds.Item(sName) & " volume to " & value.ToString, Nothing, 0, IntPtr.Zero) <> 0 Then Return False
+'        Return True
+'    End Function
+
+'    Protected Overrides Sub WndProc(ByRef m As System.Windows.Forms.Message)
+'        MyBase.WndProc(m)
+'        If m.Msg = MM_MCINOTIFY Then
+'            Dim sn As String = ""
+'            Dim indx As Integer = 0
+'            For Each s As KeyValuePair(Of String, String) In Snds
+'                indx += 1
+'                If m.LParam.ToInt32 = indx Then
+'                    sn = s.Key
+'                    Exit For
+'                End If
+'            Next
+'            If CType(m.WParam.ToInt32, MCI_NOTIFY) = MCI_NOTIFY.ABORTED Then
+'                RaiseEvent SoundStopped(sn)
+'            End If
+'            If CType(m.WParam.ToInt32, MCI_NOTIFY) = MCI_NOTIFY.SUCCESSFUL Then
+'                RaiseEvent SoundEnded(sn)
+'            End If
+'        End If
+'    End Sub
+'    '
+'    Public Sub Dispose()
+'        ClearSounds()
+'        Me.DestroyHandle()
+'    End Sub
+
+'End Class

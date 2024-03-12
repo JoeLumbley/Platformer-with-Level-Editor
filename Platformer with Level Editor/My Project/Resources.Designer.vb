@@ -61,11 +61,22 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        '''  Looks up a localized resource of type System.Byte[].
         '''</summary>
-        Friend ReadOnly Property level() As System.IO.UnmanagedMemoryStream
+        Friend ReadOnly Property CashCollected() As Byte()
             Get
-                Return ResourceManager.GetStream("level", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("CashCollected", resourceCulture)
+                Return CType(obj,Byte())
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Byte[].
+        '''</summary>
+        Friend ReadOnly Property level() As Byte()
+            Get
+                Dim obj As Object = ResourceManager.GetObject("level", resourceCulture)
+                Return CType(obj,Byte())
             End Get
         End Property
     End Module

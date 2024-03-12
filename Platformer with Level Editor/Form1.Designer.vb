@@ -22,13 +22,24 @@ Partial Class Form1
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        components = New ComponentModel.Container()
         OpenFileDialog1 = New OpenFileDialog()
         SaveFileDialog1 = New SaveFileDialog()
+        MusicLoopTimer = New Timer(components)
+        GameTimer = New Timer(components)
         SuspendLayout()
         ' 
         ' OpenFileDialog1
         ' 
         OpenFileDialog1.FileName = "OpenFileDialog1"
+        ' 
+        ' MusicLoopTimer
+        ' 
+        MusicLoopTimer.Interval = 5000
+        ' 
+        ' GameTimer
+        ' 
+        GameTimer.Interval = 1
         ' 
         ' Form1
         ' 
@@ -43,4 +54,6 @@ Partial Class Form1
 
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
     Friend WithEvents SaveFileDialog1 As SaveFileDialog
+    Friend WithEvents MusicLoopTimer As Timer
+    Friend WithEvents GameTimer As Timer
 End Class

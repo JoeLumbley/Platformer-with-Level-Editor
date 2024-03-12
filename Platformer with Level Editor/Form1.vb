@@ -6666,17 +6666,13 @@ Public Class Form1
 
     End Function
 
-    Private Function CloseSounds()
+    Private Sub CloseSounds()
 
         If Sounds IsNot Nothing Then
 
             For Each Sound In Sounds
 
-                If mciSendStringW("close " & Sound, Nothing, 0, IntPtr.Zero) <> 0 Then
-
-                    Return False
-
-                End If
+                mciSendStringW("close " & Sound, Nothing, 0, IntPtr.Zero)
 
             Next
 
@@ -6684,9 +6680,7 @@ Public Class Form1
 
         Sounds = Nothing
 
-        Return True
-
-    End Function
+    End Sub
 
     Private Sub CreateSoundFileFromResource()
 

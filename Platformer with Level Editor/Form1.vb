@@ -497,11 +497,6 @@ Public Class Form1
 
     End Sub
 
-
-    'Set up Game Sound
-    'Private WithEvents GS As New GameSounds
-
-
     Private Enum MCI_NOTIFY As Integer
         SUCCESSFUL = &H1
         SUPERSEDED = &H2
@@ -518,6 +513,14 @@ Public Class Form1
 
     'Create array for sounds.
     Private Sounds() As String
+
+    Private Sub GameTimer_Tick(sender As Object, e As EventArgs) Handles GameTimer.Tick
+
+        UpdateFrame()
+
+        Refresh()
+
+    End Sub
 
     'Private GameLoopTask As Task =
     '    Task.Factory.StartNew(Sub()
@@ -536,15 +539,7 @@ Public Class Form1
     '                                          Me.Invoke(Sub() Me.Refresh())
 
     '                                      End If
-
-    '                                      'If Me.IsPlaying("CashCollected") = False Then
-    '                                      '    Me.Invoke(Sub() Me.PlaySound("CashCollected"))
-    '                                      'End If
-
-
-
-    '                                      '
-
+    '
     '                                      ' Wait for next frame
     '                                      Thread.Sleep(15)
 
@@ -6448,85 +6443,29 @@ Public Class Form1
 
     End Sub
 
-    Private Sub CreateSoundFileFromResource()
+    Public Function LoopSound(ByVal SoundName As String) As Boolean
 
-        Dim file As String = Path.Combine(Application.StartupPath, "level.mp3")
-        If Not IO.File.Exists(file) Then
-            IO.File.WriteAllBytes(file, My.Resources.level)
-        End If
+        If Sounds IsNot Nothing Then
 
-        file = Path.Combine(Application.StartupPath, "CashCollected.mp3")
-        If Not IO.File.Exists(file) Then
-            IO.File.WriteAllBytes(file, My.Resources.CashCollected)
-        End If
+            If Not Sounds.Contains(SoundName) Then
 
-    End Sub
+                Return False
 
-    Private Sub GameTimer_Tick(sender As Object, e As EventArgs) Handles GameTimer.Tick
+            End If
 
-        UpdateFrame()
+            mciSendStringW("seek " & SoundName & " to start", Nothing, 0, IntPtr.Zero)
 
-        Refresh()
+            If mciSendStringW("play " & SoundName & " repeat", Nothing, 0, Me.Handle) <> 0 Then
 
-    End Sub
-
-    Private Sub PlayOverlaping(ByVal SoundName As String)
-
-        If IsPlaying(SoundName & "A") = False Then
-
-            PlaySound(SoundName & "A")
-
-        Else
-
-            If IsPlaying(SoundName & "B") = False Then
-
-                PlaySound(SoundName & "B")
-
-            Else
-
-                If IsPlaying(SoundName & "C") = False Then
-
-                    PlaySound(SoundName & "C")
-
-                Else
-
-                    If IsPlaying(SoundName & "D") = False Then
-
-                        PlaySound(SoundName & "D")
-
-                    End If
-
-                End If
+                Return False
 
             End If
 
         End If
 
-    End Sub
+        Return True
 
-    Private Sub AddOverlaping(ByVal SoundName As String, ByVal FilePath As String)
-
-        AddSound(SoundName & "A", FilePath)
-
-        AddSound(SoundName & "B", FilePath)
-
-        AddSound(SoundName & "C", FilePath)
-
-        AddSound(SoundName & "D", FilePath)
-
-    End Sub
-
-    Private Sub SetVolumeOverlaping(ByVal SoundName As String, ByVal Level As Integer)
-
-        SetVolume(SoundName & "A", Level)
-
-        SetVolume(SoundName & "B", Level)
-
-        SetVolume(SoundName & "C", Level)
-
-        SetVolume(SoundName & "D", Level)
-
-    End Sub
+    End Function
 
     Private Function AddSound(ByVal SoundName As String, ByVal FilePath As String) As Boolean
 
@@ -6608,31 +6547,6 @@ Public Class Form1
 
     End Function
 
-
-    Public Function LoopSound(ByVal SoundName As String) As Boolean
-
-        If Sounds IsNot Nothing Then
-
-            If Not Sounds.Contains(SoundName) Then
-
-                Return False
-
-            End If
-
-            mciSendStringW("seek " & SoundName & " to start", Nothing, 0, IntPtr.Zero)
-
-            If mciSendStringW("play " & SoundName & " repeat", Nothing, 0, Me.Handle) <> 0 Then
-
-                Return False
-
-            End If
-
-        End If
-
-        Return True
-
-    End Function
-
     Private Function SetVolume(ByVal SoundName As String, ByVal Level As Integer) As Boolean
 
         Dim CommandVolume As String = "setaudio " & SoundName & " volume to " & Level.ToString
@@ -6671,6 +6585,64 @@ Public Class Form1
         Return (GetStatus(SoundName, "mode") = "playing")
 
     End Function
+
+    Private Sub AddOverlaping(ByVal SoundName As String, ByVal FilePath As String)
+
+        AddSound(SoundName & "A", FilePath)
+
+        AddSound(SoundName & "B", FilePath)
+
+        AddSound(SoundName & "C", FilePath)
+
+        AddSound(SoundName & "D", FilePath)
+
+    End Sub
+
+    Private Sub PlayOverlaping(ByVal SoundName As String)
+
+        If IsPlaying(SoundName & "A") = False Then
+
+            PlaySound(SoundName & "A")
+
+        Else
+
+            If IsPlaying(SoundName & "B") = False Then
+
+                PlaySound(SoundName & "B")
+
+            Else
+
+                If IsPlaying(SoundName & "C") = False Then
+
+                    PlaySound(SoundName & "C")
+
+                Else
+
+                    If IsPlaying(SoundName & "D") = False Then
+
+                        PlaySound(SoundName & "D")
+
+                    End If
+
+                End If
+
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub SetVolumeOverlaping(ByVal SoundName As String, ByVal Level As Integer)
+
+        SetVolume(SoundName & "A", Level)
+
+        SetVolume(SoundName & "B", Level)
+
+        SetVolume(SoundName & "C", Level)
+
+        SetVolume(SoundName & "D", Level)
+
+    End Sub
 
     Private Function GetStatus(ByVal SoundName As String, ByVal StatusType As String) As String
 
@@ -6715,5 +6687,25 @@ Public Class Form1
         Return True
 
     End Function
+
+    Private Sub CreateSoundFileFromResource()
+
+        Dim file As String = Path.Combine(Application.StartupPath, "level.mp3")
+
+        If Not IO.File.Exists(file) Then
+
+            IO.File.WriteAllBytes(file, My.Resources.level)
+
+        End If
+
+        file = Path.Combine(Application.StartupPath, "CashCollected.mp3")
+
+        If Not IO.File.Exists(file) Then
+
+            IO.File.WriteAllBytes(file, My.Resources.CashCollected)
+
+        End If
+
+    End Sub
 
 End Class

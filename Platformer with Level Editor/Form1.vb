@@ -6443,30 +6443,6 @@ Public Class Form1
 
     End Sub
 
-    Public Function LoopSound(ByVal SoundName As String) As Boolean
-
-        If Sounds IsNot Nothing Then
-
-            If Not Sounds.Contains(SoundName) Then
-
-                Return False
-
-            End If
-
-            mciSendStringW("seek " & SoundName & " to start", Nothing, 0, IntPtr.Zero)
-
-            If mciSendStringW("play " & SoundName & " repeat", Nothing, 0, Me.Handle) <> 0 Then
-
-                Return False
-
-            End If
-
-        End If
-
-        Return True
-
-    End Function
-
     Private Function AddSound(ByVal SoundName As String, ByVal FilePath As String) As Boolean
 
         Dim CommandOpen As String = "open " & Chr(34) & FilePath & Chr(34) & " alias " & SoundName
@@ -6517,6 +6493,30 @@ Public Class Form1
         End If
 
         Return False
+
+    End Function
+
+    Public Function LoopSound(ByVal SoundName As String) As Boolean
+
+        If Sounds IsNot Nothing Then
+
+            If Not Sounds.Contains(SoundName) Then
+
+                Return False
+
+            End If
+
+            mciSendStringW("seek " & SoundName & " to start", Nothing, 0, IntPtr.Zero)
+
+            If mciSendStringW("play " & SoundName & " repeat", Nothing, 0, Me.Handle) <> 0 Then
+
+                Return False
+
+            End If
+
+        End If
+
+        Return True
 
     End Function
 

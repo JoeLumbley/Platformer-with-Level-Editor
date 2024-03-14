@@ -41,10 +41,6 @@ Imports System.Runtime.InteropServices
 Imports System.Text
 Imports System.Threading
 
-'Imports Microsoft.DirectX
-'Imports Microsoft.DirectX.AudioVideoPlayback
-'Imports System.Windows.Controls.MediaElement
-
 Public Class Form1
 
     Private Enum AppState As Integer
@@ -522,50 +518,6 @@ Public Class Form1
 
     End Sub
 
-    'Private GameLoopTask As Task =
-    '    Task.Factory.StartNew(Sub()
-    '                              Try
-
-    '                                  Thread.CurrentThread.Priority = ThreadPriority.Normal
-    '                                  'Thread.CurrentThread.SetApartmentState(ApartmentState.STA)
-
-    '                                  Do While Not GameLoopCancellationToken.IsCancellationRequested
-
-    '                                      UpdateFrame()
-
-    '                                      'Refresh the form to trigger a redraw.
-    '                                      If Not Me.IsDisposed AndAlso Me.IsHandleCreated Then
-
-    '                                          Me.Invoke(Sub() Me.Refresh())
-
-    '                                      End If
-    '
-    '                                      ' Wait for next frame
-    '                                      Thread.Sleep(15)
-
-    '                                      'For uncapped frame rate use TimeSpan.Zero
-    '                                      'Thread.Sleep(TimeSpan.Zero), the thread relinquishes the
-    '                                      'remainder of its time slice to any thread of equal priority
-    '                                      'that is ready to run. If there are no other threads of equal
-    '                                      'priority that are ready to run, execution of the current
-    '                                      'thread is not suspended.
-
-    '                                      'For a capped frame rate set interval.
-    '                                      'For 60 FPS set sleep interval to 15 ms.
-    '                                      '1 second = 1000 milliseconds.
-    '                                      '16.66666666666667 ms = 1000 ms / 60 FPS
-    '                                      'Thread.Sleep(15)
-
-    '                                  Loop
-
-    '                              Catch ex As Exception
-
-    '                                  Debug.WriteLine(ex.ToString())
-
-    '                              End Try
-
-    '                          End Sub)
-
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         InitializeApp()
@@ -603,9 +555,6 @@ Public Class Form1
                 UpdateClearScreenTimer()
 
         End Select
-
-
-
 
     End Sub
 
@@ -1102,22 +1051,49 @@ Public Class Form1
 
         If IsMuted = False Then
 
-            Try
+            If IsPlaying("Music") = False Then
+                LoopSound("Music")
+            End If
 
-                My.Computer.Audio.Play(My.Resources.level,
-                                       AudioPlayMode.BackgroundLoop)
 
-                IsBackgroundLoopPlaying = True
+            'Try
 
-            Catch ex As Exception
+            '    My.Computer.Audio.Play(My.Resources.level,
+            '                           AudioPlayMode.BackgroundLoop)
 
-                IsBackgroundLoopPlaying = False
+            '    IsBackgroundLoopPlaying = True
 
-            End Try
+            'Catch ex As Exception
+
+            '    IsBackgroundLoopPlaying = False
+
+            'End Try
 
         End If
 
     End Sub
+
+    Private Function PauseSound(ByVal SoundName As String) As Boolean
+
+        Dim CommandPause As String = "pause " & SoundName & " notify"
+
+        If Sounds IsNot Nothing Then
+
+            If Sounds.Contains(SoundName) Then
+
+                If mciSendStringW(CommandPause, Nothing, 0, Me.Handle) = 0 Then
+
+                    Return True
+
+                End If
+
+            End If
+
+        End If
+
+        Return False
+
+    End Function
 
     Private Sub UpdateControllerPosition()
 
@@ -1443,9 +1419,6 @@ Public Class Form1
 
             UpdateCameraOffset()
 
-            'Update camera offset.
-            'CameraOffset.X = Camera.Rect.X * -1
-
         End If
 
         'Is our hero near the left side of the frame?
@@ -1458,9 +1431,6 @@ Public Class Form1
             'Camera.X = Hero.Left - Camera.Width / 4
 
             UpdateCameraOffset()
-
-            'Update camera offset.
-            'CameraOffset.X = Camera.Rect.X * -1
 
         End If
 
@@ -1475,9 +1445,6 @@ Public Class Form1
 
             UpdateCameraOffset()
 
-            'Update camera offset.
-            'CameraOffset.Y = Camera.Rect.Y * -1
-
         End If
 
         'Is our hero near the top side of the frame?
@@ -1488,9 +1455,6 @@ Public Class Form1
             Camera.Rect.Y = OurHero.Rect.Top - Camera.Rect.Height / 6
 
             UpdateCameraOffset()
-
-            'Update camera offset.
-            'CameraOffset.Y = Camera.Rect.Y * -1
 
         End If
 
@@ -1507,9 +1471,6 @@ Public Class Form1
 
             UpdateCameraOffset()
 
-            'Update camera offset.
-            'CameraOffset.X = Camera.Rect.X * -1
-
         End If
 
         'Has the camera moved passed the right side of the level?
@@ -1520,9 +1481,6 @@ Public Class Form1
             Camera.Rect.X = Level.Rect.Right - Camera.Rect.Width
 
             UpdateCameraOffset()
-
-            'Update camera offset.
-            'CameraOffset.X = Camera.Rect.X * -1
 
         End If
 
@@ -1535,9 +1493,6 @@ Public Class Form1
 
             UpdateCameraOffset()
 
-            'Update camera offset.
-            'CameraOffset.Y = Camera.Rect.Y * -1
-
         End If
 
         'Has the camera moved passed the bottom side of the level?
@@ -1548,9 +1503,6 @@ Public Class Form1
             Camera.Rect.Y = Level.Rect.Bottom - Camera.Rect.Height
 
             UpdateCameraOffset()
-
-            'Update camera offset.
-            'CameraOffset.Y = Camera.Rect.Y * -1
 
         End If
 
@@ -1579,7 +1531,6 @@ Public Class Form1
         OurHero.Rect.Y = Math.Round(OurHero.Position.Y)
 
     End Sub
-
 
     Private Sub UpdateEnemies()
 
@@ -1849,7 +1800,6 @@ Public Class Form1
 
                         Case AppState.Playing
 
-
                             If Enemy.Eliminated = False Then
 
                                 Dim rectOffset As Rectangle = Enemy.Rect
@@ -1865,8 +1815,6 @@ Public Class Form1
                                 End If
 
                             End If
-
-
 
                         Case AppState.Editing
 
@@ -1937,7 +1885,6 @@ Public Class Form1
 
                 If rectOffset.IntersectsWith(ClientRectangle) Then
 
-
                     .FillRectangle(Brushes.White, rectOffset)
 
                     ' Define the rectangle to be filled
@@ -1986,14 +1933,6 @@ Public Class Form1
 
                 End If
 
-
-
-
-
-
-
-
-
                 If GameState = AppState.Editing Then
 
                     If GoalSelected = True Then
@@ -2037,12 +1976,6 @@ Public Class Form1
                         .FillRectangle(Brushes.Chocolate, rectOffset)
 
                     End If
-
-
-
-
-
-
 
                     If GameState = AppState.Editing Then
 
@@ -2095,15 +2028,6 @@ Public Class Form1
 
                     End If
 
-
-
-
-
-
-
-
-
-
                     If GameState = AppState.Editing Then
 
                         If SelectedBush = Array.IndexOf(Bushes, Bush) Then
@@ -2143,7 +2067,6 @@ Public Class Form1
 
                     rectOffset.Offset(CameraOffset)
 
-
                     If rectOffset.IntersectsWith(ClientRectangle) Then
 
                         .FillRectangle(Brushes.White, rectOffset)
@@ -2158,15 +2081,6 @@ Public Class Form1
                         .DrawRectangle(OutinePen, rectOffset)
 
                     End If
-
-
-
-
-
-
-
-
-
 
                     If GameState = AppState.Editing Then
 
@@ -2231,11 +2145,7 @@ Public Class Form1
 
                                 End If
 
-
-
                             End If
-
-
 
                         Case AppState.Editing
 
@@ -3038,7 +2948,6 @@ Public Class Form1
         Enemies(Index).MaxVelocity.X = 75
         Enemies(Index).Velocity.X = 0
 
-
         AutoSizeLevel(New Rectangle(Enemies(Index).PatrolB.X,
                                     Enemies(Index).PatrolB.Y,
                                     GridSize,
@@ -3316,8 +3225,6 @@ Public Class Form1
 
         CreateSoundFileFromResource()
 
-        'CreateSoundFileFromResource()
-
         AddSound("Music", Application.StartupPath & "level.mp3")
 
         SetVolume("Music", 300)
@@ -3327,12 +3234,10 @@ Public Class Form1
         SetVolumeOverlaping("CashCollected", 1000)
 
         GameTimer.Start()
-        'MusicLoopTimer.Start()
 
         If IsPlaying("Music") = False Then
             LoopSound("Music")
         End If
-
 
         InitializeToolBarButtons()
 
@@ -3349,8 +3254,6 @@ Public Class Form1
         MenuShadowPen.LineJoin = Drawing2D.LineJoin.Round
 
         InitializeObjects()
-
-        'CreateNewLevel()
 
         CreateStartScreenLevel()
 
@@ -5039,7 +4942,6 @@ Public Class Form1
 
                         UpdateCameraOffset()
 
-
                         BufferGridLines()
 
                     Else
@@ -5337,21 +5239,38 @@ Public Class Form1
 
             Case Keys.M 'Mute
 
-                If IsBackgroundLoopPlaying = True Then
+
+                If IsPlaying("Music") = True Then
+
+                    PauseSound("Music")
 
                     IsMuted = True
 
-                    My.Computer.Audio.Stop()
-
-                    IsBackgroundLoopPlaying = False
-
                 Else
+
+                    LoopSound("Music")
 
                     IsMuted = False
 
-                    PlayLevelMusic()
-
                 End If
+
+
+                'If IsPlaying("Music") = True Then
+
+                '    IsMuted = True
+
+                '    'My.Computer.Audio.Stop()
+                '    soun
+
+                '    IsBackgroundLoopPlaying = False
+
+                'Else
+
+                '    IsMuted = False
+
+                '    PlayLevelMusic()
+
+                'End If
 
             Case Keys.X
 

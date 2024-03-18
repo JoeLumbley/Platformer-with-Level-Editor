@@ -711,18 +711,15 @@ Public Class Form1
 
             If Cash(IsOnBill).Collected = False Then
 
+                If IsPlaying("CashCollected") = False Then
+
+                    PlayOverlaping("CashCollected")
+
+                End If
 
                 Cash(IsOnBill).Collected = True
 
                 CashCollected += 100
-
-                'GS.Play("CashCollected")
-
-                If IsPlaying("CashCollected") = False Then
-                    'Dim Debug As Boolean
-
-                    PlayOverlaping("CashCollected")
-                End If
 
             End If
 
@@ -1052,48 +1049,14 @@ Public Class Form1
         If IsMuted = False Then
 
             If IsPlaying("Music") = False Then
+
                 LoopSound("Music")
+
             End If
-
-
-            'Try
-
-            '    My.Computer.Audio.Play(My.Resources.level,
-            '                           AudioPlayMode.BackgroundLoop)
-
-            '    IsBackgroundLoopPlaying = True
-
-            'Catch ex As Exception
-
-            '    IsBackgroundLoopPlaying = False
-
-            'End Try
 
         End If
 
     End Sub
-
-    Private Function PauseSound(ByVal SoundName As String) As Boolean
-
-        Dim CommandPause As String = "pause " & SoundName & " notify"
-
-        If Sounds IsNot Nothing Then
-
-            If Sounds.Contains(SoundName) Then
-
-                If mciSendStringW(CommandPause, Nothing, 0, Me.Handle) = 0 Then
-
-                    Return True
-
-                End If
-
-            End If
-
-        End If
-
-        Return False
-
-    End Function
 
     Private Sub UpdateControllerPosition()
 
@@ -3236,7 +3199,9 @@ Public Class Form1
         GameTimer.Start()
 
         If IsPlaying("Music") = False Then
+
             LoopSound("Music")
+
         End If
 
         InitializeToolBarButtons()
@@ -5239,7 +5204,6 @@ Public Class Form1
 
             Case Keys.M 'Mute
 
-
                 If IsPlaying("Music") = True Then
 
                     PauseSound("Music")
@@ -5253,24 +5217,6 @@ Public Class Form1
                     IsMuted = False
 
                 End If
-
-
-                'If IsPlaying("Music") = True Then
-
-                '    IsMuted = True
-
-                '    'My.Computer.Audio.Stop()
-                '    soun
-
-                '    IsBackgroundLoopPlaying = False
-
-                'Else
-
-                '    IsMuted = False
-
-                '    PlayLevelMusic()
-
-                'End If
 
             Case Keys.X
 
@@ -6386,7 +6332,7 @@ Public Class Form1
                         Array.Resize(Sounds, Sounds.Length + 1)
                         Sounds(Sounds.Length - 1) = SoundName
 
-                        Return True
+                        Return True 'The sound was added.
 
                     End If
 
@@ -6403,7 +6349,7 @@ Public Class Form1
                     ReDim Sounds(0)
                     Sounds(0) = SoundName
 
-                    Return True
+                    Return True 'The sound was added.
 
                 End If
 
@@ -6411,50 +6357,61 @@ Public Class Form1
 
         End If
 
-        Return False
+        Return False 'The sound was not added.
 
     End Function
 
     Private Function LoopSound(ByVal SoundName As String) As Boolean
 
+        Dim CommandFromStart As String = "seek " & SoundName & " to start"
+
+        Dim CommandPlayRepete As String = "play " & SoundName & " repeat"
+
+        'Do we have sounds?
         If Sounds IsNot Nothing Then
+            'Yes, we have sounds.
 
+            'Is the sound in the array?
             If Not Sounds.Contains(SoundName) Then
+                'No, the sound is not in the array.
 
-                Return False
+                Return False 'The sound is not playing.
 
             End If
 
-            mciSendStringW("seek " & SoundName & " to start", Nothing, 0, IntPtr.Zero)
+            mciSendStringW(CommandFromStart, Nothing, 0, IntPtr.Zero)
 
-            If mciSendStringW("play " & SoundName & " repeat", Nothing, 0, Me.Handle) <> 0 Then
+            If mciSendStringW(CommandPlayRepete, Nothing, 0, Me.Handle) <> 0 Then
 
-                Return False
+                Return False 'The sound is not playing.
 
             End If
 
         End If
 
-        Return True
+        Return True 'The sound is playing.
 
     End Function
 
     Private Function PlaySound(ByVal SoundName As String) As Boolean
 
-        Dim CommandFromStart As String = "seek " & SoundName & " to start"
+        Dim CommandSeekToStart As String = "seek " & SoundName & " to start"
 
         Dim CommandPlay As String = "play " & SoundName & " notify"
 
+        'Do we have sounds?
         If Sounds IsNot Nothing Then
+            'Yes, we have sounds.
 
+            'Is the sound in the array?
             If Sounds.Contains(SoundName) Then
-                'Play sound file from the start.
+                'Yes, the sound is in the array.
 
-                mciSendStringW(CommandFromStart, Nothing, 0, IntPtr.Zero)
+                mciSendStringW(CommandSeekToStart, Nothing, 0, IntPtr.Zero)
 
                 If mciSendStringW(CommandPlay, Nothing, 0, Me.Handle) = 0 Then
 
-                    Return True
+                    Return True 'The sound is playing.
 
                 End If
 
@@ -6462,7 +6419,33 @@ Public Class Form1
 
         End If
 
-        Return False
+        Return False 'The sound is not playing.
+
+    End Function
+
+    Private Function PauseSound(ByVal SoundName As String) As Boolean
+
+        Dim CommandPause As String = "pause " & SoundName & " notify"
+
+        'Do we have sounds?
+        If Sounds IsNot Nothing Then
+            'Yes, we have sounds.
+
+            'Is the sound in the array?
+            If Sounds.Contains(SoundName) Then
+                'Yes, the sound is in the array.
+
+                If mciSendStringW(CommandPause, Nothing, 0, Me.Handle) = 0 Then
+
+                    Return True 'The sound is playing.
+
+                End If
+
+            End If
+
+        End If
+
+        Return False 'The sound is not playing.
 
     End Function
 
@@ -6501,7 +6484,7 @@ Public Class Form1
 
     Private Function IsPlaying(ByVal SoundName As String) As Boolean
 
-        Return (GetStatus(SoundName, "mode") = "playing")
+        Return GetStatus(SoundName, "mode") = "playing"
 
     End Function
 
@@ -6587,11 +6570,15 @@ Public Class Form1
 
     Private Sub CloseSounds()
 
+        Dim CommandClose As String
+
         If Sounds IsNot Nothing Then
 
             For Each Sound In Sounds
 
-                mciSendStringW("close " & Sound, Nothing, 0, IntPtr.Zero)
+                CommandClose = "close " & Sound
+
+                mciSendStringW(CommandClose, Nothing, 0, IntPtr.Zero)
 
             Next
 

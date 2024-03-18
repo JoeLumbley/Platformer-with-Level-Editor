@@ -6363,7 +6363,7 @@ Public Class Form1
 
     Private Function LoopSound(ByVal SoundName As String) As Boolean
 
-        Dim CommandFromStart As String = "seek " & SoundName & " to start"
+        Dim CommandSeekToStart As String = "seek " & SoundName & " to start"
 
         Dim CommandPlayRepete As String = "play " & SoundName & " repeat"
 
@@ -6379,7 +6379,7 @@ Public Class Form1
 
             End If
 
-            mciSendStringW(CommandFromStart, Nothing, 0, IntPtr.Zero)
+            mciSendStringW(CommandSeekToStart, Nothing, 0, IntPtr.Zero)
 
             If mciSendStringW(CommandPlayRepete, Nothing, 0, Me.Handle) <> 0 Then
 

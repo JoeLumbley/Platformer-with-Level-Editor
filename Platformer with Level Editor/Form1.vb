@@ -414,7 +414,7 @@ Public Class Form1
 
     Private LevelName As String = "Untitled"
 
-    Private IsBDown As Boolean = False
+    'Private IsBDown As Boolean = False
 
     Private ScreenOffset As Point
 
@@ -506,6 +506,46 @@ Public Class Form1
                                            <MarshalAs(UnmanagedType.LPWStr)> ByVal lpszReturnString As StringBuilder,
                                            ByVal cchReturn As UInteger, ByVal hwndCallback As IntPtr) As Integer
     End Function
+
+
+    Private DPadUp As Integer = 1
+    Private DPadDown As Integer = 2
+    Private DPadLeft As Integer = 4
+    Private DPadRight As Integer = 8
+
+    Private StartButton As Integer = 16
+    Private BackButton As Integer = 32
+
+    Private LeftStickButton As Integer = 64
+    Private RightStickButton As Integer = 128
+
+    Private LeftBumperButton As Integer = 256
+    Private RightBumperButton As Integer = 512
+
+    Private AButton As Integer = 4096
+    Private BButton As Integer = 8192
+    Private XButton As Integer = 16384
+    Private YButton As Integer = 32768
+
+    Private DPadUpPressed As Boolean = False
+    Private DPadDownPressed As Boolean = False
+    Private DPadLeftPressed As Boolean = False
+    Private DPadRightPressed As Boolean = False
+
+    Private StartButtonPressed As Boolean = False
+    Private BackButtonPressed As Boolean = False
+
+    Private LeftStickButtonPressed As Boolean = False
+    Private RightStickButtonPressed As Boolean = False
+
+    Private LeftBumperButtonPressed As Boolean = False
+    Private RightBumperButtonPressed As Boolean = False
+
+    Private AButtonPressed As Boolean = False
+    Private BButtonPressed As Boolean = False
+    Private XButtonPressed As Boolean = False
+    Private YButtonPressed As Boolean = False
+
 
     'Create array for sounds.
     Private Sounds() As String
@@ -5285,441 +5325,435 @@ Public Class Form1
     Private Sub UpdateButtonPosition()
         'The range of buttons is 0 to 65,535. Unsigned 16-bit (2-byte) integer.
 
-        'What buttons are down?
-        Select Case ControllerPosition.Gamepad.wButtons
+        If (ControllerPosition.Gamepad.wButtons And DPadUp) <> 0 Then
+            DPadUpPressed = True
+        Else
+            DPadUpPressed = False
+        End If
 
-            Case 0 'All the buttons are up.
+        If (ControllerPosition.Gamepad.wButtons And DPadDown) <> 0 Then
+            DPadDownPressed = True
+        Else
+            DPadDownPressed = False
+        End If
 
-                If ControllerJumped = True Then ControllerJumped = False
+        If (ControllerPosition.Gamepad.wButtons And DPadLeft) <> 0 Then
+            DPadLeftPressed = True
+        Else
+            DPadLeftPressed = False
+        End If
 
-                ControllerA = False
+        If (ControllerPosition.Gamepad.wButtons And DPadRight) <> 0 Then
+            DPadRightPressed = True
+        Else
+            DPadRightPressed = False
+        End If
 
-                ControllerB = False
+        If (ControllerPosition.Gamepad.wButtons And StartButton) <> 0 Then
+            StartButtonPressed = True
+        Else
+            StartButtonPressed = False
+        End If
 
-                ControllerRight = False
+        If (ControllerPosition.Gamepad.wButtons And BackButton) <> 0 Then
+            BackButtonPressed = True
+        Else
+            BackButtonPressed = False
+        End If
+
+        If (ControllerPosition.Gamepad.wButtons And LeftStickButton) <> 0 Then
+            LeftStickButtonPressed = True
+        Else
+            LeftStickButtonPressed = False
+        End If
+
+        If (ControllerPosition.Gamepad.wButtons And RightStickButton) <> 0 Then
+            RightStickButtonPressed = True
+        Else
+            RightStickButtonPressed = False
+        End If
+
+        If (ControllerPosition.Gamepad.wButtons And LeftBumperButton) <> 0 Then
+            LeftBumperButtonPressed = True
+        Else
+            LeftBumperButtonPressed = False
+        End If
+
+        If (ControllerPosition.Gamepad.wButtons And RightBumperButton) <> 0 Then
+            RightBumperButtonPressed = True
+        Else
+            RightBumperButtonPressed = False
+        End If
+
+        If (ControllerPosition.Gamepad.wButtons And AButton) <> 0 Then
+            AButtonPressed = True
+        Else
+            AButtonPressed = False
+        End If
+
+        If (ControllerPosition.Gamepad.wButtons And BButton) <> 0 Then
+            BButtonPressed = True
+        Else
+            BButtonPressed = False
+        End If
+
+        If (ControllerPosition.Gamepad.wButtons And XButton) <> 0 Then
+            XButtonPressed = True
+        Else
+            XButtonPressed = False
+        End If
+
+        If (ControllerPosition.Gamepad.wButtons And YButton) <> 0 Then
+            YButtonPressed = True
+        Else
+            YButtonPressed = False
+        End If
+
+
+
+        If AButtonPressed = True Then
+
+            ControllerA = True
+
+            If GameState = AppState.Start Or GameState = AppState.Editing Then
+
+                If IsMouseDown = False Then
+
+                    IsMouseDown = True
+
+                    DoMouseLeftDown()
+
+                End If
+
+            End If
+
+        Else
+
+            ControllerA = False
+
+            If ControllerJumped = True Then ControllerJumped = False
+
+            If GameState = AppState.Start Or GameState = AppState.Editing Then
+
+                If IsMouseDown = True Then
+
+                    IsMouseDown = False
+
+                    DoMouseLeftUp()
+
+                End If
+
+            End If
+
+        End If
+
+
+        If BButtonPressed = True Then
+
+            ControllerB = True
+
+            If GameState = AppState.Editing Then
+
+                If ShowMenu = True Then
+
+                    Cursor.Position = New Point(ScreenOffset.X + SaveButton.Rect.X, ScreenOffset.Y + SaveButton.Rect.Y)
+
+                    If IsMouseDown = False Then
+
+                        IsMouseDown = True
+
+                        DoMouseLeftDown()
+
+                    End If
+
+                End If
+
+            End If
+
+            If GameState = AppState.Start Then
+
+                Cursor.Position = New Point(ScreenOffset.X + StartScreenNewButton.Rect.X, ScreenOffset.Y + StartScreenNewButton.Rect.Y)
+
+                If IsMouseDown = False Then
+
+                    IsMouseDown = True
+
+                    DoMouseLeftDown()
+
+                End If
+
+            End If
+
+
+        Else
+
+            ControllerB = False
+
+        End If
+
+
+        If DPadLeftPressed = True Then
+
+            ControllerLeft = True
+
+            If GameState = AppState.Start Or GameState = AppState.Editing Then
+
+                'Move mouse pointer to the left.
+                Cursor.Position = New Point(Cursor.Position.X - 2, Cursor.Position.Y)
+
+            End If
+
+
+        Else
 
                 ControllerLeft = False
 
-                If GameState = AppState.Start Or GameState = AppState.Editing Then
+        End If
 
-                    If IsMouseDown = True Then
 
-                        IsMouseDown = False
+        If DPadRightPressed = True Then
 
-                        DoMouseLeftUp()
+            ControllerRight = True
 
-                    End If
+            If GameState = AppState.Start Or GameState = AppState.Editing Then
 
-                    If IsBDown = True Then
+                'Move mouse pointer to the right.
+                Cursor.Position = New Point(Cursor.Position.X + 2, Cursor.Position.Y)
 
-                        IsBDown = False
+            End If
 
-                    End If
+        Else
 
-                End If
+            ControllerRight = False
 
-                If IsStartDown = True Then
+        End If
 
-                    IsStartDown = False
 
-                End If
 
-            Case 1 'Up
+        If DPadUpPressed = True Then
 
-                ControllerLeft = False
+            If GameState = AppState.Start Or GameState = AppState.Editing Then
 
-                ControllerRight = False
+                'Move mouse pointer up.
+                Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y - 2)
 
-                If ControllerJumped = True Then ControllerJumped = False
+            End If
 
-                ControllerA = False
+        End If
 
-                ControllerB = False
 
-                If GameState = AppState.Start Or GameState = AppState.Editing Then
+        If DPadDownPressed = True Then
 
-                    If IsMouseDown = True Then
+            If GameState = AppState.Start Or GameState = AppState.Editing Then
 
-                        IsMouseDown = False
+                'Move mouse pointer down.
+                Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y + 2)
 
-                        DoMouseLeftUp()
+            End If
 
-                    End If
+        End If
 
-                    'Move mouse pointer up.
-                    Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y - 2)
+        If StartButtonPressed = True Then
 
-                End If
+            Select Case GameState
 
-            Case 2 'Down
+                Case AppState.Playing
 
-                ControllerLeft = False
+                    If IsStartDown = False Then
 
-                ControllerRight = False
+                        IsStartDown = True
 
-                If ControllerJumped = True Then ControllerJumped = False
+                        'Remember the cameras in game position before opening the editor.
+                        CameraPlayPostion.X = Camera.Rect.X
+                        CameraPlayPostion.Y = Camera.Rect.Y
 
-                ControllerA = False
-
-                ControllerB = False
-
-                If GameState = AppState.Start Or GameState = AppState.Editing Then
-
-                    If IsMouseDown = True Then
-
-                        IsMouseDown = False
-
-                        DoMouseLeftUp()
-
-                    End If
-
-                    'Move mouse pointer down.
-                    Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y + 2)
-
-                End If
-
-            Case 4 'Left
-
-                ControllerLeft = True
-
-                ControllerRight = False
-
-                If ControllerJumped = True Then ControllerJumped = False
-
-                ControllerA = False
-
-                ControllerB = False
-
-                If GameState = AppState.Start Or GameState = AppState.Editing Then
-
-                    If IsMouseDown = True Then
-
-                        IsMouseDown = False
-
-                        DoMouseLeftUp()
-
-                    End If
-
-                    'Move mouse pointer to the left.
-                    Cursor.Position = New Point(Cursor.Position.X - 2, Cursor.Position.Y)
-
-                End If
-
-            Case 5 'Up+Left
-
-                ControllerLeft = True
-
-                ControllerRight = False
-
-                If ControllerJumped = True Then ControllerJumped = False
-
-                ControllerA = False
-
-                ControllerB = False
-
-                If GameState = AppState.Start Or GameState = AppState.Editing Then
-
-                    If IsMouseDown = True Then
-
-                        IsMouseDown = False
-
-                        DoMouseLeftUp()
-
-                    End If
-
-                    'Move mouse pointer up and left.
-                    Cursor.Position = New Point(Cursor.Position.X - 2, Cursor.Position.Y - 2)
-
-                End If
-
-            Case 6 'Down+Left
-
-                ControllerLeft = True
-
-                ControllerRight = False
-
-                If ControllerJumped = True Then ControllerJumped = False
-
-                ControllerA = False
-
-                ControllerB = False
-
-                If GameState = AppState.Start Or GameState = AppState.Editing Then
-
-                    If IsMouseDown = True Then
-
-                        IsMouseDown = False
-
-                        DoMouseLeftUp()
-
-                    End If
-
-                    'Move mouse pointer down and to the left.
-                    Cursor.Position = New Point(Cursor.Position.X - 2, Cursor.Position.Y + 2)
-
-                End If
-
-            Case 8 'Right
-
-                ControllerRight = True
-
-                ControllerLeft = False
-
-                If ControllerJumped = True Then ControllerJumped = False
-
-                ControllerA = False
-
-                ControllerB = False
-
-                If GameState = AppState.Start Or GameState = AppState.Editing Then
-
-                    If IsMouseDown = True Then
-
-                        IsMouseDown = False
-
-                        DoMouseLeftUp()
-
-                    End If
-
-                    'Move mouse pointer to the right.
-                    Cursor.Position = New Point(Cursor.Position.X + 2, Cursor.Position.Y)
-
-                End If
-
-            Case 9 'Up+Right
-
-                ControllerLeft = False
-
-                ControllerRight = True
-
-                If ControllerJumped = True Then ControllerJumped = False
-
-                ControllerA = False
-
-                ControllerB = False
-
-                If GameState = AppState.Start Or GameState = AppState.Editing Then
-
-                    If IsMouseDown = True Then
-
-                        IsMouseDown = False
-
-                        DoMouseLeftUp()
-
-                    End If
-
-                    'Move mouse pointer up and to the right.
-                    Cursor.Position = New Point(Cursor.Position.X + 2, Cursor.Position.Y - 2)
-
-                End If
-
-            Case 10 'Down+Right
-
-                ControllerLeft = False
-
-                ControllerRight = True
-
-                If ControllerJumped = True Then ControllerJumped = False
-
-                ControllerA = False
-
-                ControllerB = False
-
-                If GameState = AppState.Start Or GameState = AppState.Editing Then
-
-                    If IsMouseDown = True Then
-
-                        IsMouseDown = False
-
-                        DoMouseLeftUp()
-
-                    End If
-
-                    'Move mouse pointer down and to the right.
-                    Cursor.Position = New Point(Cursor.Position.X + 2, Cursor.Position.Y + 2)
-
-                End If
-
-            Case 16 'Start
-
-                Select Case GameState
-
-                    Case AppState.Playing
-
-                        If IsStartDown = False Then
-
-                            IsStartDown = True
-
-                            'Remember the cameras in game position before opening the editor.
-                            CameraPlayPostion.X = Camera.Rect.X
-                            CameraPlayPostion.Y = Camera.Rect.Y
-
-                            'Move mouse pointer to the center of the client rctangle.
-                            Cursor.Position = New Point(ClientRectangle.X + ClientRectangle.Width / 2,
+                        'Move mouse pointer to the center of the client rctangle.
+                        Cursor.Position = New Point(ClientRectangle.X + ClientRectangle.Width / 2,
                                                        ClientRectangle.Y + ClientRectangle.Height / 2)
 
-                            GameState = AppState.Editing
+                        GameState = AppState.Editing
 
-                            BufferGridLines()
-
-                        End If
-
-                    Case AppState.Editing
-
-                        If IsStartDown = False Then
-
-                            IsStartDown = True
-
-                            DeselectObjects()
-
-                            'Restore the cameras in game position.
-                            Camera.Rect.X = CameraPlayPostion.X
-                            Camera.Rect.Y = CameraPlayPostion.Y
-
-                            UpdateCameraOffset()
-
-                            MovePointerOffScreen()
-
-                            LastFrame = Now
-
-                            GameState = AppState.Playing
-
-                        End If
-
-                End Select
-
-            Case 32 'Back
-
-                If GameState = AppState.Editing Then
-
-                    If ShowMenu = False Then
-
-                        ShowMenu = True
-
-                        MovePointerCenterMenu()
+                        BufferGridLines()
 
                     End If
+
+                Case AppState.Editing
+
+                    If IsStartDown = False Then
+
+                        IsStartDown = True
+
+                        DeselectObjects()
+
+                        'Restore the cameras in game position.
+                        Camera.Rect.X = CameraPlayPostion.X
+                        Camera.Rect.Y = CameraPlayPostion.Y
+
+                        UpdateCameraOffset()
+
+                        MovePointerOffScreen()
+
+                        LastFrame = Now
+
+                        GameState = AppState.Playing
+
+                    End If
+
+            End Select
+
+        Else
+
+            IsStartDown = False
+
+        End If
+
+
+        If BackButtonPressed = True Then
+
+            If GameState = AppState.Editing Then
+
+                If ShowMenu = False Then
+
+                    ShowMenu = True
+
+                    MovePointerCenterMenu()
 
                 End If
 
-            Case 64 'Left Stick
-            Case 128 'Right Stick
-            Case 256 'Left bumper
+            End If
 
-                If GameState = AppState.Editing Then
+        End If
 
-                    If SelectedBlock > -1 Then
+        If LeftBumperButtonPressed = True Then
 
-                        RemoveBlock(SelectedBlock)
+            If GameState = AppState.Editing Then
 
-                        SelectedBlock = -1
+                If SelectedBlock > -1 Then
 
-                    End If
+                    RemoveBlock(SelectedBlock)
 
-                    If SelectedBill > -1 Then
-
-                        RemoveBill(SelectedBill)
-
-                        SelectedBill = -1
-
-                    End If
-
-                    If SelectedBush > -1 Then
-
-                        RemoveBush(SelectedBush)
-
-                        SelectedBush = -1
-
-                    End If
-
-                    If SelectedCloud > -1 Then
-
-                        RemoveCloud(SelectedCloud)
-
-                        SelectedCloud = -1
-
-                    End If
-
-                    If GoalSelected = True Then
-
-                        'Place goal off level.
-                        Goal.Rect.X = -100
-                        Goal.Rect.Y = -100
-
-                        GoalSelected = False
-
-                    End If
+                    SelectedBlock = -1
 
                 End If
 
-            Case 512 'Right bumper
-                'The player pushed the right bumper down.
+                If SelectedBill > -1 Then
 
-                If GameState = AppState.Editing Then
+                    RemoveBill(SelectedBill)
 
-                    If SelectedBlock > -1 Then
-
-                        RemoveBlock(SelectedBlock)
-
-                        SelectedBlock = -1
-
-                    End If
-
-                    If SelectedBill > -1 Then
-
-                        RemoveBill(SelectedBill)
-
-                        SelectedBill = -1
-
-                    End If
-
-                    If SelectedBush > -1 Then
-
-                        RemoveBush(SelectedBush)
-
-                        SelectedBush = -1
-
-                    End If
-
-                    If SelectedCloud > -1 Then
-
-                        RemoveCloud(SelectedCloud)
-
-                        SelectedCloud = -1
-
-                    End If
-
-                    If SelectedEnemy > -1 Then
-
-                        RemoveEnemy(SelectedEnemy)
-
-                        SelectedEnemy = -1
-
-                    End If
-
-                    If GoalSelected = True Then
-
-                        'Place goal off level.
-                        Goal.Rect.X = -100
-                        Goal.Rect.Y = -100
-
-                        GoalSelected = False
-
-                    End If
+                    SelectedBill = -1
 
                 End If
 
-            Case 4096 'A
+                If SelectedBush > -1 Then
 
-                ControllerA = True
+                    RemoveBush(SelectedBush)
 
-                ControllerLeft = False
+                    SelectedBush = -1
 
-                ControllerRight = False
+                End If
 
-                ControllerB = False
+                If SelectedCloud > -1 Then
 
-                If GameState = AppState.Start Or GameState = AppState.Editing Then
+                    RemoveCloud(SelectedCloud)
+
+                    SelectedCloud = -1
+
+                End If
+
+                If GoalSelected = True Then
+
+                    'Place goal off level.
+                    Goal.Rect.X = -100
+                    Goal.Rect.Y = -100
+
+                    GoalSelected = False
+
+                End If
+
+            End If
+
+        End If
+
+        If RightBumperButtonPressed = True Then
+
+            If GameState = AppState.Editing Then
+
+                If SelectedBlock > -1 Then
+
+                    RemoveBlock(SelectedBlock)
+
+                    SelectedBlock = -1
+
+                End If
+
+                If SelectedBill > -1 Then
+
+                    RemoveBill(SelectedBill)
+
+                    SelectedBill = -1
+
+                End If
+
+                If SelectedBush > -1 Then
+
+                    RemoveBush(SelectedBush)
+
+                    SelectedBush = -1
+
+                End If
+
+                If SelectedCloud > -1 Then
+
+                    RemoveCloud(SelectedCloud)
+
+                    SelectedCloud = -1
+
+                End If
+
+                If SelectedEnemy > -1 Then
+
+                    RemoveEnemy(SelectedEnemy)
+
+                    SelectedEnemy = -1
+
+                End If
+
+                If GoalSelected = True Then
+
+                    'Place goal off level.
+                    Goal.Rect.X = -100
+                    Goal.Rect.Y = -100
+
+                    GoalSelected = False
+
+                End If
+
+            End If
+
+        End If
+
+        If XButtonPressed = True Then
+
+            If GameState = AppState.Editing Then
+
+                If ShowMenu = True Then
+
+                    ShowMenu = False
+
+                End If
+
+            End If
+
+        End If
+
+
+        If YButtonPressed = True Then
+
+            If GameState = AppState.Editing Then
+
+                If ShowMenu = True Then
+
+                    Cursor.Position = New Point(ScreenOffset.X + OpenButton.Rect.X, ScreenOffset.Y + OpenButton.Rect.Y)
 
                     If IsMouseDown = False Then
 
@@ -5731,382 +5765,843 @@ Public Class Form1
 
                 End If
 
-            Case 8192 'B
+            End If
 
-                ControllerB = True
+            If GameState = AppState.Start Then
 
-                If ControllerJumped = True Then ControllerJumped = False
+                Cursor.Position = New Point(ScreenOffset.X + StartScreenOpenButton.Rect.X, ScreenOffset.Y + StartScreenOpenButton.Rect.Y)
 
-                ControllerA = False
+                If IsMouseDown = False Then
 
-                ControllerLeft = False
+                    IsMouseDown = True
 
-                ControllerRight = False
-
-                If GameState = AppState.Editing Then
-
-                    If ShowMenu = True Then
-
-                        Cursor.Position = New Point(ScreenOffset.X + SaveButton.Rect.X, ScreenOffset.Y + SaveButton.Rect.Y)
-
-                        If IsMouseDown = False Then
-
-                            IsMouseDown = True
-
-                            DoMouseLeftDown()
-
-                        End If
-
-                    End If
+                    DoMouseLeftDown()
 
                 End If
 
-                If GameState = AppState.Start Then
+            End If
 
-                    Cursor.Position = New Point(ScreenOffset.X + StartScreenNewButton.Rect.X, ScreenOffset.Y + StartScreenNewButton.Rect.Y)
+        End If
 
-                    If IsMouseDown = False Then
 
-                        IsMouseDown = True
 
-                        DoMouseLeftDown()
 
-                    End If
+        ''What buttons are down?
+        'Select Case ControllerPosition.Gamepad.wButtons
 
-                End If
+        '    Case 0 'All the buttons are up.
 
-            Case 16384 'X
+        '        If ControllerJumped = True Then ControllerJumped = False
 
-                If GameState = AppState.Editing Then
+        '        ControllerA = False
 
-                    If ShowMenu = True Then
+        '        ControllerB = False
 
-                        ShowMenu = False
+        '        ControllerRight = False
 
-                    End If
+        '        ControllerLeft = False
 
-                End If
+        '        If GameState = AppState.Start Or GameState = AppState.Editing Then
 
-            Case 32768 'Y
+        '            If IsMouseDown = True Then
 
-                If GameState = AppState.Editing Then
+        '                IsMouseDown = False
 
-                    If ShowMenu = True Then
+        '                DoMouseLeftUp()
 
-                        Cursor.Position = New Point(ScreenOffset.X + OpenButton.Rect.X, ScreenOffset.Y + OpenButton.Rect.Y)
+        '            End If
 
-                        If IsMouseDown = False Then
+        '        End If
 
-                            IsMouseDown = True
+        '        If IsStartDown = True Then
 
-                            DoMouseLeftDown()
+        '            IsStartDown = False
 
-                        End If
+        '        End If
 
-                    End If
+        '    Case 1 'Up
 
-                End If
+        '        ControllerLeft = False
 
-                If GameState = AppState.Start Then
+        '        ControllerRight = False
 
-                    Cursor.Position = New Point(ScreenOffset.X + StartScreenOpenButton.Rect.X, ScreenOffset.Y + StartScreenOpenButton.Rect.Y)
+        '        If ControllerJumped = True Then ControllerJumped = False
 
-                    If IsMouseDown = False Then
+        '        ControllerA = False
 
-                        IsMouseDown = True
+        '        ControllerB = False
 
-                        DoMouseLeftDown()
+        '        If GameState = AppState.Start Or GameState = AppState.Editing Then
 
-                    End If
+        '            If IsMouseDown = True Then
 
-                End If
+        '                IsMouseDown = False
 
-            Case 48 'Start+Back
-            Case 192 'Left+Right Sticks
-            Case 768 'Left+Right Bumpers
-            Case 12288 'A+B
-            Case 20480 'A+X
-            Case 36864 'A+Y
-            Case 24576 'B+X
-            Case 40960 'B+Y
-            Case 49152 'X+Y
-            Case 28672 'A+B+X
-            Case 45056 'A+B+Y
-            Case 53248 'A+X+Y
-            Case 57344 'B+X+Y
-            Case 61440 'A+B+X+Y
-            Case 4097 'Up+A
+        '                DoMouseLeftUp()
 
-                ControllerA = True
+        '            End If
 
-                ControllerLeft = True
+        '            'Move mouse pointer up.
+        '            Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y - 2)
 
-                ControllerRight = False
+        '        End If
 
-                ControllerB = False
+        '    Case 2 'Down
 
-                If GameState = AppState.Editing Then
+        '        ControllerLeft = False
 
-                    If IsMouseDown = False Then
+        '        ControllerRight = False
 
-                        IsMouseDown = True
+        '        If ControllerJumped = True Then ControllerJumped = False
 
-                        DoMouseLeftDown()
+        '        ControllerA = False
 
-                    End If
+        '        ControllerB = False
 
-                    'Move mouse pointer down.
-                    Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y - 2)
+        '        If GameState = AppState.Start Or GameState = AppState.Editing Then
 
-                End If
+        '            If IsMouseDown = True Then
 
-            Case 4098 'Down+A
+        '                IsMouseDown = False
 
-                ControllerA = True
+        '                DoMouseLeftUp()
 
-                ControllerLeft = True
+        '            End If
 
-                ControllerRight = False
+        '            'Move mouse pointer down.
+        '            Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y + 2)
 
-                ControllerB = False
+        '        End If
 
-                If GameState = AppState.Editing Then
+        '    Case 4 'Left
 
-                    If IsMouseDown = False Then
+        '        ControllerLeft = True
 
-                        IsMouseDown = True
+        '        ControllerRight = False
 
-                        DoMouseLeftDown()
+        '        If ControllerJumped = True Then ControllerJumped = False
 
-                    End If
+        '        ControllerA = False
 
-                    'Move mouse pointer down.
-                    Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y + 2)
+        '        ControllerB = False
 
-                End If
+        '        If GameState = AppState.Start Or GameState = AppState.Editing Then
 
-            Case 4100 'Left+A
+        '            If IsMouseDown = True Then
 
-                ControllerA = True
+        '                IsMouseDown = False
 
-                ControllerLeft = True
+        '                DoMouseLeftUp()
 
-                ControllerRight = False
+        '            End If
 
-                ControllerB = False
+        '            'Move mouse pointer to the left.
+        '            Cursor.Position = New Point(Cursor.Position.X - 2, Cursor.Position.Y)
 
-                If GameState = AppState.Editing Then
+        '        End If
 
-                    If IsMouseDown = False Then
+        '    Case 5 'Up+Left
 
-                        IsMouseDown = True
+        '        ControllerLeft = True
 
-                        DoMouseLeftDown()
+        '        ControllerRight = False
 
-                    End If
+        '        If ControllerJumped = True Then ControllerJumped = False
 
-                    'Move mouse pointer to the left.
-                    Cursor.Position = New Point(Cursor.Position.X - 2, Cursor.Position.Y)
+        '        ControllerA = False
 
-                End If
+        '        ControllerB = False
 
-            Case 4104 'Right+A
+        '        If GameState = AppState.Start Or GameState = AppState.Editing Then
 
-                ControllerA = True
+        '            If IsMouseDown = True Then
 
-                ControllerRight = True
+        '                IsMouseDown = False
 
-                ControllerLeft = False
+        '                DoMouseLeftUp()
 
-                ControllerB = False
+        '            End If
 
-                If GameState = AppState.Editing Then
+        '            'Move mouse pointer up and left.
+        '            Cursor.Position = New Point(Cursor.Position.X - 2, Cursor.Position.Y - 2)
 
-                    If IsMouseDown = False Then
+        '        End If
 
-                        IsMouseDown = True
+        '    Case 6 'Down+Left
 
-                        DoMouseLeftDown()
+        '        ControllerLeft = True
 
-                    End If
+        '        ControllerRight = False
 
-                    'Move mouse pointer to the right.
-                    Cursor.Position = New Point(Cursor.Position.X + 2, Cursor.Position.Y)
+        '        If ControllerJumped = True Then ControllerJumped = False
 
-                End If
+        '        ControllerA = False
 
-            Case 4105 'Up+Right+A
+        '        ControllerB = False
 
-                ControllerA = True
+        '        If GameState = AppState.Start Or GameState = AppState.Editing Then
 
-                ControllerRight = True
+        '            If IsMouseDown = True Then
 
-                ControllerLeft = False
+        '                IsMouseDown = False
 
-                ControllerB = False
+        '                DoMouseLeftUp()
 
-                If GameState = AppState.Editing Then
+        '            End If
 
-                    If IsMouseDown = False Then
+        '            'Move mouse pointer down and to the left.
+        '            Cursor.Position = New Point(Cursor.Position.X - 2, Cursor.Position.Y + 2)
 
-                        IsMouseDown = True
+        '        End If
 
-                        DoMouseLeftDown()
+        '    Case 8 'Right
 
-                    End If
+        '        ControllerRight = True
 
-                    'Move mouse pointer to the right.
-                    Cursor.Position = New Point(Cursor.Position.X + 2, Cursor.Position.Y - 2)
+        '        ControllerLeft = False
 
-                End If
+        '        If ControllerJumped = True Then ControllerJumped = False
 
-            Case 4101 'Up+Left+A
+        '        ControllerA = False
 
-                ControllerA = True
+        '        ControllerB = False
 
-                ControllerLeft = True
+        '        If GameState = AppState.Start Or GameState = AppState.Editing Then
 
-                ControllerRight = False
+        '            If IsMouseDown = True Then
 
-                ControllerB = False
+        '                IsMouseDown = False
 
-                If GameState = AppState.Editing Then
+        '                DoMouseLeftUp()
 
-                    If IsMouseDown = False Then
+        '            End If
 
-                        IsMouseDown = True
+        '            'Move mouse pointer to the right.
+        '            Cursor.Position = New Point(Cursor.Position.X + 2, Cursor.Position.Y)
 
-                        DoMouseLeftDown()
+        '        End If
 
-                    End If
+        '    Case 9 'Up+Right
 
-                    'Move mouse pointer to the left.
-                    Cursor.Position = New Point(Cursor.Position.X - 2, Cursor.Position.Y - 2)
+        '        ControllerLeft = False
 
-                End If
+        '        ControllerRight = True
 
-            Case 4106 'Down+Right+A
+        '        If ControllerJumped = True Then ControllerJumped = False
 
-                ControllerA = True
+        '        ControllerA = False
 
-                ControllerRight = True
+        '        ControllerB = False
 
-                ControllerLeft = False
+        '        If GameState = AppState.Start Or GameState = AppState.Editing Then
 
-                ControllerB = False
+        '            If IsMouseDown = True Then
 
-                If GameState = AppState.Editing Then
+        '                IsMouseDown = False
 
-                    If IsMouseDown = False Then
+        '                DoMouseLeftUp()
 
-                        IsMouseDown = True
+        '            End If
 
-                        DoMouseLeftDown()
+        '            'Move mouse pointer up and to the right.
+        '            Cursor.Position = New Point(Cursor.Position.X + 2, Cursor.Position.Y - 2)
 
-                    End If
+        '        End If
 
-                    'Move mouse pointer to the right.
-                    Cursor.Position = New Point(Cursor.Position.X + 2, Cursor.Position.Y + 2)
+        '    Case 10 'Down+Right
 
-                End If
+        '        ControllerLeft = False
 
-            Case 4102 'Down+Left+A
+        '        ControllerRight = True
 
-                ControllerA = True
+        '        If ControllerJumped = True Then ControllerJumped = False
 
-                ControllerLeft = True
+        '        ControllerA = False
 
-                ControllerRight = False
+        '        ControllerB = False
 
-                ControllerB = False
+        '        If GameState = AppState.Start Or GameState = AppState.Editing Then
 
-                If GameState = AppState.Editing Then
+        '            If IsMouseDown = True Then
 
-                    If IsMouseDown = False Then
+        '                IsMouseDown = False
 
-                        IsMouseDown = True
+        '                DoMouseLeftUp()
 
-                        DoMouseLeftDown()
+        '            End If
 
-                    End If
+        '            'Move mouse pointer down and to the right.
+        '            Cursor.Position = New Point(Cursor.Position.X + 2, Cursor.Position.Y + 2)
 
-                    'Move mouse pointer to the left.
-                    Cursor.Position = New Point(Cursor.Position.X - 2, Cursor.Position.Y + 2)
+        '        End If
 
-                End If
+        '    Case 16 'Start
 
-            Case 8196 'Left+B
+        '        Select Case GameState
 
-                ControllerLeft = True
+        '            Case AppState.Playing
 
-                ControllerRight = False
+        '                If IsStartDown = False Then
 
-                ControllerA = False
+        '                    IsStartDown = True
 
-                ControllerB = True
+        '                    'Remember the cameras in game position before opening the editor.
+        '                    CameraPlayPostion.X = Camera.Rect.X
+        '                    CameraPlayPostion.Y = Camera.Rect.Y
 
-            Case 8200 'Right+B
+        '                    'Move mouse pointer to the center of the client rctangle.
+        '                    Cursor.Position = New Point(ClientRectangle.X + ClientRectangle.Width / 2,
+        '                                               ClientRectangle.Y + ClientRectangle.Height / 2)
 
-                ControllerRight = True
+        '                    GameState = AppState.Editing
 
-                ControllerLeft = False
+        '                    BufferGridLines()
 
-                ControllerA = False
+        '                End If
 
-                ControllerB = True
+        '            Case AppState.Editing
 
-            Case 8198 'Left+Down+B
+        '                If IsStartDown = False Then
 
-                ControllerRight = False
+        '                    IsStartDown = True
 
-                ControllerLeft = True
+        '                    DeselectObjects()
 
-                ControllerB = True
-            Case 8202 'Right+Down+B
-                ControllerRight = True
+        '                    'Restore the cameras in game position.
+        '                    Camera.Rect.X = CameraPlayPostion.X
+        '                    Camera.Rect.Y = CameraPlayPostion.Y
 
-                ControllerLeft = False
+        '                    UpdateCameraOffset()
 
-                ControllerA = False
+        '                    MovePointerOffScreen()
 
-                ControllerB = True
+        '                    LastFrame = Now
 
-            Case 8201 'Right+Up+B
-                ControllerRight = True
+        '                    GameState = AppState.Playing
 
-                ControllerLeft = False
+        '                End If
 
-                ControllerB = True
+        '        End Select
 
-            Case 8197 'Left+Up+B
-                ControllerRight = False
+        '    Case 32 'Back
 
-                ControllerLeft = True
+        '        If GameState = AppState.Editing Then
 
-                ControllerA = False
+        '            If ShowMenu = False Then
 
-                ControllerB = True
-            Case 8194 'Down+B
-                ControllerRight = False
+        '                ShowMenu = True
 
-                ControllerLeft = False
+        '                MovePointerCenterMenu()
 
-                ControllerA = False
+        '            End If
 
-                ControllerB = True
-            Case 8193 'Up+B
-                ControllerRight = False
+        '        End If
 
-                ControllerLeft = False
+        '    Case 64 'Left Stick
+        '    Case 128 'Right Stick
+        '    Case 256 'Left bumper
 
-                ControllerA = False
+        '        If GameState = AppState.Editing Then
 
-                ControllerB = True
-            Case Else 'Any buttons not handled yet.
+        '            If SelectedBlock > -1 Then
 
-                Debug.Print(ControllerPosition.Gamepad.wButtons.ToString)
+        '                RemoveBlock(SelectedBlock)
 
-        End Select
+        '                SelectedBlock = -1
+
+        '            End If
+
+        '            If SelectedBill > -1 Then
+
+        '                RemoveBill(SelectedBill)
+
+        '                SelectedBill = -1
+
+        '            End If
+
+        '            If SelectedBush > -1 Then
+
+        '                RemoveBush(SelectedBush)
+
+        '                SelectedBush = -1
+
+        '            End If
+
+        '            If SelectedCloud > -1 Then
+
+        '                RemoveCloud(SelectedCloud)
+
+        '                SelectedCloud = -1
+
+        '            End If
+
+        '            If GoalSelected = True Then
+
+        '                'Place goal off level.
+        '                Goal.Rect.X = -100
+        '                Goal.Rect.Y = -100
+
+        '                GoalSelected = False
+
+        '            End If
+
+        '        End If
+
+        '    Case 512 'Right bumper
+        '        'The player pushed the right bumper down.
+
+        '        If GameState = AppState.Editing Then
+
+        '            If SelectedBlock > -1 Then
+
+        '                RemoveBlock(SelectedBlock)
+
+        '                SelectedBlock = -1
+
+        '            End If
+
+        '            If SelectedBill > -1 Then
+
+        '                RemoveBill(SelectedBill)
+
+        '                SelectedBill = -1
+
+        '            End If
+
+        '            If SelectedBush > -1 Then
+
+        '                RemoveBush(SelectedBush)
+
+        '                SelectedBush = -1
+
+        '            End If
+
+        '            If SelectedCloud > -1 Then
+
+        '                RemoveCloud(SelectedCloud)
+
+        '                SelectedCloud = -1
+
+        '            End If
+
+        '            If SelectedEnemy > -1 Then
+
+        '                RemoveEnemy(SelectedEnemy)
+
+        '                SelectedEnemy = -1
+
+        '            End If
+
+        '            If GoalSelected = True Then
+
+        '                'Place goal off level.
+        '                Goal.Rect.X = -100
+        '                Goal.Rect.Y = -100
+
+        '                GoalSelected = False
+
+        '            End If
+
+        '        End If
+
+        '    Case 4096 'A
+
+        '        ControllerA = True
+
+        '        ControllerLeft = False
+
+        '        ControllerRight = False
+
+        '        ControllerB = False
+
+        '        If GameState = AppState.Start Or GameState = AppState.Editing Then
+
+        '            If IsMouseDown = False Then
+
+        '                IsMouseDown = True
+
+        '                DoMouseLeftDown()
+
+        '            End If
+
+        '        End If
+
+        '    Case 8192 'B
+
+        '        ControllerB = True
+
+        '        If ControllerJumped = True Then ControllerJumped = False
+
+        '        ControllerA = False
+
+        '        ControllerLeft = False
+
+        '        ControllerRight = False
+
+        '        If GameState = AppState.Editing Then
+
+        '            If ShowMenu = True Then
+
+        '                Cursor.Position = New Point(ScreenOffset.X + SaveButton.Rect.X, ScreenOffset.Y + SaveButton.Rect.Y)
+
+        '                If IsMouseDown = False Then
+
+        '                    IsMouseDown = True
+
+        '                    DoMouseLeftDown()
+
+        '                End If
+
+        '            End If
+
+        '        End If
+
+        '        If GameState = AppState.Start Then
+
+        '            Cursor.Position = New Point(ScreenOffset.X + StartScreenNewButton.Rect.X, ScreenOffset.Y + StartScreenNewButton.Rect.Y)
+
+        '            If IsMouseDown = False Then
+
+        '                IsMouseDown = True
+
+        '                DoMouseLeftDown()
+
+        '            End If
+
+        '        End If
+
+        '    Case 16384 'X
+
+        '        If GameState = AppState.Editing Then
+
+        '            If ShowMenu = True Then
+
+        '                ShowMenu = False
+
+        '            End If
+
+        '        End If
+
+        '    Case 32768 'Y
+
+        '        If GameState = AppState.Editing Then
+
+        '            If ShowMenu = True Then
+
+        '                Cursor.Position = New Point(ScreenOffset.X + OpenButton.Rect.X, ScreenOffset.Y + OpenButton.Rect.Y)
+
+        '                If IsMouseDown = False Then
+
+        '                    IsMouseDown = True
+
+        '                    DoMouseLeftDown()
+
+        '                End If
+
+        '            End If
+
+        '        End If
+
+        '        If GameState = AppState.Start Then
+
+        '            Cursor.Position = New Point(ScreenOffset.X + StartScreenOpenButton.Rect.X, ScreenOffset.Y + StartScreenOpenButton.Rect.Y)
+
+        '            If IsMouseDown = False Then
+
+        '                IsMouseDown = True
+
+        '                DoMouseLeftDown()
+
+        '            End If
+
+        '        End If
+
+        '    Case 48 'Start+Back
+        '    Case 192 'Left+Right Sticks
+        '    Case 768 'Left+Right Bumpers
+        '    Case 12288 'A+B
+        '    Case 20480 'A+X
+        '    Case 36864 'A+Y
+        '    Case 24576 'B+X
+        '    Case 40960 'B+Y
+        '    Case 49152 'X+Y
+        '    Case 28672 'A+B+X
+        '    Case 45056 'A+B+Y
+        '    Case 53248 'A+X+Y
+        '    Case 57344 'B+X+Y
+        '    Case 61440 'A+B+X+Y
+        '    Case 4097 'Up+A
+
+        '        ControllerA = True
+
+        '        ControllerLeft = True
+
+        '        ControllerRight = False
+
+        '        ControllerB = False
+
+        '        If GameState = AppState.Editing Then
+
+        '            If IsMouseDown = False Then
+
+        '                IsMouseDown = True
+
+        '                DoMouseLeftDown()
+
+        '            End If
+
+        '            'Move mouse pointer down.
+        '            Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y - 2)
+
+        '        End If
+
+        '    Case 4098 'Down+A
+
+        '        ControllerA = True
+
+        '        ControllerLeft = True
+
+        '        ControllerRight = False
+
+        '        ControllerB = False
+
+        '        If GameState = AppState.Editing Then
+
+        '            If IsMouseDown = False Then
+
+        '                IsMouseDown = True
+
+        '                DoMouseLeftDown()
+
+        '            End If
+
+        '            'Move mouse pointer down.
+        '            Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y + 2)
+
+        '        End If
+
+        '    Case 4100 'Left+A
+
+        '        ControllerA = True
+
+        '        ControllerLeft = True
+
+        '        ControllerRight = False
+
+        '        ControllerB = False
+
+        '        If GameState = AppState.Editing Then
+
+        '            If IsMouseDown = False Then
+
+        '                IsMouseDown = True
+
+        '                DoMouseLeftDown()
+
+        '            End If
+
+        '            'Move mouse pointer to the left.
+        '            Cursor.Position = New Point(Cursor.Position.X - 2, Cursor.Position.Y)
+
+        '        End If
+
+        '    Case 4104 'Right+A
+
+        '        ControllerA = True
+
+        '        ControllerRight = True
+
+        '        ControllerLeft = False
+
+        '        ControllerB = False
+
+        '        If GameState = AppState.Editing Then
+
+        '            If IsMouseDown = False Then
+
+        '                IsMouseDown = True
+
+        '                DoMouseLeftDown()
+
+        '            End If
+
+        '            'Move mouse pointer to the right.
+        '            Cursor.Position = New Point(Cursor.Position.X + 2, Cursor.Position.Y)
+
+        '        End If
+
+        '    Case 4105 'Up+Right+A
+
+        '        ControllerA = True
+
+        '        ControllerRight = True
+
+        '        ControllerLeft = False
+
+        '        ControllerB = False
+
+        '        If GameState = AppState.Editing Then
+
+        '            If IsMouseDown = False Then
+
+        '                IsMouseDown = True
+
+        '                DoMouseLeftDown()
+
+        '            End If
+
+        '            'Move mouse pointer to the right.
+        '            Cursor.Position = New Point(Cursor.Position.X + 2, Cursor.Position.Y - 2)
+
+        '        End If
+
+        '    Case 4101 'Up+Left+A
+
+        '        ControllerA = True
+
+        '        ControllerLeft = True
+
+        '        ControllerRight = False
+
+        '        ControllerB = False
+
+        '        If GameState = AppState.Editing Then
+
+        '            If IsMouseDown = False Then
+
+        '                IsMouseDown = True
+
+        '                DoMouseLeftDown()
+
+        '            End If
+
+        '            'Move mouse pointer to the left.
+        '            Cursor.Position = New Point(Cursor.Position.X - 2, Cursor.Position.Y - 2)
+
+        '        End If
+
+        '    Case 4106 'Down+Right+A
+
+        '        ControllerA = True
+
+        '        ControllerRight = True
+
+        '        ControllerLeft = False
+
+        '        ControllerB = False
+
+        '        If GameState = AppState.Editing Then
+
+        '            If IsMouseDown = False Then
+
+        '                IsMouseDown = True
+
+        '                DoMouseLeftDown()
+
+        '            End If
+
+        '            'Move mouse pointer to the right.
+        '            Cursor.Position = New Point(Cursor.Position.X + 2, Cursor.Position.Y + 2)
+
+        '        End If
+
+        '    Case 4102 'Down+Left+A
+
+        '        ControllerA = True
+
+        '        ControllerLeft = True
+
+        '        ControllerRight = False
+
+        '        ControllerB = False
+
+        '        If GameState = AppState.Editing Then
+
+        '            If IsMouseDown = False Then
+
+        '                IsMouseDown = True
+
+        '                DoMouseLeftDown()
+
+        '            End If
+
+        '            'Move mouse pointer to the left.
+        '            Cursor.Position = New Point(Cursor.Position.X - 2, Cursor.Position.Y + 2)
+
+        '        End If
+
+        '    Case 8196 'Left+B
+
+        '        ControllerLeft = True
+
+        '        ControllerRight = False
+
+        '        ControllerA = False
+
+        '        ControllerB = True
+
+        '    Case 8200 'Right+B
+
+        '        ControllerRight = True
+
+        '        ControllerLeft = False
+
+        '        ControllerA = False
+
+        '        ControllerB = True
+
+        '    Case 8198 'Left+Down+B
+
+        '        ControllerRight = False
+
+        '        ControllerLeft = True
+
+        '        ControllerB = True
+        '    Case 8202 'Right+Down+B
+        '        ControllerRight = True
+
+        '        ControllerLeft = False
+
+        '        ControllerA = False
+
+        '        ControllerB = True
+
+        '    Case 8201 'Right+Up+B
+        '        ControllerRight = True
+
+        '        ControllerLeft = False
+
+        '        ControllerB = True
+
+        '    Case 8197 'Left+Up+B
+        '        ControllerRight = False
+
+        '        ControllerLeft = True
+
+        '        ControllerA = False
+
+        '        ControllerB = True
+        '    Case 8194 'Down+B
+        '        ControllerRight = False
+
+        '        ControllerLeft = False
+
+        '        ControllerA = False
+
+        '        ControllerB = True
+        '    Case 8193 'Up+B
+        '        ControllerRight = False
+
+        '        ControllerLeft = False
+
+        '        ControllerA = False
+
+        '        ControllerB = True
+        '    Case Else 'Any buttons not handled yet.
+
+        '        Debug.Print(ControllerPosition.Gamepad.wButtons.ToString)
+
+        'End Select
 
     End Sub
 

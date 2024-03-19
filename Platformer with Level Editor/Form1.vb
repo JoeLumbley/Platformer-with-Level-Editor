@@ -5557,7 +5557,7 @@ Public Class Form1
                         CameraPlayPostion.X = Camera.Rect.X
                         CameraPlayPostion.Y = Camera.Rect.Y
 
-                        'Move mouse pointer to the center of the client rctangle.
+                        'Move mouse pointer to the center of the client rectangle.
                         Cursor.Position = New Point(ClientRectangle.X + ClientRectangle.Width / 2,
                                                        ClientRectangle.Y + ClientRectangle.Height / 2)
 

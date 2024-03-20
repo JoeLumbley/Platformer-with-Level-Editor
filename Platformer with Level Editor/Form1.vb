@@ -27,12 +27,6 @@
 
 'Level music by Joseph Lumbley Jr.
 
-'Monica is our an AI assistant.
-'https://monica.im/
-
-'I'm making a video to explain the code on my YouTube channel.
-'https://www.youtube.com/@codewithjoe6074
-
 Imports System.ComponentModel
 Imports System.Drawing.Drawing2D
 Imports System.IO
@@ -422,6 +416,11 @@ Public Class Form1
 
     Private CameraOffset As New Point(0, 0)
 
+    <DllImport("user32.dll")>
+    Private Shared Function SendInput(nInputs As UInteger, pInputs As INPUTStruc(), cbSize As Integer) As UInteger
+    End Function
+
+
     <StructLayout(LayoutKind.Sequential)>
     Private Structure INPUTStruc
         Public type As UInteger
@@ -448,10 +447,6 @@ Public Class Form1
     Private Const MOUSEEVENTF_LEFTDOWN As UInteger = &H2
     Private Const MOUSEEVENTF_LEFTUP As UInteger = &H4
 
-    <DllImport("user32.dll")>
-    Private Shared Function SendInput(nInputs As UInteger, pInputs As INPUTStruc(), cbSize As Integer) As UInteger
-    End Function
-
     Private Shared Sub ClickMouseLeft()
         ' Simulate a left mouse button down event
         Dim inputDown As New INPUTStruc()
@@ -467,6 +462,7 @@ Public Class Form1
         Dim inputs As INPUTStruc() = {inputDown, inputUp}
         SendInput(CUInt(inputs.Length), inputs, Marshal.SizeOf(GetType(INPUTStruc)))
     End Sub
+
     Private Shared Sub DoMouseLeftDown()
 
         ' Simulate a left mouse button down event
@@ -493,13 +489,6 @@ Public Class Form1
 
     End Sub
 
-    Private Enum MCI_NOTIFY As Integer
-        SUCCESSFUL = &H1
-        SUPERSEDED = &H2
-        ABORTED = &H4
-        FAILURE = &H8
-    End Enum
-
     'Import MM for playback of multiple audio files simultaneously
     <DllImport("winmm.dll", EntryPoint:="mciSendStringW")>
     Private Shared Function mciSendStringW(<MarshalAs(UnmanagedType.LPTStr)> ByVal lpszCommand As String,
@@ -507,25 +496,24 @@ Public Class Form1
                                            ByVal cchReturn As UInteger, ByVal hwndCallback As IntPtr) As Integer
     End Function
 
+    Private Const DPadUp As Integer = 1
+    Private Const DPadDown As Integer = 2
+    Private Const DPadLeft As Integer = 4
+    Private Const DPadRight As Integer = 8
 
-    Private DPadUp As Integer = 1
-    Private DPadDown As Integer = 2
-    Private DPadLeft As Integer = 4
-    Private DPadRight As Integer = 8
+    Private Const StartButton As Integer = 16
+    Private Const BackButton As Integer = 32
 
-    Private StartButton As Integer = 16
-    Private BackButton As Integer = 32
+    Private Const LeftStickButton As Integer = 64
+    Private Const RightStickButton As Integer = 128
 
-    Private LeftStickButton As Integer = 64
-    Private RightStickButton As Integer = 128
+    Private Const LeftBumperButton As Integer = 256
+    Private Const RightBumperButton As Integer = 512
 
-    Private LeftBumperButton As Integer = 256
-    Private RightBumperButton As Integer = 512
-
-    Private AButton As Integer = 4096
-    Private BButton As Integer = 8192
-    Private XButton As Integer = 16384
-    Private YButton As Integer = 32768
+    Private Const AButton As Integer = 4096
+    Private Const BButton As Integer = 8192
+    Private Const XButton As Integer = 16384
+    Private Const YButton As Integer = 32768
 
     Private DPadUpPressed As Boolean = False
     Private DPadDownPressed As Boolean = False
@@ -545,7 +533,6 @@ Public Class Form1
     Private BButtonPressed As Boolean = False
     Private XButtonPressed As Boolean = False
     Private YButtonPressed As Boolean = False
-
 
     'Create array for sounds.
     Private Sounds() As String
@@ -6304,3 +6291,10 @@ Public Class Form1
     End Sub
 
 End Class
+
+
+'Monica is our an AI assistant.
+'https://monica.im/
+
+'I also make coding videos on my YouTube channel.
+'https://www.youtube.com/@codewithjoe6074

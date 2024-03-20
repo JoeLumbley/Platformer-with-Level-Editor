@@ -5419,61 +5419,7 @@ Public Class Form1
 
         DoLetterButtonLogic()
 
-        If DPadLeftPressed = True Then
-
-            ControllerLeft = True
-
-            If GameState = AppState.Start Or GameState = AppState.Editing Then
-
-                'Move mouse pointer to the left.
-                Cursor.Position = New Point(Cursor.Position.X - 2, Cursor.Position.Y)
-
-            End If
-
-        Else
-
-            ControllerLeft = False
-
-        End If
-
-        If DPadRightPressed = True Then
-
-            ControllerRight = True
-
-            If GameState = AppState.Start Or GameState = AppState.Editing Then
-
-                'Move mouse pointer to the right.
-                Cursor.Position = New Point(Cursor.Position.X + 2, Cursor.Position.Y)
-
-            End If
-
-        Else
-
-            ControllerRight = False
-
-        End If
-
-        If DPadUpPressed = True Then
-
-            If GameState = AppState.Start Or GameState = AppState.Editing Then
-
-                'Move mouse pointer up.
-                Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y - 2)
-
-            End If
-
-        End If
-
-        If DPadDownPressed = True Then
-
-            If GameState = AppState.Start Or GameState = AppState.Editing Then
-
-                'Move mouse pointer down.
-                Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y + 2)
-
-            End If
-
-        End If
+        DoDpadLogic()
 
         If StartButtonPressed = True Then
 
@@ -5653,6 +5599,65 @@ Public Class Form1
 
         End If
 
+    End Sub
+
+    Private Sub DoDPadLogic()
+
+        If DPadLeftPressed = True Then
+
+            ControllerLeft = True
+
+            If GameState = AppState.Start Or GameState = AppState.Editing Then
+
+                'Move mouse pointer to the left.
+                Cursor.Position = New Point(Cursor.Position.X - 2, Cursor.Position.Y)
+
+            End If
+
+        Else
+
+            ControllerLeft = False
+
+        End If
+
+        If DPadRightPressed = True Then
+
+            ControllerRight = True
+
+            If GameState = AppState.Start Or GameState = AppState.Editing Then
+
+                'Move mouse pointer to the right.
+                Cursor.Position = New Point(Cursor.Position.X + 2, Cursor.Position.Y)
+
+            End If
+
+        Else
+
+            ControllerRight = False
+
+        End If
+
+        If DPadUpPressed = True Then
+
+            If GameState = AppState.Start Or GameState = AppState.Editing Then
+
+                'Move mouse pointer up.
+                Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y - 2)
+
+            End If
+
+        End If
+
+        If DPadDownPressed = True Then
+
+            If GameState = AppState.Start Or GameState = AppState.Editing Then
+
+                'Move mouse pointer down.
+                Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y + 2)
+
+            End If
+
+        End If
 
     End Sub
 

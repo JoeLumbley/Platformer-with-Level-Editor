@@ -5419,77 +5419,15 @@ Public Class Form1
 
         DoLetterButtonLogic()
 
-        DoDpadLogic()
+        DoDPadLogic()
 
-        If StartButtonPressed = True Then
+        DoStartBackLogic()
 
-            Select Case GameState
+        DoBumperLogic()
 
-                Case AppState.Playing
+    End Sub
 
-                    If IsStartDown = False Then
-
-                        IsStartDown = True
-
-                        'Remember the cameras in game position before opening the editor.
-                        CameraPlayPostion.X = Camera.Rect.X
-                        CameraPlayPostion.Y = Camera.Rect.Y
-
-                        'Move mouse pointer to the center of the client rectangle.
-                        Cursor.Position = New Point(ClientRectangle.X + ClientRectangle.Width / 2,
-                                                       ClientRectangle.Y + ClientRectangle.Height / 2)
-
-                        GameState = AppState.Editing
-
-                        BufferGridLines()
-
-                    End If
-
-                Case AppState.Editing
-
-                    If IsStartDown = False Then
-
-                        IsStartDown = True
-
-                        DeselectObjects()
-
-                        'Restore the cameras in game position.
-                        Camera.Rect.X = CameraPlayPostion.X
-                        Camera.Rect.Y = CameraPlayPostion.Y
-
-                        UpdateCameraOffset()
-
-                        MovePointerOffScreen()
-
-                        LastFrame = Now
-
-                        GameState = AppState.Playing
-
-                    End If
-
-            End Select
-
-        Else
-
-            IsStartDown = False
-
-        End If
-
-        If BackButtonPressed = True Then
-
-            If GameState = AppState.Editing Then
-
-                If ShowMenu = False Then
-
-                    ShowMenu = True
-
-                    MovePointerCenterMenu()
-
-                End If
-
-            End If
-
-        End If
+    Private Sub DoBumperLogic()
 
         If LeftBumperButtonPressed = True Then
 
@@ -5592,6 +5530,80 @@ Public Class Form1
                     Goal.Rect.Y = -100
 
                     GoalSelected = False
+
+                End If
+
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub DoStartBackLogic()
+
+        If StartButtonPressed = True Then
+
+            Select Case GameState
+
+                Case AppState.Playing
+
+                    If IsStartDown = False Then
+
+                        IsStartDown = True
+
+                        'Remember the cameras in game position before opening the editor.
+                        CameraPlayPostion.X = Camera.Rect.X
+                        CameraPlayPostion.Y = Camera.Rect.Y
+
+                        'Move mouse pointer to the center of the client rectangle.
+                        Cursor.Position = New Point(ClientRectangle.X + ClientRectangle.Width / 2,
+                                                       ClientRectangle.Y + ClientRectangle.Height / 2)
+
+                        GameState = AppState.Editing
+
+                        BufferGridLines()
+
+                    End If
+
+                Case AppState.Editing
+
+                    If IsStartDown = False Then
+
+                        IsStartDown = True
+
+                        DeselectObjects()
+
+                        'Restore the cameras in game position.
+                        Camera.Rect.X = CameraPlayPostion.X
+                        Camera.Rect.Y = CameraPlayPostion.Y
+
+                        UpdateCameraOffset()
+
+                        MovePointerOffScreen()
+
+                        LastFrame = Now
+
+                        GameState = AppState.Playing
+
+                    End If
+
+            End Select
+
+        Else
+
+            IsStartDown = False
+
+        End If
+
+        If BackButtonPressed = True Then
+
+            If GameState = AppState.Editing Then
+
+                If ShowMenu = False Then
+
+                    ShowMenu = True
+
+                    MovePointerCenterMenu()
 
                 End If
 

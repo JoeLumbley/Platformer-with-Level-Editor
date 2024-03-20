@@ -1117,6 +1117,8 @@ Public Class Form1
 
                         UpdateButtonPosition()
 
+                        DoButtonLogic()
+
                         UpdateLeftThumbstickPosition()
 
                         UpdateRightThumbstickPosition()
@@ -1131,6 +1133,8 @@ Public Class Form1
                         'Use controller one.
 
                         UpdateButtonPosition()
+
+                        DoButtonLogic()
 
                         UpdateLeftThumbstickPosition()
 
@@ -5409,83 +5413,11 @@ Public Class Form1
             YButtonPressed = False
         End If
 
-        If AButtonPressed = True Then
+    End Sub
 
-            ControllerA = True
+    Private Sub DoButtonLogic()
 
-            If GameState = AppState.Start Or GameState = AppState.Editing Then
-
-                If IsMouseDown = False Then
-
-                    IsMouseDown = True
-
-                    DoMouseLeftDown()
-
-                End If
-
-            End If
-
-        Else
-
-            ControllerA = False
-
-            If ControllerJumped = True Then ControllerJumped = False
-
-            If GameState = AppState.Start Or GameState = AppState.Editing Then
-
-                If IsMouseDown = True Then
-
-                    IsMouseDown = False
-
-                    DoMouseLeftUp()
-
-                End If
-
-            End If
-
-        End If
-
-        If BButtonPressed = True Then
-
-            ControllerB = True
-
-            If GameState = AppState.Editing Then
-
-                If ShowMenu = True Then
-
-                    Cursor.Position = New Point(ScreenOffset.X + SaveButton.Rect.X, ScreenOffset.Y + SaveButton.Rect.Y)
-
-                    If IsMouseDown = False Then
-
-                        IsMouseDown = True
-
-                        DoMouseLeftDown()
-
-                    End If
-
-                End If
-
-            End If
-
-            If GameState = AppState.Start Then
-
-                Cursor.Position = New Point(ScreenOffset.X + StartScreenNewButton.Rect.X, ScreenOffset.Y + StartScreenNewButton.Rect.Y)
-
-                If IsMouseDown = False Then
-
-                    IsMouseDown = True
-
-                    DoMouseLeftDown()
-
-                End If
-
-            End If
-
-        Else
-
-            ControllerB = False
-
-        End If
+        DoLetterButtonLogic()
 
         If DPadLeftPressed = True Then
 
@@ -5500,7 +5432,7 @@ Public Class Form1
 
         Else
 
-                ControllerLeft = False
+            ControllerLeft = False
 
         End If
 
@@ -5718,6 +5650,89 @@ Public Class Form1
                 End If
 
             End If
+
+        End If
+
+
+    End Sub
+
+    Private Sub DoLetterButtonLogic()
+
+        If AButtonPressed = True Then
+
+            ControllerA = True
+
+            If GameState = AppState.Start Or GameState = AppState.Editing Then
+
+                If IsMouseDown = False Then
+
+                    IsMouseDown = True
+
+                    DoMouseLeftDown()
+
+                End If
+
+            End If
+
+        Else
+
+            ControllerA = False
+
+            If ControllerJumped = True Then ControllerJumped = False
+
+            If GameState = AppState.Start Or GameState = AppState.Editing Then
+
+                If IsMouseDown = True Then
+
+                    IsMouseDown = False
+
+                    DoMouseLeftUp()
+
+                End If
+
+            End If
+
+        End If
+
+        If BButtonPressed = True Then
+
+            ControllerB = True
+
+            If GameState = AppState.Editing Then
+
+                If ShowMenu = True Then
+
+                    Cursor.Position = New Point(ScreenOffset.X + SaveButton.Rect.X, ScreenOffset.Y + SaveButton.Rect.Y)
+
+                    If IsMouseDown = False Then
+
+                        IsMouseDown = True
+
+                        DoMouseLeftDown()
+
+                    End If
+
+                End If
+
+            End If
+
+            If GameState = AppState.Start Then
+
+                Cursor.Position = New Point(ScreenOffset.X + StartScreenNewButton.Rect.X, ScreenOffset.Y + StartScreenNewButton.Rect.Y)
+
+                If IsMouseDown = False Then
+
+                    IsMouseDown = True
+
+                    DoMouseLeftDown()
+
+                End If
+
+            End If
+
+        Else
+
+            ControllerB = False
 
         End If
 

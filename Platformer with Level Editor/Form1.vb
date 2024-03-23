@@ -742,7 +742,11 @@ Public Class Form1
 
                 CashCollected += 100
 
-                PlayOverlaping("CashCollected")
+                If IsMuted = False Then
+
+                    PlayOverlaping("CashCollected")
+
+                End If
 
             End If
 
@@ -1971,20 +1975,20 @@ Public Class Form1
 
                         If SelectedBlock = Array.IndexOf(Blocks, Block) Then
 
-                            'Draw selection rectangle.
-                            .DrawRectangle(New Pen(Color.Red, 6), rectOffset)
+                                'Draw selection rectangle.
+                                .DrawRectangle(New Pen(Color.Red, 6), rectOffset)
 
-                            'Position sizing handle.
-                            SizingHandle.X = rectOffset.Right - SizingHandle.Width \ 2
-                            SizingHandle.Y = rectOffset.Bottom - SizingHandle.Height \ 2
+                                'Position sizing handle.
+                                SizingHandle.X = rectOffset.Right - SizingHandle.Width \ 2
+                                SizingHandle.Y = rectOffset.Bottom - SizingHandle.Height \ 2
 
-                            'Draw sizing handle.
-                            .FillRectangle(Brushes.Black,
-                                           SizingHandle)
+                                'Draw sizing handle.
+                                .FillRectangle(Brushes.Black,
+                                               SizingHandle)
+
+                            End If
 
                         End If
-
-                    End If
 
                 Next
 
@@ -2139,9 +2143,14 @@ Public Class Form1
 
                         Case AppState.Editing
 
-                            .FillRectangle(Brushes.Goldenrod, rectOffset)
+                            If rectOffset.IntersectsWith(ClientRectangle) Then
 
-                            .DrawString("$", FPSFont, Brushes.OrangeRed, rectOffset, AlineCenterMiddle)
+                                .FillRectangle(Brushes.Goldenrod, rectOffset)
+
+                                .DrawString("$", FPSFont, Brushes.OrangeRed, rectOffset, AlineCenterMiddle)
+
+
+                            End If
 
                             If SelectedBill = Array.IndexOf(Cash, Bill) Then
 

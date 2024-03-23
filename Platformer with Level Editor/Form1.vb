@@ -738,15 +738,11 @@ Public Class Form1
 
             If Cash(IsOnBill).Collected = False Then
 
-                If IsPlaying("CashCollected") = False Then
-
-                    PlayOverlaping("CashCollected")
-
-                End If
-
                 Cash(IsOnBill).Collected = True
 
                 CashCollected += 100
+
+                PlayOverlaping("CashCollected")
 
             End If
 
@@ -3221,7 +3217,7 @@ Public Class Form1
 
         AddSound("Music", Application.StartupPath & "level.mp3")
 
-        SetVolume("Music", 300)
+        SetVolume("Music", 75)
 
         AddOverlaping("CashCollected", Application.StartupPath & "CashCollected.mp3")
 

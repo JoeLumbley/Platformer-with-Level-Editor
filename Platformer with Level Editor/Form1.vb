@@ -115,6 +115,10 @@ Public Class Form1
 
     Private ReadOnly FPSFont As New Font(FontFamily.GenericSansSerif, 25)
 
+    Private ReadOnly MenuButtonFont As New Font(FontFamily.GenericSansSerif, 40)
+
+
+
     Private FPS_Postion As New Point(0, 0)
 
     Private CurrentFrame As DateTime
@@ -2703,7 +2707,7 @@ Public Class Form1
             .FillRectangle(Brushes.Black, MenuButton.Rect)
 
             .DrawString("≡",
-                        FPSFont,
+                        MenuButtonFont,
                         Brushes.White,
                         MenuButton.Rect,
                         AlineCenterMiddle)

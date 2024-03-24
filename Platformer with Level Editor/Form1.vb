@@ -3248,11 +3248,11 @@ Public Class Form1
 
         AddSound("Music", Application.StartupPath & "level.mp3")
 
-        SetVolume("Music", 75)
+        SetVolume("Music", 50)
 
         AddOverlaping("CashCollected", Application.StartupPath & "CashCollected.mp3")
 
-        SetVolumeOverlaping("CashCollected", 1000)
+        SetVolumeOverlaping("CashCollected", 700)
 
         GameTimer.Start()
 
@@ -5154,9 +5154,17 @@ Public Class Form1
 
                     If ShowMenu = True Then
 
-                        ShowOpenLevelDialog()
+                        'Does the player want to save this level before opening a level?
+                        If MsgBox("Changes to " & LevelName & " may be lost." & vbCrLf & "Open a level anyway?",
+                                  MsgBoxStyle.Question Or MsgBoxStyle.OkCancel,
+                                  "Open Level - Platformer with Level Editor") = MsgBoxResult.Ok Then
+                            'No, the player doesn't want to save this level before opening a level?
 
-                        ShowMenu = False
+                            ShowOpenLevelDialog()
+
+                            ShowMenu = False
+
+                        End If
 
                     End If
 
@@ -5168,9 +5176,17 @@ Public Class Form1
 
                     If ShowMenu = True Then
 
-                        InitAndCreateNewLevel()
+                        'Does the player want to save this level before creating a new level?
+                        If MsgBox("Changes to " & LevelName & " may be lost." & vbCrLf & "Create a new level anyway?",
+                                  MsgBoxStyle.Question Or MsgBoxStyle.OkCancel,
+                                  "New Level - Platformer with Level Editor") = MsgBoxResult.Ok Then
+                            'No, the player doesn't want to save this level before creating a new level?
 
-                        ShowMenu = False
+                            InitAndCreateNewLevel()
+
+                            ShowMenu = False
+
+                        End If
 
                     End If
 
@@ -5182,9 +5198,17 @@ Public Class Form1
 
                     If ShowMenu = True Then
 
-                        InitAndCreateNewLevel()
+                        'Does the player want to save this level before creating a new level?
+                        If MsgBox("Changes to " & LevelName & " may be lost." & vbCrLf & "Create a new level anyway?",
+                                  MsgBoxStyle.Question Or MsgBoxStyle.OkCancel,
+                                  "New Level - Platformer with Level Editor") = MsgBoxResult.Ok Then
+                            'No, the player doesn't want to save this level before creating a new level?
 
-                        ShowMenu = False
+                            InitAndCreateNewLevel()
+
+                            ShowMenu = False
+
+                        End If
 
                     End If
 
@@ -5196,9 +5220,17 @@ Public Class Form1
 
                     If ShowMenu = True Then
 
-                        ShowOpenLevelDialog()
+                        'Does the player want to save this level before opening a level?
+                        If MsgBox("Changes to " & LevelName & " may be lost." & vbCrLf & "Open a level anyway?",
+                                  MsgBoxStyle.Question Or MsgBoxStyle.OkCancel,
+                                  "Open Level - Platformer with Level Editor") = MsgBoxResult.Ok Then
+                            'No, the player doesn't want to save this level before opening a level?
 
-                        ShowMenu = False
+                            ShowOpenLevelDialog()
+
+                            ShowMenu = False
+
+                        End If
 
                     End If
 

@@ -3648,7 +3648,9 @@ Public Class Form1
             'Yes, the player is clicking the open button.
 
             'Does the player want to save this level before opening a level?
-            If MsgBox("Discard changes to " & LevelName & " level and " & vbCrLf & "open a level?", MsgBoxStyle.Question Or MsgBoxStyle.OkCancel, "Open Level - Platformer with Level Editor") = MsgBoxResult.Ok Then
+            If MsgBox("Changes to " & LevelName & " may be lost." & vbCrLf & "Open a level anyway?",
+                      MsgBoxStyle.Question Or MsgBoxStyle.OkCancel,
+                      "Open Level - Platformer with Level Editor") = MsgBoxResult.Ok Then
                 'No, the player doesn't want to save this level before opening a level?
 
                 ShowOpenLevelDialog()
@@ -3664,7 +3666,9 @@ Public Class Form1
             'Yes, the player is clicking the new button.
 
             'Does the player want to save this level before creating a new level?
-            If MsgBox("Discard changes to " & LevelName & " level and " & vbCrLf & "create a new level?", MsgBoxStyle.Question Or MsgBoxStyle.OkCancel, "New Level - Platformer with Level Editor") = MsgBoxResult.Ok Then
+            If MsgBox("Changes to " & LevelName & " may be lost." & vbCrLf & "Create a new level anyway?",
+                      MsgBoxStyle.Question Or MsgBoxStyle.OkCancel,
+                      "New Level - Platformer with Level Editor") = MsgBoxResult.Ok Then
                 'No, the player doesn't want to save this level before creating a new level?
 
                 InitAndCreateNewLevel()

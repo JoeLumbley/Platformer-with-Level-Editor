@@ -2710,11 +2710,11 @@ Public Class Form1
 
             If MenuButtonHover = True Then
 
-                .FillRectangle(SystemBrushes.Highlight, MenuButton.Rect)
+                .FillRectangle(Brushes.White, MenuButton.Rect)
 
                 .DrawString("≡",
                         MenuButtonFont,
-                        SystemBrushes.HighlightText,
+                        Brushes.Black,
                         MenuButton.Rect,
                         AlineCenterMiddle)
 

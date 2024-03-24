@@ -3516,7 +3516,9 @@ Public Class Form1
             OpenFileDialog1.FileName = ""
             OpenFileDialog1.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
             OpenFileDialog1.FilterIndex = 1
-            OpenFileDialog1.RestoreDirectory = True
+            'OpenFileDialog1.RestoreDirectory = True
+            OpenFileDialog1.InitialDirectory = Application.StartupPath
+
 
             If OpenFileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
 
@@ -3714,7 +3716,8 @@ Public Class Form1
         OpenFileDialog1.FileName = ""
         OpenFileDialog1.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
         OpenFileDialog1.FilterIndex = 1
-        OpenFileDialog1.RestoreDirectory = True
+        OpenFileDialog1.InitialDirectory = Application.StartupPath
+        'OpenFileDialog1.RestoreDirectory = True
 
         If OpenFileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
 
@@ -3749,7 +3752,8 @@ Public Class Form1
         SaveFileDialog1.FileName = LevelName
         SaveFileDialog1.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
         SaveFileDialog1.FilterIndex = 1
-        SaveFileDialog1.RestoreDirectory = True
+        'SaveFileDialog1.RestoreDirectory = True
+        SaveFileDialog1.InitialDirectory = Application.StartupPath
 
         If SaveFileDialog1.ShowDialog(Me) = System.Windows.Forms.DialogResult.OK Then
 

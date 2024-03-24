@@ -860,6 +860,7 @@ Public Class Form1
     Private Sub UpdateCameraOffset()
 
         CameraOffset.X = Camera.Rect.X * -1
+
         CameraOffset.Y = Camera.Rect.Y * -1
 
     End Sub

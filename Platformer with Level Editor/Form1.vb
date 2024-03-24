@@ -168,6 +168,9 @@ Public Class Form1
 
     Private MenuButton As GameObject
 
+    Private MenuButtonHover As Boolean = False
+
+
     Private PointerToolButton As GameObject
 
     Private BlockToolButton As GameObject
@@ -2705,13 +2708,27 @@ Public Class Form1
 
         With Buffer.Graphics
 
-            .FillRectangle(Brushes.Black, MenuButton.Rect)
+            If MenuButtonHover = True Then
 
-            .DrawString("≡",
+                .FillRectangle(SystemBrushes.Highlight, MenuButton.Rect)
+
+                .DrawString("≡",
+                        MenuButtonFont,
+                        SystemBrushes.HighlightText,
+                        MenuButton.Rect,
+                        AlineCenterMiddle)
+
+            Else
+
+                .FillRectangle(Brushes.Black, MenuButton.Rect)
+
+                .DrawString("≡",
                         MenuButtonFont,
                         Brushes.White,
                         MenuButton.Rect,
                         AlineCenterMiddle)
+
+            End If
 
         End With
 
@@ -4700,6 +4717,20 @@ Public Class Form1
                     ShowToolPreview = False
 
                 End If
+
+            End If
+
+            If MenuButton.Rect.Contains(e.Location) Then
+
+                If ShowMenu = False Then
+
+                    MenuButtonHover = True
+
+                End If
+
+            Else
+
+                MenuButtonHover = False
 
             End If
 

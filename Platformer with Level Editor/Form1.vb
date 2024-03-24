@@ -3480,7 +3480,7 @@ Public Class Form1
 
             Case AppState.Editing
 
-                MouseDownEditing(e.Location)
+                MouseDownEditing(e)
 
         End Select
 
@@ -3571,17 +3571,33 @@ Public Class Form1
 
     End Sub
 
-    Private Sub MouseDownEditing(e As Point)
+    Private Sub MouseDownEditing(e As MouseEventArgs)
 
         If ShowMenu = False Then
 
-            MouseDownEditingSelection(e)
+            If e.Button = MouseButtons.Right Then
 
-            MouseDownEditingButtons(e)
+                ShowMenu = True
+
+            Else
+
+                MouseDownEditingSelection(e.Location)
+
+                MouseDownEditingButtons(e.Location)
+
+            End If
 
         Else
 
-            MouseDownEditingMenuButtons(e)
+            If e.Button = MouseButtons.Left Then
+
+                MouseDownEditingMenuButtons(e.Location)
+
+            Else
+
+                ShowMenu = False
+
+            End If
 
         End If
 
@@ -5275,6 +5291,10 @@ Public Class Form1
                         ShowMenu = True
 
                         MovePointerCenterMenu()
+
+                    Else
+
+                        ShowMenu = False
 
                     End If
 

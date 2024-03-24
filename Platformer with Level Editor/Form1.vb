@@ -2702,7 +2702,7 @@ Public Class Form1
 
             .FillRectangle(Brushes.Black, MenuButton.Rect)
 
-            .DrawString("Menu",
+            .DrawString("≡",
                         FPSFont,
                         Brushes.White,
                         MenuButton.Rect,
@@ -3413,10 +3413,10 @@ Public Class Form1
                                        300,
                                        90)
 
-        MenuButton.Rect = New Rectangle(ClientRectangle.Right - 152,
+        MenuButton.Rect = New Rectangle(ClientRectangle.Right - 90,
                                         ClientRectangle.Bottom - 90,
-                                        150,
-                                        100)
+                                        90,
+                                        90)
 
         PointerToolButton.Rect = New Rectangle(ClientRectangle.Left + 331, ClientRectangle.Bottom - 90, 90, 90)
 
@@ -3575,15 +3575,19 @@ Public Class Form1
 
         If ShowMenu = False Then
 
-            If e.Button = MouseButtons.Right Then
-
-                ShowMenu = True
-
-            Else
+            If e.Button = MouseButtons.Left Then
 
                 MouseDownEditingSelection(e.Location)
 
                 MouseDownEditingButtons(e.Location)
+
+            End If
+
+            If e.Button = MouseButtons.Right Then
+
+                ShowMenu = True
+
+                MovePointerCenterMenu()
 
             End If
 
@@ -3593,7 +3597,9 @@ Public Class Form1
 
                 MouseDownEditingMenuButtons(e.Location)
 
-            Else
+            End If
+
+            If e.Button = MouseButtons.Right Then
 
                 ShowMenu = False
 

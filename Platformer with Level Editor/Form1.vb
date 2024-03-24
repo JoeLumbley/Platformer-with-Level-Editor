@@ -3400,81 +3400,85 @@ Public Class Form1
 
     Private Sub Form1_Resize(sender As Object, e As EventArgs) Handles MyBase.Resize
 
-        'Place the FPS display at the bottom of the client area.
-        FPS_Postion.Y = ClientRectangle.Bottom - 75
+        If Not Me.WindowState = FormWindowState.Minimized Then
 
-        CashCollectedPostion.Y = ClientRectangle.Top + 5
+            'Place the FPS display at the bottom of the client area.
+            FPS_Postion.Y = ClientRectangle.Bottom - 75
 
-        EditPlayButton.Rect = New Rectangle(ClientRectangle.Left + 210, ClientRectangle.Bottom - 90, 120, 90)
+            CashCollectedPostion.Y = ClientRectangle.Top + 5
 
-        ToolBarBackground.Rect = New Rectangle(ClientRectangle.Left, ClientRectangle.Bottom - 90, ClientRectangle.Width, 100)
+            EditPlayButton.Rect = New Rectangle(ClientRectangle.Left + 210, ClientRectangle.Bottom - 90, 120, 90)
 
-        MenuBackground.Rect = New Rectangle(ClientRectangle.Width \ 2 - MenuBackground.Rect.Width \ 2,
+            ToolBarBackground.Rect = New Rectangle(ClientRectangle.Left, ClientRectangle.Bottom - 90, ClientRectangle.Width, 100)
+
+            MenuBackground.Rect = New Rectangle(ClientRectangle.Width \ 2 - MenuBackground.Rect.Width \ 2,
                                             (ClientRectangle.Height \ 2) - MenuBackground.Rect.Height \ 2,
                                             300,
                                             92 * 4)
 
-        SaveButton.Rect = New Rectangle(MenuBackground.Rect.Left,
+            SaveButton.Rect = New Rectangle(MenuBackground.Rect.Left,
                                         MenuBackground.Rect.Top,
                                         300,
                                         90)
 
-        OpenButton.Rect = New Rectangle(MenuBackground.Rect.Left,
+            OpenButton.Rect = New Rectangle(MenuBackground.Rect.Left,
                                         MenuBackground.Rect.Top + 92,
                                         300,
                                         90)
 
-        NewButton.Rect = New Rectangle(MenuBackground.Rect.Left,
+            NewButton.Rect = New Rectangle(MenuBackground.Rect.Left,
                                        MenuBackground.Rect.Top + 92 * 2,
                                        300,
                                        90)
 
 
-        ExitButton.Rect = New Rectangle(MenuBackground.Rect.Left,
+            ExitButton.Rect = New Rectangle(MenuBackground.Rect.Left,
                                        MenuBackground.Rect.Top + 92 * 3,
                                        300,
                                        90)
 
-        MenuButton.Rect = New Rectangle(ClientRectangle.Right - 90,
+            MenuButton.Rect = New Rectangle(ClientRectangle.Right - 90,
                                         ClientRectangle.Bottom - 90,
                                         90,
                                         90)
 
-        PointerToolButton.Rect = New Rectangle(ClientRectangle.Left + 331, ClientRectangle.Bottom - 90, 90, 90)
+            PointerToolButton.Rect = New Rectangle(ClientRectangle.Left + 331, ClientRectangle.Bottom - 90, 90, 90)
 
-        BlockToolButton.Rect = New Rectangle(ClientRectangle.Left + 422, ClientRectangle.Bottom - 90, 90, 90)
+            BlockToolButton.Rect = New Rectangle(ClientRectangle.Left + 422, ClientRectangle.Bottom - 90, 90, 90)
 
-        BlockToolIcon.Rect = New Rectangle(ClientRectangle.Left + 447, ClientRectangle.Bottom - 65, 40, 40)
+            BlockToolIcon.Rect = New Rectangle(ClientRectangle.Left + 447, ClientRectangle.Bottom - 65, 40, 40)
 
-        BillToolButton.Rect = New Rectangle(ClientRectangle.Left + 513, ClientRectangle.Bottom - 90, 90, 90)
+            BillToolButton.Rect = New Rectangle(ClientRectangle.Left + 513, ClientRectangle.Bottom - 90, 90, 90)
 
-        BillToolIcon.Rect = New Rectangle(ClientRectangle.Left + 538, ClientRectangle.Bottom - 65, 40, 40)
+            BillToolIcon.Rect = New Rectangle(ClientRectangle.Left + 538, ClientRectangle.Bottom - 65, 40, 40)
 
-        CloudToolButton.Rect = New Rectangle(ClientRectangle.Left + 604, ClientRectangle.Bottom - 90, 90, 90)
+            CloudToolButton.Rect = New Rectangle(ClientRectangle.Left + 604, ClientRectangle.Bottom - 90, 90, 90)
 
-        CloundToolIcon.Rect = New Rectangle(ClientRectangle.Left + 629, ClientRectangle.Bottom - 65, 40, 40)
+            CloundToolIcon.Rect = New Rectangle(ClientRectangle.Left + 629, ClientRectangle.Bottom - 65, 40, 40)
 
-        BushToolButton.Rect = New Rectangle(ClientRectangle.Left + 695, ClientRectangle.Bottom - 90, 90, 90)
+            BushToolButton.Rect = New Rectangle(ClientRectangle.Left + 695, ClientRectangle.Bottom - 90, 90, 90)
 
-        BushToolIcon.Rect = New Rectangle(ClientRectangle.Left + 720, ClientRectangle.Bottom - 65, 40, 40)
+            BushToolIcon.Rect = New Rectangle(ClientRectangle.Left + 720, ClientRectangle.Bottom - 65, 40, 40)
 
-        GoalToolButton.Rect = New Rectangle(ClientRectangle.Left + 786, ClientRectangle.Bottom - 90, 90, 90)
+            GoalToolButton.Rect = New Rectangle(ClientRectangle.Left + 786, ClientRectangle.Bottom - 90, 90, 90)
 
-        GoalToolIcon.Rect = New Rectangle(ClientRectangle.Left + 811, ClientRectangle.Bottom - 65, 40, 40)
+            GoalToolIcon.Rect = New Rectangle(ClientRectangle.Left + 811, ClientRectangle.Bottom - 65, 40, 40)
 
-        EnemyToolButton.Rect = New Rectangle(ClientRectangle.Left + 877, ClientRectangle.Bottom - 90, 90, 90)
+            EnemyToolButton.Rect = New Rectangle(ClientRectangle.Left + 877, ClientRectangle.Bottom - 90, 90, 90)
 
-        EnemyToolIcon.Rect = New Rectangle(ClientRectangle.Left + 902, ClientRectangle.Bottom - 65, 40, 40)
+            EnemyToolIcon.Rect = New Rectangle(ClientRectangle.Left + 902, ClientRectangle.Bottom - 65, 40, 40)
 
-        Title.Rect = New Rectangle(ClientRectangle.Width \ 2 - 425, ClientRectangle.Height \ 2 - 175, 850, 245)
+            Title.Rect = New Rectangle(ClientRectangle.Width \ 2 - 425, ClientRectangle.Height \ 2 - 175, 850, 245)
 
-        StartScreenNewButton.Rect = New Rectangle(ClientRectangle.Width \ 2 - 230, ClientRectangle.Height \ 2 + 70, 210, 90)
+            StartScreenNewButton.Rect = New Rectangle(ClientRectangle.Width \ 2 - 230, ClientRectangle.Height \ 2 + 70, 210, 90)
 
-        StartScreenOpenButton.Rect = New Rectangle(ClientRectangle.Width \ 2 + 20, ClientRectangle.Height \ 2 + 70, 210, 90)
+            StartScreenOpenButton.Rect = New Rectangle(ClientRectangle.Width \ 2 + 20, ClientRectangle.Height \ 2 + 70, 210, 90)
 
-        Camera.Rect.Size = ClientRectangle.Size
+            Camera.Rect.Size = ClientRectangle.Size
 
-        BufferGridLines()
+            BufferGridLines()
+
+        End If
 
     End Sub
 
@@ -6393,6 +6397,9 @@ Public Class Form1
 
     End Sub
 
+    Private Sub Form1_MouseWheel(sender As Object, e As MouseEventArgs) Handles Me.MouseWheel
+
+    End Sub
 End Class
 
 

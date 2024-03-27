@@ -680,11 +680,7 @@ Public Class Form1
 
     Private Sub UpdateOurHero()
 
-        'If IsOnBill() > -1 Then
-
         UpdateCash()
-
-        'End If
 
         If IsOnBlock() > -1 Then
 
@@ -753,11 +749,11 @@ Public Class Form1
 
         End If
 
-        If IsOnEnemy() > -1 Then
+        'If IsOnEnemy() > -1 Then
 
-            DoEnemyCollision()
+        DoEnemyCollision()
 
-        End If
+        'End If
 
         FellOffLevel()
 
@@ -854,7 +850,9 @@ Public Class Form1
                             End If
 
                         Else
+                            'Our Hero died.
 
+                            'Restart level.
                             Camera.Rect.X = 0
                             Camera.Rect.Y = 0
 

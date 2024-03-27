@@ -771,21 +771,21 @@ Public Class Form1
 
             For Each Bill In Cash
 
-                'Is our hero colliding with the bill?
-                If OurHero.Rect.IntersectsWith(Bill.Rect) = True Then
-                    'Yes, our hero is colliding with the bill.
+                If Bill.Collected = False Then
 
-                    If Bill.Collected = False Then
-
-                        Cash(Array.IndexOf(Cash, Bill)).Collected = True
-
-                        CashCollected += 100
+                    'Is our hero colliding with the bill?
+                    If OurHero.Rect.IntersectsWith(Bill.Rect) = True Then
+                        'Yes, our hero is colliding with the bill.
 
                         If IsMuted = False Then
 
                             PlayOverlaping("CashCollected")
 
                         End If
+
+                        Cash(Array.IndexOf(Cash, Bill)).Collected = True
+
+                        CashCollected += 100
 
                     End If
 

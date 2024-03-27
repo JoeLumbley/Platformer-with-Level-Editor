@@ -783,9 +783,9 @@ Public Class Form1
 
                         End If
 
-                        Cash(Array.IndexOf(Cash, Bill)).Collected = True
-
                         CashCollected += 100
+
+                        Cash(Array.IndexOf(Cash, Bill)).Collected = True
 
                     End If
 

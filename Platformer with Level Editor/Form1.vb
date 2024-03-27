@@ -572,11 +572,11 @@ Public Class Form1
 
                 UpdateDeltaTime()
 
+                UpdateEnemies()
+
                 UpdateOurHero()
 
                 UpdateCamera()
-
-                UpdateEnemies()
 
             Case AppState.Editing
 
@@ -680,8 +680,6 @@ Public Class Form1
 
     Private Sub UpdateOurHero()
 
-        UpdateCash()
-
         If IsOnBlock() > -1 Then
 
             UpdateBlocks()
@@ -743,21 +741,19 @@ Public Class Form1
 
         End If
 
+        UpdateHeroMovement()
+
+        UpdateCash()
+
+        DoEnemyCollision()
+
+        FellOffLevel()
+
         If OurHero.Rect.IntersectsWith(Goal.Rect) = True Then
 
             DoGoalCollision()
 
         End If
-
-        'If IsOnEnemy() > -1 Then
-
-        DoEnemyCollision()
-
-        'End If
-
-        FellOffLevel()
-
-        UpdateHeroMovement()
 
     End Sub
 

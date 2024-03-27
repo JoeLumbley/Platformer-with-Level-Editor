@@ -680,6 +680,12 @@ Public Class Form1
 
     Private Sub UpdateOurHero()
 
+        'If IsOnBill() > -1 Then
+
+        UpdateCash()
+
+        'End If
+
         If IsOnBlock() > -1 Then
 
             UpdateBlocks()
@@ -741,24 +747,6 @@ Public Class Form1
 
         End If
 
-        If IsOnBill() > -1 Then
-
-            If Cash(IsOnBill).Collected = False Then
-
-                Cash(IsOnBill).Collected = True
-
-                CashCollected += 100
-
-                If IsMuted = False Then
-
-                    PlayOverlaping("CashCollected")
-
-                End If
-
-            End If
-
-        End If
-
         If OurHero.Rect.IntersectsWith(Goal.Rect) = True Then
 
             DoGoalCollision()
@@ -774,6 +762,38 @@ Public Class Form1
         FellOffLevel()
 
         UpdateHeroMovement()
+
+    End Sub
+
+    Private Sub UpdateCash()
+
+        If Cash IsNot Nothing Then
+
+            For Each Bill In Cash
+
+                'Is our hero colliding with the bill?
+                If OurHero.Rect.IntersectsWith(Bill.Rect) = True Then
+                    'Yes, our hero is colliding with the bill.
+
+                    If Bill.Collected = False Then
+
+                        Cash(Array.IndexOf(Cash, Bill)).Collected = True
+
+                        CashCollected += 100
+
+                        If IsMuted = False Then
+
+                            PlayOverlaping("CashCollected")
+
+                        End If
+
+                    End If
+
+                End If
+
+            Next
+
+        End If
 
     End Sub
 
@@ -4822,6 +4842,9 @@ Public Class Form1
                 Cash(SelectedBill).Rect.X = CInt(Math.Round((pointOffset.X - SelectionOffset.X) / GridSize)) * GridSize
                 Cash(SelectedBill).Rect.Y = CInt(Math.Round((pointOffset.Y - SelectionOffset.Y) / GridSize)) * GridSize
 
+                Cash(SelectedBill).Position.X = Cash(SelectedBill).Rect.X
+                Cash(SelectedBill).Position.Y = Cash(SelectedBill).Rect.Y
+
                 AutoSizeLevel(Cash(SelectedBill).Rect)
 
             End If
@@ -6287,6 +6310,10 @@ Public Class Form1
 
         AddSound(SoundName & "D", FilePath)
 
+        AddSound(SoundName & "E", FilePath)
+
+        AddSound(SoundName & "F", FilePath)
+
     End Sub
 
     Private Sub PlayOverlaping(ByVal SoundName As String)
@@ -6313,6 +6340,22 @@ Public Class Form1
 
                         PlaySound(SoundName & "D")
 
+                    Else
+
+                        If IsPlaying(SoundName & "E") = False Then
+
+                            PlaySound(SoundName & "E")
+
+                        Else
+
+                            If IsPlaying(SoundName & "F") = False Then
+
+                                PlaySound(SoundName & "F")
+
+                            End If
+
+                        End If
+
                     End If
 
                 End If
@@ -6332,6 +6375,11 @@ Public Class Form1
         SetVolume(SoundName & "C", Level)
 
         SetVolume(SoundName & "D", Level)
+
+        SetVolume(SoundName & "E", Level)
+
+        SetVolume(SoundName & "F", Level)
+
 
     End Sub
 

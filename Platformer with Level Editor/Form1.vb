@@ -771,7 +771,7 @@ Public Class Form1
 
                         If IsMuted = False Then
 
-                            PlayOverlaping("CashCollected")
+                            PlayOverlapping("CashCollected")
 
                         End If
 
@@ -3264,9 +3264,9 @@ Public Class Form1
 
         SetVolume("Music", 50)
 
-        AddOverlaping("CashCollected", Application.StartupPath & "CashCollected.mp3")
+        AddOverlapping("CashCollected", Application.StartupPath & "CashCollected.mp3")
 
-        SetVolumeOverlaping("CashCollected", 700)
+        SetVolumeOverlapping("CashCollected", 700)
 
         GameTimer.Start()
 
@@ -6294,88 +6294,125 @@ Public Class Form1
 
     End Function
 
-    Private Sub AddOverlaping(ByVal SoundName As String, ByVal FilePath As String)
+    'Private Sub AddOverlaping(ByVal SoundName As String, ByVal FilePath As String)
 
-        AddSound(SoundName & "A", FilePath)
+    '    AddSound(SoundName & "A", FilePath)
 
-        AddSound(SoundName & "B", FilePath)
+    '    AddSound(SoundName & "B", FilePath)
 
-        AddSound(SoundName & "C", FilePath)
+    '    AddSound(SoundName & "C", FilePath)
 
-        AddSound(SoundName & "D", FilePath)
+    '    AddSound(SoundName & "D", FilePath)
 
-        AddSound(SoundName & "E", FilePath)
+    '    AddSound(SoundName & "E", FilePath)
 
-        AddSound(SoundName & "F", FilePath)
+    '    AddSound(SoundName & "F", FilePath)
+
+    'End Sub
+
+    Private Sub AddOverlapping(ByVal SoundName As String, ByVal FilePath As String)
+
+        For Each suffix As String In {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"}
+
+            AddSound(SoundName & suffix, FilePath)
+
+        Next
 
     End Sub
 
-    Private Sub PlayOverlaping(ByVal SoundName As String)
 
-        If IsPlaying(SoundName & "A") = False Then
+    'Private Sub PlayOverlaping(ByVal SoundName As String)
 
-            PlaySound(SoundName & "A")
+    '    If IsPlaying(SoundName & "A") = False Then
 
-        Else
+    '        PlaySound(SoundName & "A")
 
-            If IsPlaying(SoundName & "B") = False Then
+    '    Else
 
-                PlaySound(SoundName & "B")
+    '        If IsPlaying(SoundName & "B") = False Then
 
-            Else
+    '            PlaySound(SoundName & "B")
 
-                If IsPlaying(SoundName & "C") = False Then
+    '        Else
 
-                    PlaySound(SoundName & "C")
+    '            If IsPlaying(SoundName & "C") = False Then
 
-                Else
+    '                PlaySound(SoundName & "C")
 
-                    If IsPlaying(SoundName & "D") = False Then
+    '            Else
 
-                        PlaySound(SoundName & "D")
+    '                If IsPlaying(SoundName & "D") = False Then
 
-                    Else
+    '                    PlaySound(SoundName & "D")
 
-                        If IsPlaying(SoundName & "E") = False Then
+    '                Else
 
-                            PlaySound(SoundName & "E")
+    '                    If IsPlaying(SoundName & "E") = False Then
 
-                        Else
+    '                        PlaySound(SoundName & "E")
 
-                            If IsPlaying(SoundName & "F") = False Then
+    '                    Else
 
-                                PlaySound(SoundName & "F")
+    '                        If IsPlaying(SoundName & "F") = False Then
 
-                            End If
+    '                            PlaySound(SoundName & "F")
 
-                        End If
+    '                        End If
 
-                    End If
+    '                    End If
 
-                End If
+    '                End If
+
+    '            End If
+
+    '        End If
+
+    '    End If
+
+    'End Sub
+
+    Private Sub PlayOverlapping(ByVal SoundName As String)
+
+        For Each suffix As String In {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"}
+
+            If Not IsPlaying(SoundName & suffix) Then
+
+                PlaySound(SoundName & suffix)
+
+                Exit Sub
 
             End If
 
-        End If
+        Next
 
     End Sub
 
-    Private Sub SetVolumeOverlaping(ByVal SoundName As String, ByVal Level As Integer)
+    Private Sub SetVolumeOverlapping(ByVal SoundName As String, ByVal Level As Integer)
 
-        SetVolume(SoundName & "A", Level)
+        For Each suffix As String In {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"}
 
-        SetVolume(SoundName & "B", Level)
+            SetVolume(SoundName & suffix, Level)
 
-        SetVolume(SoundName & "C", Level)
-
-        SetVolume(SoundName & "D", Level)
-
-        SetVolume(SoundName & "E", Level)
-
-        SetVolume(SoundName & "F", Level)
-
+        Next
 
     End Sub
+
+    'Private Sub SetVolumeOverlaping(ByVal SoundName As String, ByVal Level As Integer)
+
+    '    SetVolume(SoundName & "A", Level)
+
+    '    SetVolume(SoundName & "B", Level)
+
+    '    SetVolume(SoundName & "C", Level)
+
+    '    SetVolume(SoundName & "D", Level)
+
+    '    SetVolume(SoundName & "E", Level)
+
+    '    SetVolume(SoundName & "F", Level)
+
+
+    'End Sub
 
     Private Function GetStatus(ByVal SoundName As String, ByVal StatusType As String) As String
 

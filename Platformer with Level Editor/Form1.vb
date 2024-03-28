@@ -6294,22 +6294,6 @@ Public Class Form1
 
     End Function
 
-    'Private Sub AddOverlaping(ByVal SoundName As String, ByVal FilePath As String)
-
-    '    AddSound(SoundName & "A", FilePath)
-
-    '    AddSound(SoundName & "B", FilePath)
-
-    '    AddSound(SoundName & "C", FilePath)
-
-    '    AddSound(SoundName & "D", FilePath)
-
-    '    AddSound(SoundName & "E", FilePath)
-
-    '    AddSound(SoundName & "F", FilePath)
-
-    'End Sub
-
     Private Sub AddOverlapping(ByVal SoundName As String, ByVal FilePath As String)
 
         For Each suffix As String In {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"}
@@ -6319,57 +6303,6 @@ Public Class Form1
         Next
 
     End Sub
-
-
-    'Private Sub PlayOverlaping(ByVal SoundName As String)
-
-    '    If IsPlaying(SoundName & "A") = False Then
-
-    '        PlaySound(SoundName & "A")
-
-    '    Else
-
-    '        If IsPlaying(SoundName & "B") = False Then
-
-    '            PlaySound(SoundName & "B")
-
-    '        Else
-
-    '            If IsPlaying(SoundName & "C") = False Then
-
-    '                PlaySound(SoundName & "C")
-
-    '            Else
-
-    '                If IsPlaying(SoundName & "D") = False Then
-
-    '                    PlaySound(SoundName & "D")
-
-    '                Else
-
-    '                    If IsPlaying(SoundName & "E") = False Then
-
-    '                        PlaySound(SoundName & "E")
-
-    '                    Else
-
-    '                        If IsPlaying(SoundName & "F") = False Then
-
-    '                            PlaySound(SoundName & "F")
-
-    '                        End If
-
-    '                    End If
-
-    '                End If
-
-    '            End If
-
-    '        End If
-
-    '    End If
-
-    'End Sub
 
     Private Sub PlayOverlapping(ByVal SoundName As String)
 
@@ -6396,23 +6329,6 @@ Public Class Form1
         Next
 
     End Sub
-
-    'Private Sub SetVolumeOverlaping(ByVal SoundName As String, ByVal Level As Integer)
-
-    '    SetVolume(SoundName & "A", Level)
-
-    '    SetVolume(SoundName & "B", Level)
-
-    '    SetVolume(SoundName & "C", Level)
-
-    '    SetVolume(SoundName & "D", Level)
-
-    '    SetVolume(SoundName & "E", Level)
-
-    '    SetVolume(SoundName & "F", Level)
-
-
-    'End Sub
 
     Private Function GetStatus(ByVal SoundName As String, ByVal StatusType As String) As String
 

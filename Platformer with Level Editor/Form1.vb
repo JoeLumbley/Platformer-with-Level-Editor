@@ -6296,9 +6296,9 @@ Public Class Form1
 
     Private Sub AddOverlapping(ByVal SoundName As String, ByVal FilePath As String)
 
-        For Each suffix As String In {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"}
+        For Each Suffix As String In {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"}
 
-            AddSound(SoundName & suffix, FilePath)
+            AddSound(SoundName & Suffix, FilePath)
 
         Next
 
@@ -6306,11 +6306,11 @@ Public Class Form1
 
     Private Sub PlayOverlapping(ByVal SoundName As String)
 
-        For Each suffix As String In {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"}
+        For Each Suffix As String In {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"}
 
-            If Not IsPlaying(SoundName & suffix) Then
+            If Not IsPlaying(SoundName & Suffix) Then
 
-                PlaySound(SoundName & suffix)
+                PlaySound(SoundName & Suffix)
 
                 Exit Sub
 
@@ -6322,9 +6322,9 @@ Public Class Form1
 
     Private Sub SetVolumeOverlapping(ByVal SoundName As String, ByVal Level As Integer)
 
-        For Each suffix As String In {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"}
+        For Each Suffix As String In {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"}
 
-            SetVolume(SoundName & suffix, Level)
+            SetVolume(SoundName & Suffix, Level)
 
         Next
 

@@ -3658,8 +3658,6 @@ Public Class Form1
 
             ShowSaveLevelDialog()
 
-            ShowMenu = False
-
         End If
 
         'Is the player clicking the open button?
@@ -3673,8 +3671,6 @@ Public Class Form1
                 'No, the player doesn't want to save this level before opening a level?
 
                 ShowOpenLevelDialog()
-
-                ShowMenu = False
 
             End If
 
@@ -5124,9 +5120,9 @@ Public Class Form1
 
                         If IsMouseDown = False Then
 
-                            IsMouseDown = True
-
                             DoMouseLeftDown()
+
+                            IsMouseDown = True
 
                         End If
 
@@ -5160,9 +5156,9 @@ Public Class Form1
 
                         If IsMouseDown = False Then
 
-                            IsMouseDown = True
-
                             DoMouseLeftDown()
+
+                            IsMouseDown = True
 
                         End If
 
@@ -5795,9 +5791,9 @@ Public Class Form1
 
                 If IsMouseDown = False Then
 
-                    IsMouseDown = True
-
                     DoMouseLeftDown()
+
+                    IsMouseDown = True
 
                 End If
 
@@ -5813,9 +5809,9 @@ Public Class Form1
 
                 If IsMouseDown = True Then
 
-                    IsMouseDown = False
-
                     DoMouseLeftUp()
+
+                    IsMouseDown = False
 
                 End If
 
@@ -5837,9 +5833,9 @@ Public Class Form1
 
                     If IsMouseDown = False Then
 
-                        IsMouseDown = True
-
                         DoMouseLeftDown()
+
+                        IsMouseDown = True
 
                     End If
 
@@ -5895,9 +5891,9 @@ Public Class Form1
 
                     If IsMouseDown = False Then
 
-                        IsMouseDown = True
-
                         DoMouseLeftDown()
+
+                        IsMouseDown = True
 
                     End If
 
@@ -5913,9 +5909,9 @@ Public Class Form1
 
                 If IsMouseDown = False Then
 
-                    IsMouseDown = True
-
                     DoMouseLeftDown()
+
+                    IsMouseDown = True
 
                 End If
 

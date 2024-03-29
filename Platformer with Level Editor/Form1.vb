@@ -398,6 +398,8 @@ Public Class Form1
 
     Private IsStartDown As Boolean = False
 
+    Private IsBackDown As Boolean = False
+
     Private IsBackgroundLoopPlaying As Boolean = False
 
     Private ClearScreenTimer As TimeSpan
@@ -5709,13 +5711,33 @@ Public Class Form1
 
                 If ShowMenu = False Then
 
-                    ShowMenu = True
+                    If IsBackDown = False Then
 
-                    MovePointerCenterMenu()
+                        ShowMenu = True
+
+                        MovePointerCenterMenu()
+
+                        IsBackDown = True
+
+                    End If
+
+                Else
+
+                    If IsBackDown = False Then
+
+                        ShowMenu = False
+
+                        IsBackDown = True
+
+                    End If
 
                 End If
 
             End If
+
+        Else
+
+            IsBackDown = False
 
         End If
 

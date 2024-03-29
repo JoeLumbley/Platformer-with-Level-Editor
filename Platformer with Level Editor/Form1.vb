@@ -117,8 +117,6 @@ Public Class Form1
 
     Private ReadOnly MenuButtonFont As New Font(FontFamily.GenericSansSerif, 40)
 
-
-
     Private FPS_Postion As New Point(0, 0)
 
     Private CurrentFrame As DateTime
@@ -169,7 +167,6 @@ Public Class Form1
     Private MenuButton As GameObject
 
     Private MenuButtonHover As Boolean = False
-
 
     Private PointerToolButton As GameObject
 
@@ -415,8 +412,6 @@ Public Class Form1
 
     Private LevelName As String = "Untitled"
 
-    'Private IsBDown As Boolean = False
-
     Private ScreenOffset As Point
 
     Private IsMuted As Boolean = False
@@ -454,7 +449,7 @@ Public Class Form1
     Private Const MOUSEEVENTF_LEFTDOWN As UInteger = &H2
     Private Const MOUSEEVENTF_LEFTUP As UInteger = &H4
 
-    Private Shared Sub ClickMouseLeft()
+    Private Sub ClickMouseLeft()
         ' Simulate a left mouse button down event
         Dim inputDown As New INPUTStruc()
         inputDown.type = INPUT_MOUSE
@@ -468,35 +463,40 @@ Public Class Form1
         ' Send the input events using SendInput
         Dim inputs As INPUTStruc() = {inputDown, inputUp}
         SendInput(CUInt(inputs.Length), inputs, Marshal.SizeOf(GetType(INPUTStruc)))
+
     End Sub
 
-    Private Shared Sub DoMouseLeftDown()
+    Private Sub DoMouseLeftDown()
+        'Simulate a left mouse button down event
 
-        ' Simulate a left mouse button down event
         Dim inputDown As New INPUTStruc()
+
         inputDown.type = INPUT_MOUSE
+
         inputDown.union.mi.dwFlags = MOUSEEVENTF_LEFTDOWN
 
-        ' Send the input events using SendInput
         Dim inputs As INPUTStruc() = {inputDown}
+
         SendInput(CUInt(inputs.Length), inputs, Marshal.SizeOf(GetType(INPUTStruc)))
 
     End Sub
 
-    Private Shared Sub DoMouseLeftUp()
+    Private Sub DoMouseLeftUp()
+        'Simulate a left mouse button up event
 
-        ' Simulate a left mouse button up event
         Dim inputUp As New INPUTStruc
+
         inputUp.type = INPUT_MOUSE
+
         inputUp.union.mi.dwFlags = MOUSEEVENTF_LEFTUP
 
-        ' Send the input events using SendInput
         Dim inputs As INPUTStruc() = {inputUp}
+
         SendInput(CUInt(inputs.Length), inputs, Marshal.SizeOf(GetType(INPUTStruc)))
 
     End Sub
 
-    'Import MM for playback of multiple audio files simultaneously
+    'Import Windows Multimedia for playback of multiple audio files simultaneously.
     <DllImport("winmm.dll", EntryPoint:="mciSendStringW")>
     Private Shared Function mciSendStringW(<MarshalAs(UnmanagedType.LPTStr)> ByVal lpszCommand As String,
                                            <MarshalAs(UnmanagedType.LPWStr)> ByVal lpszReturnString As StringBuilder,
@@ -1311,13 +1311,14 @@ Public Class Form1
                 If ShowMenu = True Then
 
                     'Move cursor over the new button.
-                    Cursor.Position = New Point(ScreenOffset.X + NewButton.Rect.X, ScreenOffset.Y + NewButton.Rect.Y)
+                    Cursor.Position = New Point(ScreenOffset.X + NewButton.Rect.X + NewButton.Rect.Width \ 2,
+                                                ScreenOffset.Y + NewButton.Rect.Y + NewButton.Rect.Height \ 2)
 
                     If IsMouseDown = False Then
 
-                        IsMouseDown = True
-
                         DoMouseLeftDown()
+
+                        IsMouseDown = True
 
                     End If
 
@@ -5830,7 +5831,9 @@ Public Class Form1
 
                 If ShowMenu = True Then
 
-                    Cursor.Position = New Point(ScreenOffset.X + SaveButton.Rect.X, ScreenOffset.Y + SaveButton.Rect.Y)
+                    'Move mouse pointer over the save button.
+                    Cursor.Position = New Point(ScreenOffset.X + SaveButton.Rect.X + SaveButton.Rect.Width \ 2,
+                                                ScreenOffset.Y + SaveButton.Rect.Y + SaveButton.Rect.Height \ 2)
 
                     If IsMouseDown = False Then
 
@@ -5846,13 +5849,15 @@ Public Class Form1
 
             If GameState = AppState.Start Then
 
-                Cursor.Position = New Point(ScreenOffset.X + StartScreenNewButton.Rect.X, ScreenOffset.Y + StartScreenNewButton.Rect.Y)
+                'Move mouse pointer over the new button.
+                Cursor.Position = New Point(ScreenOffset.X + StartScreenNewButton.Rect.X + StartScreenNewButton.Rect.Width \ 2,
+                                            ScreenOffset.Y + StartScreenNewButton.Rect.Y + StartScreenNewButton.Rect.Height \ 2)
 
                 If IsMouseDown = False Then
 
-                    IsMouseDown = True
-
                     DoMouseLeftDown()
+
+                    IsMouseDown = True
 
                 End If
 
@@ -5884,7 +5889,9 @@ Public Class Form1
 
                 If ShowMenu = True Then
 
-                    Cursor.Position = New Point(ScreenOffset.X + OpenButton.Rect.X, ScreenOffset.Y + OpenButton.Rect.Y)
+                    'Move mouse pointer over the open button.
+                    Cursor.Position = New Point(ScreenOffset.X + OpenButton.Rect.X + OpenButton.Rect.Width \ 2,
+                                                ScreenOffset.Y + OpenButton.Rect.Y + OpenButton.Rect.Height \ 2)
 
                     If IsMouseDown = False Then
 
@@ -5900,7 +5907,9 @@ Public Class Form1
 
             If GameState = AppState.Start Then
 
-                Cursor.Position = New Point(ScreenOffset.X + StartScreenOpenButton.Rect.X, ScreenOffset.Y + StartScreenOpenButton.Rect.Y)
+                'Move mouse pointer over the open button.
+                Cursor.Position = New Point(ScreenOffset.X + StartScreenOpenButton.Rect.X + StartScreenOpenButton.Rect.Width \ 2,
+                                            ScreenOffset.Y + StartScreenOpenButton.Rect.Y + StartScreenOpenButton.Rect.Height \ 2)
 
                 If IsMouseDown = False Then
 

@@ -843,6 +843,12 @@ Public Class Form1
                             If OurHero.Position.Y <= Enemy.Rect.Top - OurHero.Rect.Height \ 2 Then
                                 'Yes, our hero is above the enemy.
 
+                                If IsMuted = False Then
+
+                                    PlayOverlapping("eliminated")
+
+                                End If
+
                                 Enemies(Index).Eliminated = True
 
                             End If
@@ -3270,6 +3276,10 @@ Public Class Form1
         AddOverlapping("CashCollected", Application.StartupPath & "CashCollected.mp3")
 
         SetVolumeOverlapping("CashCollected", 700)
+
+        AddOverlapping("eliminated", Application.StartupPath & "eliminated.mp3")
+
+        SetVolumeOverlapping("eliminated", 700)
 
         GameTimer.Start()
 
@@ -6414,6 +6424,14 @@ Public Class Form1
         If Not IO.File.Exists(file) Then
 
             IO.File.WriteAllBytes(file, My.Resources.CashCollected)
+
+        End If
+
+        file = Path.Combine(Application.StartupPath, "eliminated.mp3")
+
+        If Not IO.File.Exists(file) Then
+
+            IO.File.WriteAllBytes(file, My.Resources.eliminated)
 
         End If
 

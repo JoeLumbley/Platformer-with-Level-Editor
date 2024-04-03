@@ -37,6 +37,148 @@ Imports System.Threading
 
 Public Class Form1
 
+    'Import mci send string for playback of multiple audio files simultaneously.
+    <DllImport("winmm.dll", EntryPoint:="mciSendStringW")>
+    Private Shared Function mciSendStringW(<MarshalAs(UnmanagedType.LPTStr)> ByVal lpszCommand As String,
+                                           <MarshalAs(UnmanagedType.LPWStr)> ByVal lpszReturnString As StringBuilder,
+                                           ByVal cchReturn As UInteger, ByVal hwndCallback As IntPtr) As Integer
+    End Function
+
+    'Import get state to get the controller button positions.
+    <DllImport("XInput1_4.dll")>
+    Private Shared Function XInputGetState(dwUserIndex As Integer, ByRef pState As XINPUT_STATE) As Integer
+    End Function
+
+    <StructLayout(LayoutKind.Explicit)>
+    Public Structure XINPUT_STATE
+        <FieldOffset(0)>
+        Public dwPacketNumber As UInteger 'Unsigned 32-bit (4-byte) integer range 0 through 4,294,967,295.
+        <FieldOffset(4)>
+        Public Gamepad As XINPUT_GAMEPAD
+    End Structure
+
+    <StructLayout(LayoutKind.Sequential)>
+    Public Structure XINPUT_GAMEPAD
+        Public wButtons As UShort 'Unsigned 16-bit (2-byte) integer range 0 through 65,535.
+        Public bLeftTrigger As Byte 'Unsigned 8-bit (1-byte) integer range 0 through 255.
+        Public bRightTrigger As Byte
+        Public sThumbLX As Short 'Signed 16-bit (2-byte) integer range -32,768 through 32,767.
+        Public sThumbLY As Short
+        Public sThumbRX As Short
+        Public sThumbRY As Short
+    End Structure
+
+    'Import set state to vibrate the controller.
+    <DllImport("XInput1_4.dll")>
+    Private Shared Function XInputSetState(playerIndex As Integer, ByRef vibration As XINPUT_VIBRATION) As Integer
+    End Function
+
+    Public Structure XINPUT_VIBRATION
+        Public wLeftMotorSpeed As UShort
+        Public wRightMotorSpeed As UShort
+    End Structure
+
+    'The start of the thumbstick neutral zone.
+    Private Const NeutralStart As Short = -16256 'Signed 16-bit (2-byte) integer range -32,768 through 32,767.
+
+    'The end of the thumbstick neutral zone.
+    Private Const NeutralEnd As Short = 16256
+
+    'Set the trigger threshold to 64 or 1/4 pull.
+    Private Const TriggerThreshold As Byte = 64 '63.75 = 255 / 4
+    'The trigger position must be greater than the trigger threshold to register as pressed.
+
+    Private ReadOnly Connected(0 To 3) As Boolean 'True or False
+
+    Private ControllerNumber As Integer = 0
+
+    Private ControllerPosition As XINPUT_STATE
+
+    Private Vibration As XINPUT_VIBRATION
+
+    Private ControllerA As Boolean = False
+
+    Private ControllerB As Boolean = False
+
+    Private ControllerRight As Boolean = False
+
+    Private ControllerLeft As Boolean = False
+
+    Private ControllerJumped As Boolean = False
+
+    Private IsMouseDown As Boolean = False
+
+    Private IsStartDown As Boolean = False
+
+    Private Const DPadUp As Integer = 1
+    Private Const DPadDown As Integer = 2
+    Private Const DPadLeft As Integer = 4
+    Private Const DPadRight As Integer = 8
+
+    Private Const StartButton As Integer = 16
+    Private Const BackButton As Integer = 32
+
+    Private Const LeftStickButton As Integer = 64
+    Private Const RightStickButton As Integer = 128
+
+    Private Const LeftBumperButton As Integer = 256
+    Private Const RightBumperButton As Integer = 512
+
+    Private Const AButton As Integer = 4096
+    Private Const BButton As Integer = 8192
+    Private Const XButton As Integer = 16384
+    Private Const YButton As Integer = 32768
+
+    Private DPadUpPressed As Boolean = False
+    Private DPadDownPressed As Boolean = False
+    Private DPadLeftPressed As Boolean = False
+    Private DPadRightPressed As Boolean = False
+
+    Private StartButtonPressed As Boolean = False
+    Private BackButtonPressed As Boolean = False
+
+    Private LeftStickButtonPressed As Boolean = False
+    Private RightStickButtonPressed As Boolean = False
+
+    Private LeftBumperButtonPressed As Boolean = False
+    Private RightBumperButtonPressed As Boolean = False
+
+    Private AButtonPressed As Boolean = False
+    Private BButtonPressed As Boolean = False
+    Private XButtonPressed As Boolean = False
+    Private YButtonPressed As Boolean = False
+
+    'Import send input to simulate mouse input from the controller.
+    <DllImport("user32.dll")>
+    Private Shared Function SendInput(nInputs As UInteger, pInputs As INPUTStruc(), cbSize As Integer) As UInteger
+    End Function
+
+    <StructLayout(LayoutKind.Sequential)>
+    Private Structure INPUTStruc
+        Public type As UInteger
+        Public union As InputUnion
+    End Structure
+
+    <StructLayout(LayoutKind.Explicit)>
+    Private Structure InputUnion
+        <FieldOffset(0)>
+        Public mi As MOUSEINPUT
+    End Structure
+
+    <StructLayout(LayoutKind.Sequential)>
+    Private Structure MOUSEINPUT
+        Public dx As Integer
+        Public dy As Integer
+        Public mouseData As UInteger
+        Public dwFlags As UInteger
+        Public time As UInteger
+        Public dwExtraInfo As IntPtr
+    End Structure
+
+    Private Const INPUT_MOUSE As UInteger = 0
+    Private Const MOUSEEVENTF_LEFTDOWN As UInteger = &H2
+    Private Const MOUSEEVENTF_LEFTUP As UInteger = &H4
+
     Private Enum AppState As Integer
         Start
         Playing
@@ -331,75 +473,6 @@ Public Class Form1
 
     Private IsFileLoaded As Boolean = False
 
-    'Import get state to get the controller button positions.
-    <DllImport("XInput1_4.dll")>
-    Private Shared Function XInputGetState(dwUserIndex As Integer, ByRef pState As XINPUT_STATE) As Integer
-    End Function
-
-    'XInput1_4.dll seems to be the current version
-    'XInput9_1_0.dll is maintained primarily for backward compatibility. 
-
-    <StructLayout(LayoutKind.Explicit)>
-    Public Structure XINPUT_STATE
-        <FieldOffset(0)>
-        Public dwPacketNumber As UInteger 'Unsigned 32-bit (4-byte) integer range 0 through 4,294,967,295.
-        <FieldOffset(4)>
-        Public Gamepad As XINPUT_GAMEPAD
-    End Structure
-
-    <StructLayout(LayoutKind.Sequential)>
-    Public Structure XINPUT_GAMEPAD
-        Public wButtons As UShort 'Unsigned 16-bit (2-byte) integer range 0 through 65,535.
-        Public bLeftTrigger As Byte 'Unsigned 8-bit (1-byte) integer range 0 through 255.
-        Public bRightTrigger As Byte
-        Public sThumbLX As Short 'Signed 16-bit (2-byte) integer range -32,768 through 32,767.
-        Public sThumbLY As Short
-        Public sThumbRX As Short
-        Public sThumbRY As Short
-    End Structure
-
-    'Import set state to vibrate the controller.
-    <DllImport("XInput1_4.dll")>
-    Private Shared Function XInputSetState(playerIndex As Integer, ByRef vibration As XINPUT_VIBRATION) As Integer
-    End Function
-
-    Public Structure XINPUT_VIBRATION
-        Public wLeftMotorSpeed As UShort
-        Public wRightMotorSpeed As UShort
-    End Structure
-
-    'The start of the thumbstick neutral zone.
-    Private Const NeutralStart As Short = -16256 'Signed 16-bit (2-byte) integer range -32,768 through 32,767.
-
-    'The end of the thumbstick neutral zone.
-    Private Const NeutralEnd As Short = 16256
-
-    'Set the trigger threshold to 64 or 1/4 pull.
-    Private Const TriggerThreshold As Byte = 64 '63.75 = 255 / 4
-    'The trigger position must be greater than the trigger threshold to register as pressed.
-
-    Private ReadOnly Connected(0 To 3) As Boolean 'True or False
-
-    Private ControllerNumber As Integer = 0
-
-    Private ControllerPosition As XINPUT_STATE
-
-    Private Vibration As XINPUT_VIBRATION
-
-    Private ControllerA As Boolean = False
-
-    Private ControllerB As Boolean = False
-
-    Private ControllerRight As Boolean = False
-
-    Private ControllerLeft As Boolean = False
-
-    Private ControllerJumped As Boolean = False
-
-    Private IsMouseDown As Boolean = False
-
-    Private IsStartDown As Boolean = False
-
     Private IsBackDown As Boolean = False
 
     Private IsBackgroundLoopPlaying As Boolean = False
@@ -421,129 +494,6 @@ Public Class Form1
     Private IsMuted As Boolean = False
 
     Private CameraOffset As New Point(0, 0)
-
-    'Import send input to simulate mouse input from the controller.
-    <DllImport("user32.dll")>
-    Private Shared Function SendInput(nInputs As UInteger, pInputs As INPUTStruc(), cbSize As Integer) As UInteger
-    End Function
-
-    <StructLayout(LayoutKind.Sequential)>
-    Private Structure INPUTStruc
-        Public type As UInteger
-        Public union As InputUnion
-    End Structure
-
-    <StructLayout(LayoutKind.Explicit)>
-    Private Structure InputUnion
-        <FieldOffset(0)>
-        Public mi As MOUSEINPUT
-    End Structure
-
-    <StructLayout(LayoutKind.Sequential)>
-    Private Structure MOUSEINPUT
-        Public dx As Integer
-        Public dy As Integer
-        Public mouseData As UInteger
-        Public dwFlags As UInteger
-        Public time As UInteger
-        Public dwExtraInfo As IntPtr
-    End Structure
-
-    Private Const INPUT_MOUSE As UInteger = 0
-    Private Const MOUSEEVENTF_LEFTDOWN As UInteger = &H2
-    Private Const MOUSEEVENTF_LEFTUP As UInteger = &H4
-
-    Private Sub ClickMouseLeft()
-        ' Simulate a left mouse button down event
-        Dim inputDown As New INPUTStruc()
-        inputDown.type = INPUT_MOUSE
-        inputDown.union.mi.dwFlags = MOUSEEVENTF_LEFTDOWN
-
-        ' Simulate a left mouse button up event
-        Dim inputUp As New INPUTStruc()
-        inputUp.type = INPUT_MOUSE
-        inputUp.union.mi.dwFlags = MOUSEEVENTF_LEFTUP
-
-        ' Send the input events using SendInput
-        Dim inputs As INPUTStruc() = {inputDown, inputUp}
-        SendInput(CUInt(inputs.Length), inputs, Marshal.SizeOf(GetType(INPUTStruc)))
-
-    End Sub
-
-    Private Sub DoMouseLeftDown()
-        'Simulate a left mouse button down event
-
-        Dim inputDown As New INPUTStruc()
-
-        inputDown.type = INPUT_MOUSE
-
-        inputDown.union.mi.dwFlags = MOUSEEVENTF_LEFTDOWN
-
-        Dim inputs As INPUTStruc() = {inputDown}
-
-        SendInput(CUInt(inputs.Length), inputs, Marshal.SizeOf(GetType(INPUTStruc)))
-
-    End Sub
-
-    Private Sub DoMouseLeftUp()
-        'Simulate a left mouse button up event
-
-        Dim inputUp As New INPUTStruc
-
-        inputUp.type = INPUT_MOUSE
-
-        inputUp.union.mi.dwFlags = MOUSEEVENTF_LEFTUP
-
-        Dim inputs As INPUTStruc() = {inputUp}
-
-        SendInput(CUInt(inputs.Length), inputs, Marshal.SizeOf(GetType(INPUTStruc)))
-
-    End Sub
-
-    'Import mci send string for playback of multiple audio files simultaneously.
-    <DllImport("winmm.dll", EntryPoint:="mciSendStringW")>
-    Private Shared Function mciSendStringW(<MarshalAs(UnmanagedType.LPTStr)> ByVal lpszCommand As String,
-                                           <MarshalAs(UnmanagedType.LPWStr)> ByVal lpszReturnString As StringBuilder,
-                                           ByVal cchReturn As UInteger, ByVal hwndCallback As IntPtr) As Integer
-    End Function
-
-    Private Const DPadUp As Integer = 1
-    Private Const DPadDown As Integer = 2
-    Private Const DPadLeft As Integer = 4
-    Private Const DPadRight As Integer = 8
-
-    Private Const StartButton As Integer = 16
-    Private Const BackButton As Integer = 32
-
-    Private Const LeftStickButton As Integer = 64
-    Private Const RightStickButton As Integer = 128
-
-    Private Const LeftBumperButton As Integer = 256
-    Private Const RightBumperButton As Integer = 512
-
-    Private Const AButton As Integer = 4096
-    Private Const BButton As Integer = 8192
-    Private Const XButton As Integer = 16384
-    Private Const YButton As Integer = 32768
-
-    Private DPadUpPressed As Boolean = False
-    Private DPadDownPressed As Boolean = False
-    Private DPadLeftPressed As Boolean = False
-    Private DPadRightPressed As Boolean = False
-
-    Private StartButtonPressed As Boolean = False
-    Private BackButtonPressed As Boolean = False
-
-    Private LeftStickButtonPressed As Boolean = False
-    Private RightStickButtonPressed As Boolean = False
-
-    Private LeftBumperButtonPressed As Boolean = False
-    Private RightBumperButtonPressed As Boolean = False
-
-    Private AButtonPressed As Boolean = False
-    Private BButtonPressed As Boolean = False
-    Private XButtonPressed As Boolean = False
-    Private YButtonPressed As Boolean = False
 
     'Create array for sounds.
     Private Sounds() As String
@@ -2008,20 +1958,20 @@ Public Class Form1
 
                         If SelectedBlock = Array.IndexOf(Blocks, Block) Then
 
-                                'Draw selection rectangle.
-                                .DrawRectangle(New Pen(Color.Red, 6), rectOffset)
+                            'Draw selection rectangle.
+                            .DrawRectangle(New Pen(Color.Red, 6), rectOffset)
 
-                                'Position sizing handle.
-                                SizingHandle.X = rectOffset.Right - SizingHandle.Width \ 2
-                                SizingHandle.Y = rectOffset.Bottom - SizingHandle.Height \ 2
+                            'Position sizing handle.
+                            SizingHandle.X = rectOffset.Right - SizingHandle.Width \ 2
+                            SizingHandle.Y = rectOffset.Bottom - SizingHandle.Height \ 2
 
-                                'Draw sizing handle.
-                                .FillRectangle(Brushes.Black,
-                                               SizingHandle)
-
-                            End If
+                            'Draw sizing handle.
+                            .FillRectangle(Brushes.Black,
+                                           SizingHandle)
 
                         End If
+
+                    End If
 
                 Next
 
@@ -6442,6 +6392,54 @@ Public Class Form1
     Private Sub Form1_MouseWheel(sender As Object, e As MouseEventArgs) Handles Me.MouseWheel
 
     End Sub
+
+    Private Sub DoMouseLeftDown()
+        'Simulate a left mouse button down event
+
+        Dim inputDown As New INPUTStruc()
+
+        inputDown.type = INPUT_MOUSE
+
+        inputDown.union.mi.dwFlags = MOUSEEVENTF_LEFTDOWN
+
+        Dim inputs As INPUTStruc() = {inputDown}
+
+        SendInput(CUInt(inputs.Length), inputs, Marshal.SizeOf(GetType(INPUTStruc)))
+
+    End Sub
+
+    Private Sub DoMouseLeftUp()
+        'Simulate a left mouse button up event.
+
+        Dim InputUp As New INPUTStruc With {
+            .type = INPUT_MOUSE
+        }
+
+        InputUp.union.mi.dwFlags = MOUSEEVENTF_LEFTUP
+
+        Dim Inputs As INPUTStruc() = {InputUp}
+
+        SendInput(CUInt(Inputs.Length), Inputs, Marshal.SizeOf(GetType(INPUTStruc)))
+
+    End Sub
+
+    Private Sub ClickMouseLeft()
+        ' Simulate a left mouse button down event
+        Dim inputDown As New INPUTStruc()
+        inputDown.type = INPUT_MOUSE
+        inputDown.union.mi.dwFlags = MOUSEEVENTF_LEFTDOWN
+
+        ' Simulate a left mouse button up event
+        Dim inputUp As New INPUTStruc()
+        inputUp.type = INPUT_MOUSE
+        inputUp.union.mi.dwFlags = MOUSEEVENTF_LEFTUP
+
+        ' Send the input events using SendInput
+        Dim inputs As INPUTStruc() = {inputDown, inputUp}
+        SendInput(CUInt(inputs.Length), inputs, Marshal.SizeOf(GetType(INPUTStruc)))
+
+    End Sub
+
 End Class
 
 

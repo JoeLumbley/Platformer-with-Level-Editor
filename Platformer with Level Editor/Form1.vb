@@ -148,6 +148,9 @@ Public Class Form1
     Private XButtonPressed As Boolean = False
     Private YButtonPressed As Boolean = False
 
+    Private ADown As Boolean = False
+    Private BDown As Boolean = False
+
     'Import send input to simulate mouse input from the controller.
     <DllImport("user32.dll")>
     Private Shared Function SendInput(nInputs As UInteger, pInputs As INPUTStruc(), cbSize As Integer) As UInteger
@@ -176,8 +179,8 @@ Public Class Form1
     End Structure
 
     Private Const INPUT_MOUSE As UInteger = 0
-    Private Const MOUSEEVENTF_LEFTDOWN As UInteger = &H2
-    Private Const MOUSEEVENTF_LEFTUP As UInteger = &H4
+    Private Const MOUSEEVENTF_LEFTDOWN As UInteger = 2
+    Private Const MOUSEEVENTF_LEFTUP As UInteger = 4
 
     Private Enum AppState As Integer
         Start
@@ -188,16 +191,6 @@ Public Class Form1
 
     Private Enum ObjectID As Integer
         Level
-        Block
-        Bill
-        Bush
-        Cloud
-        Goal
-        Enemy
-    End Enum
-
-    Private Enum Tools As Integer
-        Pointer
         Block
         Bill
         Bush
@@ -238,6 +231,16 @@ Public Class Form1
         Public Eliminated As Boolean
 
     End Structure
+
+    Private Enum Tools As Integer
+        Pointer
+        Block
+        Bill
+        Bush
+        Cloud
+        Goal
+        Enemy
+    End Enum
 
     Private GameState As AppState = AppState.Start
 
@@ -280,7 +283,7 @@ Public Class Form1
     '500 slippery 1000 grippy
     Private Friction As Single = 1500
 
-    Private OurHero As GameObject
+    Private Hero As GameObject
 
     Private Goal As GameObject
 
@@ -380,15 +383,7 @@ Public Class Form1
 
     Private LeftArrowDown As Boolean = False
 
-    Private ADown As Boolean = False
-
-    Private BDown As Boolean = False
-
     Private DeleteDown As Boolean = False
-
-    Private BUp As Boolean = False
-
-    Private BPress As Boolean = False
 
     Private Jumped As Boolean = False
 
@@ -644,16 +639,16 @@ Public Class Form1
 
         Else
 
-            If OurHero.Velocity.Y >= 0 Then
+            If Hero.Velocity.Y >= 0 Then
                 'Apply gravity to our hero. FALLING.
 
-                If OurHero.Velocity.Y <= OurHero.MaxVelocity.Y Then
+                If Hero.Velocity.Y <= Hero.MaxVelocity.Y Then
 
-                    OurHero.Velocity.Y += Gravity * DeltaTime.TotalSeconds
+                    Hero.Velocity.Y += Gravity * DeltaTime.TotalSeconds
 
                 Else
 
-                    OurHero.Velocity.Y = OurHero.MaxVelocity.Y
+                    Hero.Velocity.Y = Hero.MaxVelocity.Y
 
                 End If
 
@@ -671,23 +666,23 @@ Public Class Form1
             Else
                 'Apply gravity to our hero. JUMPING.
 
-                OurHero.Velocity.Y += Gravity * DeltaTime.TotalSeconds
+                Hero.Velocity.Y += Gravity * DeltaTime.TotalSeconds
 
                 'Max falling speed.
-                If OurHero.Velocity.Y > OurHero.MaxVelocity.Y Then OurHero.Velocity.Y = OurHero.MaxVelocity.Y
+                If Hero.Velocity.Y > Hero.MaxVelocity.Y Then Hero.Velocity.Y = Hero.MaxVelocity.Y
 
                 'air resistance
-                If OurHero.Velocity.X >= 0 Then
+                If Hero.Velocity.X >= 0 Then
 
-                    OurHero.Velocity.X += -AirResistance * DeltaTime.TotalSeconds
+                    Hero.Velocity.X += -AirResistance * DeltaTime.TotalSeconds
 
-                    If OurHero.Velocity.X < 0 Then OurHero.Velocity.X = 0
+                    If Hero.Velocity.X < 0 Then Hero.Velocity.X = 0
 
                 Else
 
-                    OurHero.Velocity.X += AirResistance * DeltaTime.TotalSeconds
+                    Hero.Velocity.X += AirResistance * DeltaTime.TotalSeconds
 
-                    If OurHero.Velocity.X > 0 Then OurHero.Velocity.X = 0
+                    If Hero.Velocity.X > 0 Then Hero.Velocity.X = 0
 
                 End If
 
@@ -703,7 +698,7 @@ Public Class Form1
 
         FellOffLevel()
 
-        If OurHero.Rect.IntersectsWith(Goal.Rect) = True Then
+        If Hero.Rect.IntersectsWith(Goal.Rect) = True Then
 
             DoGoalCollision()
 
@@ -720,7 +715,7 @@ Public Class Form1
                 If Bill.Collected = False Then
 
                     'Is our hero colliding with the bill?
-                    If OurHero.Rect.IntersectsWith(Bill.Rect) = True Then
+                    If Hero.Rect.IntersectsWith(Bill.Rect) = True Then
                         'Yes, our hero is colliding with the bill.
 
                         If IsMuted = False Then
@@ -784,15 +779,15 @@ Public Class Form1
                     Dim Index As Integer = Array.IndexOf(Enemies, Enemy)
 
                     'Is our hero colliding with the Enemy?
-                    If OurHero.Rect.IntersectsWith(Enemy.Rect) = True Then
+                    If Hero.Rect.IntersectsWith(Enemy.Rect) = True Then
                         'Yes, our hero is colliding with the Enemy.
 
                         'Is our hero falling?
-                        If OurHero.Velocity.Y > 0 Then
+                        If Hero.Velocity.Y > 0 Then
                             'Yes, our hero is falling.
 
                             'Is our hero above the Enemy?
-                            If OurHero.Position.Y <= Enemy.Rect.Top - OurHero.Rect.Height \ 2 Then
+                            If Hero.Position.Y <= Enemy.Rect.Top - Hero.Rect.Height \ 2 Then
                                 'Yes, our hero is above the enemy.
 
                                 If IsMuted = False Then
@@ -978,11 +973,11 @@ Public Class Form1
 
     Private Sub ResetOurHero()
 
-        OurHero.Rect = New Rectangle(128, 769, 64, 64)
+        Hero.Rect = New Rectangle(128, 769, 64, 64)
 
-        OurHero.Position = New PointF(OurHero.Rect.X, OurHero.Rect.Y)
+        Hero.Position = New PointF(Hero.Rect.X, Hero.Rect.Y)
 
-        OurHero.Velocity = New PointF(0, 0)
+        Hero.Velocity = New PointF(0, 0)
 
     End Sub
 
@@ -1386,12 +1381,12 @@ Public Class Form1
     Private Sub LookAhead()
 
         'Is our hero near the right side of the frame?
-        If OurHero.Rect.X > Camera.Rect.X + Camera.Rect.Width / 1.5 Then
+        If Hero.Rect.X > Camera.Rect.X + Camera.Rect.Width / 1.5 Then
             'If Hero.X > Camera.X + Camera.Width / 1.5 Then
             'Yes, our hero is near the right side of the frame.
 
             'Move camera to the right.
-            Camera.Rect.X = OurHero.Rect.Left - Camera.Rect.Width / 1.5
+            Camera.Rect.X = Hero.Rect.Left - Camera.Rect.Width / 1.5
             'Camera.X = Hero.Left - Camera.Width / 1.5
 
             UpdateCameraOffset()
@@ -1399,12 +1394,12 @@ Public Class Form1
         End If
 
         'Is our hero near the left side of the frame?
-        If OurHero.Rect.X < Camera.Rect.X + Camera.Rect.Width / 4 Then
+        If Hero.Rect.X < Camera.Rect.X + Camera.Rect.Width / 4 Then
             'If Hero.X < Camera.X + Camera.Width / 4 Then
             'Yes, our hero is near the left side of the frame.
 
             'Move camera to the left.
-            Camera.Rect.X = OurHero.Rect.Left - Camera.Rect.Width / 4
+            Camera.Rect.X = Hero.Rect.Left - Camera.Rect.Width / 4
             'Camera.X = Hero.Left - Camera.Width / 4
 
             UpdateCameraOffset()
@@ -1412,12 +1407,12 @@ Public Class Form1
         End If
 
         'Is our hero near the bottom side of the frame?
-        If OurHero.Rect.Y > Camera.Rect.Y + Camera.Rect.Height / 1.25 Then
+        If Hero.Rect.Y > Camera.Rect.Y + Camera.Rect.Height / 1.25 Then
             'If Hero.Y > Camera.Y + Camera.Height / 1.25 Then
             'Yes, our hero is near the bottom side of the frame.
 
             'Move camera down.
-            Camera.Rect.Y = OurHero.Rect.Top - Camera.Rect.Height / 1.25
+            Camera.Rect.Y = Hero.Rect.Top - Camera.Rect.Height / 1.25
             'Camera.Y = Hero.Top - Camera.Height / 1.25
 
             UpdateCameraOffset()
@@ -1425,11 +1420,11 @@ Public Class Form1
         End If
 
         'Is our hero near the top side of the frame?
-        If OurHero.Rect.Y < Camera.Rect.Y + Camera.Rect.Height / 6 Then
+        If Hero.Rect.Y < Camera.Rect.Y + Camera.Rect.Height / 6 Then
             'Yes, our hero is near the top side of the frame.
 
             'Move camera up.
-            Camera.Rect.Y = OurHero.Rect.Top - Camera.Rect.Height / 6
+            Camera.Rect.Y = Hero.Rect.Top - Camera.Rect.Height / 6
 
             UpdateCameraOffset()
 
@@ -1488,24 +1483,24 @@ Public Class Form1
     Private Sub UpdateHeroMovement()
 
         'Move our hero horizontally.
-        OurHero.Position.X += OurHero.Velocity.X * DeltaTime.TotalSeconds 'Δs = V * Δt
+        Hero.Position.X += Hero.Velocity.X * DeltaTime.TotalSeconds 'Δs = V * Δt
         'Displacement = Velocity x Delta Time
 
-        OurHero.Rect.X = Math.Round(OurHero.Position.X)
+        Hero.Rect.X = Math.Round(Hero.Position.X)
 
         'Move our hero vertically.
-        OurHero.Position.Y += OurHero.Velocity.Y * DeltaTime.TotalSeconds 'Δs = V * Δt
+        Hero.Position.Y += Hero.Velocity.Y * DeltaTime.TotalSeconds 'Δs = V * Δt
         'Displacement = Velocity x Delta Time
 
-        OurHero.Rect.Y = Math.Round(OurHero.Position.Y)
+        Hero.Rect.Y = Math.Round(Hero.Position.Y)
 
     End Sub
 
     Private Sub UpdateHeroPosition()
 
-        OurHero.Rect.X = Math.Round(OurHero.Position.X)
+        Hero.Rect.X = Math.Round(Hero.Position.X)
 
-        OurHero.Rect.Y = Math.Round(OurHero.Position.Y)
+        Hero.Rect.Y = Math.Round(Hero.Position.Y)
 
     End Sub
 
@@ -1597,11 +1592,11 @@ Public Class Form1
             For Each Block In Blocks
 
                 'Is our hero colliding with the block?
-                If OurHero.Rect.IntersectsWith(Block.Rect) = True Then
+                If Hero.Rect.IntersectsWith(Block.Rect) = True Then
                     'Yes, our hero is colliding with the block.
 
                     'Is our hero on top of the block.
-                    If OurHero.Rect.Y = Block.Rect.Top - OurHero.Rect.Height + 1 Then
+                    If Hero.Rect.Y = Block.Rect.Top - Hero.Rect.Height + 1 Then
                         'Yes, our hero is on top of the block.
 
                         'Is the player holding down the right arrow key?
@@ -1609,59 +1604,59 @@ Public Class Form1
                             'Yes, the player is holding down the right arrow key.
 
                             'Is our hero moving to the left?
-                            If OurHero.Velocity.X < 0 Then
+                            If Hero.Velocity.X < 0 Then
 
                                 'Stop the move before change in direction.
-                                OurHero.Velocity.X = 0 'Zero speed.
+                                Hero.Velocity.X = 0 'Zero speed.
 
                             End If
 
                             'Move our hero the right.
-                            OurHero.Velocity.X += OurHero.Acceleration.X * DeltaTime.TotalSeconds
+                            Hero.Velocity.X += Hero.Acceleration.X * DeltaTime.TotalSeconds
 
                             'Limit our heros velocity to the max.
-                            If OurHero.Velocity.X > OurHero.MaxVelocity.X Then OurHero.Velocity.X = OurHero.MaxVelocity.X
+                            If Hero.Velocity.X > Hero.MaxVelocity.X Then Hero.Velocity.X = Hero.MaxVelocity.X
 
                             'Is the player holding down the left arrow key?
                         ElseIf LeftArrowDown = True Or ControllerLeft = True Then
                             'Yes, the player is holding down the left arrow key.
 
                             'Is our hero moving to the right?
-                            If OurHero.Velocity.X > 0F Then
+                            If Hero.Velocity.X > 0F Then
                                 'Yes, our hero is moving to the right.
 
                                 'Stop the move before change in direction.
-                                OurHero.Velocity.X = 0F 'Zero speed.
+                                Hero.Velocity.X = 0F 'Zero speed.
 
                             End If
 
                             'Move our hero the left.
-                            OurHero.Velocity.X += -OurHero.Acceleration.X * DeltaTime.TotalSeconds
+                            Hero.Velocity.X += -Hero.Acceleration.X * DeltaTime.TotalSeconds
 
                             'Limit our heros velocity to the max.
-                            If OurHero.Velocity.X < -OurHero.MaxVelocity.X Then OurHero.Velocity.X = -OurHero.MaxVelocity.X
+                            If Hero.Velocity.X < -Hero.MaxVelocity.X Then Hero.Velocity.X = -Hero.MaxVelocity.X
 
                         Else
                             'No,the player is NOT holding down the right arrow key.
                             'No, the player is NOT holding down the left arrow key.
 
                             'Is our hero moving to the right?
-                            If OurHero.Velocity.X > 0F Then
+                            If Hero.Velocity.X > 0F Then
                                 'Yes, our hero is moving to the right.
 
                                 'Slow our hero down.
-                                OurHero.Velocity.X += -Friction * DeltaTime.TotalSeconds
+                                Hero.Velocity.X += -Friction * DeltaTime.TotalSeconds
 
-                                If OurHero.Velocity.X < 0F Then
-                                    OurHero.Velocity.X = 0F
+                                If Hero.Velocity.X < 0F Then
+                                    Hero.Velocity.X = 0F
                                 End If
 
-                            ElseIf OurHero.Velocity.X < 0F Then
+                            ElseIf Hero.Velocity.X < 0F Then
 
-                                OurHero.Velocity.X += Friction * DeltaTime.TotalSeconds
+                                Hero.Velocity.X += Friction * DeltaTime.TotalSeconds
 
-                                If OurHero.Velocity.X > 0F Then
-                                    OurHero.Velocity.X = 0F
+                                If Hero.Velocity.X > 0F Then
+                                    Hero.Velocity.X = 0F
                                 End If
 
                             End If
@@ -1672,7 +1667,7 @@ Public Class Form1
 
                             If Jumped = False Then
 
-                                OurHero.Velocity.Y += -1100.0F
+                                Hero.Velocity.Y += -1100.0F
 
                                 Jumped = True
 
@@ -1684,7 +1679,7 @@ Public Class Form1
 
                             If ControllerJumped = False Then
 
-                                OurHero.Velocity.Y += -1100.0F
+                                Hero.Velocity.Y += -1100.0F
 
                                 ControllerJumped = True
 
@@ -1708,11 +1703,11 @@ Public Class Form1
 
     Private Sub DoBlockCollision(Block As Rectangle)
 
-        Dim CombinedHalfWidths As Single = (OurHero.Rect.Width + Block.Width) / 2
-        Dim CombinedHalfHeights As Single = ((OurHero.Rect.Height - 1) + Block.Height) / 2
+        Dim CombinedHalfWidths As Single = (Hero.Rect.Width + Block.Width) / 2
+        Dim CombinedHalfHeights As Single = ((Hero.Rect.Height - 1) + Block.Height) / 2
 
-        Dim DeltaX As Single = (Block.X + Block.Width / 2) - (OurHero.Rect.X + OurHero.Rect.Width / 2)
-        Dim DeltaY As Single = (Block.Y + Block.Height / 2) - (OurHero.Rect.Y + (OurHero.Rect.Height - 1) / 2)
+        Dim DeltaX As Single = (Block.X + Block.Width / 2) - (Hero.Rect.X + Hero.Rect.Width / 2)
+        Dim DeltaY As Single = (Block.Y + Block.Height / 2) - (Hero.Rect.Y + (Hero.Rect.Height - 1) / 2)
 
         Dim OverlapX As Single = CombinedHalfWidths - Math.Abs(DeltaX)
         Dim OverlapY As Single = CombinedHalfHeights - Math.Abs(DeltaY)
@@ -1724,16 +1719,16 @@ Public Class Form1
             Dim ResolveY As Single = If(OverlapY <= OverlapX, OverlapY * Math.Sign(DeltaY), 0)
 
             If ResolveX <> 0 Then
-                OurHero.Velocity.X = 0F
+                Hero.Velocity.X = 0F
             End If
 
             If ResolveY <> 0 Then
-                OurHero.Velocity.Y = 0F
+                Hero.Velocity.Y = 0F
             End If
 
-            OurHero.Position.X -= ResolveX
+            Hero.Position.X -= ResolveX
 
-            OurHero.Position.Y -= ResolveY
+            Hero.Position.Y -= ResolveY
 
             UpdateHeroPosition()
 
@@ -1745,7 +1740,7 @@ Public Class Form1
 
         With Buffer.Graphics
 
-            Dim rectOffset As Rectangle = OurHero.Rect
+            Dim rectOffset As Rectangle = Hero.Rect
 
             rectOffset.Offset(CameraOffset)
 
@@ -1754,7 +1749,7 @@ Public Class Form1
             .DrawString("Hero", CWJFont, Brushes.White, rectOffset, AlineCenterMiddle)
 
             'Draw hero position
-            .DrawString("X: " & OurHero.Position.X.ToString & vbCrLf & "Y: " & OurHero.Position.Y.ToString,
+            .DrawString("X: " & Hero.Position.X.ToString & vbCrLf & "Y: " & Hero.Position.Y.ToString,
                         CWJFont,
                         Brushes.White,
                         rectOffset.X,
@@ -3284,15 +3279,15 @@ Public Class Form1
 
         SetMinLevelSize()
 
-        OurHero.Rect = New Rectangle(128, 769, 64, 64)
+        Hero.Rect = New Rectangle(128, 769, 64, 64)
 
-        OurHero.Position = New PointF(OurHero.Rect.X, OurHero.Rect.Y)
+        Hero.Position = New PointF(Hero.Rect.X, Hero.Rect.Y)
 
-        OurHero.Velocity = New PointF(0, 0)
+        Hero.Velocity = New PointF(0, 0)
 
-        OurHero.MaxVelocity = New PointF(400, 1000)
+        Hero.MaxVelocity = New PointF(400, 1000)
 
-        OurHero.Acceleration = New PointF(300, 25)
+        Hero.Acceleration = New PointF(300, 25)
 
         BufferGridLines()
 
@@ -3674,11 +3669,11 @@ Public Class Form1
 
         SetMinLevelSize()
 
-        OurHero.Rect = New Rectangle(128, 769, 64, 64)
+        Hero.Rect = New Rectangle(128, 769, 64, 64)
 
-        OurHero.Position = New PointF(OurHero.Rect.X, OurHero.Rect.Y)
+        Hero.Position = New PointF(Hero.Rect.X, Hero.Rect.Y)
 
-        OurHero.Velocity = New PointF(0, 0)
+        Hero.Velocity = New PointF(0, 0)
 
         CreateNewLevel()
 
@@ -5963,7 +5958,7 @@ Public Class Form1
             For Each Platform In Platforms
 
                 'Is our hero colliding with the platform?
-                If OurHero.Rect.IntersectsWith(Platform.Rect) = True Then
+                If Hero.Rect.IntersectsWith(Platform.Rect) = True Then
                     'Yes, our hero is colliding with the platform.
 
                     Return Array.IndexOf(Platforms, Platform)
@@ -5985,7 +5980,7 @@ Public Class Form1
             For Each Block In Blocks
 
                 'Is our hero colliding with the block?
-                If OurHero.Rect.IntersectsWith(Block.Rect) = True Then
+                If Hero.Rect.IntersectsWith(Block.Rect) = True Then
                     'Yes, our hero is colliding with the block.
 
                     Return Array.IndexOf(Blocks, Block)
@@ -6007,7 +6002,7 @@ Public Class Form1
             For Each Bill In Cash
 
                 'Is our hero colliding with the bill?
-                If OurHero.Rect.IntersectsWith(Bill.Rect) = True Then
+                If Hero.Rect.IntersectsWith(Bill.Rect) = True Then
                     'Yes, our hero is colliding with the bill.
 
                     Return Array.IndexOf(Cash, Bill)
@@ -6029,7 +6024,7 @@ Public Class Form1
             For Each Enemy In Enemies
 
                 'Is our hero colliding with the enemy?
-                If OurHero.Rect.IntersectsWith(Enemy.Rect) = True Then
+                If Hero.Rect.IntersectsWith(Enemy.Rect) = True Then
                     'Yes, our hero is colliding with the enemy.
 
                     Return Array.IndexOf(Enemies, Enemy)
@@ -6047,15 +6042,15 @@ Public Class Form1
     Private Sub Wraparound()
 
         'When our hero exits the bottom side of the level.
-        If OurHero.Position.Y > Level.Rect.Bottom Then
+        If Hero.Position.Y > Level.Rect.Bottom Then
 
-            OurHero.Velocity.Y = 0F
-            OurHero.Velocity.X = 0F
+            Hero.Velocity.Y = 0F
+            Hero.Velocity.X = 0F
 
-            OurHero.Position.X = 1500.0F
+            Hero.Position.X = 1500.0F
 
             'Our hero reappears on the top side the level.
-            OurHero.Position.Y = Level.Rect.Top - OurHero.Rect.Height
+            Hero.Position.Y = Level.Rect.Top - Hero.Rect.Height
 
         End If
 
@@ -6064,7 +6059,7 @@ Public Class Form1
     Private Sub FellOffLevel()
 
         'When our hero exits the bottom side of the level.
-        If OurHero.Position.Y > Level.Rect.Bottom Then
+        If Hero.Position.Y > Level.Rect.Bottom Then
 
             Camera.Rect.X = 0
             Camera.Rect.Y = 0

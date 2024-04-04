@@ -37,14 +37,14 @@ Imports System.Threading
 
 Public Class Form1
 
-    'Import mci send string for playback of multiple audio files simultaneously.
+    'Import mciSendStringW for playback of multiple audio files simultaneously.
     <DllImport("winmm.dll", EntryPoint:="mciSendStringW")>
     Private Shared Function mciSendStringW(<MarshalAs(UnmanagedType.LPTStr)> ByVal lpszCommand As String,
                                            <MarshalAs(UnmanagedType.LPWStr)> ByVal lpszReturnString As StringBuilder,
                                            ByVal cchReturn As UInteger, ByVal hwndCallback As IntPtr) As Integer
     End Function
 
-    'Import get state to get the controller button positions.
+    'Import GetState to get the controller button positions.
     <DllImport("XInput1_4.dll")>
     Private Shared Function XInputGetState(dwUserIndex As Integer, ByRef pState As XINPUT_STATE) As Integer
     End Function
@@ -68,7 +68,7 @@ Public Class Form1
         Public sThumbRY As Short
     End Structure
 
-    'Import set state to vibrate the controller.
+    'Import SetState to vibrate the controller.
     <DllImport("XInput1_4.dll")>
     Private Shared Function XInputSetState(playerIndex As Integer, ByRef vibration As XINPUT_VIBRATION) As Integer
     End Function
@@ -151,7 +151,7 @@ Public Class Form1
     Private ADown As Boolean = False
     Private BDown As Boolean = False
 
-    'Import send input to simulate mouse input from the controller.
+    'Import SendInput to simulate mouse input from the controller.
     <DllImport("user32.dll")>
     Private Shared Function SendInput(nInputs As UInteger, pInputs As INPUTStruc(), cbSize As Integer) As UInteger
     End Function

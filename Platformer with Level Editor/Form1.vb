@@ -493,17 +493,17 @@ Public Class Form1
     'Create array for sounds.
     Private Sounds() As String
 
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        InitializeApp()
+
+    End Sub
+
     Private Sub GameTimer_Tick(sender As Object, e As EventArgs) Handles GameTimer.Tick
 
         UpdateFrame()
 
         Refresh()
-
-    End Sub
-
-    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
-        InitializeApp()
 
     End Sub
 

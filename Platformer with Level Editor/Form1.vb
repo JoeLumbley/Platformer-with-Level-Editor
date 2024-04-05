@@ -1512,48 +1512,49 @@ Public Class Form1
 
                 If Enemy.Eliminated = False Then
 
-                    Dim Index As Integer = Array.IndexOf(Enemies, Enemy)
+                    Dim EnemyIndex As Integer = Array.IndexOf(Enemies, Enemy)
 
                     If Enemy.PatrolDirection = Direction.Right Then
 
                         'Move Enemy to the right.
-                        Enemies(Index).Velocity.X += Enemy.Acceleration.X * DeltaTime.TotalSeconds
+                        Enemies(EnemyIndex).Velocity.X += Enemy.Acceleration.X * DeltaTime.TotalSeconds
 
                         'Limit Enemy velocity to the max.
                         If Enemy.Velocity.X > Enemy.MaxVelocity.X Then
 
-                            Enemies(Index).Velocity.X = Enemy.MaxVelocity.X
+                            Enemies(EnemyIndex).Velocity.X = Enemy.MaxVelocity.X
 
                         End If
 
                     Else
 
                         'Move Enemy to the left.
-                        Enemies(Index).Velocity.X += -Enemy.Acceleration.X * DeltaTime.TotalSeconds
+                        Enemies(EnemyIndex).Velocity.X += -Enemy.Acceleration.X * DeltaTime.TotalSeconds
 
                         'Limit Enemy velocity to the max.
                         If Enemy.Velocity.X < -Enemy.MaxVelocity.X Then
 
-                            Enemies(Index).Velocity.X = -Enemy.MaxVelocity.X
+                            Enemies(EnemyIndex).Velocity.X = -Enemy.MaxVelocity.X
 
                         End If
 
                     End If
 
-                    Enemies(Index).Position.X += Enemy.Velocity.X * DeltaTime.TotalSeconds
+                    Enemies(EnemyIndex).Position.X += Enemy.Velocity.X * DeltaTime.TotalSeconds
 
                     If Enemy.Position.X >= Enemy.PatrolB.X Then
 
                         'Is Enemy moving to the right?
                         If Enemy.Velocity.X > 0 Then
 
-                            'Stop the move before change in direction.
-                            Enemies(Index).Velocity.X = 0 'Zero speed.
+                            'Stop the move before changing direction.
+                            Enemies(EnemyIndex).Velocity.X = 0 'Zero speed.
 
                             'Aline the enemy to the patrol b point.
-                            Enemy.Position.X = Enemy.PatrolB.X
+                            'Enemy.Position.X = Enemy.PatrolB.X
+                            Enemies(EnemyIndex).Position.X = Enemy.PatrolB.X
 
-                            Enemies(Index).PatrolDirection = Direction.Left
+                            Enemies(EnemyIndex).PatrolDirection = Direction.Left
 
                         End If
 
@@ -1564,19 +1565,21 @@ Public Class Form1
                         'Is Enemy moving to the left?
                         If Enemy.Velocity.X < 0 Then
 
-                            'Stop the move before change in direction.
-                            Enemies(Index).Velocity.X = 0 'Zero speed.
+                            'Stop the move before changing direction.
+                            Enemies(EnemyIndex).Velocity.X = 0 'Zero speed.
 
                             'Aline the enemy to the patrol a point.
-                            Enemy.Position.X = Enemy.PatrolA.X
+                            'Enemy.Position.X = Enemy.PatrolA.X
 
-                            Enemies(Index).PatrolDirection = Direction.Right
+                            Enemies(EnemyIndex).Position.X = Enemy.PatrolA.X
+
+                            Enemies(EnemyIndex).PatrolDirection = Direction.Right
 
                         End If
 
                     End If
 
-                    Enemies(Index).Rect.X = Math.Round(Enemy.Position.X)
+                    Enemies(EnemyIndex).Rect.X = Math.Round(Enemy.Position.X)
 
                 End If
 

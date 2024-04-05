@@ -1551,7 +1551,6 @@ Public Class Form1
                             Enemies(EnemyIndex).Velocity.X = 0 'Zero speed.
 
                             'Aline the enemy to the patrol b point.
-                            'Enemy.Position.X = Enemy.PatrolB.X
                             Enemies(EnemyIndex).Position.X = Enemy.PatrolB.X
 
                             Enemies(EnemyIndex).PatrolDirection = Direction.Left
@@ -1569,8 +1568,6 @@ Public Class Form1
                             Enemies(EnemyIndex).Velocity.X = 0 'Zero speed.
 
                             'Aline the enemy to the patrol a point.
-                            'Enemy.Position.X = Enemy.PatrolA.X
-
                             Enemies(EnemyIndex).Position.X = Enemy.PatrolA.X
 
                             Enemies(EnemyIndex).PatrolDirection = Direction.Right

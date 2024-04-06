@@ -758,7 +758,13 @@ Public Class Form1
 
             If IsBackgroundLoopPlaying = True Then
 
-                My.Computer.Audio.Stop()
+                'My.Computer.Audio.Stop()
+
+                If IsPlaying("Music") = True Then
+
+                    PauseSound("Music")
+
+                End If
 
                 IsBackgroundLoopPlaying = False
 

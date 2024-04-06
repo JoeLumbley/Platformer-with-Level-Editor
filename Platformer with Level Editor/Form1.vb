@@ -760,6 +760,8 @@ Public Class Form1
 
             End If
 
+            'TODO: Play level clear music.
+
             GameState = AppState.Clear
 
         End If

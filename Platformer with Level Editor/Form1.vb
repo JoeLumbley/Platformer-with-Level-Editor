@@ -110,6 +110,8 @@ Public Class Form1
 
     Private IsStartDown As Boolean = False
 
+    Private IsContextDown As Boolean = False
+
     Private Const DPadUp As Integer = 1
     Private Const DPadDown As Integer = 2
     Private Const DPadLeft As Integer = 4
@@ -5102,7 +5104,7 @@ Public Class Form1
 
                         ShowSaveLevelDialog()
 
-                        ShowMenu = False
+                        'ShowMenu = False
 
                     End If
 
@@ -5140,7 +5142,7 @@ Public Class Form1
 
                             ShowOpenLevelDialog()
 
-                            ShowMenu = False
+                            'ShowMenu = False
 
                         End If
 
@@ -5162,7 +5164,7 @@ Public Class Form1
 
                             InitAndCreateNewLevel()
 
-                            ShowMenu = False
+                            'ShowMenu = False
 
                         End If
 
@@ -5184,7 +5186,7 @@ Public Class Form1
 
                             InitAndCreateNewLevel()
 
-                            ShowMenu = False
+                            'ShowMenu = False
 
                         End If
 
@@ -5206,7 +5208,7 @@ Public Class Form1
 
                             ShowOpenLevelDialog()
 
-                            ShowMenu = False
+                            'ShowMenu = False
 
                         End If
 
@@ -5222,7 +5224,7 @@ Public Class Form1
 
                         ShowSaveLevelDialog()
 
-                        ShowMenu = False
+                        'ShowMenu = False
 
                     End If
 
@@ -5342,15 +5344,21 @@ Public Class Form1
 
                 If GameState = AppState.Editing Then
 
-                    If ShowMenu = False Then
+                    If IsContextDown = False Then
 
-                        ShowMenu = True
+                        IsContextDown = True
 
-                        MovePointerCenterMenu()
+                        If ShowMenu = False Then
 
-                    Else
+                            ShowMenu = True
 
-                        ShowMenu = False
+                            MovePointerCenterMenu()
+
+                        Else
+
+                            ShowMenu = False
+
+                        End If
 
                     End If
 
@@ -5389,6 +5397,10 @@ Public Class Form1
                 'Yes, the player has let the delete key up.
 
                 DeleteDown = False
+
+            Case 93
+
+                IsContextDown = False
 
         End Select
 
@@ -6093,12 +6105,6 @@ Public Class Form1
 
     End Sub
 
-    Protected Overrides Sub OnPaintBackground(e As PaintEventArgs)
-
-        'Intentionally left blank. Do not remove.
-
-    End Sub
-
     Private Function AddSound(SoundName As String, FilePath As String) As Boolean
 
         Dim CommandOpen As String = "open " & Chr(34) & FilePath & Chr(34) & " alias " & SoundName
@@ -6359,7 +6365,7 @@ Public Class Form1
 
     Private Sub CreateSoundFileFromResource()
 
-        Dim file As String = Path.Combine(Application.StartupPath, "level.mp3")
+        Dim File As String = Path.Combine(Application.StartupPath, "level.mp3")
 
         If Not IO.File.Exists(file) Then
 
@@ -6385,20 +6391,16 @@ Public Class Form1
 
     End Sub
 
-    Private Sub Form1_MouseWheel(sender As Object, e As MouseEventArgs) Handles Me.MouseWheel
-
-    End Sub
-
     Private Sub DoMouseLeftDown()
         'Simulate a left mouse button down event
 
-        Dim inputDown As New INPUTStruc()
+        Dim InputDown As New INPUTStruc With {
+            .type = INPUT_MOUSE
+        }
 
-        inputDown.type = INPUT_MOUSE
+        InputDown.union.mi.dwFlags = MOUSEEVENTF_LEFTDOWN
 
-        inputDown.union.mi.dwFlags = MOUSEEVENTF_LEFTDOWN
-
-        Dim inputs As INPUTStruc() = {inputDown}
+        Dim Inputs As INPUTStruc() = {InputDown}
 
         SendInput(CUInt(inputs.Length), inputs, Marshal.SizeOf(GetType(INPUTStruc)))
 
@@ -6421,18 +6423,24 @@ Public Class Form1
 
     Private Sub ClickMouseLeft()
         ' Simulate a left mouse button down event
-        Dim inputDown As New INPUTStruc()
-        inputDown.type = INPUT_MOUSE
+        Dim InputDown As New INPUTStruc()
+        InputDown.type = INPUT_MOUSE
         inputDown.union.mi.dwFlags = MOUSEEVENTF_LEFTDOWN
 
         ' Simulate a left mouse button up event
-        Dim inputUp As New INPUTStruc()
-        inputUp.type = INPUT_MOUSE
+        Dim InputUp As New INPUTStruc()
+        InputUp.type = INPUT_MOUSE
         inputUp.union.mi.dwFlags = MOUSEEVENTF_LEFTUP
 
         ' Send the input events using SendInput
-        Dim inputs As INPUTStruc() = {inputDown, inputUp}
+        Dim Inputs As INPUTStruc() = {InputDown, InputUp}
         SendInput(CUInt(inputs.Length), inputs, Marshal.SizeOf(GetType(INPUTStruc)))
+
+    End Sub
+
+    Protected Overrides Sub OnPaintBackground(e As PaintEventArgs)
+
+        'Intentionally left blank. Do not remove.
 
     End Sub
 

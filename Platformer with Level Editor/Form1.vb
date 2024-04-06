@@ -756,19 +756,19 @@ Public Class Form1
 
             StopClearScreenTimer = False
 
-            If IsBackgroundLoopPlaying = True Then
+            'If IsBackgroundLoopPlaying = True Then
 
-                'My.Computer.Audio.Stop()
+            'My.Computer.Audio.Stop()
 
-                If IsPlaying("Music") = True Then
+            If IsPlaying("Music") = True Then
 
-                    PauseSound("Music")
-
-                End If
-
-                IsBackgroundLoopPlaying = False
+                PauseSound("Music")
 
             End If
+
+            'IsBackgroundLoopPlaying = False
+
+            'End If
 
             GameState = AppState.Clear
 

@@ -5340,7 +5340,7 @@ Public Class Form1
 
                 End If
 
-            Case 93 'Context Menu
+            Case 93 'Context Menu ≡
 
                 If GameState = AppState.Editing Then
 
@@ -5398,7 +5398,7 @@ Public Class Form1
 
                 DeleteDown = False
 
-            Case 93
+            Case 93 'Context Menu ≡
 
                 IsContextDown = False
 

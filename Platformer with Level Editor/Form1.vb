@@ -1740,9 +1740,9 @@ Public Class Form1
 
         With Buffer.Graphics
 
-            Dim rectOffset As Rectangle = Hero.Rect
+            Dim RectOffset As Rectangle = Hero.Rect
 
-            rectOffset.Offset(CameraOffset)
+            RectOffset.Offset(CameraOffset)
 
             .FillRectangle(Brushes.Red, rectOffset)
 
@@ -1774,9 +1774,9 @@ Public Class Form1
 
                             If Enemy.Eliminated = False Then
 
-                                Dim rectOffset As Rectangle = Enemy.Rect
+                                Dim RectOffset As Rectangle = Enemy.Rect
 
-                                rectOffset.Offset(CameraOffset)
+                                RectOffset.Offset(CameraOffset)
 
                                 If rectOffset.IntersectsWith(ClientRectangle) Then
 
@@ -1816,7 +1816,7 @@ Public Class Form1
 
                             If SelectedEnemy = Array.IndexOf(Enemies, Enemy) Then
 
-                                Dim SelectionSize As New Size((Enemy.PatrolB.X + GridSize) - Enemy.PatrolA.X, GridSize)
+                                Dim SelectionSize As New Size(Enemy.PatrolB.X + GridSize - Enemy.PatrolA.X, GridSize)
 
                                 Dim SelectionOffset As New Rectangle(New Point(Enemy.PatrolA.X, Enemy.PatrolA.Y), SelectionSize)
 
@@ -1851,24 +1851,24 @@ Public Class Form1
 
             With Buffer.Graphics
 
-                Dim rectOffset As Rectangle = Goal.Rect
+                Dim RectOffset As Rectangle = Goal.Rect
 
-                rectOffset.Offset(CameraOffset)
+                RectOffset.Offset(CameraOffset)
 
                 If rectOffset.IntersectsWith(ClientRectangle) Then
 
                     .FillRectangle(Brushes.White, rectOffset)
 
                     ' Define the rectangle to be filled
-                    Dim rect As RectangleF = rectOffset
+                    Dim Rect As RectangleF = rectOffset
 
-                    rect.Inflate(rect.Width / 6.4F, rect.Height / 6.4F)
+                    Rect.Inflate(rect.Width / 6.4F, rect.Height / 6.4F)
 
                     ' Define the center point of the gradient
-                    Dim center As New PointF(rect.Left + rect.Width / 2.0F, rect.Top + rect.Height / 2.0F)
+                    Dim Center As New PointF(Rect.Left + Rect.Width / 2.0F, Rect.Top + Rect.Height / 2.0F)
 
                     ' Define the colors for the gradient stops
-                    Dim colors() As Color = {Color.Yellow, Color.White}
+                    Dim Colors() As Color = {Color.Yellow, Color.White}
 
                     ' Create the path for the gradient brush
                     Dim GradPath As New GraphicsPath()
@@ -1884,15 +1884,17 @@ Public Class Form1
                     .FillRectangle(GradBrush, rectOffset)
 
                     If Goal.Rect.Width <= Goal.Rect.Height Then
+
                         Dim Font As New Font(New FontFamily("Wingdings"), Goal.Rect.Width \ 2, FontStyle.Regular)
 
                         .DrawString("«",
                                 Font,
                                 Brushes.Green,
-                                rectOffset,
+                                RectOffset,
                                 AlineCenterMiddle)
 
                     Else
+
                         Dim Font As New Font(New FontFamily("Wingdings"), Goal.Rect.Height \ 2, FontStyle.Regular)
 
                         .DrawString("«",
@@ -1938,10 +1940,9 @@ Public Class Form1
 
                 For Each Block In Blocks
 
-                    Dim rectOffset As Rectangle = Block.Rect
+                    Dim RectOffset As Rectangle = Block.Rect
 
-                    rectOffset.Offset(CameraOffset)
-
+                    RectOffset.Offset(CameraOffset)
 
                     If rectOffset.IntersectsWith(ClientRectangle) Then
 
@@ -1984,9 +1985,9 @@ Public Class Form1
 
                 For Each Bush In Bushes
 
-                    Dim rectOffset As Rectangle = Bush.Rect
+                    Dim RectOffset As Rectangle = Bush.Rect
 
-                    rectOffset.Offset(CameraOffset)
+                    RectOffset.Offset(CameraOffset)
 
                     If rectOffset.IntersectsWith(ClientRectangle) Then
 
@@ -2035,9 +2036,9 @@ Public Class Form1
 
                 For Each Cloud In Clouds
 
-                    Dim rectOffset As Rectangle = Cloud.Rect
+                    Dim RectOffset As Rectangle = Cloud.Rect
 
-                    rectOffset.Offset(CameraOffset)
+                    RectOffset.Offset(CameraOffset)
 
                     If rectOffset.IntersectsWith(ClientRectangle) Then
 
@@ -2089,9 +2090,9 @@ Public Class Form1
 
                 For Each Bill In Cash
 
-                    Dim rectOffset As Rectangle = Bill.Rect
+                    Dim RectOffset As Rectangle = Bill.Rect
 
-                    rectOffset.Offset(CameraOffset)
+                    RectOffset.Offset(CameraOffset)
 
                     Select Case GameState
 
@@ -2170,9 +2171,9 @@ Public Class Form1
 
             If ShowToolPreview = True Then
 
-                Dim rectOffset As Rectangle = ToolPreview
+                Dim RectOffset As Rectangle = ToolPreview
 
-                rectOffset.Offset(CameraOffset)
+                RectOffset.Offset(CameraOffset)
 
                 Select Case SelectedTool
 
@@ -2227,15 +2228,15 @@ Public Class Form1
                         .FillRectangle(Brushes.White, rectOffset)
 
                         ' Define the rectangle to be filled
-                        Dim rect As RectangleF = rectOffset
+                        Dim Rect As RectangleF = RectOffset
 
-                        rect.Inflate(rect.Width / 6.4F, rect.Height / 6.4F)
+                        Rect.Inflate(rect.Width / 6.4F, rect.Height / 6.4F)
 
                         ' Define the center point of the gradient
-                        Dim center As New PointF(rect.Left + rect.Width / 2.0F, rect.Top + rect.Height / 2.0F)
+                        Dim Center As New PointF(Rect.Left + Rect.Width / 2.0F, Rect.Top + Rect.Height / 2.0F)
 
                         ' Define the colors for the gradient stops
-                        Dim colors() As Color = {Color.Yellow, Color.White}
+                        Dim Colors() As Color = {Color.Yellow, Color.White}
 
                         ' Create the path for the gradient brush
                         Dim GradPath As New GraphicsPath()

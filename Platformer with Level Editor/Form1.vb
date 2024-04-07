@@ -288,6 +288,8 @@ Public Class Form1
 
     Private Hero As GameObject
 
+    Private MousePointer As GameObject
+
     Private Goal As GameObject
 
     Private Platforms() As GameObject
@@ -531,6 +533,8 @@ Public Class Form1
                 UpdateControllerData()
 
                 UpdateEditorDeltaTime()
+
+                UpdateMousePointerMovement()
 
             Case AppState.Clear
 
@@ -1152,11 +1156,32 @@ Public Class Form1
 
                     If ControllerPosition.Gamepad.sThumbLX < -32000 Then
 
-                        Cursor.Position = New Point(Cursor.Position.X - 14, Cursor.Position.Y)
+                        'Cursor.Position = New Point(MousePointer.Rect.X, MousePointer.Rect.Y)
+
+
+                        If MousePointer.Velocity.X > 0 Then
+
+                            MousePointer.Velocity.X = 0
+
+                        End If
+
+
+
+                        'Move pointer to the left.
+                        MousePointer.Velocity.X += -MousePointer.Acceleration.X * EditorDeltaTime.TotalSeconds
+
+                        'Limit pointer velocity to the max.
+                        If MousePointer.Velocity.X < -MousePointer.MaxVelocity.X Then MousePointer.Velocity.X = -MousePointer.MaxVelocity.X
+
+
+
+
+
+                        'Cursor.Position = New Point(Cursor.Position.X - 14, Cursor.Position.Y)
 
                     Else
 
-                        Cursor.Position = New Point(Cursor.Position.X - 1, Cursor.Position.Y)
+                        'Cursor.Position = New Point(Cursor.Position.X - 1, Cursor.Position.Y)
 
                     End If
 
@@ -1189,11 +1214,25 @@ Public Class Form1
 
                     If ControllerPosition.Gamepad.sThumbLX > 32000 Then
 
-                        Cursor.Position = New Point(Cursor.Position.X + 14, Cursor.Position.Y)
+                        'Cursor.Position = New Point(Cursor.Position.X + 14, Cursor.Position.Y)
+
+                        If MousePointer.Velocity.X < 0 Then
+
+                            MousePointer.Velocity.X = 0
+
+                        End If
+
+
+                        'Move pointer to the right.
+                        MousePointer.Velocity.X += MousePointer.Acceleration.X * EditorDeltaTime.TotalSeconds
+
+                        'Limit pointer velocity to the max.
+                        If MousePointer.Velocity.X > MousePointer.MaxVelocity.X Then MousePointer.Velocity.X = MousePointer.MaxVelocity.X
+
 
                     Else
 
-                        Cursor.Position = New Point(Cursor.Position.X + 1, Cursor.Position.Y)
+                        'Cursor.Position = New Point(Cursor.Position.X + 1, Cursor.Position.Y)
 
                     End If
 
@@ -1201,6 +1240,36 @@ Public Class Form1
 
         Else
             'The left thumbstick is in the neutral position.
+
+            Select Case GameState
+
+                Case AppState.Editing
+
+                    If MousePointer.Velocity.X < 0 Then
+
+                        'Move pointer to the left.
+                        MousePointer.Velocity.X += MousePointer.Acceleration.X * 8 * EditorDeltaTime.TotalSeconds
+
+                        'Limit pointer velocity to the max.
+                        If MousePointer.Velocity.X > 0 Then MousePointer.Velocity.X = 0
+
+                    End If
+
+
+                    If MousePointer.Velocity.X > 0 Then
+
+                        'Move pointer to the left.
+                        MousePointer.Velocity.X += -MousePointer.Acceleration.X * 8 * EditorDeltaTime.TotalSeconds
+
+                        'Limit pointer velocity to the max.
+                        If MousePointer.Velocity.X < 0 Then MousePointer.Velocity.X = 0
+
+                    End If
+
+
+
+
+            End Select
 
         End If
 
@@ -1212,11 +1281,25 @@ Public Class Form1
 
                 If ControllerPosition.Gamepad.sThumbLY < -32000 Then
 
-                    Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y + 10)
+                    If MousePointer.Velocity.Y < 0 Then
+
+                        MousePointer.Velocity.Y = 0
+
+                    End If
+
+
+                    'Move pointer to the right.
+                    MousePointer.Velocity.Y += MousePointer.Acceleration.Y * EditorDeltaTime.TotalSeconds
+
+                    'Limit pointer velocity to the max.
+                    If MousePointer.Velocity.Y > MousePointer.MaxVelocity.Y Then MousePointer.Velocity.Y = MousePointer.MaxVelocity.Y
+
+
+                    'Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y + 10)
 
                 Else
 
-                    Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y + 1)
+                    'Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y + 1)
 
                 End If
 
@@ -1229,11 +1312,26 @@ Public Class Form1
 
                 If ControllerPosition.Gamepad.sThumbLY > 32000 Then
 
-                    Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y - 10)
+                    If MousePointer.Velocity.Y > 0 Then
+
+                        MousePointer.Velocity.Y = 0
+
+                    End If
+
+
+
+                    'Move pointer to the left.
+                    MousePointer.Velocity.Y += -MousePointer.Acceleration.Y * EditorDeltaTime.TotalSeconds
+
+                    'Limit pointer velocity to the max.
+                    If MousePointer.Velocity.Y < -MousePointer.MaxVelocity.Y Then MousePointer.Velocity.Y = -MousePointer.MaxVelocity.Y
+
+
+                    'Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y - 10)
 
                 Else
 
-                    Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y - 1)
+                    'Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y - 1)
 
                 End If
 
@@ -1241,6 +1339,38 @@ Public Class Form1
 
         Else
             'The left thumbstick is in the neutral position.
+
+            Select Case GameState
+
+                Case AppState.Editing
+
+                    If MousePointer.Velocity.Y < 0 Then
+
+                        'Move pointer to the left.
+                        MousePointer.Velocity.Y += MousePointer.Acceleration.Y * 8 * EditorDeltaTime.TotalSeconds
+
+                        'Limit pointer velocity to the max.
+                        If MousePointer.Velocity.Y > 0 Then MousePointer.Velocity.Y = 0
+
+                    End If
+
+
+                    If MousePointer.Velocity.Y > 0 Then
+
+                        'Move pointer to the left.
+                        MousePointer.Velocity.Y += -MousePointer.Acceleration.Y * 8 * EditorDeltaTime.TotalSeconds
+
+                        'Limit pointer velocity to the max.
+                        If MousePointer.Velocity.Y < 0 Then MousePointer.Velocity.Y = 0
+
+                    End If
+
+
+
+
+            End Select
+
+
 
         End If
 
@@ -1473,6 +1603,7 @@ Public Class Form1
 
     End Sub
 
+
     Private Sub UpdateHeroMovement()
 
         'Move our hero horizontally.
@@ -1486,6 +1617,27 @@ Public Class Form1
         'Displacement = Velocity x Delta Time
 
         Hero.Rect.Y = Math.Round(Hero.Position.Y)
+
+    End Sub
+
+    Private Sub UpdateMousePointerMovement()
+
+        MousePointer.Position.X = Cursor.Position.X
+        MousePointer.Position.Y = Cursor.Position.Y
+
+        'Move pointer horizontally.
+        MousePointer.Position.X += MousePointer.Velocity.X * EditorDeltaTime.TotalSeconds 'Δs = V * Δt
+        'Displacement = Velocity x Delta Time
+
+        MousePointer.Rect.X = Math.Round(MousePointer.Position.X)
+
+        'Move pointer vertically.
+        MousePointer.Position.Y += MousePointer.Velocity.Y * EditorDeltaTime.TotalSeconds 'Δs = V * Δt
+        'Displacement = Velocity x Delta Time
+
+        MousePointer.Rect.Y = Math.Round(MousePointer.Position.Y)
+
+        Cursor.Position = New Point(MousePointer.Rect.X, MousePointer.Rect.Y)
 
     End Sub
 
@@ -3287,6 +3439,12 @@ Public Class Form1
 
         Hero.Acceleration = New PointF(300, 25)
 
+        MousePointer.Velocity = New PointF(0, 0)
+
+        MousePointer.MaxVelocity = New PointF(1500, 1500)
+
+        MousePointer.Acceleration = New PointF(300, 300)
+
         BufferGridLines()
 
     End Sub
@@ -3473,6 +3631,8 @@ Public Class Form1
                     CameraPlayPostion.Y = Camera.Rect.Y
 
                     GameState = AppState.Editing
+
+                    EditorLastFrame = Now
 
                     BufferGridLines()
 
@@ -4672,6 +4832,8 @@ Public Class Form1
     End Sub
 
     Private Sub MouseMoveEditing(e As MouseEventArgs)
+
+
 
         Dim pointOffset As Point = e.Location
 

@@ -426,7 +426,7 @@ Public Class Form1
 
     Private MenuShadowPen As New Pen(Color.FromArgb(128, Color.Black), 16)
 
-    Private BButtonIconOutinePen As New Pen(Color.Crimson, 3)
+    Private BButtonIconOutinePen As New Pen(Color.Tomato, 3)
 
     Private YButtonIconOutinePen As New Pen(Color.Yellow, 3)
 

@@ -1138,13 +1138,16 @@ Public Class Form1
 
             If GameState = AppState.Start Or GameState = AppState.Editing Then
 
+                'Is the pointer moving right?
                 If MousePointer.Velocity.X > 0 Then
+                    'Yes, the pointer is moving right.
 
-                    MousePointer.Velocity.X = 0
+                    'Stop move before changing direction.
+                    MousePointer.Velocity.X = 0 'Zero speed.
 
                 End If
 
-                'Move pointer to the left.
+                'Move pointer left.
                 MousePointer.Velocity.X += -MousePointer.Acceleration.X * EditorDeltaTime.TotalSeconds
 
                 'Limit pointer velocity to the max.
@@ -1165,13 +1168,16 @@ Public Class Form1
 
             If GameState = AppState.Start Or GameState = AppState.Editing Then
 
+                'Is the pointer moving left?
                 If MousePointer.Velocity.X < 0 Then
+                    'Yes, the pointer is moving left.
 
-                    MousePointer.Velocity.X = 0
+                    'Stop move before changing direction.
+                    MousePointer.Velocity.X = 0 'Zero speed.
 
                 End If
 
-                'Move pointer to the right.
+                'Move pointer right.
                 MousePointer.Velocity.X += MousePointer.Acceleration.X * EditorDeltaTime.TotalSeconds
 
                 'Limit pointer velocity to the max.
@@ -1188,9 +1194,9 @@ Public Class Form1
             End If
 
         Else
-                'The left thumbstick is in the neutral position.
+            'The left thumbstick is in the neutral position.
 
-                If GameState = AppState.Start Or GameState = AppState.Editing Then
+            If GameState = AppState.Start Or GameState = AppState.Editing Then
 
                 If MousePointer.Velocity.X < 0 Then
 
@@ -1216,19 +1222,22 @@ Public Class Form1
 
         End If
 
-            'What position is the left thumbstick in on the Y-axis?
-            If ControllerPosition.Gamepad.sThumbLY <= NeutralStart Then
+        'What position is the left thumbstick in on the Y-axis?
+        If ControllerPosition.Gamepad.sThumbLY <= NeutralStart Then
             'The left thumbstick is in the down position.
 
             If GameState = AppState.Start Or GameState = AppState.Editing Then
 
+                'Is the pointer moving up?
                 If MousePointer.Velocity.Y < 0 Then
+                    'Yes, the pointer is moving up.
 
-                    MousePointer.Velocity.Y = 0
+                    'Stop move before changing direction.
+                    MousePointer.Velocity.Y = 0 'Zero speed.
 
                 End If
 
-                'Move pointer to the down.
+                'Move pointer down.
                 MousePointer.Velocity.Y += MousePointer.Acceleration.Y * EditorDeltaTime.TotalSeconds
 
                 'Limit pointer velocity to the max.
@@ -1241,13 +1250,16 @@ Public Class Form1
 
             If GameState = AppState.Start Or GameState = AppState.Editing Then
 
+                'Is the pointer moving down?
                 If MousePointer.Velocity.Y > 0 Then
+                    'Yes, the pointer is moving down.
 
-                    MousePointer.Velocity.Y = 0
+                    'Stop move before changing direction.
+                    MousePointer.Velocity.Y = 0 'Zero speed.
 
                 End If
 
-                'Move pointer to the up.
+                'Move pointer up.
                 MousePointer.Velocity.Y += -MousePointer.Acceleration.Y * EditorDeltaTime.TotalSeconds
 
                 'Limit pointer velocity to the max.
@@ -1260,7 +1272,9 @@ Public Class Form1
 
             If GameState = AppState.Start Or GameState = AppState.Editing Then
 
+                'Is the pointer moving up?
                 If MousePointer.Velocity.Y < 0 Then
+                    'Yes, the pointer is moving up.
 
                     'Decelerate pointer.
                     MousePointer.Velocity.Y += MousePointer.Acceleration.Y * 8 * EditorDeltaTime.TotalSeconds
@@ -1270,7 +1284,9 @@ Public Class Form1
 
                 End If
 
+                'Is the pointer moving down?
                 If MousePointer.Velocity.Y > 0 Then
+                    'Yes, the pointer is moving down.
 
                     'Decelerate pointer.
                     MousePointer.Velocity.Y += -MousePointer.Acceleration.Y * 8 * EditorDeltaTime.TotalSeconds

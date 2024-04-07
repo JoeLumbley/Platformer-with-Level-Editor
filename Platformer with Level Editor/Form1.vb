@@ -1154,23 +1154,17 @@ Public Class Form1
 
                 Case AppState.Editing
 
-                    'If ControllerPosition.Gamepad.sThumbLX < -32000 Then
-
                     If MousePointer.Velocity.X > 0 Then
 
-                            MousePointer.Velocity.X = 0
+                        MousePointer.Velocity.X = 0
 
-                        End If
+                    End If
 
-                        'Move pointer to the left.
-                        MousePointer.Velocity.X += -MousePointer.Acceleration.X * EditorDeltaTime.TotalSeconds
+                    'Move pointer to the left.
+                    MousePointer.Velocity.X += -MousePointer.Acceleration.X * EditorDeltaTime.TotalSeconds
 
-                        'Limit pointer velocity to the max.
-                        If MousePointer.Velocity.X < -MousePointer.MaxVelocity.X Then MousePointer.Velocity.X = -MousePointer.MaxVelocity.X
-
-                    'Else
-
-                    'End If
+                    'Limit pointer velocity to the max.
+                    If MousePointer.Velocity.X < -MousePointer.MaxVelocity.X Then MousePointer.Velocity.X = -MousePointer.MaxVelocity.X
 
             End Select
 
@@ -1199,23 +1193,17 @@ Public Class Form1
 
                 Case AppState.Editing
 
-                    'If ControllerPosition.Gamepad.sThumbLX > 32000 Then
-
                     If MousePointer.Velocity.X < 0 Then
 
-                            MousePointer.Velocity.X = 0
+                        MousePointer.Velocity.X = 0
 
-                        End If
+                    End If
 
-                        'Move pointer to the right.
-                        MousePointer.Velocity.X += MousePointer.Acceleration.X * EditorDeltaTime.TotalSeconds
+                    'Move pointer to the right.
+                    MousePointer.Velocity.X += MousePointer.Acceleration.X * EditorDeltaTime.TotalSeconds
 
-                        'Limit pointer velocity to the max.
-                        If MousePointer.Velocity.X > MousePointer.MaxVelocity.X Then MousePointer.Velocity.X = MousePointer.MaxVelocity.X
-
-                    'Else
-
-                    'End If
+                    'Limit pointer velocity to the max.
+                    If MousePointer.Velocity.X > MousePointer.MaxVelocity.X Then MousePointer.Velocity.X = MousePointer.MaxVelocity.X
 
             End Select
 
@@ -1256,23 +1244,17 @@ Public Class Form1
 
             If GameState = AppState.Start Or GameState = AppState.Editing Then
 
-                'If ControllerPosition.Gamepad.sThumbLY < -32000 Then
-
                 If MousePointer.Velocity.Y < 0 Then
 
-                        MousePointer.Velocity.Y = 0
+                    MousePointer.Velocity.Y = 0
 
-                    End If
+                End If
 
-                    'Move pointer to the down.
-                    MousePointer.Velocity.Y += MousePointer.Acceleration.Y * EditorDeltaTime.TotalSeconds
+                'Move pointer to the down.
+                MousePointer.Velocity.Y += MousePointer.Acceleration.Y * EditorDeltaTime.TotalSeconds
 
-                    'Limit pointer velocity to the max.
-                    If MousePointer.Velocity.Y > MousePointer.MaxVelocity.Y Then MousePointer.Velocity.Y = MousePointer.MaxVelocity.Y
-
-                'Else
-
-                'End If
+                'Limit pointer velocity to the max.
+                If MousePointer.Velocity.Y > MousePointer.MaxVelocity.Y Then MousePointer.Velocity.Y = MousePointer.MaxVelocity.Y
 
             End If
 
@@ -1281,23 +1263,17 @@ Public Class Form1
 
             If GameState = AppState.Start Or GameState = AppState.Editing Then
 
-                'If ControllerPosition.Gamepad.sThumbLY > 32000 Then
-
                 If MousePointer.Velocity.Y > 0 Then
 
-                        MousePointer.Velocity.Y = 0
+                    MousePointer.Velocity.Y = 0
 
-                    End If
+                End If
 
-                    'Move pointer to the up.
-                    MousePointer.Velocity.Y += -MousePointer.Acceleration.Y * EditorDeltaTime.TotalSeconds
+                'Move pointer to the up.
+                MousePointer.Velocity.Y += -MousePointer.Acceleration.Y * EditorDeltaTime.TotalSeconds
 
-                    'Limit pointer velocity to the max.
-                    If MousePointer.Velocity.Y < -MousePointer.MaxVelocity.Y Then MousePointer.Velocity.Y = -MousePointer.MaxVelocity.Y
-
-                'Else
-
-                'End If
+                'Limit pointer velocity to the max.
+                If MousePointer.Velocity.Y < -MousePointer.MaxVelocity.Y Then MousePointer.Velocity.Y = -MousePointer.MaxVelocity.Y
 
             End If
 

@@ -1136,161 +1136,88 @@ Public Class Form1
         If ControllerPosition.Gamepad.sThumbLX <= NeutralStart Then
             'The left thumbstick is in the left position.
 
-            Select Case GameState
+            If GameState = AppState.Start Or GameState = AppState.Editing Then
 
-                Case AppState.Start
+                If MousePointer.Velocity.X > 0 Then
 
-                    'If ControllerPosition.Gamepad.sThumbLX < -32000 Then
+                    MousePointer.Velocity.X = 0
 
-                    '    Cursor.Position = New Point(Cursor.Position.X - 14, Cursor.Position.Y)
+                End If
 
-                    'Else
+                'Move pointer to the left.
+                MousePointer.Velocity.X += -MousePointer.Acceleration.X * EditorDeltaTime.TotalSeconds
 
-                    '    Cursor.Position = New Point(Cursor.Position.X - 1, Cursor.Position.Y)
+                'Limit pointer velocity to the max.
+                If MousePointer.Velocity.X < -MousePointer.MaxVelocity.X Then MousePointer.Velocity.X = -MousePointer.MaxVelocity.X
 
-                    'End If
+            End If
 
-                    If MousePointer.Velocity.X > 0 Then
+            If GameState = AppState.Playing Then
 
-                        MousePointer.Velocity.X = 0
+                ControllerLeft = True
 
-                    End If
+                ControllerRight = False
 
-                    'Move pointer to the left.
-                    MousePointer.Velocity.X += -MousePointer.Acceleration.X * EditorDeltaTime.TotalSeconds
-
-                    'Limit pointer velocity to the max.
-                    If MousePointer.Velocity.X < -MousePointer.MaxVelocity.X Then MousePointer.Velocity.X = -MousePointer.MaxVelocity.X
-
-
-                Case AppState.Playing
-
-                    ControllerLeft = True
-
-                    ControllerRight = False
-
-                Case AppState.Editing
-
-                    If MousePointer.Velocity.X > 0 Then
-
-                        MousePointer.Velocity.X = 0
-
-                    End If
-
-                    'Move pointer to the left.
-                    MousePointer.Velocity.X += -MousePointer.Acceleration.X * EditorDeltaTime.TotalSeconds
-
-                    'Limit pointer velocity to the max.
-                    If MousePointer.Velocity.X < -MousePointer.MaxVelocity.X Then MousePointer.Velocity.X = -MousePointer.MaxVelocity.X
-
-            End Select
+            End If
 
         ElseIf ControllerPosition.Gamepad.sThumbLX >= NeutralEnd Then
             'The left thumbstick is in the right position.
 
-            Select Case GameState
+            If GameState = AppState.Start Or GameState = AppState.Editing Then
 
-                Case AppState.Start
+                If MousePointer.Velocity.X < 0 Then
 
-                    'If ControllerPosition.Gamepad.sThumbLX > 32000 Then
+                    MousePointer.Velocity.X = 0
 
-                    '    Cursor.Position = New Point(Cursor.Position.X + 14, Cursor.Position.Y)
+                End If
 
-                    'Else
+                'Move pointer to the right.
+                MousePointer.Velocity.X += MousePointer.Acceleration.X * EditorDeltaTime.TotalSeconds
 
-                    '    Cursor.Position = New Point(Cursor.Position.X + 1, Cursor.Position.Y)
+                'Limit pointer velocity to the max.
+                If MousePointer.Velocity.X > MousePointer.MaxVelocity.X Then MousePointer.Velocity.X = MousePointer.MaxVelocity.X
 
-                    'End If
+            End If
 
-                    If MousePointer.Velocity.X < 0 Then
+            If GameState = AppState.Playing Then
 
-                        MousePointer.Velocity.X = 0
+                ControllerLeft = False
 
-                    End If
+                ControllerRight = True
 
-                    'Move pointer to the right.
-                    MousePointer.Velocity.X += MousePointer.Acceleration.X * EditorDeltaTime.TotalSeconds
-
-                    'Limit pointer velocity to the max.
-                    If MousePointer.Velocity.X > MousePointer.MaxVelocity.X Then MousePointer.Velocity.X = MousePointer.MaxVelocity.X
-
-                Case AppState.Playing
-
-                    ControllerLeft = False
-
-                    ControllerRight = True
-
-                Case AppState.Editing
-
-                    If MousePointer.Velocity.X < 0 Then
-
-                        MousePointer.Velocity.X = 0
-
-                    End If
-
-                    'Move pointer to the right.
-                    MousePointer.Velocity.X += MousePointer.Acceleration.X * EditorDeltaTime.TotalSeconds
-
-                    'Limit pointer velocity to the max.
-                    If MousePointer.Velocity.X > MousePointer.MaxVelocity.X Then MousePointer.Velocity.X = MousePointer.MaxVelocity.X
-
-            End Select
+            End If
 
         Else
-            'The left thumbstick is in the neutral position.
+                'The left thumbstick is in the neutral position.
 
-            Select Case GameState
+                If GameState = AppState.Start Or GameState = AppState.Editing Then
 
-                Case AppState.Start
+                If MousePointer.Velocity.X < 0 Then
 
-                    If MousePointer.Velocity.X < 0 Then
+                    'Decelerate pointer.
+                    MousePointer.Velocity.X += MousePointer.Acceleration.X * 8 * EditorDeltaTime.TotalSeconds
 
-                        'Decelerate pointer.
-                        MousePointer.Velocity.X += MousePointer.Acceleration.X * 8 * EditorDeltaTime.TotalSeconds
+                    'Limit decelerate to zero speed.
+                    If MousePointer.Velocity.X > 0 Then MousePointer.Velocity.X = 0 'Zero speed.
 
-                        'Limit decelerate to zero speed.
-                        If MousePointer.Velocity.X > 0 Then MousePointer.Velocity.X = 0 'Zero speed.
+                End If
 
-                    End If
+                If MousePointer.Velocity.X > 0 Then
 
-                    If MousePointer.Velocity.X > 0 Then
+                    'Decelerate pointer.
+                    MousePointer.Velocity.X += -MousePointer.Acceleration.X * 8 * EditorDeltaTime.TotalSeconds
 
-                        'Decelerate pointer.
-                        MousePointer.Velocity.X += -MousePointer.Acceleration.X * 8 * EditorDeltaTime.TotalSeconds
+                    'Limit decelerate to zero speed.
+                    If MousePointer.Velocity.X < 0 Then MousePointer.Velocity.X = 0 'Zero speed.
 
-                        'Limit decelerate to zero speed.
-                        If MousePointer.Velocity.X < 0 Then MousePointer.Velocity.X = 0 'Zero speed.
+                End If
 
-                    End If
-
-                Case AppState.Editing
-
-                    If MousePointer.Velocity.X < 0 Then
-
-                        'Decelerate pointer.
-                        MousePointer.Velocity.X += MousePointer.Acceleration.X * 8 * EditorDeltaTime.TotalSeconds
-
-                        'Limit decelerate to zero speed.
-                        If MousePointer.Velocity.X > 0 Then MousePointer.Velocity.X = 0 'Zero speed.
-
-                    End If
-
-                    If MousePointer.Velocity.X > 0 Then
-
-                        'Decelerate pointer.
-                        MousePointer.Velocity.X += -MousePointer.Acceleration.X * 8 * EditorDeltaTime.TotalSeconds
-
-                        'Limit decelerate to zero speed.
-                        If MousePointer.Velocity.X < 0 Then MousePointer.Velocity.X = 0 'Zero speed.
-
-                    End If
-
-            End Select
+            End If
 
         End If
 
-        'What position is the left thumbstick in on the Y-axis?
-        If ControllerPosition.Gamepad.sThumbLY <= NeutralStart Then
+            'What position is the left thumbstick in on the Y-axis?
+            If ControllerPosition.Gamepad.sThumbLY <= NeutralStart Then
             'The left thumbstick is in the down position.
 
             If GameState = AppState.Start Or GameState = AppState.Editing Then
@@ -1331,53 +1258,29 @@ Public Class Form1
         Else
             'The left thumbstick is in the neutral position.
 
-            Select Case GameState
+            If GameState = AppState.Start Or GameState = AppState.Editing Then
 
-                Case AppState.Start
+                If MousePointer.Velocity.Y < 0 Then
 
-                    If MousePointer.Velocity.Y < 0 Then
+                    'Decelerate pointer.
+                    MousePointer.Velocity.Y += MousePointer.Acceleration.Y * 8 * EditorDeltaTime.TotalSeconds
 
-                        'Decelerate pointer.
-                        MousePointer.Velocity.Y += MousePointer.Acceleration.Y * 8 * EditorDeltaTime.TotalSeconds
+                    'Limit decelerate to zero speed.
+                    If MousePointer.Velocity.Y > 0 Then MousePointer.Velocity.Y = 0 'Zero speed.
 
-                        'Limit decelerate to zero speed.
-                        If MousePointer.Velocity.Y > 0 Then MousePointer.Velocity.Y = 0 'Zero speed.
+                End If
 
-                    End If
+                If MousePointer.Velocity.Y > 0 Then
 
-                    If MousePointer.Velocity.Y > 0 Then
+                    'Decelerate pointer.
+                    MousePointer.Velocity.Y += -MousePointer.Acceleration.Y * 8 * EditorDeltaTime.TotalSeconds
 
-                        'Decelerate pointer.
-                        MousePointer.Velocity.Y += -MousePointer.Acceleration.Y * 8 * EditorDeltaTime.TotalSeconds
+                    'Limit decelerate to zero speed.
+                    If MousePointer.Velocity.Y < 0 Then MousePointer.Velocity.Y = 0 'Zero speed.
 
-                        'Limit decelerate to zero speed.
-                        If MousePointer.Velocity.Y < 0 Then MousePointer.Velocity.Y = 0 'Zero speed.
+                End If
 
-                    End If
-
-                Case AppState.Editing
-
-                    If MousePointer.Velocity.Y < 0 Then
-
-                        'Decelerate pointer.
-                        MousePointer.Velocity.Y += MousePointer.Acceleration.Y * 8 * EditorDeltaTime.TotalSeconds
-
-                        'Limit decelerate to zero speed.
-                        If MousePointer.Velocity.Y > 0 Then MousePointer.Velocity.Y = 0 'Zero speed.
-
-                    End If
-
-                    If MousePointer.Velocity.Y > 0 Then
-
-                        'Decelerate pointer.
-                        MousePointer.Velocity.Y += -MousePointer.Acceleration.Y * 8 * EditorDeltaTime.TotalSeconds
-
-                        'Limit decelerate to zero speed.
-                        If MousePointer.Velocity.Y < 0 Then MousePointer.Velocity.Y = 0 'Zero speed.
-
-                    End If
-
-            End Select
+            End If
 
         End If
 

@@ -418,8 +418,6 @@ Public Class Form1
 
     Private ReadOnly TitleFont As New Font(New FontFamily("Bahnschrift"), 52, FontStyle.Bold)
 
-    Private ReadOnly NewButtonIconFont As New Font(New FontFamily("Yu Gothic"), 25, FontStyle.Regular)
-
     Private OutinePen As New Pen(Color.Black, 4)
 
     Private MenuOutinePen As New Pen(Color.White, 16)

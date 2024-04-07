@@ -1156,16 +1156,11 @@ Public Class Form1
 
                     If ControllerPosition.Gamepad.sThumbLX < -32000 Then
 
-                        'Cursor.Position = New Point(MousePointer.Rect.X, MousePointer.Rect.Y)
-
-
                         If MousePointer.Velocity.X > 0 Then
 
                             MousePointer.Velocity.X = 0
 
                         End If
-
-
 
                         'Move pointer to the left.
                         MousePointer.Velocity.X += -MousePointer.Acceleration.X * EditorDeltaTime.TotalSeconds
@@ -1173,15 +1168,7 @@ Public Class Form1
                         'Limit pointer velocity to the max.
                         If MousePointer.Velocity.X < -MousePointer.MaxVelocity.X Then MousePointer.Velocity.X = -MousePointer.MaxVelocity.X
 
-
-
-
-
-                        'Cursor.Position = New Point(Cursor.Position.X - 14, Cursor.Position.Y)
-
                     Else
-
-                        'Cursor.Position = New Point(Cursor.Position.X - 1, Cursor.Position.Y)
 
                     End If
 
@@ -1214,14 +1201,11 @@ Public Class Form1
 
                     If ControllerPosition.Gamepad.sThumbLX > 32000 Then
 
-                        'Cursor.Position = New Point(Cursor.Position.X + 14, Cursor.Position.Y)
-
                         If MousePointer.Velocity.X < 0 Then
 
                             MousePointer.Velocity.X = 0
 
                         End If
-
 
                         'Move pointer to the right.
                         MousePointer.Velocity.X += MousePointer.Acceleration.X * EditorDeltaTime.TotalSeconds
@@ -1229,10 +1213,7 @@ Public Class Form1
                         'Limit pointer velocity to the max.
                         If MousePointer.Velocity.X > MousePointer.MaxVelocity.X Then MousePointer.Velocity.X = MousePointer.MaxVelocity.X
 
-
                     Else
-
-                        'Cursor.Position = New Point(Cursor.Position.X + 1, Cursor.Position.Y)
 
                     End If
 
@@ -1247,27 +1228,23 @@ Public Class Form1
 
                     If MousePointer.Velocity.X < 0 Then
 
-                        'Move pointer to the left.
+                        'Decelerate pointer.
                         MousePointer.Velocity.X += MousePointer.Acceleration.X * 8 * EditorDeltaTime.TotalSeconds
 
-                        'Limit pointer velocity to the max.
+                        'Limit decelerate to zero speed.
                         If MousePointer.Velocity.X > 0 Then MousePointer.Velocity.X = 0
 
                     End If
 
-
                     If MousePointer.Velocity.X > 0 Then
 
-                        'Move pointer to the left.
+                        'Decelerate pointer.
                         MousePointer.Velocity.X += -MousePointer.Acceleration.X * 8 * EditorDeltaTime.TotalSeconds
 
-                        'Limit pointer velocity to the max.
+                        'Limit decelerate to zero speed.
                         If MousePointer.Velocity.X < 0 Then MousePointer.Velocity.X = 0
 
                     End If
-
-
-
 
             End Select
 
@@ -1287,19 +1264,13 @@ Public Class Form1
 
                     End If
 
-
                     'Move pointer to the right.
                     MousePointer.Velocity.Y += MousePointer.Acceleration.Y * EditorDeltaTime.TotalSeconds
 
                     'Limit pointer velocity to the max.
                     If MousePointer.Velocity.Y > MousePointer.MaxVelocity.Y Then MousePointer.Velocity.Y = MousePointer.MaxVelocity.Y
 
-
-                    'Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y + 10)
-
                 Else
-
-                    'Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y + 1)
 
                 End If
 
@@ -1318,20 +1289,13 @@ Public Class Form1
 
                     End If
 
-
-
                     'Move pointer to the left.
                     MousePointer.Velocity.Y += -MousePointer.Acceleration.Y * EditorDeltaTime.TotalSeconds
 
                     'Limit pointer velocity to the max.
                     If MousePointer.Velocity.Y < -MousePointer.MaxVelocity.Y Then MousePointer.Velocity.Y = -MousePointer.MaxVelocity.Y
 
-
-                    'Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y - 10)
-
                 Else
-
-                    'Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y - 1)
 
                 End If
 
@@ -1346,31 +1310,25 @@ Public Class Form1
 
                     If MousePointer.Velocity.Y < 0 Then
 
-                        'Move pointer to the left.
+                        'Decelerate pointer.
                         MousePointer.Velocity.Y += MousePointer.Acceleration.Y * 8 * EditorDeltaTime.TotalSeconds
 
-                        'Limit pointer velocity to the max.
-                        If MousePointer.Velocity.Y > 0 Then MousePointer.Velocity.Y = 0
+                        'Limit decelerate to zero speed.
+                        If MousePointer.Velocity.Y > 0 Then MousePointer.Velocity.Y = 0 'Zero speed.
 
                     End If
 
-
                     If MousePointer.Velocity.Y > 0 Then
 
-                        'Move pointer to the left.
+                        'Decelerate pointer.
                         MousePointer.Velocity.Y += -MousePointer.Acceleration.Y * 8 * EditorDeltaTime.TotalSeconds
 
-                        'Limit pointer velocity to the max.
+                        'Limit decelerate to zero speed.
                         If MousePointer.Velocity.Y < 0 Then MousePointer.Velocity.Y = 0
 
                     End If
 
-
-
-
             End Select
-
-
 
         End If
 

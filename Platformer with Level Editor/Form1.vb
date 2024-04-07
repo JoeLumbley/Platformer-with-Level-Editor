@@ -842,7 +842,7 @@ Public Class Form1
 
     Private Sub DrawStartScreen()
 
-        DrawBackground(Color.LightSkyBlue)
+        DrawBackground(Color.SkyBlue)
 
         DrawClouds()
 
@@ -850,15 +850,7 @@ Public Class Form1
 
         DrawBlocks()
 
-        DrawCash()
-
-        DrawGoal()
-
-        DrawEnemies()
-
         DrawOurHero()
-
-        DrawCollectedCash()
 
         DrawTitle()
 
@@ -3330,15 +3322,17 @@ Public Class Form1
 
     Private Sub CreateNewLevel()
 
-        Goal.Rect = New Rectangle(1472, 768, 64, 64)
+        Goal.Rect = New Rectangle(2176, 768, 64, 64)
 
-        AddBlock(New Rectangle(0, 832, 1920, 64))
+        AddBlock(New Rectangle(0, 832, 2496, 128))
 
         AddBlock(New Rectangle(1088, 576, 64, 64))
 
         AddBlock(New Rectangle(1344, 576, 320, 64))
 
         AddBlock(New Rectangle(1472, 320, 64, 64))
+
+        AddBlock(New Rectangle(-128, 384, 128, 576))
 
         AddCloud(New Rectangle(512, 64, 192, 128))
 
@@ -3352,7 +3346,7 @@ Public Class Form1
 
         AddBill(New Point(1472, 64))
 
-        AddEnemy(New Point(500, 769), New Point(512, 769), New Point(576, 769))
+        AddEnemy(New Point(512, 769), New Point(512, 769), New Point(1280, 769))
 
     End Sub
 

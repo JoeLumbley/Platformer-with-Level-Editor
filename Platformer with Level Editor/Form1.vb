@@ -26,6 +26,7 @@
 'SOFTWARE.
 
 'Level music by Joseph Lumbley Jr.
+'Level clear music by Joseph Lumbley Jr.
 
 Imports System.ComponentModel
 Imports System.Drawing.Drawing2D
@@ -762,6 +763,8 @@ Public Class Form1
 
             'TODO: Play level clear music.
 
+            PlaySound("clear")
+
             GameState = AppState.Clear
 
         End If
@@ -1017,7 +1020,7 @@ Public Class Form1
 
             ClearScreenTimer = Now - ClearScreenTimerStart
 
-            If ClearScreenTimer.TotalMilliseconds > 2000 Then
+            If ClearScreenTimer.TotalMilliseconds > 5000 Then
 
                 StopClearScreenTimer = True
 
@@ -3228,6 +3231,10 @@ Public Class Form1
         AddOverlapping("eliminated", Application.StartupPath & "eliminated.mp3")
 
         SetVolumeOverlapping("eliminated", 700)
+
+        AddSound("clear", Application.StartupPath & "clear.mp3")
+
+        SetVolume("clear", 1000)
 
         GameTimer.Start()
 
@@ -6384,6 +6391,14 @@ Public Class Form1
         If Not IO.File.Exists(file) Then
 
             IO.File.WriteAllBytes(file, My.Resources.eliminated)
+
+        End If
+
+        File = Path.Combine(Application.StartupPath, "clear.mp3")
+
+        If Not IO.File.Exists(File) Then
+
+            IO.File.WriteAllBytes(File, My.Resources.clear)
 
         End If
 

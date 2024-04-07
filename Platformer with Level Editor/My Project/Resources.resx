@@ -121,6 +121,9 @@
   <data name="CashCollected" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\CashCollected.mp3;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="clear" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\clear.mp3;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="eliminated" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\eliminated.mp3;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

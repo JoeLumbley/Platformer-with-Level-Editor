@@ -3348,7 +3348,7 @@ Public Class Form1
     End Sub
 
     Private Sub MovePointerToStartScreenNewButton()
-        'Move mouse pointer over the new level button.
+        'Move mouse pointer over the new level button on the start screen.
 
         Cursor.Position = New Point(ScreenOffset.X + StartScreenNewButton.Rect.X + StartScreenNewButton.Rect.Width \ 2,
                                     ScreenOffset.Y + StartScreenNewButton.Rect.Y + StartScreenNewButton.Rect.Height \ 2)
@@ -3673,8 +3673,8 @@ Public Class Form1
     Private Sub MovePointerCenterMenu()
         'Move mouse pointer to the center of the menu.
 
-        Cursor.Position = New Point(MenuBackground.Rect.X + MenuBackground.Rect.Width / 2,
-                                    MenuBackground.Rect.Y + MenuBackground.Rect.Height / 2)
+        Cursor.Position = New Point(MenuBackground.Rect.X + MenuBackground.Rect.Width \ 2,
+                                    MenuBackground.Rect.Y + MenuBackground.Rect.Height \ 2)
 
     End Sub
 

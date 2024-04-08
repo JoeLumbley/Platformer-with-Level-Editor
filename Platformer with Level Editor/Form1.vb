@@ -1020,7 +1020,7 @@ Public Class Form1
 
             ClearScreenTimer = Now - ClearScreenTimerStart
 
-            If ClearScreenTimer.TotalMilliseconds > 5000 Then
+            If ClearScreenTimer.TotalMilliseconds > 3000 Then
 
                 StopClearScreenTimer = True
 

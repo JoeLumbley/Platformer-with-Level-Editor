@@ -746,14 +746,6 @@ Public Class Form1
 
     End Sub
 
-    Private Sub UpdateCamera()
-
-        LookAhead()
-
-        KeepCameraOnTheLevel()
-
-    End Sub
-
     Private Sub DoGoalCollision()
 
         If GameState = AppState.Playing Then
@@ -838,14 +830,6 @@ Public Class Form1
             Next
 
         End If
-
-    End Sub
-
-    Private Sub UpdateCameraOffset()
-
-        CameraOffset.X = Camera.Rect.X * -1
-
-        CameraOffset.Y = Camera.Rect.Y * -1
 
     End Sub
 
@@ -1437,109 +1421,6 @@ Public Class Form1
         End If
 
     End Sub
-
-    Private Sub LookAhead()
-
-        'Is our hero near the right side of the frame?
-        If Hero.Rect.X > Camera.Rect.X + Camera.Rect.Width / 1.5 Then
-            'If Hero.X > Camera.X + Camera.Width / 1.5 Then
-            'Yes, our hero is near the right side of the frame.
-
-            'Move camera to the right.
-            Camera.Rect.X = Hero.Rect.Left - Camera.Rect.Width / 1.5
-            'Camera.X = Hero.Left - Camera.Width / 1.5
-
-            UpdateCameraOffset()
-
-        End If
-
-        'Is our hero near the left side of the frame?
-        If Hero.Rect.X < Camera.Rect.X + Camera.Rect.Width / 4 Then
-            'If Hero.X < Camera.X + Camera.Width / 4 Then
-            'Yes, our hero is near the left side of the frame.
-
-            'Move camera to the left.
-            Camera.Rect.X = Hero.Rect.Left - Camera.Rect.Width / 4
-            'Camera.X = Hero.Left - Camera.Width / 4
-
-            UpdateCameraOffset()
-
-        End If
-
-        'Is our hero near the bottom side of the frame?
-        If Hero.Rect.Y > Camera.Rect.Y + Camera.Rect.Height / 1.25 Then
-            'If Hero.Y > Camera.Y + Camera.Height / 1.25 Then
-            'Yes, our hero is near the bottom side of the frame.
-
-            'Move camera down.
-            Camera.Rect.Y = Hero.Rect.Top - Camera.Rect.Height / 1.25
-            'Camera.Y = Hero.Top - Camera.Height / 1.25
-
-            UpdateCameraOffset()
-
-        End If
-
-        'Is our hero near the top side of the frame?
-        If Hero.Rect.Y < Camera.Rect.Y + Camera.Rect.Height / 6 Then
-            'Yes, our hero is near the top side of the frame.
-
-            'Move camera up.
-            Camera.Rect.Y = Hero.Rect.Top - Camera.Rect.Height / 6
-
-            UpdateCameraOffset()
-
-        End If
-
-    End Sub
-
-    Private Sub KeepCameraOnTheLevel()
-
-        'Has the camera moved passed the left side of the level?
-        If Camera.Rect.X < Level.Rect.Left Then
-            'Yes, the camera has moved pass the left side of the level.
-
-            'Limit the camera movement to the left side of the level.
-            Camera.Rect.X = Level.Rect.Left
-
-            UpdateCameraOffset()
-
-        End If
-
-        'Has the camera moved passed the right side of the level?
-        If Camera.Rect.X + Camera.Rect.Width > Level.Rect.Right Then
-            'Yes, the camera has moved pass the right side of the level.
-
-            'Limit the camera movement to the right side of the level.
-            Camera.Rect.X = Level.Rect.Right - Camera.Rect.Width
-
-            UpdateCameraOffset()
-
-        End If
-
-        'Has the camera moved passed the top side of the level?
-        If Camera.Rect.Y < Level.Rect.Top Then
-            'Yes, the camera has moved passed the top side of the level.
-
-            'Limit camera movement to the top side of the level.
-            Camera.Rect.Y = Level.Rect.Top
-
-            UpdateCameraOffset()
-
-        End If
-
-        'Has the camera moved passed the bottom side of the level?
-        If Camera.Rect.Y + Camera.Rect.Height > Level.Rect.Bottom Then
-            'Yes, the camera has moved pass the bottom side of the level.
-
-            'Limit camera movement to the bottom of the level.
-            Camera.Rect.Y = Level.Rect.Bottom - Camera.Rect.Height
-
-            UpdateCameraOffset()
-
-        End If
-
-    End Sub
-
 
     Private Sub UpdateHeroMovement()
 
@@ -5034,7 +4915,6 @@ Public Class Form1
 
                 UpdateCameraOffset()
 
-
                 BufferGridLines()
 
             End If
@@ -6233,6 +6113,124 @@ Public Class Form1
         GameLoopCancellationToken.Cancel(True)
 
         CloseSounds()
+
+    End Sub
+
+    Private Sub UpdateCamera()
+
+        LookAhead()
+
+        KeepCameraOnTheLevel()
+
+    End Sub
+
+    Private Sub LookAhead()
+
+        'Is our hero near the right side of the frame?
+        If Hero.Rect.X > Camera.Rect.X + Camera.Rect.Width / 1.5 Then
+            'If Hero.X > Camera.X + Camera.Width / 1.5 Then
+            'Yes, our hero is near the right side of the frame.
+
+            'Move camera to the right.
+            Camera.Rect.X = Hero.Rect.Left - Camera.Rect.Width / 1.5
+            'Camera.X = Hero.Left - Camera.Width / 1.5
+
+            UpdateCameraOffset()
+
+        End If
+
+        'Is our hero near the left side of the frame?
+        If Hero.Rect.X < Camera.Rect.X + Camera.Rect.Width / 4 Then
+            'If Hero.X < Camera.X + Camera.Width / 4 Then
+            'Yes, our hero is near the left side of the frame.
+
+            'Move camera to the left.
+            Camera.Rect.X = Hero.Rect.Left - Camera.Rect.Width / 4
+            'Camera.X = Hero.Left - Camera.Width / 4
+
+            UpdateCameraOffset()
+
+        End If
+
+        'Is our hero near the bottom side of the frame?
+        If Hero.Rect.Y > Camera.Rect.Y + Camera.Rect.Height / 1.25 Then
+            'If Hero.Y > Camera.Y + Camera.Height / 1.25 Then
+            'Yes, our hero is near the bottom side of the frame.
+
+            'Move camera down.
+            Camera.Rect.Y = Hero.Rect.Top - Camera.Rect.Height / 1.25
+            'Camera.Y = Hero.Top - Camera.Height / 1.25
+
+            UpdateCameraOffset()
+
+        End If
+
+        'Is our hero near the top side of the frame?
+        If Hero.Rect.Y < Camera.Rect.Y + Camera.Rect.Height / 6 Then
+            'Yes, our hero is near the top side of the frame.
+
+            'Move camera up.
+            Camera.Rect.Y = Hero.Rect.Top - Camera.Rect.Height / 6
+
+            UpdateCameraOffset()
+
+        End If
+
+    End Sub
+
+    Private Sub KeepCameraOnTheLevel()
+
+        'Has the camera moved passed the left side of the level?
+        If Camera.Rect.X < Level.Rect.Left Then
+            'Yes, the camera has moved pass the left side of the level.
+
+            'Limit the camera movement to the left side of the level.
+            Camera.Rect.X = Level.Rect.Left
+
+            UpdateCameraOffset()
+
+        End If
+
+        'Has the camera moved passed the right side of the level?
+        If Camera.Rect.X + Camera.Rect.Width > Level.Rect.Right Then
+            'Yes, the camera has moved pass the right side of the level.
+
+            'Limit the camera movement to the right side of the level.
+            Camera.Rect.X = Level.Rect.Right - Camera.Rect.Width
+
+            UpdateCameraOffset()
+
+        End If
+
+        'Has the camera moved passed the top side of the level?
+        If Camera.Rect.Y < Level.Rect.Top Then
+            'Yes, the camera has moved passed the top side of the level.
+
+            'Limit camera movement to the top side of the level.
+            Camera.Rect.Y = Level.Rect.Top
+
+            UpdateCameraOffset()
+
+        End If
+
+        'Has the camera moved passed the bottom side of the level?
+        If Camera.Rect.Y + Camera.Rect.Height > Level.Rect.Bottom Then
+            'Yes, the camera has moved pass the bottom side of the level.
+
+            'Limit camera movement to the bottom of the level.
+            Camera.Rect.Y = Level.Rect.Bottom - Camera.Rect.Height
+
+            UpdateCameraOffset()
+
+        End If
+
+    End Sub
+
+    Private Sub UpdateCameraOffset()
+
+        CameraOffset.X = Camera.Rect.X * -1
+
+        CameraOffset.Y = Camera.Rect.Y * -1
 
     End Sub
 

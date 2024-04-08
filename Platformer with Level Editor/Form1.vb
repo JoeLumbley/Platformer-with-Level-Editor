@@ -3350,284 +3350,6 @@ Public Class Form1
 
     End Sub
 
-    Private Sub Form1_Resize(sender As Object, e As EventArgs) Handles MyBase.Resize
-
-        If Not Me.WindowState = FormWindowState.Minimized Then
-
-            'Place the FPS display at the bottom of the client area.
-            FPS_Postion.Y = ClientRectangle.Bottom - 75
-
-            CashCollectedPostion.Y = ClientRectangle.Top + 5
-
-            EditPlayButton.Rect = New Rectangle(ClientRectangle.Left + 210, ClientRectangle.Bottom - 90, 120, 90)
-
-            ToolBarBackground.Rect = New Rectangle(ClientRectangle.Left, ClientRectangle.Bottom - 90, ClientRectangle.Width, 100)
-
-            MenuBackground.Rect = New Rectangle(ClientRectangle.Width \ 2 - MenuBackground.Rect.Width \ 2,
-                                            (ClientRectangle.Height \ 2) - MenuBackground.Rect.Height \ 2,
-                                            300,
-                                            92 * 4)
-
-            SaveButton.Rect = New Rectangle(MenuBackground.Rect.Left,
-                                        MenuBackground.Rect.Top,
-                                        300,
-                                        90)
-
-            OpenButton.Rect = New Rectangle(MenuBackground.Rect.Left,
-                                        MenuBackground.Rect.Top + 92,
-                                        300,
-                                        90)
-
-            NewButton.Rect = New Rectangle(MenuBackground.Rect.Left,
-                                       MenuBackground.Rect.Top + 92 * 2,
-                                       300,
-                                       90)
-
-
-            ExitButton.Rect = New Rectangle(MenuBackground.Rect.Left,
-                                       MenuBackground.Rect.Top + 92 * 3,
-                                       300,
-                                       90)
-
-            MenuButton.Rect = New Rectangle(ClientRectangle.Right - 90,
-                                        ClientRectangle.Bottom - 90,
-                                        90,
-                                        90)
-
-            PointerToolButton.Rect = New Rectangle(ClientRectangle.Left + 331, ClientRectangle.Bottom - 90, 90, 90)
-
-            BlockToolButton.Rect = New Rectangle(ClientRectangle.Left + 422, ClientRectangle.Bottom - 90, 90, 90)
-
-            BlockToolIcon.Rect = New Rectangle(ClientRectangle.Left + 447, ClientRectangle.Bottom - 65, 40, 40)
-
-            BillToolButton.Rect = New Rectangle(ClientRectangle.Left + 513, ClientRectangle.Bottom - 90, 90, 90)
-
-            BillToolIcon.Rect = New Rectangle(ClientRectangle.Left + 538, ClientRectangle.Bottom - 65, 40, 40)
-
-            CloudToolButton.Rect = New Rectangle(ClientRectangle.Left + 604, ClientRectangle.Bottom - 90, 90, 90)
-
-            CloundToolIcon.Rect = New Rectangle(ClientRectangle.Left + 629, ClientRectangle.Bottom - 65, 40, 40)
-
-            BushToolButton.Rect = New Rectangle(ClientRectangle.Left + 695, ClientRectangle.Bottom - 90, 90, 90)
-
-            BushToolIcon.Rect = New Rectangle(ClientRectangle.Left + 720, ClientRectangle.Bottom - 65, 40, 40)
-
-            GoalToolButton.Rect = New Rectangle(ClientRectangle.Left + 786, ClientRectangle.Bottom - 90, 90, 90)
-
-            GoalToolIcon.Rect = New Rectangle(ClientRectangle.Left + 811, ClientRectangle.Bottom - 65, 40, 40)
-
-            EnemyToolButton.Rect = New Rectangle(ClientRectangle.Left + 877, ClientRectangle.Bottom - 90, 90, 90)
-
-            EnemyToolIcon.Rect = New Rectangle(ClientRectangle.Left + 902, ClientRectangle.Bottom - 65, 40, 40)
-
-            Title.Rect = New Rectangle(ClientRectangle.Width \ 2 - 425, ClientRectangle.Height \ 2 - 175, 850, 245)
-
-            StartScreenNewButton.Rect = New Rectangle(ClientRectangle.Width \ 2 - 230, ClientRectangle.Height \ 2 + 70, 210, 90)
-
-            StartScreenOpenButton.Rect = New Rectangle(ClientRectangle.Width \ 2 + 20, ClientRectangle.Height \ 2 + 70, 210, 90)
-
-            Camera.Rect.Size = ClientRectangle.Size
-
-            BufferGridLines()
-
-        End If
-
-    End Sub
-
-    Private Sub Form1_MouseDown(sender As Object, e As MouseEventArgs) Handles MyBase.MouseDown
-
-        Select Case GameState
-
-            Case AppState.Start
-
-                MouseDownStart(e)
-
-            Case AppState.Playing
-
-                If EditPlayButton.Rect.Contains(e.Location) Then
-
-                    'Remember the cameras in game position before opening the editor.
-                    CameraPlayPostion.X = Camera.Rect.X
-                    CameraPlayPostion.Y = Camera.Rect.Y
-
-                    GameState = AppState.Editing
-
-                    EditorLastFrame = Now
-
-                    BufferGridLines()
-
-                End If
-
-            Case AppState.Editing
-
-                MouseDownEditing(e)
-
-        End Select
-
-    End Sub
-
-    Private Sub MouseDownStart(e As MouseEventArgs)
-
-        'Open Button
-        If StartScreenOpenButton.Rect.Contains(e.Location) Then
-
-            OpenFileDialog1.FileName = ""
-            OpenFileDialog1.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
-            OpenFileDialog1.FilterIndex = 1
-            OpenFileDialog1.InitialDirectory = Application.StartupPath
-
-            If OpenFileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
-
-                If My.Computer.FileSystem.FileExists(OpenFileDialog1.FileName) = True Then
-
-                    InitializeObjects()
-
-                    OpenTestLevelFile(OpenFileDialog1.FileName)
-
-                    If IsFileLoaded = True Then
-
-                        LevelName = Path.GetFileName(OpenFileDialog1.FileName)
-
-                        Text = LevelName & " - Platformer with Level Editor - Code with Joe"
-
-                        CashCollected = 0
-
-                        LastFrame = Now
-
-                        GameState = AppState.Playing
-
-                        MovePointerOffScreen()
-
-                        PlayLevelMusic()
-
-                    End If
-
-                End If
-
-            End If
-
-        End If
-
-        'Is the player selecting the new button?
-        If StartScreenNewButton.Rect.Contains(e.Location) Then
-            'Yes, the player is selecting the new button.
-
-            ClearObjects()
-
-            InitializeObjects()
-
-            CreateNewLevel()
-
-            LevelName = "Untitled"
-
-            Text = LevelName & " - Platformer with Level Editor - Code with Joe"
-
-            CashCollected = 0
-
-            LastFrame = Now
-
-            GameState = AppState.Playing
-
-            MovePointerOffScreen()
-
-            PlayLevelMusic()
-
-        End If
-
-    End Sub
-
-    Private Sub MouseDownEditing(e As MouseEventArgs)
-
-        If ShowMenu = False Then
-
-            If e.Button = MouseButtons.Left Then
-
-                MouseDownEditingSelection(e.Location)
-
-                MouseDownEditingButtons(e.Location)
-
-            End If
-
-            If e.Button = MouseButtons.Right Then
-
-                ShowMenu = True
-
-                MovePointerCenterMenu()
-
-            End If
-
-        Else
-
-            If e.Button = MouseButtons.Left Then
-
-                MouseDownEditingMenuButtons(e.Location)
-
-            End If
-
-            If e.Button = MouseButtons.Right Then
-
-                ShowMenu = False
-
-            End If
-
-        End If
-
-    End Sub
-
-    Private Sub MouseDownEditingMenuButtons(e As Point)
-
-        'Is the player clicking the save button?
-        If SaveButton.Rect.Contains(e) Then
-            'Yes, the player is clicking the save button.
-
-            ShowSaveLevelDialog()
-
-        End If
-
-        'Is the player clicking the open button?
-        If OpenButton.Rect.Contains(e) Then
-            'Yes, the player is clicking the open button.
-
-            'Does the player want to save this level before opening a level?
-            If MsgBox("Changes to " & LevelName & " may be lost." & vbCrLf & "Open a level anyway?",
-                      MsgBoxStyle.Question Or MsgBoxStyle.OkCancel,
-                      "Open Level - Platformer with Level Editor") = MsgBoxResult.Ok Then
-                'No, the player doesn't want to save this level before opening a level?
-
-                ShowOpenLevelDialog()
-
-            End If
-
-        End If
-
-        'Is the player clicking the new button?
-        If NewButton.Rect.Contains(e) Then
-            'Yes, the player is clicking the new button.
-
-            'Does the player want to save this level before creating a new level?
-            If MsgBox("Changes to " & LevelName & " may be lost." & vbCrLf & "Create a new level anyway?",
-                      MsgBoxStyle.Question Or MsgBoxStyle.OkCancel,
-                      "New Level - Platformer with Level Editor") = MsgBoxResult.Ok Then
-                'No, the player doesn't want to save this level before creating a new level?
-
-                InitAndCreateNewLevel()
-
-                ShowMenu = False
-
-            End If
-
-        End If
-
-        'Is the player clicking the exit button?
-        If ExitButton.Rect.Contains(e) Then
-            'Yes, the player is clicking the exit button.
-
-            ShowMenu = False
-
-        End If
-
-    End Sub
-
     Private Sub InitAndCreateNewLevel()
 
         ClearObjects()
@@ -6102,9 +5824,287 @@ Public Class Form1
 
     End Sub
 
+    Private Sub Form1_MouseDown(sender As Object, e As MouseEventArgs) Handles MyBase.MouseDown
+
+        Select Case GameState
+
+            Case AppState.Start
+
+                MouseDownStart(e)
+
+            Case AppState.Playing
+
+                If EditPlayButton.Rect.Contains(e.Location) Then
+
+                    'Remember the cameras in game position before opening the editor.
+                    CameraPlayPostion.X = Camera.Rect.X
+                    CameraPlayPostion.Y = Camera.Rect.Y
+
+                    GameState = AppState.Editing
+
+                    EditorLastFrame = Now
+
+                    BufferGridLines()
+
+                End If
+
+            Case AppState.Editing
+
+                MouseDownEditing(e)
+
+        End Select
+
+    End Sub
+
+    Private Sub MouseDownStart(e As MouseEventArgs)
+
+        'Open Button
+        If StartScreenOpenButton.Rect.Contains(e.Location) Then
+
+            OpenFileDialog1.FileName = ""
+            OpenFileDialog1.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
+            OpenFileDialog1.FilterIndex = 1
+            OpenFileDialog1.InitialDirectory = Application.StartupPath
+
+            If OpenFileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+
+                If My.Computer.FileSystem.FileExists(OpenFileDialog1.FileName) = True Then
+
+                    InitializeObjects()
+
+                    OpenTestLevelFile(OpenFileDialog1.FileName)
+
+                    If IsFileLoaded = True Then
+
+                        LevelName = Path.GetFileName(OpenFileDialog1.FileName)
+
+                        Text = LevelName & " - Platformer with Level Editor - Code with Joe"
+
+                        CashCollected = 0
+
+                        LastFrame = Now
+
+                        GameState = AppState.Playing
+
+                        MovePointerOffScreen()
+
+                        PlayLevelMusic()
+
+                    End If
+
+                End If
+
+            End If
+
+        End If
+
+        'Is the player selecting the new button?
+        If StartScreenNewButton.Rect.Contains(e.Location) Then
+            'Yes, the player is selecting the new button.
+
+            ClearObjects()
+
+            InitializeObjects()
+
+            CreateNewLevel()
+
+            LevelName = "Untitled"
+
+            Text = LevelName & " - Platformer with Level Editor - Code with Joe"
+
+            CashCollected = 0
+
+            LastFrame = Now
+
+            GameState = AppState.Playing
+
+            MovePointerOffScreen()
+
+            PlayLevelMusic()
+
+        End If
+
+    End Sub
+
+    Private Sub MouseDownEditing(e As MouseEventArgs)
+
+        If ShowMenu = False Then
+
+            If e.Button = MouseButtons.Left Then
+
+                MouseDownEditingSelection(e.Location)
+
+                MouseDownEditingButtons(e.Location)
+
+            End If
+
+            If e.Button = MouseButtons.Right Then
+
+                ShowMenu = True
+
+                MovePointerCenterMenu()
+
+            End If
+
+        Else
+
+            If e.Button = MouseButtons.Left Then
+
+                MouseDownEditingMenuButtons(e.Location)
+
+            End If
+
+            If e.Button = MouseButtons.Right Then
+
+                ShowMenu = False
+
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub MouseDownEditingMenuButtons(e As Point)
+
+        'Is the player clicking the save button?
+        If SaveButton.Rect.Contains(e) Then
+            'Yes, the player is clicking the save button.
+
+            ShowSaveLevelDialog()
+
+        End If
+
+        'Is the player clicking the open button?
+        If OpenButton.Rect.Contains(e) Then
+            'Yes, the player is clicking the open button.
+
+            'Does the player want to save this level before opening a level?
+            If MsgBox("Changes to " & LevelName & " may be lost." & vbCrLf & "Open a level anyway?",
+                      MsgBoxStyle.Question Or MsgBoxStyle.OkCancel,
+                      "Open Level - Platformer with Level Editor") = MsgBoxResult.Ok Then
+                'No, the player doesn't want to save this level before opening a level?
+
+                ShowOpenLevelDialog()
+
+            End If
+
+        End If
+
+        'Is the player clicking the new button?
+        If NewButton.Rect.Contains(e) Then
+            'Yes, the player is clicking the new button.
+
+            'Does the player want to save this level before creating a new level?
+            If MsgBox("Changes to " & LevelName & " may be lost." & vbCrLf & "Create a new level anyway?",
+                      MsgBoxStyle.Question Or MsgBoxStyle.OkCancel,
+                      "New Level - Platformer with Level Editor") = MsgBoxResult.Ok Then
+                'No, the player doesn't want to save this level before creating a new level?
+
+                InitAndCreateNewLevel()
+
+                ShowMenu = False
+
+            End If
+
+        End If
+
+        'Is the player clicking the exit button?
+        If ExitButton.Rect.Contains(e) Then
+            'Yes, the player is clicking the exit button.
+
+            ShowMenu = False
+
+        End If
+
+    End Sub
+
     Private Sub Form1_Move(sender As Object, e As EventArgs) Handles MyBase.Move
 
         ScreenOffset = PointToScreen(New Point(0, 0))
+
+    End Sub
+
+    Private Sub Form1_Resize(sender As Object, e As EventArgs) Handles MyBase.Resize
+
+        If Not Me.WindowState = FormWindowState.Minimized Then
+
+            'Place the FPS display at the bottom of the client area.
+            FPS_Postion.Y = ClientRectangle.Bottom - 75
+
+            CashCollectedPostion.Y = ClientRectangle.Top + 5
+
+            EditPlayButton.Rect = New Rectangle(ClientRectangle.Left + 210, ClientRectangle.Bottom - 90, 120, 90)
+
+            ToolBarBackground.Rect = New Rectangle(ClientRectangle.Left, ClientRectangle.Bottom - 90, ClientRectangle.Width, 100)
+
+            MenuBackground.Rect = New Rectangle(ClientRectangle.Width \ 2 - MenuBackground.Rect.Width \ 2,
+                                            (ClientRectangle.Height \ 2) - MenuBackground.Rect.Height \ 2,
+                                            300,
+                                            92 * 4)
+
+            SaveButton.Rect = New Rectangle(MenuBackground.Rect.Left,
+                                        MenuBackground.Rect.Top,
+                                        300,
+                                        90)
+
+            OpenButton.Rect = New Rectangle(MenuBackground.Rect.Left,
+                                        MenuBackground.Rect.Top + 92,
+                                        300,
+                                        90)
+
+            NewButton.Rect = New Rectangle(MenuBackground.Rect.Left,
+                                       MenuBackground.Rect.Top + 92 * 2,
+                                       300,
+                                       90)
+
+
+            ExitButton.Rect = New Rectangle(MenuBackground.Rect.Left,
+                                       MenuBackground.Rect.Top + 92 * 3,
+                                       300,
+                                       90)
+
+            MenuButton.Rect = New Rectangle(ClientRectangle.Right - 90,
+                                        ClientRectangle.Bottom - 90,
+                                        90,
+                                        90)
+
+            PointerToolButton.Rect = New Rectangle(ClientRectangle.Left + 331, ClientRectangle.Bottom - 90, 90, 90)
+
+            BlockToolButton.Rect = New Rectangle(ClientRectangle.Left + 422, ClientRectangle.Bottom - 90, 90, 90)
+
+            BlockToolIcon.Rect = New Rectangle(ClientRectangle.Left + 447, ClientRectangle.Bottom - 65, 40, 40)
+
+            BillToolButton.Rect = New Rectangle(ClientRectangle.Left + 513, ClientRectangle.Bottom - 90, 90, 90)
+
+            BillToolIcon.Rect = New Rectangle(ClientRectangle.Left + 538, ClientRectangle.Bottom - 65, 40, 40)
+
+            CloudToolButton.Rect = New Rectangle(ClientRectangle.Left + 604, ClientRectangle.Bottom - 90, 90, 90)
+
+            CloundToolIcon.Rect = New Rectangle(ClientRectangle.Left + 629, ClientRectangle.Bottom - 65, 40, 40)
+
+            BushToolButton.Rect = New Rectangle(ClientRectangle.Left + 695, ClientRectangle.Bottom - 90, 90, 90)
+
+            BushToolIcon.Rect = New Rectangle(ClientRectangle.Left + 720, ClientRectangle.Bottom - 65, 40, 40)
+
+            GoalToolButton.Rect = New Rectangle(ClientRectangle.Left + 786, ClientRectangle.Bottom - 90, 90, 90)
+
+            GoalToolIcon.Rect = New Rectangle(ClientRectangle.Left + 811, ClientRectangle.Bottom - 65, 40, 40)
+
+            EnemyToolButton.Rect = New Rectangle(ClientRectangle.Left + 877, ClientRectangle.Bottom - 90, 90, 90)
+
+            EnemyToolIcon.Rect = New Rectangle(ClientRectangle.Left + 902, ClientRectangle.Bottom - 65, 40, 40)
+
+            Title.Rect = New Rectangle(ClientRectangle.Width \ 2 - 425, ClientRectangle.Height \ 2 - 175, 850, 245)
+
+            StartScreenNewButton.Rect = New Rectangle(ClientRectangle.Width \ 2 - 230, ClientRectangle.Height \ 2 + 70, 210, 90)
+
+            StartScreenOpenButton.Rect = New Rectangle(ClientRectangle.Width \ 2 + 20, ClientRectangle.Height \ 2 + 70, 210, 90)
+
+            Camera.Rect.Size = ClientRectangle.Size
+
+            BufferGridLines()
+
+        End If
 
     End Sub
 

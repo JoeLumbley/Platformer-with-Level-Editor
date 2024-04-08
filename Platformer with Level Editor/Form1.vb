@@ -767,7 +767,6 @@ Public Class Form1
 
             End If
 
-            'TODO: Play level clear music.
             If IsMuted = False Then
 
                 PlaySound("clear")
@@ -5832,9 +5831,6 @@ Public Class Form1
                 'Limit pointer velocity to the max.
                 If MousePointer.Velocity.X < -MousePointer.MaxVelocity.X Then MousePointer.Velocity.X = -MousePointer.MaxVelocity.X
 
-                'Move mouse pointer to the left.
-                'Cursor.Position = New Point(Cursor.Position.X - 2, Cursor.Position.Y)
-
             End If
 
         Else
@@ -5864,9 +5860,6 @@ Public Class Form1
                 'Limit pointer velocity to the max.
                 If MousePointer.Velocity.X > MousePointer.MaxVelocity.X Then MousePointer.Velocity.X = MousePointer.MaxVelocity.X
 
-                'Move mouse pointer to the right.
-                'Cursor.Position = New Point(Cursor.Position.X + 2, Cursor.Position.Y)
-
             End If
 
         Else
@@ -5894,9 +5887,6 @@ Public Class Form1
                 'Limit pointer velocity to the max.
                 If MousePointer.Velocity.Y < -MousePointer.MaxVelocity.Y Then MousePointer.Velocity.Y = -MousePointer.MaxVelocity.Y
 
-                'Move mouse pointer up.
-                'Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y - 2)
-
             End If
 
         End If
@@ -5919,9 +5909,6 @@ Public Class Form1
 
                 'Limit pointer velocity to the max.
                 If MousePointer.Velocity.Y > MousePointer.MaxVelocity.Y Then MousePointer.Velocity.Y = MousePointer.MaxVelocity.Y
-
-                'Move mouse pointer down.
-                'Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y + 2)
 
             End If
 

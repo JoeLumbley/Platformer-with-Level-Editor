@@ -3315,14 +3315,6 @@ Public Class Form1
 
         SetVolume("clear", 1000)
 
-        GameTimer.Start()
-
-        If IsPlaying("Music") = False Then
-
-            LoopSound("Music")
-
-        End If
-
         InitializeToolBarButtons()
 
         InitializeForm()
@@ -3342,6 +3334,24 @@ Public Class Form1
         CreateStartScreenLevel()
 
         CashCollected = 0
+
+        GameTimer.Start()
+
+        If IsPlaying("Music") = False Then
+
+            LoopSound("Music")
+
+        End If
+
+        MovePointerToStartScreenNewButton()
+
+    End Sub
+
+    Private Sub MovePointerToStartScreenNewButton()
+        'Move mouse pointer over the new level button.
+
+        Cursor.Position = New Point(ScreenOffset.X + StartScreenNewButton.Rect.X + StartScreenNewButton.Rect.Width \ 2,
+                                    ScreenOffset.Y + StartScreenNewButton.Rect.Y + StartScreenNewButton.Rect.Height \ 2)
 
     End Sub
 

@@ -3347,14 +3347,6 @@ Public Class Form1
 
     End Sub
 
-    Private Sub MovePointerToStartScreenNewButton()
-        'Move mouse pointer over the new level button on the start screen.
-
-        Cursor.Position = New Point(ScreenOffset.X + StartScreenNewButton.Rect.X + StartScreenNewButton.Rect.Width \ 2,
-                                    ScreenOffset.Y + StartScreenNewButton.Rect.Y + StartScreenNewButton.Rect.Height \ 2)
-
-    End Sub
-
     Private Sub InitializeToolBarButtons()
 
         EditPlayButton.Rect = New Rectangle(ClientRectangle.Left + 210,
@@ -3660,21 +3652,6 @@ Public Class Form1
             PlayLevelMusic()
 
         End If
-
-    End Sub
-
-    Private Shared Sub MovePointerOffScreen()
-        'Move mouse pointer off screen.
-
-        Cursor.Position = New Point(Screen.PrimaryScreen.WorkingArea.Right, Screen.PrimaryScreen.WorkingArea.Height \ 2)
-
-    End Sub
-
-    Private Sub MovePointerCenterMenu()
-        'Move mouse pointer to the center of the menu.
-
-        Cursor.Position = New Point(MenuBackground.Rect.X + MenuBackground.Rect.Width \ 2,
-                                    MenuBackground.Rect.Y + MenuBackground.Rect.Height \ 2)
 
     End Sub
 
@@ -6597,6 +6574,30 @@ Public Class Form1
         ' Send the input events using SendInput
         Dim Inputs As INPUTStruc() = {InputDown, InputUp}
         SendInput(CUInt(inputs.Length), inputs, Marshal.SizeOf(GetType(INPUTStruc)))
+
+    End Sub
+
+    Private Shared Sub MovePointerOffScreen()
+        'Move mouse pointer off screen.
+
+        Cursor.Position = New Point(Screen.PrimaryScreen.WorkingArea.Right,
+                                    Screen.PrimaryScreen.WorkingArea.Height \ 2)
+
+    End Sub
+
+    Private Sub MovePointerCenterMenu()
+        'Move mouse pointer to the center of the menu.
+
+        Cursor.Position = New Point(MenuBackground.Rect.X + MenuBackground.Rect.Width \ 2,
+                                    MenuBackground.Rect.Y + MenuBackground.Rect.Height \ 2)
+
+    End Sub
+
+    Private Sub MovePointerToStartScreenNewButton()
+        'Move mouse pointer over the new level button on the start screen.
+
+        Cursor.Position = New Point(ScreenOffset.X + StartScreenNewButton.Rect.X + StartScreenNewButton.Rect.Width \ 2,
+                                    ScreenOffset.Y + StartScreenNewButton.Rect.Y + StartScreenNewButton.Rect.Height \ 2)
 
     End Sub
 

@@ -25,6 +25,7 @@
 'OUT OF Or IN CONNECTION WITH THE SOFTWARE Or THE USE Or OTHER DEALINGS IN THE
 'SOFTWARE.
 
+'Testing Joseph Lumbley Jr
 'Level music by Joseph Lumbley Jr.
 'Level clear music by Joseph Lumbley Jr.
 
@@ -5826,7 +5827,7 @@ Public Class Form1
                 End If
 
                 'Move pointer left.
-                MousePointer.Velocity.X += (-MousePointer.Acceleration.X \ 4) * EditorDeltaTime.TotalSeconds
+                MousePointer.Velocity.X += (-MousePointer.Acceleration.X \ 3) * EditorDeltaTime.TotalSeconds
 
                 'Limit pointer velocity to the max.
                 If MousePointer.Velocity.X < -MousePointer.MaxVelocity.X Then MousePointer.Velocity.X = -MousePointer.MaxVelocity.X
@@ -5855,7 +5856,7 @@ Public Class Form1
                 End If
 
                 'Move pointer right.
-                MousePointer.Velocity.X += (MousePointer.Acceleration.X \ 4) * EditorDeltaTime.TotalSeconds
+                MousePointer.Velocity.X += (MousePointer.Acceleration.X \ 3) * EditorDeltaTime.TotalSeconds
 
                 'Limit pointer velocity to the max.
                 If MousePointer.Velocity.X > MousePointer.MaxVelocity.X Then MousePointer.Velocity.X = MousePointer.MaxVelocity.X
@@ -5882,7 +5883,7 @@ Public Class Form1
                 End If
 
                 'Move pointer up.
-                MousePointer.Velocity.Y += (-MousePointer.Acceleration.Y \ 4) * EditorDeltaTime.TotalSeconds
+                MousePointer.Velocity.Y += (-MousePointer.Acceleration.Y \ 3) * EditorDeltaTime.TotalSeconds
 
                 'Limit pointer velocity to the max.
                 If MousePointer.Velocity.Y < -MousePointer.MaxVelocity.Y Then MousePointer.Velocity.Y = -MousePointer.MaxVelocity.Y
@@ -5905,7 +5906,7 @@ Public Class Form1
                 End If
 
                 'Move pointer down.
-                MousePointer.Velocity.Y += (MousePointer.Acceleration.Y \ 4) * EditorDeltaTime.TotalSeconds
+                MousePointer.Velocity.Y += (MousePointer.Acceleration.Y \ 3) * EditorDeltaTime.TotalSeconds
 
                 'Limit pointer velocity to the max.
                 If MousePointer.Velocity.Y > MousePointer.MaxVelocity.Y Then MousePointer.Velocity.Y = MousePointer.MaxVelocity.Y

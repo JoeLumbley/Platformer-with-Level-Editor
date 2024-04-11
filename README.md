@@ -1,7 +1,7 @@
 # Platformer with Level Editor
 
 
-Platformer with Level Editor is an excellent learning resource for students of programming.
+Platformer with Level Editor is an excellent learning resource for game development.
 
 ![042](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/905d2649-9f46-4136-9e67-9770c34ef38c)
 

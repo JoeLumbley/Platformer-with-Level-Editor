@@ -3,11 +3,11 @@
 
 Platformer with Level Editor is an excellent learning resource for game development.
 
-![042](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/905d2649-9f46-4136-9e67-9770c34ef38c)
-
 Here’s why:
 
 Hands-On Experience: Students can dive into the source code, explore the project structure, and understand how a platformer game with a level editor is built. They’ll gain practical experience by studying real-world code.
+
+![042](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/905d2649-9f46-4136-9e67-9770c34ef38c)
 
 Game Mechanics: By analyzing the game mechanics, students can learn about physics, collision detection, character movement, and game loops. The level editor component provides insights into user interface design and interaction.
 

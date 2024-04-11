@@ -2132,7 +2132,7 @@ Public Class Form1
 
         With Buffer.Graphics
 
-            If ShowToolPreview = True Then
+            If ShowToolPreview = True AndAlso ShowMenu = False Then
 
                 Dim RectOffset As Rectangle = ToolPreview
 
@@ -2142,41 +2142,41 @@ Public Class Form1
 
                     Case Tools.Block
 
-                        .FillRectangle(Brushes.Chocolate, rectOffset)
+                        .FillRectangle(Brushes.Chocolate, RectOffset)
 
                     Case Tools.Bill
 
-                        .FillRectangle(Brushes.Goldenrod, rectOffset)
+                        .FillRectangle(Brushes.Goldenrod, RectOffset)
 
-                        .DrawString("$", FPSFont, Brushes.OrangeRed, rectOffset, AlineCenterMiddle)
+                        .DrawString("$", FPSFont, Brushes.OrangeRed, RectOffset, AlineCenterMiddle)
 
                     Case Tools.Cloud
 
-                        .FillRectangle(Brushes.White, rectOffset)
+                        .FillRectangle(Brushes.White, RectOffset)
 
-                        .DrawLine(LightSkyBluePen, rectOffset.Right - 10, rectOffset.Top + 10, rectOffset.Right - 10, rectOffset.Bottom - 10)
+                        .DrawLine(LightSkyBluePen, RectOffset.Right - 10, RectOffset.Top + 10, RectOffset.Right - 10, RectOffset.Bottom - 10)
 
-                        .DrawLine(LightSkyBluePen, rectOffset.Left + 10, rectOffset.Bottom - 10, rectOffset.Right - 10, rectOffset.Bottom - 10)
+                        .DrawLine(LightSkyBluePen, RectOffset.Left + 10, RectOffset.Bottom - 10, RectOffset.Right - 10, RectOffset.Bottom - 10)
 
-                        .DrawRectangle(OutinePen, rectOffset)
+                        .DrawRectangle(OutinePen, RectOffset)
 
                     Case Tools.Bush
 
-                        .FillRectangle(Brushes.GreenYellow, rectOffset)
+                        .FillRectangle(Brushes.GreenYellow, RectOffset)
 
-                        .DrawLine(SeaGreenPen, rectOffset.Right - 10, rectOffset.Top + 10, rectOffset.Right - 10, rectOffset.Bottom - 10)
+                        .DrawLine(SeaGreenPen, RectOffset.Right - 10, RectOffset.Top + 10, RectOffset.Right - 10, RectOffset.Bottom - 10)
 
-                        .DrawLine(SeaGreenPen, rectOffset.Left + 10, rectOffset.Bottom - 10, rectOffset.Right - 10, rectOffset.Bottom - 10)
+                        .DrawLine(SeaGreenPen, RectOffset.Left + 10, RectOffset.Bottom - 10, RectOffset.Right - 10, RectOffset.Bottom - 10)
 
-                        .DrawRectangle(OutinePen, rectOffset)
+                        .DrawRectangle(OutinePen, RectOffset)
 
                     Case Tools.Enemy
 
-                        .FillRectangle(Brushes.Chocolate, rectOffset)
+                        .FillRectangle(Brushes.Chocolate, RectOffset)
 
-                        .DrawString("E", EnemyFont, Brushes.PaleGoldenrod, rectOffset, AlineCenterMiddle)
+                        .DrawString("E", EnemyFont, Brushes.PaleGoldenrod, RectOffset, AlineCenterMiddle)
 
-                        Dim PatrolB As New Rectangle(rectOffset.X + GridSize, rectOffset.Y, GridSize, GridSize)
+                        Dim PatrolB As New Rectangle(RectOffset.X + GridSize, RectOffset.Y, GridSize, GridSize)
 
                         .FillRectangle(New SolidBrush(Color.FromArgb(128, Color.Chocolate)), PatrolB)
 
@@ -2188,12 +2188,12 @@ Public Class Form1
 
                     Case Tools.Goal
 
-                        .FillRectangle(Brushes.White, rectOffset)
+                        .FillRectangle(Brushes.White, RectOffset)
 
                         ' Define the rectangle to be filled
                         Dim Rect As RectangleF = RectOffset
 
-                        Rect.Inflate(rect.Width / 6.4F, rect.Height / 6.4F)
+                        Rect.Inflate(Rect.Width / 6.4F, Rect.Height / 6.4F)
 
                         ' Define the center point of the gradient
                         Dim Center As New PointF(Rect.Left + Rect.Width / 2.0F, Rect.Top + Rect.Height / 2.0F)
@@ -2203,35 +2203,35 @@ Public Class Form1
 
                         ' Create the path for the gradient brush
                         Dim GradPath As New GraphicsPath()
-                        GradPath.AddEllipse(rect)
+                        GradPath.AddEllipse(Rect)
 
                         ' Create the gradient brush
                         Dim GradBrush As New PathGradientBrush(GradPath) With {
-                            .CenterPoint = center,
-                            .CenterColor = colors(0),
-                            .SurroundColors = New Color() {colors(1)}
+                            .CenterPoint = Center,
+                            .CenterColor = Colors(0),
+                            .SurroundColors = New Color() {Colors(1)}
                         }
 
-                        .FillRectangle(GradBrush, rectOffset)
+                        .FillRectangle(GradBrush, RectOffset)
 
-                        If rectOffset.Width <= rectOffset.Height Then
+                        If RectOffset.Width <= RectOffset.Height Then
 
-                            Dim Font As New Font(New FontFamily("Wingdings"), rectOffset.Width \ 2, FontStyle.Regular)
+                            Dim Font As New Font(New FontFamily("Wingdings"), RectOffset.Width \ 2, FontStyle.Regular)
 
                             .DrawString("«",
                                     Font,
                                     Brushes.Green,
-                                    rectOffset,
+                                    RectOffset,
                                     AlineCenterMiddle)
 
                         Else
 
-                            Dim Font As New Font(New FontFamily("Wingdings"), rectOffset.Height \ 2, FontStyle.Regular)
+                            Dim Font As New Font(New FontFamily("Wingdings"), RectOffset.Height \ 2, FontStyle.Regular)
 
                             .DrawString("«",
                                     Font,
                                     Brushes.Green,
-                                    rectOffset,
+                                    RectOffset,
                                     AlineCenterMiddle)
 
                         End If

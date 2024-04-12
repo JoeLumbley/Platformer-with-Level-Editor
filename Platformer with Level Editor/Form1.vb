@@ -6040,7 +6040,7 @@ Public Class Form1
 
     Private Sub DoResize()
 
-        Camera.Rect.Size = ClientRectangle.Size
+        ResizeCamera()
 
         ResizeHUD()
 
@@ -6049,6 +6049,12 @@ Public Class Form1
         ResizeToolBar()
 
         ResizeStartScreen()
+
+    End Sub
+
+    Private Sub ResizeCamera()
+
+        Camera.Rect.Size = ClientRectangle.Size
 
     End Sub
 

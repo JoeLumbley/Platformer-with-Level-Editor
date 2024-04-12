@@ -6040,14 +6040,44 @@ Public Class Form1
 
     Private Sub DoResize()
 
+        If GameState = AppState.Playing Then
+
+            ResizeHUD()
+
+        End If
+
+        If GameState = AppState.Editing Then
+
+            ResizeMenu()
+
+            ResizeToolBar()
+
+        End If
+
+        Camera.Rect.Size = ClientRectangle.Size
+
+        If GameState = AppState.Start Then
+
+            Title.Rect = New Rectangle(ClientRectangle.Width \ 2 - 425, ClientRectangle.Height \ 2 - 175, 850, 245)
+
+            StartScreenNewButton.Rect = New Rectangle(ClientRectangle.Width \ 2 - 230, ClientRectangle.Height \ 2 + 70, 210, 90)
+
+            StartScreenOpenButton.Rect = New Rectangle(ClientRectangle.Width \ 2 + 20, ClientRectangle.Height \ 2 + 70, 210, 90)
+
+        End If
+
+    End Sub
+
+    Private Sub ResizeHUD()
+
         'Place the FPS display at the bottom of the client area.
         FPS_Postion.Y = ClientRectangle.Bottom - 75
 
         CashCollectedPostion.Y = ClientRectangle.Top + 5
 
-        EditPlayButton.Rect = New Rectangle(ClientRectangle.Left + 210, ClientRectangle.Bottom - 90, 120, 90)
+    End Sub
 
-        ToolBarBackground.Rect = New Rectangle(ClientRectangle.Left, ClientRectangle.Bottom - 90, ClientRectangle.Width, 100)
+    Private Sub ResizeMenu()
 
         MenuBackground.Rect = New Rectangle(ClientRectangle.Width \ 2 - MenuBackground.Rect.Width \ 2,
                                         (ClientRectangle.Height \ 2) - MenuBackground.Rect.Height \ 2,
@@ -6080,6 +6110,14 @@ Public Class Form1
                                     90,
                                     90)
 
+    End Sub
+
+    Private Sub ResizeToolBar()
+
+        ToolBarBackground.Rect = New Rectangle(ClientRectangle.Left, ClientRectangle.Bottom - 90, ClientRectangle.Width, 100)
+
+        EditPlayButton.Rect = New Rectangle(ClientRectangle.Left + 210, ClientRectangle.Bottom - 90, 120, 90)
+
         PointerToolButton.Rect = New Rectangle(ClientRectangle.Left + 331, ClientRectangle.Bottom - 90, 90, 90)
 
         BlockToolButton.Rect = New Rectangle(ClientRectangle.Left + 422, ClientRectangle.Bottom - 90, 90, 90)
@@ -6105,14 +6143,6 @@ Public Class Form1
         EnemyToolButton.Rect = New Rectangle(ClientRectangle.Left + 877, ClientRectangle.Bottom - 90, 90, 90)
 
         EnemyToolIcon.Rect = New Rectangle(ClientRectangle.Left + 902, ClientRectangle.Bottom - 65, 40, 40)
-
-        Title.Rect = New Rectangle(ClientRectangle.Width \ 2 - 425, ClientRectangle.Height \ 2 - 175, 850, 245)
-
-        StartScreenNewButton.Rect = New Rectangle(ClientRectangle.Width \ 2 - 230, ClientRectangle.Height \ 2 + 70, 210, 90)
-
-        StartScreenOpenButton.Rect = New Rectangle(ClientRectangle.Width \ 2 + 20, ClientRectangle.Height \ 2 + 70, 210, 90)
-
-        Camera.Rect.Size = ClientRectangle.Size
 
     End Sub
 

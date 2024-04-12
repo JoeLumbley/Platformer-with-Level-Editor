@@ -5551,6 +5551,7 @@ Public Class Form1
             If GameState = AppState.Editing Then
 
                 If ShowMenu = True Then
+                    'B is the controller shortcut to save the level.
 
                     'Move mouse pointer over the save level button.
                     Cursor.Position = New Point(ScreenOffset.X + SaveButton.Rect.X + SaveButton.Rect.Width \ 2,
@@ -5569,6 +5570,7 @@ Public Class Form1
             End If
 
             If GameState = AppState.Start Then
+                'B is the controller shortcut to create a new level.
 
                 'Move mouse pointer over the new level button.
                 Cursor.Position = New Point(ScreenOffset.X + StartScreenNewButton.Rect.X + StartScreenNewButton.Rect.Width \ 2,
@@ -5596,6 +5598,7 @@ Public Class Form1
 
                 If ShowMenu = True Then
 
+                    'X is the controller shortcut to close the menu.
                     ShowMenu = False
 
                 End If
@@ -5609,6 +5612,7 @@ Public Class Form1
             If GameState = AppState.Editing Then
 
                 If ShowMenu = True Then
+                    'Y is the controller shortcut to open a level.
 
                     'Move mouse pointer over the open level button.
                     Cursor.Position = New Point(ScreenOffset.X + OpenButton.Rect.X + OpenButton.Rect.Width \ 2,

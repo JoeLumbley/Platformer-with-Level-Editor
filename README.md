@@ -2,7 +2,7 @@
 
 A Valuable Learning Tool for Game Development
 
-![042](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/905d2649-9f46-4136-9e67-9770c34ef38c)
+![053](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/911e8936-c212-4e7c-9cdc-cd341422b924)
 
 “Platformer with Level Editor” serves as an indispensable resource for aspiring game developers. 
 

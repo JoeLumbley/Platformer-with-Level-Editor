@@ -5597,8 +5597,8 @@ Public Class Form1
             If GameState = AppState.Editing Then
 
                 If ShowMenu = True Then
-
                     'X is the controller shortcut to close the menu.
+
                     ShowMenu = False
 
                 End If

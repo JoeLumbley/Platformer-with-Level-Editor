@@ -2,7 +2,7 @@
 
 A Valuable Learning Tool for Game Development
 
-![050](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/d0e9278d-9556-4c03-a0b7-f1f145438962)
+![042](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/905d2649-9f46-4136-9e67-9770c34ef38c)
 
 “Platformer with Level Editor” serves as an indispensable resource for aspiring game developers. 
 
@@ -14,7 +14,7 @@ Game Mechanics Exploration: Dive into the intricacies of physics, collision dete
 
 Programming Patterns: Explore common programming patterns used in game development, including object-oriented design and event handling.
 
-![042](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/905d2649-9f46-4136-9e67-9770c34ef38c)
+![050](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/d0e9278d-9556-4c03-a0b7-f1f145438962)
 
 Level Design Principles: The level editor component introduces you to game design principles, covering level creation, storage, and loading.
 

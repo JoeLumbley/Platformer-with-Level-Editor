@@ -26,8 +26,8 @@ In conclusion, "Platformer with Level Editor" provides a comprehensive learning 
 
 It's an excellent resource for anyone entering the field of game development. 🎮🚀
 
-![004](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/7976efa9-029b-47de-90c5-c877c1328675)
 
+![005](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/2660702d-eef3-4ce9-a5cc-3543d2f9f580)
 
 
 

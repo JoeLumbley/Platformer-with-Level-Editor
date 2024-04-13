@@ -5513,6 +5513,7 @@ Public Class Form1
             ControllerA = True
 
             If GameState = AppState.Start Or GameState = AppState.Editing Then
+                'A on the controller simulates the left mouse button down.
 
                 If IsMouseDown = False Then
 
@@ -5531,6 +5532,7 @@ Public Class Form1
             If ControllerJumped = True Then ControllerJumped = False
 
             If GameState = AppState.Start Or GameState = AppState.Editing Then
+                'A on the controller simulates the left mouse button up.
 
                 If IsMouseDown = True Then
 
@@ -5631,6 +5633,7 @@ Public Class Form1
             End If
 
             If GameState = AppState.Start Then
+                'Y is the controller shortcut to open a level.
 
                 'Move mouse pointer over the open button.
                 Cursor.Position = New Point(ScreenOffset.X + StartScreenOpenButton.Rect.X + StartScreenOpenButton.Rect.Width \ 2,

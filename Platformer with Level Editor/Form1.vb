@@ -5365,6 +5365,7 @@ Public Class Form1
             If GameState = AppState.Editing Then
 
                 If ShowMenu = False Then
+                    'Back is the controller shortcut to show the menu.
 
                     If IsBackDown = False Then
 
@@ -5377,6 +5378,7 @@ Public Class Form1
                     End If
 
                 Else
+                    'Back is the controller shortcut to hide the menu.
 
                     If IsBackDown = False Then
 

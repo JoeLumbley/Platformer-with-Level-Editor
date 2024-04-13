@@ -5311,6 +5311,7 @@ Public Class Form1
             Select Case GameState
 
                 Case AppState.Playing
+                    'Start is the controller shortcut to edit the level.
 
                     If IsStartDown = False Then
 
@@ -5331,6 +5332,7 @@ Public Class Form1
                     End If
 
                 Case AppState.Editing
+                    'Start is the controller shortcut to play the level.
 
                     If IsStartDown = False Then
 

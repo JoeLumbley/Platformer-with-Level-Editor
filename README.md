@@ -10,7 +10,7 @@ By delving into the source code and project structure of a platformer game with 
 
 Here's what you can expect to explore with this learning tool:
 
-### Game Mechanics Exploration 
+### Game Mechanics
 
 Gain a deep understanding of physics, collision detection, character movement, and game loops.
 
@@ -20,7 +20,7 @@ Discover common programming patterns used in game development, such as object-or
 
 ![050](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/d0e9278d-9556-4c03-a0b7-f1f145438962)
 
-### Level Design Principles
+### Level Design
 
 The level editor component introduces you to key game design principles, covering aspects like level creation, storage, and loading.
 

@@ -10,7 +10,7 @@ By delving into the source code and project structure of a platformer game with 
 
 
 
-![054](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/137cf9cf-c37e-40a1-ba01-df879149c98f)
+![055](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/9c8fc9e2-5e4f-4f1f-a544-8b5b3a6ad385)
 
 
 

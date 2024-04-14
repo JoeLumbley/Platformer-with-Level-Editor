@@ -423,9 +423,11 @@ Public Class Form1
 
     Private OutinePen As New Pen(Color.Black, 4)
 
-    Private MenuOutinePen As New Pen(Color.White, 16)
+    Private MenuOutinePen As New Pen(Color.White, 9)
 
     Private MenuShadowPen As New Pen(Color.FromArgb(128, Color.Black), 16)
+
+    Private MenuShadowBrush As New SolidBrush(Color.FromArgb(128, Color.Black))
 
     Private BButtonIconOutinePen As New Pen(Color.Tomato, 3)
 
@@ -924,6 +926,8 @@ Public Class Form1
             DrawOpenButton()
 
             DrawExitButton()
+
+            DrawMenuOutline()
 
         End If
 
@@ -2260,17 +2264,36 @@ Public Class Form1
 
             Dim Shadow As Rectangle = MenuBackground.Rect
 
-            Shadow.Offset(9, 9)
+            Shadow.Inflate(2, 2)
 
-            .DrawRectangle(MenuShadowPen, Shadow)
+            Shadow.Offset(15, 15)
 
-            .DrawRectangle(MenuOutinePen, MenuBackground.Rect)
+            '.DrawRectangle(MenuShadowPen, Shadow)
 
-            .FillRectangle(Brushes.Black, MenuBackground.Rect)
+            'DrawRoundedRectangle(MenuShadowPen, Shadow, 10, Buffer.Graphics)
+
+            FillRoundedRectangle(MenuShadowBrush, Shadow, 10, Buffer.Graphics)
+
+            '.DrawRectangle(MenuOutinePen, MenuBackground.Rect)
+
+            '.FillRectangle(Brushes.Black, MenuBackground.Rect)
+
+            FillRoundedRectangle(Brushes.Black, MenuBackground.Rect, 10, Buffer.Graphics)
 
         End With
 
     End Sub
+
+    Private Sub DrawMenuOutline()
+
+        Dim OutLineRect As Rectangle = MenuBackground.Rect
+
+        OutLineRect.Inflate(2, 2)
+
+        DrawRoundedRectangle(MenuOutinePen, OutLineRect, 10, Buffer.Graphics)
+
+    End Sub
+
 
     Private Sub DrawStartScreenNewButtonBackground()
 
@@ -2672,20 +2695,23 @@ Public Class Form1
 
         With Buffer.Graphics
 
-            .FillRectangle(Brushes.Black, SaveButton.Rect)
+            '.FillRectangle(Brushes.Black, SaveButton.Rect)
+
+            FillRoundedRectangle(Brushes.Black, SaveButton.Rect, 20, Buffer.Graphics)
+
 
             .DrawEllipse(BButtonIconOutinePen,
                          New Rectangle(SaveButton.Rect.X + 197,
-                                       SaveButton.Rect.Y + 20,
+                                       SaveButton.Rect.Y + SaveButton.Rect.Height \ 2 - 52 \ 2,
                                        52,
                                        52))
 
             .DrawString("Save",
                         FPSFont,
                         Brushes.White,
-                        New Rectangle(SaveButton.Rect.X + 22,
-                                      SaveButton.Rect.Y + 24,
-                                      145,
+                        New Rectangle(SaveButton.Rect.X + 25,
+                                      SaveButton.Rect.Y + SaveButton.Rect.Height \ 2 - 45 \ 2,
+                                      140,
                                       50),
                         AlineCenterMiddle)
 
@@ -2693,7 +2719,7 @@ Public Class Form1
                         RightTriggerIconFont,
                         Brushes.White,
                         New Rectangle(SaveButton.Rect.X + 175,
-                                      SaveButton.Rect.Y + 24,
+                                      SaveButton.Rect.Y + SaveButton.Rect.Height \ 2 - 45 \ 2,
                                       100,
                                       50),
                         AlineCenterMiddle)
@@ -2706,19 +2732,22 @@ Public Class Form1
 
         With Buffer.Graphics
 
-            .FillRectangle(Brushes.Black, OpenButton.Rect)
+            '.FillRectangle(Brushes.Black, OpenButton.Rect)
+
+            FillRoundedRectangle(Brushes.Black, OpenButton.Rect, 20, Buffer.Graphics)
+
 
             .DrawEllipse(YButtonIconOutinePen,
                          New Rectangle(OpenButton.Rect.X + 197,
-                                       OpenButton.Rect.Y + 20,
+                                       OpenButton.Rect.Y + OpenButton.Rect.Height \ 2 - 52 \ 2,
                                        52,
                                        52))
 
             .DrawString("Open",
                         FPSFont,
                         Brushes.White,
-                        New Rectangle(OpenButton.Rect.X + 24,
-                                      OpenButton.Rect.Y + 24,
+                        New Rectangle(OpenButton.Rect.X + 25,
+                                      OpenButton.Rect.Y + OpenButton.Rect.Height \ 2 - 45 \ 2,
                                       145,
                                       50),
                         AlineCenterMiddle)
@@ -2727,7 +2756,7 @@ Public Class Form1
                         ButtonIconFont,
                         Brushes.White,
                         New Rectangle(OpenButton.Rect.X + 174,
-                                      OpenButton.Rect.Y + 24,
+                                      OpenButton.Rect.Y + OpenButton.Rect.Height \ 2 - 45 \ 2,
                                       100,
                                       50),
                         AlineCenterMiddle)
@@ -2740,12 +2769,15 @@ Public Class Form1
 
         With Buffer.Graphics
 
-            .FillRectangle(Brushes.Black, NewButton.Rect)
+            '.FillRectangle(Brushes.Black, NewButton.Rect)
+
+            FillRoundedRectangle(Brushes.Black, NewButton.Rect, 20, Buffer.Graphics)
+
 
             .DrawString("New", FPSFont,
                         Brushes.White,
                         New Rectangle(NewButton.Rect.X + 25,
-                                      NewButton.Rect.Y + 24,
+                                      NewButton.Rect.Y + SaveButton.Rect.Height \ 2 - 45 \ 2,
                                       120,
                                       50),
                         AlineCenterMiddle)
@@ -2754,7 +2786,7 @@ Public Class Form1
                         RightTriggerIconFont,
                         Brushes.White,
                         New Rectangle(NewButton.Rect.X + 175,
-                                      NewButton.Rect.Y + 24,
+                                      NewButton.Rect.Y + NewButton.Rect.Height \ 2 - 52 \ 2,
                                       100,
                                       50),
                         AlineCenterMiddle)
@@ -2767,19 +2799,25 @@ Public Class Form1
 
         With Buffer.Graphics
 
-            .FillRectangle(Brushes.Black, ExitButton.Rect)
+            '.FillRectangle(Brushes.Black, ExitButton.Rect)
+
+            FillRoundedRectangle(Brushes.Black, ExitButton.Rect, 20, Buffer.Graphics)
+
 
             .DrawEllipse(XButtonIconOutinePen,
-                         New Rectangle(ExitButton.Rect.X + 124,
-                                       ExitButton.Rect.Y + 16,
+                         New Rectangle(ExitButton.Rect.X + ExitButton.Rect.Width \ 2 - 52 \ 2,
+                                       ExitButton.Rect.Y + ExitButton.Rect.Height \ 2 - 52 \ 2,
                                        52,
                                        52))
 
             .DrawString("X",
                         ButtonIconFont,
                         Brushes.White,
-                        ExitButton.Rect,
-                        AlineCenterMiddle)
+                        New Rectangle(ExitButton.Rect.X + ExitButton.Rect.Width \ 2 - 52 \ 2,
+                                      ExitButton.Rect.Y + 16,
+                                      52,
+                                      52),
+                                      AlineCenterMiddle)
 
         End With
 
@@ -3154,7 +3192,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub DrawRoundedRectangle(pen As Pen, Rect As Rectangle, radius As Integer, e As PaintEventArgs)
+    Private Sub DrawRoundedRectangle(pen As Pen, Rect As Rectangle, radius As Integer, g As Graphics)
 
         Dim path As New Drawing2D.GraphicsPath()
 
@@ -3184,11 +3222,11 @@ Public Class Form1
 
         path.CloseFigure()
 
-        e.Graphics.DrawPath(pen, path)
+        g.DrawPath(pen, path)
 
     End Sub
 
-    Private Sub FillRoundedRectangle(brush As Brush, Rect As Rectangle, radius As Integer, e As PaintEventArgs)
+    Private Sub FillRoundedRectangle(brush As Brush, Rect As Rectangle, radius As Integer, e As Graphics)
 
         Dim Path As New Drawing2D.GraphicsPath()
 
@@ -3218,7 +3256,7 @@ Public Class Form1
 
         Path.CloseFigure()
 
-        e.Graphics.FillPath(brush, Path)
+        e.FillPath(brush, Path)
 
     End Sub
 
@@ -3275,9 +3313,9 @@ Public Class Form1
 
         OutinePen.LineJoin = Drawing2D.LineJoin.Round
 
-        MenuOutinePen.LineJoin = Drawing2D.LineJoin.Round
+        'MenuOutinePen.LineJoin = Drawing2D.LineJoin.Round
 
-        MenuShadowPen.LineJoin = Drawing2D.LineJoin.Round
+        'MenuShadowPen.LineJoin = Drawing2D.LineJoin.Round
 
         InitializeObjects()
 
@@ -6099,28 +6137,28 @@ Public Class Form1
         MenuBackground.Rect = New Rectangle(ClientRectangle.Width \ 2 - MenuBackground.Rect.Width \ 2,
                                         (ClientRectangle.Height \ 2) - MenuBackground.Rect.Height \ 2,
                                         300,
-                                        92 * 4)
+                                        86 * 4)
 
-        SaveButton.Rect = New Rectangle(MenuBackground.Rect.Left,
-                                    MenuBackground.Rect.Top,
-                                    300,
-                                    90)
+        SaveButton.Rect = New Rectangle(MenuBackground.Rect.Left + 5,
+                                    MenuBackground.Rect.Top + 5,
+                                    290,
+                                    80)
 
-        OpenButton.Rect = New Rectangle(MenuBackground.Rect.Left,
-                                    MenuBackground.Rect.Top + 92,
-                                    300,
-                                    90)
+        OpenButton.Rect = New Rectangle(MenuBackground.Rect.Left + 5,
+                                    MenuBackground.Rect.Top + 90,
+                                    290,
+                                    80)
 
-        NewButton.Rect = New Rectangle(MenuBackground.Rect.Left,
-                                   MenuBackground.Rect.Top + 92 * 2,
-                                   300,
-                                   90)
+        NewButton.Rect = New Rectangle(MenuBackground.Rect.Left + 5,
+                                   MenuBackground.Rect.Top + 87 * 2,
+                                   290,
+                                   80)
 
 
-        ExitButton.Rect = New Rectangle(MenuBackground.Rect.Left,
-                                   MenuBackground.Rect.Top + 92 * 3,
-                                   300,
-                                   90)
+        ExitButton.Rect = New Rectangle(MenuBackground.Rect.Left + 5,
+                                   MenuBackground.Rect.Top + 86 * 3,
+                                   290,
+                                   80)
 
         MenuButton.Rect = New Rectangle(ClientRectangle.Right - 90,
                                     ClientRectangle.Bottom - 90,

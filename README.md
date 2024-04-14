@@ -1,6 +1,6 @@
 # Platformer with Level Editor
 
-## An Invaluable Resource for Learning Game Development
+#### An Invaluable Resource for Learning Game Development
 
 ![Platformer with Level Editor](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/29d37425-6a1b-4bbd-8a11-b918ad0ae02d)
 
@@ -10,25 +10,22 @@ The **"Platformer with Level Editor"** is an essential tool for aspiring game de
 
 Here's what you can expect to explore with this learning tool:
 
-### 1. Game Mechanics
+#### 1. Game Mechanics
 Gain a deep understanding of physics, collision detection, character movement, and game loops.
 
-### 2. Programming Patterns
+#### 2. Programming Patterns
 Discover common programming patterns used in game development, such as object-oriented design and event handling.
 
 ![Platformer with Level Editor](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/d0e9278d-9556-4c03-a0b7-f1f145438962)
 
-### 3. Level Design
+#### 3. Level Design
 The level editor component introduces you to key game design principles, covering aspects like level creation, storage, and loading.
 
-### 4. Sound Integration
+#### 4. Sound Integration
 Learn how to integrate audio assets into your game, including sound effects and music.
 
-### 5. Xbox Controller Support
-Discover how to integrate Xbox controller support into your game, enhancing the gaming experience.
-
-### 5. Xbox Controller Support
-Learn how to integrate Xbox controllers into your own game projects.
+#### 5. Xbox Controller Support
+Learn how to use Xbox controllers into your own game projects.
 
 In conclusion, **"Platformer with Level Editor"** provides a comprehensive learning experience, equipping you with the skills to analyze code and lay the foundation for your own game projects. It's an excellent resource for anyone entering the field of game development. 🎮🚀
 

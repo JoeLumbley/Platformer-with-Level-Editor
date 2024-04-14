@@ -4789,8 +4789,6 @@ Public Class Form1
 
                         ShowSaveLevelDialog()
 
-                        'ShowMenu = False
-
                     End If
 
                 End If
@@ -4827,8 +4825,6 @@ Public Class Form1
 
                             ShowOpenLevelDialog()
 
-                            'ShowMenu = False
-
                         End If
 
                     End If
@@ -4848,8 +4844,6 @@ Public Class Form1
                             'No, the player doesn't want to save this level before creating a new level?
 
                             InitAndCreateNewLevel()
-
-                            'ShowMenu = False
 
                         End If
 
@@ -4871,8 +4865,6 @@ Public Class Form1
 
                             InitAndCreateNewLevel()
 
-                            'ShowMenu = False
-
                         End If
 
                     End If
@@ -4893,8 +4885,6 @@ Public Class Form1
 
                             ShowOpenLevelDialog()
 
-                            'ShowMenu = False
-
                         End If
 
                     End If
@@ -4908,8 +4898,6 @@ Public Class Form1
                     If ShowMenu = True Then
 
                         ShowSaveLevelDialog()
-
-                        'ShowMenu = False
 
                     End If
 

@@ -4360,8 +4360,6 @@ Public Class Form1
 
     Private Sub MouseMoveEditing(e As MouseEventArgs)
 
-
-
         Dim pointOffset As Point = e.Location
 
         pointOffset.X = Camera.Rect.X + e.X

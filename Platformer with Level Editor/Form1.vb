@@ -3118,7 +3118,7 @@ Public Class Form1
 
         With Buffer.Graphics
 
-            .Clear(Color) 'LightSkyBlue
+            .Clear(Color)
 
         End With
 
@@ -3153,6 +3153,75 @@ Public Class Form1
         Next
 
     End Sub
+
+    Private Sub DrawRoundedRectangle(pen As Pen, Rect As Rectangle, radius As Integer, e As PaintEventArgs)
+
+        Dim path As New Drawing2D.GraphicsPath()
+
+        'Add top line inside the top left and top right corners.
+        path.AddLine(Rect.Left + radius, Rect.Top, Rect.Right - radius, Rect.Top)
+
+        'Add top right corner.
+        path.AddArc(Rect.Right - radius, Rect.Top, radius, radius, 270, 90)
+
+        'Add right line inside the top right and bottom right corners.
+        path.AddLine(Rect.Right, Rect.Top + radius, Rect.Right, Rect.Bottom - radius)
+
+        'Add bottom right corner.
+        path.AddArc(Rect.Right - radius, Rect.Bottom - radius, radius, radius, 0, 90)
+
+        'Add bottom line inside the bottom left and the bottom right corners.
+        path.AddLine(Rect.Right - radius, Rect.Bottom, Rect.Left + radius, Rect.Bottom)
+
+        'Add bottom left corner.
+        path.AddArc(Rect.Left, Rect.Bottom - radius, radius, radius, 90, 90)
+
+        'Add left line inside the top left and bottom left corners.
+        path.AddLine(Rect.Left, Rect.Bottom - radius, Rect.Left, Rect.Top + radius)
+
+        'Add top left corner.
+        path.AddArc(Rect.Left, Rect.Top, radius, radius, 180, 90)
+
+        path.CloseFigure()
+
+        e.Graphics.DrawPath(pen, path)
+
+    End Sub
+
+    Private Sub FillRoundedRectangle(brush As Brush, Rect As Rectangle, radius As Integer, e As PaintEventArgs)
+
+        Dim Path As New Drawing2D.GraphicsPath()
+
+        'Add top line inside the top left and top right corners.
+        Path.AddLine(Rect.Left + radius, Rect.Top, Rect.Right - radius, Rect.Top)
+
+        'Add top right corner.
+        Path.AddArc(Rect.Right - radius, Rect.Top, radius, radius, 270, 90)
+
+        'Add right line inside the top right and bottom right corners.
+        Path.AddLine(Rect.Right, Rect.Top + radius, Rect.Right, Rect.Bottom - radius)
+
+        'Add bottom right corner.
+        Path.AddArc(Rect.Right - radius, Rect.Bottom - radius, radius, radius, 0, 90)
+
+        'Add bottom line inside the bottom left and the bottom right corners.
+        Path.AddLine(Rect.Right - radius, Rect.Bottom, Rect.Left + radius, Rect.Bottom)
+
+        'Add bottom left corner.
+        Path.AddArc(Rect.Left, Rect.Bottom - radius, radius, radius, 90, 90)
+
+        'Add left line inside the top left and bottom left corners.
+        Path.AddLine(Rect.Left, Rect.Bottom - radius, Rect.Left, Rect.Top + radius)
+
+        'Add top left corner.
+        Path.AddArc(Rect.Left, Rect.Top, radius, radius, 180, 90)
+
+        Path.CloseFigure()
+
+        e.Graphics.FillPath(brush, Path)
+
+    End Sub
+
 
     Private Sub UpdateFrameCounter()
 

@@ -16,10 +16,17 @@ Gain a deep understanding of physics, collision detection, character movement, a
 #### 2. Programming Patterns
 Discover common programming patterns used in game development, such as object-oriented design and event handling.
 
-![Platformer with Level Editor](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/d0e9278d-9556-4c03-a0b7-f1f145438962)
+
+
+![057](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/886fa4d4-76b0-4785-88d7-0e012c5ae303)
+
 
 #### 3. Level Design
 The level editor component introduces you to key game design principles, covering aspects like level creation, storage, and loading.
+
+
+![058](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/65bf74f9-de90-45ed-9186-c5ef8e13dfd7)
+
 
 #### 4. Sound Integration
 Learn how to integrate audio assets into your game, including sound effects and music.

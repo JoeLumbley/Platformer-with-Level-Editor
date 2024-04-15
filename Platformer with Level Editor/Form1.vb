@@ -849,11 +849,7 @@ Public Class Form1
 
         DrawTitle()
 
-        'DrawStartScreenNewButtonBackground()
-
         DrawStartScreenNewButton()
-
-        'DrawStartScreenOpenButtonBackground()
 
         DrawStartScreenOpenButton()
 
@@ -2268,15 +2264,7 @@ Public Class Form1
 
             Shadow.Offset(15, 15)
 
-            '.DrawRectangle(MenuShadowPen, Shadow)
-
-            'DrawRoundedRectangle(MenuShadowPen, Shadow, 10, Buffer.Graphics)
-
             FillRoundedRectangle(MenuShadowBrush, Shadow, 20, Buffer.Graphics)
-
-            '.DrawRectangle(MenuOutinePen, MenuBackground.Rect)
-
-            '.FillRectangle(Brushes.Black, MenuBackground.Rect)
 
             FillRoundedRectangle(Brushes.Black, MenuBackground.Rect, 10, Buffer.Graphics)
 
@@ -2291,51 +2279,6 @@ Public Class Form1
         OutLineRect.Inflate(2, 2)
 
         DrawRoundedRectangle(MenuOutinePen, OutLineRect, 20, Buffer.Graphics)
-
-    End Sub
-
-
-    Private Sub DrawStartScreenNewButtonBackground()
-
-        With Buffer.Graphics
-
-            'Dim Shadow As Rectangle = StartScreenNewButton.Rect
-
-            'Shadow.Offset(12, 12)
-
-            ''.DrawRectangle(MenuShadowPen, Shadow)
-            'FillRoundedRectangle(MenuShadowBrush, Shadow, 10, Buffer.Graphics)
-
-
-            '.DrawRectangle(MenuOutinePen, StartScreenNewButton.Rect)
-
-            'DrawRoundedRectangle(MenuOutinePen, StartScreenNewButton.Rect, 10, Buffer.Graphics)
-
-            '.FillRectangle(Brushes.Black, StartScreenNewButton.Rect)
-
-        End With
-
-    End Sub
-
-    Private Sub DrawStartScreenOpenButtonBackground()
-
-        With Buffer.Graphics
-
-            'Dim Shadow As Rectangle = StartScreenOpenButton.Rect
-
-            'Shadow.Offset(9, 9)
-
-            ''.DrawRectangle(MenuShadowPen, Shadow)
-
-            'FillRoundedRectangle(MenuShadowBrush, Shadow, 10, Buffer.Graphics)
-
-
-
-            '.DrawRectangle(MenuOutinePen, StartScreenOpenButton.Rect)
-
-            '.FillRectangle(Brushes.Black, StartScreenOpenButton.Rect)
-
-        End With
 
     End Sub
 
@@ -3043,9 +2986,6 @@ Public Class Form1
     Private Sub DrawStartScreenOpenButton()
 
         With Buffer.Graphics
-
-            '.FillRectangle(Brushes.Black,
-            'StartScreenOpenButton.Rect)
 
             Dim Shadow As Rectangle = StartScreenOpenButton.Rect
 

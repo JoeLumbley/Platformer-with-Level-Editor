@@ -24,7 +24,6 @@ Discover common programming patterns used in game development, such as object-or
 #### 3. Level Design
 The level editor component introduces you to key game design principles, covering aspects like level creation, storage, and loading.
 
-
 ![058](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/65bf74f9-de90-45ed-9186-c5ef8e13dfd7)
 
 
@@ -39,3 +38,5 @@ In conclusion, **"Platformer with Level Editor"** provides a comprehensive learn
 ![Platformer with Level Editor](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/2660702d-eef3-4ce9-a5cc-3543d2f9f580)
 ![061](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/4392ab00-f8cf-4047-ac23-e09430b654a0)
 ![062](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/3560698b-312a-4e7a-a86a-863c8b750bff)
+![063](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/c55ed39f-9a4e-43d6-84a0-f5c364f224d9)
+

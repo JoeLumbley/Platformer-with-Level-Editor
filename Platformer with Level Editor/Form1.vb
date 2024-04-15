@@ -849,11 +849,11 @@ Public Class Form1
 
         DrawTitle()
 
-        DrawStartScreenNewButtonBackground()
+        'DrawStartScreenNewButtonBackground()
 
         DrawStartScreenNewButton()
 
-        DrawStartScreenOpenButtonBackground()
+        'DrawStartScreenOpenButtonBackground()
 
         DrawStartScreenOpenButton()
 
@@ -2272,7 +2272,7 @@ Public Class Form1
 
             'DrawRoundedRectangle(MenuShadowPen, Shadow, 10, Buffer.Graphics)
 
-            FillRoundedRectangle(MenuShadowBrush, Shadow, 10, Buffer.Graphics)
+            FillRoundedRectangle(MenuShadowBrush, Shadow, 20, Buffer.Graphics)
 
             '.DrawRectangle(MenuOutinePen, MenuBackground.Rect)
 
@@ -2290,7 +2290,7 @@ Public Class Form1
 
         OutLineRect.Inflate(2, 2)
 
-        DrawRoundedRectangle(MenuOutinePen, OutLineRect, 10, Buffer.Graphics)
+        DrawRoundedRectangle(MenuOutinePen, OutLineRect, 20, Buffer.Graphics)
 
     End Sub
 
@@ -2299,15 +2299,19 @@ Public Class Form1
 
         With Buffer.Graphics
 
-            Dim Shadow As Rectangle = StartScreenNewButton.Rect
+            'Dim Shadow As Rectangle = StartScreenNewButton.Rect
 
-            Shadow.Offset(9, 9)
+            'Shadow.Offset(12, 12)
 
-            .DrawRectangle(MenuShadowPen, Shadow)
+            ''.DrawRectangle(MenuShadowPen, Shadow)
+            'FillRoundedRectangle(MenuShadowBrush, Shadow, 10, Buffer.Graphics)
 
-            .DrawRectangle(MenuOutinePen, StartScreenNewButton.Rect)
 
-            .FillRectangle(Brushes.Black, StartScreenNewButton.Rect)
+            '.DrawRectangle(MenuOutinePen, StartScreenNewButton.Rect)
+
+            'DrawRoundedRectangle(MenuOutinePen, StartScreenNewButton.Rect, 10, Buffer.Graphics)
+
+            '.FillRectangle(Brushes.Black, StartScreenNewButton.Rect)
 
         End With
 
@@ -2317,15 +2321,19 @@ Public Class Form1
 
         With Buffer.Graphics
 
-            Dim Shadow As Rectangle = StartScreenOpenButton.Rect
+            'Dim Shadow As Rectangle = StartScreenOpenButton.Rect
 
-            Shadow.Offset(9, 9)
+            'Shadow.Offset(9, 9)
 
-            .DrawRectangle(MenuShadowPen, Shadow)
+            ''.DrawRectangle(MenuShadowPen, Shadow)
 
-            .DrawRectangle(MenuOutinePen, StartScreenOpenButton.Rect)
+            'FillRoundedRectangle(MenuShadowBrush, Shadow, 10, Buffer.Graphics)
 
-            .FillRectangle(Brushes.Black, StartScreenOpenButton.Rect)
+
+
+            '.DrawRectangle(MenuOutinePen, StartScreenOpenButton.Rect)
+
+            '.FillRectangle(Brushes.Black, StartScreenOpenButton.Rect)
 
         End With
 
@@ -3036,12 +3044,22 @@ Public Class Form1
 
         With Buffer.Graphics
 
-            .FillRectangle(Brushes.Black,
-                           StartScreenOpenButton.Rect)
+            '.FillRectangle(Brushes.Black,
+            'StartScreenOpenButton.Rect)
+
+            Dim Shadow As Rectangle = StartScreenOpenButton.Rect
+
+            Shadow.Offset(12, 12)
+
+            FillRoundedRectangle(MenuShadowBrush, Shadow, 10, Buffer.Graphics)
+
+            FillRoundedRectangle(Brushes.Black, StartScreenOpenButton.Rect, 10, Buffer.Graphics)
+
+            DrawRoundedRectangle(MenuOutinePen, StartScreenOpenButton.Rect, 10, Buffer.Graphics)
 
             .DrawEllipse(YButtonIconOutinePen,
                          New Rectangle(StartScreenOpenButton.Rect.X + 142,
-                                       StartScreenOpenButton.Rect.Y + 20,
+                                       StartScreenOpenButton.Rect.Y + StartScreenOpenButton.Rect.Height \ 2 - 52 \ 2,
                                        52,
                                        52))
 
@@ -3049,7 +3067,7 @@ Public Class Form1
                         FPSFont,
                         Brushes.White,
                         New Rectangle(StartScreenOpenButton.Rect.X,
-                                      StartScreenOpenButton.Rect.Y + 24,
+                                      StartScreenOpenButton.Rect.Y + StartScreenOpenButton.Rect.Height \ 2 - 45 \ 2,
                                       150,
                                       50),
                                       AlineCenterMiddle)
@@ -3057,8 +3075,8 @@ Public Class Form1
             .DrawString("Y",
                         ButtonIconFont,
                         Brushes.White,
-                        New Rectangle(StartScreenOpenButton.Rect.X + 144,
-                                      StartScreenOpenButton.Rect.Y + 25,
+                        New Rectangle(StartScreenOpenButton.Rect.X + 143,
+                                      StartScreenOpenButton.Rect.Y + StartScreenOpenButton.Rect.Height \ 2 - 45 \ 2,
                                       50,
                                       50),
                                       AlineCenterMiddle)
@@ -3071,12 +3089,19 @@ Public Class Form1
 
         With Buffer.Graphics
 
-            .FillRectangle(Brushes.Black,
-                           StartScreenNewButton.Rect)
+            Dim Shadow As Rectangle = StartScreenNewButton.Rect
+
+            Shadow.Offset(12, 12)
+
+            FillRoundedRectangle(MenuShadowBrush, Shadow, 10, Buffer.Graphics)
+
+            FillRoundedRectangle(Brushes.Black, StartScreenNewButton.Rect, 10, Buffer.Graphics)
+
+            DrawRoundedRectangle(MenuOutinePen, StartScreenNewButton.Rect, 10, Buffer.Graphics)
 
             .DrawEllipse(BButtonIconOutinePen,
                          New Rectangle(StartScreenNewButton.Rect.X + 140,
-                                       StartScreenNewButton.Rect.Y + 20,
+                                       StartScreenNewButton.Rect.Y + StartScreenNewButton.Rect.Height \ 2 - 52 \ 2,
                                        52,
                                        52))
 
@@ -3084,7 +3109,7 @@ Public Class Form1
                         FPSFont,
                         Brushes.White,
                         New Rectangle(StartScreenNewButton.Rect.X + 5,
-                                      StartScreenNewButton.Rect.Y + 24,
+                                      StartScreenNewButton.Rect.Y + StartScreenNewButton.Rect.Height \ 2 - 45 \ 2,
                                       120,
                                       50),
                         AlineCenterMiddle)
@@ -3093,7 +3118,7 @@ Public Class Form1
                         ButtonIconFont,
                         Brushes.White,
                         New Rectangle(StartScreenNewButton.Rect.X + 143,
-                                      StartScreenNewButton.Rect.Y + 24,
+                                      StartScreenNewButton.Rect.Y + StartScreenNewButton.Rect.Height \ 2 - 45 \ 2,
                                       50,
                                       50),
                                       AlineCenterMiddle)

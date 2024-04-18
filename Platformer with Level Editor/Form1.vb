@@ -4898,10 +4898,6 @@ Public Class Form1
                         BufferGridLines()
 
                     Else
-                        'TODO
-
-                        'Move mouse pointer right.
-                        'Cursor.Position = New Point(Cursor.Position.X + 2, Cursor.Position.Y)
 
                         'Is the pointer moving left?
                         If MousePointer.Velocity.X < 0 Then
@@ -4953,9 +4949,6 @@ Public Class Form1
 
                     Else
 
-                        'Move mouse pointer left.
-                        'Cursor.Position = New Point(Cursor.Position.X - 2, Cursor.Position.Y)
-
                         'Is the pointer moving right?
                         If MousePointer.Velocity.X > 0 Then
                             'Yes, the pointer is moving right.
@@ -5004,9 +4997,6 @@ Public Class Form1
 
                     Else
 
-                        'Move mouse pointer up.
-                        'Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y - 2)
-
                         'Is the pointer moving down?
                         If MousePointer.Velocity.Y > 0 Then
                             'Yes, the pointer is moving down.
@@ -5054,9 +5044,6 @@ Public Class Form1
                         BufferGridLines()
 
                     Else
-
-                        'Move mouse pointer down.
-                        'Cursor.Position = New Point(Cursor.Position.X, Cursor.Position.Y + 2)
 
                         'Is the pointer moving up?
                         If MousePointer.Velocity.Y < 0 Then

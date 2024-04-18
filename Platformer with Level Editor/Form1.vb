@@ -389,6 +389,10 @@ Public Class Form1
 
     Private LeftArrowDown As Boolean = False
 
+    Private UpArrowDown As Boolean = False
+
+    Private DownArrowDown As Boolean = False
+
     Private DeleteDown As Boolean = False
 
     Private Jumped As Boolean = False
@@ -542,6 +546,8 @@ Public Class Form1
                 UpdateEditorDeltaTime()
 
                 UpdateMousePointerMovement()
+
+                UpdateCameraMovement()
 
             Case AppState.Clear
 
@@ -810,8 +816,8 @@ Public Class Form1
                             'Our Hero died.
 
                             'Restart level.
-                            Camera.Rect.X = 0
-                            Camera.Rect.Y = 0
+                            Camera.Position.X = 0
+                            Camera.Position.Y = 0
 
                             UpdateCameraOffset()
 
@@ -1009,8 +1015,8 @@ Public Class Form1
 
                 StopClearScreenTimer = True
 
-                Camera.Rect.X = 0
-                Camera.Rect.Y = 0
+                Camera.Position.X = 0
+                Camera.Position.Y = 0
 
                 UpdateCameraOffset()
 
@@ -1344,8 +1350,19 @@ Public Class Form1
 
                 If ShowMenu = False Then
 
-                    'Move camera to the left.
-                    Camera.Rect.X -= 10
+                    'Is the camera moving right?
+                    If Camera.Velocity.X > 0 Then
+                        'Yes, the camera is moving right.
+
+                        'Stop move before changing direction.
+                        Camera.Velocity.X = 0 'Zero speed.
+
+                    End If
+                    'Move camera left.
+                    Camera.Velocity.X += -Camera.Acceleration.X * EditorDeltaTime.TotalSeconds
+
+                    'Limit camera velocity to the max.
+                    If Camera.Velocity.X < -Camera.MaxVelocity.X Then Camera.Velocity.X = -Camera.MaxVelocity.X
 
                     UpdateCameraOffset()
 
@@ -1362,8 +1379,20 @@ Public Class Form1
 
                 If ShowMenu = False Then
 
-                    'Move camera to the right.
-                    Camera.Rect.X += 10
+                    'Is the camera moving left?
+                    If Camera.Velocity.X < 0 Then
+                        'Yes, the camera is moving left.
+
+                        'Stop move before changing direction.
+                        Camera.Velocity.X = 0 'Zero speed.
+
+                    End If
+
+                    'Move camera right.
+                    Camera.Velocity.X += Camera.Acceleration.X * EditorDeltaTime.TotalSeconds
+
+                    'Limit camera velocity to the max.
+                    If Camera.Velocity.X > Camera.MaxVelocity.X Then Camera.Velocity.X = Camera.MaxVelocity.X
 
                     UpdateCameraOffset()
 
@@ -1376,18 +1405,66 @@ Public Class Form1
         Else
             'The right thumbstick is in the neutral position.
 
+            If GameState = AppState.Editing Then
+
+                If LeftArrowDown = False And RightArrowDown = False Then
+
+                    If Camera.Velocity.X < 0 Then
+
+                        'Decelerate camera.
+                        Camera.Velocity.X += Camera.Acceleration.X * 8 * EditorDeltaTime.TotalSeconds
+
+                        'Limit decelerate to zero speed.
+                        If Camera.Velocity.X > 0 Then Camera.Velocity.X = 0 'Zero speed.
+
+                        UpdateCameraOffset()
+
+                        BufferGridLines()
+
+                    End If
+
+                    If Camera.Velocity.X > 0 Then
+
+                        'Decelerate camera.
+                        Camera.Velocity.X += -Camera.Acceleration.X * 8 * EditorDeltaTime.TotalSeconds
+
+                        'Limit decelerate to zero speed.
+                        If Camera.Velocity.X < 0 Then Camera.Velocity.X = 0 'Zero speed.
+
+                        UpdateCameraOffset()
+
+                        BufferGridLines()
+
+                    End If
+
+                End If
+
+            End If
+
         End If
 
         'What position is the right thumbstick in on the Y-axis?
         If ControllerPosition.Gamepad.sThumbRY <= NeutralStart Then
-            'The right thumbstick is in the up position.
+            'The right thumbstick is in the down position.
 
             If GameState = AppState.Editing Then
 
                 If ShowMenu = False Then
 
-                    'Move camera up.
-                    Camera.Rect.Y += 10
+                    'Is the camera moving up?
+                    If Camera.Velocity.Y < 0 Then
+                        'Yes, the camera is moving up.
+
+                        'Stop move before changing direction.
+                        Camera.Velocity.Y = 0 'Zero speed.
+
+                    End If
+
+                    'Move camera down.
+                    Camera.Velocity.Y += Camera.Acceleration.Y * EditorDeltaTime.TotalSeconds
+
+                    'Limit camera velocity to the max.
+                    If Camera.Velocity.Y > Camera.MaxVelocity.Y Then Camera.Velocity.Y = Camera.MaxVelocity.Y
 
                     UpdateCameraOffset()
 
@@ -1398,14 +1475,26 @@ Public Class Form1
             End If
 
         ElseIf ControllerPosition.Gamepad.sThumbRY >= NeutralEnd Then
-            'The right thumbstick is in the down position.
+            'The right thumbstick is in the up position.
 
             If GameState = AppState.Editing Then
 
                 If ShowMenu = False Then
 
-                    'Move camera down.
-                    Camera.Rect.Y -= 10
+                    'Is the camera moving down?
+                    If Camera.Velocity.Y > 0 Then
+                        'Yes, the camera is moving down.
+
+                        'Stop move before changing direction.
+                        Camera.Velocity.Y = 0 'Zero speed.
+
+                    End If
+
+                    'Move camera up.
+                    Camera.Velocity.Y += -Camera.Acceleration.Y * EditorDeltaTime.TotalSeconds
+
+                    'Limit camera velocity to the max.
+                    If Camera.Velocity.Y < -Camera.MaxVelocity.Y Then Camera.Velocity.Y = -Camera.MaxVelocity.Y
 
                     UpdateCameraOffset()
 
@@ -1417,6 +1506,47 @@ Public Class Form1
 
         Else
             'The right thumbstick is in the neutral position.
+
+            If GameState = AppState.Editing Then
+
+
+                If UpArrowDown = False And DownArrowDown = False Then
+
+                    'Is the camera moving up?
+                    If Camera.Velocity.Y < 0 Then
+                        'Yes, the camera is moving up.
+
+                        'Decelerate camera.
+                        Camera.Velocity.Y += Camera.Acceleration.Y * 8 * EditorDeltaTime.TotalSeconds
+
+                        'Limit decelerate to zero speed.
+                        If Camera.Velocity.Y > 0 Then Camera.Velocity.Y = 0 'Zero speed.
+
+                        UpdateCameraOffset()
+
+                        BufferGridLines()
+
+                    End If
+
+                    'Is the camera moving down?
+                    If Camera.Velocity.Y > 0 Then
+                        'Yes, the camera is moving down.
+
+                        'Decelerate camera.
+                        Camera.Velocity.Y += -Camera.Acceleration.Y * 8 * EditorDeltaTime.TotalSeconds
+
+                        'Limit decelerate to zero speed.
+                        If Camera.Velocity.Y < 0 Then Camera.Velocity.Y = 0 'Zero speed.
+
+                        UpdateCameraOffset()
+
+                        BufferGridLines()
+
+                    End If
+
+                End If
+
+            End If
 
         End If
 
@@ -1456,6 +1586,22 @@ Public Class Form1
         MousePointer.Rect.Y = Math.Round(MousePointer.Position.Y)
 
         Cursor.Position = New Point(MousePointer.Rect.X, MousePointer.Rect.Y)
+
+    End Sub
+
+    Private Sub UpdateCameraMovement()
+
+        'Move camera horizontally.
+        Camera.Position.X += Camera.Velocity.X * EditorDeltaTime.TotalSeconds 'Δs = V * Δt
+        'Displacement = Velocity x Delta Time
+
+        Camera.Rect.X = Math.Round(Camera.Position.X)
+
+        'Move camera vertically.
+        Camera.Position.Y += Camera.Velocity.Y * EditorDeltaTime.TotalSeconds 'Δs = V * Δt
+        'Displacement = Velocity x Delta Time
+
+        Camera.Rect.Y = Math.Round(Camera.Position.Y)
 
     End Sub
 
@@ -3278,10 +3424,6 @@ Public Class Form1
 
         OutinePen.LineJoin = Drawing2D.LineJoin.Round
 
-        'MenuOutinePen.LineJoin = Drawing2D.LineJoin.Round
-
-        'MenuShadowPen.LineJoin = Drawing2D.LineJoin.Round
-
         InitializeObjects()
 
         CreateStartScreenLevel()
@@ -3315,7 +3457,8 @@ Public Class Form1
 
     Private Sub InitializeObjects()
 
-        Camera.Rect.Location = New Point(0, 0)
+        Camera.Position.X = 0
+        Camera.Position.Y = 0
 
         UpdateCameraOffset()
 
@@ -3336,6 +3479,12 @@ Public Class Form1
         MousePointer.MaxVelocity = New PointF(1500, 1500)
 
         MousePointer.Acceleration = New PointF(400, 300)
+
+        Camera.Velocity = New PointF(0, 0)
+
+        Camera.MaxVelocity = New PointF(2500, 2500)
+
+        Camera.Acceleration = New PointF(400, 300)
 
         BufferGridLines()
 
@@ -3523,11 +3672,11 @@ Public Class Form1
 
     Private Sub MouseDownEditingButtons(e As Point)
 
-        Dim pointOffset As Point = e
+        Dim PointOffset As Point = e
 
-        pointOffset.X = Camera.Rect.X + e.X
+        PointOffset.X = Camera.Position.X + e.X
 
-        pointOffset.Y = Camera.Rect.Y + e.Y
+        pointOffset.Y = Camera.Position.Y + e.Y
 
         'Is the player clicking the play button?
         If EditPlayButton.Rect.Contains(e) Then
@@ -3536,8 +3685,8 @@ Public Class Form1
             DeselectObjects()
 
             'Restore the cameras in game position.
-            Camera.Rect.X = CameraPlayPostion.X
-            Camera.Rect.Y = CameraPlayPostion.Y
+            Camera.Position.X = CameraPlayPostion.X
+            Camera.Position.Y = CameraPlayPostion.Y
 
             UpdateCameraOffset()
 
@@ -4432,11 +4581,11 @@ Public Class Form1
 
     Private Sub MouseMoveEditing(e As MouseEventArgs)
 
-        Dim pointOffset As Point = e.Location
+        Dim PointOffset As Point = e.Location
 
-        pointOffset.X = Camera.Rect.X + e.X
+        PointOffset.X = Camera.Position.X + e.X
 
-        pointOffset.Y = Camera.Rect.Y + e.Y
+        pointOffset.Y = Camera.Position.Y + e.Y
 
         If e.Button = MouseButtons.None Then
 
@@ -4701,9 +4850,9 @@ Public Class Form1
 
             If e.Button = MouseButtons.Left Then
 
-                Camera.Rect.X = SelectionOffset.X - e.X
+                Camera.Position.X = SelectionOffset.X - e.X
 
-                Camera.Rect.Y = SelectionOffset.Y - e.Y
+                Camera.Position.Y = SelectionOffset.Y - e.Y
 
                 UpdateCameraOffset()
 
@@ -4723,9 +4872,9 @@ Public Class Form1
             Case Keys.Right
                 'Yes, the player has pressed the right arrow key down.
 
-                If GameState = AppState.Playing Then
+                RightArrowDown = True
 
-                    RightArrowDown = True
+                If GameState = AppState.Playing Then
 
                     LeftArrowDown = False
 
@@ -4735,14 +4884,27 @@ Public Class Form1
 
                     If ShowMenu = False Then
 
-                        'Move Camera to the right.
-                        Camera.Rect.X += 10
+                        'Is the camera moving left?
+                        If Camera.Velocity.X < 0 Then
+                            'Yes, the camera is moving left.
+
+                            'Stop move before changing direction.
+                            Camera.Velocity.X = 0 'Zero speed.
+
+                        End If
+
+                        'Move camera right.
+                        Camera.Velocity.X += Camera.Acceleration.X * EditorDeltaTime.TotalSeconds
+
+                        'Limit camera velocity to the max.
+                        If Camera.Velocity.X > Camera.MaxVelocity.X Then Camera.Velocity.X = Camera.MaxVelocity.X
 
                         UpdateCameraOffset()
 
                         BufferGridLines()
 
                     Else
+                        'TODO
 
                         'Move mouse pointer right.
                         Cursor.Position = New Point(Cursor.Position.X + 2, Cursor.Position.Y)
@@ -4755,9 +4917,9 @@ Public Class Form1
             Case Keys.Left
                 'Yes, the player has pressed the left arrow key down.
 
-                If GameState = AppState.Playing Then
+                LeftArrowDown = True
 
-                    LeftArrowDown = True
+                If GameState = AppState.Playing Then
 
                     RightArrowDown = False
 
@@ -4767,8 +4929,19 @@ Public Class Form1
 
                     If ShowMenu = False Then
 
-                        'Move Camera to the left.
-                        Camera.Rect.X -= 10
+                        'Is the camera moving right?
+                        If Camera.Velocity.X > 0 Then
+                            'Yes, the camera is moving right.
+
+                            'Stop move before changing direction.
+                            Camera.Velocity.X = 0 'Zero speed.
+
+                        End If
+                        'Move camera left.
+                        Camera.Velocity.X += -Camera.Acceleration.X * EditorDeltaTime.TotalSeconds
+
+                        'Limit camera velocity to the max.
+                        If Camera.Velocity.X < -Camera.MaxVelocity.X Then Camera.Velocity.X = -Camera.MaxVelocity.X
 
                         UpdateCameraOffset()
 
@@ -4785,12 +4958,26 @@ Public Class Form1
 
             Case Keys.Up
 
+                UpArrowDown = True
+
                 If GameState = AppState.Editing Then
 
                     If ShowMenu = False Then
 
-                        'Move Camera up.
-                        Camera.Rect.Y -= 10
+                        'Is the camera moving down?
+                        If Camera.Velocity.Y > 0 Then
+                            'Yes, the camera is moving down.
+
+                            'Stop move before changing direction.
+                            Camera.Velocity.Y = 0 'Zero speed.
+
+                        End If
+
+                        'Move camera up.
+                        Camera.Velocity.Y += -Camera.Acceleration.Y * EditorDeltaTime.TotalSeconds
+
+                        'Limit camera velocity to the max.
+                        If Camera.Velocity.Y < -Camera.MaxVelocity.Y Then Camera.Velocity.Y = -Camera.MaxVelocity.Y
 
                         UpdateCameraOffset()
 
@@ -4807,12 +4994,26 @@ Public Class Form1
 
             Case Keys.Down
 
+                DownArrowDown = True
+
                 If GameState = AppState.Editing Then
 
                     If ShowMenu = False Then
 
-                        'Move Camera down.
-                        Camera.Rect.Y += 10
+                        'Is the camera moving up?
+                        If Camera.Velocity.Y < 0 Then
+                            'Yes, the camera is moving up.
+
+                            'Stop move before changing direction.
+                            Camera.Velocity.Y = 0 'Zero speed.
+
+                        End If
+
+                        'Move camera down.
+                        Camera.Velocity.Y += Camera.Acceleration.Y * EditorDeltaTime.TotalSeconds
+
+                        'Limit camera velocity to the max.
+                        If Camera.Velocity.Y > Camera.MaxVelocity.Y Then Camera.Velocity.Y = Camera.MaxVelocity.Y
 
                         UpdateCameraOffset()
 
@@ -5123,6 +5324,14 @@ Public Class Form1
 
                 LeftArrowDown = False
 
+            Case Keys.Up
+
+                UpArrowDown = False
+
+            Case Keys.Down
+
+                DownArrowDown = False
+
             Case Keys.A
 
                 If Jumped = True Then Jumped = False
@@ -5376,8 +5585,8 @@ Public Class Form1
                         IsStartDown = True
 
                         'Remember the cameras in game position before opening the editor.
-                        CameraPlayPostion.X = Camera.Rect.X
-                        CameraPlayPostion.Y = Camera.Rect.Y
+                        CameraPlayPostion.X = Camera.Position.X
+                        CameraPlayPostion.Y = Camera.Position.Y
 
                         'Move mouse pointer to the center of the client rectangle.
                         Cursor.Position = New Point(ClientRectangle.X + ClientRectangle.Width / 2,
@@ -5399,8 +5608,8 @@ Public Class Form1
                         DeselectObjects()
 
                         'Restore the cameras in game position.
-                        Camera.Rect.X = CameraPlayPostion.X
-                        Camera.Rect.Y = CameraPlayPostion.Y
+                        Camera.Position.X = CameraPlayPostion.X
+                        Camera.Position.Y = CameraPlayPostion.Y
 
                         UpdateCameraOffset()
 
@@ -5825,8 +6034,8 @@ Public Class Form1
         'When our hero exits the bottom side of the level.
         If Hero.Position.Y > Level.Rect.Bottom Then
 
-            Camera.Rect.X = 0
-            Camera.Rect.Y = 0
+            Camera.Position.X = 0
+            Camera.Position.Y = 0
 
             UpdateCameraOffset()
 
@@ -5855,8 +6064,8 @@ Public Class Form1
                 If EditPlayButton.Rect.Contains(e.Location) Then
 
                     'Remember the cameras in game position before opening the editor.
-                    CameraPlayPostion.X = Camera.Rect.X
-                    CameraPlayPostion.Y = Camera.Rect.Y
+                    CameraPlayPostion.X = Camera.Position.X
+                    CameraPlayPostion.Y = Camera.Position.Y
 
                     GameState = AppState.Editing
 
@@ -6030,6 +6239,8 @@ Public Class Form1
         If ExitButton.Rect.Contains(e) Then
             'Yes, the player is selecting the exit button.
 
+            LevelSelected = False
+
             ShowMenu = False
 
         End If
@@ -6183,12 +6394,12 @@ Public Class Form1
     Private Sub LookAhead()
 
         'Is our hero near the right side of the frame?
-        If Hero.Rect.X > Camera.Rect.X + Camera.Rect.Width / 1.5 Then
+        If Hero.Position.X > Camera.Position.X + Camera.Rect.Width / 1.5 Then
             'If Hero.X > Camera.X + Camera.Width / 1.5 Then
             'Yes, our hero is near the right side of the frame.
 
             'Move camera to the right.
-            Camera.Rect.X = Hero.Rect.Left - Camera.Rect.Width / 1.5
+            Camera.Position.X = Hero.Rect.Left - Camera.Rect.Width / 1.5
             'Camera.X = Hero.Left - Camera.Width / 1.5
 
             UpdateCameraOffset()
@@ -6196,12 +6407,12 @@ Public Class Form1
         End If
 
         'Is our hero near the left side of the frame?
-        If Hero.Rect.X < Camera.Rect.X + Camera.Rect.Width / 4 Then
+        If Hero.Rect.X < Camera.Position.X + Camera.Rect.Width / 4 Then
             'If Hero.X < Camera.X + Camera.Width / 4 Then
             'Yes, our hero is near the left side of the frame.
 
             'Move camera to the left.
-            Camera.Rect.X = Hero.Rect.Left - Camera.Rect.Width / 4
+            Camera.Position.X = Hero.Rect.Left - Camera.Rect.Width / 4
             'Camera.X = Hero.Left - Camera.Width / 4
 
             UpdateCameraOffset()
@@ -6209,12 +6420,12 @@ Public Class Form1
         End If
 
         'Is our hero near the bottom side of the frame?
-        If Hero.Rect.Y > Camera.Rect.Y + Camera.Rect.Height / 1.25 Then
+        If Hero.Rect.Y > Camera.Position.Y + Camera.Rect.Height / 1.25 Then
             'If Hero.Y > Camera.Y + Camera.Height / 1.25 Then
             'Yes, our hero is near the bottom side of the frame.
 
             'Move camera down.
-            Camera.Rect.Y = Hero.Rect.Top - Camera.Rect.Height / 1.25
+            Camera.Position.Y = Hero.Rect.Top - Camera.Rect.Height / 1.25
             'Camera.Y = Hero.Top - Camera.Height / 1.25
 
             UpdateCameraOffset()
@@ -6222,11 +6433,11 @@ Public Class Form1
         End If
 
         'Is our hero near the top side of the frame?
-        If Hero.Rect.Y < Camera.Rect.Y + Camera.Rect.Height / 6 Then
+        If Hero.Rect.Y < Camera.Position.Y + Camera.Rect.Height / 6 Then
             'Yes, our hero is near the top side of the frame.
 
             'Move camera up.
-            Camera.Rect.Y = Hero.Rect.Top - Camera.Rect.Height / 6
+            Camera.Position.Y = Hero.Rect.Top - Camera.Rect.Height / 6
 
             UpdateCameraOffset()
 
@@ -6237,44 +6448,44 @@ Public Class Form1
     Private Sub KeepCameraOnTheLevel()
 
         'Has the camera moved passed the left side of the level?
-        If Camera.Rect.X < Level.Rect.Left Then
+        If Camera.Position.X < Level.Rect.Left Then
             'Yes, the camera has moved pass the left side of the level.
 
             'Limit the camera movement to the left side of the level.
-            Camera.Rect.X = Level.Rect.Left
+            Camera.Position.X = Level.Rect.Left
 
             UpdateCameraOffset()
 
         End If
 
         'Has the camera moved passed the right side of the level?
-        If Camera.Rect.X + Camera.Rect.Width > Level.Rect.Right Then
+        If Camera.Position.X + Camera.Rect.Width > Level.Rect.Right Then
             'Yes, the camera has moved pass the right side of the level.
 
             'Limit the camera movement to the right side of the level.
-            Camera.Rect.X = Level.Rect.Right - Camera.Rect.Width
+            Camera.Position.X = Level.Rect.Right - Camera.Rect.Width
 
             UpdateCameraOffset()
 
         End If
 
         'Has the camera moved passed the top side of the level?
-        If Camera.Rect.Y < Level.Rect.Top Then
+        If Camera.Position.Y < Level.Rect.Top Then
             'Yes, the camera has moved passed the top side of the level.
 
             'Limit camera movement to the top side of the level.
-            Camera.Rect.Y = Level.Rect.Top
+            Camera.Position.Y = Level.Rect.Top
 
             UpdateCameraOffset()
 
         End If
 
         'Has the camera moved passed the bottom side of the level?
-        If Camera.Rect.Y + Camera.Rect.Height > Level.Rect.Bottom Then
+        If Camera.Position.Y + Camera.Rect.Height > Level.Rect.Bottom Then
             'Yes, the camera has moved pass the bottom side of the level.
 
             'Limit camera movement to the bottom of the level.
-            Camera.Rect.Y = Level.Rect.Bottom - Camera.Rect.Height
+            Camera.Position.Y = Level.Rect.Bottom - Camera.Rect.Height
 
             UpdateCameraOffset()
 
@@ -6284,9 +6495,9 @@ Public Class Form1
 
     Private Sub UpdateCameraOffset()
 
-        CameraOffset.X = Camera.Rect.X * -1
+        CameraOffset.X = Camera.Position.X * -1
 
-        CameraOffset.Y = Camera.Rect.Y * -1
+        CameraOffset.Y = Camera.Position.Y * -1
 
     End Sub
 

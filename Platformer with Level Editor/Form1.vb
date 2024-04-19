@@ -1225,20 +1225,7 @@ Public Class Form1
 
             If GameState = AppState.Start Or GameState = AppState.Editing Then
 
-                'Is the pointer moving up?
-                If MousePointer.Velocity.Y < 0 Then
-                    'Yes, the pointer is moving up.
-
-                    'Stop move before changing direction.
-                    MousePointer.Velocity.Y = 0 'Zero speed.
-
-                End If
-
-                'Move pointer down.
-                MousePointer.Velocity.Y += MousePointer.Acceleration.Y * EditorDeltaTime.TotalSeconds
-
-                'Limit pointer velocity to the max.
-                If MousePointer.Velocity.Y > MousePointer.MaxVelocity.Y Then MousePointer.Velocity.Y = MousePointer.MaxVelocity.Y
+                MovePointerDown()
 
             End If
 
@@ -1300,6 +1287,25 @@ Public Class Form1
             End If
 
         End If
+
+    End Sub
+
+    Private Sub MovePointerDown()
+
+        'Is the pointer moving up?
+        If MousePointer.Velocity.Y < 0 Then
+            'Yes, the pointer is moving up.
+
+            'Stop move before changing direction.
+            MousePointer.Velocity.Y = 0 'Zero speed.
+
+        End If
+
+        'Move pointer down.
+        MousePointer.Velocity.Y += MousePointer.Acceleration.Y * EditorDeltaTime.TotalSeconds
+
+        'Limit pointer velocity to the max.
+        If MousePointer.Velocity.Y > MousePointer.MaxVelocity.Y Then MousePointer.Velocity.Y = MousePointer.MaxVelocity.Y
 
     End Sub
 
@@ -1853,16 +1859,16 @@ Public Class Form1
 
             RectOffset.Offset(CameraOffset)
 
-            .FillRectangle(Brushes.Red, rectOffset)
+            .FillRectangle(Brushes.Red, RectOffset)
 
-            .DrawString("Hero", CWJFont, Brushes.White, rectOffset, AlineCenterMiddle)
+            .DrawString("Hero", CWJFont, Brushes.White, RectOffset, AlineCenterMiddle)
 
             'Draw hero position
             .DrawString("X: " & Hero.Position.X.ToString & vbCrLf & "Y: " & Hero.Position.Y.ToString,
                         CWJFont,
                         Brushes.White,
-                        rectOffset.X,
-                        rectOffset.Y - 50,
+                        RectOffset.X,
+                        RectOffset.Y - 50,
                         New StringFormat With {.Alignment = StringAlignment.Near})
 
         End With
@@ -1887,11 +1893,11 @@ Public Class Form1
 
                                 RectOffset.Offset(CameraOffset)
 
-                                If rectOffset.IntersectsWith(ClientRectangle) Then
+                                If RectOffset.IntersectsWith(ClientRectangle) Then
 
-                                    .FillRectangle(Brushes.Chocolate, rectOffset)
+                                    .FillRectangle(Brushes.Chocolate, RectOffset)
 
-                                    .DrawString("E", EnemyFont, Brushes.PaleGoldenrod, rectOffset, AlineCenterMiddle)
+                                    .DrawString("E", EnemyFont, Brushes.PaleGoldenrod, RectOffset, AlineCenterMiddle)
 
                                 End If
 
@@ -1964,14 +1970,14 @@ Public Class Form1
 
                 RectOffset.Offset(CameraOffset)
 
-                If rectOffset.IntersectsWith(ClientRectangle) Then
+                If RectOffset.IntersectsWith(ClientRectangle) Then
 
-                    .FillRectangle(Brushes.White, rectOffset)
+                    .FillRectangle(Brushes.White, RectOffset)
 
                     ' Define the rectangle to be filled
-                    Dim Rect As RectangleF = rectOffset
+                    Dim Rect As RectangleF = RectOffset
 
-                    Rect.Inflate(rect.Width / 6.4F, rect.Height / 6.4F)
+                    Rect.Inflate(Rect.Width / 6.4F, Rect.Height / 6.4F)
 
                     ' Define the center point of the gradient
                     Dim Center As New PointF(Rect.Left + Rect.Width / 2.0F, Rect.Top + Rect.Height / 2.0F)
@@ -1981,16 +1987,16 @@ Public Class Form1
 
                     ' Create the path for the gradient brush
                     Dim GradPath As New GraphicsPath()
-                    GradPath.AddEllipse(rect)
+                    GradPath.AddEllipse(Rect)
 
                     ' Create the gradient brush
                     Dim GradBrush As New PathGradientBrush(GradPath) With {
-                        .CenterPoint = center,
-                        .CenterColor = colors(0),
-                        .SurroundColors = New Color() {colors(1)}
+                        .CenterPoint = Center,
+                        .CenterColor = Colors(0),
+                        .SurroundColors = New Color() {Colors(1)}
                     }
 
-                    .FillRectangle(GradBrush, rectOffset)
+                    .FillRectangle(GradBrush, RectOffset)
 
                     If Goal.Rect.Width <= Goal.Rect.Height Then
 
@@ -2009,7 +2015,7 @@ Public Class Form1
                         .DrawString("«",
                                 Font,
                                 Brushes.Green,
-                                rectOffset,
+                                RectOffset,
                                 AlineCenterMiddle)
 
                     End If
@@ -2021,11 +2027,11 @@ Public Class Form1
                     If GoalSelected = True Then
 
                         'Draw selection rectangle.
-                        .DrawRectangle(New Pen(Color.Red, 6), rectOffset)
+                        .DrawRectangle(New Pen(Color.Red, 6), RectOffset)
 
                         'Position sizing handle.
-                        SizingHandle.X = rectOffset.Right - SizingHandle.Width \ 2
-                        SizingHandle.Y = rectOffset.Bottom - SizingHandle.Height \ 2
+                        SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
+                        SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
 
                         'Draw sizing handle.
                         .FillRectangle(Brushes.Black,
@@ -2053,9 +2059,9 @@ Public Class Form1
 
                     RectOffset.Offset(CameraOffset)
 
-                    If rectOffset.IntersectsWith(ClientRectangle) Then
+                    If RectOffset.IntersectsWith(ClientRectangle) Then
 
-                        .FillRectangle(Brushes.Chocolate, rectOffset)
+                        .FillRectangle(Brushes.Chocolate, RectOffset)
 
                     End If
 
@@ -2064,11 +2070,11 @@ Public Class Form1
                         If SelectedBlock = Array.IndexOf(Blocks, Block) Then
 
                             'Draw selection rectangle.
-                            .DrawRectangle(New Pen(Color.Red, 6), rectOffset)
+                            .DrawRectangle(New Pen(Color.Red, 6), RectOffset)
 
                             'Position sizing handle.
-                            SizingHandle.X = rectOffset.Right - SizingHandle.Width \ 2
-                            SizingHandle.Y = rectOffset.Bottom - SizingHandle.Height \ 2
+                            SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
+                            SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
 
                             'Draw sizing handle.
                             .FillRectangle(Brushes.Black,
@@ -2098,15 +2104,15 @@ Public Class Form1
 
                     RectOffset.Offset(CameraOffset)
 
-                    If rectOffset.IntersectsWith(ClientRectangle) Then
+                    If RectOffset.IntersectsWith(ClientRectangle) Then
 
-                        .FillRectangle(Brushes.GreenYellow, rectOffset)
+                        .FillRectangle(Brushes.GreenYellow, RectOffset)
 
-                        .DrawLine(SeaGreenPen, rectOffset.Right - 10, rectOffset.Top + 10, rectOffset.Right - 10, rectOffset.Bottom - 10)
+                        .DrawLine(SeaGreenPen, RectOffset.Right - 10, RectOffset.Top + 10, RectOffset.Right - 10, RectOffset.Bottom - 10)
 
-                        .DrawLine(SeaGreenPen, rectOffset.Left + 10, rectOffset.Bottom - 10, rectOffset.Right - 10, rectOffset.Bottom - 10)
+                        .DrawLine(SeaGreenPen, RectOffset.Left + 10, RectOffset.Bottom - 10, RectOffset.Right - 10, RectOffset.Bottom - 10)
 
-                        .DrawRectangle(OutinePen, rectOffset)
+                        .DrawRectangle(OutinePen, RectOffset)
 
                     End If
 
@@ -2115,11 +2121,11 @@ Public Class Form1
                         If SelectedBush = Array.IndexOf(Bushes, Bush) Then
 
                             'Draw selection rectangle.
-                            .DrawRectangle(New Pen(Color.Red, 6), rectOffset)
+                            .DrawRectangle(New Pen(Color.Red, 6), RectOffset)
 
                             'Position sizing handle.
-                            SizingHandle.X = rectOffset.Right - SizingHandle.Width \ 2
-                            SizingHandle.Y = rectOffset.Bottom - SizingHandle.Height \ 2
+                            SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
+                            SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
 
                             'Draw sizing handle.
                             .FillRectangle(Brushes.Black,
@@ -2149,18 +2155,18 @@ Public Class Form1
 
                     RectOffset.Offset(CameraOffset)
 
-                    If rectOffset.IntersectsWith(ClientRectangle) Then
+                    If RectOffset.IntersectsWith(ClientRectangle) Then
 
-                        .FillRectangle(Brushes.White, rectOffset)
+                        .FillRectangle(Brushes.White, RectOffset)
 
-                        .DrawLine(LightSkyBluePen, rectOffset.Right - 10,
-                                  rectOffset.Top + 10,
-                                  rectOffset.Right - 10,
-                                  rectOffset.Bottom - 10)
+                        .DrawLine(LightSkyBluePen, RectOffset.Right - 10,
+                                  RectOffset.Top + 10,
+                                  RectOffset.Right - 10,
+                                  RectOffset.Bottom - 10)
 
-                        .DrawLine(LightSkyBluePen, rectOffset.Left + 10, rectOffset.Bottom - 10, rectOffset.Right - 10, rectOffset.Bottom - 10)
+                        .DrawLine(LightSkyBluePen, RectOffset.Left + 10, RectOffset.Bottom - 10, RectOffset.Right - 10, RectOffset.Bottom - 10)
 
-                        .DrawRectangle(OutinePen, rectOffset)
+                        .DrawRectangle(OutinePen, RectOffset)
 
                     End If
 
@@ -2169,11 +2175,11 @@ Public Class Form1
                         If SelectedCloud = Array.IndexOf(Clouds, Cloud) Then
 
                             'Draw selection rectangle.
-                            .DrawRectangle(New Pen(Color.Red, 6), rectOffset)
+                            .DrawRectangle(New Pen(Color.Red, 6), RectOffset)
 
                             'Position sizing handle.
-                            SizingHandle.X = rectOffset.Right - SizingHandle.Width \ 2
-                            SizingHandle.Y = rectOffset.Bottom - SizingHandle.Height \ 2
+                            SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
+                            SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
 
                             'Draw sizing handle.
                             .FillRectangle(Brushes.Black,
@@ -2209,21 +2215,21 @@ Public Class Form1
 
                             If Bill.Collected = False Then
 
-                                .FillRectangle(Brushes.Goldenrod, rectOffset)
+                                .FillRectangle(Brushes.Goldenrod, RectOffset)
 
-                                .DrawString("$", FPSFont, Brushes.OrangeRed, rectOffset, AlineCenterMiddle)
+                                .DrawString("$", FPSFont, Brushes.OrangeRed, RectOffset, AlineCenterMiddle)
 
                             End If
 
                         Case AppState.Playing
 
-                            If rectOffset.IntersectsWith(ClientRectangle) Then
+                            If RectOffset.IntersectsWith(ClientRectangle) Then
 
                                 If Bill.Collected = False Then
 
-                                    .FillRectangle(Brushes.Goldenrod, rectOffset)
+                                    .FillRectangle(Brushes.Goldenrod, RectOffset)
 
-                                    .DrawString("$", FPSFont, Brushes.OrangeRed, rectOffset, AlineCenterMiddle)
+                                    .DrawString("$", FPSFont, Brushes.OrangeRed, RectOffset, AlineCenterMiddle)
 
                                 End If
 
@@ -2231,11 +2237,11 @@ Public Class Form1
 
                         Case AppState.Editing
 
-                            If rectOffset.IntersectsWith(ClientRectangle) Then
+                            If RectOffset.IntersectsWith(ClientRectangle) Then
 
-                                .FillRectangle(Brushes.Goldenrod, rectOffset)
+                                .FillRectangle(Brushes.Goldenrod, RectOffset)
 
-                                .DrawString("$", FPSFont, Brushes.OrangeRed, rectOffset, AlineCenterMiddle)
+                                .DrawString("$", FPSFont, Brushes.OrangeRed, RectOffset, AlineCenterMiddle)
 
 
                             End If
@@ -2243,7 +2249,7 @@ Public Class Form1
                             If SelectedBill = Array.IndexOf(Cash, Bill) Then
 
                                 'Draw selection rectangle.
-                                .DrawRectangle(New Pen(Color.Red, 6), rectOffset)
+                                .DrawRectangle(New Pen(Color.Red, 6), RectOffset)
 
                             End If
 
@@ -3676,7 +3682,7 @@ Public Class Form1
 
         PointOffset.X = Camera.Position.X + e.X
 
-        pointOffset.Y = Camera.Position.Y + e.Y
+        PointOffset.Y = Camera.Position.Y + e.Y
 
         'Is the player clicking the play button?
         If EditPlayButton.Rect.Contains(e) Then
@@ -3715,8 +3721,8 @@ Public Class Form1
             DeselectObjects()
 
             'Snap preview to grid.
-            ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize) * GridSize)
-            ToolPreview.Y = CInt(Math.Round(pointOffset.Y / GridSize) * GridSize)
+            ToolPreview.X = CInt(Math.Round(PointOffset.X / GridSize) * GridSize)
+            ToolPreview.Y = CInt(Math.Round(PointOffset.Y / GridSize) * GridSize)
 
             ToolPreview.Width = GridSize
             ToolPreview.Height = GridSize
@@ -3732,8 +3738,8 @@ Public Class Form1
             DeselectObjects()
 
             'Snap preview to grid.
-            ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize) * GridSize)
-            ToolPreview.Y = CInt(Math.Round(pointOffset.Y / GridSize) * GridSize)
+            ToolPreview.X = CInt(Math.Round(PointOffset.X / GridSize) * GridSize)
+            ToolPreview.Y = CInt(Math.Round(PointOffset.Y / GridSize) * GridSize)
 
             ToolPreview.Width = GridSize
             ToolPreview.Height = GridSize
@@ -3749,8 +3755,8 @@ Public Class Form1
             DeselectObjects()
 
             'Snap preview to grid.
-            ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize) * GridSize)
-            ToolPreview.Y = CInt(Math.Round(pointOffset.Y / GridSize) * GridSize)
+            ToolPreview.X = CInt(Math.Round(PointOffset.X / GridSize) * GridSize)
+            ToolPreview.Y = CInt(Math.Round(PointOffset.Y / GridSize) * GridSize)
 
             ToolPreview.Width = GridSize
             ToolPreview.Height = GridSize
@@ -3766,8 +3772,8 @@ Public Class Form1
             DeselectObjects()
 
             'Snap preview to grid.
-            ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize) * GridSize)
-            ToolPreview.Y = CInt(Math.Round(pointOffset.Y / GridSize) * GridSize)
+            ToolPreview.X = CInt(Math.Round(PointOffset.X / GridSize) * GridSize)
+            ToolPreview.Y = CInt(Math.Round(PointOffset.Y / GridSize) * GridSize)
 
             ToolPreview.Width = GridSize
             ToolPreview.Height = GridSize
@@ -3783,8 +3789,8 @@ Public Class Form1
             DeselectObjects()
 
             'Snap preview to grid.
-            ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize) * GridSize)
-            ToolPreview.Y = CInt(Math.Round(pointOffset.Y / GridSize) * GridSize)
+            ToolPreview.X = CInt(Math.Round(PointOffset.X / GridSize) * GridSize)
+            ToolPreview.Y = CInt(Math.Round(PointOffset.Y / GridSize) * GridSize)
 
             ToolPreview.Width = GridSize
             ToolPreview.Height = GridSize
@@ -3800,8 +3806,8 @@ Public Class Form1
             DeselectObjects()
 
             'Snap preview to grid.
-            ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize) * GridSize)
-            ToolPreview.Y = CInt(Math.Round(pointOffset.Y / GridSize) * GridSize)
+            ToolPreview.X = CInt(Math.Round(PointOffset.X / GridSize) * GridSize)
+            ToolPreview.Y = CInt(Math.Round(PointOffset.Y / GridSize) * GridSize)
 
             ToolPreview.Width = GridSize
             ToolPreview.Height = GridSize
@@ -4585,7 +4591,7 @@ Public Class Form1
 
         PointOffset.X = Camera.Position.X + e.X
 
-        pointOffset.Y = Camera.Position.Y + e.Y
+        PointOffset.Y = Camera.Position.Y + e.Y
 
         If e.Button = MouseButtons.None Then
 
@@ -4593,8 +4599,8 @@ Public Class Form1
 
                 If ToolBarBackground.Rect.Contains(e.Location) = False Then
 
-                    ToolPreview.X = CInt(Math.Round(pointOffset.X / GridSize) * GridSize)
-                    ToolPreview.Y = CInt(Math.Round(pointOffset.Y / GridSize) * GridSize)
+                    ToolPreview.X = CInt(Math.Round(PointOffset.X / GridSize) * GridSize)
+                    ToolPreview.Y = CInt(Math.Round(PointOffset.Y / GridSize) * GridSize)
 
                     ShowToolPreview = True
 
@@ -4629,13 +4635,13 @@ Public Class Form1
                 If SizingHandleSelected = True Then
 
                     'Snap cloud width to grid.
-                    Clouds(SelectedCloud).Rect.Width = CInt(Math.Round((pointOffset.X - Clouds(SelectedCloud).Rect.X) / GridSize)) * GridSize
+                    Clouds(SelectedCloud).Rect.Width = CInt(Math.Round((PointOffset.X - Clouds(SelectedCloud).Rect.X) / GridSize)) * GridSize
 
                     'Limit smallest cloud width to one grid width.
                     If Clouds(SelectedCloud).Rect.Width < GridSize Then Clouds(SelectedCloud).Rect.Width = GridSize
 
                     'Snap cloud height to grid.
-                    Clouds(SelectedCloud).Rect.Height = CInt(Math.Round((pointOffset.Y - Clouds(SelectedCloud).Rect.Y) / GridSize)) * GridSize
+                    Clouds(SelectedCloud).Rect.Height = CInt(Math.Round((PointOffset.Y - Clouds(SelectedCloud).Rect.Y) / GridSize)) * GridSize
 
                     'Limit smallest cloud height to one grid height.
                     If Clouds(SelectedCloud).Rect.Height < GridSize Then Clouds(SelectedCloud).Rect.Height = GridSize
@@ -4645,8 +4651,8 @@ Public Class Form1
                 Else
 
                     'Snap cloud to grid
-                    Clouds(SelectedCloud).Rect.X = CInt(Math.Round((pointOffset.X - SelectionOffset.X) / GridSize)) * GridSize
-                    Clouds(SelectedCloud).Rect.Y = CInt(Math.Round((pointOffset.Y - SelectionOffset.Y) / GridSize)) * GridSize
+                    Clouds(SelectedCloud).Rect.X = CInt(Math.Round((PointOffset.X - SelectionOffset.X) / GridSize)) * GridSize
+                    Clouds(SelectedCloud).Rect.Y = CInt(Math.Round((PointOffset.Y - SelectionOffset.Y) / GridSize)) * GridSize
 
                     AutoSizeLevel(Clouds(SelectedCloud).Rect)
 
@@ -4665,13 +4671,13 @@ Public Class Form1
                     'Yes, the player is resizing the block.
 
                     'Snap block width to grid.
-                    Blocks(SelectedBlock).Rect.Width = CInt(Math.Round((pointOffset.X - Blocks(SelectedBlock).Rect.X) / GridSize)) * GridSize
+                    Blocks(SelectedBlock).Rect.Width = CInt(Math.Round((PointOffset.X - Blocks(SelectedBlock).Rect.X) / GridSize)) * GridSize
 
                     'Limit smallest block width to one grid width.
                     If Blocks(SelectedBlock).Rect.Width < GridSize Then Blocks(SelectedBlock).Rect.Width = GridSize
 
                     'Snap block height to grid.
-                    Blocks(SelectedBlock).Rect.Height = CInt(Math.Round((pointOffset.Y - Blocks(SelectedBlock).Rect.Y) / GridSize)) * GridSize
+                    Blocks(SelectedBlock).Rect.Height = CInt(Math.Round((PointOffset.Y - Blocks(SelectedBlock).Rect.Y) / GridSize)) * GridSize
 
                     'Limit smallest block height to one grid height.
                     If Blocks(SelectedBlock).Rect.Height < GridSize Then Blocks(SelectedBlock).Rect.Height = GridSize
@@ -4681,8 +4687,8 @@ Public Class Form1
                 Else
 
                     'Snap block to grid
-                    Blocks(SelectedBlock).Rect.X = CInt(Math.Round((pointOffset.X - SelectionOffset.X) / GridSize)) * GridSize
-                    Blocks(SelectedBlock).Rect.Y = CInt(Math.Round((pointOffset.Y - SelectionOffset.Y) / GridSize)) * GridSize
+                    Blocks(SelectedBlock).Rect.X = CInt(Math.Round((PointOffset.X - SelectionOffset.X) / GridSize)) * GridSize
+                    Blocks(SelectedBlock).Rect.Y = CInt(Math.Round((PointOffset.Y - SelectionOffset.Y) / GridSize)) * GridSize
 
                     AutoSizeLevel(Blocks(SelectedBlock).Rect)
 
@@ -4697,8 +4703,8 @@ Public Class Form1
             If e.Button = MouseButtons.Left Then
 
                 'Move bill, snap to grid.
-                Cash(SelectedBill).Rect.X = CInt(Math.Round((pointOffset.X - SelectionOffset.X) / GridSize)) * GridSize
-                Cash(SelectedBill).Rect.Y = CInt(Math.Round((pointOffset.Y - SelectionOffset.Y) / GridSize)) * GridSize
+                Cash(SelectedBill).Rect.X = CInt(Math.Round((PointOffset.X - SelectionOffset.X) / GridSize)) * GridSize
+                Cash(SelectedBill).Rect.Y = CInt(Math.Round((PointOffset.Y - SelectionOffset.Y) / GridSize)) * GridSize
 
                 Cash(SelectedBill).Position.X = Cash(SelectedBill).Rect.X
                 Cash(SelectedBill).Position.Y = Cash(SelectedBill).Rect.Y
@@ -4720,13 +4726,13 @@ Public Class Form1
                     'Yes, the player is resizing the bush.
 
                     'Snap bush width to grid.
-                    Bushes(SelectedBush).Rect.Width = CInt(Math.Round((pointOffset.X - Bushes(SelectedBush).Rect.X) / GridSize)) * GridSize
+                    Bushes(SelectedBush).Rect.Width = CInt(Math.Round((PointOffset.X - Bushes(SelectedBush).Rect.X) / GridSize)) * GridSize
 
                     'Limit smallest bush width to one grid width.
                     If Bushes(SelectedBush).Rect.Width < GridSize Then Bushes(SelectedBush).Rect.Width = GridSize
 
                     'Snap bush height to grid.
-                    Bushes(SelectedBush).Rect.Height = CInt(Math.Round((pointOffset.Y - Bushes(SelectedBush).Rect.Y) / GridSize)) * GridSize
+                    Bushes(SelectedBush).Rect.Height = CInt(Math.Round((PointOffset.Y - Bushes(SelectedBush).Rect.Y) / GridSize)) * GridSize
 
                     'Limit smallest bush height to one grid height.
                     If Bushes(SelectedBush).Rect.Height < GridSize Then Bushes(SelectedBush).Rect.Height = GridSize
@@ -4738,8 +4744,8 @@ Public Class Form1
                     'The player is moving the bush.
 
                     'Move bush, snap to grid
-                    Bushes(SelectedBush).Rect.X = CInt(Math.Round((pointOffset.X - SelectionOffset.X) / GridSize)) * GridSize
-                    Bushes(SelectedBush).Rect.Y = CInt(Math.Round((pointOffset.Y - SelectionOffset.Y) / GridSize)) * GridSize
+                    Bushes(SelectedBush).Rect.X = CInt(Math.Round((PointOffset.X - SelectionOffset.X) / GridSize)) * GridSize
+                    Bushes(SelectedBush).Rect.Y = CInt(Math.Round((PointOffset.Y - SelectionOffset.Y) / GridSize)) * GridSize
 
                     AutoSizeLevel(Bushes(SelectedBush).Rect)
 
@@ -4756,13 +4762,13 @@ Public Class Form1
                 If SizingHandleSelected = True Then
 
                     'Snap bush width to grid.
-                    Goal.Rect.Width = CInt(Math.Round((pointOffset.X - Goal.Rect.X) / GridSize)) * GridSize
+                    Goal.Rect.Width = CInt(Math.Round((PointOffset.X - Goal.Rect.X) / GridSize)) * GridSize
 
                     'Limit smallest bush width to one grid width.
                     If Goal.Rect.Width < GridSize Then Goal.Rect.Width = GridSize
 
                     'Snap bush height to grid.
-                    Goal.Rect.Height = CInt(Math.Round((pointOffset.Y - Goal.Rect.Y) / GridSize)) * GridSize
+                    Goal.Rect.Height = CInt(Math.Round((PointOffset.Y - Goal.Rect.Y) / GridSize)) * GridSize
 
                     'Limit smallest bush height to one grid height.
                     If Goal.Rect.Height < GridSize Then Goal.Rect.Height = GridSize
@@ -4772,8 +4778,8 @@ Public Class Form1
                 Else
 
                     'Move Goal, snap to grid
-                    Goal.Rect.X = CInt(Math.Round((pointOffset.X - SelectionOffset.X) / GridSize)) * GridSize
-                    Goal.Rect.Y = CInt(Math.Round((pointOffset.Y - SelectionOffset.Y) / GridSize)) * GridSize
+                    Goal.Rect.X = CInt(Math.Round((PointOffset.X - SelectionOffset.X) / GridSize)) * GridSize
+                    Goal.Rect.Y = CInt(Math.Round((PointOffset.Y - SelectionOffset.Y) / GridSize)) * GridSize
 
                     AutoSizeLevel(Goal.Rect)
 
@@ -4802,7 +4808,7 @@ Public Class Form1
                                                     GridSize)
 
                     'Snap patrol width to grid.
-                    PatrolRect.Width = CInt(Math.Round((pointOffset.X - PatrolRect.X) / GridSize)) * GridSize
+                    PatrolRect.Width = CInt(Math.Round((PointOffset.X - PatrolRect.X) / GridSize)) * GridSize
 
                     'Limit smallest patrol width to two grid widths.
                     If PatrolRect.Width < GridSize * 2 Then PatrolRect.Width = GridSize * 2
@@ -4820,14 +4826,14 @@ Public Class Form1
                     Dim PatrolWidth As Integer = Enemies(SelectedEnemy).PatrolB.X + GridSize - Enemies(SelectedEnemy).PatrolA.X
 
                     'Move enemy patrol, snap to grid
-                    Enemies(SelectedEnemy).Rect.X = CInt(Math.Round((pointOffset.X - SelectionOffset.X) / GridSize)) * GridSize
-                    Enemies(SelectedEnemy).Rect.Y = CInt(Math.Round((pointOffset.Y - SelectionOffset.Y) / GridSize)) * GridSize
+                    Enemies(SelectedEnemy).Rect.X = CInt(Math.Round((PointOffset.X - SelectionOffset.X) / GridSize)) * GridSize
+                    Enemies(SelectedEnemy).Rect.Y = CInt(Math.Round((PointOffset.Y - SelectionOffset.Y) / GridSize)) * GridSize
 
-                    Enemies(SelectedEnemy).Position.X = CInt(Math.Round((pointOffset.X - SelectionOffset.X) / GridSize)) * GridSize
-                    Enemies(SelectedEnemy).Position.Y = CInt(Math.Round((pointOffset.Y - SelectionOffset.Y) / GridSize)) * GridSize
+                    Enemies(SelectedEnemy).Position.X = CInt(Math.Round((PointOffset.X - SelectionOffset.X) / GridSize)) * GridSize
+                    Enemies(SelectedEnemy).Position.Y = CInt(Math.Round((PointOffset.Y - SelectionOffset.Y) / GridSize)) * GridSize
 
-                    Enemies(SelectedEnemy).PatrolA.X = CInt(Math.Round((pointOffset.X - SelectionOffset.X) / GridSize)) * GridSize
-                    Enemies(SelectedEnemy).PatrolA.Y = CInt(Math.Round((pointOffset.Y - SelectionOffset.Y) / GridSize)) * GridSize
+                    Enemies(SelectedEnemy).PatrolA.X = CInt(Math.Round((PointOffset.X - SelectionOffset.X) / GridSize)) * GridSize
+                    Enemies(SelectedEnemy).PatrolA.Y = CInt(Math.Round((PointOffset.Y - SelectionOffset.Y) / GridSize)) * GridSize
 
                     'Move patrol point B.
                     Enemies(SelectedEnemy).PatrolB.X = Enemies(SelectedEnemy).PatrolA.X + PatrolWidth - GridSize
@@ -5713,20 +5719,7 @@ Public Class Form1
 
             If GameState = AppState.Start Or GameState = AppState.Editing Then
 
-                'Is the pointer moving right?
-                If MousePointer.Velocity.X > 0 Then
-                    'Yes, the pointer is moving right.
-
-                    'Stop move before changing direction.
-                    MousePointer.Velocity.X = 0 'Zero speed.
-
-                End If
-
-                'Move pointer left.
-                MousePointer.Velocity.X += (-MousePointer.Acceleration.X \ 3) * EditorDeltaTime.TotalSeconds
-
-                'Limit pointer velocity to the max.
-                If MousePointer.Velocity.X < -MousePointer.MaxVelocity.X Then MousePointer.Velocity.X = -MousePointer.MaxVelocity.X
+                MovePointerLeftDPad()
 
             End If
 
@@ -5742,20 +5735,7 @@ Public Class Form1
 
             If GameState = AppState.Start Or GameState = AppState.Editing Then
 
-                'Is the pointer moving left?
-                If MousePointer.Velocity.X < 0 Then
-                    'Yes, the pointer is moving left.
-
-                    'Stop move before changing direction.
-                    MousePointer.Velocity.X = 0 'Zero speed.
-
-                End If
-
-                'Move pointer right.
-                MousePointer.Velocity.X += (MousePointer.Acceleration.X \ 3) * EditorDeltaTime.TotalSeconds
-
-                'Limit pointer velocity to the max.
-                If MousePointer.Velocity.X > MousePointer.MaxVelocity.X Then MousePointer.Velocity.X = MousePointer.MaxVelocity.X
+                MovePointerRightDPad()
 
             End If
 
@@ -5769,20 +5749,7 @@ Public Class Form1
 
             If GameState = AppState.Start Or GameState = AppState.Editing Then
 
-                'Is the pointer moving down?
-                If MousePointer.Velocity.Y > 0 Then
-                    'Yes, the pointer is moving down.
-
-                    'Stop move before changing direction.
-                    MousePointer.Velocity.Y = 0 'Zero speed.
-
-                End If
-
-                'Move pointer up.
-                MousePointer.Velocity.Y += (-MousePointer.Acceleration.Y \ 3) * EditorDeltaTime.TotalSeconds
-
-                'Limit pointer velocity to the max.
-                If MousePointer.Velocity.Y < -MousePointer.MaxVelocity.Y Then MousePointer.Velocity.Y = -MousePointer.MaxVelocity.Y
+                MovePointerUpDPad()
 
             End If
 
@@ -5792,24 +5759,87 @@ Public Class Form1
 
             If GameState = AppState.Start Or GameState = AppState.Editing Then
 
-                'Is the pointer moving up?
-                If MousePointer.Velocity.Y < 0 Then
-                    'Yes, the pointer is moving up.
-
-                    'Stop move before changing direction.
-                    MousePointer.Velocity.Y = 0 'Zero speed.
-
-                End If
-
-                'Move pointer down.
-                MousePointer.Velocity.Y += (MousePointer.Acceleration.Y \ 3) * EditorDeltaTime.TotalSeconds
-
-                'Limit pointer velocity to the max.
-                If MousePointer.Velocity.Y > MousePointer.MaxVelocity.Y Then MousePointer.Velocity.Y = MousePointer.MaxVelocity.Y
+                MovePointerDownDPad()
 
             End If
 
         End If
+
+    End Sub
+
+    Private Sub MovePointerLeftDPad()
+
+        'Is the pointer moving right?
+        If MousePointer.Velocity.X > 0 Then
+            'Yes, the pointer is moving right.
+
+            'Stop move before changing direction.
+            MousePointer.Velocity.X = 0 'Zero speed.
+
+        End If
+
+        'Move pointer left.
+        MousePointer.Velocity.X += (-MousePointer.Acceleration.X \ 3) * EditorDeltaTime.TotalSeconds
+
+        'Limit pointer velocity to the max.
+        If MousePointer.Velocity.X < -MousePointer.MaxVelocity.X Then MousePointer.Velocity.X = -MousePointer.MaxVelocity.X
+
+    End Sub
+
+    Private Sub MovePointerRightDPad()
+
+        'Is the pointer moving left?
+        If MousePointer.Velocity.X < 0 Then
+            'Yes, the pointer is moving left.
+
+            'Stop move before changing direction.
+            MousePointer.Velocity.X = 0 'Zero speed.
+
+        End If
+
+        'Move pointer right.
+        MousePointer.Velocity.X += (MousePointer.Acceleration.X \ 3) * EditorDeltaTime.TotalSeconds
+
+        'Limit pointer velocity to the max.
+        If MousePointer.Velocity.X > MousePointer.MaxVelocity.X Then MousePointer.Velocity.X = MousePointer.MaxVelocity.X
+
+    End Sub
+
+    Private Sub MovePointerUpDPad()
+
+        'Is the pointer moving down?
+        If MousePointer.Velocity.Y > 0 Then
+            'Yes, the pointer is moving down.
+
+            'Stop move before changing direction.
+            MousePointer.Velocity.Y = 0 'Zero speed.
+
+        End If
+
+        'Move pointer up.
+        MousePointer.Velocity.Y += (-MousePointer.Acceleration.Y \ 3) * EditorDeltaTime.TotalSeconds
+
+        'Limit pointer velocity to the max.
+        If MousePointer.Velocity.Y < -MousePointer.MaxVelocity.Y Then MousePointer.Velocity.Y = -MousePointer.MaxVelocity.Y
+
+    End Sub
+
+    Private Sub MovePointerDownDPad()
+
+        'Is the pointer moving up?
+        If MousePointer.Velocity.Y < 0 Then
+            'Yes, the pointer is moving up.
+
+            'Stop move before changing direction.
+            MousePointer.Velocity.Y = 0 'Zero speed.
+
+        End If
+
+        'Move pointer down.
+        MousePointer.Velocity.Y += (MousePointer.Acceleration.Y \ 3) * EditorDeltaTime.TotalSeconds
+
+        'Limit pointer velocity to the max.
+        If MousePointer.Velocity.Y > MousePointer.MaxVelocity.Y Then MousePointer.Velocity.Y = MousePointer.MaxVelocity.Y
 
     End Sub
 
@@ -6799,25 +6829,25 @@ Public Class Form1
 
         Dim File As String = Path.Combine(Application.StartupPath, "level.mp3")
 
-        If Not IO.File.Exists(file) Then
+        If Not IO.File.Exists(File) Then
 
-            IO.File.WriteAllBytes(file, My.Resources.level)
-
-        End If
-
-        file = Path.Combine(Application.StartupPath, "CashCollected.mp3")
-
-        If Not IO.File.Exists(file) Then
-
-            IO.File.WriteAllBytes(file, My.Resources.CashCollected)
+            IO.File.WriteAllBytes(File, My.Resources.level)
 
         End If
 
-        file = Path.Combine(Application.StartupPath, "eliminated.mp3")
+        File = Path.Combine(Application.StartupPath, "CashCollected.mp3")
 
-        If Not IO.File.Exists(file) Then
+        If Not IO.File.Exists(File) Then
 
-            IO.File.WriteAllBytes(file, My.Resources.eliminated)
+            IO.File.WriteAllBytes(File, My.Resources.CashCollected)
+
+        End If
+
+        File = Path.Combine(Application.StartupPath, "eliminated.mp3")
+
+        If Not IO.File.Exists(File) Then
+
+            IO.File.WriteAllBytes(File, My.Resources.eliminated)
 
         End If
 
@@ -6893,7 +6923,7 @@ Public Class Form1
 
         Dim Inputs As INPUTStruc() = {InputDown}
 
-        SendInput(CUInt(inputs.Length), inputs, Marshal.SizeOf(GetType(INPUTStruc)))
+        SendInput(CUInt(Inputs.Length), Inputs, Marshal.SizeOf(GetType(INPUTStruc)))
 
     End Sub
 
@@ -6916,16 +6946,16 @@ Public Class Form1
         ' Simulate a left mouse button down event
         Dim InputDown As New INPUTStruc()
         InputDown.type = INPUT_MOUSE
-        inputDown.union.mi.dwFlags = MOUSEEVENTF_LEFTDOWN
+        InputDown.union.mi.dwFlags = MOUSEEVENTF_LEFTDOWN
 
         ' Simulate a left mouse button up event
         Dim InputUp As New INPUTStruc()
         InputUp.type = INPUT_MOUSE
-        inputUp.union.mi.dwFlags = MOUSEEVENTF_LEFTUP
+        InputUp.union.mi.dwFlags = MOUSEEVENTF_LEFTUP
 
         ' Send the input events using SendInput
         Dim Inputs As INPUTStruc() = {InputDown, InputUp}
-        SendInput(CUInt(inputs.Length), inputs, Marshal.SizeOf(GetType(INPUTStruc)))
+        SendInput(CUInt(Inputs.Length), Inputs, Marshal.SizeOf(GetType(INPUTStruc)))
 
     End Sub
 

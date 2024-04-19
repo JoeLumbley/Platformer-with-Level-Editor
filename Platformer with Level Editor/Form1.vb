@@ -1165,7 +1165,7 @@ Public Class Form1
 
             If GameState = AppState.Start Or GameState = AppState.Editing Then
 
-                If DPadLeftPressed = False AndAlso DPadRightPressed = False Then
+                If DPadLeftPressed = False AndAlso DPadRightPressed = False AndAlso LeftArrowDown = False AndAlso RightArrowDown = False Then
 
                     DeceleratePointerXAxis()
 
@@ -1199,7 +1199,7 @@ Public Class Form1
 
             If GameState = AppState.Start Or GameState = AppState.Editing Then
 
-                If DPadUpPressed = False AndAlso DPadDownPressed = False Then
+                If DPadUpPressed = False AndAlso DPadDownPressed = False AndAlso UpArrowDown = False AndAlso DownArrowDown = False Then
 
                     DeceleratePointerYAxis()
 
@@ -4914,20 +4914,7 @@ Public Class Form1
 
                     If ShowMenu = False Then
 
-                        'Is the camera moving left?
-                        If Camera.Velocity.X < 0 Then
-                            'Yes, the camera is moving left.
-
-                            'Stop move before changing direction.
-                            Camera.Velocity.X = 0 'Zero speed.
-
-                        End If
-
-                        'Move camera right.
-                        Camera.Velocity.X += Camera.Acceleration.X * EditorDeltaTime.TotalSeconds
-
-                        'Limit camera velocity to the max.
-                        If Camera.Velocity.X > Camera.MaxVelocity.X Then Camera.Velocity.X = Camera.MaxVelocity.X
+                        MoveCameraRight()
 
                         UpdateCameraOffset()
 
@@ -4935,21 +4922,7 @@ Public Class Form1
 
                     Else
 
-                        'Is the pointer moving left?
-                        If MousePointer.Velocity.X < 0 Then
-                            'Yes, the pointer is moving left.
-
-                            'Stop move before changing direction.
-                            MousePointer.Velocity.X = 0 'Zero speed.
-
-                        End If
-
-                        'Move pointer right.
-                        MousePointer.Velocity.X += MousePointer.Acceleration.X * EditorDeltaTime.TotalSeconds
-
-                        'Limit pointer velocity to the max.
-                        If MousePointer.Velocity.X > MousePointer.MaxVelocity.X Then MousePointer.Velocity.X = MousePointer.MaxVelocity.X
-
+                        MovePointerRight()
 
                     End If
 
@@ -4965,19 +4938,7 @@ Public Class Form1
 
                     If ShowMenu = False Then
 
-                        'Is the camera moving right?
-                        If Camera.Velocity.X > 0 Then
-                            'Yes, the camera is moving right.
-
-                            'Stop move before changing direction.
-                            Camera.Velocity.X = 0 'Zero speed.
-
-                        End If
-                        'Move camera left.
-                        Camera.Velocity.X += -Camera.Acceleration.X * EditorDeltaTime.TotalSeconds
-
-                        'Limit camera velocity to the max.
-                        If Camera.Velocity.X < -Camera.MaxVelocity.X Then Camera.Velocity.X = -Camera.MaxVelocity.X
+                        MoveCameraLeft()
 
                         UpdateCameraOffset()
 
@@ -4985,20 +4946,7 @@ Public Class Form1
 
                     Else
 
-                        'Is the pointer moving right?
-                        If MousePointer.Velocity.X > 0 Then
-                            'Yes, the pointer is moving right.
-
-                            'Stop move before changing direction.
-                            MousePointer.Velocity.X = 0 'Zero speed.
-
-                        End If
-
-                        'Move pointer left.
-                        MousePointer.Velocity.X += -MousePointer.Acceleration.X * EditorDeltaTime.TotalSeconds
-
-                        'Limit pointer velocity to the max.
-                        If MousePointer.Velocity.X < -MousePointer.MaxVelocity.X Then MousePointer.Velocity.X = -MousePointer.MaxVelocity.X
+                        MovePointerLeft()
 
                     End If
 
@@ -5012,20 +4960,7 @@ Public Class Form1
 
                     If ShowMenu = False Then
 
-                        'Is the camera moving down?
-                        If Camera.Velocity.Y > 0 Then
-                            'Yes, the camera is moving down.
-
-                            'Stop move before changing direction.
-                            Camera.Velocity.Y = 0 'Zero speed.
-
-                        End If
-
-                        'Move camera up.
-                        Camera.Velocity.Y += -Camera.Acceleration.Y * EditorDeltaTime.TotalSeconds
-
-                        'Limit camera velocity to the max.
-                        If Camera.Velocity.Y < -Camera.MaxVelocity.Y Then Camera.Velocity.Y = -Camera.MaxVelocity.Y
+                        MoveCameraUp()
 
                         UpdateCameraOffset()
 
@@ -5033,20 +4968,7 @@ Public Class Form1
 
                     Else
 
-                        'Is the pointer moving down?
-                        If MousePointer.Velocity.Y > 0 Then
-                            'Yes, the pointer is moving down.
-
-                            'Stop move before changing direction.
-                            MousePointer.Velocity.Y = 0 'Zero speed.
-
-                        End If
-
-                        'Move pointer up.
-                        MousePointer.Velocity.Y += -MousePointer.Acceleration.Y * EditorDeltaTime.TotalSeconds
-
-                        'Limit pointer velocity to the max.
-                        If MousePointer.Velocity.Y < -MousePointer.MaxVelocity.Y Then MousePointer.Velocity.Y = -MousePointer.MaxVelocity.Y
+                        MovePointerUp()
 
                     End If
 
@@ -5060,20 +4982,7 @@ Public Class Form1
 
                     If ShowMenu = False Then
 
-                        'Is the camera moving up?
-                        If Camera.Velocity.Y < 0 Then
-                            'Yes, the camera is moving up.
-
-                            'Stop move before changing direction.
-                            Camera.Velocity.Y = 0 'Zero speed.
-
-                        End If
-
-                        'Move camera down.
-                        Camera.Velocity.Y += Camera.Acceleration.Y * EditorDeltaTime.TotalSeconds
-
-                        'Limit camera velocity to the max.
-                        If Camera.Velocity.Y > Camera.MaxVelocity.Y Then Camera.Velocity.Y = Camera.MaxVelocity.Y
+                        MoveCameraDown()
 
                         UpdateCameraOffset()
 
@@ -5081,20 +4990,7 @@ Public Class Form1
 
                     Else
 
-                        'Is the pointer moving up?
-                        If MousePointer.Velocity.Y < 0 Then
-                            'Yes, the pointer is moving up.
-
-                            'Stop move before changing direction.
-                            MousePointer.Velocity.Y = 0 'Zero speed.
-
-                        End If
-
-                        'Move pointer down.
-                        MousePointer.Velocity.Y += MousePointer.Acceleration.Y * EditorDeltaTime.TotalSeconds
-
-                        'Limit pointer velocity to the max.
-                        If MousePointer.Velocity.Y > MousePointer.MaxVelocity.Y Then MousePointer.Velocity.Y = MousePointer.MaxVelocity.Y
+                        MovePointerDown()
 
                     End If
 
@@ -5382,6 +5278,73 @@ Public Class Form1
 
         End Select
 
+    End Sub
+
+    Private Sub MoveCameraDown()
+        'Is the camera moving up?
+        If Camera.Velocity.Y < 0 Then
+            'Yes, the camera is moving up.
+
+            'Stop move before changing direction.
+            Camera.Velocity.Y = 0 'Zero speed.
+
+        End If
+
+        'Move camera down.
+        Camera.Velocity.Y += Camera.Acceleration.Y * EditorDeltaTime.TotalSeconds
+
+        'Limit camera velocity to the max.
+        If Camera.Velocity.Y > Camera.MaxVelocity.Y Then Camera.Velocity.Y = Camera.MaxVelocity.Y
+    End Sub
+
+    Private Sub MoveCameraUp()
+        'Is the camera moving down?
+        If Camera.Velocity.Y > 0 Then
+            'Yes, the camera is moving down.
+
+            'Stop move before changing direction.
+            Camera.Velocity.Y = 0 'Zero speed.
+
+        End If
+
+        'Move camera up.
+        Camera.Velocity.Y += -Camera.Acceleration.Y * EditorDeltaTime.TotalSeconds
+
+        'Limit camera velocity to the max.
+        If Camera.Velocity.Y < -Camera.MaxVelocity.Y Then Camera.Velocity.Y = -Camera.MaxVelocity.Y
+    End Sub
+
+    Private Sub MoveCameraLeft()
+        'Is the camera moving right?
+        If Camera.Velocity.X > 0 Then
+            'Yes, the camera is moving right.
+
+            'Stop move before changing direction.
+            Camera.Velocity.X = 0 'Zero speed.
+
+        End If
+        'Move camera left.
+        Camera.Velocity.X += -Camera.Acceleration.X * EditorDeltaTime.TotalSeconds
+
+        'Limit camera velocity to the max.
+        If Camera.Velocity.X < -Camera.MaxVelocity.X Then Camera.Velocity.X = -Camera.MaxVelocity.X
+    End Sub
+
+    Private Sub MoveCameraRight()
+        'Is the camera moving left?
+        If Camera.Velocity.X < 0 Then
+            'Yes, the camera is moving left.
+
+            'Stop move before changing direction.
+            Camera.Velocity.X = 0 'Zero speed.
+
+        End If
+
+        'Move camera right.
+        Camera.Velocity.X += Camera.Acceleration.X * EditorDeltaTime.TotalSeconds
+
+        'Limit camera velocity to the max.
+        If Camera.Velocity.X > Camera.MaxVelocity.X Then Camera.Velocity.X = Camera.MaxVelocity.X
     End Sub
 
     Private Sub Form1_KeyUp(sender As Object, e As KeyEventArgs) Handles MyBase.KeyUp

@@ -1131,20 +1131,7 @@ Public Class Form1
 
             If GameState = AppState.Start Or GameState = AppState.Editing Then
 
-                'Is the pointer moving right?
-                If MousePointer.Velocity.X > 0 Then
-                    'Yes, the pointer is moving right.
-
-                    'Stop move before changing direction.
-                    MousePointer.Velocity.X = 0 'Zero speed.
-
-                End If
-
-                'Move pointer left.
-                MousePointer.Velocity.X += -MousePointer.Acceleration.X * EditorDeltaTime.TotalSeconds
-
-                'Limit pointer velocity to the max.
-                If MousePointer.Velocity.X < -MousePointer.MaxVelocity.X Then MousePointer.Velocity.X = -MousePointer.MaxVelocity.X
+                MovePointerLeft()
 
             End If
 
@@ -1161,20 +1148,7 @@ Public Class Form1
 
             If GameState = AppState.Start Or GameState = AppState.Editing Then
 
-                'Is the pointer moving left?
-                If MousePointer.Velocity.X < 0 Then
-                    'Yes, the pointer is moving left.
-
-                    'Stop move before changing direction.
-                    MousePointer.Velocity.X = 0 'Zero speed.
-
-                End If
-
-                'Move pointer right.
-                MousePointer.Velocity.X += MousePointer.Acceleration.X * EditorDeltaTime.TotalSeconds
-
-                'Limit pointer velocity to the max.
-                If MousePointer.Velocity.X > MousePointer.MaxVelocity.X Then MousePointer.Velocity.X = MousePointer.MaxVelocity.X
+                MovePointerRight()
 
             End If
 
@@ -1191,27 +1165,9 @@ Public Class Form1
 
             If GameState = AppState.Start Or GameState = AppState.Editing Then
 
-                If DPadLeftPressed = False And DPadRightPressed = False And RightArrowDown = False And LeftArrowDown = False Then
+                If DPadLeftPressed = False AndAlso DPadRightPressed = False Then
 
-                    If MousePointer.Velocity.X < 0 Then
-
-                        'Decelerate pointer.
-                        MousePointer.Velocity.X += MousePointer.Acceleration.X * 8 * EditorDeltaTime.TotalSeconds
-
-                        'Limit decelerate to zero speed.
-                        If MousePointer.Velocity.X > 0 Then MousePointer.Velocity.X = 0 'Zero speed.
-
-                    End If
-
-                    If MousePointer.Velocity.X > 0 Then
-
-                        'Decelerate pointer.
-                        MousePointer.Velocity.X += -MousePointer.Acceleration.X * 8 * EditorDeltaTime.TotalSeconds
-
-                        'Limit decelerate to zero speed.
-                        If MousePointer.Velocity.X < 0 Then MousePointer.Velocity.X = 0 'Zero speed.
-
-                    End If
+                    DeceleratePointerXAxis()
 
                 End If
 
@@ -1234,20 +1190,7 @@ Public Class Form1
 
             If GameState = AppState.Start Or GameState = AppState.Editing Then
 
-                'Is the pointer moving down?
-                If MousePointer.Velocity.Y > 0 Then
-                    'Yes, the pointer is moving down.
-
-                    'Stop move before changing direction.
-                    MousePointer.Velocity.Y = 0 'Zero speed.
-
-                End If
-
-                'Move pointer up.
-                MousePointer.Velocity.Y += -MousePointer.Acceleration.Y * EditorDeltaTime.TotalSeconds
-
-                'Limit pointer velocity to the max.
-                If MousePointer.Velocity.Y < -MousePointer.MaxVelocity.Y Then MousePointer.Velocity.Y = -MousePointer.MaxVelocity.Y
+                MovePointerUp()
 
             End If
 
@@ -1256,37 +1199,124 @@ Public Class Form1
 
             If GameState = AppState.Start Or GameState = AppState.Editing Then
 
-                If DPadUpPressed = False AndAlso DPadDownPressed = False AndAlso UpArrowDown = False AndAlso DownArrowDown = False Then
+                If DPadUpPressed = False AndAlso DPadDownPressed = False Then
 
-                    'Is the pointer moving up?
-                    If MousePointer.Velocity.Y < 0 Then
-                        'Yes, the pointer is moving up.
-
-                        'Decelerate pointer.
-                        MousePointer.Velocity.Y += MousePointer.Acceleration.Y * 8 * EditorDeltaTime.TotalSeconds
-
-                        'Limit decelerate to zero speed.
-                        If MousePointer.Velocity.Y > 0 Then MousePointer.Velocity.Y = 0 'Zero speed.
-
-                    End If
-
-                    'Is the pointer moving down?
-                    If MousePointer.Velocity.Y > 0 Then
-                        'Yes, the pointer is moving down.
-
-                        'Decelerate pointer.
-                        MousePointer.Velocity.Y += -MousePointer.Acceleration.Y * 8 * EditorDeltaTime.TotalSeconds
-
-                        'Limit decelerate to zero speed.
-                        If MousePointer.Velocity.Y < 0 Then MousePointer.Velocity.Y = 0 'Zero speed.
-
-                    End If
+                    DeceleratePointerYAxis()
 
                 End If
 
             End If
 
         End If
+
+    End Sub
+
+    Private Sub MovePointerLeft()
+
+        'Is the pointer moving right?
+        If MousePointer.Velocity.X > 0 Then
+            'Yes, the pointer is moving right.
+
+            'Stop move before changing direction.
+            MousePointer.Velocity.X = 0 'Zero speed.
+
+        End If
+
+        'Move pointer left.
+        MousePointer.Velocity.X += -MousePointer.Acceleration.X * EditorDeltaTime.TotalSeconds
+
+        'Limit pointer velocity to the max.
+        If MousePointer.Velocity.X < -MousePointer.MaxVelocity.X Then MousePointer.Velocity.X = -MousePointer.MaxVelocity.X
+
+    End Sub
+
+    Private Sub MovePointerRight()
+
+        'Is the pointer moving left?
+        If MousePointer.Velocity.X < 0 Then
+            'Yes, the pointer is moving left.
+
+            'Stop move before changing direction.
+            MousePointer.Velocity.X = 0 'Zero speed.
+
+        End If
+
+        'Move pointer right.
+        MousePointer.Velocity.X += MousePointer.Acceleration.X * EditorDeltaTime.TotalSeconds
+
+        'Limit pointer velocity to the max.
+        If MousePointer.Velocity.X > MousePointer.MaxVelocity.X Then MousePointer.Velocity.X = MousePointer.MaxVelocity.X
+
+    End Sub
+
+    Private Sub DeceleratePointerXAxis()
+
+        If MousePointer.Velocity.X < 0 Then
+
+            'Decelerate pointer.
+            MousePointer.Velocity.X += MousePointer.Acceleration.X * 8 * EditorDeltaTime.TotalSeconds
+
+            'Limit decelerate to zero speed.
+            If MousePointer.Velocity.X > 0 Then MousePointer.Velocity.X = 0 'Zero speed.
+
+        End If
+
+        If MousePointer.Velocity.X > 0 Then
+
+            'Decelerate pointer.
+            MousePointer.Velocity.X += -MousePointer.Acceleration.X * 8 * EditorDeltaTime.TotalSeconds
+
+            'Limit decelerate to zero speed.
+            If MousePointer.Velocity.X < 0 Then MousePointer.Velocity.X = 0 'Zero speed.
+
+        End If
+
+    End Sub
+
+    Private Sub DeceleratePointerYAxis()
+
+        'Is the pointer moving up?
+        If MousePointer.Velocity.Y < 0 Then
+            'Yes, the pointer is moving up.
+
+            'Decelerate pointer.
+            MousePointer.Velocity.Y += MousePointer.Acceleration.Y * 8 * EditorDeltaTime.TotalSeconds
+
+            'Limit decelerate to zero speed.
+            If MousePointer.Velocity.Y > 0 Then MousePointer.Velocity.Y = 0 'Zero speed.
+
+        End If
+
+        'Is the pointer moving down?
+        If MousePointer.Velocity.Y > 0 Then
+            'Yes, the pointer is moving down.
+
+            'Decelerate pointer.
+            MousePointer.Velocity.Y += -MousePointer.Acceleration.Y * 8 * EditorDeltaTime.TotalSeconds
+
+            'Limit decelerate to zero speed.
+            If MousePointer.Velocity.Y < 0 Then MousePointer.Velocity.Y = 0 'Zero speed.
+
+        End If
+
+    End Sub
+
+    Private Sub MovePointerUp()
+
+        'Is the pointer moving down?
+        If MousePointer.Velocity.Y > 0 Then
+            'Yes, the pointer is moving down.
+
+            'Stop move before changing direction.
+            MousePointer.Velocity.Y = 0 'Zero speed.
+
+        End If
+
+        'Move pointer up.
+        MousePointer.Velocity.Y += -MousePointer.Acceleration.Y * EditorDeltaTime.TotalSeconds
+
+        'Limit pointer velocity to the max.
+        If MousePointer.Velocity.Y < -MousePointer.MaxVelocity.Y Then MousePointer.Velocity.Y = -MousePointer.MaxVelocity.Y
 
     End Sub
 

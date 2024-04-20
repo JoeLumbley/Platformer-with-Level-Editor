@@ -1377,8 +1377,11 @@ Public Class Form1
 
                         RightTriggerDown = True
 
+                        'Has the player reached the right end of the toolbar?
                         If SelectedTool = Tools.Enemy Then
+                            'Yes, the player has reached the right end of the toolbar.
 
+                            'Select the first tool
                             SelectedTool = Tools.Pointer
 
                             ShowToolPreview = False
@@ -1428,11 +1431,19 @@ Public Class Form1
 
                         LeftTriggerDown = True
 
+                        'Has the player reached the left end of the toolbar?
                         If SelectedTool = Tools.Pointer Then
+                            'Yes, the player has reached the left end of the toolbar.
 
+                            DeselectObjects()
+
+                            ToolPreview.Width = GridSize
+                            ToolPreview.Height = GridSize
+
+                            'Select the last tool.
                             SelectedTool = Tools.Enemy
 
-                            ShowToolPreview = False
+                            ShowToolPreview = True
 
                         Else
 

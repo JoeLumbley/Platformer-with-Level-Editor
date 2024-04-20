@@ -4928,6 +4928,12 @@ Public Class Form1
 
                 End If
 
+                If GameState = AppState.Start Then
+
+                    MovePointerRight()
+
+                End If
+
             'Has the player pressed the left arrow key down?
             Case Keys.Left
                 'Yes, the player has pressed the left arrow key down.
@@ -4952,6 +4958,13 @@ Public Class Form1
 
                 End If
 
+                If GameState = AppState.Start Then
+
+                    MovePointerLeft()
+
+                End If
+
+
             Case Keys.Up
 
                 UpArrowDown = True
@@ -4974,6 +4987,12 @@ Public Class Form1
 
                 End If
 
+                If GameState = AppState.Start Then
+
+                    MovePointerUp()
+
+                End If
+
             Case Keys.Down
 
                 DownArrowDown = True
@@ -4993,6 +5012,12 @@ Public Class Form1
                         MovePointerDown()
 
                     End If
+
+                End If
+
+                If GameState = AppState.Start Then
+
+                    MovePointerDown()
 
                 End If
 
@@ -5029,6 +5054,30 @@ Public Class Form1
                         ShowSaveLevelDialog()
 
                     End If
+
+                End If
+
+                If GameState = AppState.Start Then
+
+                    ClearObjects()
+
+                    InitializeObjects()
+
+                    CreateNewLevel()
+
+                    LevelName = "Untitled"
+
+                    Text = LevelName & " - Platformer with Level Editor - Code with Joe"
+
+                    CashCollected = 0
+
+                    LastFrame = Now
+
+                    GameState = AppState.Playing
+
+                    MovePointerOffScreen()
+
+                    PlayLevelMusic()
 
                 End If
 
@@ -5070,6 +5119,45 @@ Public Class Form1
 
                 End If
 
+                If GameState = AppState.Start Then
+
+                    OpenFileDialog1.FileName = ""
+                    OpenFileDialog1.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
+                    OpenFileDialog1.FilterIndex = 1
+                    OpenFileDialog1.InitialDirectory = Application.StartupPath
+
+                    If OpenFileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+
+                        If My.Computer.FileSystem.FileExists(OpenFileDialog1.FileName) = True Then
+
+                            InitializeObjects()
+
+                            OpenTestLevelFile(OpenFileDialog1.FileName)
+
+                            If IsFileLoaded = True Then
+
+                                LevelName = Path.GetFileName(OpenFileDialog1.FileName)
+
+                                Text = LevelName & " - Platformer with Level Editor - Code with Joe"
+
+                                CashCollected = 0
+
+                                LastFrame = Now
+
+                                GameState = AppState.Playing
+
+                                MovePointerOffScreen()
+
+                                PlayLevelMusic()
+
+                            End If
+
+                        End If
+
+                    End If
+
+                End If
+
             Case Keys.N
 
                 If GameState = AppState.Editing Then
@@ -5089,6 +5177,31 @@ Public Class Form1
                     End If
 
                 End If
+
+                If GameState = AppState.Start Then
+
+                    ClearObjects()
+
+                    InitializeObjects()
+
+                    CreateNewLevel()
+
+                    LevelName = "Untitled"
+
+                    Text = LevelName & " - Platformer with Level Editor - Code with Joe"
+
+                    CashCollected = 0
+
+                    LastFrame = Now
+
+                    GameState = AppState.Playing
+
+                    MovePointerOffScreen()
+
+                    PlayLevelMusic()
+
+                End If
+
 
             Case Keys.R
 
@@ -5129,6 +5242,46 @@ Public Class Form1
                     End If
 
                 End If
+
+                If GameState = AppState.Start Then
+
+                    OpenFileDialog1.FileName = ""
+                    OpenFileDialog1.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
+                    OpenFileDialog1.FilterIndex = 1
+                    OpenFileDialog1.InitialDirectory = Application.StartupPath
+
+                    If OpenFileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+
+                        If My.Computer.FileSystem.FileExists(OpenFileDialog1.FileName) = True Then
+
+                            InitializeObjects()
+
+                            OpenTestLevelFile(OpenFileDialog1.FileName)
+
+                            If IsFileLoaded = True Then
+
+                                LevelName = Path.GetFileName(OpenFileDialog1.FileName)
+
+                                Text = LevelName & " - Platformer with Level Editor - Code with Joe"
+
+                                CashCollected = 0
+
+                                LastFrame = Now
+
+                                GameState = AppState.Playing
+
+                                MovePointerOffScreen()
+
+                                PlayLevelMusic()
+
+                            End If
+
+                        End If
+
+                    End If
+
+                End If
+
 
             Case Keys.S
 

@@ -114,6 +114,10 @@ Public Class Form1
 
     Private IsContextDown As Boolean = False
 
+    Private RightTriggerDown As Boolean = False
+
+    Private LeftTriggerDown As Boolean = False
+
     Private Const DPadUp As Integer = 1
     Private Const DPadDown As Integer = 2
     Private Const DPadLeft As Integer = 4
@@ -1079,6 +1083,8 @@ Public Class Form1
 
                         UpdateLeftThumbstickPosition()
 
+                        UpdateLeftTriggerPosition()
+
                         UpdateRightThumbstickPosition()
 
                         UpdateRightTriggerPosition()
@@ -1095,6 +1101,8 @@ Public Class Form1
                         DoButtonLogic()
 
                         UpdateLeftThumbstickPosition()
+
+                        UpdateLeftTriggerPosition()
 
                         UpdateRightThumbstickPosition()
 
@@ -1363,6 +1371,33 @@ Public Class Form1
 
                     End If
 
+                Else
+
+                    If RightTriggerDown = False Then
+
+                        RightTriggerDown = True
+
+                        If SelectedTool = Tools.Enemy Then
+
+                            SelectedTool = Tools.Pointer
+
+                            ShowToolPreview = False
+
+                        Else
+
+                            DeselectObjects()
+
+                            ToolPreview.Width = GridSize
+                            ToolPreview.Height = GridSize
+
+                            SelectedTool += 1
+
+                            ShowToolPreview = True
+
+                        End If
+
+                    End If
+
                 End If
 
             End If
@@ -1370,9 +1405,63 @@ Public Class Form1
         Else
             'The right trigger is in the neutral position. Pre-Travel.
 
+            RightTriggerDown = False
+
         End If
 
     End Sub
+
+    Private Sub UpdateLeftTriggerPosition()
+
+        'The range of left trigger is 0 to 255. Unsigned 8-bit (1-byte) integer.
+        'The trigger position must be greater than the trigger threshold to register as pressed.
+
+        'What position is the left trigger in?
+        If ControllerPosition.Gamepad.bLeftTrigger > TriggerThreshold Then
+            'The left trigger is in the down position. Trigger Break. Bang!
+
+            If GameState = AppState.Editing Then
+
+                If ShowMenu = False Then
+
+                    If LeftTriggerDown = False Then
+
+                        LeftTriggerDown = True
+
+                        If SelectedTool = Tools.Pointer Then
+
+                            SelectedTool = Tools.Enemy
+
+                            ShowToolPreview = False
+
+                        Else
+
+                            DeselectObjects()
+
+                            ToolPreview.Width = GridSize
+                            ToolPreview.Height = GridSize
+
+                            SelectedTool -= 1
+
+                            ShowToolPreview = True
+
+                        End If
+
+                    End If
+
+                End If
+
+            End If
+
+        Else
+            'The left trigger is in the neutral position. Pre-Travel.
+
+            LeftTriggerDown = False
+
+        End If
+
+    End Sub
+
 
     Private Sub UpdateRightThumbstickPosition()
         'The range on the X-axis is -32,768 through 32,767. Signed 16-bit (2-byte) integer.

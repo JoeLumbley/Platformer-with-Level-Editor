@@ -1381,7 +1381,7 @@ Public Class Form1
                         If SelectedTool = Tools.Enemy Then
                             'Yes, the player has reached the right end of the toolbar.
 
-                            'Select the first tool
+                            'Select the first tool.
                             SelectedTool = Tools.Pointer
 
                             ShowToolPreview = False
@@ -3506,7 +3506,6 @@ Public Class Form1
         e.FillPath(brush, Path)
 
     End Sub
-
 
     Private Sub UpdateFrameCounter()
 

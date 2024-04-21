@@ -5007,13 +5007,33 @@ Public Class Form1
 
                 If GameState = AppState.Playing Then
 
+                    'Remember the cameras in game position before opening the editor.
+                    CameraPlayPostion.X = Camera.Position.X
+                    CameraPlayPostion.Y = Camera.Position.Y
+
                     GameState = AppState.Editing
+
+                    EditorLastFrame = Now
+
+                    BufferGridLines()
 
                 End If
 
             Case Keys.P
 
                 If GameState = AppState.Editing Then
+
+                    DeselectObjects()
+
+                    'Restore the cameras in game position.
+                    Camera.Position.X = CameraPlayPostion.X
+                    Camera.Position.Y = CameraPlayPostion.Y
+
+                    UpdateCameraOffset()
+
+                    MovePointerOffScreen()
+
+                    LastFrame = Now
 
                     GameState = AppState.Playing
 

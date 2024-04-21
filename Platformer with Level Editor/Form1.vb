@@ -268,7 +268,9 @@ Public Class Form1
 
     Private ReadOnly FPSFont As New Font(FontFamily.GenericSansSerif, 25)
 
-    Private ReadOnly MenuButtonFont As New Font(FontFamily.GenericSansSerif, 40)
+    Private ReadOnly BillFont As New Font(FontFamily.GenericSansSerif, 25, FontStyle.Bold)
+
+    Private ReadOnly MenuButtonFont As New Font(FontFamily.GenericSansSerif, 45)
 
     Private FPS_Postion As New Point(0, 0)
 
@@ -417,15 +419,15 @@ Public Class Form1
 
     Private CashCollectedPostion As New Point(0, 0)
 
-    Private ReadOnly PointerToolFont As New Font(New FontFamily("Wingdings"), 25, FontStyle.Bold)
+    Private ReadOnly PointerToolFont As New Font(New FontFamily("Wingdings"), 35, FontStyle.Bold)
 
     Private ReadOnly GoalToolFont As New Font(New FontFamily("Wingdings"), 25, FontStyle.Bold)
 
-    Private ReadOnly GoalFont As New Font(New FontFamily("Wingdings"), 35, FontStyle.Regular)
+    Private ReadOnly GoalFont As New Font(New FontFamily("Wingdings"), 35, FontStyle.Bold)
 
-    Private ReadOnly BillIconFont As New Font(FontFamily.GenericSansSerif, 16, FontStyle.Regular)
+    Private ReadOnly BillIconFont As New Font(FontFamily.GenericSansSerif, 25, FontStyle.Bold)
 
-    Private ReadOnly EnemyIconFont As New Font(FontFamily.GenericSansSerif, 16, FontStyle.Regular)
+    Private ReadOnly EnemyIconFont As New Font(FontFamily.GenericSansSerif, 25, FontStyle.Bold)
 
     Private ReadOnly TitleFont As New Font(New FontFamily("Bahnschrift"), 52, FontStyle.Bold)
 
@@ -447,15 +449,15 @@ Public Class Form1
 
     Private ReadOnly RightTriggerIconFont As New Font(FontFamily.GenericSansSerif, 20)
 
-    Private CloundToolIconOutinePen As New Pen(Color.Black, 3)
+    Private CloundToolIconOutinePen As New Pen(Color.Black, 4)
 
-    Private BushToolIconOutinePen As New Pen(Color.Black, 3)
+    Private BushToolIconOutinePen As New Pen(Color.Black, 4)
 
     Private LightSkyBluePen As New Pen(Color.LightSkyBlue, 4)
 
-    Private CloundToolIconPen As New Pen(Color.LightSkyBlue, 3)
+    Private CloundToolIconPen As New Pen(Color.LightSkyBlue, 4)
 
-    Private BushToolIconPen As New Pen(Color.SeaGreen, 3)
+    Private BushToolIconPen As New Pen(Color.SeaGreen, 4)
 
     Private LawnGreenPen As New Pen(Color.LawnGreen, 4)
 
@@ -2360,7 +2362,7 @@ Public Class Form1
 
                                 .FillRectangle(Brushes.Goldenrod, RectOffset)
 
-                                .DrawString("$", FPSFont, Brushes.OrangeRed, RectOffset, AlineCenterMiddle)
+                                .DrawString("$", BillFont, Brushes.OrangeRed, RectOffset, AlineCenterMiddle)
 
                             End If
 
@@ -2372,7 +2374,7 @@ Public Class Form1
 
                                     .FillRectangle(Brushes.Goldenrod, RectOffset)
 
-                                    .DrawString("$", FPSFont, Brushes.OrangeRed, RectOffset, AlineCenterMiddle)
+                                    .DrawString("$", BillFont, Brushes.OrangeRed, RectOffset, AlineCenterMiddle)
 
                                 End If
 
@@ -2384,7 +2386,7 @@ Public Class Form1
 
                                 .FillRectangle(Brushes.Goldenrod, RectOffset)
 
-                                .DrawString("$", FPSFont, Brushes.OrangeRed, RectOffset, AlineCenterMiddle)
+                                .DrawString("$", BillFont, Brushes.OrangeRed, RectOffset, AlineCenterMiddle)
 
 
                             End If
@@ -2690,16 +2692,16 @@ Public Class Form1
                 .FillRectangle(Brushes.White, CloundToolIcon.Rect)
 
                 .DrawLine(CloundToolIconPen,
-                          CloundToolIcon.Rect.Right - 6,
-                          CloundToolIcon.Rect.Top + 6,
-                          CloundToolIcon.Rect.Right - 6,
-                          CloundToolIcon.Rect.Bottom - 6)
+                          CloundToolIcon.Rect.Right - 10,
+                          CloundToolIcon.Rect.Top + 10,
+                          CloundToolIcon.Rect.Right - 10,
+                          CloundToolIcon.Rect.Bottom - 10)
 
                 .DrawLine(CloundToolIconPen,
-                          CloundToolIcon.Rect.Left + 6,
-                          CloundToolIcon.Rect.Bottom - 6,
-                          CloundToolIcon.Rect.Right - 6,
-                          CloundToolIcon.Rect.Bottom - 6)
+                          CloundToolIcon.Rect.Left + 10,
+                          CloundToolIcon.Rect.Bottom - 10,
+                          CloundToolIcon.Rect.Right - 10,
+                          CloundToolIcon.Rect.Bottom - 10)
 
                 .DrawRectangle(CloundToolIconOutinePen, CloundToolIcon.Rect)
 
@@ -2710,16 +2712,16 @@ Public Class Form1
                 .FillRectangle(Brushes.White, CloundToolIcon.Rect)
 
                 .DrawLine(CloundToolIconPen,
-                          CloundToolIcon.Rect.Right - 6,
-                          CloundToolIcon.Rect.Top + 6,
-                          CloundToolIcon.Rect.Right - 6,
-                          CloundToolIcon.Rect.Bottom - 6)
+                          CloundToolIcon.Rect.Right - 10,
+                          CloundToolIcon.Rect.Top + 10,
+                          CloundToolIcon.Rect.Right - 10,
+                          CloundToolIcon.Rect.Bottom - 10)
 
                 .DrawLine(CloundToolIconPen,
-                          CloundToolIcon.Rect.Left + 6,
-                          CloundToolIcon.Rect.Bottom - 6,
-                          CloundToolIcon.Rect.Right - 6,
-                          CloundToolIcon.Rect.Bottom - 6)
+                          CloundToolIcon.Rect.Left + 10,
+                          CloundToolIcon.Rect.Bottom - 10,
+                          CloundToolIcon.Rect.Right - 10,
+                          CloundToolIcon.Rect.Bottom - 10)
 
                 .DrawRectangle(CloundToolIconOutinePen, CloundToolIcon.Rect)
 
@@ -2740,16 +2742,16 @@ Public Class Form1
                 .FillRectangle(Brushes.GreenYellow, BushToolIcon.Rect)
 
                 .DrawLine(BushToolIconPen,
-                          BushToolIcon.Rect.Right - 6,
-                          BushToolIcon.Rect.Top + 6,
-                          BushToolIcon.Rect.Right - 6,
-                          BushToolIcon.Rect.Bottom - 6)
+                          BushToolIcon.Rect.Right - 10,
+                          BushToolIcon.Rect.Top + 10,
+                          BushToolIcon.Rect.Right - 10,
+                          BushToolIcon.Rect.Bottom - 10)
 
                 .DrawLine(BushToolIconPen,
-                          BushToolIcon.Rect.Left + 6,
-                          BushToolIcon.Rect.Bottom - 6,
-                          BushToolIcon.Rect.Right - 6,
-                          BushToolIcon.Rect.Bottom - 6)
+                          BushToolIcon.Rect.Left + 10,
+                          BushToolIcon.Rect.Bottom - 10,
+                          BushToolIcon.Rect.Right - 10,
+                          BushToolIcon.Rect.Bottom - 10)
 
                 .DrawRectangle(BushToolIconOutinePen, BushToolIcon.Rect)
 
@@ -2760,16 +2762,16 @@ Public Class Form1
                 .FillRectangle(Brushes.GreenYellow, BushToolIcon.Rect)
 
                 .DrawLine(BushToolIconPen,
-                          BushToolIcon.Rect.Right - 6,
-                          BushToolIcon.Rect.Top + 6,
-                          BushToolIcon.Rect.Right - 6,
-                          BushToolIcon.Rect.Bottom - 6)
+                          BushToolIcon.Rect.Right - 10,
+                          BushToolIcon.Rect.Top + 10,
+                          BushToolIcon.Rect.Right - 10,
+                          BushToolIcon.Rect.Bottom - 10)
 
                 .DrawLine(BushToolIconPen,
-                          BushToolIcon.Rect.Left + 6,
-                          BushToolIcon.Rect.Bottom - 6,
-                          BushToolIcon.Rect.Right - 6,
-                          BushToolIcon.Rect.Bottom - 6)
+                          BushToolIcon.Rect.Left + 10,
+                          BushToolIcon.Rect.Bottom - 10,
+                          BushToolIcon.Rect.Right - 10,
+                          BushToolIcon.Rect.Bottom - 10)
 
                 .DrawRectangle(BushToolIconOutinePen, BushToolIcon.Rect)
 
@@ -3587,6 +3589,10 @@ Public Class Form1
         Title.Text = "Platformer" & vbCrLf & "with Level Editor"
 
         OutinePen.LineJoin = Drawing2D.LineJoin.Round
+
+        CloundToolIconOutinePen.LineJoin = LineJoin.Round
+
+        BushToolIconOutinePen.LineJoin = LineJoin.Round
 
         InitializeObjects()
 
@@ -6727,27 +6733,27 @@ Public Class Form1
 
         BlockToolButton.Rect = New Rectangle(ClientRectangle.Left + 422, ClientRectangle.Bottom - 90, 90, 90)
 
-        BlockToolIcon.Rect = New Rectangle(ClientRectangle.Left + 447, ClientRectangle.Bottom - 65, 40, 40)
+        BlockToolIcon.Rect = New Rectangle(ClientRectangle.Left + 435, ClientRectangle.Bottom - 77, 64, 64)
 
         BillToolButton.Rect = New Rectangle(ClientRectangle.Left + 513, ClientRectangle.Bottom - 90, 90, 90)
 
-        BillToolIcon.Rect = New Rectangle(ClientRectangle.Left + 538, ClientRectangle.Bottom - 65, 40, 40)
+        BillToolIcon.Rect = New Rectangle(ClientRectangle.Left + 526, ClientRectangle.Bottom - 77, 64, 64)
 
         BushToolButton.Rect = New Rectangle(ClientRectangle.Left + 604, ClientRectangle.Bottom - 90, 90, 90)
 
-        BushToolIcon.Rect = New Rectangle(ClientRectangle.Left + 629, ClientRectangle.Bottom - 65, 40, 40)
+        BushToolIcon.Rect = New Rectangle(ClientRectangle.Left + 618, ClientRectangle.Bottom - 77, 64, 64)
 
         CloudToolButton.Rect = New Rectangle(ClientRectangle.Left + 695, ClientRectangle.Bottom - 90, 90, 90)
 
-        CloundToolIcon.Rect = New Rectangle(ClientRectangle.Left + 720, ClientRectangle.Bottom - 65, 40, 40)
+        CloundToolIcon.Rect = New Rectangle(ClientRectangle.Left + 708, ClientRectangle.Bottom - 77, 64, 64)
 
         GoalToolButton.Rect = New Rectangle(ClientRectangle.Left + 786, ClientRectangle.Bottom - 90, 90, 90)
 
-        GoalToolIcon.Rect = New Rectangle(ClientRectangle.Left + 811, ClientRectangle.Bottom - 65, 40, 40)
+        GoalToolIcon.Rect = New Rectangle(ClientRectangle.Left + 798, ClientRectangle.Bottom - 77, 64, 64)
 
         EnemyToolButton.Rect = New Rectangle(ClientRectangle.Left + 877, ClientRectangle.Bottom - 90, 90, 90)
 
-        EnemyToolIcon.Rect = New Rectangle(ClientRectangle.Left + 902, ClientRectangle.Bottom - 65, 40, 40)
+        EnemyToolIcon.Rect = New Rectangle(ClientRectangle.Left + 890, ClientRectangle.Bottom - 77, 64, 64)
 
     End Sub
 

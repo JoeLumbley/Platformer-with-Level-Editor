@@ -5003,6 +5003,22 @@ Public Class Form1
 
         Select Case e.KeyCode
 
+            Case Keys.E
+
+                If GameState = AppState.Playing Then
+
+                    GameState = AppState.Editing
+
+                End If
+
+            Case Keys.P
+
+                If GameState = AppState.Editing Then
+
+                    GameState = AppState.Playing
+
+                End If
+
             'Has the player pressed the right arrow key down?
             Case Keys.Right
                 'Yes, the player has pressed the right arrow key down.

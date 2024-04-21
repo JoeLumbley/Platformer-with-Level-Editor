@@ -2238,9 +2238,17 @@ Public Class Form1
 
                         .FillRectangle(Brushes.GreenYellow, RectOffset)
 
-                        .DrawLine(SeaGreenPen, RectOffset.Right - 10, RectOffset.Top + 10, RectOffset.Right - 10, RectOffset.Bottom - 10)
+                        .DrawLine(SeaGreenPen,
+                                  RectOffset.Right - 10,
+                                  RectOffset.Top + 10,
+                                  RectOffset.Right - 10,
+                                  RectOffset.Bottom - 10)
 
-                        .DrawLine(SeaGreenPen, RectOffset.Left + 10, RectOffset.Bottom - 10, RectOffset.Right - 10, RectOffset.Bottom - 10)
+                        .DrawLine(SeaGreenPen,
+                                  RectOffset.Left + 10,
+                                  RectOffset.Bottom - 10,
+                                  RectOffset.Right - 10,
+                                  RectOffset.Bottom - 10)
 
                         .DrawRectangle(OutinePen, RectOffset)
 
@@ -2289,12 +2297,17 @@ Public Class Form1
 
                         .FillRectangle(Brushes.White, RectOffset)
 
-                        .DrawLine(LightSkyBluePen, RectOffset.Right - 10,
+                        .DrawLine(LightSkyBluePen,
+                                  RectOffset.Right - 10,
                                   RectOffset.Top + 10,
                                   RectOffset.Right - 10,
                                   RectOffset.Bottom - 10)
 
-                        .DrawLine(LightSkyBluePen, RectOffset.Left + 10, RectOffset.Bottom - 10, RectOffset.Right - 10, RectOffset.Bottom - 10)
+                        .DrawLine(LightSkyBluePen,
+                                  RectOffset.Left + 10,
+                                  RectOffset.Bottom - 10,
+                                  RectOffset.Right - 10,
+                                  RectOffset.Bottom - 10)
 
                         .DrawRectangle(OutinePen, RectOffset)
 
@@ -2436,9 +2449,17 @@ Public Class Form1
 
                         .FillRectangle(Brushes.White, RectOffset)
 
-                        .DrawLine(LightSkyBluePen, RectOffset.Right - 10, RectOffset.Top + 10, RectOffset.Right - 10, RectOffset.Bottom - 10)
+                        .DrawLine(LightSkyBluePen,
+                                  RectOffset.Right - 10,
+                                  RectOffset.Top + 10,
+                                  RectOffset.Right - 10,
+                                  RectOffset.Bottom - 10)
 
-                        .DrawLine(LightSkyBluePen, RectOffset.Left + 10, RectOffset.Bottom - 10, RectOffset.Right - 10, RectOffset.Bottom - 10)
+                        .DrawLine(LightSkyBluePen,
+                                  RectOffset.Left + 10,
+                                  RectOffset.Bottom - 10,
+                                  RectOffset.Right - 10,
+                                  RectOffset.Bottom - 10)
 
                         .DrawRectangle(OutinePen, RectOffset)
 
@@ -2446,9 +2467,17 @@ Public Class Form1
 
                         .FillRectangle(Brushes.GreenYellow, RectOffset)
 
-                        .DrawLine(SeaGreenPen, RectOffset.Right - 10, RectOffset.Top + 10, RectOffset.Right - 10, RectOffset.Bottom - 10)
+                        .DrawLine(SeaGreenPen,
+                                  RectOffset.Right - 10,
+                                  RectOffset.Top + 10,
+                                  RectOffset.Right - 10,
+                                  RectOffset.Bottom - 10)
 
-                        .DrawLine(SeaGreenPen, RectOffset.Left + 10, RectOffset.Bottom - 10, RectOffset.Right - 10, RectOffset.Bottom - 10)
+                        .DrawLine(SeaGreenPen,
+                                  RectOffset.Left + 10,
+                                  RectOffset.Bottom - 10,
+                                  RectOffset.Right - 10,
+                                  RectOffset.Bottom - 10)
 
                         .DrawRectangle(OutinePen, RectOffset)
 

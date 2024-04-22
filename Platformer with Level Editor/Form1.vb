@@ -327,7 +327,11 @@ Public Class Form1
 
     Private PointerToolButton As GameObject
 
+    Private PointerToolButtonHover As Boolean = False
+
     Private BlockToolButton As GameObject
+
+    Private BlockToolButtonHover As Boolean = False
 
     Private BlockToolIcon As GameObject
 
@@ -2611,23 +2615,51 @@ Public Class Form1
 
             If SelectedTool = Tools.Pointer Then
 
-                .FillRectangle(DarkCharcoalGreyBrush, PointerToolButton.Rect)
+                If PointerToolButtonHover = True Then
 
-                .DrawString("ë",
+                    .FillRectangle(Brushes.White, PointerToolButton.Rect)
+
+                    .DrawString("ë",
                             PointerToolFont,
-                            Brushes.White,
+                            Brushes.Black,
                             PointerToolButton.Rect,
                             AlineCenterMiddle)
+
+                Else
+
+                    .FillRectangle(Brushes.LightGray, PointerToolButton.Rect)
+
+                    .DrawString("ë",
+                            PointerToolFont,
+                            Brushes.Black,
+                            PointerToolButton.Rect,
+                            AlineCenterMiddle)
+
+                End If
 
             Else
 
-                .FillRectangle(Brushes.Black, PointerToolButton.Rect)
+                If PointerToolButtonHover = True Then
 
-                .DrawString("ë",
-                            PointerToolFont,
-                            Brushes.White,
-                            PointerToolButton.Rect,
-                            AlineCenterMiddle)
+                    .FillRectangle(DarkCharcoalGreyBrush, PointerToolButton.Rect)
+
+                    .DrawString("ë",
+                                PointerToolFont,
+                                Brushes.White,
+                                PointerToolButton.Rect,
+                                AlineCenterMiddle)
+
+                Else
+
+                    .FillRectangle(Brushes.Black, PointerToolButton.Rect)
+
+                    .DrawString("ë",
+                                PointerToolFont,
+                                Brushes.White,
+                                PointerToolButton.Rect,
+                                AlineCenterMiddle)
+
+                End If
 
             End If
 
@@ -2641,15 +2673,35 @@ Public Class Form1
 
             If SelectedTool = Tools.Block Then
 
-                .FillRectangle(DarkCharcoalGreyBrush, BlockToolButton.Rect)
+                If BlockToolButtonHover = True Then
 
-                .FillRectangle(Brushes.Chocolate, BlockToolIcon.Rect)
+                    .FillRectangle(Brushes.White, BlockToolButton.Rect)
+
+                    .FillRectangle(Brushes.Chocolate, BlockToolIcon.Rect)
+
+                Else
+
+                    .FillRectangle(Brushes.LightGray, BlockToolButton.Rect)
+
+                    .FillRectangle(Brushes.Chocolate, BlockToolIcon.Rect)
+
+                End If
 
             Else
 
-                .FillRectangle(Brushes.Black, BlockToolButton.Rect)
+                If BlockToolButtonHover = True Then
 
-                .FillRectangle(Brushes.Chocolate, BlockToolIcon.Rect)
+                    .FillRectangle(DarkCharcoalGreyBrush, BlockToolButton.Rect)
+
+                    .FillRectangle(Brushes.Chocolate, BlockToolIcon.Rect)
+
+                Else
+
+                    .FillRectangle(Brushes.Black, BlockToolButton.Rect)
+
+                    .FillRectangle(Brushes.Chocolate, BlockToolIcon.Rect)
+
+                End If
 
             End If
 
@@ -5094,6 +5146,34 @@ Public Class Form1
             Else
 
                 BillToolButtonHover = False
+
+            End If
+
+            If BlockToolButton.Rect.Contains(e.Location) Then
+
+                If ShowMenu = False Then
+
+                    BlockToolButtonHover = True
+
+                End If
+
+            Else
+
+                BlockToolButtonHover = False
+
+            End If
+
+            If PointerToolButton.Rect.Contains(e.Location) Then
+
+                If ShowMenu = False Then
+
+                    PointerToolButtonHover = True
+
+                End If
+
+            Else
+
+                PointerToolButtonHover = False
 
             End If
 

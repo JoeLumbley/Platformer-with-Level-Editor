@@ -6,7 +6,8 @@
 
 **"Platformer with Level Editor"** is an essential tool for aspiring game developers. By delving into the source code and project structure of a platformer game with a level editor, you can gain practical experience and valuable insights.
 
-![073](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/5eac0a7d-256f-479f-b63e-65551e453091)
+![078](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/d16207b7-93f6-45c6-abb6-f9a60084f2a4)
+
 
 Here's what you can expect to explore with this learning tool:
 
@@ -19,7 +20,7 @@ Discover common programming patterns used in game development, such as object-or
 #### 3. Level Design
 The level editor component introduces you to key game design principles, covering aspects like level creation, storage, and loading.
 
-![074](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/6a216fb6-a2b8-42ef-a86b-221dc74fc66c)
+![079](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/fe8bd545-27e4-4e3e-8628-56339f7fb185)
 
 #### 4. Sound Integration
 Learn how to integrate audio assets into your game, including sound effects and music.
@@ -44,17 +45,18 @@ In conclusion, **"Platformer with Level Editor"** provides a comprehensive learn
 
 
 
+![075](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/28c0aef0-6f8c-463d-8ef6-c9a228e0779e)
 
-![067](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/fe5c42da-cc7c-4cda-b2a9-49cf7f1ad835)
-
-![068](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/87e9bf7d-ba10-4574-a0a5-b4c1c36b2982)
-
+![076](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/46cc6437-f34e-4f38-bbcc-58b868f4de2c)
 
 
 
 
 
-![070](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/6a05f3bf-a290-4f5b-b2b5-48753e2b8a63)
+
+![077](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/d0581982-faa9-4675-8ccd-865f865a9a93)
+
+
 
 
 

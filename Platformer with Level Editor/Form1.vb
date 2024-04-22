@@ -333,9 +333,13 @@ Public Class Form1
 
     Private BillToolButton As GameObject
 
+    Private BillToolButtonHover As Boolean = False
+
     Private BillToolIcon As GameObject
 
     Private CloudToolButton As GameObject
+
+    Private CloudToolButtonHover As Boolean = False
 
     Private CloundToolIcon As GameObject
 
@@ -343,11 +347,17 @@ Public Class Form1
 
     Private BushToolIcon As GameObject
 
+    Private BushToolButtonHover As Boolean = False
+
     Private GoalToolButton As GameObject
+
+    Private GoalToolButtonHover As Boolean = False
 
     Private GoalToolIcon As GameObject
 
     Private EnemyToolButton As GameObject
+
+    Private EnemyToolButtonHover As Boolean = False
 
     Private EnemyToolIcon As GameObject
 
@@ -2653,27 +2663,58 @@ Public Class Form1
 
             If SelectedTool = Tools.Bill Then
 
-                .FillRectangle(DarkCharcoalGreyBrush, BillToolButton.Rect)
+                If BillToolButtonHover = True Then
 
-                .FillRectangle(Brushes.Goldenrod, BillToolIcon.Rect)
+                    .FillRectangle(Brushes.White, BillToolButton.Rect)
 
-                .DrawString("$",
+                    .FillRectangle(Brushes.Goldenrod, BillToolIcon.Rect)
+
+                    .DrawString("$",
                             BillIconFont,
                             Brushes.OrangeRed,
                             BillToolIcon.Rect,
                             AlineCenterMiddle)
+
+                Else
+                    .FillRectangle(Brushes.LightGray, BillToolButton.Rect)
+
+                    .FillRectangle(Brushes.Goldenrod, BillToolIcon.Rect)
+
+                    .DrawString("$",
+                            BillIconFont,
+                            Brushes.OrangeRed,
+                            BillToolIcon.Rect,
+                            AlineCenterMiddle)
+
+                End If
 
             Else
 
-                .FillRectangle(Brushes.Black, BillToolButton.Rect)
+                If BillToolButtonHover = True Then
 
-                .FillRectangle(Brushes.Goldenrod, BillToolIcon.Rect)
+                    .FillRectangle(DarkCharcoalGreyBrush, BillToolButton.Rect)
 
-                .DrawString("$",
-                            BillIconFont,
-                            Brushes.OrangeRed,
-                            BillToolIcon.Rect,
-                            AlineCenterMiddle)
+                    .FillRectangle(Brushes.Goldenrod, BillToolIcon.Rect)
+
+                    .DrawString("$",
+                                BillIconFont,
+                                Brushes.OrangeRed,
+                                BillToolIcon.Rect,
+                                AlineCenterMiddle)
+
+                Else
+
+                    .FillRectangle(Brushes.Black, BillToolButton.Rect)
+
+                    .FillRectangle(Brushes.Goldenrod, BillToolIcon.Rect)
+
+                    .DrawString("$",
+                                BillIconFont,
+                                Brushes.OrangeRed,
+                                BillToolIcon.Rect,
+                                AlineCenterMiddle)
+
+                End If
 
             End If
 
@@ -2687,43 +2728,91 @@ Public Class Form1
 
             If SelectedTool = Tools.Cloud Then
 
-                .FillRectangle(DarkCharcoalGreyBrush, CloudToolButton.Rect)
+                If CloudToolButtonHover = True Then
 
-                .FillRectangle(Brushes.White, CloundToolIcon.Rect)
+                    .FillRectangle(Brushes.White, CloudToolButton.Rect)
 
-                .DrawLine(CloundToolIconPen,
+                    .FillRectangle(Brushes.White, CloundToolIcon.Rect)
+
+                    .DrawLine(CloundToolIconPen,
                           CloundToolIcon.Rect.Right - 10,
                           CloundToolIcon.Rect.Top + 10,
                           CloundToolIcon.Rect.Right - 10,
                           CloundToolIcon.Rect.Bottom - 10)
 
-                .DrawLine(CloundToolIconPen,
+                    .DrawLine(CloundToolIconPen,
                           CloundToolIcon.Rect.Left + 10,
                           CloundToolIcon.Rect.Bottom - 10,
                           CloundToolIcon.Rect.Right - 10,
                           CloundToolIcon.Rect.Bottom - 10)
 
-                .DrawRectangle(CloundToolIconOutinePen, CloundToolIcon.Rect)
+                    .DrawRectangle(CloundToolIconOutinePen, CloundToolIcon.Rect)
+
+                Else
+
+                    .FillRectangle(Brushes.LightGray, CloudToolButton.Rect)
+
+                    .FillRectangle(Brushes.White, CloundToolIcon.Rect)
+
+                    .DrawLine(CloundToolIconPen,
+                          CloundToolIcon.Rect.Right - 10,
+                          CloundToolIcon.Rect.Top + 10,
+                          CloundToolIcon.Rect.Right - 10,
+                          CloundToolIcon.Rect.Bottom - 10)
+
+                    .DrawLine(CloundToolIconPen,
+                          CloundToolIcon.Rect.Left + 10,
+                          CloundToolIcon.Rect.Bottom - 10,
+                          CloundToolIcon.Rect.Right - 10,
+                          CloundToolIcon.Rect.Bottom - 10)
+
+                    .DrawRectangle(CloundToolIconOutinePen, CloundToolIcon.Rect)
+
+                End If
 
             Else
 
-                .FillRectangle(Brushes.Black, CloudToolButton.Rect)
+                If CloudToolButtonHover = True Then
 
-                .FillRectangle(Brushes.White, CloundToolIcon.Rect)
+                    .FillRectangle(DarkCharcoalGreyBrush, CloudToolButton.Rect)
 
-                .DrawLine(CloundToolIconPen,
-                          CloundToolIcon.Rect.Right - 10,
-                          CloundToolIcon.Rect.Top + 10,
-                          CloundToolIcon.Rect.Right - 10,
-                          CloundToolIcon.Rect.Bottom - 10)
+                    .FillRectangle(Brushes.White, CloundToolIcon.Rect)
 
-                .DrawLine(CloundToolIconPen,
-                          CloundToolIcon.Rect.Left + 10,
-                          CloundToolIcon.Rect.Bottom - 10,
-                          CloundToolIcon.Rect.Right - 10,
-                          CloundToolIcon.Rect.Bottom - 10)
+                    .DrawLine(CloundToolIconPen,
+                              CloundToolIcon.Rect.Right - 10,
+                              CloundToolIcon.Rect.Top + 10,
+                              CloundToolIcon.Rect.Right - 10,
+                              CloundToolIcon.Rect.Bottom - 10)
 
-                .DrawRectangle(CloundToolIconOutinePen, CloundToolIcon.Rect)
+                    .DrawLine(CloundToolIconPen,
+                              CloundToolIcon.Rect.Left + 10,
+                              CloundToolIcon.Rect.Bottom - 10,
+                              CloundToolIcon.Rect.Right - 10,
+                              CloundToolIcon.Rect.Bottom - 10)
+
+                    .DrawRectangle(CloundToolIconOutinePen, CloundToolIcon.Rect)
+
+                Else
+
+                    .FillRectangle(Brushes.Black, CloudToolButton.Rect)
+
+                    .FillRectangle(Brushes.White, CloundToolIcon.Rect)
+
+                    .DrawLine(CloundToolIconPen,
+                              CloundToolIcon.Rect.Right - 10,
+                              CloundToolIcon.Rect.Top + 10,
+                              CloundToolIcon.Rect.Right - 10,
+                              CloundToolIcon.Rect.Bottom - 10)
+
+                    .DrawLine(CloundToolIconPen,
+                              CloundToolIcon.Rect.Left + 10,
+                              CloundToolIcon.Rect.Bottom - 10,
+                              CloundToolIcon.Rect.Right - 10,
+                              CloundToolIcon.Rect.Bottom - 10)
+
+                    .DrawRectangle(CloundToolIconOutinePen, CloundToolIcon.Rect)
+
+                End If
 
             End If
 
@@ -2737,43 +2826,91 @@ Public Class Form1
 
             If SelectedTool = Tools.Bush Then
 
-                .FillRectangle(DarkCharcoalGreyBrush, BushToolButton.Rect)
+                If BushToolButtonHover = True Then
 
-                .FillRectangle(Brushes.GreenYellow, BushToolIcon.Rect)
+                    .FillRectangle(Brushes.White, BushToolButton.Rect)
 
-                .DrawLine(BushToolIconPen,
+                    .FillRectangle(Brushes.GreenYellow, BushToolIcon.Rect)
+
+                    .DrawLine(BushToolIconPen,
                           BushToolIcon.Rect.Right - 10,
                           BushToolIcon.Rect.Top + 10,
                           BushToolIcon.Rect.Right - 10,
                           BushToolIcon.Rect.Bottom - 10)
 
-                .DrawLine(BushToolIconPen,
+                    .DrawLine(BushToolIconPen,
                           BushToolIcon.Rect.Left + 10,
                           BushToolIcon.Rect.Bottom - 10,
                           BushToolIcon.Rect.Right - 10,
                           BushToolIcon.Rect.Bottom - 10)
 
-                .DrawRectangle(BushToolIconOutinePen, BushToolIcon.Rect)
+                    .DrawRectangle(BushToolIconOutinePen, BushToolIcon.Rect)
+
+                Else
+
+                    .FillRectangle(Brushes.LightGray, BushToolButton.Rect)
+
+                    .FillRectangle(Brushes.GreenYellow, BushToolIcon.Rect)
+
+                    .DrawLine(BushToolIconPen,
+                          BushToolIcon.Rect.Right - 10,
+                          BushToolIcon.Rect.Top + 10,
+                          BushToolIcon.Rect.Right - 10,
+                          BushToolIcon.Rect.Bottom - 10)
+
+                    .DrawLine(BushToolIconPen,
+                          BushToolIcon.Rect.Left + 10,
+                          BushToolIcon.Rect.Bottom - 10,
+                          BushToolIcon.Rect.Right - 10,
+                          BushToolIcon.Rect.Bottom - 10)
+
+                    .DrawRectangle(BushToolIconOutinePen, BushToolIcon.Rect)
+
+                End If
 
             Else
 
-                .FillRectangle(Brushes.Black, BushToolButton.Rect)
+                If BushToolButtonHover = True Then
 
-                .FillRectangle(Brushes.GreenYellow, BushToolIcon.Rect)
+                    .FillRectangle(DarkCharcoalGreyBrush, BushToolButton.Rect)
 
-                .DrawLine(BushToolIconPen,
-                          BushToolIcon.Rect.Right - 10,
-                          BushToolIcon.Rect.Top + 10,
-                          BushToolIcon.Rect.Right - 10,
-                          BushToolIcon.Rect.Bottom - 10)
+                    .FillRectangle(Brushes.GreenYellow, BushToolIcon.Rect)
 
-                .DrawLine(BushToolIconPen,
-                          BushToolIcon.Rect.Left + 10,
-                          BushToolIcon.Rect.Bottom - 10,
-                          BushToolIcon.Rect.Right - 10,
-                          BushToolIcon.Rect.Bottom - 10)
+                    .DrawLine(BushToolIconPen,
+                              BushToolIcon.Rect.Right - 10,
+                              BushToolIcon.Rect.Top + 10,
+                              BushToolIcon.Rect.Right - 10,
+                              BushToolIcon.Rect.Bottom - 10)
 
-                .DrawRectangle(BushToolIconOutinePen, BushToolIcon.Rect)
+                    .DrawLine(BushToolIconPen,
+                              BushToolIcon.Rect.Left + 10,
+                              BushToolIcon.Rect.Bottom - 10,
+                              BushToolIcon.Rect.Right - 10,
+                              BushToolIcon.Rect.Bottom - 10)
+
+                    .DrawRectangle(BushToolIconOutinePen, BushToolIcon.Rect)
+
+                Else
+
+                    .FillRectangle(Brushes.Black, BushToolButton.Rect)
+
+                    .FillRectangle(Brushes.GreenYellow, BushToolIcon.Rect)
+
+                    .DrawLine(BushToolIconPen,
+                              BushToolIcon.Rect.Right - 10,
+                              BushToolIcon.Rect.Top + 10,
+                              BushToolIcon.Rect.Right - 10,
+                              BushToolIcon.Rect.Bottom - 10)
+
+                    .DrawLine(BushToolIconPen,
+                              BushToolIcon.Rect.Left + 10,
+                              BushToolIcon.Rect.Bottom - 10,
+                              BushToolIcon.Rect.Right - 10,
+                              BushToolIcon.Rect.Bottom - 10)
+
+                    .DrawRectangle(BushToolIconOutinePen, BushToolIcon.Rect)
+
+                End If
 
             End If
 
@@ -2787,19 +2924,43 @@ Public Class Form1
 
             If SelectedTool = Tools.Enemy Then
 
-                .FillRectangle(DarkCharcoalGreyBrush, EnemyToolButton.Rect)
+                If EnemyToolButtonHover = True Then
 
-                .FillRectangle(Brushes.Chocolate, EnemyToolIcon.Rect)
+                    .FillRectangle(Brushes.White, EnemyToolButton.Rect)
 
-                .DrawString("E", EnemyIconFont, Brushes.PaleGoldenrod, EnemyToolIcon.Rect, AlineCenterMiddle)
+                    .FillRectangle(Brushes.Chocolate, EnemyToolIcon.Rect)
+
+                    .DrawString("E", EnemyIconFont, Brushes.PaleGoldenrod, EnemyToolIcon.Rect, AlineCenterMiddle)
+
+                Else
+
+                    .FillRectangle(Brushes.LightGray, EnemyToolButton.Rect)
+
+                    .FillRectangle(Brushes.Chocolate, EnemyToolIcon.Rect)
+
+                    .DrawString("E", EnemyIconFont, Brushes.PaleGoldenrod, EnemyToolIcon.Rect, AlineCenterMiddle)
+
+                End If
 
             Else
 
-                .FillRectangle(Brushes.Black, EnemyToolButton.Rect)
+                If EnemyToolButtonHover = True Then
 
-                .FillRectangle(Brushes.Chocolate, EnemyToolIcon.Rect)
+                    .FillRectangle(DarkCharcoalGreyBrush, EnemyToolButton.Rect)
 
-                .DrawString("E", EnemyIconFont, Brushes.PaleGoldenrod, EnemyToolIcon.Rect, AlineCenterMiddle)
+                    .FillRectangle(Brushes.Chocolate, EnemyToolIcon.Rect)
+
+                    .DrawString("E", EnemyIconFont, Brushes.PaleGoldenrod, EnemyToolIcon.Rect, AlineCenterMiddle)
+
+                Else
+
+                    .FillRectangle(Brushes.Black, EnemyToolButton.Rect)
+
+                    .FillRectangle(Brushes.Chocolate, EnemyToolIcon.Rect)
+
+                    .DrawString("E", EnemyIconFont, Brushes.PaleGoldenrod, EnemyToolIcon.Rect, AlineCenterMiddle)
+
+                End If
 
             End If
 
@@ -2813,79 +2974,163 @@ Public Class Form1
 
             If SelectedTool = Tools.Goal Then
 
-                .FillRectangle(DarkCharcoalGreyBrush, GoalToolButton.Rect)
+                If GoalToolButtonHover = True Then
 
-                .FillRectangle(Brushes.White, GoalToolIcon.Rect)
+                    .FillRectangle(Brushes.White, GoalToolButton.Rect)
 
-                ' Define the rectangle to be filled
-                Dim rect As RectangleF = GoalToolIcon.Rect
+                    .FillRectangle(Brushes.White, GoalToolIcon.Rect)
 
-                rect.Inflate(rect.Width / 6.4F, rect.Height / 6.4F)
+                    ' Define the rectangle to be filled
+                    Dim rect As RectangleF = GoalToolIcon.Rect
 
-                ' Define the center point of the gradient
-                Dim center As New PointF(rect.Left + rect.Width / 2.0F, rect.Top + rect.Height / 2.0F)
+                    rect.Inflate(rect.Width / 6.4F, rect.Height / 6.4F)
 
-                ' Define the colors for the gradient stops
-                Dim colors() As Color = {Color.Yellow, Color.White}
+                    ' Define the center point of the gradient
+                    Dim center As New PointF(rect.Left + rect.Width / 2.0F, rect.Top + rect.Height / 2.0F)
 
-                ' Create the path for the gradient brush
-                Dim GradPath As New GraphicsPath()
-                GradPath.AddEllipse(rect)
+                    ' Define the colors for the gradient stops
+                    Dim colors() As Color = {Color.Yellow, Color.White}
 
-                ' Create the gradient brush
-                Dim GradBrush As New PathGradientBrush(GradPath) With {
-                    .CenterPoint = center,
-                    .CenterColor = colors(0),
-                    .SurroundColors = New Color() {colors(1)}
-                }
+                    ' Create the path for the gradient brush
+                    Dim GradPath As New GraphicsPath()
+                    GradPath.AddEllipse(rect)
 
-                .FillRectangle(GradBrush, GoalToolIcon.Rect)
+                    ' Create the gradient brush
+                    Dim GradBrush As New PathGradientBrush(GradPath) With {
+                        .CenterPoint = center,
+                        .CenterColor = colors(0),
+                        .SurroundColors = New Color() {colors(1)}
+                    }
 
-                Dim Font As New Font(New FontFamily("Wingdings"), GoalToolIcon.Rect.Width \ 2, FontStyle.Regular)
+                    .FillRectangle(GradBrush, GoalToolIcon.Rect)
 
-                .DrawString("«",
-                        Font,
-                        Brushes.Green,
-                        GoalToolIcon.Rect,
-                        AlineCenterMiddle)
+                    Dim Font As New Font(New FontFamily("Wingdings"), GoalToolIcon.Rect.Width \ 2, FontStyle.Regular)
+
+                    .DrawString("«",
+                            Font,
+                            Brushes.Green,
+                            GoalToolIcon.Rect,
+                            AlineCenterMiddle)
+
+                Else
+
+                    .FillRectangle(Brushes.LightGray, GoalToolButton.Rect)
+
+                    .FillRectangle(Brushes.White, GoalToolIcon.Rect)
+
+                    ' Define the rectangle to be filled
+                    Dim rect As RectangleF = GoalToolIcon.Rect
+
+                    rect.Inflate(rect.Width / 6.4F, rect.Height / 6.4F)
+
+                    ' Define the center point of the gradient
+                    Dim center As New PointF(rect.Left + rect.Width / 2.0F, rect.Top + rect.Height / 2.0F)
+
+                    ' Define the colors for the gradient stops
+                    Dim colors() As Color = {Color.Yellow, Color.White}
+
+                    ' Create the path for the gradient brush
+                    Dim GradPath As New GraphicsPath()
+                    GradPath.AddEllipse(rect)
+
+                    ' Create the gradient brush
+                    Dim GradBrush As New PathGradientBrush(GradPath) With {
+                        .CenterPoint = center,
+                        .CenterColor = colors(0),
+                        .SurroundColors = New Color() {colors(1)}
+                    }
+
+                    .FillRectangle(GradBrush, GoalToolIcon.Rect)
+
+                    Dim Font As New Font(New FontFamily("Wingdings"), GoalToolIcon.Rect.Width \ 2, FontStyle.Regular)
+
+                    .DrawString("«",
+                            Font,
+                            Brushes.Green,
+                            GoalToolIcon.Rect,
+                            AlineCenterMiddle)
+
+                End If
 
             Else
 
-                .FillRectangle(Brushes.Black, GoalToolButton.Rect)
+                If GoalToolButtonHover = True Then
 
-                .FillRectangle(Brushes.White, GoalToolIcon.Rect)
+                    .FillRectangle(DarkCharcoalGreyBrush, GoalToolButton.Rect)
 
-                ' Define the rectangle to be filled
-                Dim rect As RectangleF = GoalToolIcon.Rect
+                    .FillRectangle(Brushes.White, GoalToolIcon.Rect)
 
-                rect.Inflate(rect.Width / 6.4F, rect.Height / 6.4F)
+                    ' Define the rectangle to be filled
+                    Dim rect As RectangleF = GoalToolIcon.Rect
 
-                ' Define the center point of the gradient
-                Dim center As New PointF(rect.Left + rect.Width / 2.0F, rect.Top + rect.Height / 2.0F)
+                    rect.Inflate(rect.Width / 6.4F, rect.Height / 6.4F)
 
-                ' Define the colors for the gradient stops
-                Dim colors() As Color = {Color.Yellow, Color.White}
+                    ' Define the center point of the gradient
+                    Dim center As New PointF(rect.Left + rect.Width / 2.0F, rect.Top + rect.Height / 2.0F)
 
-                ' Create the path for the gradient brush
-                Dim GradPath As New GraphicsPath()
-                GradPath.AddEllipse(rect)
+                    ' Define the colors for the gradient stops
+                    Dim colors() As Color = {Color.Yellow, Color.White}
 
-                ' Create the gradient brush
-                Dim GradBrush As New PathGradientBrush(GradPath) With {
+                    ' Create the path for the gradient brush
+                    Dim GradPath As New GraphicsPath()
+                    GradPath.AddEllipse(rect)
+
+                    ' Create the gradient brush
+                    Dim GradBrush As New PathGradientBrush(GradPath) With {
                     .CenterPoint = center,
                     .CenterColor = colors(0),
                     .SurroundColors = New Color() {colors(1)}
                 }
 
-                .FillRectangle(GradBrush, GoalToolIcon.Rect)
+                    .FillRectangle(GradBrush, GoalToolIcon.Rect)
 
-                Dim Font As New Font(New FontFamily("Wingdings"), GoalToolIcon.Rect.Width \ 2, FontStyle.Regular)
+                    Dim Font As New Font(New FontFamily("Wingdings"), GoalToolIcon.Rect.Width \ 2, FontStyle.Regular)
 
-                .DrawString("«",
+                    .DrawString("«",
                         Font,
                         Brushes.Green,
                         GoalToolIcon.Rect,
                         AlineCenterMiddle)
+
+                Else
+
+                    .FillRectangle(Brushes.Black, GoalToolButton.Rect)
+
+                    .FillRectangle(Brushes.White, GoalToolIcon.Rect)
+
+                    ' Define the rectangle to be filled
+                    Dim rect As RectangleF = GoalToolIcon.Rect
+
+                    rect.Inflate(rect.Width / 6.4F, rect.Height / 6.4F)
+
+                    ' Define the center point of the gradient
+                    Dim center As New PointF(rect.Left + rect.Width / 2.0F, rect.Top + rect.Height / 2.0F)
+
+                    ' Define the colors for the gradient stops
+                    Dim colors() As Color = {Color.Yellow, Color.White}
+
+                    ' Create the path for the gradient brush
+                    Dim GradPath As New GraphicsPath()
+                    GradPath.AddEllipse(rect)
+
+                    ' Create the gradient brush
+                    Dim GradBrush As New PathGradientBrush(GradPath) With {
+                    .CenterPoint = center,
+                    .CenterColor = colors(0),
+                    .SurroundColors = New Color() {colors(1)}
+                }
+
+                    .FillRectangle(GradBrush, GoalToolIcon.Rect)
+
+                    Dim Font As New Font(New FontFamily("Wingdings"), GoalToolIcon.Rect.Width \ 2, FontStyle.Regular)
+
+                    .DrawString("«",
+                        Font,
+                        Brushes.Green,
+                        GoalToolIcon.Rect,
+                        AlineCenterMiddle)
+
+                End If
 
             End If
 
@@ -2931,11 +3176,11 @@ Public Class Form1
 
             If MenuButtonHover = True Then
 
-                .FillRectangle(Brushes.White, MenuButton.Rect)
+                .FillRectangle(DarkCharcoalGreyBrush, MenuButton.Rect)
 
                 .DrawString("≡",
                         MenuButtonFont,
-                        Brushes.Black,
+                        Brushes.White,
                         MenuButton.Rect,
                         AlineCenterMiddle)
 
@@ -4787,6 +5032,76 @@ Public Class Form1
             Else
 
                 MenuButtonHover = False
+
+            End If
+
+            If EnemyToolButton.Rect.Contains(e.Location) Then
+
+                If ShowMenu = False Then
+
+                    EnemyToolButtonHover = True
+
+                End If
+
+            Else
+
+                EnemyToolButtonHover = False
+
+            End If
+
+            If GoalToolButton.Rect.Contains(e.Location) Then
+
+                If ShowMenu = False Then
+
+                    GoalToolButtonHover = True
+
+                End If
+
+            Else
+
+                GoalToolButtonHover = False
+
+            End If
+
+            If BushToolButton.Rect.Contains(e.Location) Then
+
+                If ShowMenu = False Then
+
+                    BushToolButtonHover = True
+
+                End If
+
+            Else
+
+                BushToolButtonHover = False
+
+            End If
+
+            If CloudToolButton.Rect.Contains(e.Location) Then
+
+                If ShowMenu = False Then
+
+                    CloudToolButtonHover = True
+
+                End If
+
+            Else
+
+                CloudToolButtonHover = False
+
+            End If
+
+            If BillToolButton.Rect.Contains(e.Location) Then
+
+                If ShowMenu = False Then
+
+                    BillToolButtonHover = True
+
+                End If
+
+            Else
+
+                BillToolButtonHover = False
 
             End If
 

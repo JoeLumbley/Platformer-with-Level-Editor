@@ -315,6 +315,8 @@ Public Class Form1
 
     Private EditPlayButton As GameObject
 
+    Private EditPlayButtonHover As Boolean = False
+
     Private SaveButton As GameObject
 
     Private ToolBarBackground As GameObject
@@ -3194,13 +3196,27 @@ Public Class Form1
 
         With Buffer.Graphics
 
-            .FillRectangle(Brushes.Black, EditPlayButton.Rect)
+            If EditPlayButtonHover = True Then
 
-            .DrawString("Play",
+                .FillRectangle(DarkCharcoalGreyBrush, EditPlayButton.Rect)
+
+                .DrawString("Play",
                         FPSFont,
                         Brushes.White,
                         EditPlayButton.Rect,
                         AlineCenterMiddle)
+
+            Else
+
+                .FillRectangle(Brushes.Black, EditPlayButton.Rect)
+
+                .DrawString("Play",
+                        FPSFont,
+                        Brushes.White,
+                        EditPlayButton.Rect,
+                        AlineCenterMiddle)
+
+            End If
 
         End With
 
@@ -5174,6 +5190,20 @@ Public Class Form1
             Else
 
                 PointerToolButtonHover = False
+
+            End If
+
+            If EditPlayButton.Rect.Contains(e.Location) Then
+
+                If ShowMenu = False Then
+
+                    EditPlayButtonHover = True
+
+                End If
+
+            Else
+
+                EditPlayButtonHover = False
 
             End If
 

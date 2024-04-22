@@ -3204,8 +3204,6 @@ Public Class Form1
 
         With Buffer.Graphics
 
-            '.FillRectangle(Brushes.Black, SaveButton.Rect)
-
             FillRoundedRectangle(Brushes.Black, SaveButton.Rect, 20, Buffer.Graphics)
 
 
@@ -3240,8 +3238,6 @@ Public Class Form1
     Private Sub DrawOpenButton()
 
         With Buffer.Graphics
-
-            '.FillRectangle(Brushes.Black, OpenButton.Rect)
 
             FillRoundedRectangle(Brushes.Black, OpenButton.Rect, 20, Buffer.Graphics)
 
@@ -3278,8 +3274,6 @@ Public Class Form1
 
         With Buffer.Graphics
 
-            '.FillRectangle(Brushes.Black, NewButton.Rect)
-
             FillRoundedRectangle(Brushes.Black, NewButton.Rect, 20, Buffer.Graphics)
 
 
@@ -3307,8 +3301,6 @@ Public Class Form1
     Private Sub DrawExitButton()
 
         With Buffer.Graphics
-
-            '.FillRectangle(Brushes.Black, ExitButton.Rect)
 
             FillRoundedRectangle(Brushes.Black, ExitButton.Rect, 20, Buffer.Graphics)
 

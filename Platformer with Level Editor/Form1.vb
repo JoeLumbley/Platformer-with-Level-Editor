@@ -317,7 +317,6 @@ Public Class Form1
 
     Private EditPlayButtonHover As Boolean = False
 
-    Private SaveButton As GameObject
 
     Private ToolBarBackground As GameObject
 
@@ -379,11 +378,21 @@ Public Class Form1
 
     Private StartScreenNewButton As GameObject
 
+    Private SaveButton As GameObject
+
+    Private SaveButtonHover As Boolean = False
+
     Private OpenButton As GameObject
+
+    Private OpenButtonHover As Boolean = False
 
     Private NewButton As GameObject
 
+    Private NewButtonHover As Boolean = False
+
     Private ExitButton As GameObject
+
+    Private ExitButtonHover As Boolean = False
 
     Private ScoreIndicators As GameObject
 
@@ -3272,16 +3281,17 @@ Public Class Form1
 
         With Buffer.Graphics
 
-            FillRoundedRectangle(Brushes.Black, SaveButton.Rect, 20, Buffer.Graphics)
+            If SaveButtonHover = True Then
 
+                FillRoundedRectangle(DarkCharcoalGreyBrush, SaveButton.Rect, 20, Buffer.Graphics)
 
-            .DrawEllipse(BButtonIconOutinePen,
+                .DrawEllipse(BButtonIconOutinePen,
                          New Rectangle(SaveButton.Rect.X + 197,
                                        SaveButton.Rect.Y + SaveButton.Rect.Height \ 2 - 52 \ 2,
                                        52,
                                        52))
 
-            .DrawString("Save",
+                .DrawString("Save",
                         FPSFont,
                         Brushes.White,
                         New Rectangle(SaveButton.Rect.X + 25,
@@ -3290,7 +3300,7 @@ Public Class Form1
                                       50),
                         AlineCenterMiddle)
 
-            .DrawString("B",
+                .DrawString("B",
                         RightTriggerIconFont,
                         Brushes.White,
                         New Rectangle(SaveButton.Rect.X + 175,
@@ -3298,6 +3308,36 @@ Public Class Form1
                                       100,
                                       50),
                         AlineCenterMiddle)
+
+            Else
+
+                FillRoundedRectangle(Brushes.Black, SaveButton.Rect, 20, Buffer.Graphics)
+
+                .DrawEllipse(BButtonIconOutinePen,
+                         New Rectangle(SaveButton.Rect.X + 197,
+                                       SaveButton.Rect.Y + SaveButton.Rect.Height \ 2 - 52 \ 2,
+                                       52,
+                                       52))
+
+                .DrawString("Save",
+                        FPSFont,
+                        Brushes.White,
+                        New Rectangle(SaveButton.Rect.X + 25,
+                                      SaveButton.Rect.Y + SaveButton.Rect.Height \ 2 - 45 \ 2,
+                                      140,
+                                      50),
+                        AlineCenterMiddle)
+
+                .DrawString("B",
+                        RightTriggerIconFont,
+                        Brushes.White,
+                        New Rectangle(SaveButton.Rect.X + 175,
+                                      SaveButton.Rect.Y + SaveButton.Rect.Height \ 2 - 45 \ 2,
+                                      100,
+                                      50),
+                        AlineCenterMiddle)
+
+            End If
 
         End With
 
@@ -3307,16 +3347,17 @@ Public Class Form1
 
         With Buffer.Graphics
 
-            FillRoundedRectangle(Brushes.Black, OpenButton.Rect, 20, Buffer.Graphics)
+            If OpenButtonHover = True Then
 
+                FillRoundedRectangle(DarkCharcoalGreyBrush, OpenButton.Rect, 20, Buffer.Graphics)
 
-            .DrawEllipse(YButtonIconOutinePen,
+                .DrawEllipse(YButtonIconOutinePen,
                          New Rectangle(OpenButton.Rect.X + 197,
                                        OpenButton.Rect.Y + OpenButton.Rect.Height \ 2 - 52 \ 2,
                                        52,
                                        52))
 
-            .DrawString("Open",
+                .DrawString("Open",
                         FPSFont,
                         Brushes.White,
                         New Rectangle(OpenButton.Rect.X + 25,
@@ -3325,7 +3366,7 @@ Public Class Form1
                                       50),
                         AlineCenterMiddle)
 
-            .DrawString("Y",
+                .DrawString("Y",
                         ButtonIconFont,
                         Brushes.White,
                         New Rectangle(OpenButton.Rect.X + 174,
@@ -3333,6 +3374,36 @@ Public Class Form1
                                       100,
                                       50),
                         AlineCenterMiddle)
+
+            Else
+
+                FillRoundedRectangle(Brushes.Black, OpenButton.Rect, 20, Buffer.Graphics)
+
+                .DrawEllipse(YButtonIconOutinePen,
+                         New Rectangle(OpenButton.Rect.X + 197,
+                                       OpenButton.Rect.Y + OpenButton.Rect.Height \ 2 - 52 \ 2,
+                                       52,
+                                       52))
+
+                .DrawString("Open",
+                        FPSFont,
+                        Brushes.White,
+                        New Rectangle(OpenButton.Rect.X + 25,
+                                      OpenButton.Rect.Y + OpenButton.Rect.Height \ 2 - 45 \ 2,
+                                      145,
+                                      50),
+                        AlineCenterMiddle)
+
+                .DrawString("Y",
+                        ButtonIconFont,
+                        Brushes.White,
+                        New Rectangle(OpenButton.Rect.X + 174,
+                                      OpenButton.Rect.Y + OpenButton.Rect.Height \ 2 - 45 \ 2,
+                                      100,
+                                      50),
+                        AlineCenterMiddle)
+
+            End If
 
         End With
 
@@ -3342,10 +3413,11 @@ Public Class Form1
 
         With Buffer.Graphics
 
-            FillRoundedRectangle(Brushes.Black, NewButton.Rect, 20, Buffer.Graphics)
+            If NewButtonHover = True Then
 
+                FillRoundedRectangle(DarkCharcoalGreyBrush, NewButton.Rect, 20, Buffer.Graphics)
 
-            .DrawString("New", FPSFont,
+                .DrawString("New", FPSFont,
                         Brushes.White,
                         New Rectangle(NewButton.Rect.X + 25,
                                       NewButton.Rect.Y + SaveButton.Rect.Height \ 2 - 45 \ 2,
@@ -3353,7 +3425,7 @@ Public Class Form1
                                       50),
                         AlineCenterMiddle)
 
-            .DrawString("RT",
+                .DrawString("RT",
                         RightTriggerIconFont,
                         Brushes.White,
                         New Rectangle(NewButton.Rect.X + 175,
@@ -3361,6 +3433,29 @@ Public Class Form1
                                       100,
                                       50),
                         AlineCenterMiddle)
+
+            Else
+
+                FillRoundedRectangle(Brushes.Black, NewButton.Rect, 20, Buffer.Graphics)
+
+                .DrawString("New", FPSFont,
+                        Brushes.White,
+                        New Rectangle(NewButton.Rect.X + 25,
+                                      NewButton.Rect.Y + SaveButton.Rect.Height \ 2 - 45 \ 2,
+                                      120,
+                                      50),
+                        AlineCenterMiddle)
+
+                .DrawString("RT",
+                        RightTriggerIconFont,
+                        Brushes.White,
+                        New Rectangle(NewButton.Rect.X + 175,
+                                      NewButton.Rect.Y + NewButton.Rect.Height \ 2 - 52 \ 2,
+                                      100,
+                                      50),
+                        AlineCenterMiddle)
+
+            End If
 
         End With
 
@@ -3370,16 +3465,17 @@ Public Class Form1
 
         With Buffer.Graphics
 
-            FillRoundedRectangle(Brushes.Black, ExitButton.Rect, 20, Buffer.Graphics)
+            If ExitButtonHover = True Then
 
+                FillRoundedRectangle(DarkCharcoalGreyBrush, ExitButton.Rect, 20, Buffer.Graphics)
 
-            .DrawEllipse(XButtonIconOutinePen,
+                .DrawEllipse(XButtonIconOutinePen,
                          New Rectangle(ExitButton.Rect.X + ExitButton.Rect.Width \ 2 - 52 \ 2,
                                        ExitButton.Rect.Y + ExitButton.Rect.Height \ 2 - 52 \ 2,
                                        52,
                                        52))
 
-            .DrawString("X",
+                .DrawString("X",
                         ButtonIconFont,
                         Brushes.White,
                         New Rectangle(ExitButton.Rect.X + ExitButton.Rect.Width \ 2 - 52 \ 2,
@@ -3387,6 +3483,28 @@ Public Class Form1
                                       52,
                                       52),
                                       AlineCenterMiddle)
+
+
+            Else
+
+                FillRoundedRectangle(Brushes.Black, ExitButton.Rect, 20, Buffer.Graphics)
+
+                .DrawEllipse(XButtonIconOutinePen,
+                         New Rectangle(ExitButton.Rect.X + ExitButton.Rect.Width \ 2 - 52 \ 2,
+                                       ExitButton.Rect.Y + ExitButton.Rect.Height \ 2 - 52 \ 2,
+                                       52,
+                                       52))
+
+                .DrawString("X",
+                        ButtonIconFont,
+                        Brushes.White,
+                        New Rectangle(ExitButton.Rect.X + ExitButton.Rect.Width \ 2 - 52 \ 2,
+                                      ExitButton.Rect.Y + 16,
+                                      52,
+                                      52),
+                                      AlineCenterMiddle)
+
+            End If
 
         End With
 
@@ -5204,6 +5322,63 @@ Public Class Form1
             Else
 
                 EditPlayButtonHover = False
+
+            End If
+
+            If SaveButton.Rect.Contains(e.Location) Then
+
+                If ShowMenu = True Then
+
+                    SaveButtonHover = True
+
+                End If
+
+            Else
+
+                SaveButtonHover = False
+
+            End If
+
+
+            If OpenButton.Rect.Contains(e.Location) Then
+
+                If ShowMenu = True Then
+
+                    OpenButtonHover = True
+
+                End If
+
+            Else
+
+                OpenButtonHover = False
+
+            End If
+
+            If NewButton.Rect.Contains(e.Location) Then
+
+                If ShowMenu = True Then
+
+                    NewButtonHover = True
+
+                End If
+
+            Else
+
+                NewButtonHover = False
+
+            End If
+
+            If ExitButton.Rect.Contains(e.Location) Then
+
+                If ShowMenu = True Then
+
+                    ExitButtonHover = True
+
+                End If
+
+            Else
+
+                ExitButtonHover = False
 
             End If
 

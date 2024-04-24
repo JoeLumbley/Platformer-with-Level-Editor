@@ -496,6 +496,27 @@ Public Class Form1
 
     Private DarkCharcoalGreyBrush As New SolidBrush(DarkCharcoalGrey)
 
+
+    Private HoverColor As Color = Color.FromArgb(255, 39, 39, 39)
+
+    Private HoverBrush As New SolidBrush(HoverColor)
+
+
+
+    Private SelectedColor As Color = Color.FromArgb(255, 51, 51, 51)
+
+    Private SelectedBrush As New SolidBrush(SelectedColor)
+
+
+
+    Private SelectedHoverColor As Color = Color.FromArgb(255, 71, 71, 71)
+
+    Private SelectedHoverBrush As New SolidBrush(SelectedHoverColor)
+
+
+
+
+
     Private ReadOnly AlineCenter As New StringFormat With {.Alignment = StringAlignment.Center}
 
     Private ReadOnly AlineCenterMiddle As New StringFormat With {.Alignment = StringAlignment.Center,
@@ -2628,21 +2649,21 @@ Public Class Form1
 
                 If PointerToolButtonHover = True Then
 
-                    .FillRectangle(Brushes.White, PointerToolButton.Rect)
+                    .FillRectangle(SelectedHoverBrush, PointerToolButton.Rect)
 
                     .DrawString("ë",
                             PointerToolFont,
-                            Brushes.Black,
+                            Brushes.White,
                             PointerToolButton.Rect,
                             AlineCenterMiddle)
 
                 Else
 
-                    .FillRectangle(Brushes.LightGray, PointerToolButton.Rect)
+                    .FillRectangle(SelectedBrush, PointerToolButton.Rect)
 
                     .DrawString("ë",
                             PointerToolFont,
-                            Brushes.Black,
+                            Brushes.White,
                             PointerToolButton.Rect,
                             AlineCenterMiddle)
 
@@ -2652,7 +2673,7 @@ Public Class Form1
 
                 If PointerToolButtonHover = True Then
 
-                    .FillRectangle(DarkCharcoalGreyBrush, PointerToolButton.Rect)
+                    .FillRectangle(HoverBrush, PointerToolButton.Rect)
 
                     .DrawString("ë",
                                 PointerToolFont,
@@ -2702,7 +2723,7 @@ Public Class Form1
 
                 If BlockToolButtonHover = True Then
 
-                    .FillRectangle(DarkCharcoalGreyBrush, BlockToolButton.Rect)
+                    .FillRectangle(HoverBrush, BlockToolButton.Rect)
 
                     .FillRectangle(Brushes.Chocolate, BlockToolIcon.Rect)
 
@@ -2755,7 +2776,7 @@ Public Class Form1
 
                 If BillToolButtonHover = True Then
 
-                    .FillRectangle(DarkCharcoalGreyBrush, BillToolButton.Rect)
+                    .FillRectangle(HoverBrush, BillToolButton.Rect)
 
                     .FillRectangle(Brushes.Goldenrod, BillToolIcon.Rect)
 
@@ -2837,7 +2858,7 @@ Public Class Form1
 
                 If CloudToolButtonHover = True Then
 
-                    .FillRectangle(DarkCharcoalGreyBrush, CloudToolButton.Rect)
+                    .FillRectangle(HoverBrush, CloudToolButton.Rect)
 
                     .FillRectangle(Brushes.White, CloundToolIcon.Rect)
 
@@ -2935,7 +2956,7 @@ Public Class Form1
 
                 If BushToolButtonHover = True Then
 
-                    .FillRectangle(DarkCharcoalGreyBrush, BushToolButton.Rect)
+                    .FillRectangle(HoverBrush, BushToolButton.Rect)
 
                     .FillRectangle(Brushes.GreenYellow, BushToolIcon.Rect)
 
@@ -3009,7 +3030,7 @@ Public Class Form1
 
                 If EnemyToolButtonHover = True Then
 
-                    .FillRectangle(DarkCharcoalGreyBrush, EnemyToolButton.Rect)
+                    .FillRectangle(HoverBrush, EnemyToolButton.Rect)
 
                     .FillRectangle(Brushes.Chocolate, EnemyToolIcon.Rect)
 
@@ -3119,7 +3140,7 @@ Public Class Form1
 
                 If GoalToolButtonHover = True Then
 
-                    .FillRectangle(DarkCharcoalGreyBrush, GoalToolButton.Rect)
+                    .FillRectangle(HoverBrush, GoalToolButton.Rect)
 
                     .FillRectangle(Brushes.White, GoalToolIcon.Rect)
 
@@ -3207,7 +3228,7 @@ Public Class Form1
 
             If EditPlayButtonHover = True Then
 
-                .FillRectangle(DarkCharcoalGreyBrush, EditPlayButton.Rect)
+                .FillRectangle(HoverBrush, EditPlayButton.Rect)
 
                 .DrawString("Play",
                         FPSFont,
@@ -3253,7 +3274,7 @@ Public Class Form1
 
             If MenuButtonHover = True Then
 
-                .FillRectangle(DarkCharcoalGreyBrush, MenuButton.Rect)
+                .FillRectangle(HoverBrush, MenuButton.Rect)
 
                 .DrawString("≡",
                         MenuButtonFont,
@@ -3283,7 +3304,7 @@ Public Class Form1
 
             If SaveButtonHover = True Then
 
-                FillRoundedRectangle(DarkCharcoalGreyBrush, SaveButton.Rect, 20, Buffer.Graphics)
+                FillRoundedRectangle(HoverBrush, SaveButton.Rect, 20, Buffer.Graphics)
 
                 .DrawEllipse(BButtonIconOutinePen,
                          New Rectangle(SaveButton.Rect.X + 197,
@@ -3349,7 +3370,7 @@ Public Class Form1
 
             If OpenButtonHover = True Then
 
-                FillRoundedRectangle(DarkCharcoalGreyBrush, OpenButton.Rect, 20, Buffer.Graphics)
+                FillRoundedRectangle(HoverBrush, OpenButton.Rect, 20, Buffer.Graphics)
 
                 .DrawEllipse(YButtonIconOutinePen,
                          New Rectangle(OpenButton.Rect.X + 197,
@@ -3415,7 +3436,7 @@ Public Class Form1
 
             If NewButtonHover = True Then
 
-                FillRoundedRectangle(DarkCharcoalGreyBrush, NewButton.Rect, 20, Buffer.Graphics)
+                FillRoundedRectangle(HoverBrush, NewButton.Rect, 20, Buffer.Graphics)
 
                 .DrawString("New", FPSFont,
                         Brushes.White,
@@ -3467,7 +3488,7 @@ Public Class Form1
 
             If ExitButtonHover = True Then
 
-                FillRoundedRectangle(DarkCharcoalGreyBrush, ExitButton.Rect, 20, Buffer.Graphics)
+                FillRoundedRectangle(HoverBrush, ExitButton.Rect, 20, Buffer.Graphics)
 
                 .DrawEllipse(XButtonIconOutinePen,
                          New Rectangle(ExitButton.Rect.X + ExitButton.Rect.Width \ 2 - 52 \ 2,

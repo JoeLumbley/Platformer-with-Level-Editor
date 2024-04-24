@@ -6,7 +6,7 @@
 
 **"Platformer with Level Editor"** is an essential tool for aspiring game developers. By delving into the source code and project structure of a platformer game with a level editor, you can gain practical experience and valuable insights.
 
-![078](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/d16207b7-93f6-45c6-abb6-f9a60084f2a4)
+![081](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/fe94b2c4-a6d0-462f-b39f-92fddc36fb1c)
 
 
 Here's what you can expect to explore with this learning tool:
@@ -20,7 +20,7 @@ Discover common programming patterns used in game development, such as object-or
 #### 3. Level Design
 The level editor component introduces you to key game design principles, covering aspects like level creation, storage, and loading.
 
-![080](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/0986b348-5fa0-4a00-a61c-4b478cc9ace2)
+![082](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/58bc26e8-6f2f-446f-bca3-234c0116e278)
 
 #### 4. Sound Integration
 Learn how to integrate audio assets into your game, including sound effects and music.

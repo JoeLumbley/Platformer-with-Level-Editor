@@ -2698,13 +2698,13 @@ Public Class Form1
 
                 If BlockToolButtonHover = True Then
 
-                    .FillRectangle(Brushes.White, BlockToolButton.Rect)
+                    .FillRectangle(SelectedHoverBrush, BlockToolButton.Rect)
 
                     .FillRectangle(Brushes.Chocolate, BlockToolIcon.Rect)
 
                 Else
 
-                    .FillRectangle(Brushes.LightGray, BlockToolButton.Rect)
+                    .FillRectangle(SelectedBrush, BlockToolButton.Rect)
 
                     .FillRectangle(Brushes.Chocolate, BlockToolIcon.Rect)
 
@@ -2740,7 +2740,7 @@ Public Class Form1
 
                 If BillToolButtonHover = True Then
 
-                    .FillRectangle(Brushes.White, BillToolButton.Rect)
+                    .FillRectangle(SelectedHoverBrush, BillToolButton.Rect)
 
                     .FillRectangle(Brushes.Goldenrod, BillToolIcon.Rect)
 
@@ -2751,7 +2751,7 @@ Public Class Form1
                             AlineCenterMiddle)
 
                 Else
-                    .FillRectangle(Brushes.LightGray, BillToolButton.Rect)
+                    .FillRectangle(SelectedBrush, BillToolButton.Rect)
 
                     .FillRectangle(Brushes.Goldenrod, BillToolIcon.Rect)
 
@@ -2805,7 +2805,7 @@ Public Class Form1
 
                 If CloudToolButtonHover = True Then
 
-                    .FillRectangle(Brushes.White, CloudToolButton.Rect)
+                    .FillRectangle(SelectedHoverBrush, CloudToolButton.Rect)
 
                     .FillRectangle(Brushes.White, CloundToolIcon.Rect)
 
@@ -2825,7 +2825,7 @@ Public Class Form1
 
                 Else
 
-                    .FillRectangle(Brushes.LightGray, CloudToolButton.Rect)
+                    .FillRectangle(SelectedBrush, CloudToolButton.Rect)
 
                     .FillRectangle(Brushes.White, CloundToolIcon.Rect)
 
@@ -2903,7 +2903,7 @@ Public Class Form1
 
                 If BushToolButtonHover = True Then
 
-                    .FillRectangle(Brushes.White, BushToolButton.Rect)
+                    .FillRectangle(SelectedHoverBrush, BushToolButton.Rect)
 
                     .FillRectangle(Brushes.GreenYellow, BushToolIcon.Rect)
 
@@ -2923,7 +2923,7 @@ Public Class Form1
 
                 Else
 
-                    .FillRectangle(Brushes.LightGray, BushToolButton.Rect)
+                    .FillRectangle(SelectedBrush, BushToolButton.Rect)
 
                     .FillRectangle(Brushes.GreenYellow, BushToolIcon.Rect)
 
@@ -3001,7 +3001,7 @@ Public Class Form1
 
                 If EnemyToolButtonHover = True Then
 
-                    .FillRectangle(Brushes.White, EnemyToolButton.Rect)
+                    .FillRectangle(SelectedHoverBrush, EnemyToolButton.Rect)
 
                     .FillRectangle(Brushes.Chocolate, EnemyToolIcon.Rect)
 
@@ -3009,7 +3009,7 @@ Public Class Form1
 
                 Else
 
-                    .FillRectangle(Brushes.LightGray, EnemyToolButton.Rect)
+                    .FillRectangle(SelectedBrush, EnemyToolButton.Rect)
 
                     .FillRectangle(Brushes.Chocolate, EnemyToolIcon.Rect)
 
@@ -3051,7 +3051,7 @@ Public Class Form1
 
                 If GoalToolButtonHover = True Then
 
-                    .FillRectangle(Brushes.White, GoalToolButton.Rect)
+                    .FillRectangle(SelectedHoverBrush, GoalToolButton.Rect)
 
                     .FillRectangle(Brushes.White, GoalToolIcon.Rect)
 
@@ -3089,7 +3089,7 @@ Public Class Form1
 
                 Else
 
-                    .FillRectangle(Brushes.LightGray, GoalToolButton.Rect)
+                    .FillRectangle(SelectedBrush, GoalToolButton.Rect)
 
                     .FillRectangle(Brushes.White, GoalToolIcon.Rect)
 

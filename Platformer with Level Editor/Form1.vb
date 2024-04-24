@@ -2232,6 +2232,12 @@ Public Class Form1
 
                         .FillRectangle(Brushes.Chocolate, RectOffset)
 
+                        .DrawLine(Pens.White,
+                                  RectOffset.Right,
+                                  RectOffset.Top,
+                                  RectOffset.Left,
+                                  RectOffset.Top)
+
                     End If
 
                     If GameState = AppState.Editing Then
@@ -4126,7 +4132,7 @@ Public Class Form1
 
         Goal.Rect = New Rectangle(2176, 768, 64, 64)
 
-        AddBlock(New Rectangle(0, 832, 2496, 128))
+        AddBlock(New Rectangle(0, 832, 2496, 192))
 
         AddBlock(New Rectangle(1088, 576, 64, 64))
 
@@ -4156,15 +4162,11 @@ Public Class Form1
 
         Goal.Rect = New Rectangle(-100, -100, 64, 64)
 
-        AddBlock(New Rectangle(0, 832, 1920, 64))
+        AddBlock(New Rectangle(0, 832, 1920, 192))
 
         AddBlock(New Rectangle(1472, 576, 384, 64))
 
         AddBlock(New Rectangle(1536, 256, 256, 64))
-
-        AddBlock(New Rectangle(0, 896, 1920, 64))
-
-        AddBlock(New Rectangle(0, 960, 1920, 128))
 
         AddBush(New Rectangle(256, 768, 320, 64))
 

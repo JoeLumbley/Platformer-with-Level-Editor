@@ -20,7 +20,7 @@ Discover common programming patterns used in game development, such as object-or
 #### 3. Level Design
 The level editor component introduces you to key game design principles, covering aspects like level creation, storage, and loading.
 
-![079](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/fe8bd545-27e4-4e3e-8628-56339f7fb185)
+![080](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/0986b348-5fa0-4a00-a61c-4b478cc9ace2)
 
 #### 4. Sound Integration
 Learn how to integrate audio assets into your game, including sound effects and music.

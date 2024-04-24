@@ -496,26 +496,17 @@ Public Class Form1
 
     Private DarkCharcoalGreyBrush As New SolidBrush(DarkCharcoalGrey)
 
-
     Private HoverColor As Color = Color.FromArgb(255, 39, 39, 39)
 
     Private HoverBrush As New SolidBrush(HoverColor)
-
-
 
     Private SelectedColor As Color = Color.FromArgb(255, 51, 51, 51)
 
     Private SelectedBrush As New SolidBrush(SelectedColor)
 
-
-
     Private SelectedHoverColor As Color = Color.FromArgb(255, 71, 71, 71)
 
     Private SelectedHoverBrush As New SolidBrush(SelectedHoverColor)
-
-
-
-
 
     Private ReadOnly AlineCenter As New StringFormat With {.Alignment = StringAlignment.Center}
 

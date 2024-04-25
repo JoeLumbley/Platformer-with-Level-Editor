@@ -4572,145 +4572,7 @@ Public Class Form1
                 Else
                     'No, the player is not selecting a game object.
 
-                    Select Case SelectedTool
-
-                        Case Tools.Block
-
-                            'Snap block to grid.
-                            Dim SnapPoint As New Point(CInt(Math.Round(PointOffset.X / GridSize) * GridSize),
-                                                           CInt(Math.Round(PointOffset.Y / GridSize) * GridSize))
-
-                            AddBlock(New Rectangle(SnapPoint, New Drawing.Size(GridSize, GridSize)))
-
-                            'Change tool to the mouse pointer.
-                            SelectedTool = Tools.Pointer
-
-                            'Turn tool preview off.
-                            ShowToolPreview = False
-
-                            'Select the newly created block.
-                            SelectedBlock = Blocks.Length - 1
-
-                            SelectionOffset.X = PointOffset.X - Blocks(Blocks.Length - 1).Rect.X
-                            SelectionOffset.Y = PointOffset.Y - Blocks(Blocks.Length - 1).Rect.Y
-
-                        Case Tools.Bill
-
-                            'Snap bill to grid.
-                            AddBill(New Point(CInt(Math.Round(PointOffset.X / GridSize) * GridSize),
-                                           CInt(Math.Round(PointOffset.Y / GridSize) * GridSize)))
-
-                            'Change tool to the mouse pointer.
-                            SelectedTool = Tools.Pointer
-
-                            'Turn tool preview off.
-                            ShowToolPreview = False
-
-                            'Select the newly created bill.
-                            SelectedBill = Cash.Length - 1
-
-                            SelectionOffset.X = PointOffset.X - Cash(Cash.Length - 1).Rect.X
-                            SelectionOffset.Y = PointOffset.Y - Cash(Cash.Length - 1).Rect.Y
-
-                        Case Tools.Cloud
-
-                            'Snap block to grid.
-                            Dim SnapPoint As New Point(CInt(Math.Round(PointOffset.X / GridSize) * GridSize),
-                                                           CInt(Math.Round(PointOffset.Y / GridSize) * GridSize))
-
-                            AddCloud(New Rectangle(SnapPoint, New Drawing.Size(GridSize, GridSize)))
-
-                            'Change tool to the mouse pointer.
-                            SelectedTool = Tools.Pointer
-
-                            'Turn tool preview off.
-                            ShowToolPreview = False
-
-                            'Select the newly created cloud.
-                            SelectedCloud = Clouds.Length - 1
-
-                            SelectionOffset.X = PointOffset.X - Clouds(Clouds.Length - 1).Rect.X
-                            SelectionOffset.Y = PointOffset.Y - Clouds(Clouds.Length - 1).Rect.Y
-
-                        Case Tools.Bush
-
-                            'Snap block to grid.
-                            Dim SnapPoint As New Point(CInt(Math.Round(PointOffset.X / GridSize) * GridSize),
-                                                           CInt(Math.Round(PointOffset.Y / GridSize) * GridSize))
-
-                            AddBush(New Rectangle(SnapPoint, New Drawing.Size(GridSize, GridSize)))
-
-                            'Change tool to the mouse pointer.
-                            SelectedTool = Tools.Pointer
-
-                            'Turn tool preview off.
-                            ShowToolPreview = False
-
-                            'Select the newly created bill.
-                            SelectedBush = Bushes.Length - 1
-
-                            SelectionOffset.X = PointOffset.X - Bushes(Bushes.Length - 1).Rect.X
-                            SelectionOffset.Y = PointOffset.Y - Bushes(Bushes.Length - 1).Rect.Y
-
-                        Case Tools.Enemy
-
-                            'Snap block to grid.
-                            Dim SnapPoint As New Point(CInt(Math.Round(PointOffset.X / GridSize) * GridSize),
-                                                       CInt(Math.Round(PointOffset.Y / GridSize) * GridSize))
-
-                            Dim SnapPointB As New Point(SnapPoint.X + GridSize, SnapPoint.Y)
-
-                            AddEnemy(SnapPoint, SnapPoint, SnapPointB)
-
-                            'Change tool to the mouse pointer.
-                            SelectedTool = Tools.Pointer
-
-                            'Turn tool preview off.
-                            ShowToolPreview = False
-
-                            'Select the newly created enemy.
-                            SelectedEnemy = Enemies.Length - 1
-
-                            SelectionOffset.X = PointOffset.X - Enemies(Enemies.Length - 1).Rect.X
-                            SelectionOffset.Y = PointOffset.Y - Enemies(Enemies.Length - 1).Rect.Y
-
-                        Case Tools.Goal
-
-                            Goal.Rect.Location = New Point(CInt(Math.Round(PointOffset.X / GridSize) * GridSize),
-                                                               CInt(Math.Round(PointOffset.Y / GridSize) * GridSize))
-
-                            Goal.Rect.Size = New Size(GridSize, GridSize)
-
-                            AutoSizeLevel(Goal.Rect)
-
-                            'Change tool to the mouse pointer.
-                            SelectedTool = Tools.Pointer
-
-                            'Turn tool preview off.
-                            ShowToolPreview = False
-
-                            'Select the goal.
-                            GoalSelected = True
-
-                            SelectionOffset.X = PointOffset.X - Goal.Rect.X
-                            SelectionOffset.Y = PointOffset.Y - Goal.Rect.Y
-
-                        Case Tools.Pointer
-
-                            LevelSelected = True
-
-                            SelectionOffset.X = PointOffset.X - Level.Rect.X
-                            SelectionOffset.Y = PointOffset.Y - Level.Rect.Y
-
-                            'Deselect game objects.
-                            SelectedBlock = -1
-                            SelectedBill = -1
-                            SelectedCloud = -1
-                            SelectedBush = -1
-                            GoalSelected = False
-                            SelectedEnemy = -1
-
-                    End Select
+                    MouseDownEditingSelectionTools(PointOffset)
 
                 End If
 
@@ -4730,6 +4592,149 @@ Public Class Form1
 
         End If
 
+    End Sub
+
+    Private Sub MouseDownEditingSelectionTools(PointOffset As Point)
+
+        Select Case SelectedTool
+
+            Case Tools.Block
+
+                'Snap block to grid.
+                Dim SnapPoint As New Point(CInt(Math.Round(PointOffset.X / GridSize) * GridSize),
+                                               CInt(Math.Round(PointOffset.Y / GridSize) * GridSize))
+
+                AddBlock(New Rectangle(SnapPoint, New Drawing.Size(GridSize, GridSize)))
+
+                'Change tool to the mouse pointer.
+                SelectedTool = Tools.Pointer
+
+                'Turn tool preview off.
+                ShowToolPreview = False
+
+                'Select the newly created block.
+                SelectedBlock = Blocks.Length - 1
+
+                SelectionOffset.X = PointOffset.X - Blocks(Blocks.Length - 1).Rect.X
+                SelectionOffset.Y = PointOffset.Y - Blocks(Blocks.Length - 1).Rect.Y
+
+            Case Tools.Bill
+
+                'Snap bill to grid.
+                AddBill(New Point(CInt(Math.Round(PointOffset.X / GridSize) * GridSize),
+                               CInt(Math.Round(PointOffset.Y / GridSize) * GridSize)))
+
+                'Change tool to the mouse pointer.
+                SelectedTool = Tools.Pointer
+
+                'Turn tool preview off.
+                ShowToolPreview = False
+
+                'Select the newly created bill.
+                SelectedBill = Cash.Length - 1
+
+                SelectionOffset.X = PointOffset.X - Cash(Cash.Length - 1).Rect.X
+                SelectionOffset.Y = PointOffset.Y - Cash(Cash.Length - 1).Rect.Y
+
+            Case Tools.Cloud
+
+                'Snap block to grid.
+                Dim SnapPoint As New Point(CInt(Math.Round(PointOffset.X / GridSize) * GridSize),
+                                               CInt(Math.Round(PointOffset.Y / GridSize) * GridSize))
+
+                AddCloud(New Rectangle(SnapPoint, New Drawing.Size(GridSize, GridSize)))
+
+                'Change tool to the mouse pointer.
+                SelectedTool = Tools.Pointer
+
+                'Turn tool preview off.
+                ShowToolPreview = False
+
+                'Select the newly created cloud.
+                SelectedCloud = Clouds.Length - 1
+
+                SelectionOffset.X = PointOffset.X - Clouds(Clouds.Length - 1).Rect.X
+                SelectionOffset.Y = PointOffset.Y - Clouds(Clouds.Length - 1).Rect.Y
+
+            Case Tools.Bush
+
+                'Snap block to grid.
+                Dim SnapPoint As New Point(CInt(Math.Round(PointOffset.X / GridSize) * GridSize),
+                                               CInt(Math.Round(PointOffset.Y / GridSize) * GridSize))
+
+                AddBush(New Rectangle(SnapPoint, New Drawing.Size(GridSize, GridSize)))
+
+                'Change tool to the mouse pointer.
+                SelectedTool = Tools.Pointer
+
+                'Turn tool preview off.
+                ShowToolPreview = False
+
+                'Select the newly created bill.
+                SelectedBush = Bushes.Length - 1
+
+                SelectionOffset.X = PointOffset.X - Bushes(Bushes.Length - 1).Rect.X
+                SelectionOffset.Y = PointOffset.Y - Bushes(Bushes.Length - 1).Rect.Y
+
+            Case Tools.Enemy
+
+                'Snap block to grid.
+                Dim SnapPoint As New Point(CInt(Math.Round(PointOffset.X / GridSize) * GridSize),
+                                           CInt(Math.Round(PointOffset.Y / GridSize) * GridSize))
+
+                Dim SnapPointB As New Point(SnapPoint.X + GridSize, SnapPoint.Y)
+
+                AddEnemy(SnapPoint, SnapPoint, SnapPointB)
+
+                'Change tool to the mouse pointer.
+                SelectedTool = Tools.Pointer
+
+                'Turn tool preview off.
+                ShowToolPreview = False
+
+                'Select the newly created enemy.
+                SelectedEnemy = Enemies.Length - 1
+
+                SelectionOffset.X = PointOffset.X - Enemies(Enemies.Length - 1).Rect.X
+                SelectionOffset.Y = PointOffset.Y - Enemies(Enemies.Length - 1).Rect.Y
+
+            Case Tools.Goal
+
+                Goal.Rect.Location = New Point(CInt(Math.Round(PointOffset.X / GridSize) * GridSize),
+                                                   CInt(Math.Round(PointOffset.Y / GridSize) * GridSize))
+
+                Goal.Rect.Size = New Size(GridSize, GridSize)
+
+                AutoSizeLevel(Goal.Rect)
+
+                'Change tool to the mouse pointer.
+                SelectedTool = Tools.Pointer
+
+                'Turn tool preview off.
+                ShowToolPreview = False
+
+                'Select the goal.
+                GoalSelected = True
+
+                SelectionOffset.X = PointOffset.X - Goal.Rect.X
+                SelectionOffset.Y = PointOffset.Y - Goal.Rect.Y
+
+            Case Tools.Pointer
+
+                LevelSelected = True
+
+                SelectionOffset.X = PointOffset.X - Level.Rect.X
+                SelectionOffset.Y = PointOffset.Y - Level.Rect.Y
+
+                'Deselect game objects.
+                SelectedBlock = -1
+                SelectedBill = -1
+                SelectedCloud = -1
+                SelectedBush = -1
+                GoalSelected = False
+                SelectedEnemy = -1
+
+        End Select
     End Sub
 
     Private Function CheckCloudSelection(e As Point) As Integer

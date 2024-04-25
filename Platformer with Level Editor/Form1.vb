@@ -1512,7 +1512,6 @@ Public Class Form1
 
     End Sub
 
-
     Private Sub UpdateRightThumbstickPosition()
         'The range on the X-axis is -32,768 through 32,767. Signed 16-bit (2-byte) integer.
         'The range on the Y-axis is -32,768 through 32,767. Signed 16-bit (2-byte) integer.
@@ -1533,6 +1532,7 @@ Public Class Form1
                         Camera.Velocity.X = 0 'Zero speed.
 
                     End If
+
                     'Move camera left.
                     Camera.Velocity.X += -Camera.Acceleration.X * EditorDeltaTime.TotalSeconds
 
@@ -4721,10 +4721,10 @@ Public Class Form1
 
             Case Tools.Pointer
 
-                LevelSelected = True
-
                 SelectionOffset.X = PointOffset.X - Level.Rect.X
                 SelectionOffset.Y = PointOffset.Y - Level.Rect.Y
+
+                LevelSelected = True
 
                 'Deselect game objects.
                 SelectedBlock = -1
@@ -6234,6 +6234,7 @@ Public Class Form1
     End Sub
 
     Private Sub MoveCameraDown()
+
         'Is the camera moving up?
         If Camera.Velocity.Y < 0 Then
             'Yes, the camera is moving up.
@@ -6248,9 +6249,11 @@ Public Class Form1
 
         'Limit camera velocity to the max.
         If Camera.Velocity.Y > Camera.MaxVelocity.Y Then Camera.Velocity.Y = Camera.MaxVelocity.Y
+
     End Sub
 
     Private Sub MoveCameraUp()
+
         'Is the camera moving down?
         If Camera.Velocity.Y > 0 Then
             'Yes, the camera is moving down.
@@ -6265,9 +6268,11 @@ Public Class Form1
 
         'Limit camera velocity to the max.
         If Camera.Velocity.Y < -Camera.MaxVelocity.Y Then Camera.Velocity.Y = -Camera.MaxVelocity.Y
+
     End Sub
 
     Private Sub MoveCameraLeft()
+
         'Is the camera moving right?
         If Camera.Velocity.X > 0 Then
             'Yes, the camera is moving right.
@@ -6281,6 +6286,7 @@ Public Class Form1
 
         'Limit camera velocity to the max.
         If Camera.Velocity.X < -Camera.MaxVelocity.X Then Camera.Velocity.X = -Camera.MaxVelocity.X
+
     End Sub
 
     Private Sub MoveCameraRight()
@@ -6298,6 +6304,7 @@ Public Class Form1
 
         'Limit camera velocity to the max.
         If Camera.Velocity.X > Camera.MaxVelocity.X Then Camera.Velocity.X = Camera.MaxVelocity.X
+
     End Sub
 
     Private Sub Form1_KeyUp(sender As Object, e As KeyEventArgs) Handles MyBase.KeyUp
@@ -6308,17 +6315,131 @@ Public Class Form1
 
                 RightArrowDown = False
 
+                If GameState = AppState.Editing Then
+
+                    If ShowMenu = False Then
+
+                        If Camera.Velocity.X > 0 Then
+
+                            'Stop Camera
+                            Camera.Velocity.X = 0 'Zero speed.
+
+                            UpdateCameraOffset()
+
+                            BufferGridLines()
+
+                        End If
+
+                    Else
+
+                        If MousePointer.Velocity.X > 0 Then
+
+                            MousePointer.Velocity.X = 0 'Zero speed.
+
+                        End If
+
+                    End If
+
+                End If
+
             Case Keys.Left
 
                 LeftArrowDown = False
+
+                If GameState = AppState.Editing Then
+
+                    If ShowMenu = False Then
+
+                        If Camera.Velocity.X < 0 Then
+
+                            'Stop Camera
+                            Camera.Velocity.X = 0 'Zero speed.
+
+                            UpdateCameraOffset()
+
+                            BufferGridLines()
+
+                        End If
+                    Else
+
+                        If MousePointer.Velocity.X < 0 Then
+
+                            'Stop mouse pointer
+                            MousePointer.Velocity.X = 0 'Zero speed.
+
+                        End If
+
+                    End If
+
+                End If
 
             Case Keys.Up
 
                 UpArrowDown = False
 
+                If GameState = AppState.Editing Then
+
+                    If ShowMenu = False Then
+
+                        'Is the camera moving up?
+                        If Camera.Velocity.Y < 0 Then
+                            'Yes, the camera is moving up.
+
+                            'Stop Camera
+                            Camera.Velocity.Y = 0 'Zero speed.
+
+                            UpdateCameraOffset()
+
+                            BufferGridLines()
+
+                        End If
+
+                    Else
+
+                        If MousePointer.Velocity.Y < 0 Then
+
+                            'Stop mouse pointer
+                            MousePointer.Velocity.Y = 0 'Zero speed.
+
+                        End If
+
+                    End If
+
+                End If
+
             Case Keys.Down
 
                 DownArrowDown = False
+
+                If GameState = AppState.Editing Then
+
+                    If ShowMenu = False Then
+
+                        'Is the camera moving down?
+                        If Camera.Velocity.Y > 0 Then
+                            'Yes, the camera is moving down.
+
+                            'Stop Camera
+                            Camera.Velocity.Y = 0 'Zero speed.
+
+                            UpdateCameraOffset()
+
+                            BufferGridLines()
+
+                        End If
+
+                    Else
+
+                        If MousePointer.Velocity.Y > 0 Then
+
+                            'Stop mouse pointer
+                            MousePointer.Velocity.Y = 0 'Zero speed.
+
+                        End If
+
+                    End If
+
+                End If
 
             Case Keys.A
 

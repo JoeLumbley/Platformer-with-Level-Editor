@@ -2234,9 +2234,9 @@ Public Class Form1
 
                         .DrawLine(Pens.White,
                                   RectOffset.Right,
-                                  RectOffset.Top,
+                                  RectOffset.Top + 1,
                                   RectOffset.Left,
-                                  RectOffset.Top)
+                                  RectOffset.Top + 1)
 
                     End If
 
@@ -4458,8 +4458,8 @@ Public Class Form1
 
             Dim PointOffset As Point = e
 
-            PointOffset.X = Camera.Rect.X + e.X
-            PointOffset.Y = Camera.Rect.Y + e.Y
+            PointOffset.X = Camera.Position.X + e.X
+            PointOffset.Y = Camera.Position.Y + e.Y
 
             If SizingHandle.Contains(e) Then
 
@@ -4591,9 +4591,12 @@ Public Class Form1
                             'Select the newly created block.
                             SelectedBlock = Blocks.Length - 1
 
+                            SelectionOffset.X = PointOffset.X - Blocks(Blocks.Length - 1).Rect.X
+                            SelectionOffset.Y = PointOffset.Y - Blocks(Blocks.Length - 1).Rect.Y
+
                         Case Tools.Bill
 
-                            'Snap block to grid.
+                            'Snap bill to grid.
                             AddBill(New Point(CInt(Math.Round(PointOffset.X / GridSize) * GridSize),
                                            CInt(Math.Round(PointOffset.Y / GridSize) * GridSize)))
 
@@ -4605,6 +4608,9 @@ Public Class Form1
 
                             'Select the newly created bill.
                             SelectedBill = Cash.Length - 1
+
+                            SelectionOffset.X = PointOffset.X - Cash(Cash.Length - 1).Rect.X
+                            SelectionOffset.Y = PointOffset.Y - Cash(Cash.Length - 1).Rect.Y
 
                         Case Tools.Cloud
 
@@ -4623,6 +4629,9 @@ Public Class Form1
                             'Select the newly created cloud.
                             SelectedCloud = Clouds.Length - 1
 
+                            SelectionOffset.X = PointOffset.X - Clouds(Clouds.Length - 1).Rect.X
+                            SelectionOffset.Y = PointOffset.Y - Clouds(Clouds.Length - 1).Rect.Y
+
                         Case Tools.Bush
 
                             'Snap block to grid.
@@ -4639,6 +4648,9 @@ Public Class Form1
 
                             'Select the newly created bill.
                             SelectedBush = Bushes.Length - 1
+
+                            SelectionOffset.X = PointOffset.X - Bushes(Bushes.Length - 1).Rect.X
+                            SelectionOffset.Y = PointOffset.Y - Bushes(Bushes.Length - 1).Rect.Y
 
                         Case Tools.Enemy
 
@@ -4659,6 +4671,9 @@ Public Class Form1
                             'Select the newly created enemy.
                             SelectedEnemy = Enemies.Length - 1
 
+                            SelectionOffset.X = PointOffset.X - Enemies(Enemies.Length - 1).Rect.X
+                            SelectionOffset.Y = PointOffset.Y - Enemies(Enemies.Length - 1).Rect.Y
+
                         Case Tools.Goal
 
                             Goal.Rect.Location = New Point(CInt(Math.Round(PointOffset.X / GridSize) * GridSize),
@@ -4676,6 +4691,9 @@ Public Class Form1
 
                             'Select the goal.
                             GoalSelected = True
+
+                            SelectionOffset.X = PointOffset.X - Goal.Rect.X
+                            SelectionOffset.Y = PointOffset.Y - Goal.Rect.Y
 
                         Case Tools.Pointer
 

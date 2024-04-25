@@ -4735,6 +4735,7 @@ Public Class Form1
                 SelectedEnemy = -1
 
         End Select
+
     End Sub
 
     Private Function CheckCloudSelection(e As Point) As Integer

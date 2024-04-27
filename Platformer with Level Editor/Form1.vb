@@ -258,7 +258,7 @@ Public Class Form1
 
     Private FrameCount As Integer = 0
 
-    Private StartTime As DateTime = Now 'Get current time.
+    Private StartTime As DateTime = Now
 
     Private TimeElapsed As TimeSpan
 
@@ -316,7 +316,6 @@ Public Class Form1
     Private EditPlayButton As GameObject
 
     Private EditPlayButtonHover As Boolean = False
-
 
     Private ToolBarBackground As GameObject
 
@@ -541,7 +540,6 @@ Public Class Form1
 
     Private CameraOffset As New Point(0, 0)
 
-    'Create array for sounds.
     Private Sounds() As String
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load

@@ -5,7 +5,7 @@
 ![086](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/73bd7c32-f3c4-40dc-b18f-f34b2a5f5045)
 
 
-**"Platformer with Level Editor"** is an essential tool for aspiring game developers. By delving into the source code and project structure of a platformer game with a level editor, you can gain practical experience and valuable insights.
+**"Platformer with Level Editor"** is the essential tool for aspiring game developers. By delving into the source code and project structure of a platformer game with a level editor, you can gain practical experience and valuable insights.
 
 ![087](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/344c7895-4dbf-421d-8072-6a1d2ab498ba)
 
@@ -20,7 +20,7 @@ Gain a deep understanding of physics, collision detection, character movement, a
 Discover common programming patterns used in game development, such as object-oriented design and event handling.
 
 #### 3. Level Design
-The level editor component introduces you to key game design principles, covering aspects like level creation, storage, and loading.
+The level editor introduces you to key game design principles, covering aspects like level creation, storage, and loading.
 
 ![088](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/cf2ed1d9-99d4-445e-b9cf-3dd72b2a4ebd)
 

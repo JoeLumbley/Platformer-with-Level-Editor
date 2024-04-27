@@ -5259,11 +5259,7 @@ Public Class Form1
 
             If EditPlayButton.Rect.Contains(e.Location) Then
 
-                If ShowMenu = False Then
-
-                    EditPlayButtonHover = True
-
-                End If
+                EditPlayButtonHover = True
 
             Else
 

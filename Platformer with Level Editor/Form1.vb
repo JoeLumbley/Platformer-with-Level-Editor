@@ -3286,13 +3286,27 @@ Public Class Form1
 
         With Buffer.Graphics
 
-            .FillRectangle(Brushes.Black, EditPlayButton.Rect)
+            If EditPlayButtonHover = True Then
 
-            .DrawString("Edit",
+                .FillRectangle(HoverBrush, EditPlayButton.Rect)
+
+                .DrawString("Edit",
                         FPSFont,
                         Brushes.White,
                         EditPlayButton.Rect,
                         AlineCenterMiddle)
+
+            Else
+
+                .FillRectangle(Brushes.Black, EditPlayButton.Rect)
+
+                .DrawString("Edit",
+                        FPSFont,
+                        Brushes.White,
+                        EditPlayButton.Rect,
+                        AlineCenterMiddle)
+
+            End If
 
         End With
 
@@ -5238,6 +5252,24 @@ Public Class Form1
         If GameState = AppState.Editing Then
 
             MouseMoveEditing(e)
+
+        End If
+
+        If GameState = AppState.Playing Then
+
+            If EditPlayButton.Rect.Contains(e.Location) Then
+
+                If ShowMenu = False Then
+
+                    EditPlayButtonHover = True
+
+                End If
+
+            Else
+
+                EditPlayButtonHover = False
+
+            End If
 
         End If
 
@@ -8088,6 +8120,7 @@ Public Class Form1
         'Intentionally left blank. Do not remove.
 
     End Sub
+
 
 End Class
 

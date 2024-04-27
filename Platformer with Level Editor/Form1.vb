@@ -2231,9 +2231,9 @@ Public Class Form1
                         .FillRectangle(Brushes.Chocolate, RectOffset)
 
                         .DrawLine(Pens.White,
-                                  RectOffset.Right,
+                                  RectOffset.Right - 1,
                                   RectOffset.Top + 1,
-                                  RectOffset.Left,
+                                  RectOffset.Left + 1,
                                   RectOffset.Top + 1)
 
                     End If
@@ -2482,11 +2482,18 @@ Public Class Form1
 
                         .FillRectangle(Brushes.Chocolate, RectOffset)
 
+                        .DrawLine(Pens.White,
+                                  RectOffset.Right - 1,
+                                  RectOffset.Top + 1,
+                                  RectOffset.Left + 1,
+                                  RectOffset.Top + 1)
+
+
                     Case Tools.Bill
 
                         .FillRectangle(Brushes.Goldenrod, RectOffset)
 
-                        .DrawString("$", FPSFont, Brushes.OrangeRed, RectOffset, AlineCenterMiddle)
+                        .DrawString("$", BillFont, Brushes.OrangeRed, RectOffset, AlineCenterMiddle)
 
                     Case Tools.Cloud
 
@@ -2706,11 +2713,25 @@ Public Class Form1
 
                     .FillRectangle(Brushes.Chocolate, BlockToolIcon.Rect)
 
+                    .DrawLine(Pens.White,
+                                  BlockToolIcon.Rect.Right - 1,
+                                  BlockToolIcon.Rect.Top + 1,
+                                  BlockToolIcon.Rect.Left + 1,
+                                  BlockToolIcon.Rect.Top + 1)
+
+
                 Else
 
                     .FillRectangle(SelectedBrush, BlockToolButton.Rect)
 
                     .FillRectangle(Brushes.Chocolate, BlockToolIcon.Rect)
+
+                    .DrawLine(Pens.White,
+                                  BlockToolIcon.Rect.Right - 1,
+                                  BlockToolIcon.Rect.Top + 1,
+                                  BlockToolIcon.Rect.Left + 1,
+                                  BlockToolIcon.Rect.Top + 1)
+
 
                 End If
 
@@ -2722,11 +2743,25 @@ Public Class Form1
 
                     .FillRectangle(Brushes.Chocolate, BlockToolIcon.Rect)
 
+                    .DrawLine(Pens.White,
+                                  BlockToolIcon.Rect.Right - 1,
+                                  BlockToolIcon.Rect.Top + 1,
+                                  BlockToolIcon.Rect.Left + 1,
+                                  BlockToolIcon.Rect.Top + 1)
+
+
                 Else
 
                     .FillRectangle(Brushes.Black, BlockToolButton.Rect)
 
                     .FillRectangle(Brushes.Chocolate, BlockToolIcon.Rect)
+
+                    .DrawLine(Pens.White,
+                                  BlockToolIcon.Rect.Right - 1,
+                                  BlockToolIcon.Rect.Top + 1,
+                                  BlockToolIcon.Rect.Left + 1,
+                                  BlockToolIcon.Rect.Top + 1)
+
 
                 End If
 

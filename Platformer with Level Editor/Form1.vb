@@ -2866,41 +2866,9 @@ Public Class Form1
 
                     FillRoundedRectangle(SelectedHoverBrush, RoundedBushToolButton, 30, Buffer.Graphics)
 
-                    .FillRectangle(Brushes.GreenYellow, BushToolIcon.Rect)
-
-                    .DrawLine(BushToolIconPen,
-                          BushToolIcon.Rect.Right - 10,
-                          BushToolIcon.Rect.Top + 10,
-                          BushToolIcon.Rect.Right - 10,
-                          BushToolIcon.Rect.Bottom - 10)
-
-                    .DrawLine(BushToolIconPen,
-                          BushToolIcon.Rect.Left + 10,
-                          BushToolIcon.Rect.Bottom - 10,
-                          BushToolIcon.Rect.Right - 10,
-                          BushToolIcon.Rect.Bottom - 10)
-
-                    .DrawRectangle(BushToolIconOutinePen, BushToolIcon.Rect)
-
                 Else
 
                     FillRoundedRectangle(SelectedBrush, RoundedBushToolButton, 30, Buffer.Graphics)
-
-                    .FillRectangle(Brushes.GreenYellow, BushToolIcon.Rect)
-
-                    .DrawLine(BushToolIconPen,
-                          BushToolIcon.Rect.Right - 10,
-                          BushToolIcon.Rect.Top + 10,
-                          BushToolIcon.Rect.Right - 10,
-                          BushToolIcon.Rect.Bottom - 10)
-
-                    .DrawLine(BushToolIconPen,
-                          BushToolIcon.Rect.Left + 10,
-                          BushToolIcon.Rect.Bottom - 10,
-                          BushToolIcon.Rect.Right - 10,
-                          BushToolIcon.Rect.Bottom - 10)
-
-                    .DrawRectangle(BushToolIconOutinePen, BushToolIcon.Rect)
 
                 End If
 
@@ -2910,45 +2878,29 @@ Public Class Form1
 
                     FillRoundedRectangle(HoverBrush, RoundedBushToolButton, 30, Buffer.Graphics)
 
-                    .FillRectangle(Brushes.GreenYellow, BushToolIcon.Rect)
-
-                    .DrawLine(BushToolIconPen,
-                              BushToolIcon.Rect.Right - 10,
-                              BushToolIcon.Rect.Top + 10,
-                              BushToolIcon.Rect.Right - 10,
-                              BushToolIcon.Rect.Bottom - 10)
-
-                    .DrawLine(BushToolIconPen,
-                              BushToolIcon.Rect.Left + 10,
-                              BushToolIcon.Rect.Bottom - 10,
-                              BushToolIcon.Rect.Right - 10,
-                              BushToolIcon.Rect.Bottom - 10)
-
-                    .DrawRectangle(BushToolIconOutinePen, BushToolIcon.Rect)
-
                 Else
 
                     FillRoundedRectangle(Brushes.Black, RoundedBushToolButton, 30, Buffer.Graphics)
 
-                    .FillRectangle(Brushes.GreenYellow, BushToolIcon.Rect)
-
-                    .DrawLine(BushToolIconPen,
-                              BushToolIcon.Rect.Right - 10,
-                              BushToolIcon.Rect.Top + 10,
-                              BushToolIcon.Rect.Right - 10,
-                              BushToolIcon.Rect.Bottom - 10)
-
-                    .DrawLine(BushToolIconPen,
-                              BushToolIcon.Rect.Left + 10,
-                              BushToolIcon.Rect.Bottom - 10,
-                              BushToolIcon.Rect.Right - 10,
-                              BushToolIcon.Rect.Bottom - 10)
-
-                    .DrawRectangle(BushToolIconOutinePen, BushToolIcon.Rect)
-
                 End If
 
             End If
+
+            .FillRectangle(Brushes.GreenYellow, BushToolIcon.Rect)
+
+            .DrawLine(BushToolIconPen,
+                          BushToolIcon.Rect.Right - 10,
+                          BushToolIcon.Rect.Top + 10,
+                          BushToolIcon.Rect.Right - 10,
+                          BushToolIcon.Rect.Bottom - 10)
+
+            .DrawLine(BushToolIconPen,
+                          BushToolIcon.Rect.Left + 10,
+                          BushToolIcon.Rect.Bottom - 10,
+                          BushToolIcon.Rect.Right - 10,
+                          BushToolIcon.Rect.Bottom - 10)
+
+            .DrawRectangle(BushToolIconOutinePen, BushToolIcon.Rect)
 
         End With
 

@@ -3105,41 +3105,19 @@ Public Class Form1
 
                 FillRoundedRectangle(HoverBrush, SaveButton.Rect, 20, Buffer.Graphics)
 
-                .DrawEllipse(BButtonIconOutinePen,
-                         New Rectangle(SaveButton.Rect.X + 197,
-                                       SaveButton.Rect.Y + SaveButton.Rect.Height \ 2 - 52 \ 2,
-                                       52,
-                                       52))
-
-                .DrawString("Save",
-                        FPSFont,
-                        Brushes.White,
-                        New Rectangle(SaveButton.Rect.X + 25,
-                                      SaveButton.Rect.Y + SaveButton.Rect.Height \ 2 - 45 \ 2,
-                                      140,
-                                      50),
-                        AlineCenterMiddle)
-
-                .DrawString("B",
-                        RightTriggerIconFont,
-                        Brushes.White,
-                        New Rectangle(SaveButton.Rect.X + 175,
-                                      SaveButton.Rect.Y + SaveButton.Rect.Height \ 2 - 45 \ 2,
-                                      100,
-                                      50),
-                        AlineCenterMiddle)
-
             Else
 
                 FillRoundedRectangle(Brushes.Black, SaveButton.Rect, 20, Buffer.Graphics)
 
-                .DrawEllipse(BButtonIconOutinePen,
+            End If
+
+            .DrawEllipse(BButtonIconOutinePen,
                          New Rectangle(SaveButton.Rect.X + 197,
                                        SaveButton.Rect.Y + SaveButton.Rect.Height \ 2 - 52 \ 2,
                                        52,
                                        52))
 
-                .DrawString("Save",
+            .DrawString("Save",
                         FPSFont,
                         Brushes.White,
                         New Rectangle(SaveButton.Rect.X + 25,
@@ -3148,7 +3126,7 @@ Public Class Form1
                                       50),
                         AlineCenterMiddle)
 
-                .DrawString("B",
+            .DrawString("B",
                         RightTriggerIconFont,
                         Brushes.White,
                         New Rectangle(SaveButton.Rect.X + 175,
@@ -3157,7 +3135,6 @@ Public Class Form1
                                       50),
                         AlineCenterMiddle)
 
-            End If
 
         End With
 

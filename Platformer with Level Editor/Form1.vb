@@ -2760,25 +2760,9 @@ Public Class Form1
 
                     FillRoundedRectangle(SelectedHoverBrush, RoundedBillToolButton, 30, Buffer.Graphics)
 
-                    .FillRectangle(Brushes.Goldenrod, BillToolIcon.Rect)
-
-                    .DrawString("$",
-                            BillIconFont,
-                            Brushes.OrangeRed,
-                            BillToolIcon.Rect,
-                            AlineCenterMiddle)
-
                 Else
 
                     FillRoundedRectangle(SelectedBrush, RoundedBillToolButton, 30, Buffer.Graphics)
-
-                    .FillRectangle(Brushes.Goldenrod, BillToolIcon.Rect)
-
-                    .DrawString("$",
-                            BillIconFont,
-                            Brushes.OrangeRed,
-                            BillToolIcon.Rect,
-                            AlineCenterMiddle)
 
                 End If
 
@@ -2788,29 +2772,21 @@ Public Class Form1
 
                     FillRoundedRectangle(HoverBrush, RoundedBillToolButton, 30, Buffer.Graphics)
 
-                    .FillRectangle(Brushes.Goldenrod, BillToolIcon.Rect)
-
-                    .DrawString("$",
-                                BillIconFont,
-                                Brushes.OrangeRed,
-                                BillToolIcon.Rect,
-                                AlineCenterMiddle)
-
                 Else
 
                     FillRoundedRectangle(Brushes.Black, RoundedBillToolButton, 30, Buffer.Graphics)
 
-                    .FillRectangle(Brushes.Goldenrod, BillToolIcon.Rect)
-
-                    .DrawString("$",
-                                BillIconFont,
-                                Brushes.OrangeRed,
-                                BillToolIcon.Rect,
-                                AlineCenterMiddle)
-
                 End If
 
             End If
+
+            .FillRectangle(Brushes.Goldenrod, BillToolIcon.Rect)
+
+            .DrawString("$",
+                        BillIconFont,
+                        Brushes.OrangeRed,
+                        BillToolIcon.Rect,
+                        AlineCenterMiddle)
 
         End With
 

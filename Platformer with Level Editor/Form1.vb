@@ -2923,17 +2923,9 @@ Public Class Form1
 
                     FillRoundedRectangle(SelectedHoverBrush, RoundedEnemyToolButton, 30, Buffer.Graphics)
 
-                    .FillRectangle(Brushes.Chocolate, EnemyToolIcon.Rect)
-
-                    .DrawString("E", EnemyIconFont, Brushes.PaleGoldenrod, EnemyToolIcon.Rect, AlineCenterMiddle)
-
                 Else
 
                     FillRoundedRectangle(SelectedBrush, RoundedEnemyToolButton, 30, Buffer.Graphics)
-
-                    .FillRectangle(Brushes.Chocolate, EnemyToolIcon.Rect)
-
-                    .DrawString("E", EnemyIconFont, Brushes.PaleGoldenrod, EnemyToolIcon.Rect, AlineCenterMiddle)
 
                 End If
 
@@ -2943,21 +2935,17 @@ Public Class Form1
 
                     FillRoundedRectangle(HoverBrush, RoundedEnemyToolButton, 30, Buffer.Graphics)
 
-                    .FillRectangle(Brushes.Chocolate, EnemyToolIcon.Rect)
-
-                    .DrawString("E", EnemyIconFont, Brushes.PaleGoldenrod, EnemyToolIcon.Rect, AlineCenterMiddle)
-
                 Else
 
                     FillRoundedRectangle(Brushes.Black, RoundedEnemyToolButton, 30, Buffer.Graphics)
 
-                    .FillRectangle(Brushes.Chocolate, EnemyToolIcon.Rect)
-
-                    .DrawString("E", EnemyIconFont, Brushes.PaleGoldenrod, EnemyToolIcon.Rect, AlineCenterMiddle)
-
                 End If
 
             End If
+
+            .FillRectangle(Brushes.Chocolate, EnemyToolIcon.Rect)
+
+            .DrawString("E", EnemyIconFont, Brushes.PaleGoldenrod, EnemyToolIcon.Rect, AlineCenterMiddle)
 
         End With
 

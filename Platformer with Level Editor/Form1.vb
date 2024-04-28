@@ -2651,11 +2651,20 @@ Public Class Form1
 
         With Buffer.Graphics
 
+            Dim RoundedPointerToolButton As Rectangle = PointerToolButton.Rect
+
+            RoundedPointerToolButton.Offset(2, 2)
+
+            RoundedPointerToolButton.Width = PointerToolButton.Rect.Width - 4
+            RoundedPointerToolButton.Height = PointerToolButton.Rect.Height - 4
+
             If SelectedTool = Tools.Pointer Then
 
                 If PointerToolButtonHover = True Then
 
-                    .FillRectangle(SelectedHoverBrush, PointerToolButton.Rect)
+                    '.FillRectangle(SelectedHoverBrush, PointerToolButton.Rect)
+
+                    FillRoundedRectangle(SelectedHoverBrush, RoundedPointerToolButton, 30, Buffer.Graphics)
 
                     .DrawString("ë",
                             PointerToolFont,
@@ -2665,7 +2674,9 @@ Public Class Form1
 
                 Else
 
-                    .FillRectangle(SelectedBrush, PointerToolButton.Rect)
+                    '.FillRectangle(SelectedBrush, PointerToolButton.Rect)
+
+                    FillRoundedRectangle(SelectedBrush, RoundedPointerToolButton, 30, Buffer.Graphics)
 
                     .DrawString("ë",
                             PointerToolFont,
@@ -2679,7 +2690,9 @@ Public Class Form1
 
                 If PointerToolButtonHover = True Then
 
-                    .FillRectangle(HoverBrush, PointerToolButton.Rect)
+                    '.FillRectangle(HoverBrush, PointerToolButton.Rect)
+
+                    FillRoundedRectangle(HoverBrush, RoundedPointerToolButton, 30, Buffer.Graphics)
 
                     .DrawString("ë",
                                 PointerToolFont,
@@ -2689,7 +2702,9 @@ Public Class Form1
 
                 Else
 
-                    .FillRectangle(Brushes.Black, PointerToolButton.Rect)
+                    '.FillRectangle(Brushes.Black, PointerToolButton.Rect)
+
+                    FillRoundedRectangle(Brushes.Black, RoundedPointerToolButton, 30, Buffer.Graphics)
 
                     .DrawString("ë",
                                 PointerToolFont,
@@ -2707,13 +2722,23 @@ Public Class Form1
 
     Private Sub DrawBlockToolButton()
 
+        Dim RoundedBlockToolButton As Rectangle = BlockToolButton.Rect
+
+        RoundedBlockToolButton.Offset(2, 2)
+
+        RoundedBlockToolButton.Width = BlockToolButton.Rect.Width - 4
+        RoundedBlockToolButton.Height = BlockToolButton.Rect.Height - 4
+
+
         With Buffer.Graphics
 
             If SelectedTool = Tools.Block Then
 
                 If BlockToolButtonHover = True Then
 
-                    .FillRectangle(SelectedHoverBrush, BlockToolButton.Rect)
+                    '.FillRectangle(SelectedHoverBrush, BlockToolButton.Rect)
+
+                    FillRoundedRectangle(SelectedHoverBrush, RoundedBlockToolButton, 30, Buffer.Graphics)
 
                     .FillRectangle(Brushes.Chocolate, BlockToolIcon.Rect)
 
@@ -2726,7 +2751,9 @@ Public Class Form1
 
                 Else
 
-                    .FillRectangle(SelectedBrush, BlockToolButton.Rect)
+                    '.FillRectangle(SelectedBrush, BlockToolButton.Rect)
+
+                    FillRoundedRectangle(SelectedBrush, RoundedBlockToolButton, 30, Buffer.Graphics)
 
                     .FillRectangle(Brushes.Chocolate, BlockToolIcon.Rect)
 
@@ -2743,7 +2770,9 @@ Public Class Form1
 
                 If BlockToolButtonHover = True Then
 
-                    .FillRectangle(HoverBrush, BlockToolButton.Rect)
+                    '.FillRectangle(HoverBrush, BlockToolButton.Rect)
+
+                    FillRoundedRectangle(HoverBrush, RoundedBlockToolButton, 30, Buffer.Graphics)
 
                     .FillRectangle(Brushes.Chocolate, BlockToolIcon.Rect)
 
@@ -2756,7 +2785,9 @@ Public Class Form1
 
                 Else
 
-                    .FillRectangle(Brushes.Black, BlockToolButton.Rect)
+                    '.FillRectangle(Brushes.Black, BlockToolButton.Rect)
+
+                    FillRoundedRectangle(Brushes.Black, RoundedBlockToolButton, 30, Buffer.Graphics)
 
                     .FillRectangle(Brushes.Chocolate, BlockToolIcon.Rect)
 
@@ -2777,13 +2808,22 @@ Public Class Form1
 
     Private Sub DrawBillToolButton()
 
+        Dim RoundedBillToolButton As Rectangle = BillToolButton.Rect
+
+        RoundedBillToolButton.Offset(2, 2)
+
+        RoundedBillToolButton.Width = BillToolButton.Rect.Width - 4
+        RoundedBillToolButton.Height = BillToolButton.Rect.Height - 4
+
         With Buffer.Graphics
 
             If SelectedTool = Tools.Bill Then
 
                 If BillToolButtonHover = True Then
 
-                    .FillRectangle(SelectedHoverBrush, BillToolButton.Rect)
+                    '.FillRectangle(SelectedHoverBrush, BillToolButton.Rect)
+
+                    FillRoundedRectangle(SelectedHoverBrush, RoundedBillToolButton, 30, Buffer.Graphics)
 
                     .FillRectangle(Brushes.Goldenrod, BillToolIcon.Rect)
 
@@ -2794,7 +2834,10 @@ Public Class Form1
                             AlineCenterMiddle)
 
                 Else
-                    .FillRectangle(SelectedBrush, BillToolButton.Rect)
+
+                    '.FillRectangle(SelectedBrush, BillToolButton.Rect)
+
+                    FillRoundedRectangle(SelectedBrush, RoundedBillToolButton, 30, Buffer.Graphics)
 
                     .FillRectangle(Brushes.Goldenrod, BillToolIcon.Rect)
 
@@ -2810,7 +2853,9 @@ Public Class Form1
 
                 If BillToolButtonHover = True Then
 
-                    .FillRectangle(HoverBrush, BillToolButton.Rect)
+                    '.FillRectangle(HoverBrush, BillToolButton.Rect)
+
+                    FillRoundedRectangle(HoverBrush, RoundedBillToolButton, 30, Buffer.Graphics)
 
                     .FillRectangle(Brushes.Goldenrod, BillToolIcon.Rect)
 
@@ -2822,7 +2867,9 @@ Public Class Form1
 
                 Else
 
-                    .FillRectangle(Brushes.Black, BillToolButton.Rect)
+                    '.FillRectangle(Brushes.Black, BillToolButton.Rect)
+
+                    FillRoundedRectangle(Brushes.Black, RoundedBillToolButton, 30, Buffer.Graphics)
 
                     .FillRectangle(Brushes.Goldenrod, BillToolIcon.Rect)
 
@@ -2842,13 +2889,22 @@ Public Class Form1
 
     Private Sub DrawCloudToolButton()
 
+        Dim RoundedCloudToolButton As Rectangle = CloudToolButton.Rect
+
+        RoundedCloudToolButton.Offset(2, 2)
+
+        RoundedCloudToolButton.Width = CloudToolButton.Rect.Width - 4
+        RoundedCloudToolButton.Height = CloudToolButton.Rect.Height - 4
+
         With Buffer.Graphics
 
             If SelectedTool = Tools.Cloud Then
 
                 If CloudToolButtonHover = True Then
 
-                    .FillRectangle(SelectedHoverBrush, CloudToolButton.Rect)
+                    '.FillRectangle(SelectedHoverBrush, CloudToolButton.Rect)
+
+                    FillRoundedRectangle(SelectedHoverBrush, RoundedCloudToolButton, 30, Buffer.Graphics)
 
                     .FillRectangle(Brushes.White, CloundToolIcon.Rect)
 
@@ -2868,7 +2924,9 @@ Public Class Form1
 
                 Else
 
-                    .FillRectangle(SelectedBrush, CloudToolButton.Rect)
+                    '.FillRectangle(SelectedBrush, CloudToolButton.Rect)
+
+                    FillRoundedRectangle(SelectedBrush, RoundedCloudToolButton, 30, Buffer.Graphics)
 
                     .FillRectangle(Brushes.White, CloundToolIcon.Rect)
 
@@ -2892,7 +2950,9 @@ Public Class Form1
 
                 If CloudToolButtonHover = True Then
 
-                    .FillRectangle(HoverBrush, CloudToolButton.Rect)
+                    '.FillRectangle(HoverBrush, CloudToolButton.Rect)
+
+                    FillRoundedRectangle(HoverBrush, RoundedCloudToolButton, 30, Buffer.Graphics)
 
                     .FillRectangle(Brushes.White, CloundToolIcon.Rect)
 
@@ -2912,7 +2972,9 @@ Public Class Form1
 
                 Else
 
-                    .FillRectangle(Brushes.Black, CloudToolButton.Rect)
+                    '.FillRectangle(Brushes.Black, CloudToolButton.Rect)
+
+                    FillRoundedRectangle(Brushes.Black, RoundedCloudToolButton, 30, Buffer.Graphics)
 
                     .FillRectangle(Brushes.White, CloundToolIcon.Rect)
 
@@ -2940,13 +3002,22 @@ Public Class Form1
 
     Private Sub DrawBushesToolButton()
 
+        Dim RoundedBushToolButton As Rectangle = BushToolButton.Rect
+
+        RoundedBushToolButton.Offset(2, 2)
+
+        RoundedBushToolButton.Width = BushToolButton.Rect.Width - 4
+        RoundedBushToolButton.Height = BushToolButton.Rect.Height - 4
+
         With Buffer.Graphics
 
             If SelectedTool = Tools.Bush Then
 
                 If BushToolButtonHover = True Then
 
-                    .FillRectangle(SelectedHoverBrush, BushToolButton.Rect)
+                    '.FillRectangle(SelectedHoverBrush, BushToolButton.Rect)
+
+                    FillRoundedRectangle(SelectedHoverBrush, RoundedBushToolButton, 30, Buffer.Graphics)
 
                     .FillRectangle(Brushes.GreenYellow, BushToolIcon.Rect)
 
@@ -2966,7 +3037,9 @@ Public Class Form1
 
                 Else
 
-                    .FillRectangle(SelectedBrush, BushToolButton.Rect)
+                    '.FillRectangle(SelectedBrush, BushToolButton.Rect)
+
+                    FillRoundedRectangle(SelectedBrush, RoundedBushToolButton, 30, Buffer.Graphics)
 
                     .FillRectangle(Brushes.GreenYellow, BushToolIcon.Rect)
 
@@ -2990,7 +3063,9 @@ Public Class Form1
 
                 If BushToolButtonHover = True Then
 
-                    .FillRectangle(HoverBrush, BushToolButton.Rect)
+                    '.FillRectangle(HoverBrush, BushToolButton.Rect)
+
+                    FillRoundedRectangle(HoverBrush, RoundedBushToolButton, 30, Buffer.Graphics)
 
                     .FillRectangle(Brushes.GreenYellow, BushToolIcon.Rect)
 
@@ -3038,13 +3113,22 @@ Public Class Form1
 
     Private Sub DrawEnemyToolButton()
 
+        Dim RoundedEnemyToolButton As Rectangle = EnemyToolButton.Rect
+
+        RoundedEnemyToolButton.Offset(2, 2)
+
+        RoundedEnemyToolButton.Width = EnemyToolButton.Rect.Width - 4
+        RoundedEnemyToolButton.Height = EnemyToolButton.Rect.Height - 4
+
         With Buffer.Graphics
 
             If SelectedTool = Tools.Enemy Then
 
                 If EnemyToolButtonHover = True Then
 
-                    .FillRectangle(SelectedHoverBrush, EnemyToolButton.Rect)
+                    '.FillRectangle(SelectedHoverBrush, EnemyToolButton.Rect)
+
+                    FillRoundedRectangle(SelectedHoverBrush, RoundedEnemyToolButton, 30, Buffer.Graphics)
 
                     .FillRectangle(Brushes.Chocolate, EnemyToolIcon.Rect)
 
@@ -3052,7 +3136,9 @@ Public Class Form1
 
                 Else
 
-                    .FillRectangle(SelectedBrush, EnemyToolButton.Rect)
+                    '.FillRectangle(SelectedBrush, EnemyToolButton.Rect)
+
+                    FillRoundedRectangle(SelectedBrush, RoundedEnemyToolButton, 30, Buffer.Graphics)
 
                     .FillRectangle(Brushes.Chocolate, EnemyToolIcon.Rect)
 
@@ -3064,7 +3150,9 @@ Public Class Form1
 
                 If EnemyToolButtonHover = True Then
 
-                    .FillRectangle(HoverBrush, EnemyToolButton.Rect)
+                    '.FillRectangle(HoverBrush, EnemyToolButton.Rect)
+
+                    FillRoundedRectangle(HoverBrush, RoundedEnemyToolButton, 30, Buffer.Graphics)
 
                     .FillRectangle(Brushes.Chocolate, EnemyToolIcon.Rect)
 
@@ -3072,7 +3160,9 @@ Public Class Form1
 
                 Else
 
-                    .FillRectangle(Brushes.Black, EnemyToolButton.Rect)
+                    '.FillRectangle(Brushes.Black, EnemyToolButton.Rect)
+
+                    FillRoundedRectangle(Brushes.Black, RoundedEnemyToolButton, 30, Buffer.Graphics)
 
                     .FillRectangle(Brushes.Chocolate, EnemyToolIcon.Rect)
 
@@ -3088,13 +3178,22 @@ Public Class Form1
 
     Private Sub DrawGoalToolButton()
 
+        Dim RoundedGoalToolButton As Rectangle = GoalToolButton.Rect
+
+        RoundedGoalToolButton.Offset(2, 2)
+
+        RoundedGoalToolButton.Width = GoalToolButton.Rect.Width - 4
+        RoundedGoalToolButton.Height = GoalToolButton.Rect.Height - 4
+
         With Buffer.Graphics
 
             If SelectedTool = Tools.Goal Then
 
                 If GoalToolButtonHover = True Then
 
-                    .FillRectangle(SelectedHoverBrush, GoalToolButton.Rect)
+                    '.FillRectangle(SelectedHoverBrush, GoalToolButton.Rect)
+
+                    FillRoundedRectangle(SelectedHoverBrush, RoundedGoalToolButton, 30, Buffer.Graphics)
 
                     .FillRectangle(Brushes.White, GoalToolIcon.Rect)
 
@@ -3132,7 +3231,9 @@ Public Class Form1
 
                 Else
 
-                    .FillRectangle(SelectedBrush, GoalToolButton.Rect)
+                    '.FillRectangle(SelectedBrush, GoalToolButton.Rect)
+
+                    FillRoundedRectangle(SelectedBrush, RoundedGoalToolButton, 30, Buffer.Graphics)
 
                     .FillRectangle(Brushes.White, GoalToolIcon.Rect)
 
@@ -3174,7 +3275,9 @@ Public Class Form1
 
                 If GoalToolButtonHover = True Then
 
-                    .FillRectangle(HoverBrush, GoalToolButton.Rect)
+                    '.FillRectangle(HoverBrush, GoalToolButton.Rect)
+
+                    FillRoundedRectangle(HoverBrush, RoundedGoalToolButton, 30, Buffer.Graphics)
 
                     .FillRectangle(Brushes.White, GoalToolIcon.Rect)
 
@@ -3212,7 +3315,9 @@ Public Class Form1
 
                 Else
 
-                    .FillRectangle(Brushes.Black, GoalToolButton.Rect)
+                    '.FillRectangle(Brushes.Black, GoalToolButton.Rect)
+
+                    FillRoundedRectangle(Brushes.Black, RoundedGoalToolButton, 30, Buffer.Graphics)
 
                     .FillRectangle(Brushes.White, GoalToolIcon.Rect)
 

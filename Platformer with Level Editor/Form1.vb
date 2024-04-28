@@ -2889,16 +2889,16 @@ Public Class Form1
             .FillRectangle(Brushes.GreenYellow, BushToolIcon.Rect)
 
             .DrawLine(BushToolIconPen,
-                          BushToolIcon.Rect.Right - 10,
-                          BushToolIcon.Rect.Top + 10,
-                          BushToolIcon.Rect.Right - 10,
-                          BushToolIcon.Rect.Bottom - 10)
+                      BushToolIcon.Rect.Right - 10,
+                      BushToolIcon.Rect.Top + 10,
+                      BushToolIcon.Rect.Right - 10,
+                      BushToolIcon.Rect.Bottom - 10)
 
             .DrawLine(BushToolIconPen,
-                          BushToolIcon.Rect.Left + 10,
-                          BushToolIcon.Rect.Bottom - 10,
-                          BushToolIcon.Rect.Right - 10,
-                          BushToolIcon.Rect.Bottom - 10)
+                      BushToolIcon.Rect.Left + 10,
+                      BushToolIcon.Rect.Bottom - 10,
+                      BushToolIcon.Rect.Right - 10,
+                      BushToolIcon.Rect.Bottom - 10)
 
             .DrawRectangle(BushToolIconOutinePen, BushToolIcon.Rect)
 

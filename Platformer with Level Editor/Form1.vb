@@ -2703,7 +2703,6 @@ Public Class Form1
         RoundedBlockToolButton.Width = BlockToolButton.Rect.Width - 4
         RoundedBlockToolButton.Height = BlockToolButton.Rect.Height - 4
 
-
         With Buffer.Graphics
 
             If SelectedTool = Tools.Block Then
@@ -2712,25 +2711,9 @@ Public Class Form1
 
                     FillRoundedRectangle(SelectedHoverBrush, RoundedBlockToolButton, 30, Buffer.Graphics)
 
-                    .FillRectangle(Brushes.Chocolate, BlockToolIcon.Rect)
-
-                    .DrawLine(Pens.White,
-                                  BlockToolIcon.Rect.Right - 1,
-                                  BlockToolIcon.Rect.Top + 1,
-                                  BlockToolIcon.Rect.Left + 1,
-                                  BlockToolIcon.Rect.Top + 1)
-
                 Else
 
                     FillRoundedRectangle(SelectedBrush, RoundedBlockToolButton, 30, Buffer.Graphics)
-
-                    .FillRectangle(Brushes.Chocolate, BlockToolIcon.Rect)
-
-                    .DrawLine(Pens.White,
-                                  BlockToolIcon.Rect.Right - 1,
-                                  BlockToolIcon.Rect.Top + 1,
-                                  BlockToolIcon.Rect.Left + 1,
-                                  BlockToolIcon.Rect.Top + 1)
 
                 End If
 
@@ -2740,29 +2723,21 @@ Public Class Form1
 
                     FillRoundedRectangle(HoverBrush, RoundedBlockToolButton, 30, Buffer.Graphics)
 
-                    .FillRectangle(Brushes.Chocolate, BlockToolIcon.Rect)
-
-                    .DrawLine(Pens.White,
-                                  BlockToolIcon.Rect.Right - 1,
-                                  BlockToolIcon.Rect.Top + 1,
-                                  BlockToolIcon.Rect.Left + 1,
-                                  BlockToolIcon.Rect.Top + 1)
-
                 Else
 
                     FillRoundedRectangle(Brushes.Black, RoundedBlockToolButton, 30, Buffer.Graphics)
 
-                    .FillRectangle(Brushes.Chocolate, BlockToolIcon.Rect)
-
-                    .DrawLine(Pens.White,
-                                  BlockToolIcon.Rect.Right - 1,
-                                  BlockToolIcon.Rect.Top + 1,
-                                  BlockToolIcon.Rect.Left + 1,
-                                  BlockToolIcon.Rect.Top + 1)
-
                 End If
 
             End If
+
+            .FillRectangle(Brushes.Chocolate, BlockToolIcon.Rect)
+
+            .DrawLine(Pens.White,
+                      BlockToolIcon.Rect.Right - 1,
+                      BlockToolIcon.Rect.Top + 1,
+                      BlockToolIcon.Rect.Left + 1,
+                      BlockToolIcon.Rect.Top + 1)
 
         End With
 

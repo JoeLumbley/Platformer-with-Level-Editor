@@ -2664,21 +2664,9 @@ Public Class Form1
 
                     FillRoundedRectangle(SelectedHoverBrush, RoundedPointerToolButton, 30, Buffer.Graphics)
 
-                    .DrawString("ë",
-                            PointerToolFont,
-                            Brushes.White,
-                            PointerToolButton.Rect,
-                            AlineCenterMiddle)
-
                 Else
 
                     FillRoundedRectangle(SelectedBrush, RoundedPointerToolButton, 30, Buffer.Graphics)
-
-                    .DrawString("ë",
-                            PointerToolFont,
-                            Brushes.White,
-                            PointerToolButton.Rect,
-                            AlineCenterMiddle)
 
                 End If
 
@@ -2688,25 +2676,19 @@ Public Class Form1
 
                     FillRoundedRectangle(HoverBrush, RoundedPointerToolButton, 30, Buffer.Graphics)
 
-                    .DrawString("ë",
-                                PointerToolFont,
-                                Brushes.White,
-                                PointerToolButton.Rect,
-                                AlineCenterMiddle)
-
                 Else
 
                     FillRoundedRectangle(Brushes.Black, RoundedPointerToolButton, 30, Buffer.Graphics)
 
-                    .DrawString("ë",
-                                PointerToolFont,
-                                Brushes.White,
-                                PointerToolButton.Rect,
-                                AlineCenterMiddle)
-
                 End If
 
             End If
+
+            .DrawString("ë",
+                        PointerToolFont,
+                        Brushes.White,
+                        PointerToolButton.Rect,
+                        AlineCenterMiddle)
 
         End With
 

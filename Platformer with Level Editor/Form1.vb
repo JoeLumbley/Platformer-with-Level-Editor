@@ -3033,23 +3033,17 @@ Public Class Form1
 
                 .FillRectangle(HoverBrush, EditPlayButton.Rect)
 
-                .DrawString("Play",
-                        FPSFont,
-                        Brushes.White,
-                        EditPlayButton.Rect,
-                        AlineCenterMiddle)
-
             Else
 
                 .FillRectangle(Brushes.Black, EditPlayButton.Rect)
 
-                .DrawString("Play",
+            End If
+
+            .DrawString("Play",
                         FPSFont,
                         Brushes.White,
                         EditPlayButton.Rect,
                         AlineCenterMiddle)
-
-            End If
 
         End With
 
@@ -3063,23 +3057,17 @@ Public Class Form1
 
                 .FillRectangle(HoverBrush, EditPlayButton.Rect)
 
-                .DrawString("Edit",
-                        FPSFont,
-                        Brushes.White,
-                        EditPlayButton.Rect,
-                        AlineCenterMiddle)
-
             Else
 
                 .FillRectangle(Brushes.Black, EditPlayButton.Rect)
 
-                .DrawString("Edit",
+            End If
+
+            .DrawString("Edit",
                         FPSFont,
                         Brushes.White,
                         EditPlayButton.Rect,
                         AlineCenterMiddle)
-
-            End If
 
         End With
 
@@ -3093,23 +3081,17 @@ Public Class Form1
 
                 .FillRectangle(HoverBrush, MenuButton.Rect)
 
-                .DrawString("≡",
-                        MenuButtonFont,
-                        Brushes.White,
-                        MenuButton.Rect,
-                        AlineCenterMiddle)
-
             Else
 
                 .FillRectangle(Brushes.Black, MenuButton.Rect)
 
-                .DrawString("≡",
+            End If
+
+            .DrawString("≡",
                         MenuButtonFont,
                         Brushes.White,
                         MenuButton.Rect,
                         AlineCenterMiddle)
-
-            End If
 
         End With
 

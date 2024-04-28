@@ -3513,61 +3513,31 @@ Public Class Form1
 
         With Buffer.Graphics
 
+            Dim Shadow As Rectangle = StartScreenNewButton.Rect
+
+            Shadow.Offset(12, 12)
+
+            FillRoundedRectangle(MenuShadowBrush, Shadow, 10, Buffer.Graphics)
+
             If StartScreenNewButtonHover = True Then
-
-                Dim Shadow As Rectangle = StartScreenNewButton.Rect
-
-                Shadow.Offset(12, 12)
-
-                FillRoundedRectangle(MenuShadowBrush, Shadow, 10, Buffer.Graphics)
 
                 FillRoundedRectangle(SelectedHoverBrush, StartScreenNewButton.Rect, 10, Buffer.Graphics)
 
-                DrawRoundedRectangle(MenuOutinePen, StartScreenNewButton.Rect, 10, Buffer.Graphics)
-
-                .DrawEllipse(BButtonIconOutinePen,
-                         New Rectangle(StartScreenNewButton.Rect.X + 140,
-                                       StartScreenNewButton.Rect.Y + StartScreenNewButton.Rect.Height \ 2 - 52 \ 2,
-                                       52,
-                                       52))
-
-                .DrawString("New",
-                        FPSFont,
-                        Brushes.White,
-                        New Rectangle(StartScreenNewButton.Rect.X + 5,
-                                      StartScreenNewButton.Rect.Y + StartScreenNewButton.Rect.Height \ 2 - 45 \ 2,
-                                      120,
-                                      50),
-                        AlineCenterMiddle)
-
-                .DrawString("B",
-                        ButtonIconFont,
-                        Brushes.White,
-                        New Rectangle(StartScreenNewButton.Rect.X + 143,
-                                      StartScreenNewButton.Rect.Y + StartScreenNewButton.Rect.Height \ 2 - 45 \ 2,
-                                      50,
-                                      50),
-                                      AlineCenterMiddle)
-
             Else
-
-                Dim Shadow As Rectangle = StartScreenNewButton.Rect
-
-                Shadow.Offset(12, 12)
-
-                FillRoundedRectangle(MenuShadowBrush, Shadow, 10, Buffer.Graphics)
 
                 FillRoundedRectangle(Brushes.Black, StartScreenNewButton.Rect, 10, Buffer.Graphics)
 
-                DrawRoundedRectangle(MenuOutinePen, StartScreenNewButton.Rect, 10, Buffer.Graphics)
+            End If
 
-                .DrawEllipse(BButtonIconOutinePen,
+            DrawRoundedRectangle(MenuOutinePen, StartScreenNewButton.Rect, 10, Buffer.Graphics)
+
+            .DrawEllipse(BButtonIconOutinePen,
                          New Rectangle(StartScreenNewButton.Rect.X + 140,
                                        StartScreenNewButton.Rect.Y + StartScreenNewButton.Rect.Height \ 2 - 52 \ 2,
                                        52,
                                        52))
 
-                .DrawString("New",
+            .DrawString("New",
                         FPSFont,
                         Brushes.White,
                         New Rectangle(StartScreenNewButton.Rect.X + 5,
@@ -3576,7 +3546,7 @@ Public Class Form1
                                       50),
                         AlineCenterMiddle)
 
-                .DrawString("B",
+            .DrawString("B",
                         ButtonIconFont,
                         Brushes.White,
                         New Rectangle(StartScreenNewButton.Rect.X + 143,
@@ -3584,8 +3554,6 @@ Public Class Form1
                                       50,
                                       50),
                                       AlineCenterMiddle)
-
-            End If
 
         End With
 

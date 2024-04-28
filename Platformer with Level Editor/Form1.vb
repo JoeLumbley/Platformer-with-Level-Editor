@@ -3132,13 +3132,9 @@ Public Class Form1
 
             If EditPlayButtonHover = True Then
 
-                '.FillRectangle(HoverBrush, EditPlayButton.Rect)
-
                 FillRoundedRectangle(HoverBrush, RoundedEditPlayButton, 30, Buffer.Graphics)
 
             Else
-
-                '.FillRectangle(Brushes.Black, EditPlayButton.Rect)
 
                 FillRoundedRectangle(Brushes.Black, RoundedEditPlayButton, 30, Buffer.Graphics)
 

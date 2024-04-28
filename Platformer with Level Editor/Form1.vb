@@ -3148,41 +3148,19 @@ Public Class Form1
 
                 FillRoundedRectangle(HoverBrush, OpenButton.Rect, 20, Buffer.Graphics)
 
-                .DrawEllipse(YButtonIconOutinePen,
-                         New Rectangle(OpenButton.Rect.X + 197,
-                                       OpenButton.Rect.Y + OpenButton.Rect.Height \ 2 - 52 \ 2,
-                                       52,
-                                       52))
-
-                .DrawString("Open",
-                        FPSFont,
-                        Brushes.White,
-                        New Rectangle(OpenButton.Rect.X + 25,
-                                      OpenButton.Rect.Y + OpenButton.Rect.Height \ 2 - 45 \ 2,
-                                      145,
-                                      50),
-                        AlineCenterMiddle)
-
-                .DrawString("Y",
-                        ButtonIconFont,
-                        Brushes.White,
-                        New Rectangle(OpenButton.Rect.X + 174,
-                                      OpenButton.Rect.Y + OpenButton.Rect.Height \ 2 - 45 \ 2,
-                                      100,
-                                      50),
-                        AlineCenterMiddle)
-
             Else
 
                 FillRoundedRectangle(Brushes.Black, OpenButton.Rect, 20, Buffer.Graphics)
 
-                .DrawEllipse(YButtonIconOutinePen,
+            End If
+
+            .DrawEllipse(YButtonIconOutinePen,
                          New Rectangle(OpenButton.Rect.X + 197,
                                        OpenButton.Rect.Y + OpenButton.Rect.Height \ 2 - 52 \ 2,
                                        52,
                                        52))
 
-                .DrawString("Open",
+            .DrawString("Open",
                         FPSFont,
                         Brushes.White,
                         New Rectangle(OpenButton.Rect.X + 25,
@@ -3191,7 +3169,7 @@ Public Class Form1
                                       50),
                         AlineCenterMiddle)
 
-                .DrawString("Y",
+            .DrawString("Y",
                         ButtonIconFont,
                         Brushes.White,
                         New Rectangle(OpenButton.Rect.X + 174,
@@ -3199,8 +3177,6 @@ Public Class Form1
                                       100,
                                       50),
                         AlineCenterMiddle)
-
-            End If
 
         End With
 
@@ -3214,28 +3190,13 @@ Public Class Form1
 
                 FillRoundedRectangle(HoverBrush, NewButton.Rect, 20, Buffer.Graphics)
 
-                .DrawString("New", FPSFont,
-                        Brushes.White,
-                        New Rectangle(NewButton.Rect.X + 25,
-                                      NewButton.Rect.Y + SaveButton.Rect.Height \ 2 - 45 \ 2,
-                                      120,
-                                      50),
-                        AlineCenterMiddle)
-
-                .DrawString("RT",
-                        RightTriggerIconFont,
-                        Brushes.White,
-                        New Rectangle(NewButton.Rect.X + 175,
-                                      NewButton.Rect.Y + NewButton.Rect.Height \ 2 - 52 \ 2,
-                                      100,
-                                      50),
-                        AlineCenterMiddle)
-
             Else
 
                 FillRoundedRectangle(Brushes.Black, NewButton.Rect, 20, Buffer.Graphics)
 
-                .DrawString("New", FPSFont,
+            End If
+
+            .DrawString("New", FPSFont,
                         Brushes.White,
                         New Rectangle(NewButton.Rect.X + 25,
                                       NewButton.Rect.Y + SaveButton.Rect.Height \ 2 - 45 \ 2,
@@ -3243,7 +3204,7 @@ Public Class Form1
                                       50),
                         AlineCenterMiddle)
 
-                .DrawString("RT",
+            .DrawString("RT",
                         RightTriggerIconFont,
                         Brushes.White,
                         New Rectangle(NewButton.Rect.X + 175,
@@ -3251,8 +3212,6 @@ Public Class Form1
                                       100,
                                       50),
                         AlineCenterMiddle)
-
-            End If
 
         End With
 
@@ -3266,33 +3225,19 @@ Public Class Form1
 
                 FillRoundedRectangle(HoverBrush, ExitButton.Rect, 20, Buffer.Graphics)
 
-                .DrawEllipse(XButtonIconOutinePen,
-                         New Rectangle(ExitButton.Rect.X + ExitButton.Rect.Width \ 2 - 52 \ 2,
-                                       ExitButton.Rect.Y + ExitButton.Rect.Height \ 2 - 52 \ 2,
-                                       52,
-                                       52))
-
-                .DrawString("X",
-                        ButtonIconFont,
-                        Brushes.White,
-                        New Rectangle(ExitButton.Rect.X + ExitButton.Rect.Width \ 2 - 52 \ 2,
-                                      ExitButton.Rect.Y + 16,
-                                      52,
-                                      52),
-                                      AlineCenterMiddle)
-
-
             Else
 
                 FillRoundedRectangle(Brushes.Black, ExitButton.Rect, 20, Buffer.Graphics)
 
-                .DrawEllipse(XButtonIconOutinePen,
+            End If
+
+            .DrawEllipse(XButtonIconOutinePen,
                          New Rectangle(ExitButton.Rect.X + ExitButton.Rect.Width \ 2 - 52 \ 2,
                                        ExitButton.Rect.Y + ExitButton.Rect.Height \ 2 - 52 \ 2,
                                        52,
                                        52))
 
-                .DrawString("X",
+            .DrawString("X",
                         ButtonIconFont,
                         Brushes.White,
                         New Rectangle(ExitButton.Rect.X + ExitButton.Rect.Width \ 2 - 52 \ 2,
@@ -3300,8 +3245,6 @@ Public Class Form1
                                       52,
                                       52),
                                       AlineCenterMiddle)
-
-            End If
 
         End With
 

@@ -3180,13 +3180,9 @@ Public Class Form1
 
             If MenuButtonHover = True Then
 
-                '.FillRectangle(HoverBrush, MenuButton.Rect)
-
                 FillRoundedRectangle(HoverBrush, RoundedMenuButton, 30, Buffer.Graphics)
 
             Else
-
-                '.FillRectangle(Brushes.Black, MenuButton.Rect)
 
                 FillRoundedRectangle(Brushes.Black, RoundedMenuButton, 30, Buffer.Graphics)
 

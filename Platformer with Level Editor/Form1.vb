@@ -3463,61 +3463,31 @@ Public Class Form1
 
         With Buffer.Graphics
 
+            Dim Shadow As Rectangle = StartScreenOpenButton.Rect
+
+            Shadow.Offset(12, 12)
+
+            FillRoundedRectangle(MenuShadowBrush, Shadow, 10, Buffer.Graphics)
+
             If StartScreenOpenButtonHover = True Then
-
-                Dim Shadow As Rectangle = StartScreenOpenButton.Rect
-
-                Shadow.Offset(12, 12)
-
-                FillRoundedRectangle(MenuShadowBrush, Shadow, 10, Buffer.Graphics)
 
                 FillRoundedRectangle(SelectedHoverBrush, StartScreenOpenButton.Rect, 10, Buffer.Graphics)
 
-                DrawRoundedRectangle(MenuOutinePen, StartScreenOpenButton.Rect, 10, Buffer.Graphics)
-
-                .DrawEllipse(YButtonIconOutinePen,
-                         New Rectangle(StartScreenOpenButton.Rect.X + 142,
-                                       StartScreenOpenButton.Rect.Y + StartScreenOpenButton.Rect.Height \ 2 - 52 \ 2,
-                                       52,
-                                       52))
-
-                .DrawString("Open",
-                        FPSFont,
-                        Brushes.White,
-                        New Rectangle(StartScreenOpenButton.Rect.X,
-                                      StartScreenOpenButton.Rect.Y + StartScreenOpenButton.Rect.Height \ 2 - 45 \ 2,
-                                      150,
-                                      50),
-                                      AlineCenterMiddle)
-
-                .DrawString("Y",
-                        ButtonIconFont,
-                        Brushes.White,
-                        New Rectangle(StartScreenOpenButton.Rect.X + 143,
-                                      StartScreenOpenButton.Rect.Y + StartScreenOpenButton.Rect.Height \ 2 - 45 \ 2,
-                                      50,
-                                      50),
-                                      AlineCenterMiddle)
-
             Else
-
-                Dim Shadow As Rectangle = StartScreenOpenButton.Rect
-
-                Shadow.Offset(12, 12)
-
-                FillRoundedRectangle(MenuShadowBrush, Shadow, 10, Buffer.Graphics)
 
                 FillRoundedRectangle(Brushes.Black, StartScreenOpenButton.Rect, 10, Buffer.Graphics)
 
-                DrawRoundedRectangle(MenuOutinePen, StartScreenOpenButton.Rect, 10, Buffer.Graphics)
+            End If
 
-                .DrawEllipse(YButtonIconOutinePen,
+            DrawRoundedRectangle(MenuOutinePen, StartScreenOpenButton.Rect, 10, Buffer.Graphics)
+
+            .DrawEllipse(YButtonIconOutinePen,
                          New Rectangle(StartScreenOpenButton.Rect.X + 142,
                                        StartScreenOpenButton.Rect.Y + StartScreenOpenButton.Rect.Height \ 2 - 52 \ 2,
                                        52,
                                        52))
 
-                .DrawString("Open",
+            .DrawString("Open",
                         FPSFont,
                         Brushes.White,
                         New Rectangle(StartScreenOpenButton.Rect.X,
@@ -3526,7 +3496,7 @@ Public Class Form1
                                       50),
                                       AlineCenterMiddle)
 
-                .DrawString("Y",
+            .DrawString("Y",
                         ButtonIconFont,
                         Brushes.White,
                         New Rectangle(StartScreenOpenButton.Rect.X + 143,
@@ -3534,8 +3504,6 @@ Public Class Form1
                                       50,
                                       50),
                                       AlineCenterMiddle)
-
-            End If
 
         End With
 

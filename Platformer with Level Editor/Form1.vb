@@ -2809,41 +2809,9 @@ Public Class Form1
 
                     FillRoundedRectangle(SelectedHoverBrush, RoundedCloudToolButton, 30, Buffer.Graphics)
 
-                    .FillRectangle(Brushes.White, CloundToolIcon.Rect)
-
-                    .DrawLine(CloundToolIconPen,
-                          CloundToolIcon.Rect.Right - 10,
-                          CloundToolIcon.Rect.Top + 10,
-                          CloundToolIcon.Rect.Right - 10,
-                          CloundToolIcon.Rect.Bottom - 10)
-
-                    .DrawLine(CloundToolIconPen,
-                          CloundToolIcon.Rect.Left + 10,
-                          CloundToolIcon.Rect.Bottom - 10,
-                          CloundToolIcon.Rect.Right - 10,
-                          CloundToolIcon.Rect.Bottom - 10)
-
-                    .DrawRectangle(CloundToolIconOutinePen, CloundToolIcon.Rect)
-
                 Else
 
                     FillRoundedRectangle(SelectedBrush, RoundedCloudToolButton, 30, Buffer.Graphics)
-
-                    .FillRectangle(Brushes.White, CloundToolIcon.Rect)
-
-                    .DrawLine(CloundToolIconPen,
-                          CloundToolIcon.Rect.Right - 10,
-                          CloundToolIcon.Rect.Top + 10,
-                          CloundToolIcon.Rect.Right - 10,
-                          CloundToolIcon.Rect.Bottom - 10)
-
-                    .DrawLine(CloundToolIconPen,
-                          CloundToolIcon.Rect.Left + 10,
-                          CloundToolIcon.Rect.Bottom - 10,
-                          CloundToolIcon.Rect.Right - 10,
-                          CloundToolIcon.Rect.Bottom - 10)
-
-                    .DrawRectangle(CloundToolIconOutinePen, CloundToolIcon.Rect)
 
                 End If
 
@@ -2853,45 +2821,29 @@ Public Class Form1
 
                     FillRoundedRectangle(HoverBrush, RoundedCloudToolButton, 30, Buffer.Graphics)
 
-                    .FillRectangle(Brushes.White, CloundToolIcon.Rect)
-
-                    .DrawLine(CloundToolIconPen,
-                              CloundToolIcon.Rect.Right - 10,
-                              CloundToolIcon.Rect.Top + 10,
-                              CloundToolIcon.Rect.Right - 10,
-                              CloundToolIcon.Rect.Bottom - 10)
-
-                    .DrawLine(CloundToolIconPen,
-                              CloundToolIcon.Rect.Left + 10,
-                              CloundToolIcon.Rect.Bottom - 10,
-                              CloundToolIcon.Rect.Right - 10,
-                              CloundToolIcon.Rect.Bottom - 10)
-
-                    .DrawRectangle(CloundToolIconOutinePen, CloundToolIcon.Rect)
-
                 Else
 
                     FillRoundedRectangle(Brushes.Black, RoundedCloudToolButton, 30, Buffer.Graphics)
 
-                    .FillRectangle(Brushes.White, CloundToolIcon.Rect)
-
-                    .DrawLine(CloundToolIconPen,
-                              CloundToolIcon.Rect.Right - 10,
-                              CloundToolIcon.Rect.Top + 10,
-                              CloundToolIcon.Rect.Right - 10,
-                              CloundToolIcon.Rect.Bottom - 10)
-
-                    .DrawLine(CloundToolIconPen,
-                              CloundToolIcon.Rect.Left + 10,
-                              CloundToolIcon.Rect.Bottom - 10,
-                              CloundToolIcon.Rect.Right - 10,
-                              CloundToolIcon.Rect.Bottom - 10)
-
-                    .DrawRectangle(CloundToolIconOutinePen, CloundToolIcon.Rect)
-
                 End If
 
             End If
+
+            .FillRectangle(Brushes.White, CloundToolIcon.Rect)
+
+            .DrawLine(CloundToolIconPen,
+                      CloundToolIcon.Rect.Right - 10,
+                      CloundToolIcon.Rect.Top + 10,
+                      CloundToolIcon.Rect.Right - 10,
+                      CloundToolIcon.Rect.Bottom - 10)
+
+            .DrawLine(CloundToolIconPen,
+                      CloundToolIcon.Rect.Left + 10,
+                      CloundToolIcon.Rect.Bottom - 10,
+                      CloundToolIcon.Rect.Right - 10,
+                      CloundToolIcon.Rect.Bottom - 10)
+
+            .DrawRectangle(CloundToolIconOutinePen, CloundToolIcon.Rect)
 
         End With
 

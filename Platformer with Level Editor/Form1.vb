@@ -3169,15 +3169,26 @@ Public Class Form1
 
     Private Sub DrawMenuButton()
 
+        Dim RoundedMenuButton As Rectangle = MenuButton.Rect
+
+        RoundedMenuButton.Offset(2, 2)
+
+        RoundedMenuButton.Width = MenuButton.Rect.Width - 4
+        RoundedMenuButton.Height = MenuButton.Rect.Height - 4
+
         With Buffer.Graphics
 
             If MenuButtonHover = True Then
 
-                .FillRectangle(HoverBrush, MenuButton.Rect)
+                '.FillRectangle(HoverBrush, MenuButton.Rect)
+
+                FillRoundedRectangle(HoverBrush, RoundedMenuButton, 30, Buffer.Graphics)
 
             Else
 
-                .FillRectangle(Brushes.Black, MenuButton.Rect)
+                '.FillRectangle(Brushes.Black, MenuButton.Rect)
+
+                FillRoundedRectangle(Brushes.Black, RoundedMenuButton, 30, Buffer.Graphics)
 
             End If
 

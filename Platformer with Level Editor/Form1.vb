@@ -511,6 +511,14 @@ Public Class Form1
 
     Private SelectedHoverBrush As New SolidBrush(SelectedHoverColor)
 
+    Private SelectionHighlightColor As Color = Color.SkyBlue
+
+    Private SelectionHighlightPen As New Pen(SelectionHighlightColor, 3)
+
+    Private SelectionHighlightHoverColor As Color = Color.DeepSkyBlue
+
+    Private SelectionHighlightHoverPen As New Pen(SelectionHighlightHoverColor, 3)
+
     Private ReadOnly AlineCenter As New StringFormat With {.Alignment = StringAlignment.Center}
 
     Private ReadOnly AlineCenterMiddle As New StringFormat With {.Alignment = StringAlignment.Center,
@@ -2664,9 +2672,21 @@ Public Class Form1
 
                     FillRoundedRectangle(SelectedHoverBrush, RoundedPointerToolButton, 30, Buffer.Graphics)
 
+                    .DrawLine(SelectionHighlightHoverPen,
+                      RoundedPointerToolButton.Left + 11,
+                      RoundedPointerToolButton.Bottom - 2,
+                      RoundedPointerToolButton.Right - 11,
+                      RoundedPointerToolButton.Bottom - 2)
+
                 Else
 
                     FillRoundedRectangle(SelectedBrush, RoundedPointerToolButton, 30, Buffer.Graphics)
+
+                    .DrawLine(SelectionHighlightPen,
+                      RoundedPointerToolButton.Left + 11,
+                      RoundedPointerToolButton.Bottom - 2,
+                      RoundedPointerToolButton.Right - 11,
+                      RoundedPointerToolButton.Bottom - 2)
 
                 End If
 
@@ -2711,9 +2731,21 @@ Public Class Form1
 
                     FillRoundedRectangle(SelectedHoverBrush, RoundedBlockToolButton, 30, Buffer.Graphics)
 
+                    .DrawLine(SelectionHighlightHoverPen,
+                      RoundedBlockToolButton.Left + 11,
+                      RoundedBlockToolButton.Bottom - 2,
+                      RoundedBlockToolButton.Right - 11,
+                      RoundedBlockToolButton.Bottom - 2)
+
                 Else
 
                     FillRoundedRectangle(SelectedBrush, RoundedBlockToolButton, 30, Buffer.Graphics)
+
+                    .DrawLine(SelectionHighlightPen,
+                      RoundedBlockToolButton.Left + 11,
+                      RoundedBlockToolButton.Bottom - 2,
+                      RoundedBlockToolButton.Right - 11,
+                      RoundedBlockToolButton.Bottom - 2)
 
                 End If
 
@@ -2760,9 +2792,21 @@ Public Class Form1
 
                     FillRoundedRectangle(SelectedHoverBrush, RoundedBillToolButton, 30, Buffer.Graphics)
 
+                    .DrawLine(SelectionHighlightHoverPen,
+                      RoundedBillToolButton.Left + 11,
+                      RoundedBillToolButton.Bottom - 2,
+                      RoundedBillToolButton.Right - 11,
+                      RoundedBillToolButton.Bottom - 2)
+
                 Else
 
                     FillRoundedRectangle(SelectedBrush, RoundedBillToolButton, 30, Buffer.Graphics)
+
+                    .DrawLine(SelectionHighlightPen,
+                      RoundedBillToolButton.Left + 11,
+                      RoundedBillToolButton.Bottom - 2,
+                      RoundedBillToolButton.Right - 11,
+                      RoundedBillToolButton.Bottom - 2)
 
                 End If
 
@@ -2809,9 +2853,21 @@ Public Class Form1
 
                     FillRoundedRectangle(SelectedHoverBrush, RoundedCloudToolButton, 30, Buffer.Graphics)
 
+                    .DrawLine(SelectionHighlightHoverPen,
+                              RoundedCloudToolButton.Left + 11,
+                              RoundedCloudToolButton.Bottom - 2,
+                              RoundedCloudToolButton.Right - 11,
+                              RoundedCloudToolButton.Bottom - 2)
+
                 Else
 
                     FillRoundedRectangle(SelectedBrush, RoundedCloudToolButton, 30, Buffer.Graphics)
+
+                    .DrawLine(SelectionHighlightPen,
+                              RoundedCloudToolButton.Left + 11,
+                              RoundedCloudToolButton.Bottom - 2,
+                              RoundedCloudToolButton.Right - 11,
+                              RoundedCloudToolButton.Bottom - 2)
 
                 End If
 
@@ -2866,9 +2922,21 @@ Public Class Form1
 
                     FillRoundedRectangle(SelectedHoverBrush, RoundedBushToolButton, 30, Buffer.Graphics)
 
+                    .DrawLine(SelectionHighlightHoverPen,
+                      RoundedBushToolButton.Left + 11,
+                      RoundedBushToolButton.Bottom - 2,
+                      RoundedBushToolButton.Right - 11,
+                      RoundedBushToolButton.Bottom - 2)
+
                 Else
 
                     FillRoundedRectangle(SelectedBrush, RoundedBushToolButton, 30, Buffer.Graphics)
+
+                    .DrawLine(SelectionHighlightPen,
+                      RoundedBushToolButton.Left + 11,
+                      RoundedBushToolButton.Bottom - 2,
+                      RoundedBushToolButton.Right - 11,
+                      RoundedBushToolButton.Bottom - 2)
 
                 End If
 
@@ -2923,9 +2991,21 @@ Public Class Form1
 
                     FillRoundedRectangle(SelectedHoverBrush, RoundedEnemyToolButton, 30, Buffer.Graphics)
 
+                    .DrawLine(SelectionHighlightHoverPen,
+                      RoundedEnemyToolButton.Left + 11,
+                      RoundedEnemyToolButton.Bottom - 2,
+                      RoundedEnemyToolButton.Right - 11,
+                      RoundedEnemyToolButton.Bottom - 2)
+
                 Else
 
                     FillRoundedRectangle(SelectedBrush, RoundedEnemyToolButton, 30, Buffer.Graphics)
+
+                    .DrawLine(SelectionHighlightPen,
+                      RoundedEnemyToolButton.Left + 11,
+                      RoundedEnemyToolButton.Bottom - 2,
+                      RoundedEnemyToolButton.Right - 11,
+                      RoundedEnemyToolButton.Bottom - 2)
 
                 End If
 
@@ -2968,9 +3048,23 @@ Public Class Form1
 
                     FillRoundedRectangle(SelectedHoverBrush, RoundedGoalToolButton, 30, Buffer.Graphics)
 
+                    'SelectionHighlightHover
+                    .DrawLine(SelectionHighlightHoverPen,
+                              RoundedGoalToolButton.Left + 11,
+                              RoundedGoalToolButton.Bottom - 2,
+                              RoundedGoalToolButton.Right - 11,
+                              RoundedGoalToolButton.Bottom - 2)
+
                 Else
 
                     FillRoundedRectangle(SelectedBrush, RoundedGoalToolButton, 30, Buffer.Graphics)
+
+                    'SelectionHighlight
+                    .DrawLine(SelectionHighlightPen,
+                      RoundedGoalToolButton.Left + 11,
+                      RoundedGoalToolButton.Bottom - 2,
+                      RoundedGoalToolButton.Right - 11,
+                      RoundedGoalToolButton.Bottom - 2)
 
                 End If
 
@@ -3772,6 +3866,14 @@ Public Class Form1
         CloundToolIconOutinePen.LineJoin = LineJoin.Round
 
         BushToolIconOutinePen.LineJoin = LineJoin.Round
+
+        SelectionHighlightPen.StartCap = LineCap.Round
+
+        SelectionHighlightPen.EndCap = LineCap.Round
+
+        SelectionHighlightHoverPen.StartCap = LineCap.Round
+
+        SelectionHighlightHoverPen.EndCap = LineCap.Round
 
         InitializeObjects()
 

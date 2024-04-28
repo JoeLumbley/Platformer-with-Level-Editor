@@ -2968,77 +2968,9 @@ Public Class Form1
 
                     FillRoundedRectangle(SelectedHoverBrush, RoundedGoalToolButton, 30, Buffer.Graphics)
 
-                    .FillRectangle(Brushes.White, GoalToolIcon.Rect)
-
-                    ' Define the rectangle to be filled
-                    Dim rect As RectangleF = GoalToolIcon.Rect
-
-                    rect.Inflate(rect.Width / 6.4F, rect.Height / 6.4F)
-
-                    ' Define the center point of the gradient
-                    Dim center As New PointF(rect.Left + rect.Width / 2.0F, rect.Top + rect.Height / 2.0F)
-
-                    ' Define the colors for the gradient stops
-                    Dim colors() As Color = {Color.Yellow, Color.White}
-
-                    ' Create the path for the gradient brush
-                    Dim GradPath As New GraphicsPath()
-                    GradPath.AddEllipse(rect)
-
-                    ' Create the gradient brush
-                    Dim GradBrush As New PathGradientBrush(GradPath) With {
-                        .CenterPoint = center,
-                        .CenterColor = colors(0),
-                        .SurroundColors = New Color() {colors(1)}
-                    }
-
-                    .FillRectangle(GradBrush, GoalToolIcon.Rect)
-
-                    Dim Font As New Font(New FontFamily("Wingdings"), GoalToolIcon.Rect.Width \ 2, FontStyle.Regular)
-
-                    .DrawString("«",
-                            Font,
-                            Brushes.Green,
-                            GoalToolIcon.Rect,
-                            AlineCenterMiddle)
-
                 Else
 
                     FillRoundedRectangle(SelectedBrush, RoundedGoalToolButton, 30, Buffer.Graphics)
-
-                    .FillRectangle(Brushes.White, GoalToolIcon.Rect)
-
-                    ' Define the rectangle to be filled
-                    Dim rect As RectangleF = GoalToolIcon.Rect
-
-                    rect.Inflate(rect.Width / 6.4F, rect.Height / 6.4F)
-
-                    ' Define the center point of the gradient
-                    Dim center As New PointF(rect.Left + rect.Width / 2.0F, rect.Top + rect.Height / 2.0F)
-
-                    ' Define the colors for the gradient stops
-                    Dim colors() As Color = {Color.Yellow, Color.White}
-
-                    ' Create the path for the gradient brush
-                    Dim GradPath As New GraphicsPath()
-                    GradPath.AddEllipse(rect)
-
-                    ' Create the gradient brush
-                    Dim GradBrush As New PathGradientBrush(GradPath) With {
-                        .CenterPoint = center,
-                        .CenterColor = colors(0),
-                        .SurroundColors = New Color() {colors(1)}
-                    }
-
-                    .FillRectangle(GradBrush, GoalToolIcon.Rect)
-
-                    Dim Font As New Font(New FontFamily("Wingdings"), GoalToolIcon.Rect.Width \ 2, FontStyle.Regular)
-
-                    .DrawString("«",
-                            Font,
-                            Brushes.Green,
-                            GoalToolIcon.Rect,
-                            AlineCenterMiddle)
 
                 End If
 
@@ -3048,81 +2980,46 @@ Public Class Form1
 
                     FillRoundedRectangle(HoverBrush, RoundedGoalToolButton, 30, Buffer.Graphics)
 
-                    .FillRectangle(Brushes.White, GoalToolIcon.Rect)
-
-                    ' Define the rectangle to be filled
-                    Dim rect As RectangleF = GoalToolIcon.Rect
-
-                    rect.Inflate(rect.Width / 6.4F, rect.Height / 6.4F)
-
-                    ' Define the center point of the gradient
-                    Dim center As New PointF(rect.Left + rect.Width / 2.0F, rect.Top + rect.Height / 2.0F)
-
-                    ' Define the colors for the gradient stops
-                    Dim colors() As Color = {Color.Yellow, Color.White}
-
-                    ' Create the path for the gradient brush
-                    Dim GradPath As New GraphicsPath()
-                    GradPath.AddEllipse(rect)
-
-                    ' Create the gradient brush
-                    Dim GradBrush As New PathGradientBrush(GradPath) With {
-                    .CenterPoint = center,
-                    .CenterColor = colors(0),
-                    .SurroundColors = New Color() {colors(1)}
-                }
-
-                    .FillRectangle(GradBrush, GoalToolIcon.Rect)
-
-                    Dim Font As New Font(New FontFamily("Wingdings"), GoalToolIcon.Rect.Width \ 2, FontStyle.Regular)
-
-                    .DrawString("«",
-                        Font,
-                        Brushes.Green,
-                        GoalToolIcon.Rect,
-                        AlineCenterMiddle)
-
                 Else
 
                     FillRoundedRectangle(Brushes.Black, RoundedGoalToolButton, 30, Buffer.Graphics)
 
-                    .FillRectangle(Brushes.White, GoalToolIcon.Rect)
+                End If
 
-                    ' Define the rectangle to be filled
-                    Dim rect As RectangleF = GoalToolIcon.Rect
+            End If
 
-                    rect.Inflate(rect.Width / 6.4F, rect.Height / 6.4F)
+            .FillRectangle(Brushes.White, GoalToolIcon.Rect)
 
-                    ' Define the center point of the gradient
-                    Dim center As New PointF(rect.Left + rect.Width / 2.0F, rect.Top + rect.Height / 2.0F)
+            ' Define the rectangle to be filled
+            Dim rect As RectangleF = GoalToolIcon.Rect
 
-                    ' Define the colors for the gradient stops
-                    Dim colors() As Color = {Color.Yellow, Color.White}
+            rect.Inflate(rect.Width / 6.4F, rect.Height / 6.4F)
 
-                    ' Create the path for the gradient brush
-                    Dim GradPath As New GraphicsPath()
-                    GradPath.AddEllipse(rect)
+            ' Define the center point of the gradient
+            Dim center As New PointF(rect.Left + rect.Width / 2.0F, rect.Top + rect.Height / 2.0F)
 
-                    ' Create the gradient brush
-                    Dim GradBrush As New PathGradientBrush(GradPath) With {
-                    .CenterPoint = center,
-                    .CenterColor = colors(0),
-                    .SurroundColors = New Color() {colors(1)}
-                }
+            ' Define the colors for the gradient stops
+            Dim colors() As Color = {Color.Yellow, Color.White}
 
-                    .FillRectangle(GradBrush, GoalToolIcon.Rect)
+            ' Create the path for the gradient brush
+            Dim GradPath As New GraphicsPath()
+            GradPath.AddEllipse(rect)
 
-                    Dim Font As New Font(New FontFamily("Wingdings"), GoalToolIcon.Rect.Width \ 2, FontStyle.Regular)
+            ' Create the gradient brush
+            Dim GradBrush As New PathGradientBrush(GradPath) With
+                {.CenterPoint = center,
+                .CenterColor = colors(0),
+                .SurroundColors = New Color() {colors(1)}}
 
-                    .DrawString("«",
+            .FillRectangle(GradBrush, GoalToolIcon.Rect)
+
+            Dim Font As New Font(New FontFamily("Wingdings"), GoalToolIcon.Rect.Width \ 2, FontStyle.Regular)
+
+            .DrawString("«",
                         Font,
                         Brushes.Green,
                         GoalToolIcon.Rect,
                         AlineCenterMiddle)
-
-                End If
-
-            End If
 
         End With
 

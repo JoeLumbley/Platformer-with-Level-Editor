@@ -7967,7 +7967,7 @@ Public Class Form1
                         ToolPreview.Width = GridSize
                         ToolPreview.Height = GridSize
 
-                        'Select the last tool.
+                        'Start over by selecting the last tool on the bar. Far right end.
                         SelectedTool = Tools.Enemy
 
                         ShowToolPreview = True
@@ -7979,9 +7979,17 @@ Public Class Form1
                         ToolPreview.Width = GridSize
                         ToolPreview.Height = GridSize
 
+                        'Select the next tool to the left on the bar.
                         SelectedTool -= 1
 
-                        ShowToolPreview = True
+                        If SelectedTool = Tools.Pointer Then
+
+                            ShowToolPreview = False
+
+                        Else
+                            ShowToolPreview = True
+
+                        End If
 
                     End If
 
@@ -7991,6 +7999,7 @@ Public Class Form1
 
         Else
             'No, the player is not rolling the mouse wheel up.
+            'The player is rolling the mouse wheel down.
 
             If GameState = AppState.Editing Then
 
@@ -8000,7 +8009,7 @@ Public Class Form1
                     If SelectedTool = Tools.Enemy Then
                         'Yes, the player has reached the right end of the toolbar.
 
-                        'Select the first tool.
+                        'Start over by selecting the first tool on the bar. Far left end.
                         SelectedTool = Tools.Pointer
 
                         ShowToolPreview = False
@@ -8012,9 +8021,17 @@ Public Class Form1
                         ToolPreview.Width = GridSize
                         ToolPreview.Height = GridSize
 
+                        'Select the next tool to the right on the bar.
                         SelectedTool += 1
 
-                        ShowToolPreview = True
+                        If SelectedTool = Tools.Pointer Then
+
+                            ShowToolPreview = False
+
+                        Else
+                            ShowToolPreview = True
+
+                        End If
 
                     End If
 

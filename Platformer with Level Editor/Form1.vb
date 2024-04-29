@@ -7987,6 +7987,7 @@ Public Class Form1
                             ShowToolPreview = False
 
                         Else
+
                             ShowToolPreview = True
 
                         End If
@@ -8029,6 +8030,7 @@ Public Class Form1
                             ShowToolPreview = False
 
                         Else
+
                             ShowToolPreview = True
 
                         End If

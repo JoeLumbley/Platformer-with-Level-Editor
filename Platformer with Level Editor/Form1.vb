@@ -6127,41 +6127,7 @@ Public Class Form1
 
                     If ShowMenu = False Then
 
-                        'Has the player reached the left end of the toolbar?
-                        If SelectedTool = Tools.Pointer Then
-                            'Yes, the player has reached the left end of the toolbar.
-
-                            DeselectObjects()
-
-                            ToolPreview.Width = GridSize
-                            ToolPreview.Height = GridSize
-
-                            'Start over by selecting the last tool on the bar. Far right end.
-                            SelectedTool = Tools.Enemy
-
-                            ShowToolPreview = True
-
-                        Else
-
-                            DeselectObjects()
-
-                            ToolPreview.Width = GridSize
-                            ToolPreview.Height = GridSize
-
-                            'Select the next tool to the left on the bar.
-                            SelectedTool -= 1
-
-                            If SelectedTool = Tools.Pointer Then
-
-                                ShowToolPreview = False
-
-                            Else
-
-                                ShowToolPreview = True
-
-                            End If
-
-                        End If
+                        SelectNextToolToTheLeft()
 
                     End If
 
@@ -6173,36 +6139,7 @@ Public Class Form1
 
                     If ShowMenu = False Then
 
-                        'Has the player reached the right end of the toolbar?
-                        If SelectedTool = Tools.Enemy Then
-                            'Yes, the player has reached the right end of the toolbar.
-
-                            'Start over by selecting the first tool on the bar. Far left end.
-                            SelectedTool = Tools.Pointer
-
-                            ShowToolPreview = False
-
-                        Else
-
-                            DeselectObjects()
-
-                            ToolPreview.Width = GridSize
-                            ToolPreview.Height = GridSize
-
-                            'Select the next tool to the right on the bar.
-                            SelectedTool += 1
-
-                            If SelectedTool = Tools.Pointer Then
-
-                                ShowToolPreview = False
-
-                            Else
-
-                                ShowToolPreview = True
-
-                            End If
-
-                        End If
+                        SelectNextToolToTheRight()
 
                     End If
 

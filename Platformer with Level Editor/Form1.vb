@@ -1426,27 +1426,32 @@ Public Class Form1
 
                         RightTriggerDown = True
 
-                        'Has the player reached the right end of the toolbar?
-                        If SelectedTool = Tools.Enemy Then
-                            'Yes, the player has reached the right end of the toolbar.
 
-                            'Select the first tool.
-                            SelectedTool = Tools.Pointer
+                        SelectNextToolToTheRight()
 
-                            ShowToolPreview = False
+                        ''Has the player reached the right end of the toolbar?
+                        'If SelectedTool = Tools.Enemy Then
+                        '    'Yes, the player has reached the right end of the toolbar.
 
-                        Else
+                        '    'Select the first tool.
+                        '    SelectedTool = Tools.Pointer
 
-                            DeselectObjects()
+                        '    ShowToolPreview = False
 
-                            ToolPreview.Width = GridSize
-                            ToolPreview.Height = GridSize
+                        'Else
 
-                            SelectedTool += 1
+                        '    DeselectObjects()
 
-                            ShowToolPreview = True
+                        '    ToolPreview.Width = GridSize
+                        '    ToolPreview.Height = GridSize
 
-                        End If
+                        '    SelectedTool += 1
+
+                        '    ShowToolPreview = True
+
+                        'End If
+
+
 
                     End If
 
@@ -1480,32 +1485,34 @@ Public Class Form1
 
                         LeftTriggerDown = True
 
-                        'Has the player reached the left end of the toolbar?
-                        If SelectedTool = Tools.Pointer Then
-                            'Yes, the player has reached the left end of the toolbar.
+                        SelectNextToolToTheLeft()
 
-                            DeselectObjects()
+                        ''Has the player reached the left end of the toolbar?
+                        'If SelectedTool = Tools.Pointer Then
+                        '    'Yes, the player has reached the left end of the toolbar.
 
-                            ToolPreview.Width = GridSize
-                            ToolPreview.Height = GridSize
+                        '    DeselectObjects()
 
-                            'Select the last tool.
-                            SelectedTool = Tools.Enemy
+                        '    ToolPreview.Width = GridSize
+                        '    ToolPreview.Height = GridSize
 
-                            ShowToolPreview = True
+                        '    'Select the last tool.
+                        '    SelectedTool = Tools.Enemy
 
-                        Else
+                        '    ShowToolPreview = True
 
-                            DeselectObjects()
+                        'Else
 
-                            ToolPreview.Width = GridSize
-                            ToolPreview.Height = GridSize
+                        '    DeselectObjects()
 
-                            SelectedTool -= 1
+                        '    ToolPreview.Width = GridSize
+                        '    ToolPreview.Height = GridSize
 
-                            ShowToolPreview = True
+                        '    SelectedTool -= 1
 
-                        End If
+                        '    ShowToolPreview = True
+
+                        'End If
 
                     End If
 

@@ -57,14 +57,10 @@ In conclusion, **"Platformer with Level Editor"** provides a comprehensive learn
 
 
 
+![100](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/4a4bd8f9-5633-40f9-92e1-d5a2921a0572)
 
 
-
-![097](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/cb5f999e-4639-4fc7-a8c0-cb3771457f30)
-
-
-
-![098](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/de5ed0a6-df66-4273-b22d-cf7fd4260e46)
+![101](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/0ab0cfc6-c704-4048-a435-2bba45b1b9dc)
 
 
 

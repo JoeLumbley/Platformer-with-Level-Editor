@@ -3865,16 +3865,6 @@ Public Class Form1
 
     End Sub
 
-    Private Shared Sub CreateDemoFileFromResource()
-        Dim File As String = Path.Combine(Application.StartupPath, "demo.txt")
-
-        If Not IO.File.Exists(File) Then
-
-            IO.File.WriteAllText(File, My.Resources.Demo_Level)
-
-        End If
-    End Sub
-
     Private Sub InitializeToolBarButtons()
 
         EditPlayButton.Rect = New Rectangle(ClientRectangle.Left + 210,
@@ -7807,6 +7797,18 @@ Public Class Form1
         If Not IO.File.Exists(File) Then
 
             IO.File.WriteAllBytes(File, My.Resources.clear)
+
+        End If
+
+    End Sub
+
+    Private Shared Sub CreateDemoFileFromResource()
+
+        Dim File As String = Path.Combine(Application.StartupPath, "demo.txt")
+
+        If Not IO.File.Exists(File) Then
+
+            IO.File.WriteAllText(File, My.Resources.Demo_Level)
 
         End If
 

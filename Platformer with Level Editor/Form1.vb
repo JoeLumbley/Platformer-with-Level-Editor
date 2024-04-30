@@ -33,6 +33,7 @@ Imports System.ComponentModel
 Imports System.Drawing.Drawing2D
 Imports System.IO
 Imports System.Numerics
+Imports System.Resources
 Imports System.Runtime.InteropServices
 Imports System.Text
 Imports System.Threading
@@ -3806,6 +3807,8 @@ Public Class Form1
 
         CreateSoundFileFromResource()
 
+        CreateDemoFileFromResource()
+
         AddSound("Music", Application.StartupPath & "level.mp3")
 
         SetVolume("Music", 50)
@@ -3860,6 +3863,16 @@ Public Class Form1
 
         MovePointerToStartScreenNewButton()
 
+    End Sub
+
+    Private Shared Sub CreateDemoFileFromResource()
+        Dim File As String = Path.Combine(Application.StartupPath, "demo.txt")
+
+        If Not IO.File.Exists(File) Then
+
+            IO.File.WriteAllText(File, My.Resources.Demo_Level)
+
+        End If
     End Sub
 
     Private Sub InitializeToolBarButtons()

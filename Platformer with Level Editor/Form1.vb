@@ -1409,9 +1409,7 @@ Public Class Form1
 
                 If ShowMenu = True Then
 
-                    'Move mouse pointer over the new level button.
-                    Cursor.Position = New Point(ScreenOffset.X + NewButton.Rect.X + NewButton.Rect.Width \ 2,
-                                                ScreenOffset.Y + NewButton.Rect.Y + NewButton.Rect.Height \ 2)
+                    MovePointerOverNewButton()
 
                     If IsMouseDown = False Then
 
@@ -6833,9 +6831,7 @@ Public Class Form1
                 If ShowMenu = True Then
                     'B is the controller shortcut to save the level.
 
-                    'Move mouse pointer over the save level button.
-                    Cursor.Position = New Point(ScreenOffset.X + SaveButton.Rect.X + SaveButton.Rect.Width \ 2,
-                                                ScreenOffset.Y + SaveButton.Rect.Y + SaveButton.Rect.Height \ 2)
+                    MovePointerOverSaveButton()
 
                     If IsMouseDown = False Then
 
@@ -6894,9 +6890,7 @@ Public Class Form1
                 If ShowMenu = True Then
                     'Y is the controller shortcut to open a level.
 
-                    'Move mouse pointer over the open level button.
-                    Cursor.Position = New Point(ScreenOffset.X + OpenButton.Rect.X + OpenButton.Rect.Width \ 2,
-                                                ScreenOffset.Y + OpenButton.Rect.Y + OpenButton.Rect.Height \ 2)
+                    MovePointerOverOpenButton()
 
                     If IsMouseDown = False Then
 
@@ -7996,7 +7990,6 @@ Public Class Form1
 
                     End If
 
-
                     If SaveButton.Rect.Contains(e.Location) Then
 
                         MovePointerOverOpenButton()
@@ -8021,7 +8014,7 @@ Public Class Form1
 
         'Move mouse pointer over the exit button.
         Cursor.Position = New Point(ScreenOffset.X + ExitButton.Rect.X + ExitButton.Rect.Width \ 2,
-                                ScreenOffset.Y + ExitButton.Rect.Y + ExitButton.Rect.Height \ 2)
+                                    ScreenOffset.Y + ExitButton.Rect.Y + ExitButton.Rect.Height \ 2)
 
     End Sub
 
@@ -8029,7 +8022,7 @@ Public Class Form1
 
         'Move mouse pointer over the open level button.
         Cursor.Position = New Point(ScreenOffset.X + OpenButton.Rect.X + OpenButton.Rect.Width \ 2,
-                                ScreenOffset.Y + OpenButton.Rect.Y + OpenButton.Rect.Height \ 2)
+                                    ScreenOffset.Y + OpenButton.Rect.Y + OpenButton.Rect.Height \ 2)
 
     End Sub
 
@@ -8037,7 +8030,7 @@ Public Class Form1
 
         'Move mouse pointer over the new level button.
         Cursor.Position = New Point(ScreenOffset.X + NewButton.Rect.X + NewButton.Rect.Width \ 2,
-                                ScreenOffset.Y + NewButton.Rect.Y + NewButton.Rect.Height \ 2)
+                                    ScreenOffset.Y + NewButton.Rect.Y + NewButton.Rect.Height \ 2)
 
     End Sub
 
@@ -8045,7 +8038,7 @@ Public Class Form1
 
         'Move mouse pointer over the save level button.
         Cursor.Position = New Point(ScreenOffset.X + SaveButton.Rect.X + SaveButton.Rect.Width \ 2,
-                                ScreenOffset.Y + SaveButton.Rect.Y + SaveButton.Rect.Height \ 2)
+                                    ScreenOffset.Y + SaveButton.Rect.Y + SaveButton.Rect.Height \ 2)
 
     End Sub
 

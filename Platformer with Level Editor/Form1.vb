@@ -7804,7 +7804,7 @@ Public Class Form1
 
     Private Shared Sub CreateDemoFileFromResource()
 
-        Dim File As String = Path.Combine(Application.StartupPath, "demo.txt")
+        Dim File As String = Path.Combine(Application.StartupPath, "Demo.txt")
 
         If Not IO.File.Exists(File) Then
 
@@ -7954,6 +7954,26 @@ Public Class Form1
 
                     SelectNextToolToTheLeft()
 
+                Else
+
+                    If OpenButton.Rect.Contains(e.Location) Then
+
+                        MovePointerOverSaveButton()
+
+                    End If
+
+                    If NewButton.Rect.Contains(e.Location) Then
+
+                        MovePointerOverOpenButton()
+
+                    End If
+
+                    If ExitButton.Rect.Contains(e.Location) Then
+
+                        MovePointerOverNewButton()
+
+                    End If
+
                 End If
 
             End If
@@ -7968,11 +7988,64 @@ Public Class Form1
 
                     SelectNextToolToTheRight()
 
+                Else
+
+                    If OpenButton.Rect.Contains(e.Location) Then
+
+                        MovePointerOverNewButton()
+
+                    End If
+
+
+                    If SaveButton.Rect.Contains(e.Location) Then
+
+                        MovePointerOverOpenButton()
+
+                    End If
+
+                    If NewButton.Rect.Contains(e.Location) Then
+
+                        MovePointerOverExitButton()
+
+                    End If
+
                 End If
 
             End If
 
         End If
+
+    End Sub
+
+    Private Sub MovePointerOverExitButton()
+
+        'Move mouse pointer over the exit button.
+        Cursor.Position = New Point(ScreenOffset.X + ExitButton.Rect.X + ExitButton.Rect.Width \ 2,
+                                ScreenOffset.Y + ExitButton.Rect.Y + ExitButton.Rect.Height \ 2)
+
+    End Sub
+
+    Private Sub MovePointerOverOpenButton()
+
+        'Move mouse pointer over the open level button.
+        Cursor.Position = New Point(ScreenOffset.X + OpenButton.Rect.X + OpenButton.Rect.Width \ 2,
+                                ScreenOffset.Y + OpenButton.Rect.Y + OpenButton.Rect.Height \ 2)
+
+    End Sub
+
+    Private Sub MovePointerOverNewButton()
+
+        'Move mouse pointer over the new level button.
+        Cursor.Position = New Point(ScreenOffset.X + NewButton.Rect.X + NewButton.Rect.Width \ 2,
+                                ScreenOffset.Y + NewButton.Rect.Y + NewButton.Rect.Height \ 2)
+
+    End Sub
+
+    Private Sub MovePointerOverSaveButton()
+
+        'Move mouse pointer over the save level button.
+        Cursor.Position = New Point(ScreenOffset.X + SaveButton.Rect.X + SaveButton.Rect.Width \ 2,
+                                ScreenOffset.Y + SaveButton.Rect.Y + SaveButton.Rect.Height \ 2)
 
     End Sub
 

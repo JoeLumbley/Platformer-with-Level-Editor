@@ -7969,37 +7969,43 @@ Public Class Form1
 
         Else
 
-            'Is the mouse pointer on the menu?
-            If Not MenuBackground.Rect.Contains(MousePointer) Then
-                'No, the mouse pointer is not on the menu.
+            MouseWheelDownEditingShowMenuTrue(MousePointer)
 
-                MovePointerOverSaveButton()
+        End If
 
-            End If
+    End Sub
 
-            'Is the mouse pointer on the open button?
-            If OpenButton.Rect.Contains(MousePointer) Then
-                'Yes, the mouse pointer is on the open button.
+    Private Sub MouseWheelDownEditingShowMenuTrue(MousePointer As Point)
 
-                MovePointerOverNewButton()
+        'Is the mouse pointer on the menu?
+        If Not MenuBackground.Rect.Contains(MousePointer) Then
+            'No, the mouse pointer is not on the menu.
 
-            End If
+            MovePointerOverSaveButton()
 
-            'Is the mouse pointer on the save button?
-            If SaveButton.Rect.Contains(MousePointer) Then
-                'Yes, the mouse pointer is on the save button.
+        End If
 
-                MovePointerOverOpenButton()
+        'Is the mouse pointer on the open button?
+        If OpenButton.Rect.Contains(MousePointer) Then
+            'Yes, the mouse pointer is on the open button.
 
-            End If
+            MovePointerOverNewButton()
 
-            'Is the mouse pointer on the new button?
-            If NewButton.Rect.Contains(MousePointer) Then
-                'Yes, the mouse pointer is on the new button.
+        End If
 
-                MovePointerOverExitButton()
+        'Is the mouse pointer on the save button?
+        If SaveButton.Rect.Contains(MousePointer) Then
+            'Yes, the mouse pointer is on the save button.
 
-            End If
+            MovePointerOverOpenButton()
+
+        End If
+
+        'Is the mouse pointer on the new button?
+        If NewButton.Rect.Contains(MousePointer) Then
+            'Yes, the mouse pointer is on the new button.
+
+            MovePointerOverExitButton()
 
         End If
 
@@ -8013,37 +8019,43 @@ Public Class Form1
 
         Else
 
-            'Is the mouse pointer on the menu?
-            If Not MenuBackground.Rect.Contains(MousePointer) Then
-                'No, the mouse pointer is not on the menu.
+            MouseWheelUpEditingShowMenuTrue(MousePointer)
 
-                MovePointerOverExitButton()
+        End If
 
-            End If
+    End Sub
 
-            'Is the mouse pointer on the open button?
-            If OpenButton.Rect.Contains(MousePointer) Then
-                'Yes, the mouse pointer is on the open button.
+    Private Sub MouseWheelUpEditingShowMenuTrue(MousePointer As Point)
 
-                MovePointerOverSaveButton()
+        'Is the mouse pointer on the menu?
+        If Not MenuBackground.Rect.Contains(MousePointer) Then
+            'No, the mouse pointer is not on the menu.
 
-            End If
+            MovePointerOverExitButton()
 
-            'Is the mouse pointer on the new button?
-            If NewButton.Rect.Contains(MousePointer) Then
-                'Yes, the mouse pointer is on the new button.
+        End If
 
-                MovePointerOverOpenButton()
+        'Is the mouse pointer on the open button?
+        If OpenButton.Rect.Contains(MousePointer) Then
+            'Yes, the mouse pointer is on the open button.
 
-            End If
+            MovePointerOverSaveButton()
 
-            'Is the mouse pointer on the exit button?
-            If ExitButton.Rect.Contains(MousePointer) Then
-                'Yes, the mouse pointer is on the exit button.
+        End If
 
-                MovePointerOverNewButton()
+        'Is the mouse pointer on the new button?
+        If NewButton.Rect.Contains(MousePointer) Then
+            'Yes, the mouse pointer is on the new button.
 
-            End If
+            MovePointerOverOpenButton()
+
+        End If
+
+        'Is the mouse pointer on the exit button?
+        If ExitButton.Rect.Contains(MousePointer) Then
+            'Yes, the mouse pointer is on the exit button.
+
+            MovePointerOverNewButton()
 
         End If
 

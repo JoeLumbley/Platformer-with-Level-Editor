@@ -7987,6 +7987,12 @@ Public Class Form1
 
             End If
 
+            If Not MenuBackground.Rect.Contains(MousePointer) Then
+
+                MovePointerOverSaveButton()
+
+            End If
+
         End If
 
     End Sub
@@ -8014,6 +8020,12 @@ Public Class Form1
             If ExitButton.Rect.Contains(MousePointer) Then
 
                 MovePointerOverNewButton()
+
+            End If
+
+            If Not MenuBackground.Rect.Contains(MousePointer) Then
+
+                MovePointerOverExitButton()
 
             End If
 

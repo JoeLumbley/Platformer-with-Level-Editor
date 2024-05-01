@@ -8009,6 +8009,14 @@ Public Class Form1
 
         End If
 
+        'Is the mouse pointer on the exit button?
+        If ExitButton.Rect.Contains(MousePointer) Then
+            'Yes, the mouse pointer is on the exit button.
+
+            MovePointerOverSaveButton()
+
+        End If
+
     End Sub
 
     Private Sub MouseWheelUpEditing(MousePointer As Point)
@@ -8056,6 +8064,14 @@ Public Class Form1
             'Yes, the mouse pointer is on the exit button.
 
             MovePointerOverNewButton()
+
+        End If
+
+        'Is the mouse pointer on the save button?
+        If SaveButton.Rect.Contains(MousePointer) Then
+            'Yes, the mouse pointer is on the save button.
+
+            MovePointerOverExitButton()
 
         End If
 

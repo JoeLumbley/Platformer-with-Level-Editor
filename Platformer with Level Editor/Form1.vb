@@ -7938,71 +7938,82 @@ Public Class Form1
 
     Private Sub Form1_MouseWheel(sender As Object, e As MouseEventArgs) Handles Me.MouseWheel
 
-        'Is the player rolling the mouse wheel up?
+        'Is the player rolling the mouse wheel up or down?
         If e.Delta > 0 Then
-            'Yes, the player is rolling the mouse wheel up.
+            'The player is rolling the mouse wheel up.
 
             If GameState = AppState.Editing Then
 
-                If ShowMenu = False Then
-
-                    SelectNextToolToTheLeft()
-
-                Else
-
-                    If OpenButton.Rect.Contains(e.Location) Then
-
-                        MovePointerOverSaveButton()
-
-                    End If
-
-                    If NewButton.Rect.Contains(e.Location) Then
-
-                        MovePointerOverOpenButton()
-
-                    End If
-
-                    If ExitButton.Rect.Contains(e.Location) Then
-
-                        MovePointerOverNewButton()
-
-                    End If
-
-                End If
+                MouseWheelUpEditing(e)
 
             End If
 
         Else
-            'No, the player is not rolling the mouse wheel up.
             'The player is rolling the mouse wheel down.
 
             If GameState = AppState.Editing Then
 
-                If ShowMenu = False Then
+                MouseWheelDownEditing(e)
 
-                    SelectNextToolToTheRight()
+            End If
 
-                Else
+        End If
 
-                    If OpenButton.Rect.Contains(e.Location) Then
+    End Sub
 
-                        MovePointerOverNewButton()
+    Private Sub MouseWheelDownEditing(e As MouseEventArgs)
 
-                    End If
+        If ShowMenu = False Then
 
-                    If SaveButton.Rect.Contains(e.Location) Then
+            SelectNextToolToTheRight()
 
-                        MovePointerOverOpenButton()
+        Else
 
-                    End If
+            If OpenButton.Rect.Contains(e.Location) Then
 
-                    If NewButton.Rect.Contains(e.Location) Then
+                MovePointerOverNewButton()
 
-                        MovePointerOverExitButton()
+            End If
 
-                    End If
+            If SaveButton.Rect.Contains(e.Location) Then
 
-                End If
+                MovePointerOverOpenButton()
+
+            End If
+
+            If NewButton.Rect.Contains(e.Location) Then
+
+                MovePointerOverExitButton()
+
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub MouseWheelUpEditing(e As MouseEventArgs)
+
+        If ShowMenu = False Then
+
+            SelectNextToolToTheLeft()
+
+        Else
+
+            If OpenButton.Rect.Contains(e.Location) Then
+
+                MovePointerOverSaveButton()
+
+            End If
+
+            If NewButton.Rect.Contains(e.Location) Then
+
+                MovePointerOverOpenButton()
+
+            End If
+
+            If ExitButton.Rect.Contains(e.Location) Then
+
+                MovePointerOverNewButton()
 
             End If
 

@@ -7944,7 +7944,7 @@ Public Class Form1
 
             If GameState = AppState.Editing Then
 
-                MouseWheelUpEditing(e)
+                MouseWheelUpEditing(e.Location)
 
             End If
 
@@ -7953,7 +7953,7 @@ Public Class Form1
 
             If GameState = AppState.Editing Then
 
-                MouseWheelDownEditing(e)
+                MouseWheelDownEditing(e.Location)
 
             End If
 
@@ -7961,7 +7961,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub MouseWheelDownEditing(e As MouseEventArgs)
+    Private Sub MouseWheelDownEditing(MousePointer As Point)
 
         If ShowMenu = False Then
 
@@ -7969,19 +7969,19 @@ Public Class Form1
 
         Else
 
-            If OpenButton.Rect.Contains(e.Location) Then
+            If OpenButton.Rect.Contains(MousePointer) Then
 
                 MovePointerOverNewButton()
 
             End If
 
-            If SaveButton.Rect.Contains(e.Location) Then
+            If SaveButton.Rect.Contains(MousePointer) Then
 
                 MovePointerOverOpenButton()
 
             End If
 
-            If NewButton.Rect.Contains(e.Location) Then
+            If NewButton.Rect.Contains(MousePointer) Then
 
                 MovePointerOverExitButton()
 
@@ -7991,7 +7991,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub MouseWheelUpEditing(e As MouseEventArgs)
+    Private Sub MouseWheelUpEditing(MousePointer As Point)
 
         If ShowMenu = False Then
 
@@ -7999,19 +7999,19 @@ Public Class Form1
 
         Else
 
-            If OpenButton.Rect.Contains(e.Location) Then
+            If OpenButton.Rect.Contains(MousePointer) Then
 
                 MovePointerOverSaveButton()
 
             End If
 
-            If NewButton.Rect.Contains(e.Location) Then
+            If NewButton.Rect.Contains(MousePointer) Then
 
                 MovePointerOverOpenButton()
 
             End If
 
-            If ExitButton.Rect.Contains(e.Location) Then
+            If ExitButton.Rect.Contains(MousePointer) Then
 
                 MovePointerOverNewButton()
 

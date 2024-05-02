@@ -3531,17 +3531,17 @@ Public Class Form1
 
             FillRoundedRectangle(MenuShadowBrush, Shadow, 10, Buffer.Graphics)
 
+            DrawRoundedRectangle(MenuOutinePen, StartScreenOpenButton.Rect, 10, Buffer.Graphics)
+
             If StartScreenOpenButtonHover = True Then
 
-                FillRoundedRectangle(SelectedHoverBrush, StartScreenOpenButton.Rect, 10, Buffer.Graphics)
+                FillRoundedRectangle(HoverBrush, StartScreenOpenButton.Rect, 10, Buffer.Graphics)
 
             Else
 
                 FillRoundedRectangle(Brushes.Black, StartScreenOpenButton.Rect, 10, Buffer.Graphics)
 
             End If
-
-            DrawRoundedRectangle(MenuOutinePen, StartScreenOpenButton.Rect, 10, Buffer.Graphics)
 
             .DrawEllipse(YButtonIconOutinePen,
                          New Rectangle(StartScreenOpenButton.Rect.X + 142,
@@ -3581,17 +3581,17 @@ Public Class Form1
 
             FillRoundedRectangle(MenuShadowBrush, Shadow, 10, Buffer.Graphics)
 
+            DrawRoundedRectangle(MenuOutinePen, StartScreenNewButton.Rect, 10, Buffer.Graphics)
+
             If StartScreenNewButtonHover = True Then
 
-                FillRoundedRectangle(SelectedHoverBrush, StartScreenNewButton.Rect, 10, Buffer.Graphics)
+                FillRoundedRectangle(HoverBrush, StartScreenNewButton.Rect, 10, Buffer.Graphics)
 
             Else
 
                 FillRoundedRectangle(Brushes.Black, StartScreenNewButton.Rect, 10, Buffer.Graphics)
 
             End If
-
-            DrawRoundedRectangle(MenuOutinePen, StartScreenNewButton.Rect, 10, Buffer.Graphics)
 
             .DrawEllipse(BButtonIconOutinePen,
                          New Rectangle(StartScreenNewButton.Rect.X + 140,

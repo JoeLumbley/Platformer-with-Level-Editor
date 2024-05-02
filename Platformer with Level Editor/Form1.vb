@@ -504,6 +504,10 @@ Public Class Form1
 
     Private HoverBrush As New SolidBrush(HoverColor)
 
+    Private StartScreenButtonOutlineHoverPen As New Pen(Color.DodgerBlue, 15)
+
+    Private StartScreenButtonOutlinePen As New Pen(Color.White, 9)
+
     Private SelectedColor As Color = Color.FromArgb(255, 51, 51, 51)
 
     Private SelectedBrush As New SolidBrush(SelectedColor)
@@ -3581,13 +3585,20 @@ Public Class Form1
 
             FillRoundedRectangle(MenuShadowBrush, Shadow, 30, Buffer.Graphics)
 
-            DrawRoundedRectangle(MenuOutinePen, StartScreenNewButton.Rect, 30, Buffer.Graphics)
+            'DrawRoundedRectangle(MenuOutinePen, StartScreenNewButton.Rect, 30, Buffer.Graphics)
 
             If StartScreenNewButtonHover = True Then
 
+                'StartScreenButtonOutlineHoverPen
+                DrawRoundedRectangle(StartScreenButtonOutlineHoverPen, StartScreenNewButton.Rect, 30, Buffer.Graphics)
+
                 FillRoundedRectangle(HoverBrush, StartScreenNewButton.Rect, 30, Buffer.Graphics)
 
+
+
             Else
+
+                DrawRoundedRectangle(StartScreenButtonOutlinePen, StartScreenNewButton.Rect, 30, Buffer.Graphics)
 
                 FillRoundedRectangle(Brushes.Black, StartScreenNewButton.Rect, 30, Buffer.Graphics)
 
@@ -5578,7 +5589,7 @@ Public Class Form1
 
                 If GameState = AppState.Start Then
 
-                    MovePointerRight()
+                    MovePointerToStartScreenOpenButton()
 
                 End If
 
@@ -5608,10 +5619,9 @@ Public Class Form1
 
                 If GameState = AppState.Start Then
 
-                    MovePointerLeft()
+                    MovePointerToStartScreenNewButton()
 
                 End If
-
 
             Case Keys.Up
 
@@ -5637,7 +5647,7 @@ Public Class Form1
 
                 If GameState = AppState.Start Then
 
-                    MovePointerUp()
+                    MovePointerToStartScreenNewButton()
 
                 End If
 
@@ -5665,7 +5675,7 @@ Public Class Form1
 
                 If GameState = AppState.Start Then
 
-                    MovePointerDown()
+                    MovePointerToStartScreenOpenButton()
 
                 End If
 
@@ -6214,6 +6224,16 @@ Public Class Form1
 
                 End If
 
+                If GameState = AppState.Start Then
+
+                    If MousePointer.Velocity.X > 0 Then
+
+                        MousePointer.Velocity.X = 0 'Zero speed.
+
+                    End If
+
+                End If
+
             Case Keys.Left
 
                 LeftArrowDown = False
@@ -6240,6 +6260,16 @@ Public Class Form1
                             MousePointer.Velocity.X = 0 'Zero speed.
 
                         End If
+
+                    End If
+
+                End If
+
+                If GameState = AppState.Start Then
+
+                    If MousePointer.Velocity.X < 0 Then
+
+                        MousePointer.Velocity.X = 0 'Zero speed.
 
                     End If
 
@@ -6279,6 +6309,16 @@ Public Class Form1
 
                 End If
 
+                If GameState = AppState.Start Then
+
+                    If MousePointer.Velocity.Y < 0 Then
+
+                        MousePointer.Velocity.Y = 0 'Zero speed.
+
+                    End If
+
+                End If
+
             Case Keys.Down
 
                 DownArrowDown = False
@@ -6308,6 +6348,16 @@ Public Class Form1
                             MousePointer.Velocity.Y = 0 'Zero speed.
 
                         End If
+
+                    End If
+
+                End If
+
+                If GameState = AppState.Start Then
+
+                    If MousePointer.Velocity.Y > 0 Then
+
+                        MousePointer.Velocity.Y = 0 'Zero speed.
 
                     End If
 
@@ -7930,6 +7980,14 @@ Public Class Form1
 
     End Sub
 
+    Private Sub MovePointerToStartScreenOpenButton()
+        'Move mouse pointer over the open level button on the start screen.
+
+        Cursor.Position = New Point(ScreenOffset.X + StartScreenOpenButton.Rect.X + StartScreenOpenButton.Rect.Width \ 2,
+                                    ScreenOffset.Y + StartScreenOpenButton.Rect.Y + StartScreenOpenButton.Rect.Height \ 2)
+
+    End Sub
+
     Protected Overrides Sub OnPaintBackground(e As PaintEventArgs)
 
         'Intentionally left blank. Do not remove.
@@ -7948,12 +8006,24 @@ Public Class Form1
 
             End If
 
+            If GameState = AppState.Start Then
+
+                MovePointerToStartScreenNewButton()
+
+            End If
+
         Else
             'The player is rolling the mouse wheel down.
 
             If GameState = AppState.Editing Then
 
                 MouseWheelDownEditing(e.Location)
+
+            End If
+
+            If GameState = AppState.Start Then
+
+                MovePointerToStartScreenOpenButton()
 
             End If
 

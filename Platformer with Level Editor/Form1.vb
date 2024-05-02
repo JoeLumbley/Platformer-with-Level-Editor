@@ -3529,17 +3529,17 @@ Public Class Form1
 
             Shadow.Offset(12, 12)
 
-            FillRoundedRectangle(MenuShadowBrush, Shadow, 10, Buffer.Graphics)
+            FillRoundedRectangle(MenuShadowBrush, Shadow, 30, Buffer.Graphics)
 
-            DrawRoundedRectangle(MenuOutinePen, StartScreenOpenButton.Rect, 10, Buffer.Graphics)
+            DrawRoundedRectangle(MenuOutinePen, StartScreenOpenButton.Rect, 30, Buffer.Graphics)
 
             If StartScreenOpenButtonHover = True Then
 
-                FillRoundedRectangle(HoverBrush, StartScreenOpenButton.Rect, 10, Buffer.Graphics)
+                FillRoundedRectangle(HoverBrush, StartScreenOpenButton.Rect, 30, Buffer.Graphics)
 
             Else
 
-                FillRoundedRectangle(Brushes.Black, StartScreenOpenButton.Rect, 10, Buffer.Graphics)
+                FillRoundedRectangle(Brushes.Black, StartScreenOpenButton.Rect, 30, Buffer.Graphics)
 
             End If
 
@@ -3579,17 +3579,17 @@ Public Class Form1
 
             Shadow.Offset(12, 12)
 
-            FillRoundedRectangle(MenuShadowBrush, Shadow, 10, Buffer.Graphics)
+            FillRoundedRectangle(MenuShadowBrush, Shadow, 30, Buffer.Graphics)
 
-            DrawRoundedRectangle(MenuOutinePen, StartScreenNewButton.Rect, 10, Buffer.Graphics)
+            DrawRoundedRectangle(MenuOutinePen, StartScreenNewButton.Rect, 30, Buffer.Graphics)
 
             If StartScreenNewButtonHover = True Then
 
-                FillRoundedRectangle(HoverBrush, StartScreenNewButton.Rect, 10, Buffer.Graphics)
+                FillRoundedRectangle(HoverBrush, StartScreenNewButton.Rect, 30, Buffer.Graphics)
 
             Else
 
-                FillRoundedRectangle(Brushes.Black, StartScreenNewButton.Rect, 10, Buffer.Graphics)
+                FillRoundedRectangle(Brushes.Black, StartScreenNewButton.Rect, 30, Buffer.Graphics)
 
             End If
 
@@ -3628,9 +3628,9 @@ Public Class Form1
             'Draw drop shadow.
             .DrawString(Title.Text,
                     TitleFont,
-                    New SolidBrush(Color.FromArgb(128, Color.Black)),
-                    New Rectangle(Title.Rect.X + 5,
-                                  Title.Rect.Y + 5,
+                    New SolidBrush(Color.FromArgb(255, Color.White)),
+                    New Rectangle(Title.Rect.X + 3,
+                                  Title.Rect.Y + 3,
                                   Title.Rect.Width,
                                   Title.Rect.Height),
                                   AlineCenterMiddle)

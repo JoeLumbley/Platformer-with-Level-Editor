@@ -3535,13 +3535,15 @@ Public Class Form1
 
             FillRoundedRectangle(MenuShadowBrush, Shadow, 30, Buffer.Graphics)
 
-            DrawRoundedRectangle(MenuOutinePen, StartScreenOpenButton.Rect, 30, Buffer.Graphics)
-
             If StartScreenOpenButtonHover = True Then
+
+                DrawRoundedRectangle(StartScreenButtonOutlineHoverPen, StartScreenOpenButton.Rect, 30, Buffer.Graphics)
 
                 FillRoundedRectangle(HoverBrush, StartScreenOpenButton.Rect, 30, Buffer.Graphics)
 
             Else
+
+                DrawRoundedRectangle(StartScreenButtonOutlinePen, StartScreenOpenButton.Rect, 30, Buffer.Graphics)
 
                 FillRoundedRectangle(Brushes.Black, StartScreenOpenButton.Rect, 30, Buffer.Graphics)
 
@@ -3585,16 +3587,11 @@ Public Class Form1
 
             FillRoundedRectangle(MenuShadowBrush, Shadow, 30, Buffer.Graphics)
 
-            'DrawRoundedRectangle(MenuOutinePen, StartScreenNewButton.Rect, 30, Buffer.Graphics)
-
             If StartScreenNewButtonHover = True Then
 
-                'StartScreenButtonOutlineHoverPen
                 DrawRoundedRectangle(StartScreenButtonOutlineHoverPen, StartScreenNewButton.Rect, 30, Buffer.Graphics)
 
                 FillRoundedRectangle(HoverBrush, StartScreenNewButton.Rect, 30, Buffer.Graphics)
-
-
 
             Else
 

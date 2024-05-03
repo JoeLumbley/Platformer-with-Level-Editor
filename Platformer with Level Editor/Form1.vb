@@ -3006,7 +3006,6 @@ Public Class Form1
 
                     FillRoundedRectangle(SelectedHoverBrush, RoundedGoalToolButton, 30, Buffer.Graphics)
 
-                    'SelectionHighlightHover
                     .DrawLine(SelectionHighlightHoverPen,
                               RoundedGoalToolButton.Left + 11,
                               RoundedGoalToolButton.Bottom - 2,
@@ -3017,7 +3016,6 @@ Public Class Form1
 
                     FillRoundedRectangle(SelectedBrush, RoundedGoalToolButton, 30, Buffer.Graphics)
 
-                    'SelectionHighlight
                     .DrawLine(SelectionHighlightPen,
                       RoundedGoalToolButton.Left + 11,
                       RoundedGoalToolButton.Bottom - 2,

@@ -504,7 +504,7 @@ Public Class Form1
 
     Private HoverBrush As New SolidBrush(HoverColor)
 
-    Private StartScreenButtonOutlineHoverPen As New Pen(Color.DodgerBlue, 15)
+    Private StartScreenButtonOutlineHoverPen As New Pen(Color.Orange, 15)
 
     Private StartScreenButtonOutlinePen As New Pen(Color.White, 9)
 
@@ -516,11 +516,11 @@ Public Class Form1
 
     Private SelectedHoverBrush As New SolidBrush(SelectedHoverColor)
 
-    Private SelectionHighlightColor As Color = Color.SkyBlue
+    Private SelectionHighlightColor As Color = Color.Orange
 
     Private SelectionHighlightPen As New Pen(SelectionHighlightColor, 3)
 
-    Private SelectionHighlightHoverColor As Color = Color.DeepSkyBlue
+    Private SelectionHighlightHoverColor As Color = Color.DarkOrange
 
     Private SelectionHighlightHoverPen As New Pen(SelectionHighlightHoverColor, 3)
 

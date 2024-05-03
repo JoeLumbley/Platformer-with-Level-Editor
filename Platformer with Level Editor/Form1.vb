@@ -2595,9 +2595,9 @@ Public Class Form1
 
             Shadow.Offset(15, 15)
 
-            FillRoundedRectangle(MenuShadowBrush, Shadow, 20, Buffer.Graphics)
+            FillRoundedRectangle(MenuShadowBrush, Shadow, 30, Buffer.Graphics)
 
-            FillRoundedRectangle(Brushes.Black, MenuBackground.Rect, 10, Buffer.Graphics)
+            FillRoundedRectangle(Brushes.Black, MenuBackground.Rect, 30, Buffer.Graphics)
 
         End With
 
@@ -2609,7 +2609,7 @@ Public Class Form1
 
         OutLineRect.Inflate(2, 2)
 
-        DrawRoundedRectangle(MenuOutinePen, OutLineRect, 20, Buffer.Graphics)
+        DrawRoundedRectangle(MenuOutinePen, OutLineRect, 30, Buffer.Graphics)
 
     End Sub
 
@@ -3169,11 +3169,11 @@ Public Class Form1
 
             If SaveButtonHover = True Then
 
-                FillRoundedRectangle(HoverBrush, SaveButton.Rect, 20, Buffer.Graphics)
+                FillRoundedRectangle(HoverBrush, SaveButton.Rect, 30, Buffer.Graphics)
 
             Else
 
-                FillRoundedRectangle(Brushes.Black, SaveButton.Rect, 20, Buffer.Graphics)
+                FillRoundedRectangle(Brushes.Black, SaveButton.Rect, 30, Buffer.Graphics)
 
             End If
 
@@ -3212,11 +3212,11 @@ Public Class Form1
 
             If OpenButtonHover = True Then
 
-                FillRoundedRectangle(HoverBrush, OpenButton.Rect, 20, Buffer.Graphics)
+                FillRoundedRectangle(HoverBrush, OpenButton.Rect, 30, Buffer.Graphics)
 
             Else
 
-                FillRoundedRectangle(Brushes.Black, OpenButton.Rect, 20, Buffer.Graphics)
+                FillRoundedRectangle(Brushes.Black, OpenButton.Rect, 30, Buffer.Graphics)
 
             End If
 
@@ -3254,11 +3254,11 @@ Public Class Form1
 
             If NewButtonHover = True Then
 
-                FillRoundedRectangle(HoverBrush, NewButton.Rect, 20, Buffer.Graphics)
+                FillRoundedRectangle(HoverBrush, NewButton.Rect, 30, Buffer.Graphics)
 
             Else
 
-                FillRoundedRectangle(Brushes.Black, NewButton.Rect, 20, Buffer.Graphics)
+                FillRoundedRectangle(Brushes.Black, NewButton.Rect, 30, Buffer.Graphics)
 
             End If
 
@@ -3289,11 +3289,11 @@ Public Class Form1
 
             If ExitButtonHover = True Then
 
-                FillRoundedRectangle(HoverBrush, ExitButton.Rect, 20, Buffer.Graphics)
+                FillRoundedRectangle(HoverBrush, ExitButton.Rect, 30, Buffer.Graphics)
 
             Else
 
-                FillRoundedRectangle(Brushes.Black, ExitButton.Rect, 20, Buffer.Graphics)
+                FillRoundedRectangle(Brushes.Black, ExitButton.Rect, 30, Buffer.Graphics)
 
             End If
 

@@ -549,6 +549,8 @@ Public Class Form1
 
     Private LevelSelected As Boolean = False
 
+    Private ShowOpenFileDialog As Boolean = False
+
     Private LevelName As String = "Untitled"
 
     Private ScreenOffset As Point
@@ -1207,7 +1209,15 @@ Public Class Form1
 
             If GameState = AppState.Start Then
 
-                MovePointerToStartScreenNewButton()
+                If ShowOpenFileDialog = True Then
+
+                    MovePointerLeft()
+
+                Else
+
+                    MovePointerToStartScreenNewButton()
+
+                End If
 
             End If
 
@@ -1253,18 +1263,30 @@ Public Class Form1
         If ControllerPosition.Gamepad.sThumbLY <= NeutralStart Then
             'The left thumbstick is in the down position.
 
-            If GameState = AppState.Start Or GameState = AppState.Editing Then
+            If GameState = AppState.Editing Then
 
                 MovePointerDown()
+
+            End If
+
+            If GameState = AppState.Start Then
+
+                MovePointerToStartScreenOpenButton()
 
             End If
 
         ElseIf ControllerPosition.Gamepad.sThumbLY >= NeutralEnd Then
             'The left thumbstick is in the up position.
 
-            If GameState = AppState.Start Or GameState = AppState.Editing Then
+            If GameState = AppState.Editing Then
 
                 MovePointerUp()
+
+            End If
+
+            If GameState = AppState.Start Then
+
+                MovePointerToStartScreenNewButton()
 
             End If
 
@@ -1449,6 +1471,12 @@ Public Class Form1
 
             End If
 
+            If GameState = AppState.Start Then
+
+                MovePointerToStartScreenOpenButton()
+
+            End If
+
         Else
             'The right trigger is in the neutral position. Pre-Travel.
 
@@ -1480,6 +1508,12 @@ Public Class Form1
                     End If
 
                 End If
+
+            End If
+
+            If GameState = AppState.Start Then
+
+                MovePointerToStartScreenNewButton()
 
             End If
 
@@ -1527,6 +1561,12 @@ Public Class Form1
 
             End If
 
+            If GameState = AppState.Start Then
+
+                MovePointerToStartScreenNewButton()
+
+            End If
+
         ElseIf ControllerPosition.Gamepad.sThumbRX >= NeutralEnd Then
             'The right thumbstick is in the right position.
 
@@ -1554,6 +1594,12 @@ Public Class Form1
                     BufferGridLines()
 
                 End If
+
+            End If
+
+            If GameState = AppState.Start Then
+
+                MovePointerToStartScreenOpenButton()
 
             End If
 
@@ -1629,6 +1675,12 @@ Public Class Form1
 
             End If
 
+            If GameState = AppState.Start Then
+
+                MovePointerToStartScreenOpenButton()
+
+            End If
+
         ElseIf ControllerPosition.Gamepad.sThumbRY >= NeutralEnd Then
             'The right thumbstick is in the up position.
 
@@ -1656,6 +1708,12 @@ Public Class Form1
                     BufferGridLines()
 
                 End If
+
+            End If
+
+            If GameState = AppState.Start Then
+
+                MovePointerToStartScreenNewButton()
 
             End If
 
@@ -6547,6 +6605,12 @@ Public Class Form1
 
             End If
 
+            If GameState = AppState.Start Then
+
+                MovePointerToStartScreenNewButton()
+
+            End If
+
         End If
 
         If RightBumperButtonPressed = True Then
@@ -6602,6 +6666,12 @@ Public Class Form1
                     GoalSelected = False
 
                 End If
+
+            End If
+
+            If GameState = AppState.Start Then
+
+                MovePointerToStartScreenOpenButton()
 
             End If
 
@@ -7175,6 +7245,8 @@ Public Class Form1
             OpenFileDialog1.FilterIndex = 1
             OpenFileDialog1.InitialDirectory = Application.StartupPath
 
+            ShowOpenFileDialog = True
+
             If OpenFileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
 
                 If My.Computer.FileSystem.FileExists(OpenFileDialog1.FileName) = True Then
@@ -7204,6 +7276,8 @@ Public Class Form1
                 End If
 
             End If
+
+            ShowOpenFileDialog = False
 
         End If
 

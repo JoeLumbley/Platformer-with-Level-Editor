@@ -1191,7 +1191,7 @@ Public Class Form1
         If ControllerPosition.Gamepad.sThumbLX <= NeutralStart Then
             'The left thumbstick is in the left position.
 
-            If GameState = AppState.Start Or GameState = AppState.Editing Then
+            If GameState = AppState.Editing Then
 
                 MovePointerLeft()
 
@@ -1205,10 +1205,16 @@ Public Class Form1
 
             End If
 
+            If GameState = AppState.Start Then
+
+                MovePointerToStartScreenNewButton()
+
+            End If
+
         ElseIf ControllerPosition.Gamepad.sThumbLX >= NeutralEnd Then
             'The left thumbstick is in the right position.
 
-            If GameState = AppState.Start Or GameState = AppState.Editing Then
+            If GameState = AppState.Editing Then
 
                 MovePointerRight()
 
@@ -1219,6 +1225,12 @@ Public Class Form1
                 ControllerLeft = False
 
                 ControllerRight = True
+
+            End If
+
+            If GameState = AppState.Start Then
+
+                MovePointerToStartScreenOpenButton()
 
             End If
 
@@ -6701,15 +6713,21 @@ Public Class Form1
 
             ControllerLeft = True
 
-            If GameState = AppState.Start Or GameState = AppState.Editing Then
+            If GameState = AppState.Editing Then
 
                 MovePointerLeftDPad()
 
             End If
 
+            If GameState = AppState.Start Then
+
+                MovePointerToStartScreenNewButton()
+
+            End If
+
         Else
 
-            ControllerLeft = False
+                ControllerLeft = False
 
         End If
 
@@ -6717,9 +6735,15 @@ Public Class Form1
 
             ControllerRight = True
 
-            If GameState = AppState.Start Or GameState = AppState.Editing Then
+            If GameState = AppState.Editing Then
 
                 MovePointerRightDPad()
+
+            End If
+
+            If GameState = AppState.Start Then
+
+                MovePointerToStartScreenOpenButton()
 
             End If
 
@@ -6731,9 +6755,15 @@ Public Class Form1
 
         If DPadUpPressed = True Then
 
-            If GameState = AppState.Start Or GameState = AppState.Editing Then
+            If GameState = AppState.Editing Then
 
                 MovePointerUpDPad()
+
+            End If
+
+            If GameState = AppState.Start Then
+
+                MovePointerToStartScreenNewButton()
 
             End If
 
@@ -6741,9 +6771,15 @@ Public Class Form1
 
         If DPadDownPressed = True Then
 
-            If GameState = AppState.Start Or GameState = AppState.Editing Then
+            If GameState = AppState.Editing Then
 
                 MovePointerDownDPad()
+
+            End If
+
+            If GameState = AppState.Start Then
+
+                MovePointerToStartScreenOpenButton()
 
             End If
 

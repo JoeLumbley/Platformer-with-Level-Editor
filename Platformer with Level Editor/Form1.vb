@@ -1240,11 +1240,19 @@ Public Class Form1
 
             If GameState = AppState.Start Then
 
-                MovePointerToStartScreenOpenButton()
+                If ShowOpenFileDialog = True Then
+
+                    MovePointerRight()
+
+                Else
+
+                    MovePointerToStartScreenOpenButton()
+
+                End If
 
             End If
 
-        Else
+            Else
             'The left thumbstick is in the neutral position.
 
             If GameState = AppState.Start Or GameState = AppState.Editing Then
@@ -1271,11 +1279,19 @@ Public Class Form1
 
             If GameState = AppState.Start Then
 
-                MovePointerToStartScreenOpenButton()
+                If ShowOpenFileDialog = True Then
+
+                    MovePointerDown()
+
+                Else
+
+                    MovePointerToStartScreenOpenButton()
+
+                End If
 
             End If
 
-        ElseIf ControllerPosition.Gamepad.sThumbLY >= NeutralEnd Then
+            ElseIf ControllerPosition.Gamepad.sThumbLY >= NeutralEnd Then
             'The left thumbstick is in the up position.
 
             If GameState = AppState.Editing Then
@@ -1286,11 +1302,19 @@ Public Class Form1
 
             If GameState = AppState.Start Then
 
-                MovePointerToStartScreenNewButton()
+                If ShowOpenFileDialog = True Then
+
+                    MovePointerUp()
+
+                Else
+
+                    MovePointerToStartScreenNewButton()
+
+                End If
 
             End If
 
-        Else
+            Else
             'The left thumbstick is in the neutral position.
 
             If GameState = AppState.Start Or GameState = AppState.Editing Then
@@ -1473,7 +1497,11 @@ Public Class Form1
 
             If GameState = AppState.Start Then
 
-                MovePointerToStartScreenOpenButton()
+                If ShowOpenFileDialog = False Then
+
+                    MovePointerToStartScreenOpenButton()
+
+                End If
 
             End If
 
@@ -1483,6 +1511,7 @@ Public Class Form1
             RightTriggerDown = False
 
         End If
+
 
     End Sub
 
@@ -1513,7 +1542,11 @@ Public Class Form1
 
             If GameState = AppState.Start Then
 
-                MovePointerToStartScreenNewButton()
+                If ShowOpenFileDialog = False Then
+
+                    MovePointerToStartScreenNewButton()
+
+                End If
 
             End If
 
@@ -1523,6 +1556,7 @@ Public Class Form1
             LeftTriggerDown = False
 
         End If
+
 
     End Sub
 
@@ -1563,11 +1597,15 @@ Public Class Form1
 
             If GameState = AppState.Start Then
 
-                MovePointerToStartScreenNewButton()
+                If ShowOpenFileDialog = False Then
+
+                    MovePointerToStartScreenNewButton()
+
+                End If
 
             End If
 
-        ElseIf ControllerPosition.Gamepad.sThumbRX >= NeutralEnd Then
+            ElseIf ControllerPosition.Gamepad.sThumbRX >= NeutralEnd Then
             'The right thumbstick is in the right position.
 
             If GameState = AppState.Editing Then
@@ -1599,7 +1637,11 @@ Public Class Form1
 
             If GameState = AppState.Start Then
 
-                MovePointerToStartScreenOpenButton()
+                If ShowOpenFileDialog = False Then
+
+                    MovePointerToStartScreenOpenButton()
+
+                End If
 
             End If
 
@@ -1677,11 +1719,15 @@ Public Class Form1
 
             If GameState = AppState.Start Then
 
-                MovePointerToStartScreenOpenButton()
+                If ShowOpenFileDialog = False Then
+
+                    MovePointerToStartScreenOpenButton()
+
+                End If
 
             End If
 
-        ElseIf ControllerPosition.Gamepad.sThumbRY >= NeutralEnd Then
+            ElseIf ControllerPosition.Gamepad.sThumbRY >= NeutralEnd Then
             'The right thumbstick is in the up position.
 
             If GameState = AppState.Editing Then
@@ -1713,11 +1759,15 @@ Public Class Form1
 
             If GameState = AppState.Start Then
 
-                MovePointerToStartScreenNewButton()
+                If ShowOpenFileDialog = False Then
+
+                    MovePointerToStartScreenNewButton()
+
+                End If
 
             End If
 
-        Else
+            Else
             'The right thumbstick is in the neutral position.
 
             If GameState = AppState.Editing Then
@@ -6607,11 +6657,16 @@ Public Class Form1
 
             If GameState = AppState.Start Then
 
-                MovePointerToStartScreenNewButton()
+                If ShowOpenFileDialog = False Then
+
+                    MovePointerToStartScreenNewButton()
+
+                End If
 
             End If
 
         End If
+
 
         If RightBumperButtonPressed = True Then
 
@@ -6671,11 +6726,16 @@ Public Class Form1
 
             If GameState = AppState.Start Then
 
-                MovePointerToStartScreenOpenButton()
+                If ShowOpenFileDialog = False Then
+
+                    MovePointerToStartScreenOpenButton()
+
+                End If
 
             End If
 
         End If
+
 
     End Sub
 
@@ -6791,11 +6851,19 @@ Public Class Form1
 
             If GameState = AppState.Start Then
 
-                MovePointerToStartScreenNewButton()
+                If ShowOpenFileDialog = True Then
+
+                    MovePointerLeftDPad()
+
+                Else
+
+                    MovePointerToStartScreenNewButton()
+
+                End If
 
             End If
 
-        Else
+            Else
 
                 ControllerLeft = False
 
@@ -6813,11 +6881,19 @@ Public Class Form1
 
             If GameState = AppState.Start Then
 
-                MovePointerToStartScreenOpenButton()
+                If ShowOpenFileDialog = True Then
+
+                    MovePointerRightDPad()
+
+                Else
+
+                    MovePointerToStartScreenOpenButton()
+
+                End If
 
             End If
 
-        Else
+            Else
 
             ControllerRight = False
 
@@ -6833,11 +6909,19 @@ Public Class Form1
 
             If GameState = AppState.Start Then
 
-                MovePointerToStartScreenNewButton()
+                If ShowOpenFileDialog = True Then
+
+                    MovePointerUpDPad()
+
+                Else
+
+                    MovePointerToStartScreenNewButton()
+
+                End If
 
             End If
 
-        End If
+            End If
 
         If DPadDownPressed = True Then
 
@@ -6849,11 +6933,20 @@ Public Class Form1
 
             If GameState = AppState.Start Then
 
-                MovePointerToStartScreenOpenButton()
+                If ShowOpenFileDialog = True Then
+
+                    MovePointerDownDPad()
+
+                Else
+
+                    MovePointerToStartScreenOpenButton()
+
+                End If
 
             End If
 
         End If
+
 
     End Sub
 
@@ -6999,15 +7092,19 @@ Public Class Form1
             If GameState = AppState.Start Then
                 'B is the controller shortcut to create a new level.
 
-                'Move mouse pointer over the new level button.
-                Cursor.Position = New Point(ScreenOffset.X + StartScreenNewButton.Rect.X + StartScreenNewButton.Rect.Width \ 2,
-                                            ScreenOffset.Y + StartScreenNewButton.Rect.Y + StartScreenNewButton.Rect.Height \ 2)
+                If ShowOpenFileDialog = False Then
 
-                If IsMouseDown = False Then
+                    'Move mouse pointer over the new level button.
+                    Cursor.Position = New Point(ScreenOffset.X + StartScreenNewButton.Rect.X + StartScreenNewButton.Rect.Width \ 2,
+                                                ScreenOffset.Y + StartScreenNewButton.Rect.Y + StartScreenNewButton.Rect.Height \ 2)
 
-                    DoMouseLeftDown()
+                    If IsMouseDown = False Then
 
-                    IsMouseDown = True
+                        DoMouseLeftDown()
+
+                        IsMouseDown = True
+
+                    End If
 
                 End If
 
@@ -7018,6 +7115,7 @@ Public Class Form1
             ControllerB = False
 
         End If
+
 
         If XButtonPressed = True Then
 
@@ -7058,15 +7156,19 @@ Public Class Form1
             If GameState = AppState.Start Then
                 'Y is the controller shortcut to open a level.
 
-                'Move mouse pointer over the open button.
-                Cursor.Position = New Point(ScreenOffset.X + StartScreenOpenButton.Rect.X + StartScreenOpenButton.Rect.Width \ 2,
-                                            ScreenOffset.Y + StartScreenOpenButton.Rect.Y + StartScreenOpenButton.Rect.Height \ 2)
+                If ShowOpenFileDialog = False Then
 
-                If IsMouseDown = False Then
+                    'Move mouse pointer over the open button.
+                    Cursor.Position = New Point(ScreenOffset.X + StartScreenOpenButton.Rect.X + StartScreenOpenButton.Rect.Width \ 2,
+                                                ScreenOffset.Y + StartScreenOpenButton.Rect.Y + StartScreenOpenButton.Rect.Height \ 2)
 
-                    DoMouseLeftDown()
+                    If IsMouseDown = False Then
 
-                    IsMouseDown = True
+                        DoMouseLeftDown()
+
+                        IsMouseDown = True
+
+                    End If
 
                 End If
 

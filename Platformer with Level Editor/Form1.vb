@@ -111,6 +111,8 @@ Public Class Form1
 
     Private IsMouseDown As Boolean = False
 
+    Private IsLeftStickDown As Boolean = False
+
     Private IsStartDown As Boolean = False
 
     Private IsContextDown As Boolean = False
@@ -6603,7 +6605,50 @@ Public Class Form1
 
         DoBumperLogic()
 
+
+        If LeftStickButtonPressed = True Then
+
+            If GameState = AppState.Start Then
+
+                If ShowOpenFileDialog = True Then
+
+                    If IsLeftStickDown = False Then
+
+                        IsLeftStickDown = True
+
+                        DoMouseLeftDown()
+
+                    End If
+
+                End If
+
+            End If
+
+        Else
+
+            If GameState = AppState.Start Then
+
+                If ShowOpenFileDialog = True Then
+
+                    If IsLeftStickDown = True Then
+
+                        IsLeftStickDown = False
+
+                        DoMouseLeftUp()
+
+                    End If
+
+                End If
+
+            End If
+
+        End If
+
     End Sub
+
+
+
+
 
     Private Sub DoBumperLogic()
 
@@ -7037,9 +7082,9 @@ Public Class Form1
 
                 If IsMouseDown = False Then
 
-                    DoMouseLeftDown()
-
                     IsMouseDown = True
+
+                    DoMouseLeftDown()
 
                 End If
 

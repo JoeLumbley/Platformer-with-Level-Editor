@@ -2,14 +2,14 @@
 
 #### An Invaluable Resource for Learning Game Development
 
-![086](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/73bd7c32-f3c4-40dc-b18f-f34b2a5f5045)
+![107](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/b0ce51b7-8ef9-4a9e-a17b-f0eb2c381390)
 
 
 **"Platformer with Level Editor"** is the essential tool for aspiring game developers. By delving into the source code and project structure of a platformer game with a level editor, you can gain practical experience and valuable insights.
 
 
-![102](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/c6043d55-06cb-4278-929c-14aaab768bc5)
 
+![108](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/5f8f849d-ccfc-4038-8084-6b2481814f7e)
 
 Here's what you can expect to explore with this learning tool:
 
@@ -23,7 +23,7 @@ Discover common programming patterns used in game development, such as object-or
 The level editor introduces you to key game design principles, covering aspects like level creation, storage, and loading.
 
 
-![103](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/e415563c-cef7-4977-838f-a55b5472c81e)
+![109](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/29008dca-7ee9-46a5-a768-2b4ba432dc37)
 
 
 #### 4. Sound Integration
@@ -56,12 +56,10 @@ In conclusion, **"Platformer with Level Editor"** provides a comprehensive learn
 
 
 
+![116](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/4267a304-2e41-405b-9050-0be3b53e23ef)
 
-![100](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/4a4bd8f9-5633-40f9-92e1-d5a2921a0572)
 
-
-![101](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/0ab0cfc6-c704-4048-a435-2bba45b1b9dc)
-
+![117](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/011d4e8b-b16d-4d6c-a48e-323fdaa8d6fa)
 
 
 
@@ -78,7 +76,7 @@ In conclusion, **"Platformer with Level Editor"** provides a comprehensive learn
 
 
 
-![099](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/11014c5e-d346-4b54-bb2b-20840e38a42e)
+![112](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/1ed456d4-9e1e-4b3c-b335-ae719f763bbc)
 
 
 
@@ -89,3 +87,4 @@ In conclusion, **"Platformer with Level Editor"** provides a comprehensive learn
 
 
 
+![113](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/4500a6da-5f13-4eb8-8eb2-11bbdabcc503)

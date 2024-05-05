@@ -3237,7 +3237,6 @@ Public Class Form1
         RoundedEditPlayButton.Width = EditPlayButton.Rect.Width - 4
         RoundedEditPlayButton.Height = EditPlayButton.Rect.Height - 4
 
-
         With Buffer.Graphics
 
             If EditPlayButtonHover = True Then

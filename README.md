@@ -2,8 +2,8 @@
 
 #### An Invaluable Resource for Learning Game Development
 
-![107](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/b0ce51b7-8ef9-4a9e-a17b-f0eb2c381390)
 
+![118](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/8f615a01-6790-49b3-91ec-e6d5d24eacd9)
 
 **"Platformer with Level Editor"** is the essential tool for aspiring game developers. By delving into the source code and project structure of a platformer game with a level editor, you can gain practical experience and valuable insights.
 

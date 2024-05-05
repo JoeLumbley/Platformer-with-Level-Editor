@@ -6605,6 +6605,11 @@ Public Class Form1
 
         DoBumperLogic()
 
+        DoStickLogic()
+
+    End Sub
+
+    Private Sub DoStickLogic()
 
         If LeftStickButtonPressed = True Then
 
@@ -6645,10 +6650,6 @@ Public Class Form1
         End If
 
     End Sub
-
-
-
-
 
     Private Sub DoBumperLogic()
 
@@ -6711,7 +6712,6 @@ Public Class Form1
             End If
 
         End If
-
 
         If RightBumperButtonPressed = True Then
 
@@ -6780,7 +6780,6 @@ Public Class Form1
             End If
 
         End If
-
 
     End Sub
 

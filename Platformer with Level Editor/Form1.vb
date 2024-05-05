@@ -3230,15 +3230,25 @@ Public Class Form1
 
     Private Sub DrawEditButton()
 
+        Dim RoundedEditPlayButton As Rectangle = EditPlayButton.Rect
+
+        RoundedEditPlayButton.Offset(2, 2)
+
+        RoundedEditPlayButton.Width = EditPlayButton.Rect.Width - 4
+        RoundedEditPlayButton.Height = EditPlayButton.Rect.Height - 4
+
+
         With Buffer.Graphics
 
             If EditPlayButtonHover = True Then
 
-                .FillRectangle(HoverBrush, EditPlayButton.Rect)
+                '.FillRectangle(HoverBrush, EditPlayButton.Rect)
+                FillRoundedRectangle(HoverBrush, RoundedEditPlayButton, 30, Buffer.Graphics)
 
             Else
 
-                .FillRectangle(Brushes.Black, EditPlayButton.Rect)
+                '.FillRectangle(Brushes.Black, EditPlayButton.Rect)
+                FillRoundedRectangle(Brushes.Black, RoundedEditPlayButton, 30, Buffer.Graphics)
 
             End If
 

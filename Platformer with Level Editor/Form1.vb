@@ -208,6 +208,7 @@ Public Class Form1
         Cloud
         Goal
         Enemy
+        Spawn 'Todo
     End Enum
 
     Private Enum Direction As Integer
@@ -240,6 +241,8 @@ Public Class Form1
         Public PatrolDirection As Direction
 
         Public Eliminated As Boolean
+
+        Public Color As Integer
 
     End Structure
 
@@ -925,7 +928,9 @@ Public Class Form1
 
     Private Sub DrawPlaying()
 
-        DrawBackground(Color.LightSkyBlue)
+        'Todo
+        '= Color.FromArgb(Level.Color) 'Convert integer color to ARGB color.
+        DrawBackground(Color.FromArgb(Level.Color))
 
         DrawClouds()
 
@@ -951,7 +956,7 @@ Public Class Form1
 
     Private Sub DrawEditing()
 
-        DrawBackground(Color.LightSkyBlue)
+        DrawBackground(Color.FromArgb(Level.Color))
 
         DrawClouds()
 
@@ -3996,6 +4001,10 @@ Public Class Form1
 
         MovePointerToStartScreenNewButton()
 
+        'Todo
+        Level.Color = Color.SkyBlue.ToArgb
+        'Level.Color = Color.SkyBlue
+
     End Sub
 
     Private Sub InitializeToolBarButtons()
@@ -4158,7 +4167,7 @@ Public Class Form1
 
             If My.Computer.FileSystem.FileExists(OpenFileDialog1.FileName) = True Then
 
-                OpenTestLevelFile(OpenFileDialog1.FileName)
+                OpenTest2LevelFile(OpenFileDialog1.FileName)
 
                 If IsFileLoaded = True Then
 
@@ -4191,7 +4200,8 @@ Public Class Form1
 
         If SaveFileDialog1.ShowDialog(Me) = System.Windows.Forms.DialogResult.OK Then
 
-            SaveTestLevelFile(SaveFileDialog1.FileName)
+            'Todo
+            SaveTest2LevelFile(SaveFileDialog1.FileName)
 
             LevelName = Path.GetFileName(SaveFileDialog1.FileName)
             Text = LevelName & " - Platformer with Level Editor - Code with Joe"
@@ -4834,6 +4844,11 @@ Public Class Form1
         Write(File_Number, Level.PatrolB.X)
         Write(File_Number, Level.PatrolB.Y)
 
+        'Todo
+        'Write Color
+        Write(File_Number, Level.Color)
+
+        'Write Text
         Write(File_Number, "Level")
 
         'Write Blocks to File
@@ -5012,6 +5027,248 @@ Public Class Form1
 
     End Sub
 
+    Private Sub SaveTest2LevelFile(FilePath As String)
+
+        Dim File_Number As Integer = FreeFile()
+
+        FileOpen(File_Number, FilePath, OpenMode.Output)
+
+        'Write Level to File
+        'Write ID
+        Write(File_Number, ObjectID.Level)
+
+        'Write Position
+        Write(File_Number, Level.Rect.X)
+        Write(File_Number, Level.Rect.Y)
+
+        'Write Size
+        Write(File_Number, Level.Rect.Width)
+        Write(File_Number, Level.Rect.Height)
+
+        'Write PatrolA
+        Write(File_Number, Level.PatrolA.X)
+        Write(File_Number, Level.PatrolA.Y)
+
+        'Write PatrolB
+        Write(File_Number, Level.PatrolB.X)
+        Write(File_Number, Level.PatrolB.Y)
+
+        'Todo
+        'Write Color
+        Write(File_Number, Level.Color)
+        'Write(File_Number, Color.SkyBlue.ToArgb)
+
+
+        'Write Text
+        Write(File_Number, "Level")
+
+        'Write Blocks to File
+        If Blocks IsNot Nothing Then
+
+            For Each Block In Blocks
+
+                'Write ID
+                Write(File_Number, ObjectID.Block)
+
+                'Write Position
+                Write(File_Number, Block.Rect.X)
+                Write(File_Number, Block.Rect.Y)
+
+                'Write Size
+                Write(File_Number, Block.Rect.Width)
+                Write(File_Number, Block.Rect.Height)
+
+                'Write PatrolA
+                Write(File_Number, Block.PatrolA.X)
+                Write(File_Number, Block.PatrolA.Y)
+
+                'Write PatrolB
+                Write(File_Number, Block.PatrolB.X)
+                Write(File_Number, Block.PatrolB.Y)
+
+                'Todo
+                'Write Color
+                Write(File_Number, Color.OrangeRed.ToArgb)
+
+                'Write Text
+                Write(File_Number, "Block")
+
+            Next
+
+        End If
+
+        'Write Cash to File
+        If Cash IsNot Nothing Then
+
+            For Each Bill In Cash
+
+                'Write ID
+                Write(File_Number, ObjectID.Bill)
+
+                'Write Position
+                Write(File_Number, Bill.Rect.X)
+                Write(File_Number, Bill.Rect.Y)
+
+                'Write Size
+                Write(File_Number, Bill.Rect.Width)
+                Write(File_Number, Bill.Rect.Height)
+
+                'Write PatrolA
+                Write(File_Number, Bill.PatrolA.X)
+                Write(File_Number, Bill.PatrolA.Y)
+
+                'Write PatrolB
+                Write(File_Number, Bill.PatrolB.X)
+                Write(File_Number, Bill.PatrolB.Y)
+
+                'Todo
+                'Write Color
+                Write(File_Number, Color.OrangeRed.ToArgb)
+
+                'Write Text
+                Write(File_Number, "Bill")
+
+            Next
+
+        End If
+
+        'Write Bushes to File
+        If Bushes IsNot Nothing Then
+
+            For Each Bush In Bushes
+
+                'Write ID
+                Write(File_Number, ObjectID.Bush)
+
+                'Write Position
+                Write(File_Number, Bush.Rect.X)
+                Write(File_Number, Bush.Rect.Y)
+
+                'Write Size
+                Write(File_Number, Bush.Rect.Width)
+                Write(File_Number, Bush.Rect.Height)
+
+                'Write PatrolA
+                Write(File_Number, Bush.PatrolA.X)
+                Write(File_Number, Bush.PatrolA.Y)
+
+                'Write PatrolB
+                Write(File_Number, Bush.PatrolB.X)
+                Write(File_Number, Bush.PatrolB.Y)
+
+                'Todo
+                'Write Color
+                Write(File_Number, Color.OrangeRed.ToArgb)
+
+                'Write Text
+                Write(File_Number, "Bush")
+
+            Next
+
+        End If
+
+        'Write Clouds to File
+        If Clouds IsNot Nothing Then
+
+            For Each Cloud In Clouds
+
+                'Write ID
+                Write(File_Number, ObjectID.Cloud)
+
+                'Write Position
+                Write(File_Number, Cloud.Rect.X)
+                Write(File_Number, Cloud.Rect.Y)
+
+                'Write Size
+                Write(File_Number, Cloud.Rect.Width)
+                Write(File_Number, Cloud.Rect.Height)
+
+                'Write PatrolA
+                Write(File_Number, Cloud.PatrolA.X)
+                Write(File_Number, Cloud.PatrolA.Y)
+
+                'Write PatrolB
+                Write(File_Number, Cloud.PatrolB.X)
+                Write(File_Number, Cloud.PatrolB.Y)
+
+                'Todo
+                'Write Color
+                Write(File_Number, Color.OrangeRed.ToArgb)
+
+                'Write Text
+                Write(File_Number, "Cloud")
+
+            Next
+
+        End If
+
+        'Write Enemies to File
+        If Enemies IsNot Nothing Then
+
+            For Each Enemy In Enemies
+
+                'Write ID
+                Write(File_Number, ObjectID.Enemy)
+
+                'Write Position
+                Write(File_Number, Enemy.PatrolA.X)
+                Write(File_Number, Enemy.PatrolA.Y)
+
+                'Write Size
+                Write(File_Number, Enemy.Rect.Width)
+                Write(File_Number, Enemy.Rect.Height)
+
+                'Write PatrolA
+                Write(File_Number, Enemy.PatrolA.X)
+                Write(File_Number, Enemy.PatrolA.Y)
+
+                'Write PatrolB
+                Write(File_Number, Enemy.PatrolB.X)
+                Write(File_Number, Enemy.PatrolB.Y)
+
+                'Todo
+                'Write Color
+                Write(File_Number, Color.OrangeRed.ToArgb)
+
+                'Write Text
+                Write(File_Number, "Enemy")
+
+            Next
+
+        End If
+
+        'Write Goal to File
+        'Write ID
+        Write(File_Number, ObjectID.Goal)
+
+        'Write Position
+        Write(File_Number, Goal.Rect.X)
+        Write(File_Number, Goal.Rect.Y)
+
+        'Write Size
+        Write(File_Number, Goal.Rect.Width)
+        Write(File_Number, Goal.Rect.Height)
+
+        'Write PatrolA
+        Write(File_Number, Goal.PatrolA.X)
+        Write(File_Number, Goal.PatrolA.Y)
+
+        'Write PatrolB
+        Write(File_Number, Goal.PatrolB.X)
+        Write(File_Number, Goal.PatrolB.Y)
+
+        'Todo
+        'Write Color
+        Write(File_Number, Color.OrangeRed.ToArgb)
+
+        'Write Text
+        Write(File_Number, "Goal")
+
+        FileClose(File_Number)
+
+    End Sub
+
+
     Private Sub OpenTestLevelFile(FilePath As String)
 
         Dim File_Number As Integer = FreeFile()
@@ -5091,6 +5348,92 @@ Public Class Form1
 
     End Sub
 
+    Private Sub OpenTest2LevelFile(FilePath As String)
+
+        Dim File_Number As Integer = FreeFile()
+
+        Dim Index As Integer = -1
+
+        FileObjects = Nothing
+
+        FileOpen(File_Number, FilePath, OpenMode.Input)
+
+        IsFileLoaded = True
+
+        'Read Objects from File
+        Do Until EOF(File_Number)
+
+            Index += 1
+
+            ReDim Preserve FileObjects(Index)
+
+            With FileObjects(Index)
+
+                Try
+
+                    'Read ID
+                    FileSystem.Input(File_Number, .ID)
+
+                    'Read Position
+                    FileSystem.Input(File_Number, .Rect.X)
+                    FileSystem.Input(File_Number, .Rect.Y)
+
+                    'Read Size
+                    FileSystem.Input(File_Number, .Rect.Width)
+                    FileSystem.Input(File_Number, .Rect.Height)
+
+                    'Read PatrolA
+                    FileSystem.Input(File_Number, .PatrolA.X)
+                    FileSystem.Input(File_Number, .PatrolA.Y)
+
+                    'Read PatrolB
+                    FileSystem.Input(File_Number, .PatrolB.X)
+                    FileSystem.Input(File_Number, .PatrolB.Y)
+
+                    'Todo
+                    'Read Color
+                    FileSystem.Input(File_Number, .Color)
+
+                    'Dim debug As Color = .Color
+
+                    'Read Text
+                    FileSystem.Input(File_Number, .Text)
+
+                Catch ex As Exception
+
+                    IsFileLoaded = False
+
+                    MsgBox("Invaild File Structure", MsgBoxStyle.Critical, "File Error")
+
+                    Exit Do
+
+                End Try
+
+            End With
+
+        Loop
+
+        FileClose(File_Number)
+
+        If IsFileLoaded = True Then
+
+            ClearObjects()
+
+            SetMinLevelSize()
+
+            If FileObjects IsNot Nothing Then
+
+                LoadGameObjects()
+
+            End If
+
+            BufferGridLines()
+
+        End If
+
+    End Sub
+
+
     Private Sub LoadGameObjects()
 
         For Each FileObject In FileObjects
@@ -5138,6 +5481,10 @@ Public Class Form1
 
                     'Load Text
                     Goal.Text = FileObject.Text
+
+                Case ObjectID.Level
+
+                    Level.Color = FileObject.Color
 
             End Select
 
@@ -5914,7 +6261,7 @@ Public Class Form1
 
                             InitializeObjects()
 
-                            OpenTestLevelFile(OpenFileDialog1.FileName)
+                            OpenTest2LevelFile(OpenFileDialog1.FileName)
 
                             If IsFileLoaded = True Then
 
@@ -6038,7 +6385,7 @@ Public Class Form1
 
                             InitializeObjects()
 
-                            OpenTestLevelFile(OpenFileDialog1.FileName)
+                            OpenTest2LevelFile(OpenFileDialog1.FileName)
 
                             If IsFileLoaded = True Then
 
@@ -7406,7 +7753,7 @@ Public Class Form1
 
                     InitializeObjects()
 
-                    OpenTestLevelFile(OpenFileDialog1.FileName)
+                    OpenTest2LevelFile(OpenFileDialog1.FileName)
 
                     If IsFileLoaded = True Then
 
@@ -8110,7 +8457,7 @@ Public Class Form1
 
         If Not IO.File.Exists(File) Then
 
-            IO.File.WriteAllText(File, My.Resources.Demo_Level)
+            IO.File.WriteAllText(File, My.Resources.Demo3)
 
         End If
 
@@ -8252,7 +8599,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub Form1_MouseWheel(sender As Object, e As MouseEventArgs) Handles Me.MouseWheel
+    Private Sub Form1_MouseWheel(sender As Object, e As MouseEventArgs) Handles MyBase.MouseWheel
 
         'Is the player rolling the mouse wheel up or down?
         If e.Delta > 0 Then
@@ -8505,6 +8852,24 @@ Public Class Form1
             Else
 
                 ShowToolPreview = True
+
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub Form1_DoubleClick(sender As Object, e As EventArgs) Handles MyBase.DoubleClick
+
+        If GameState = AppState.Editing Then
+
+            ColorDialog1.Color = Color.FromArgb(Level.Color)
+
+            ColorDialog1.FullOpen = True
+
+            If ColorDialog1.ShowDialog() = DialogResult.OK Then
+
+                Level.Color = ColorDialog1.Color.ToArgb
 
             End If
 

@@ -41,8 +41,8 @@ Learn how to use Xbox controllers in your own game projects.
 In conclusion, **"Platformer with Level Editor"** provides a comprehensive learning experience, equipping you with the skills to analyze code and lay the foundation for your own game projects. It's an excellent resource for anyone entering the field of game development. 🎮🚀
 
 
+![123](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/077a508a-da1d-4c8a-b3bd-d443d38dc0fd)
 
-![119](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/b721f630-2858-4722-b1d4-d627dbae58d2)
 
 
 
@@ -66,10 +66,6 @@ In conclusion, **"Platformer with Level Editor"** provides a comprehensive learn
 
 
 
-![116](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/4267a304-2e41-405b-9050-0be3b53e23ef)
-
-
-![117](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/011d4e8b-b16d-4d6c-a48e-323fdaa8d6fa)
 
 
 
@@ -86,7 +82,6 @@ In conclusion, **"Platformer with Level Editor"** provides a comprehensive learn
 
 
 
-![112](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/1ed456d4-9e1e-4b3c-b335-ae719f763bbc)
 
 
 
@@ -95,6 +90,3 @@ In conclusion, **"Platformer with Level Editor"** provides a comprehensive learn
 
 
 
-
-
-![113](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/4500a6da-5f13-4eb8-8eb2-11bbdabcc503)

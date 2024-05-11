@@ -26,6 +26,9 @@ The level editor introduces you to key game design principles, covering aspects 
 ![109](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/29008dca-7ee9-46a5-a768-2b4ba432dc37)
 
 
+
+
+
 #### 4. Sound Integration
 Learn how to integrate audio assets into your game, including sound effects and music.
 
@@ -33,6 +36,10 @@ Learn how to integrate audio assets into your game, including sound effects and 
 Learn how to use Xbox controllers in your own game projects.
 
 In conclusion, **"Platformer with Level Editor"** provides a comprehensive learning experience, equipping you with the skills to analyze code and lay the foundation for your own game projects. It's an excellent resource for anyone entering the field of game development. 🎮🚀
+
+
+
+![119](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/b721f630-2858-4722-b1d4-d627dbae58d2)
 
 
 

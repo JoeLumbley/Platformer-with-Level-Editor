@@ -208,7 +208,7 @@ Public Class Form1
         Cloud
         Goal
         Enemy
-        Spawn 'Todo
+        Spawn
     End Enum
 
     Private Enum Direction As Integer
@@ -455,7 +455,7 @@ Public Class Form1
 
     Private CashCollectedPostion As New Point(0, 0)
 
-    Private ReadOnly PointerToolFont As New Font(New FontFamily("Wingdings"), 30, FontStyle.Bold)
+    Private ReadOnly PointerToolFont As New Font(New FontFamily("Wingdings"), 32, FontStyle.Bold)
 
     Private ReadOnly GoalToolFont As New Font(New FontFamily("Wingdings"), 25, FontStyle.Bold)
 
@@ -537,7 +537,7 @@ Public Class Form1
                                                                  .LineAlignment = StringAlignment.Center}
 
     Private ReadOnly CWJFont As New Font(FontFamily.GenericSansSerif, 12, FontStyle.Bold)
-    'Todo
+
     Private ReadOnly SpawnFont As New Font(FontFamily.GenericSansSerif, 11, FontStyle.Bold)
 
     Private SpawnColor As Color = Color.FromArgb(255, Color.Red)
@@ -938,8 +938,6 @@ Public Class Form1
 
     Private Sub DrawPlaying()
 
-        'Todo
-        '= Color.FromArgb(Level.Color) 'Convert integer color to ARGB color.
         DrawBackground(Color.FromArgb(Level.Color))
 
         DrawClouds()
@@ -1046,19 +1044,12 @@ Public Class Form1
 
     Private Sub ResetOurHero()
 
-        'Hero.Rect = New Rectangle(128, 769, 64, 64)
-
-        'Hero.Position = New PointF(Hero.Rect.X, Hero.Rect.Y)
-
-        'Hero.Velocity = New PointF(0, 0)
-
         Hero.Rect.X = Spawn.Rect.X
         Hero.Rect.Y = Spawn.Rect.Y
 
         Hero.Position = New PointF(Hero.Rect.X, Hero.Rect.Y)
 
         Hero.Velocity = New PointF(0, 0)
-
 
     End Sub
 

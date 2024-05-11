@@ -455,7 +455,7 @@ Public Class Form1
 
     Private CashCollectedPostion As New Point(0, 0)
 
-    Private ReadOnly PointerToolFont As New Font(New FontFamily("Wingdings"), 35, FontStyle.Bold)
+    Private ReadOnly PointerToolFont As New Font(New FontFamily("Wingdings"), 30, FontStyle.Bold)
 
     Private ReadOnly GoalToolFont As New Font(New FontFamily("Wingdings"), 25, FontStyle.Bold)
 
@@ -2863,7 +2863,10 @@ Public Class Form1
             .DrawString("ë",
                         PointerToolFont,
                         Brushes.White,
-                        PointerToolButton.Rect,
+                        New Rectangle(PointerToolButton.Rect.X,
+                                      PointerToolButton.Rect.Y + 5,
+                                      PointerToolButton.Rect.Width,
+                                      PointerToolButton.Rect.Height),
                         AlineCenterMiddle)
 
         End With

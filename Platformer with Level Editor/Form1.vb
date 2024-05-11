@@ -305,6 +305,8 @@ Public Class Form1
 
     Private Goal As GameObject
 
+    Private Spawn As GameObject
+
     Private Platforms() As GameObject
 
     Private Blocks() As GameObject
@@ -535,6 +537,12 @@ Public Class Form1
                                                                  .LineAlignment = StringAlignment.Center}
 
     Private ReadOnly CWJFont As New Font(FontFamily.GenericSansSerif, 12, FontStyle.Bold)
+    'Todo
+    Private ReadOnly SpawnFont As New Font(FontFamily.GenericSansSerif, 11, FontStyle.Bold)
+
+    Private SpawnColor As Color = Color.FromArgb(255, Color.Red)
+
+    Private SpawnBrush As New SolidBrush(SpawnColor)
 
     Private ReadOnly EnemyFont As New Font(FontFamily.GenericSansSerif, 25, FontStyle.Bold)
 
@@ -553,6 +561,8 @@ Public Class Form1
     Private GoalSelected As Boolean = False
 
     Private LevelSelected As Boolean = False
+
+    Private SpawnSelected As Boolean = False
 
     Private ShowOpenFileDialog As Boolean = False
 
@@ -970,6 +980,8 @@ Public Class Form1
 
         DrawEnemies()
 
+        DrawSpawn()
+
         DrawOurHero()
 
         DrawGridLines()
@@ -1034,11 +1046,19 @@ Public Class Form1
 
     Private Sub ResetOurHero()
 
-        Hero.Rect = New Rectangle(128, 769, 64, 64)
+        'Hero.Rect = New Rectangle(128, 769, 64, 64)
+
+        'Hero.Position = New PointF(Hero.Rect.X, Hero.Rect.Y)
+
+        'Hero.Velocity = New PointF(0, 0)
+
+        Hero.Rect.X = Spawn.Rect.X
+        Hero.Rect.Y = Spawn.Rect.Y
 
         Hero.Position = New PointF(Hero.Rect.X, Hero.Rect.Y)
 
         Hero.Velocity = New PointF(0, 0)
+
 
     End Sub
 
@@ -2138,6 +2158,57 @@ Public Class Form1
         End With
 
     End Sub
+
+    Private Sub DrawSpawn()
+        'Todo
+        With Buffer.Graphics
+
+            Dim RectOffset As Rectangle = Spawn.Rect
+
+            RectOffset.Offset(CameraOffset)
+
+            .FillRectangle(SpawnBrush, RectOffset)
+
+            .DrawString("Start", SpawnFont, Brushes.White, RectOffset, AlineCenterMiddle)
+
+
+
+
+
+
+
+            If GameState = AppState.Editing Then
+
+                If SpawnSelected = True Then
+
+                    'Draw selection rectangle.
+                    .DrawRectangle(New Pen(Color.Black, 6), RectOffset)
+
+                    ''Position sizing handle.
+                    'SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
+                    'SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
+
+                    ''Draw sizing handle.
+                    '.FillRectangle(Brushes.Black,
+                    '                   SizingHandle)
+
+                End If
+
+            End If
+
+
+            ''Draw hero position
+            '.DrawString("X: " & Hero.Position.X.ToString & vbCrLf & "Y: " & Hero.Position.Y.ToString,
+            '            CWJFont,
+            '            Brushes.White,
+            '            RectOffset.X,
+            '            RectOffset.Y - 50,
+            '            New StringFormat With {.Alignment = StringAlignment.Near})
+
+        End With
+
+    End Sub
+
 
     Private Sub DrawEnemies()
 
@@ -4039,6 +4110,11 @@ Public Class Form1
 
         Hero.Acceleration = New PointF(300, 25)
 
+        'Todo
+        Spawn.Rect = New Rectangle(128, 769, 64, 64)
+
+        Spawn.Position = New PointF(Spawn.Rect.X, Spawn.Rect.Y)
+
         MousePointer.Velocity = New PointF(0, 0)
 
         MousePointer.MaxVelocity = New PointF(1500, 1500)
@@ -4403,6 +4479,8 @@ Public Class Form1
 
         LevelSelected = False
 
+        SpawnSelected = False
+
     End Sub
 
     Private Sub MouseDownEditingSelection(e As Point)
@@ -4411,7 +4489,7 @@ Public Class Form1
         If ToolBarBackground.Rect.Contains(e) = False Then
             'No, the player is NOT over the toolbar.
 
-            Dim PointOffset As Point = e
+            Dim PointOffset As Point
 
             PointOffset.X = Camera.Position.X + e.X
             PointOffset.Y = Camera.Position.Y + e.Y
@@ -4440,6 +4518,8 @@ Public Class Form1
                     SelectedBush = -1
                     GoalSelected = False
                     LevelSelected = False
+                    SpawnSelected = False
+
 
                 ElseIf Goal.Rect.Contains(PointOffset) Then
 
@@ -4455,6 +4535,8 @@ Public Class Form1
                     SelectedBush = -1
                     SelectedEnemy = -1
                     LevelSelected = False
+                    SpawnSelected = False
+
 
                     'Is the player selecting a block?
                 ElseIf CheckBlockSelection(PointOffset) > -1 Then
@@ -4472,6 +4554,8 @@ Public Class Form1
                     SelectedEnemy = -1
                     GoalSelected = False
                     LevelSelected = False
+                    SpawnSelected = False
+
 
                     'Is the player selecting a bill?
                 ElseIf CheckBillSelection(PointOffset) > -1 Then
@@ -4489,6 +4573,8 @@ Public Class Form1
                     SelectedEnemy = -1
                     GoalSelected = False
                     LevelSelected = False
+                    SpawnSelected = False
+
 
                     'Is the player selecting a cloud?
                 ElseIf CheckCloudSelection(PointOffset) > -1 Then
@@ -4505,6 +4591,7 @@ Public Class Form1
                     SelectedBush = -1
                     SelectedEnemy = -1
                     GoalSelected = False
+                    SpawnSelected = False
                     LevelSelected = False
 
                     'Is the player selecting a bush?
@@ -4520,6 +4607,24 @@ Public Class Form1
                     SelectedBlock = -1
                     SelectedBill = -1
                     SelectedCloud = -1
+                    SelectedEnemy = -1
+                    GoalSelected = False
+                    LevelSelected = False
+                    SpawnSelected = False
+
+
+                ElseIf Spawn.Rect.Contains(PointOffset) Then
+
+                    SpawnSelected = True
+
+                    SelectionOffset.X = PointOffset.X - Spawn.Rect.X
+                    SelectionOffset.Y = PointOffset.Y - Spawn.Rect.Y
+
+                    'Deselect other game objects.
+                    SelectedBlock = -1
+                    SelectedBill = -1
+                    SelectedCloud = -1
+                    SelectedBush = -1
                     SelectedEnemy = -1
                     GoalSelected = False
                     LevelSelected = False
@@ -4544,6 +4649,8 @@ Public Class Form1
             GoalSelected = False
             LevelSelected = False
             SelectedEnemy = -1
+            SpawnSelected = False
+
 
         End If
 
@@ -4688,6 +4795,8 @@ Public Class Form1
                 SelectedBush = -1
                 GoalSelected = False
                 SelectedEnemy = -1
+                SpawnSelected = False
+
 
         End Select
 
@@ -5058,9 +5167,37 @@ Public Class Form1
         Write(File_Number, Level.Color)
         'Write(File_Number, Color.SkyBlue.ToArgb)
 
-
         'Write Text
         Write(File_Number, "Level")
+
+
+        'Write Spawn to File
+        'Write ID
+        Write(File_Number, ObjectID.Spawn)
+
+        'Write Position
+        Write(File_Number, Spawn.Rect.X)
+        Write(File_Number, Spawn.Rect.Y)
+
+        'Write Size
+        Write(File_Number, Spawn.Rect.Width)
+        Write(File_Number, Spawn.Rect.Height)
+
+        'Write PatrolA
+        Write(File_Number, Spawn.PatrolA.X)
+        Write(File_Number, Spawn.PatrolA.Y)
+
+        'Write PatrolB
+        Write(File_Number, Spawn.PatrolB.X)
+        Write(File_Number, Spawn.PatrolB.Y)
+
+        'Todo
+        'Write Color
+        Write(File_Number, Color.OrangeRed.ToArgb)
+
+        'Write Text
+        Write(File_Number, "Spawn")
+
 
         'Write Blocks to File
         If Blocks IsNot Nothing Then
@@ -5236,6 +5373,8 @@ Public Class Form1
             Next
 
         End If
+
+
 
         'Write Goal to File
         'Write ID
@@ -5485,6 +5624,22 @@ Public Class Form1
                 Case ObjectID.Level
 
                     Level.Color = FileObject.Color
+
+                Case ObjectID.Spawn
+
+                    'Load Rect Position
+                    Spawn.Rect.X = FileObject.Rect.X
+                    Spawn.Rect.Y = FileObject.Rect.Y
+
+                    'Load Vec2 Position
+                    Spawn.Position.X = FileObject.Rect.X
+                    Spawn.Position.Y = FileObject.Rect.Y
+
+                    Hero.Rect.X = Spawn.Rect.X
+                    Hero.Rect.Y = Spawn.Rect.Y
+
+                    Hero.Position.X = Spawn.Rect.X
+                    Hero.Position.Y = Spawn.Rect.Y
 
             End Select
 
@@ -5912,6 +6067,69 @@ Public Class Form1
             End If
 
         End If
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        If SpawnSelected = True Then
+
+            If e.Button = MouseButtons.Left Then
+
+                'If SizingHandleSelected = True Then
+
+                '    'Snap bush width to grid.
+                '    Goal.Rect.Width = CInt(Math.Round((PointOffset.X - Goal.Rect.X) / GridSize)) * GridSize
+
+                '    'Limit smallest bush width to one grid width.
+                '    If Goal.Rect.Width < GridSize Then Goal.Rect.Width = GridSize
+
+                '    'Snap bush height to grid.
+                '    Goal.Rect.Height = CInt(Math.Round((PointOffset.Y - Goal.Rect.Y) / GridSize)) * GridSize
+
+                '    'Limit smallest bush height to one grid height.
+                '    If Goal.Rect.Height < GridSize Then Goal.Rect.Height = GridSize
+
+                '    AutoSizeLevel(Goal.Rect)
+
+                'Else
+
+                'Move Spawn, snap to grid
+                Spawn.Rect.X = CInt(Math.Round((PointOffset.X - SelectionOffset.X) / GridSize)) * GridSize
+                Spawn.Rect.Y = CInt(Math.Round((PointOffset.Y - SelectionOffset.Y) / GridSize)) * GridSize
+
+                AutoSizeLevel(Spawn.Rect)
+
+
+                'End If
+
+            End If
+
+        End If
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         'Has the player selected a Enemy?
         If SelectedEnemy > -1 Then
@@ -8457,7 +8675,7 @@ Public Class Form1
 
         If Not IO.File.Exists(File) Then
 
-            IO.File.WriteAllText(File, My.Resources.Demo3)
+            IO.File.WriteAllText(File, My.Resources.Demo6)
 
         End If
 

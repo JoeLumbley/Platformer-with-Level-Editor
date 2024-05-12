@@ -8980,13 +8980,26 @@ Public Class Form1
 
         If GameState = AppState.Editing Then
 
-            ColorDialog1.Color = Color.FromArgb(Level.Color)
+            'Is player over a game object that can not have its color set?
+            If SizingHandleSelected = False AndAlso
+                SelectedBlock = -1 AndAlso
+                SelectedBill = -1 AndAlso
+                SelectedBush = -1 AndAlso
+                SelectedCloud = -1 AndAlso
+                GoalSelected = False AndAlso
+                SelectedEnemy = -1 AndAlso
+                SpawnSelected = False Then
+                'No, the player is not over a game object that can not have its color set.
 
-            ColorDialog1.FullOpen = True
+                ColorDialog1.Color = Color.FromArgb(Level.Color)
 
-            If ColorDialog1.ShowDialog() = DialogResult.OK Then
+                ColorDialog1.FullOpen = True
 
-                Level.Color = ColorDialog1.Color.ToArgb
+                If ColorDialog1.ShowDialog() = DialogResult.OK Then
+
+                    Level.Color = ColorDialog1.Color.ToArgb
+
+                End If
 
             End If
 

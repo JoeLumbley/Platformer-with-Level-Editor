@@ -33,7 +33,6 @@ Imports System.ComponentModel
 Imports System.Drawing.Drawing2D
 Imports System.IO
 Imports System.Numerics
-Imports System.Resources
 Imports System.Runtime.InteropServices
 Imports System.Text
 Imports System.Threading

@@ -6455,7 +6455,6 @@ Public Class Form1
 
                 End If
 
-
             Case Keys.R
 
                 If GameState = AppState.Editing Then
@@ -6534,7 +6533,6 @@ Public Class Form1
                     End If
 
                 End If
-
 
             Case Keys.S
 
@@ -6758,6 +6756,7 @@ Public Class Form1
             Camera.Velocity.X = 0 'Zero speed.
 
         End If
+
         'Move camera left.
         Camera.Velocity.X += -Camera.Acceleration.X * EditorDeltaTime.TotalSeconds
 
@@ -6767,6 +6766,7 @@ Public Class Form1
     End Sub
 
     Private Sub MoveCameraRight()
+
         'Is the camera moving left?
         If Camera.Velocity.X < 0 Then
             'Yes, the camera is moving left.
@@ -6847,6 +6847,7 @@ Public Class Form1
                             BufferGridLines()
 
                         End If
+
                     Else
 
                         If MousePointer.Velocity.X < 0 Then

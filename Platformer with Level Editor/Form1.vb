@@ -2151,7 +2151,7 @@ Public Class Form1
     End Sub
 
     Private Sub DrawSpawn()
-        'Todo
+
         With Buffer.Graphics
 
             Dim RectOffset As Rectangle = Spawn.Rect
@@ -2162,12 +2162,6 @@ Public Class Form1
 
             .DrawString("Start", SpawnFont, Brushes.White, RectOffset, AlineCenterMiddle)
 
-
-
-
-
-
-
             If GameState = AppState.Editing Then
 
                 If SpawnSelected = True Then
@@ -2175,26 +2169,9 @@ Public Class Form1
                     'Draw selection rectangle.
                     .DrawRectangle(New Pen(Color.Black, 6), RectOffset)
 
-                    ''Position sizing handle.
-                    'SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
-                    'SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
-
-                    ''Draw sizing handle.
-                    '.FillRectangle(Brushes.Black,
-                    '                   SizingHandle)
-
                 End If
 
             End If
-
-
-            ''Draw hero position
-            '.DrawString("X: " & Hero.Position.X.ToString & vbCrLf & "Y: " & Hero.Position.Y.ToString,
-            '            CWJFont,
-            '            Brushes.White,
-            '            RectOffset.X,
-            '            RectOffset.Y - 50,
-            '            New StringFormat With {.Alignment = StringAlignment.Near})
 
         End With
 
@@ -4066,9 +4043,7 @@ Public Class Form1
 
         MovePointerToStartScreenNewButton()
 
-        'Todo
         Level.Color = Color.SkyBlue.ToArgb
-        'Level.Color = Color.SkyBlue
 
     End Sub
 
@@ -4104,7 +4079,6 @@ Public Class Form1
 
         Hero.Acceleration = New PointF(300, 25)
 
-        'Todo
         Spawn.Rect = New Rectangle(128, 769, 64, 64)
 
         Spawn.Position = New PointF(Spawn.Rect.X, Spawn.Rect.Y)
@@ -4270,7 +4244,6 @@ Public Class Form1
 
         If SaveFileDialog1.ShowDialog(Me) = System.Windows.Forms.DialogResult.OK Then
 
-            'Todo
             SaveTest2LevelFile(SaveFileDialog1.FileName)
 
             LevelName = Path.GetFileName(SaveFileDialog1.FileName)
@@ -4947,7 +4920,6 @@ Public Class Form1
         Write(File_Number, Level.PatrolB.X)
         Write(File_Number, Level.PatrolB.Y)
 
-        'Todo
         'Write Color
         Write(File_Number, Level.Color)
 
@@ -5156,7 +5128,6 @@ Public Class Form1
         Write(File_Number, Level.PatrolB.X)
         Write(File_Number, Level.PatrolB.Y)
 
-        'Todo
         'Write Color
         Write(File_Number, Level.Color)
         'Write(File_Number, Color.SkyBlue.ToArgb)
@@ -5185,7 +5156,6 @@ Public Class Form1
         Write(File_Number, Spawn.PatrolB.X)
         Write(File_Number, Spawn.PatrolB.Y)
 
-        'Todo
         'Write Color
         Write(File_Number, Color.OrangeRed.ToArgb)
 
@@ -5217,7 +5187,6 @@ Public Class Form1
                 Write(File_Number, Block.PatrolB.X)
                 Write(File_Number, Block.PatrolB.Y)
 
-                'Todo
                 'Write Color
                 Write(File_Number, Color.OrangeRed.ToArgb)
 
@@ -5252,7 +5221,6 @@ Public Class Form1
                 Write(File_Number, Bill.PatrolB.X)
                 Write(File_Number, Bill.PatrolB.Y)
 
-                'Todo
                 'Write Color
                 Write(File_Number, Color.OrangeRed.ToArgb)
 
@@ -5287,7 +5255,6 @@ Public Class Form1
                 Write(File_Number, Bush.PatrolB.X)
                 Write(File_Number, Bush.PatrolB.Y)
 
-                'Todo
                 'Write Color
                 Write(File_Number, Color.OrangeRed.ToArgb)
 
@@ -5322,7 +5289,6 @@ Public Class Form1
                 Write(File_Number, Cloud.PatrolB.X)
                 Write(File_Number, Cloud.PatrolB.Y)
 
-                'Todo
                 'Write Color
                 Write(File_Number, Color.OrangeRed.ToArgb)
 
@@ -5357,7 +5323,6 @@ Public Class Form1
                 Write(File_Number, Enemy.PatrolB.X)
                 Write(File_Number, Enemy.PatrolB.Y)
 
-                'Todo
                 'Write Color
                 Write(File_Number, Color.OrangeRed.ToArgb)
 
@@ -5390,7 +5355,6 @@ Public Class Form1
         Write(File_Number, Goal.PatrolB.X)
         Write(File_Number, Goal.PatrolB.Y)
 
-        'Todo
         'Write Color
         Write(File_Number, Color.OrangeRed.ToArgb)
 
@@ -5523,11 +5487,8 @@ Public Class Form1
                     FileSystem.Input(File_Number, .PatrolB.X)
                     FileSystem.Input(File_Number, .PatrolB.Y)
 
-                    'Todo
                     'Read Color
                     FileSystem.Input(File_Number, .Color)
-
-                    'Dim debug As Color = .Color
 
                     'Read Text
                     FileSystem.Input(File_Number, .Text)
@@ -6062,42 +6023,9 @@ Public Class Form1
 
         End If
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         If SpawnSelected = True Then
 
             If e.Button = MouseButtons.Left Then
-
-                'If SizingHandleSelected = True Then
-
-                '    'Snap bush width to grid.
-                '    Goal.Rect.Width = CInt(Math.Round((PointOffset.X - Goal.Rect.X) / GridSize)) * GridSize
-
-                '    'Limit smallest bush width to one grid width.
-                '    If Goal.Rect.Width < GridSize Then Goal.Rect.Width = GridSize
-
-                '    'Snap bush height to grid.
-                '    Goal.Rect.Height = CInt(Math.Round((PointOffset.Y - Goal.Rect.Y) / GridSize)) * GridSize
-
-                '    'Limit smallest bush height to one grid height.
-                '    If Goal.Rect.Height < GridSize Then Goal.Rect.Height = GridSize
-
-                '    AutoSizeLevel(Goal.Rect)
-
-                'Else
 
                 'Move Spawn, snap to grid
                 Spawn.Rect.X = CInt(Math.Round((PointOffset.X - SelectionOffset.X) / GridSize)) * GridSize
@@ -6105,25 +6033,9 @@ Public Class Form1
 
                 AutoSizeLevel(Spawn.Rect)
 
-
-                'End If
-
             End If
 
         End If
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         'Has the player selected a Enemy?
         If SelectedEnemy > -1 Then

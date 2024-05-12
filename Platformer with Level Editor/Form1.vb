@@ -7092,7 +7092,7 @@ Public Class Form1
 
         If LeftStickButtonPressed = True Then
 
-            If GameState = AppState.Start Then
+            If GameState = AppState.Start Or GameState = AppState.Editing Then
 
                 'If ShowOpenFileDialog = True Then
 
@@ -7109,25 +7109,25 @@ Public Class Form1
             End If
 
 
-            If GameState = AppState.Editing Then
+            'If GameState = AppState.Editing Then
 
-                'If ShowOpenFileDialog = True Then
+            '    'If ShowOpenFileDialog = True Then
 
-                If IsLeftStickDown = False Then
+            '    If IsLeftStickDown = False Then
 
-                    IsLeftStickDown = True
+            '        IsLeftStickDown = True
 
-                    DoMouseLeftDown()
+            '        DoMouseLeftDown()
 
-                End If
+            '    End If
 
-                'End If
+            '    'End If
 
-            End If
+            'End If
 
         Else
 
-            If GameState = AppState.Start Then
+            If GameState = AppState.Start Or GameState = AppState.Editing Then
 
                 'If ShowOpenFileDialog = True Then
 
@@ -7144,21 +7144,21 @@ Public Class Form1
             End If
 
 
-            If GameState = AppState.Editing Then
+            'If GameState = AppState.Editing Then
 
-                'If ShowOpenFileDialog = True Then
+            '    'If ShowOpenFileDialog = True Then
 
-                If IsLeftStickDown = True Then
+            '    If IsLeftStickDown = True Then
 
-                    IsLeftStickDown = False
+            '        IsLeftStickDown = False
 
-                    DoMouseLeftUp()
+            '        DoMouseLeftUp()
 
-                End If
+            '    End If
 
-                'End If
+            '    'End If
 
-            End If
+            'End If
 
         End If
 

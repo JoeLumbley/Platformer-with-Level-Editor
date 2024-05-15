@@ -1005,9 +1005,9 @@ Public Class Form1
 
         DrawGridLines()
 
-        DrawOurHero()
-
         DrawSelectionAndSizingHamdle()
+
+        DrawOurHero()
 
         DrawToolPreview()
 

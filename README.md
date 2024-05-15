@@ -38,7 +38,7 @@ Learn how to integrate audio assets into your game, including sound effects and 
 #### 5. Xbox Controller Support
 Learn how to use Xbox controllers in your own game projects.
 
-In conclusion, **"Platformer with Level Editor"** provides a comprehensive learning experience, equipping you with the skills to analyze code and lay the foundation for your own game projects. It's an excellent resource for anyone entering the field of game development. 🎮🚀
+**"Platformer with Level Editor"** provides a comprehensive learning experience, equipping you with the skills to analyze code and lay the foundation for your own game projects. It's an excellent resource for anyone entering the field of game development. 🎮🚀
 
 
 

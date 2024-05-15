@@ -4501,6 +4501,8 @@ Public Class Form1
 
         Enemies = Nothing
 
+        Backdrops = Nothing
+
     End Sub
 
     Private Sub MouseDownEditingButtons(e As Point)

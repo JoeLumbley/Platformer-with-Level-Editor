@@ -83,9 +83,9 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized string similar to 0,0,0,14336,2560,0,0,0,0,-7876885,&quot;Level&quot;,7,128,768,64,64,0,0,0,0,-47872,&quot;Spawn&quot;,1,0,832,576,576,0,0,0,0,-47872,&quot;Block&quot;,1,1152,576,64,64,0,0,0,0,-47872,&quot;Block&quot;,1,1472,576,320,64,0,0,0,0,-47872,&quot;Block&quot;,1,1600,320,64,64,0,0,0,0,-47872,&quot;Block&quot;,1,2048,704,128,704,0,0,0,0,-47872,&quot;Block&quot;,1,2752,640,128,768,0,0,0,0,-47872,&quot;Block&quot;,1,3328,576,128,832,0,0,0,0,-47872,&quot;Block&quot;,1,4096,576,64,1536,0,0,0,0,-47872,&quot;Block&quot;,1,4608,576,64,64,0,0,0,0,-47872,&quot;Block&quot;,1,5568,576,192,64,0,0,0,0,-47872,&quot;Block&quot;,1,5760,320,576,64,0,0, [rest of string was truncated]&quot;;.
         '''</summary>
-        Friend ReadOnly Property Demo6() As String
+        Friend ReadOnly Property Demo8() As String
             Get
-                Return ResourceManager.GetString("Demo6", resourceCulture)
+                Return ResourceManager.GetString("Demo8", resourceCulture)
             End Get
         End Property
         

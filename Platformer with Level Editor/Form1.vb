@@ -208,6 +208,7 @@ Public Class Form1
         Goal
         Enemy
         Spawn
+        Backdrop
     End Enum
 
     Private Enum Direction As Integer
@@ -253,6 +254,7 @@ Public Class Form1
         Cloud
         Goal
         Enemy
+        Backdrop
     End Enum
 
     Private GameState As AppState = AppState.Start
@@ -318,6 +320,9 @@ Public Class Form1
 
     Private Enemies() As GameObject
 
+    Private Backdrops() As GameObject
+
+
     Private FileObjects() As GameObject
 
     Private EditPlayButton As GameObject
@@ -341,6 +346,16 @@ Public Class Form1
     Private BlockToolButtonHover As Boolean = False
 
     Private BlockToolIcon As GameObject
+
+
+
+    Private BackdropToolButton As GameObject
+
+    Private BackdropToolButtonHover As Boolean = False
+
+    Private BackdropToolIcon As GameObject
+
+
 
     Private BillToolButton As GameObject
 
@@ -417,6 +432,9 @@ Public Class Form1
     Private SelectedCloud As Integer = -1
 
     Private SelectedBlock As Integer = -1
+
+    Private SelectedBackdrop As Integer = -1
+
 
     Private SelectedPlatform As Integer = -1
 
@@ -939,6 +957,8 @@ Public Class Form1
 
         DrawBackground(Color.FromArgb(Level.Color))
 
+        DrawBackdrops()
+
         DrawClouds()
 
         DrawBushes()
@@ -965,6 +985,10 @@ Public Class Form1
 
         DrawBackground(Color.FromArgb(Level.Color))
 
+        DrawBackdrops()
+
+        DrawToolPreviewBackdrop()
+
         DrawClouds()
 
         DrawBushes()
@@ -979,9 +1003,11 @@ Public Class Form1
 
         DrawSpawn()
 
+        DrawGridLines()
+
         DrawOurHero()
 
-        DrawGridLines()
+        DrawSelectionAndSizingHamdle()
 
         DrawToolPreview()
 
@@ -1028,6 +1054,8 @@ Public Class Form1
         DrawGoalToolButton()
 
         DrawEnemyToolButton()
+
+        DrawBackdropToolButton()
 
     End Sub
 
@@ -2348,6 +2376,131 @@ Public Class Form1
         End If
 
     End Sub
+    Private Sub DrawBackdrops()
+        'todo
+        With Buffer.Graphics
+
+            If Backdrops IsNot Nothing Then
+
+                For Each Backdrop In Backdrops
+
+                    Dim RectOffset As Rectangle = Backdrop.Rect
+
+                    RectOffset.Offset(CameraOffset)
+
+                    If RectOffset.IntersectsWith(ClientRectangle) Then
+
+                        .FillRectangle(New SolidBrush(Color.FromArgb(Backdrop.Color)), RectOffset)
+
+                        '.DrawLine(Pens.White,
+                        '          RectOffset.Right - 1,
+                        '          RectOffset.Top + 1,
+                        '          RectOffset.Left + 1,
+                        '          RectOffset.Top + 1)
+
+                    End If
+
+                    'If GameState = AppState.Editing Then
+
+                    '    If SelectedBackdrop = Array.IndexOf(Backdrops, Backdrop) Then
+
+                    '        'Draw selection rectangle.
+                    '        .DrawRectangle(New Pen(Color.Orange, 6), RectOffset)
+
+                    '        'Position sizing handle.
+                    '        SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
+                    '        SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
+
+                    '        'Draw sizing handle.
+                    '        .FillRectangle(Brushes.Black,
+                    '                       SizingHandle)
+
+                    '        'Draw sizing handle outline.
+                    '        .DrawRectangle(New Pen(Color.OrangeRed, 6),
+                    '                       SizingHandle)
+
+
+                    '    End If
+
+                    'End If
+
+                Next
+
+            End If
+
+        End With
+
+    End Sub
+
+
+
+
+    Private Sub DrawSelectionAndSizingHamdle()
+
+        With Buffer.Graphics
+
+            '    If Backdrops IsNot Nothing Then
+
+            '        For Each Backdrop In Backdrops
+
+            '            Dim RectOffset As Rectangle = Backdrop.Rect
+
+            '            RectOffset.Offset(CameraOffset)
+
+            'If RectOffset.IntersectsWith(ClientRectangle) Then
+
+            '    .FillRectangle(New SolidBrush(Color.FromArgb(Backdrop.Color)), RectOffset)
+
+            '    '.DrawLine(Pens.White,
+            '    '          RectOffset.Right - 1,
+            '    '          RectOffset.Top + 1,
+            '    '          RectOffset.Left + 1,
+            '    '          RectOffset.Top + 1)
+
+            'End If
+
+            If GameState = AppState.Editing Then
+
+                'If SelectedBackdrop = Array.IndexOf(Backdrops, Backdrop) Then
+                If SelectedBackdrop > -1 Then
+
+                    Dim RectOffset As Rectangle = Backdrops(SelectedBackdrop).Rect
+
+                    RectOffset.Offset(CameraOffset)
+
+                    'Draw selection rectangle.
+                    .DrawRectangle(New Pen(Color.Orange, 6), RectOffset)
+
+                    'Position sizing handle.
+                    SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
+                    SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
+
+                    'Draw sizing handle.
+                    .FillRectangle(Brushes.Black,
+                                           SizingHandle)
+
+                    'Draw sizing handle outline.
+                    .DrawRectangle(New Pen(Color.OrangeRed, 6),
+                                           SizingHandle)
+
+
+                End If
+
+            End If
+
+
+            'Next
+
+            '    End If
+
+        End With
+
+
+
+    End Sub
+
+
+
 
     Private Sub DrawBlocks()
 
@@ -2600,6 +2753,23 @@ Public Class Form1
         End With
 
     End Sub
+    Private Sub DrawToolPreviewBackdrop()
+        With Buffer.Graphics
+            If ShowToolPreview = True AndAlso ShowMenu = False Then
+
+                Dim RectOffset As Rectangle = ToolPreview
+
+                RectOffset.Offset(CameraOffset)
+
+                If SelectedTool = Tools.Backdrop Then
+
+                    'Todo
+                    .FillRectangle(Brushes.Black, RectOffset)
+
+                End If
+            End If
+        End With
+    End Sub
 
     Private Sub DrawToolPreview()
 
@@ -2612,6 +2782,12 @@ Public Class Form1
                 RectOffset.Offset(CameraOffset)
 
                 Select Case SelectedTool
+
+                    'Case Tools.Backdrop
+
+                    '    'Todo
+                    '    .FillRectangle(Brushes.Black, RectOffset)
+
 
                     Case Tools.Block
 
@@ -2900,6 +3076,92 @@ Public Class Form1
         End With
 
     End Sub
+
+    Private Sub DrawBackdropToolButton()
+
+        Dim RoundedBackdropToolButton As Rectangle = BackdropToolButton.Rect
+
+        RoundedBackdropToolButton.Offset(2, 2)
+
+        RoundedBackdropToolButton.Width = BackdropToolButton.Rect.Width - 4
+        RoundedBackdropToolButton.Height = BackdropToolButton.Rect.Height - 4
+
+        With Buffer.Graphics
+
+            If SelectedTool = Tools.Backdrop Then
+
+                If BackdropToolButtonHover = True Then
+
+                    FillRoundedRectangle(SelectedHoverBrush, RoundedBackdropToolButton, 30, Buffer.Graphics)
+
+                    .DrawLine(SelectionHighlightHoverPen,
+                      RoundedBackdropToolButton.Left + 11,
+                      RoundedBackdropToolButton.Bottom - 2,
+                      RoundedBackdropToolButton.Right - 11,
+                      RoundedBackdropToolButton.Bottom - 2)
+
+                Else
+
+                    FillRoundedRectangle(SelectedBrush, RoundedBackdropToolButton, 30, Buffer.Graphics)
+
+                    .DrawLine(SelectionHighlightPen,
+                      RoundedBackdropToolButton.Left + 11,
+                      RoundedBackdropToolButton.Bottom - 2,
+                      RoundedBackdropToolButton.Right - 11,
+                      RoundedBackdropToolButton.Bottom - 2)
+
+                End If
+
+            Else
+
+                If BackdropToolButtonHover = True Then
+
+                    FillRoundedRectangle(HoverBrush, RoundedBackdropToolButton, 30, Buffer.Graphics)
+
+                Else
+
+                    FillRoundedRectangle(Brushes.Black, RoundedBackdropToolButton, 30, Buffer.Graphics)
+
+                End If
+
+            End If
+
+            '.FillRectangle(Brushes.Chocolate, BackdropToolIcon.Rect)
+
+            '.DrawLine(Pens.White,
+            '          BackdropToolIcon.Rect.Right - 1,
+            '          BackdropToolIcon.Rect.Top + 1,
+            '          BackdropToolIcon.Rect.Left + 1,
+            '          BackdropToolIcon.Rect.Top + 1)
+
+            ' Define the start and end points of the gradient
+            Dim StartPoint As New PointF(BackdropToolIcon.Rect.Left, BackdropToolIcon.Rect.Top)
+            Dim EndPoint As New PointF(BackdropToolIcon.Rect.Right, BackdropToolIcon.Rect.Top)
+
+            ' Define the colors for the gradient stops
+            'Dim Colors() As Color = {Color.Red, Color.Orange, Color.Yellow, Color.Green, Color.Blue, Color.Indigo, Color.Violet}
+            Dim Colors() As Color = {Color.Red, Color.Orange, Color.Yellow, Color.Green, Color.RoyalBlue, Color.Indigo, Color.Violet}
+
+            ' Create the color blend for the gradient
+            Dim ColorBlend As New ColorBlend()
+            ColorBlend.Colors = Colors
+            ColorBlend.Positions = New Single() {0.0F, 0.167F, 0.333F, 0.5F, 0.667F, 0.833F, 1.0F}
+            'ColorBlend.Positions = New Single() {0.0F, 0.1F, 0.25F, 0.45F, 0.65F, 0.833F, 1.0F}
+
+
+            ' Create the linear gradient brush
+            Dim GradBrush As New LinearGradientBrush(StartPoint, EndPoint, Color.Empty, Color.Empty)
+            GradBrush.InterpolationColors = ColorBlend
+
+            ' Fill the rectangle with the gradient brush
+            'e.Graphics.FillRectangle(GradBrush, Rect)
+            FillRoundedRectangle(GradBrush, BackdropToolIcon.Rect, 30, Buffer.Graphics)
+
+
+        End With
+
+    End Sub
+
 
     Private Sub DrawBillToolButton()
 
@@ -3499,6 +3761,34 @@ Public Class Form1
 
     End Sub
 
+
+    'todo
+    Private Sub AddBackdrop(Rect As Rectangle, Color As Color)
+
+        If Backdrops IsNot Nothing Then
+
+            Array.Resize(Backdrops, Backdrops.Length + 1)
+
+        Else
+
+            ReDim Backdrops(0)
+
+        End If
+
+        Dim Index As Integer = Backdrops.Length - 1
+
+        'Init backdrop
+        Backdrops(Index).Rect = Rect
+
+        Backdrops(Index).Position.X = Rect.X
+        Backdrops(Index).Position.Y = Rect.Y
+
+        Backdrops(Index).Color = Color.ToArgb
+
+        AutoSizeLevel(Backdrops(Index).Rect)
+
+    End Sub
+
     Private Sub AddBlock(Rect As Rectangle)
 
         If Blocks IsNot Nothing Then
@@ -3669,6 +3959,14 @@ Public Class Form1
         Blocks = Blocks.Where(Function(e, i) i <> Index).ToArray()
 
     End Sub
+
+    Private Sub RemoveBackdrop(Index As Integer)
+
+        'Remove the backdrop from backdrops.
+        Backdrops = Backdrops.Where(Function(e, i) i <> Index).ToArray()
+
+    End Sub
+
 
     Private Sub RemoveBill(Index As Integer)
 
@@ -4399,6 +4697,24 @@ Public Class Form1
 
         End If
 
+        If BackdropToolButton.Rect.Contains(e) Then
+
+            DeselectObjects()
+
+            'Snap preview to grid.
+            ToolPreview.X = CInt(Math.Round(PointOffset.X / GridSize) * GridSize)
+            ToolPreview.Y = CInt(Math.Round(PointOffset.Y / GridSize) * GridSize)
+
+            ToolPreview.Width = GridSize
+            ToolPreview.Height = GridSize
+
+            SelectedTool = Tools.Backdrop
+
+            ShowToolPreview = True
+
+        End If
+
+
         If GoalToolButton.Rect.Contains(e) Then
 
             DeselectObjects()
@@ -4447,6 +4763,8 @@ Public Class Form1
 
         SpawnSelected = False
 
+        SelectedBackdrop = -1
+
     End Sub
 
     Private Sub MouseDownEditingSelection(e As Point)
@@ -4485,6 +4803,7 @@ Public Class Form1
                     GoalSelected = False
                     LevelSelected = False
                     SpawnSelected = False
+                    SelectedBackdrop = -1
 
 
                 ElseIf Goal.Rect.Contains(PointOffset) Then
@@ -4502,6 +4821,7 @@ Public Class Form1
                     SelectedEnemy = -1
                     LevelSelected = False
                     SpawnSelected = False
+                    SelectedBackdrop = -1
 
 
                     'Is the player selecting a block?
@@ -4521,6 +4841,19 @@ Public Class Form1
                     GoalSelected = False
                     LevelSelected = False
                     SpawnSelected = False
+                    SelectedBackdrop = -1
+
+
+
+
+
+
+
+
+
+
+
+
 
 
                     'Is the player selecting a bill?
@@ -4540,6 +4873,7 @@ Public Class Form1
                     GoalSelected = False
                     LevelSelected = False
                     SpawnSelected = False
+                    SelectedBackdrop = -1
 
 
                     'Is the player selecting a cloud?
@@ -4559,6 +4893,7 @@ Public Class Form1
                     GoalSelected = False
                     SpawnSelected = False
                     LevelSelected = False
+                    SelectedBackdrop = -1
 
                     'Is the player selecting a bush?
                 ElseIf CheckBushSelection(PointOffset) > -1 Then
@@ -4577,6 +4912,7 @@ Public Class Form1
                     GoalSelected = False
                     LevelSelected = False
                     SpawnSelected = False
+                    SelectedBackdrop = -1
 
 
                 ElseIf Spawn.Rect.Contains(PointOffset) Then
@@ -4594,6 +4930,28 @@ Public Class Form1
                     SelectedEnemy = -1
                     GoalSelected = False
                     LevelSelected = False
+                    SelectedBackdrop = -1
+
+                    'todo
+                    'Is the player selecting a backdrop?
+                ElseIf CheckBackdropSelection(PointOffset) > -1 Then
+                    'Yes, the player is selecting a backdrop.
+
+                    SelectedBackdrop = CheckBackdropSelection(PointOffset)
+
+                    SelectionOffset.X = PointOffset.X - Backdrops(SelectedBackdrop).Rect.X
+                    SelectionOffset.Y = PointOffset.Y - Backdrops(SelectedBackdrop).Rect.Y
+
+                    'Deselect other game objects.
+                    SelectedBill = -1
+                    SelectedCloud = -1
+                    SelectedBush = -1
+                    SelectedEnemy = -1
+                    SelectedBlock = -1
+                    GoalSelected = False
+                    LevelSelected = False
+                    SpawnSelected = False
+
 
                 Else
                     'No, the player is not selecting a game object.
@@ -4626,6 +4984,29 @@ Public Class Form1
 
         Select Case SelectedTool
 
+            Case Tools.Backdrop
+
+                'Snap backdrop to grid.
+                Dim SnapPoint As New Point(CInt(Math.Round(PointOffset.X / GridSize) * GridSize),
+                                               CInt(Math.Round(PointOffset.Y / GridSize) * GridSize))
+
+                AddBackdrop(New Rectangle(SnapPoint, New Drawing.Size(GridSize, GridSize)), Color.Black)
+
+                'Change tool to the mouse pointer.
+                SelectedTool = Tools.Pointer
+
+                'Turn tool preview off.
+                ShowToolPreview = False
+
+                'Select the newly created backdrop.
+                SelectedBackdrop = Backdrops.Length - 1
+
+                SelectionOffset.X = PointOffset.X - Backdrops(Backdrops.Length - 1).Rect.X
+                SelectionOffset.Y = PointOffset.Y - Backdrops(Backdrops.Length - 1).Rect.Y
+
+
+
+
             Case Tools.Block
 
                 'Snap block to grid.
@@ -4645,6 +5026,10 @@ Public Class Form1
 
                 SelectionOffset.X = PointOffset.X - Blocks(Blocks.Length - 1).Rect.X
                 SelectionOffset.Y = PointOffset.Y - Blocks(Blocks.Length - 1).Rect.Y
+
+
+
+
 
             Case Tools.Bill
 
@@ -4666,7 +5051,7 @@ Public Class Form1
 
             Case Tools.Cloud
 
-                'Snap block to grid.
+                'Snap cloud to grid.
                 Dim SnapPoint As New Point(CInt(Math.Round(PointOffset.X / GridSize) * GridSize),
                                                CInt(Math.Round(PointOffset.Y / GridSize) * GridSize))
 
@@ -4686,7 +5071,7 @@ Public Class Form1
 
             Case Tools.Bush
 
-                'Snap block to grid.
+                'Snap bush to grid.
                 Dim SnapPoint As New Point(CInt(Math.Round(PointOffset.X / GridSize) * GridSize),
                                                CInt(Math.Round(PointOffset.Y / GridSize) * GridSize))
 
@@ -4698,7 +5083,7 @@ Public Class Form1
                 'Turn tool preview off.
                 ShowToolPreview = False
 
-                'Select the newly created bill.
+                'Select the newly created bush.
                 SelectedBush = Bushes.Length - 1
 
                 SelectionOffset.X = PointOffset.X - Bushes(Bushes.Length - 1).Rect.X
@@ -4706,7 +5091,7 @@ Public Class Form1
 
             Case Tools.Enemy
 
-                'Snap block to grid.
+                'Snap enemy to grid.
                 Dim SnapPoint As New Point(CInt(Math.Round(PointOffset.X / GridSize) * GridSize),
                                            CInt(Math.Round(PointOffset.Y / GridSize) * GridSize))
 
@@ -4762,6 +5147,7 @@ Public Class Form1
                 GoalSelected = False
                 SelectedEnemy = -1
                 SpawnSelected = False
+                SelectedBackdrop = -1
 
 
         End Select
@@ -4792,15 +5178,39 @@ Public Class Form1
 
     End Function
 
+    Private Function CheckBackdropSelection(e As Point) As Integer
+
+        If Backdrops IsNot Nothing Then
+
+            For Each Backdrop In Backdrops
+
+                'Has the player selected a backdrop?
+                If Backdrop.Rect.Contains(e) Then
+                    'Yes, the player has selected a backdrop.
+
+                    Return Array.IndexOf(Backdrops, Backdrop)
+
+                    Exit Function
+
+                End If
+
+            Next
+
+        End If
+
+        Return -1
+
+    End Function
+
     Private Function CheckBlockSelection(e As Point) As Integer
 
         If Blocks IsNot Nothing Then
 
             For Each Block In Blocks
 
-                'Has the player selected a cloud?
+                'Has the player selected a block?
                 If Block.Rect.Contains(e) Then
-                    'Yes, the player has selected a cloud.
+                    'Yes, the player has selected a block.
 
                     Return Array.IndexOf(Blocks, Block)
 
@@ -4822,9 +5232,9 @@ Public Class Form1
 
             For Each Bill In Cash
 
-                'Has the player selected a cloud?
+                'Has the player selected a bill?
                 If Bill.Rect.Contains(e) Then
-                    'Yes, the player has selected a cloud.
+                    'Yes, the player has selected a bill.
 
                     Return Array.IndexOf(Cash, Bill)
 
@@ -4846,9 +5256,9 @@ Public Class Form1
 
             For Each Bush In Bushes
 
-                'Has the player selected a cloud?
+                'Has the player selected a bush?
                 If Bush.Rect.Contains(e) Then
-                    'Yes, the player has selected a cloud.
+                    'Yes, the player has selected a bush.
 
                     Return Array.IndexOf(Bushes, Bush)
 
@@ -5332,6 +5742,41 @@ Public Class Form1
 
         End If
 
+        'Write Backdrops to File
+        If Backdrops IsNot Nothing Then
+
+            For Each Backdrop In Backdrops
+
+                'Write ID
+                Write(File_Number, ObjectID.Backdrop)
+
+                'Write Position
+                Write(File_Number, Backdrop.Rect.X)
+                Write(File_Number, Backdrop.Rect.Y)
+
+                'Write Size
+                Write(File_Number, Backdrop.Rect.Width)
+                Write(File_Number, Backdrop.Rect.Height)
+
+                'Write PatrolA
+                Write(File_Number, Backdrop.PatrolA.X)
+                Write(File_Number, Backdrop.PatrolA.Y)
+
+                'Write PatrolB
+                Write(File_Number, Backdrop.PatrolB.X)
+                Write(File_Number, Backdrop.PatrolB.Y)
+
+                'Write Color
+                Write(File_Number, Backdrop.Color)
+
+                'Write Text
+                Write(File_Number, "Backdrop")
+
+            Next
+
+        End If
+
+
 
 
         'Write Goal to File
@@ -5595,6 +6040,10 @@ Public Class Form1
                     Hero.Position.X = Spawn.Rect.X
                     Hero.Position.Y = Spawn.Rect.Y
 
+                Case ObjectID.Backdrop
+
+                    AddBackdrop(FileObject.Rect, Color.FromArgb(FileObject.Color))
+
             End Select
 
         Next
@@ -5703,6 +6152,21 @@ Public Class Form1
                 EnemyToolButtonHover = False
 
             End If
+
+            If BackdropToolButton.Rect.Contains(e.Location) Then
+
+                If ShowMenu = False Then
+
+                    BackdropToolButtonHover = True
+
+                End If
+
+            Else
+
+                BackdropToolButtonHover = False
+
+            End If
+
 
             If GoalToolButton.Rect.Contains(e.Location) Then
 
@@ -6098,6 +6562,43 @@ Public Class Form1
             End If
 
         End If
+
+        If SelectedBackdrop > -1 Then
+
+            If e.Button = MouseButtons.Left Then
+
+                'Is the player resizing the backdrop?
+                If SizingHandleSelected = True Then
+                    'Yes, the player is resizing the backdrop.
+
+                    'Snap backdrop width to grid.
+                    Backdrops(SelectedBackdrop).Rect.Width = CInt(Math.Round((PointOffset.X - Backdrops(SelectedBackdrop).Rect.X) / GridSize)) * GridSize
+
+                    'Limit smallest backdrop width to one grid width.
+                    If Backdrops(SelectedBackdrop).Rect.Width < GridSize Then Backdrops(SelectedBackdrop).Rect.Width = GridSize
+
+                    'Snap backdrop height to grid.
+                    Backdrops(SelectedBackdrop).Rect.Height = CInt(Math.Round((PointOffset.Y - Backdrops(SelectedBackdrop).Rect.Y) / GridSize)) * GridSize
+
+                    'Limit smallest backdrop height to one grid height.
+                    If Backdrops(SelectedBackdrop).Rect.Height < GridSize Then Backdrops(SelectedBackdrop).Rect.Height = GridSize
+
+                    AutoSizeLevel(Backdrops(SelectedBackdrop).Rect)
+
+                Else
+
+                    'Snap backdrop to grid
+                    Backdrops(SelectedBackdrop).Rect.X = CInt(Math.Round((PointOffset.X - SelectionOffset.X) / GridSize)) * GridSize
+                    Backdrops(SelectedBackdrop).Rect.Y = CInt(Math.Round((PointOffset.Y - SelectionOffset.Y) / GridSize)) * GridSize
+
+                    AutoSizeLevel(Backdrops(SelectedBackdrop).Rect)
+
+                End If
+
+            End If
+
+        End If
+
 
         If LevelSelected = True Then
 
@@ -6614,6 +7115,17 @@ Public Class Form1
                         SelectedEnemy = -1
 
                     End If
+
+                    If SelectedBackdrop > -1 Then
+
+                        RemoveBackdrop(SelectedBackdrop)
+
+                        SelectedBackdrop = -1
+
+                    End If
+
+
+
 
                     If GoalSelected = True Then
 
@@ -7158,6 +7670,16 @@ Public Class Form1
                     SelectedCloud = -1
 
                 End If
+                'Todo
+
+                If SelectedBackdrop > -1 Then
+
+                    RemoveBackdrop(SelectedBackdrop)
+
+                    SelectedBackdrop = -1
+
+                End If
+
 
                 If GoalSelected = True Then
 
@@ -7226,6 +7748,16 @@ Public Class Form1
                     SelectedEnemy = -1
 
                 End If
+
+                'Todo
+                If SelectedBackdrop > -1 Then
+
+                    RemoveBackdrop(SelectedBackdrop)
+
+                    SelectedBackdrop = -1
+
+                End If
+
 
                 If GoalSelected = True Then
 
@@ -8145,6 +8677,11 @@ Public Class Form1
 
         EnemyToolIcon.Rect = New Rectangle(ClientRectangle.Left + 890, ClientRectangle.Bottom - 77, 64, 64)
 
+        BackdropToolButton.Rect = New Rectangle(ClientRectangle.Left + 968, ClientRectangle.Bottom - 90, 90, 90)
+
+        BackdropToolIcon.Rect = New Rectangle(ClientRectangle.Left + 981, ClientRectangle.Bottom - 77, 64, 64)
+
+
     End Sub
 
     Private Sub Form1_Closing(sender As Object, e As CancelEventArgs) Handles MyBase.Closing
@@ -8573,7 +9110,7 @@ Public Class Form1
 
         If Not IO.File.Exists(File) Then
 
-            IO.File.WriteAllText(File, My.Resources.Demo6)
+            IO.File.WriteAllText(File, My.Resources.Demo8)
 
         End If
 
@@ -8903,7 +9440,7 @@ Public Class Form1
     Private Sub SelectNextToolToTheRight()
 
         'Has the player reached the right end of the toolbar?
-        If SelectedTool = Tools.Enemy Then
+        If SelectedTool = Tools.Backdrop Then
             'Yes, the player has reached the right end of the toolbar.
 
             'Start over by selecting the first tool on the bar. Far left end.
@@ -8947,7 +9484,7 @@ Public Class Form1
             ToolPreview.Height = GridSize
 
             'Start over by selecting the last tool on the bar. Far right end.
-            SelectedTool = Tools.Enemy
+            SelectedTool = Tools.Backdrop
 
             ShowToolPreview = True
 
@@ -8979,6 +9516,7 @@ Public Class Form1
 
         If GameState = AppState.Editing Then
 
+
             'Is player over a game object that can not have its color set?
             If SizingHandleSelected = False AndAlso
                 SelectedBlock = -1 AndAlso
@@ -8990,13 +9528,32 @@ Public Class Form1
                 SpawnSelected = False Then
                 'No, the player is not over a game object that can not have its color set.
 
-                ColorDialog1.Color = Color.FromArgb(Level.Color)
 
-                ColorDialog1.FullOpen = True
+                'todo
 
-                If ColorDialog1.ShowDialog() = DialogResult.OK Then
+                If SelectedBackdrop > -1 Then
 
-                    Level.Color = ColorDialog1.Color.ToArgb
+                    ColorDialog1.Color = Color.FromArgb(Backdrops(SelectedBackdrop).Color)
+
+                    ColorDialog1.FullOpen = True
+
+                    If ColorDialog1.ShowDialog() = DialogResult.OK Then
+
+                        Backdrops(SelectedBackdrop).Color = ColorDialog1.Color.ToArgb
+
+                    End If
+
+                Else
+
+                    ColorDialog1.Color = Color.FromArgb(Level.Color)
+
+                    ColorDialog1.FullOpen = True
+
+                    If ColorDialog1.ShowDialog() = DialogResult.OK Then
+
+                        Level.Color = ColorDialog1.Color.ToArgb
+
+                    End If
 
                 End If
 

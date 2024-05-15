@@ -2377,7 +2377,7 @@ Public Class Form1
 
     End Sub
     Private Sub DrawBackdrops()
-        'todo
+
         With Buffer.Graphics
 
             If Backdrops IsNot Nothing Then
@@ -2392,37 +2392,7 @@ Public Class Form1
 
                         .FillRectangle(New SolidBrush(Color.FromArgb(Backdrop.Color)), RectOffset)
 
-                        '.DrawLine(Pens.White,
-                        '          RectOffset.Right - 1,
-                        '          RectOffset.Top + 1,
-                        '          RectOffset.Left + 1,
-                        '          RectOffset.Top + 1)
-
                     End If
-
-                    'If GameState = AppState.Editing Then
-
-                    '    If SelectedBackdrop = Array.IndexOf(Backdrops, Backdrop) Then
-
-                    '        'Draw selection rectangle.
-                    '        .DrawRectangle(New Pen(Color.Orange, 6), RectOffset)
-
-                    '        'Position sizing handle.
-                    '        SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
-                    '        SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
-
-                    '        'Draw sizing handle.
-                    '        .FillRectangle(Brushes.Black,
-                    '                       SizingHandle)
-
-                    '        'Draw sizing handle outline.
-                    '        .DrawRectangle(New Pen(Color.OrangeRed, 6),
-                    '                       SizingHandle)
-
-
-                    '    End If
-
-                    'End If
 
                 Next
 
@@ -2432,32 +2402,9 @@ Public Class Form1
 
     End Sub
 
-
-
-
     Private Sub DrawSelectionAndSizingHamdle()
 
         With Buffer.Graphics
-
-            '    If Backdrops IsNot Nothing Then
-
-            '        For Each Backdrop In Backdrops
-
-            '            Dim RectOffset As Rectangle = Backdrop.Rect
-
-            '            RectOffset.Offset(CameraOffset)
-
-            'If RectOffset.IntersectsWith(ClientRectangle) Then
-
-            '    .FillRectangle(New SolidBrush(Color.FromArgb(Backdrop.Color)), RectOffset)
-
-            '    '.DrawLine(Pens.White,
-            '    '          RectOffset.Right - 1,
-            '    '          RectOffset.Top + 1,
-            '    '          RectOffset.Left + 1,
-            '    '          RectOffset.Top + 1)
-
-            'End If
 
             If GameState = AppState.Editing Then
 
@@ -2483,24 +2430,13 @@ Public Class Form1
                     .DrawRectangle(New Pen(Color.OrangeRed, 6),
                                            SizingHandle)
 
-
                 End If
 
             End If
 
-
-            'Next
-
-            '    End If
-
         End With
 
-
-
     End Sub
-
-
-
 
     Private Sub DrawBlocks()
 
@@ -2754,7 +2690,9 @@ Public Class Form1
 
     End Sub
     Private Sub DrawToolPreviewBackdrop()
+
         With Buffer.Graphics
+
             If ShowToolPreview = True AndAlso ShowMenu = False Then
 
                 Dim RectOffset As Rectangle = ToolPreview
@@ -2763,12 +2701,14 @@ Public Class Form1
 
                 If SelectedTool = Tools.Backdrop Then
 
-                    'Todo
                     .FillRectangle(Brushes.Black, RectOffset)
 
                 End If
+
             End If
+
         End With
+
     End Sub
 
     Private Sub DrawToolPreview()
@@ -2783,12 +2723,6 @@ Public Class Form1
 
                 Select Case SelectedTool
 
-                    'Case Tools.Backdrop
-
-                    '    'Todo
-                    '    .FillRectangle(Brushes.Black, RectOffset)
-
-
                     Case Tools.Block
 
                         .FillRectangle(Brushes.Chocolate, RectOffset)
@@ -2798,7 +2732,6 @@ Public Class Form1
                                   RectOffset.Top + 1,
                                   RectOffset.Left + 1,
                                   RectOffset.Top + 1)
-
 
                     Case Tools.Bill
 
@@ -3761,8 +3694,6 @@ Public Class Form1
 
     End Sub
 
-
-    'todo
     Private Sub AddBackdrop(Rect As Rectangle, Color As Color)
 
         If Backdrops IsNot Nothing Then
@@ -4736,6 +4667,8 @@ Public Class Form1
         If MenuButton.Rect.Contains(e) Then
             'Yes, the player is clicking the menu button.
 
+            DeselectObjects()
+
             ShowMenu = True
 
             MovePointerCenterMenu()
@@ -4843,19 +4776,6 @@ Public Class Form1
                     SpawnSelected = False
                     SelectedBackdrop = -1
 
-
-
-
-
-
-
-
-
-
-
-
-
-
                     'Is the player selecting a bill?
                 ElseIf CheckBillSelection(PointOffset) > -1 Then
                     'Yes, the player is selecting a bill.
@@ -4874,7 +4794,6 @@ Public Class Form1
                     LevelSelected = False
                     SpawnSelected = False
                     SelectedBackdrop = -1
-
 
                     'Is the player selecting a cloud?
                 ElseIf CheckCloudSelection(PointOffset) > -1 Then
@@ -4914,7 +4833,6 @@ Public Class Form1
                     SpawnSelected = False
                     SelectedBackdrop = -1
 
-
                 ElseIf Spawn.Rect.Contains(PointOffset) Then
 
                     SpawnSelected = True
@@ -4932,7 +4850,6 @@ Public Class Form1
                     LevelSelected = False
                     SelectedBackdrop = -1
 
-                    'todo
                     'Is the player selecting a backdrop?
                 ElseIf CheckBackdropSelection(PointOffset) > -1 Then
                     'Yes, the player is selecting a backdrop.
@@ -4951,7 +4868,6 @@ Public Class Form1
                     GoalSelected = False
                     LevelSelected = False
                     SpawnSelected = False
-
 
                 Else
                     'No, the player is not selecting a game object.
@@ -4974,7 +4890,7 @@ Public Class Form1
             LevelSelected = False
             SelectedEnemy = -1
             SpawnSelected = False
-
+            SelectedBackdrop = -1
 
         End If
 
@@ -7176,6 +7092,8 @@ Public Class Form1
                         IsContextDown = True
 
                         If ShowMenu = False Then
+
+                            DeselectObjects()
 
                             ShowMenu = True
 

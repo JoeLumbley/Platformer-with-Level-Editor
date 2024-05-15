@@ -18,16 +18,16 @@ Gain a deep understanding of physics, collision detection, character movement, a
 #### 2. Programming Patterns
 Discover common programming patterns used in game development, such as object-oriented design and event handling.
 
+![124](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/92fb2182-08c5-4a55-9dd5-93dd0a42824b)
 
-![121](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/91ba51c1-1771-4af8-8a26-d779aec29802)
 
 
 #### 3. Level Design
 The level editor introduces you to key game design principles, covering aspects like level creation, storage, and loading.
 
 
-![122](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/15c20881-5bf5-44fe-90d4-f18513783a63)
 
+![125](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/64575454-d9d1-47c0-a06b-f2b516e391bf)
 
 
 
@@ -41,7 +41,6 @@ Learn how to use Xbox controllers in your own game projects.
 In conclusion, **"Platformer with Level Editor"** provides a comprehensive learning experience, equipping you with the skills to analyze code and lay the foundation for your own game projects. It's an excellent resource for anyone entering the field of game development. 🎮🚀
 
 
-![123](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/077a508a-da1d-4c8a-b3bd-d443d38dc0fd)
 
 
 

@@ -1005,7 +1005,7 @@ Public Class Form1
 
         DrawGridLines()
 
-        DrawSelectionAndSizingHamdle()
+        DrawSelectionAndSizingHandle()
 
         DrawOurHero()
 
@@ -1297,7 +1297,7 @@ Public Class Form1
 
             End If
 
-            Else
+        Else
             'The left thumbstick is in the neutral position.
 
             If GameState = AppState.Start Or GameState = AppState.Editing Then
@@ -1336,7 +1336,7 @@ Public Class Form1
 
             End If
 
-            ElseIf ControllerPosition.Gamepad.sThumbLY >= NeutralEnd Then
+        ElseIf ControllerPosition.Gamepad.sThumbLY >= NeutralEnd Then
             'The left thumbstick is in the up position.
 
             If GameState = AppState.Editing Then
@@ -1359,7 +1359,7 @@ Public Class Form1
 
             End If
 
-            Else
+        Else
             'The left thumbstick is in the neutral position.
 
             If GameState = AppState.Start Or GameState = AppState.Editing Then
@@ -1650,7 +1650,7 @@ Public Class Form1
 
             End If
 
-            ElseIf ControllerPosition.Gamepad.sThumbRX >= NeutralEnd Then
+        ElseIf ControllerPosition.Gamepad.sThumbRX >= NeutralEnd Then
             'The right thumbstick is in the right position.
 
             If GameState = AppState.Editing Then
@@ -1772,7 +1772,7 @@ Public Class Form1
 
             End If
 
-            ElseIf ControllerPosition.Gamepad.sThumbRY >= NeutralEnd Then
+        ElseIf ControllerPosition.Gamepad.sThumbRY >= NeutralEnd Then
             'The right thumbstick is in the up position.
 
             If GameState = AppState.Editing Then
@@ -1812,7 +1812,7 @@ Public Class Form1
 
             End If
 
-            Else
+        Else
             'The right thumbstick is in the neutral position.
 
             If GameState = AppState.Editing Then
@@ -2402,7 +2402,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub DrawSelectionAndSizingHamdle()
+    Private Sub DrawSelectionAndSizingHandle()
 
         With Buffer.Graphics
 
@@ -2416,19 +2416,35 @@ Public Class Form1
                     RectOffset.Offset(CameraOffset)
 
                     'Draw selection rectangle.
-                    .DrawRectangle(New Pen(Color.Orange, 6), RectOffset)
+                    .DrawRectangle(New Pen(Color.Black, 14), RectOffset)
+
+                    Dim SelectionPen As New Pen(Color.Orange, 4) With {
+                        .DashStyle = DashStyle.Dash,
+                        .DashCap = DashCap.Flat
+                    }
+
+                    'Draw dash selection rectangle.
+                    .DrawRectangle(SelectionPen, RectOffset)
 
                     'Position sizing handle.
                     SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
                     SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
 
                     'Draw sizing handle.
-                    .FillRectangle(Brushes.Black,
+                    .FillRectangle(Brushes.White,
                                            SizingHandle)
 
                     'Draw sizing handle outline.
-                    .DrawRectangle(New Pen(Color.OrangeRed, 6),
+                    .DrawRectangle(New Pen(Color.Black, 14),
                                            SizingHandle)
+
+                    'SelectionPen.LineJoin = LineJoin.Miter
+                    SelectionPen.DashStyle = DashStyle.Dot
+                    SelectionPen.Color = Color.OrangeRed
+
+
+                    'Draw sizing handle outline.
+                    .DrawRectangle(SelectionPen, SizingHandle)
 
                 End If
 

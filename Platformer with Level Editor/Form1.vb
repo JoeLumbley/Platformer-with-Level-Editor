@@ -2438,7 +2438,6 @@ Public Class Form1
                     .DrawRectangle(New Pen(Color.Black, 14),
                                            SizingHandle)
 
-                    'SelectionPen.LineJoin = LineJoin.Miter
                     SelectionPen.DashStyle = DashStyle.Dot
                     SelectionPen.Color = Color.OrangeRed
 

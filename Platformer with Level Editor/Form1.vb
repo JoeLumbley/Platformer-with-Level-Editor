@@ -7590,7 +7590,6 @@ Public Class Form1
                     SelectedCloud = -1
 
                 End If
-                'Todo
 
                 If SelectedBackdrop > -1 Then
 
@@ -7599,7 +7598,6 @@ Public Class Form1
                     SelectedBackdrop = -1
 
                 End If
-
 
                 If GoalSelected = True Then
 
@@ -7669,7 +7667,6 @@ Public Class Form1
 
                 End If
 
-                'Todo
                 If SelectedBackdrop > -1 Then
 
                     RemoveBackdrop(SelectedBackdrop)
@@ -7677,7 +7674,6 @@ Public Class Form1
                     SelectedBackdrop = -1
 
                 End If
-
 
                 If GoalSelected = True Then
 
@@ -9436,7 +9432,6 @@ Public Class Form1
 
         If GameState = AppState.Editing Then
 
-
             'Is player over a game object that can not have its color set?
             If SizingHandleSelected = False AndAlso
                 SelectedBlock = -1 AndAlso
@@ -9447,9 +9442,6 @@ Public Class Form1
                 SelectedEnemy = -1 AndAlso
                 SpawnSelected = False Then
                 'No, the player is not over a game object that can not have its color set.
-
-
-                'todo
 
                 If SelectedBackdrop > -1 Then
 

@@ -2546,7 +2546,6 @@ Public Class Form1
 
     End Sub
 
-
     Private Sub DrawSelectionRectangle(Rect As Rectangle, Grap As Graphics)
 
         'Draw selection rectangle.
@@ -2558,7 +2557,6 @@ Public Class Form1
                     }
         'Todo SelectionRectanglePen
         'Todo SelectionRectangleDashPen
-
 
         'Draw dash selection rectangle.
         Grap.DrawRectangle(SelectionPen, Rect)
@@ -2584,7 +2582,6 @@ Public Class Form1
         Grap.DrawRectangle(SelectionPen, SizingHandle)
 
     End Sub
-
 
     Private Sub DrawBlocks()
 

@@ -2189,21 +2189,9 @@ Public Class Form1
 
             .DrawString("Start", SpawnFont, Brushes.White, RectOffset, AlineCenterMiddle)
 
-            If GameState = AppState.Editing Then
-
-                If SpawnSelected = True Then
-
-                    'Draw selection rectangle.
-                    .DrawRectangle(New Pen(Color.Black, 6), RectOffset)
-
-                End If
-
-            End If
-
         End With
 
     End Sub
-
 
     Private Sub DrawEnemies()
 
@@ -2258,27 +2246,6 @@ Public Class Form1
                             SpanOffset.Offset(CameraOffset)
 
                             .FillRectangle(New SolidBrush(Color.FromArgb(128, Color.Chocolate)), SpanOffset)
-
-                            'If SelectedEnemy = Array.IndexOf(Enemies, Enemy) Then
-
-                            '    Dim SelectionSize As New Size(Enemy.PatrolB.X + GridSize - Enemy.PatrolA.X, GridSize)
-
-                            '    Dim SelectionOffset As New Rectangle(New Point(Enemy.PatrolA.X, Enemy.PatrolA.Y), SelectionSize)
-
-                            '    SelectionOffset.Offset(CameraOffset)
-
-                            '    'Draw selection rectangle.
-                            '    .DrawRectangle(New Pen(Color.Red, 6), SelectionOffset)
-
-                            '    'Position sizing handle.
-                            '    SizingHandle.X = SelectionOffset.Right - SizingHandle.Width \ 2
-                            '    SizingHandle.Y = SelectionOffset.Bottom - SizingHandle.Height \ 2
-
-                            '    'Draw sizing handle.
-                            '    .FillRectangle(Brushes.Black,
-                            '                   SizingHandle)
-
-                            'End If
 
                     End Select
 
@@ -2347,25 +2314,6 @@ Public Class Form1
                                 Brushes.Green,
                                 RectOffset,
                                 AlineCenterMiddle)
-
-                    End If
-
-                End If
-
-                If GameState = AppState.Editing Then
-
-                    If GoalSelected = True Then
-
-                        'Draw selection rectangle.
-                        .DrawRectangle(New Pen(Color.Red, 6), RectOffset)
-
-                        'Position sizing handle.
-                        SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
-                        SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
-
-                        'Draw sizing handle.
-                        .FillRectangle(Brushes.Black,
-                                       SizingHandle)
 
                     End If
 
@@ -2591,25 +2539,6 @@ Public Class Form1
 
                     End If
 
-                    If GameState = AppState.Editing Then
-
-                        If SelectedBlock = Array.IndexOf(Blocks, Block) Then
-
-                            'Draw selection rectangle.
-                            .DrawRectangle(New Pen(Color.Red, 6), RectOffset)
-
-                            'Position sizing handle.
-                            SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
-                            SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
-
-                            'Draw sizing handle.
-                            .FillRectangle(Brushes.Black,
-                                           SizingHandle)
-
-                        End If
-
-                    End If
-
                 Next
 
             End If
@@ -2647,25 +2576,6 @@ Public Class Form1
                                   RectOffset.Bottom - 10)
 
                         .DrawRectangle(OutinePen, RectOffset)
-
-                    End If
-
-                    If GameState = AppState.Editing Then
-
-                        If SelectedBush = Array.IndexOf(Bushes, Bush) Then
-
-                            'Draw selection rectangle.
-                            .DrawRectangle(New Pen(Color.Red, 6), RectOffset)
-
-                            'Position sizing handle.
-                            SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
-                            SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
-
-                            'Draw sizing handle.
-                            .FillRectangle(Brushes.Black,
-                                           SizingHandle)
-
-                        End If
 
                     End If
 

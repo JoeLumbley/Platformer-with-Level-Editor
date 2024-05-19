@@ -19,7 +19,7 @@ Gain a deep understanding of physics, collision detection, character movement, a
 Discover common programming patterns used in game development, such as object-oriented design and event handling.
 
 
-![126](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/58d609e6-d3e2-4cce-95a7-573e0f1e70f3)
+![128](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/0f893bb4-9d3b-406a-b41f-233abf6e6165)
 
 
 #### 3. Level Design
@@ -27,7 +27,7 @@ The level editor introduces you to key game design principles, covering aspects 
 
 
 
-![127](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/5c82e6fb-ce19-4514-913f-9915e24603b2)
+![130](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/4e093da0-0e9f-4064-8006-5c6e5099cd14)
 
 
 

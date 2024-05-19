@@ -2416,42 +2416,13 @@ Public Class Form1
 
                     SelectionOffset.Offset(CameraOffset)
 
-
-
-
                     DrawSelectionRectangle(SelectionOffset, Buffer.Graphics)
-
-
-
-
-                    ''Draw selection rectangle.
-                    '.DrawRectangle(New Pen(Color.Black, 14), SelectionOffset)
-
-                    Dim SelectionPen As New Pen(Color.Orange, 4) With {
-                        .DashStyle = DashStyle.Dash,
-                        .DashCap = DashCap.Flat
-                    }
-
-                    ''Draw dash selection rectangle.
-                    '.DrawRectangle(SelectionPen, SelectionOffset)
 
                     'Position sizing handle.
                     SizingHandle.X = SelectionOffset.Right - SizingHandle.Width \ 2
                     SizingHandle.Y = SelectionOffset.Bottom - SizingHandle.Height \ 2
 
-                    'Draw sizing handle.
-                    .FillRectangle(Brushes.White,
-                                           SizingHandle)
-
-                    'Draw sizing handle outline.
-                    .DrawRectangle(New Pen(Color.Black, 14),
-                                           SizingHandle)
-
-                    SelectionPen.DashStyle = DashStyle.Dot
-                    SelectionPen.Color = Color.OrangeRed
-
-                    'Draw sizing handle outline.
-                    .DrawRectangle(SelectionPen, SizingHandle)
+                    DrawSizingHandle(SelectionOffset, Buffer.Graphics)
 
                 End If
 
@@ -2463,34 +2434,13 @@ Public Class Form1
 
                     RectOffset.Offset(CameraOffset)
 
-                    'Draw selection rectangle.
-                    .DrawRectangle(New Pen(Color.Black, 14), RectOffset)
-
-                    Dim SelectionPen As New Pen(Color.Orange, 4) With {
-                        .DashStyle = DashStyle.Dash,
-                        .DashCap = DashCap.Flat
-                    }
-
-                    'Draw dash selection rectangle.
-                    .DrawRectangle(SelectionPen, RectOffset)
+                    DrawSelectionRectangle(RectOffset, Buffer.Graphics)
 
                     'Position sizing handle.
                     SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
                     SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
 
-                    'Draw sizing handle.
-                    .FillRectangle(Brushes.White,
-                                           SizingHandle)
-
-                    'Draw sizing handle outline.
-                    .DrawRectangle(New Pen(Color.Black, 14),
-                                           SizingHandle)
-
-                    SelectionPen.DashStyle = DashStyle.Dot
-                    SelectionPen.Color = Color.OrangeRed
-
-                    'Draw sizing handle outline.
-                    .DrawRectangle(SelectionPen, SizingHandle)
+                    DrawSizingHandle(RectOffset, Buffer.Graphics)
 
                 End If
 
@@ -2502,34 +2452,13 @@ Public Class Form1
 
                     RectOffset.Offset(CameraOffset)
 
-                    'Draw selection rectangle.
-                    .DrawRectangle(New Pen(Color.Black, 14), RectOffset)
-
-                    Dim SelectionPen As New Pen(Color.Orange, 4) With {
-                        .DashStyle = DashStyle.Dash,
-                        .DashCap = DashCap.Flat
-                    }
-
-                    'Draw dash selection rectangle.
-                    .DrawRectangle(SelectionPen, RectOffset)
+                    DrawSelectionRectangle(RectOffset, Buffer.Graphics)
 
                     'Position sizing handle.
                     SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
                     SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
 
-                    'Draw sizing handle.
-                    .FillRectangle(Brushes.White,
-                                           SizingHandle)
-
-                    'Draw sizing handle outline.
-                    .DrawRectangle(New Pen(Color.Black, 14),
-                                           SizingHandle)
-
-                    SelectionPen.DashStyle = DashStyle.Dot
-                    SelectionPen.Color = Color.OrangeRed
-
-                    'Draw sizing handle outline.
-                    .DrawRectangle(SelectionPen, SizingHandle)
+                    DrawSizingHandle(RectOffset, Buffer.Graphics)
 
                 End If
 
@@ -2541,37 +2470,9 @@ Public Class Form1
 
                     RectOffset.Offset(CameraOffset)
 
-                    'Draw selection rectangle.
-                    .DrawRectangle(New Pen(Color.Black, 14), RectOffset)
-
-                    Dim SelectionPen As New Pen(Color.Orange, 4) With {
-                        .DashStyle = DashStyle.Dash,
-                        .DashCap = DashCap.Flat
-                    }
-
-                    'Draw dash selection rectangle.
-                    .DrawRectangle(SelectionPen, RectOffset)
-
-                    ''Position sizing handle.
-                    'SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
-                    'SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
-
-                    ''Draw sizing handle.
-                    '.FillRectangle(Brushes.White,
-                    '                       SizingHandle)
-
-                    ''Draw sizing handle outline.
-                    '.DrawRectangle(New Pen(Color.Black, 14),
-                    '                       SizingHandle)
-
-                    'SelectionPen.DashStyle = DashStyle.Dot
-                    'SelectionPen.Color = Color.OrangeRed
-
-                    ''Draw sizing handle outline.
-                    '.DrawRectangle(SelectionPen, SizingHandle)
+                    DrawSelectionRectangle(RectOffset, Buffer.Graphics)
 
                 End If
-
 
                 If SelectedBlock > -1 Then
 
@@ -2581,34 +2482,13 @@ Public Class Form1
 
                     RectOffset.Offset(CameraOffset)
 
-                    'Draw selection rectangle.
-                    .DrawRectangle(New Pen(Color.Black, 14), RectOffset)
-
-                    Dim SelectionPen As New Pen(Color.Orange, 4) With {
-                        .DashStyle = DashStyle.Dash,
-                        .DashCap = DashCap.Flat
-                    }
-
-                    'Draw dash selection rectangle.
-                    .DrawRectangle(SelectionPen, RectOffset)
+                    DrawSelectionRectangle(RectOffset, Buffer.Graphics)
 
                     'Position sizing handle.
                     SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
                     SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
 
-                    'Draw sizing handle.
-                    .FillRectangle(Brushes.White,
-                                           SizingHandle)
-
-                    'Draw sizing handle outline.
-                    .DrawRectangle(New Pen(Color.Black, 14),
-                                           SizingHandle)
-
-                    SelectionPen.DashStyle = DashStyle.Dot
-                    SelectionPen.Color = Color.OrangeRed
-
-                    'Draw sizing handle outline.
-                    .DrawRectangle(SelectionPen, SizingHandle)
+                    DrawSizingHandle(RectOffset, Buffer.Graphics)
 
                 End If
 
@@ -2620,45 +2500,15 @@ Public Class Form1
 
                     RectOffset.Offset(CameraOffset)
 
-
-
-
-                    'Draw selection rectangle.
-                    .DrawRectangle(New Pen(Color.Black, 14), RectOffset)
-
-                    Dim SelectionPen As New Pen(Color.Orange, 4) With {
-                        .DashStyle = DashStyle.Dash,
-                        .DashCap = DashCap.Flat
-                    }
-
-                    'Draw dash selection rectangle.
-                    .DrawRectangle(SelectionPen, RectOffset)
-
-
-
-
+                    DrawSelectionRectangle(RectOffset, Buffer.Graphics)
 
                     'Position sizing handle.
                     SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
                     SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
 
-                    'Draw sizing handle.
-                    .FillRectangle(Brushes.White,
-                                           SizingHandle)
-
-                    'Draw sizing handle outline.
-                    .DrawRectangle(New Pen(Color.Black, 14),
-                                           SizingHandle)
-
-                    SelectionPen.DashStyle = DashStyle.Dot
-                    SelectionPen.Color = Color.OrangeRed
-
-                    'Draw sizing handle outline.
-                    .DrawRectangle(SelectionPen, SizingHandle)
+                    DrawSizingHandle(RectOffset, Buffer.Graphics)
 
                 End If
-
-
 
                 If SelectedCloud > -1 Then
 
@@ -2668,37 +2518,15 @@ Public Class Form1
 
                     RectOffset.Offset(CameraOffset)
 
-                    'Draw selection rectangle.
-                    .DrawRectangle(New Pen(Color.Black, 14), RectOffset)
-
-                    Dim SelectionPen As New Pen(Color.Orange, 4) With {
-                        .DashStyle = DashStyle.Dash,
-                        .DashCap = DashCap.Flat
-                    }
-
-                    'Draw dash selection rectangle.
-                    .DrawRectangle(SelectionPen, RectOffset)
+                    DrawSelectionRectangle(RectOffset, Buffer.Graphics)
 
                     'Position sizing handle.
                     SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
                     SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
 
-                    'Draw sizing handle.
-                    .FillRectangle(Brushes.White,
-                                           SizingHandle)
-
-                    'Draw sizing handle outline.
-                    .DrawRectangle(New Pen(Color.Black, 14),
-                                           SizingHandle)
-
-                    SelectionPen.DashStyle = DashStyle.Dot
-                    SelectionPen.Color = Color.OrangeRed
-
-                    'Draw sizing handle outline.
-                    .DrawRectangle(SelectionPen, SizingHandle)
+                    DrawSizingHandle(RectOffset, Buffer.Graphics)
 
                 End If
-
 
                 If SelectedBill > -1 Then
 
@@ -2708,34 +2536,7 @@ Public Class Form1
 
                     RectOffset.Offset(CameraOffset)
 
-                    'Draw selection rectangle.
-                    .DrawRectangle(New Pen(Color.Black, 14), RectOffset)
-
-                    Dim SelectionPen As New Pen(Color.Orange, 4) With {
-                        .DashStyle = DashStyle.Dash,
-                        .DashCap = DashCap.Flat
-                    }
-
-                    'Draw dash selection rectangle.
-                    .DrawRectangle(SelectionPen, RectOffset)
-
-                    ''Position sizing handle.
-                    'SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
-                    'SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
-
-                    ''Draw sizing handle.
-                    '.FillRectangle(Brushes.White,
-                    '                       SizingHandle)
-
-                    ''Draw sizing handle outline.
-                    '.DrawRectangle(New Pen(Color.Black, 14),
-                    '                       SizingHandle)
-
-                    'SelectionPen.DashStyle = DashStyle.Dot
-                    'SelectionPen.Color = Color.OrangeRed
-
-                    ''Draw sizing handle outline.
-                    '.DrawRectangle(SelectionPen, SizingHandle)
+                    DrawSelectionRectangle(RectOffset, Buffer.Graphics)
 
                 End If
 
@@ -2752,8 +2553,8 @@ Public Class Form1
         Grap.DrawRectangle(New Pen(Color.Black, 14), Rect)
 
         Dim SelectionPen As New Pen(Color.Orange, 4) With {
-                        .DashStyle = DashStyle.Dash,
-                        .DashCap = DashCap.Flat
+                        .DashCap = DashCap.Flat,
+                        .DashPattern = New Single() {4.0F, 4.0F}
                     }
         'Todo SelectionRectanglePen
         'Todo SelectionRectangleDashPen
@@ -2763,6 +2564,27 @@ Public Class Form1
         Grap.DrawRectangle(SelectionPen, Rect)
 
     End Sub
+
+    Private Sub DrawSizingHandle(Rect As Rectangle, Grap As Graphics)
+
+        Dim SelectionPen As New Pen(Color.OrangeRed, 4) With {
+            .DashStyle = DashStyle.Solid,
+            .DashCap = DashCap.Flat
+        }
+
+        'Draw sizing handle.
+        Grap.FillRectangle(Brushes.White,
+                               SizingHandle)
+
+        'Draw sizing handle outline.
+        Grap.DrawRectangle(New Pen(Color.Black, 14),
+                               SizingHandle)
+
+        'Draw sizing handle outline.
+        Grap.DrawRectangle(SelectionPen, SizingHandle)
+
+    End Sub
+
 
     Private Sub DrawBlocks()
 

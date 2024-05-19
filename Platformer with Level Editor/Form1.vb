@@ -2619,25 +2619,6 @@ Public Class Form1
 
                     End If
 
-                    If GameState = AppState.Editing Then
-
-                        If SelectedCloud = Array.IndexOf(Clouds, Cloud) Then
-
-                            'Draw selection rectangle.
-                            .DrawRectangle(New Pen(Color.Red, 6), RectOffset)
-
-                            'Position sizing handle.
-                            SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
-                            SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
-
-                            'Draw sizing handle.
-                            .FillRectangle(Brushes.Black,
-                                           SizingHandle)
-
-                        End If
-
-                    End If
-
                 Next
 
             End If
@@ -2691,14 +2672,6 @@ Public Class Form1
                                 .FillRectangle(Brushes.Goldenrod, RectOffset)
 
                                 .DrawString("$", BillFont, Brushes.OrangeRed, RectOffset, AlineCenterMiddle)
-
-
-                            End If
-
-                            If SelectedBill = Array.IndexOf(Cash, Bill) Then
-
-                                'Draw selection rectangle.
-                                .DrawRectangle(New Pen(Color.Red, 6), RectOffset)
 
                             End If
 

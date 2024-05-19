@@ -2408,27 +2408,27 @@ Public Class Form1
 
             If GameState = AppState.Editing Then
 
+                Dim RectOffset As Rectangle
+
                 If SelectedEnemy > -1 Then
 
                     Dim SelectionSize As New Size(Enemies(SelectedEnemy).PatrolB.X + GridSize - Enemies(SelectedEnemy).PatrolA.X, GridSize)
 
-                    Dim SelectionOffset As New Rectangle(New Point(Enemies(SelectedEnemy).PatrolA.X, Enemies(SelectedEnemy).PatrolA.Y), SelectionSize)
+                    RectOffset = New Rectangle(New Point(Enemies(SelectedEnemy).PatrolA.X, Enemies(SelectedEnemy).PatrolA.Y), SelectionSize)
 
-                    SelectionOffset.Offset(CameraOffset)
+                    RectOffset.Offset(CameraOffset)
 
-                    DrawSelectionRectangle(SelectionOffset, Buffer.Graphics)
+                    DrawSelectionRectangle(RectOffset, Buffer.Graphics)
 
                     'Position sizing handle.
-                    SizingHandle.X = SelectionOffset.Right - SizingHandle.Width \ 2
-                    SizingHandle.Y = SelectionOffset.Bottom - SizingHandle.Height \ 2
+                    SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
+                    SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
 
-                    DrawSizingHandle(SelectionOffset, Buffer.Graphics)
+                    DrawSizingHandle(RectOffset, Buffer.Graphics)
 
                 End If
 
                 If SelectedBackdrop > -1 Then
-
-                    Dim RectOffset As Rectangle
 
                     RectOffset = Backdrops(SelectedBackdrop).Rect
 
@@ -2446,8 +2446,6 @@ Public Class Form1
 
                 If SelectedBush > -1 Then
 
-                    Dim RectOffset As Rectangle
-
                     RectOffset = Bushes(SelectedBush).Rect
 
                     RectOffset.Offset(CameraOffset)
@@ -2464,8 +2462,6 @@ Public Class Form1
 
                 If SpawnSelected = True Then
 
-                    Dim RectOffset As Rectangle
-
                     RectOffset = Spawn.Rect
 
                     RectOffset.Offset(CameraOffset)
@@ -2475,8 +2471,6 @@ Public Class Form1
                 End If
 
                 If SelectedBlock > -1 Then
-
-                    Dim RectOffset As Rectangle
 
                     RectOffset = Blocks(SelectedBlock).Rect
 
@@ -2494,8 +2488,6 @@ Public Class Form1
 
                 If GoalSelected = True Then
 
-                    Dim RectOffset As Rectangle
-
                     RectOffset = Goal.Rect
 
                     RectOffset.Offset(CameraOffset)
@@ -2512,8 +2504,6 @@ Public Class Form1
 
                 If SelectedCloud > -1 Then
 
-                    Dim RectOffset As Rectangle
-
                     RectOffset = Clouds(SelectedCloud).Rect
 
                     RectOffset.Offset(CameraOffset)
@@ -2529,8 +2519,6 @@ Public Class Form1
                 End If
 
                 If SelectedBill > -1 Then
-
-                    Dim RectOffset As Rectangle
 
                     RectOffset = Cash(SelectedBill).Rect
 

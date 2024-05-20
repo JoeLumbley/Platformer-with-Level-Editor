@@ -4659,7 +4659,6 @@ Public Class Form1
 
         End If
 
-
         If GoalToolButton.Rect.Contains(e) Then
 
             DeselectObjects()
@@ -4752,7 +4751,6 @@ Public Class Form1
                     SpawnSelected = False
                     SelectedBackdrop = -1
 
-
                 ElseIf Goal.Rect.Contains(PointOffset) Then
 
                     GoalSelected = True
@@ -4769,7 +4767,6 @@ Public Class Form1
                     LevelSelected = False
                     SpawnSelected = False
                     SelectedBackdrop = -1
-
 
                     'Is the player selecting a block?
                 ElseIf CheckBlockSelection(PointOffset) > -1 Then
@@ -4934,9 +4931,6 @@ Public Class Form1
                 SelectionOffset.X = PointOffset.X - Backdrops(Backdrops.Length - 1).Rect.X
                 SelectionOffset.Y = PointOffset.Y - Backdrops(Backdrops.Length - 1).Rect.Y
 
-
-
-
             Case Tools.Block
 
                 'Snap block to grid.
@@ -4956,10 +4950,6 @@ Public Class Form1
 
                 SelectionOffset.X = PointOffset.X - Blocks(Blocks.Length - 1).Rect.X
                 SelectionOffset.Y = PointOffset.Y - Blocks(Blocks.Length - 1).Rect.Y
-
-
-
-
 
             Case Tools.Bill
 

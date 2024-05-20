@@ -543,7 +543,7 @@ Public Class Form1
 
     Private SelectionHighlightHoverPen As New Pen(SelectionHighlightHoverColor, 3)
 
-    Private SelectionRectanglePen As New Pen(Color.Black, 14)
+    Private SelectionRectangleOutlinePen As New Pen(Color.Black, 14)
 
     Private SelectionRectangleDashPen As New Pen(Color.Orange, 8) With {
                         .DashCap = DashCap.Flat,
@@ -2486,8 +2486,8 @@ Public Class Form1
 
     Private Sub DrawSelectionRectangle(Rect As Rectangle, Grap As Graphics)
 
-        'Draw selection rectangle.
-        Grap.DrawRectangle(SelectionRectanglePen, Rect)
+        'Draw selection rectangle outline.
+        Grap.DrawRectangle(SelectionRectangleOutlinePen, Rect)
 
         'Draw dash selection rectangle.
         Grap.DrawRectangle(SelectionRectangleDashPen, Rect)
@@ -2496,17 +2496,14 @@ Public Class Form1
 
     Private Sub DrawSizingHandle(Rect As Rectangle, Grap As Graphics)
 
-        'Draw sizing handle.
-        Grap.FillRectangle(Brushes.White,
-                           SizingHandle)
+        'Draw sizing handle center.
+        Grap.FillRectangle(Brushes.White, SizingHandle)
 
         'Draw sizing handle outer outline.
-        Grap.DrawRectangle(SizingHandleOuterOutlinePen,
-                           SizingHandle)
+        Grap.DrawRectangle(SizingHandleOuterOutlinePen, SizingHandle)
 
         'Draw sizing handle inner outline.
-        Grap.DrawRectangle(SizingHandleInnerOutlinePen,
-                           SizingHandle)
+        Grap.DrawRectangle(SizingHandleInnerOutlinePen, SizingHandle)
 
     End Sub
 
@@ -7822,9 +7819,9 @@ Public Class Form1
 
             End If
 
-            Else
+        Else
 
-                ControllerLeft = False
+            ControllerLeft = False
 
         End If
 
@@ -7852,7 +7849,7 @@ Public Class Form1
 
             End If
 
-            Else
+        Else
 
             ControllerRight = False
 
@@ -7880,7 +7877,7 @@ Public Class Form1
 
             End If
 
-            End If
+        End If
 
         If DPadDownPressed = True Then
 

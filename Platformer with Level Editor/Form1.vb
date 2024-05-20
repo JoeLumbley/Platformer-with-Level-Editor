@@ -347,15 +347,11 @@ Public Class Form1
 
     Private BlockToolIcon As GameObject
 
-
-
     Private BackdropToolButton As GameObject
 
     Private BackdropToolButtonHover As Boolean = False
 
     Private BackdropToolIcon As GameObject
-
-
 
     Private BillToolButton As GameObject
 
@@ -434,7 +430,6 @@ Public Class Form1
     Private SelectedBlock As Integer = -1
 
     Private SelectedBackdrop As Integer = -1
-
 
     Private SelectedPlatform As Integer = -1
 
@@ -547,6 +542,17 @@ Public Class Form1
     Private SelectionHighlightHoverColor As Color = Color.DarkOrange
 
     Private SelectionHighlightHoverPen As New Pen(SelectionHighlightHoverColor, 3)
+
+    Private SelectionRectanglePen As New Pen(Color.Black, 14)
+
+    Private SelectionRectangleDashPen As New Pen(Color.Orange, 8) With {
+                        .DashCap = DashCap.Flat,
+                        .DashPattern = New Single() {4.0F, 4.0F}
+                    }
+
+    Private SizingHandleOuterOutlinePen As New Pen(Color.Black, 14)
+
+    Private SizingHandleInnerOutlinePen As New Pen(Color.OrangeRed, 8)
 
     Private ReadOnly AlineCenter As New StringFormat With {.Alignment = StringAlignment.Center}
 
@@ -2481,37 +2487,26 @@ Public Class Form1
     Private Sub DrawSelectionRectangle(Rect As Rectangle, Grap As Graphics)
 
         'Draw selection rectangle.
-        Grap.DrawRectangle(New Pen(Color.Black, 14), Rect)
-
-        Dim SelectionPen As New Pen(Color.Orange, 8) With {
-                        .DashCap = DashCap.Flat,
-                        .DashPattern = New Single() {4.0F, 4.0F}
-                    }
-        'Todo SelectionRectanglePen
-        'Todo SelectionRectangleDashPen
+        Grap.DrawRectangle(SelectionRectanglePen, Rect)
 
         'Draw dash selection rectangle.
-        Grap.DrawRectangle(SelectionPen, Rect)
+        Grap.DrawRectangle(SelectionRectangleDashPen, Rect)
 
     End Sub
 
     Private Sub DrawSizingHandle(Rect As Rectangle, Grap As Graphics)
 
-        Dim SelectionPen As New Pen(Color.OrangeRed, 4) With {
-            .DashStyle = DashStyle.Solid,
-            .DashCap = DashCap.Flat
-        }
-
         'Draw sizing handle.
         Grap.FillRectangle(Brushes.White,
-                               SizingHandle)
+                           SizingHandle)
 
-        'Draw sizing handle outline.
-        Grap.DrawRectangle(New Pen(Color.Black, 14),
-                               SizingHandle)
+        'Draw sizing handle outer outline.
+        Grap.DrawRectangle(SizingHandleOuterOutlinePen,
+                           SizingHandle)
 
-        'Draw sizing handle outline.
-        Grap.DrawRectangle(SelectionPen, SizingHandle)
+        'Draw sizing handle inner outline.
+        Grap.DrawRectangle(SizingHandleInnerOutlinePen,
+                           SizingHandle)
 
     End Sub
 

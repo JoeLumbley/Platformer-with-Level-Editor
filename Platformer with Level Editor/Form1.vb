@@ -2483,7 +2483,7 @@ Public Class Form1
         'Draw selection rectangle.
         Grap.DrawRectangle(New Pen(Color.Black, 14), Rect)
 
-        Dim SelectionPen As New Pen(Color.Orange, 4) With {
+        Dim SelectionPen As New Pen(Color.Orange, 8) With {
                         .DashCap = DashCap.Flat,
                         .DashPattern = New Single() {4.0F, 4.0F}
                     }

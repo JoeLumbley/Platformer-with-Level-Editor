@@ -2487,23 +2487,34 @@ Public Class Form1
     Private Sub DrawSelectionRectangle(Rect As Rectangle, Grap As Graphics)
 
         'Draw selection rectangle outline.
-        Grap.DrawRectangle(SelectionRectangleOutlinePen, Rect)
+        'Grap.DrawRectangle(SelectionRectangleOutlinePen, Rect)
+
+        DrawRoundedRectangle(SelectionRectangleOutlinePen, Rect, 5, Grap)
 
         'Draw dash selection rectangle.
         Grap.DrawRectangle(SelectionRectangleDashPen, Rect)
+
+        'DrawRoundedRectangle(SelectionRectangleDashPen, Rect, 5, Grap)
+
 
     End Sub
 
     Private Sub DrawSizingHandle(Rect As Rectangle, Grap As Graphics)
 
         'Draw sizing handle center.
-        Grap.FillRectangle(Brushes.White, SizingHandle)
+        'Grap.FillRectangle(Brushes.White, SizingHandle)
+
+        FillRoundedRectangle(Brushes.White, SizingHandle, 5, Grap)
 
         'Draw sizing handle outer outline.
-        Grap.DrawRectangle(SizingHandleOuterOutlinePen, SizingHandle)
+        'Grap.DrawRectangle(SizingHandleOuterOutlinePen, SizingHandle)
+
+        DrawRoundedRectangle(SizingHandleOuterOutlinePen, SizingHandle, 5, Grap)
 
         'Draw sizing handle inner outline.
-        Grap.DrawRectangle(SizingHandleInnerOutlinePen, SizingHandle)
+        'Grap.DrawRectangle(SizingHandleInnerOutlinePen, SizingHandle)
+
+        DrawRoundedRectangle(SizingHandleInnerOutlinePen, SizingHandle, 5, Grap)
 
     End Sub
 

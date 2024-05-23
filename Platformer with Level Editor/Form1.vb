@@ -3474,11 +3474,45 @@ Public Class Form1
 
             End If
 
+            Dim ButtonCaption As Rectangle
+            ButtonCaption.X = EditPlayButton.Rect.X + 2
+            ButtonCaption.Y = EditPlayButton.Rect.Y
+            ButtonCaption.Width = EditPlayButton.Rect.Width
+            ButtonCaption.Height = EditPlayButton.Rect.Height
+
+
             .DrawString("Play",
                         FPSFont,
                         Brushes.White,
-                        EditPlayButton.Rect,
+                        ButtonCaption,
                         AlineCenterMiddle)
+
+            Dim ControllerHint As Rectangle
+            ControllerHint.X = EditPlayButton.Rect.X + 100
+            ControllerHint.Y = EditPlayButton.Rect.Y + 65
+            ControllerHint.Width = 15
+            ControllerHint.Height = 7
+
+
+            FillRoundedRectangle(Brushes.OrangeRed, ControllerHint, 7, Buffer.Graphics)
+
+            ControllerHint.X = EditPlayButton.Rect.X + 85
+            ControllerHint.Y = EditPlayButton.Rect.Y + 70
+            ControllerHint.Width = 15
+            ControllerHint.Height = 15
+
+
+            FillRoundedRectangle(Brushes.Gray, ControllerHint, 15, Buffer.Graphics)
+
+
+            ControllerHint.X = EditPlayButton.Rect.X + 70
+            ControllerHint.Y = EditPlayButton.Rect.Y + 65
+            ControllerHint.Width = 15
+            ControllerHint.Height = 7
+
+
+            FillRoundedRectangle(Brushes.Gray, ControllerHint, 7, Buffer.Graphics)
+
 
         End With
 
@@ -3571,6 +3605,34 @@ Public Class Form1
                         Brushes.White,
                         MenuButton.Rect,
                         AlineCenterMiddle)
+
+
+            Dim ControllerHint As Rectangle
+            ControllerHint.X = MenuButton.Rect.X + 70
+            ControllerHint.Y = MenuButton.Rect.Y + 65
+            ControllerHint.Width = 15
+            ControllerHint.Height = 7
+
+
+            FillRoundedRectangle(Brushes.Gray, ControllerHint, 7, Buffer.Graphics)
+
+            ControllerHint.X = MenuButton.Rect.X + 55
+            ControllerHint.Y = MenuButton.Rect.Y + 70
+            ControllerHint.Width = 15
+            ControllerHint.Height = 15
+
+
+            FillRoundedRectangle(Brushes.Gray, ControllerHint, 15, Buffer.Graphics)
+
+
+            ControllerHint.X = MenuButton.Rect.X + 40
+            ControllerHint.Y = MenuButton.Rect.Y + 65
+            ControllerHint.Width = 15
+            ControllerHint.Height = 7
+
+
+            FillRoundedRectangle(Brushes.OrangeRed, ControllerHint, 7, Buffer.Graphics)
+
 
         End With
 

@@ -3511,6 +3511,36 @@ Public Class Form1
                         EditPlayButton.Rect,
                         AlineCenterMiddle)
 
+
+            Dim ControllerHint As Rectangle
+            ControllerHint.X = EditPlayButton.Rect.X + 100
+            ControllerHint.Y = EditPlayButton.Rect.Y + 65
+            ControllerHint.Width = 15
+            ControllerHint.Height = 7
+
+
+            FillRoundedRectangle(Brushes.OrangeRed, ControllerHint, 7, Buffer.Graphics)
+
+            ControllerHint.X = EditPlayButton.Rect.X + 85
+            ControllerHint.Y = EditPlayButton.Rect.Y + 70
+            ControllerHint.Width = 15
+            ControllerHint.Height = 15
+
+
+            FillRoundedRectangle(Brushes.Gray, ControllerHint, 15, Buffer.Graphics)
+
+
+            ControllerHint.X = EditPlayButton.Rect.X + 70
+            ControllerHint.Y = EditPlayButton.Rect.Y + 65
+            ControllerHint.Width = 15
+            ControllerHint.Height = 7
+
+
+            FillRoundedRectangle(Brushes.Gray, ControllerHint, 7, Buffer.Graphics)
+
+
+
+
         End With
 
     End Sub

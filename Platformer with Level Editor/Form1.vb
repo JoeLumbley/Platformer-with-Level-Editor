@@ -3480,7 +3480,6 @@ Public Class Form1
             ButtonCaption.Width = EditPlayButton.Rect.Width
             ButtonCaption.Height = EditPlayButton.Rect.Height
 
-
             .DrawString("Play",
                         FPSFont,
                         Brushes.White,
@@ -3493,7 +3492,6 @@ Public Class Form1
             ControllerHint.Width = 15
             ControllerHint.Height = 7
 
-
             FillRoundedRectangle(Brushes.OrangeRed, ControllerHint, 7, Buffer.Graphics)
 
             ControllerHint.X = EditPlayButton.Rect.X + 85
@@ -3501,18 +3499,14 @@ Public Class Form1
             ControllerHint.Width = 15
             ControllerHint.Height = 15
 
-
             FillRoundedRectangle(Brushes.Gray, ControllerHint, 15, Buffer.Graphics)
-
 
             ControllerHint.X = EditPlayButton.Rect.X + 70
             ControllerHint.Y = EditPlayButton.Rect.Y + 65
             ControllerHint.Width = 15
             ControllerHint.Height = 7
 
-
             FillRoundedRectangle(Brushes.Gray, ControllerHint, 7, Buffer.Graphics)
-
 
         End With
 

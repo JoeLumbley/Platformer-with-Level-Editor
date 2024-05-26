@@ -1,6 +1,6 @@
 # Platformer with Level Editor
 
-#### Learn to Code Your Own Games
+#### Make Your Own Games
 
 
 

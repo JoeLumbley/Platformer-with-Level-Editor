@@ -275,6 +275,8 @@ Public Class Form1
 
     Private ReadOnly FPSFont As New Font(FontFamily.GenericSansSerif, 25)
 
+    Private ReadOnly ControllerHintFont As New Font(FontFamily.GenericSansSerif, 15, FontStyle.Bold)
+
     Private ReadOnly BillFont As New Font(FontFamily.GenericSansSerif, 25, FontStyle.Bold)
 
     Private ReadOnly MenuButtonFont As New Font(FontFamily.GenericSansSerif, 45)
@@ -2960,6 +2962,35 @@ Public Class Form1
                                       PointerToolButton.Rect.Height),
                         AlineCenterMiddle)
 
+
+            If SelectedTool = Tools.Block Then
+
+
+                Dim ControllerHint As Rectangle
+                ControllerHint.X = PointerToolButton.Rect.X + 18
+                ControllerHint.Y = PointerToolButton.Rect.Y + 30
+                ControllerHint.Width = PointerToolButton.Rect.Width
+                ControllerHint.Height = PointerToolButton.Rect.Height
+
+                Dim ControllerHintShadow As Rectangle = ControllerHint
+                ControllerHintShadow.X = ControllerHint.X + 2
+                ControllerHintShadow.Y = ControllerHint.Y + 2
+
+                .DrawString("LT",
+            ControllerHintFont,
+            Brushes.Black,
+            ControllerHintShadow,
+            AlineCenterMiddle)
+
+                .DrawString("LT",
+            ControllerHintFont,
+            Brushes.White,
+            ControllerHint,
+            AlineCenterMiddle)
+
+
+            End If
+
         End With
 
     End Sub
@@ -3020,6 +3051,67 @@ Public Class Form1
                       BlockToolIcon.Rect.Top + 1,
                       BlockToolIcon.Rect.Left + 1,
                       BlockToolIcon.Rect.Top + 1)
+
+
+            If SelectedTool = Tools.Pointer Then
+
+
+                Dim ControllerHint As Rectangle
+                ControllerHint.X = BlockToolButton.Rect.X + 18
+                ControllerHint.Y = BlockToolButton.Rect.Y + 30
+                ControllerHint.Width = BlockToolButton.Rect.Width
+                ControllerHint.Height = BlockToolButton.Rect.Height
+
+                Dim ControllerHintShadow As Rectangle = ControllerHint
+                ControllerHintShadow.X = ControllerHint.X + 2
+                ControllerHintShadow.Y = ControllerHint.Y + 2
+
+                .DrawString("RT",
+            ControllerHintFont,
+            Brushes.Black,
+            ControllerHintShadow,
+            AlineCenterMiddle)
+
+
+                .DrawString("RT",
+            ControllerHintFont,
+            Brushes.White,
+            ControllerHint,
+            AlineCenterMiddle)
+
+
+            End If
+
+            If SelectedTool = Tools.Bill Then
+
+
+                Dim ControllerHint As Rectangle
+                ControllerHint.X = BlockToolButton.Rect.X + 18
+                ControllerHint.Y = BlockToolButton.Rect.Y + 30
+                ControllerHint.Width = BlockToolButton.Rect.Width
+                ControllerHint.Height = BlockToolButton.Rect.Height
+
+                Dim ControllerHintShadow As Rectangle = ControllerHint
+                ControllerHintShadow.X = ControllerHint.X + 2
+                ControllerHintShadow.Y = ControllerHint.Y + 2
+
+                .DrawString("LT",
+            ControllerHintFont,
+            Brushes.Black,
+            ControllerHintShadow,
+            AlineCenterMiddle)
+
+
+                .DrawString("LT",
+            ControllerHintFont,
+            Brushes.White,
+            ControllerHint,
+            AlineCenterMiddle)
+
+
+            End If
+
+
 
         End With
 
@@ -3105,6 +3197,40 @@ Public Class Form1
             'e.Graphics.FillRectangle(GradBrush, Rect)
             FillRoundedRectangle(GradBrush, BackdropToolIcon.Rect, 30, Buffer.Graphics)
 
+            If SelectedTool = Tools.Pointer Then
+
+
+                Dim ControllerHint As Rectangle
+                ControllerHint.X = BackdropToolButton.Rect.X + 18
+                ControllerHint.Y = BackdropToolButton.Rect.Y + 30
+                ControllerHint.Width = BackdropToolButton.Rect.Width
+                ControllerHint.Height = BackdropToolButton.Rect.Height
+
+                Dim ControllerHintShadow As Rectangle = ControllerHint
+                ControllerHintShadow.X = ControllerHint.X + 2
+                ControllerHintShadow.Y = ControllerHint.Y + 2
+
+                .DrawString("LT",
+            ControllerHintFont,
+            Brushes.Black,
+            ControllerHintShadow,
+            AlineCenterMiddle)
+
+
+                .DrawString("LT",
+            ControllerHintFont,
+            Brushes.White,
+            ControllerHint,
+            AlineCenterMiddle)
+
+
+            End If
+
+
+
+
+
+
 
         End With
 
@@ -3167,6 +3293,70 @@ Public Class Form1
                         Brushes.OrangeRed,
                         BillToolIcon.Rect,
                         AlineCenterMiddle)
+
+            If SelectedTool = Tools.Block Then
+
+
+                Dim ControllerHint As Rectangle
+                ControllerHint.X = BillToolButton.Rect.X + 18
+                ControllerHint.Y = BillToolButton.Rect.Y + 30
+                ControllerHint.Width = BillToolButton.Rect.Width
+                ControllerHint.Height = BillToolButton.Rect.Height
+
+                Dim ControllerHintShadow As Rectangle = ControllerHint
+                ControllerHintShadow.X = ControllerHint.X + 2
+                ControllerHintShadow.Y = ControllerHint.Y + 2
+
+                .DrawString("RT",
+            ControllerHintFont,
+            Brushes.Black,
+            ControllerHintShadow,
+            AlineCenterMiddle)
+
+                .DrawString("RT",
+            ControllerHintFont,
+            Brushes.White,
+            ControllerHint,
+            AlineCenterMiddle)
+
+
+            End If
+
+
+            If SelectedTool = Tools.Bush Then
+
+
+                Dim ControllerHint As Rectangle
+                ControllerHint.X = BillToolButton.Rect.X + 18
+                ControllerHint.Y = BillToolButton.Rect.Y + 30
+                ControllerHint.Width = BillToolButton.Rect.Width
+                ControllerHint.Height = BillToolButton.Rect.Height
+
+                Dim ControllerHintShadow As Rectangle = ControllerHint
+                ControllerHintShadow.X = ControllerHint.X + 2
+                ControllerHintShadow.Y = ControllerHint.Y + 2
+
+                .DrawString("LT",
+            ControllerHintFont,
+            Brushes.Black,
+            ControllerHintShadow,
+            AlineCenterMiddle)
+
+                .DrawString("LT",
+            ControllerHintFont,
+            Brushes.White,
+            ControllerHint,
+            AlineCenterMiddle)
+
+
+            End If
+
+
+
+
+
+
+
 
         End With
 
@@ -3237,6 +3427,67 @@ Public Class Form1
 
             .DrawRectangle(CloundToolIconOutinePen, CloundToolIcon.Rect)
 
+
+
+            If SelectedTool = Tools.Bush Then
+
+
+                Dim ControllerHint As Rectangle
+                ControllerHint.X = CloudToolButton.Rect.X + 18
+                ControllerHint.Y = CloudToolButton.Rect.Y + 30
+                ControllerHint.Width = CloudToolButton.Rect.Width
+                ControllerHint.Height = CloudToolButton.Rect.Height
+
+                Dim ControllerHintShadow As Rectangle = ControllerHint
+                ControllerHintShadow.X = ControllerHint.X + 2
+                ControllerHintShadow.Y = ControllerHint.Y + 2
+
+                .DrawString("RT",
+            ControllerHintFont,
+            Brushes.Black,
+            ControllerHintShadow,
+            AlineCenterMiddle)
+
+                .DrawString("RT",
+            ControllerHintFont,
+            Brushes.White,
+            ControllerHint,
+            AlineCenterMiddle)
+
+
+            End If
+
+            If SelectedTool = Tools.Goal Then
+
+
+                Dim ControllerHint As Rectangle
+                ControllerHint.X = CloudToolButton.Rect.X + 18
+                ControllerHint.Y = CloudToolButton.Rect.Y + 30
+                ControllerHint.Width = CloudToolButton.Rect.Width
+                ControllerHint.Height = CloudToolButton.Rect.Height
+
+                Dim ControllerHintShadow As Rectangle = ControllerHint
+                ControllerHintShadow.X = ControllerHint.X + 2
+                ControllerHintShadow.Y = ControllerHint.Y + 2
+
+                .DrawString("LT",
+            ControllerHintFont,
+            Brushes.Black,
+            ControllerHintShadow,
+            AlineCenterMiddle)
+
+                .DrawString("LT",
+            ControllerHintFont,
+            Brushes.White,
+            ControllerHint,
+            AlineCenterMiddle)
+
+
+            End If
+
+
+
+
         End With
 
     End Sub
@@ -3306,6 +3557,68 @@ Public Class Form1
 
             .DrawRectangle(BushToolIconOutinePen, BushToolIcon.Rect)
 
+
+            If SelectedTool = Tools.Bill Then
+
+
+                Dim ControllerHint As Rectangle
+                ControllerHint.X = BushToolIcon.Rect.X + 18
+                ControllerHint.Y = BushToolIcon.Rect.Y + 30
+                ControllerHint.Width = BushToolIcon.Rect.Width
+                ControllerHint.Height = BushToolIcon.Rect.Height
+
+                Dim ControllerHintShadow As Rectangle = ControllerHint
+                ControllerHintShadow.X = ControllerHint.X + 2
+                ControllerHintShadow.Y = ControllerHint.Y + 2
+
+                .DrawString("RT",
+            ControllerHintFont,
+            Brushes.Black,
+            ControllerHintShadow,
+            AlineCenterMiddle)
+
+                .DrawString("RT",
+            ControllerHintFont,
+            Brushes.White,
+            ControllerHint,
+            AlineCenterMiddle)
+
+
+            End If
+
+
+
+            If SelectedTool = Tools.Cloud Then
+
+
+                Dim ControllerHint As Rectangle
+                ControllerHint.X = BushToolIcon.Rect.X + 18
+                ControllerHint.Y = BushToolIcon.Rect.Y + 30
+                ControllerHint.Width = BushToolIcon.Rect.Width
+                ControllerHint.Height = BushToolIcon.Rect.Height
+
+                Dim ControllerHintShadow As Rectangle = ControllerHint
+                ControllerHintShadow.X = ControllerHint.X + 2
+                ControllerHintShadow.Y = ControllerHint.Y + 2
+
+                .DrawString("LT",
+            ControllerHintFont,
+            Brushes.Black,
+            ControllerHintShadow,
+            AlineCenterMiddle)
+
+                .DrawString("LT",
+            ControllerHintFont,
+            Brushes.White,
+            ControllerHint,
+            AlineCenterMiddle)
+
+
+            End If
+
+
+
+
         End With
 
     End Sub
@@ -3362,6 +3675,43 @@ Public Class Form1
             .FillRectangle(Brushes.Chocolate, EnemyToolIcon.Rect)
 
             .DrawString("E", EnemyIconFont, Brushes.PaleGoldenrod, EnemyToolIcon.Rect, AlineCenterMiddle)
+
+
+
+
+
+            If SelectedTool = Tools.Goal Then
+
+
+                Dim ControllerHint As Rectangle
+                ControllerHint.X = EnemyToolButton.Rect.X + 18
+                ControllerHint.Y = EnemyToolButton.Rect.Y + 30
+                ControllerHint.Width = EnemyToolButton.Rect.Width
+                ControllerHint.Height = EnemyToolButton.Rect.Height
+
+                Dim ControllerHintShadow As Rectangle = ControllerHint
+                ControllerHintShadow.X = ControllerHint.X + 2
+                ControllerHintShadow.Y = ControllerHint.Y + 2
+
+                .DrawString("RT",
+            ControllerHintFont,
+            Brushes.Black,
+            ControllerHintShadow,
+            AlineCenterMiddle)
+
+                .DrawString("RT",
+            ControllerHintFont,
+            Brushes.White,
+            ControllerHint,
+            AlineCenterMiddle)
+
+
+            End If
+
+
+
+
+
 
         End With
 
@@ -3448,6 +3798,65 @@ Public Class Form1
                         Brushes.Green,
                         GoalToolIcon.Rect,
                         AlineCenterMiddle)
+
+
+            If SelectedTool = Tools.Cloud Then
+
+
+                Dim ControllerHint As Rectangle
+                ControllerHint.X = GoalToolButton.Rect.X + 18
+                ControllerHint.Y = GoalToolButton.Rect.Y + 30
+                ControllerHint.Width = GoalToolButton.Rect.Width
+                ControllerHint.Height = GoalToolButton.Rect.Height
+
+                Dim ControllerHintShadow As Rectangle = ControllerHint
+                ControllerHintShadow.X = ControllerHint.X + 2
+                ControllerHintShadow.Y = ControllerHint.Y + 2
+
+                .DrawString("RT",
+            ControllerHintFont,
+            Brushes.Black,
+            ControllerHintShadow,
+            AlineCenterMiddle)
+
+                .DrawString("RT",
+            ControllerHintFont,
+            Brushes.White,
+            ControllerHint,
+            AlineCenterMiddle)
+
+
+            End If
+
+            If SelectedTool = Tools.Enemy Then
+
+
+                Dim ControllerHint As Rectangle
+                ControllerHint.X = GoalToolButton.Rect.X + 18
+                ControllerHint.Y = GoalToolButton.Rect.Y + 30
+                ControllerHint.Width = GoalToolButton.Rect.Width
+                ControllerHint.Height = GoalToolButton.Rect.Height
+
+                Dim ControllerHintShadow As Rectangle = ControllerHint
+                ControllerHintShadow.X = ControllerHint.X + 2
+                ControllerHintShadow.Y = ControllerHint.Y + 2
+
+                .DrawString("LT",
+            ControllerHintFont,
+            Brushes.Black,
+            ControllerHintShadow,
+            AlineCenterMiddle)
+
+                .DrawString("LT",
+            ControllerHintFont,
+            Brushes.White,
+            ControllerHint,
+            AlineCenterMiddle)
+
+
+            End If
+
+
 
         End With
 

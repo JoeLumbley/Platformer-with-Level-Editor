@@ -2991,6 +2991,35 @@ Public Class Form1
 
             End If
 
+            If SelectedTool = Tools.Backdrop Then
+
+
+                Dim ControllerHint As Rectangle
+                ControllerHint.X = PointerToolButton.Rect.X + 18
+                ControllerHint.Y = PointerToolButton.Rect.Y + 30
+                ControllerHint.Width = PointerToolButton.Rect.Width
+                ControllerHint.Height = PointerToolButton.Rect.Height
+
+                Dim ControllerHintShadow As Rectangle = ControllerHint
+                ControllerHintShadow.X = ControllerHint.X + 2
+                ControllerHintShadow.Y = ControllerHint.Y + 2
+
+                .DrawString("RT",
+            ControllerHintFont,
+            Brushes.Black,
+            ControllerHintShadow,
+            AlineCenterMiddle)
+
+                .DrawString("RT",
+            ControllerHintFont,
+            Brushes.White,
+            ControllerHint,
+            AlineCenterMiddle)
+
+
+            End If
+
+
         End With
 
     End Sub
@@ -3218,6 +3247,35 @@ Public Class Form1
 
 
                 .DrawString("LT",
+            ControllerHintFont,
+            Brushes.White,
+            ControllerHint,
+            AlineCenterMiddle)
+
+
+            End If
+
+            If SelectedTool = Tools.Enemy Then
+
+
+                Dim ControllerHint As Rectangle
+                ControllerHint.X = BackdropToolButton.Rect.X + 18
+                ControllerHint.Y = BackdropToolButton.Rect.Y + 30
+                ControllerHint.Width = BackdropToolButton.Rect.Width
+                ControllerHint.Height = BackdropToolButton.Rect.Height
+
+                Dim ControllerHintShadow As Rectangle = ControllerHint
+                ControllerHintShadow.X = ControllerHint.X + 2
+                ControllerHintShadow.Y = ControllerHint.Y + 2
+
+                .DrawString("RT",
+            ControllerHintFont,
+            Brushes.Black,
+            ControllerHintShadow,
+            AlineCenterMiddle)
+
+
+                .DrawString("RT",
             ControllerHintFont,
             Brushes.White,
             ControllerHint,
@@ -3709,6 +3767,33 @@ Public Class Form1
             End If
 
 
+            If SelectedTool = Tools.Backdrop Then
+
+
+                Dim ControllerHint As Rectangle
+                ControllerHint.X = EnemyToolButton.Rect.X + 18
+                ControllerHint.Y = EnemyToolButton.Rect.Y + 30
+                ControllerHint.Width = EnemyToolButton.Rect.Width
+                ControllerHint.Height = EnemyToolButton.Rect.Height
+
+                Dim ControllerHintShadow As Rectangle = ControllerHint
+                ControllerHintShadow.X = ControllerHint.X + 2
+                ControllerHintShadow.Y = ControllerHint.Y + 2
+
+                .DrawString("LT",
+            ControllerHintFont,
+            Brushes.Black,
+            ControllerHintShadow,
+            AlineCenterMiddle)
+
+                .DrawString("LT",
+            ControllerHintFont,
+            Brushes.White,
+            ControllerHint,
+            AlineCenterMiddle)
+
+
+            End If
 
 
 

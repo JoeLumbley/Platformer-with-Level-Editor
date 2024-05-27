@@ -3095,18 +3095,15 @@ Public Class Form1
             ControllerHintShadow,
             AlineCenterMiddle)
 
-
                 .DrawString("RT",
             ControllerHintFont,
             Brushes.White,
             ControllerHint,
             AlineCenterMiddle)
 
-
             End If
 
             If SelectedTool = Tools.Bill Then
-
 
                 Dim ControllerHint As Rectangle
                 ControllerHint.X = BlockToolButton.Rect.X + 18
@@ -3124,17 +3121,13 @@ Public Class Form1
             ControllerHintShadow,
             AlineCenterMiddle)
 
-
                 .DrawString("LT",
             ControllerHintFont,
             Brushes.White,
             ControllerHint,
             AlineCenterMiddle)
 
-
             End If
-
-
 
         End With
 
@@ -3222,7 +3215,6 @@ Public Class Form1
 
             If SelectedTool = Tools.Pointer Then
 
-
                 Dim ControllerHint As Rectangle
                 ControllerHint.X = BackdropToolButton.Rect.X + 18
                 ControllerHint.Y = BackdropToolButton.Rect.Y + 30
@@ -3239,19 +3231,16 @@ Public Class Form1
             ControllerHintShadow,
             AlineCenterMiddle)
 
-
                 .DrawString("LT",
             ControllerHintFont,
             Brushes.White,
             ControllerHint,
             AlineCenterMiddle)
-
 
             End If
 
             If SelectedTool = Tools.Enemy Then
 
-
                 Dim ControllerHint As Rectangle
                 ControllerHint.X = BackdropToolButton.Rect.X + 18
                 ControllerHint.Y = BackdropToolButton.Rect.Y + 30
@@ -3268,21 +3257,13 @@ Public Class Form1
             ControllerHintShadow,
             AlineCenterMiddle)
 
-
                 .DrawString("RT",
             ControllerHintFont,
             Brushes.White,
             ControllerHint,
             AlineCenterMiddle)
 
-
             End If
-
-
-
-
-
-
 
         End With
 
@@ -3348,7 +3329,6 @@ Public Class Form1
 
             If SelectedTool = Tools.Block Then
 
-
                 Dim ControllerHint As Rectangle
                 ControllerHint.X = BillToolButton.Rect.X + 18
                 ControllerHint.Y = BillToolButton.Rect.Y + 30
@@ -3371,13 +3351,10 @@ Public Class Form1
             ControllerHint,
             AlineCenterMiddle)
 
-
             End If
-
 
             If SelectedTool = Tools.Bush Then
 
-
                 Dim ControllerHint As Rectangle
                 ControllerHint.X = BillToolButton.Rect.X + 18
                 ControllerHint.Y = BillToolButton.Rect.Y + 30
@@ -3400,15 +3377,7 @@ Public Class Form1
             ControllerHint,
             AlineCenterMiddle)
 
-
             End If
-
-
-
-
-
-
-
 
         End With
 
@@ -3479,10 +3448,7 @@ Public Class Form1
 
             .DrawRectangle(CloundToolIconOutinePen, CloundToolIcon.Rect)
 
-
-
             If SelectedTool = Tools.Bush Then
-
 
                 Dim ControllerHint As Rectangle
                 ControllerHint.X = CloudToolButton.Rect.X + 18
@@ -3505,13 +3471,11 @@ Public Class Form1
             Brushes.White,
             ControllerHint,
             AlineCenterMiddle)
-
 
             End If
 
             If SelectedTool = Tools.Goal Then
 
-
                 Dim ControllerHint As Rectangle
                 ControllerHint.X = CloudToolButton.Rect.X + 18
                 ControllerHint.Y = CloudToolButton.Rect.Y + 30
@@ -3534,11 +3498,7 @@ Public Class Form1
             ControllerHint,
             AlineCenterMiddle)
 
-
             End If
-
-
-
 
         End With
 
@@ -3609,9 +3569,7 @@ Public Class Form1
 
             .DrawRectangle(BushToolIconOutinePen, BushToolIcon.Rect)
 
-
             If SelectedTool = Tools.Bill Then
-
 
                 Dim ControllerHint As Rectangle
                 ControllerHint.X = BushToolIcon.Rect.X + 18
@@ -3635,14 +3593,10 @@ Public Class Form1
             ControllerHint,
             AlineCenterMiddle)
 
-
             End If
-
-
 
             If SelectedTool = Tools.Cloud Then
 
-
                 Dim ControllerHint As Rectangle
                 ControllerHint.X = BushToolIcon.Rect.X + 18
                 ControllerHint.Y = BushToolIcon.Rect.Y + 30
@@ -3665,11 +3619,7 @@ Public Class Form1
             ControllerHint,
             AlineCenterMiddle)
 
-
             End If
-
-
-
 
         End With
 
@@ -3728,12 +3678,7 @@ Public Class Form1
 
             .DrawString("E", EnemyIconFont, Brushes.PaleGoldenrod, EnemyToolIcon.Rect, AlineCenterMiddle)
 
-
-
-
-
             If SelectedTool = Tools.Goal Then
-
 
                 Dim ControllerHint As Rectangle
                 ControllerHint.X = EnemyToolButton.Rect.X + 18
@@ -3757,13 +3702,10 @@ Public Class Form1
             ControllerHint,
             AlineCenterMiddle)
 
-
             End If
-
 
             If SelectedTool = Tools.Backdrop Then
 
-
                 Dim ControllerHint As Rectangle
                 ControllerHint.X = EnemyToolButton.Rect.X + 18
                 ControllerHint.Y = EnemyToolButton.Rect.Y + 30
@@ -3786,11 +3728,7 @@ Public Class Form1
             ControllerHint,
             AlineCenterMiddle)
 
-
             End If
-
-
-
 
         End With
 
@@ -3878,9 +3816,7 @@ Public Class Form1
                         GoalToolIcon.Rect,
                         AlineCenterMiddle)
 
-
             If SelectedTool = Tools.Cloud Then
-
 
                 Dim ControllerHint As Rectangle
                 ControllerHint.X = GoalToolButton.Rect.X + 18
@@ -3903,13 +3839,11 @@ Public Class Form1
             Brushes.White,
             ControllerHint,
             AlineCenterMiddle)
-
 
             End If
 
             If SelectedTool = Tools.Enemy Then
 
-
                 Dim ControllerHint As Rectangle
                 ControllerHint.X = GoalToolButton.Rect.X + 18
                 ControllerHint.Y = GoalToolButton.Rect.Y + 30
@@ -3932,10 +3866,7 @@ Public Class Form1
             ControllerHint,
             AlineCenterMiddle)
 
-
             End If
-
-
 
         End With
 

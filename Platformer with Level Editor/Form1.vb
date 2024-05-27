@@ -2988,11 +2988,9 @@ Public Class Form1
             ControllerHint,
             AlineCenterMiddle)
 
-
             End If
 
             If SelectedTool = Tools.Backdrop Then
-
 
                 Dim ControllerHint As Rectangle
                 ControllerHint.X = PointerToolButton.Rect.X + 18
@@ -3015,7 +3013,6 @@ Public Class Form1
             Brushes.White,
             ControllerHint,
             AlineCenterMiddle)
-
 
             End If
 

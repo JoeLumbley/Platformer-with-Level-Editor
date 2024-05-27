@@ -255,6 +255,7 @@ Public Class Form1
         Goal
         Enemy
         Backdrop
+        Portal
     End Enum
 
     Private GameState As AppState = AppState.Start
@@ -378,6 +379,16 @@ Public Class Form1
     Private GoalToolButtonHover As Boolean = False
 
     Private GoalToolIcon As GameObject
+
+
+    Private PortalToolButton As GameObject
+
+    Private PortalToolButtonHover As Boolean = False
+
+    Private PortalToolIcon As GameObject
+
+
+
 
     Private EnemyToolButton As GameObject
 
@@ -1064,6 +1075,8 @@ Public Class Form1
         DrawEnemyToolButton()
 
         DrawBackdropToolButton()
+
+        DrawPortalToolButton()
 
     End Sub
 
@@ -3871,6 +3884,162 @@ Public Class Form1
         End With
 
     End Sub
+
+
+
+
+
+    Private Sub DrawPortalToolButton()
+
+        Dim RoundedPortalToolButton As Rectangle = PortalToolButton.Rect
+
+        RoundedPortalToolButton.Offset(2, 2)
+
+        RoundedPortalToolButton.Width = PortalToolButton.Rect.Width - 4
+        RoundedPortalToolButton.Height = PortalToolButton.Rect.Height - 4
+
+        With Buffer.Graphics
+
+            If SelectedTool = Tools.Portal Then
+
+                If PortalToolButtonHover = True Then
+
+                    FillRoundedRectangle(SelectedHoverBrush, RoundedPortalToolButton, 30, Buffer.Graphics)
+
+                    .DrawLine(SelectionHighlightHoverPen,
+                              RoundedPortalToolButton.Left + 11,
+                              RoundedPortalToolButton.Bottom - 2,
+                              RoundedPortalToolButton.Right - 11,
+                              RoundedPortalToolButton.Bottom - 2)
+
+                Else
+
+                    FillRoundedRectangle(SelectedBrush, RoundedPortalToolButton, 30, Buffer.Graphics)
+
+                    .DrawLine(SelectionHighlightPen,
+                      RoundedPortalToolButton.Left + 11,
+                      RoundedPortalToolButton.Bottom - 2,
+                      RoundedPortalToolButton.Right - 11,
+                      RoundedPortalToolButton.Bottom - 2)
+
+                End If
+
+            Else
+
+                If PortalToolButtonHover = True Then
+
+                    FillRoundedRectangle(HoverBrush, RoundedPortalToolButton, 30, Buffer.Graphics)
+
+                Else
+
+                    FillRoundedRectangle(Brushes.Black, RoundedPortalToolButton, 30, Buffer.Graphics)
+
+                End If
+
+            End If
+
+            .FillRectangle(Brushes.Indigo, PortalToolIcon.Rect)
+
+            ' Define the rectangle to be filled
+            Dim rect As RectangleF = PortalToolIcon.Rect
+
+            rect.Inflate(rect.Width / 6.4F, rect.Height / 6.4F)
+
+            ' Define the center point of the gradient
+            Dim center As New PointF(rect.Left + rect.Width / 2.0F, rect.Top + rect.Height / 2.0F)
+
+            ' Define the colors for the gradient stops
+            Dim colors() As Color = {Color.Cyan, Color.Indigo}
+
+            ' Create the path for the gradient brush
+            Dim GradPath As New GraphicsPath()
+            GradPath.AddEllipse(rect)
+
+            ' Create the gradient brush
+            Dim GradBrush As New PathGradientBrush(GradPath) With
+                {.CenterPoint = center,
+                .CenterColor = colors(0),
+                .SurroundColors = New Color() {colors(1)}}
+
+            .FillRectangle(GradBrush, PortalToolIcon.Rect)
+
+            Dim DoorWay As Rectangle
+
+            DoorWay.X = PortalToolIcon.Rect.X + 20
+            DoorWay.Y = PortalToolIcon.Rect.Y + 8
+            DoorWay.Width = 26
+            DoorWay.Height = 48
+
+
+
+            .FillRectangle(Brushes.Black, DoorWay)
+
+            'Dim Font As New Font(New FontFamily("Wingdings"), 10, FontStyle.Regular)
+
+            '.DrawString("«",
+            '            Font,
+            '            Brushes.DarkGray,
+            '            PortalToolIcon.Rect,
+            '            AlineCenterMiddle)
+
+            If SelectedTool = Tools.Cloud Then
+
+                Dim ControllerHint As Rectangle
+                ControllerHint.X = PortalToolIcon.Rect.X + 18
+                ControllerHint.Y = PortalToolIcon.Rect.Y + 30
+                ControllerHint.Width = PortalToolIcon.Rect.Width
+                ControllerHint.Height = PortalToolIcon.Rect.Height
+
+                Dim ControllerHintShadow As Rectangle = ControllerHint
+                ControllerHintShadow.X = ControllerHint.X + 2
+                ControllerHintShadow.Y = ControllerHint.Y + 2
+
+                .DrawString("RT",
+            ControllerHintFont,
+            Brushes.Black,
+            ControllerHintShadow,
+            AlineCenterMiddle)
+
+                .DrawString("RT",
+            ControllerHintFont,
+            Brushes.White,
+            ControllerHint,
+            AlineCenterMiddle)
+
+            End If
+
+            If SelectedTool = Tools.Enemy Then
+
+                Dim ControllerHint As Rectangle
+                ControllerHint.X = PortalToolIcon.Rect.X + 18
+                ControllerHint.Y = PortalToolIcon.Rect.Y + 30
+                ControllerHint.Width = PortalToolIcon.Rect.Width
+                ControllerHint.Height = PortalToolIcon.Rect.Height
+
+                Dim ControllerHintShadow As Rectangle = ControllerHint
+                ControllerHintShadow.X = ControllerHint.X + 2
+                ControllerHintShadow.Y = ControllerHint.Y + 2
+
+                .DrawString("LT",
+            ControllerHintFont,
+            Brushes.Black,
+            ControllerHintShadow,
+            AlineCenterMiddle)
+
+                .DrawString("LT",
+            ControllerHintFont,
+            Brushes.White,
+            ControllerHint,
+            AlineCenterMiddle)
+
+            End If
+
+        End With
+
+    End Sub
+
+
+
 
     Private Sub DrawPlayButton()
 
@@ -9087,6 +9256,11 @@ Public Class Form1
         GoalToolButton.Rect = New Rectangle(ClientRectangle.Left + 786, ClientRectangle.Bottom - 90, 90, 90)
 
         GoalToolIcon.Rect = New Rectangle(ClientRectangle.Left + 798, ClientRectangle.Bottom - 77, 64, 64)
+
+        PortalToolButton.Rect = New Rectangle(ClientRectangle.Left + 1059, ClientRectangle.Bottom - 90, 90, 90)
+
+        PortalToolIcon.Rect = New Rectangle(ClientRectangle.Left + 1072, ClientRectangle.Bottom - 77, 64, 64)
+
 
         EnemyToolButton.Rect = New Rectangle(ClientRectangle.Left + 877, ClientRectangle.Bottom - 90, 90, 90)
 

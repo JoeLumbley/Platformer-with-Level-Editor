@@ -4945,6 +4945,7 @@ Public Class Form1
 
             If My.Computer.FileSystem.FileExists(OpenFileDialog1.FileName) = True Then
 
+
                 OpenTest2LevelFile(OpenFileDialog1.FileName)
 
                 If IsFileLoaded = True Then
@@ -8920,6 +8921,8 @@ Public Class Form1
         'Is the player selecting the open button?
         If OpenButton.Rect.Contains(e) Then
             'Yes, the player is selecting the open button.
+
+            DeselectObjects()
 
             'Does the player want to save this level before opening a level?
             If MsgBox("Changes to " & LevelName & " may be lost." & vbCrLf & "Open a level anyway?",

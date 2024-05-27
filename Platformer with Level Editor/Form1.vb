@@ -2962,9 +2962,7 @@ Public Class Form1
                                       PointerToolButton.Rect.Height),
                         AlineCenterMiddle)
 
-
             If SelectedTool = Tools.Block Then
-
 
                 Dim ControllerHint As Rectangle
                 ControllerHint.X = PointerToolButton.Rect.X + 18
@@ -3015,7 +3013,6 @@ Public Class Form1
             AlineCenterMiddle)
 
             End If
-
 
         End With
 

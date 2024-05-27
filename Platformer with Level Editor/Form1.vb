@@ -3982,7 +3982,7 @@ Public Class Form1
             '            PortalToolIcon.Rect,
             '            AlineCenterMiddle)
 
-            If SelectedTool = Tools.Cloud Then
+            If SelectedTool = Tools.Backdrop Then
 
                 Dim ControllerHint As Rectangle
                 ControllerHint.X = PortalToolIcon.Rect.X + 18
@@ -4008,7 +4008,7 @@ Public Class Form1
 
             End If
 
-            If SelectedTool = Tools.Enemy Then
+            If SelectedTool = Tools.Pointer Then
 
                 Dim ControllerHint As Rectangle
                 ControllerHint.X = PortalToolIcon.Rect.X + 18

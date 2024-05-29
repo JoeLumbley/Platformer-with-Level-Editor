@@ -6784,6 +6784,21 @@ Public Class Form1
 
             End If
 
+            If PortalToolButton.Rect.Contains(e.Location) Then
+
+                If ShowMenu = False Then
+
+                    PortalToolButtonHover = True
+
+                End If
+
+            Else
+
+                PortalToolButtonHover = False
+
+            End If
+
+
             If BushToolButton.Rect.Contains(e.Location) Then
 
                 If ShowMenu = False Then

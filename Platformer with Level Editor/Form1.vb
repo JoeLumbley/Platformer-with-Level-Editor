@@ -5340,6 +5340,24 @@ Public Class Form1
 
         End If
 
+        If PortalToolButton.Rect.Contains(e) Then
+
+            DeselectObjects()
+
+            'Snap preview to grid.
+            ToolPreview.X = CInt(Math.Round(PointOffset.X / GridSize) * GridSize)
+            ToolPreview.Y = CInt(Math.Round(PointOffset.Y / GridSize) * GridSize)
+
+            ToolPreview.Width = GridSize
+            ToolPreview.Height = GridSize
+
+            SelectedTool = Tools.Portal
+
+            ShowToolPreview = True
+
+        End If
+
+
         'Is the player clicking the menu button?
         If MenuButton.Rect.Contains(e) Then
             'Yes, the player is clicking the menu button.

@@ -3001,7 +3001,7 @@ Public Class Form1
 
             End If
 
-            If SelectedTool = Tools.Backdrop Then
+            If SelectedTool = Tools.Portal Then
 
                 Dim ControllerHint As Rectangle
                 ControllerHint.X = PointerToolButton.Rect.X + 18
@@ -3226,7 +3226,7 @@ Public Class Form1
             'e.Graphics.FillRectangle(GradBrush, Rect)
             FillRoundedRectangle(GradBrush, BackdropToolIcon.Rect, 30, Buffer.Graphics)
 
-            If SelectedTool = Tools.Pointer Then
+            If SelectedTool = Tools.Portal Then
 
                 Dim ControllerHint As Rectangle
                 ControllerHint.X = BackdropToolButton.Rect.X + 18
@@ -10029,7 +10029,7 @@ Public Class Form1
     Private Sub SelectNextToolToTheRight()
 
         'Has the player reached the right end of the toolbar?
-        If SelectedTool = Tools.Backdrop Then
+        If SelectedTool = Tools.Portal Then
             'Yes, the player has reached the right end of the toolbar.
 
             'Start over by selecting the first tool on the bar. Far left end.
@@ -10073,7 +10073,7 @@ Public Class Form1
             ToolPreview.Height = GridSize
 
             'Start over by selecting the last tool on the bar. Far right end.
-            SelectedTool = Tools.Backdrop
+            SelectedTool = Tools.Portal
 
             ShowToolPreview = True
 
@@ -10147,6 +10147,7 @@ Public Class Form1
         End If
 
     End Sub
+
 
 End Class
 

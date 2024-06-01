@@ -3738,6 +3738,7 @@ Public Class Form1
 
                 ControllerHint.X = EnemyToolButton.Rect.X + 18
                 ControllerHint.Y = EnemyToolButton.Rect.Y + 30
+
                 ControllerHint.Size = EnemyToolButton.Rect.Size
 
                 'ControllerHint.Width = EnemyToolButton.Rect.Width
@@ -3768,8 +3769,8 @@ Public Class Form1
 
                 ControllerHint.X = EnemyToolButton.Rect.X + 18
                 ControllerHint.Y = EnemyToolButton.Rect.Y + 30
+
                 ControllerHint.Size = EnemyToolButton.Rect.Size
-                'ControllerHint.Height = EnemyToolButton.Rect.Height
 
                 Dim ControllerHintShadow As Rectangle = ControllerHint
 
@@ -3822,10 +3823,10 @@ Public Class Form1
                     FillRoundedRectangle(SelectedBrush, RoundedGoalToolButton, 30, Buffer.Graphics)
 
                     .DrawLine(SelectionHighlightPen,
-                      RoundedGoalToolButton.Left + 11,
-                      RoundedGoalToolButton.Bottom - 2,
-                      RoundedGoalToolButton.Right - 11,
-                      RoundedGoalToolButton.Bottom - 2)
+                              RoundedGoalToolButton.Left + 11,
+                              RoundedGoalToolButton.Bottom - 2,
+                              RoundedGoalToolButton.Right - 11,
+                              RoundedGoalToolButton.Bottom - 2)
 
                 End If
 
@@ -3879,52 +3880,56 @@ Public Class Form1
             If SelectedTool = Tools.Cloud Then
 
                 Dim ControllerHint As Rectangle
+
                 ControllerHint.X = GoalToolButton.Rect.X + 18
                 ControllerHint.Y = GoalToolButton.Rect.Y + 30
-                ControllerHint.Width = GoalToolButton.Rect.Width
-                ControllerHint.Height = GoalToolButton.Rect.Height
+
+                ControllerHint.Size = EnemyToolButton.Rect.Size
 
                 Dim ControllerHintShadow As Rectangle = ControllerHint
+
                 ControllerHintShadow.X = ControllerHint.X + 2
                 ControllerHintShadow.Y = ControllerHint.Y + 2
 
                 .DrawString("RT",
-            ControllerHintFont,
-            Brushes.Black,
-            ControllerHintShadow,
-            AlineCenterMiddle)
+                            ControllerHintFont,
+                            Brushes.Black,
+                            ControllerHintShadow,
+                            AlineCenterMiddle)
 
                 .DrawString("RT",
-            ControllerHintFont,
-            Brushes.White,
-            ControllerHint,
-            AlineCenterMiddle)
+                            ControllerHintFont,
+                            Brushes.White,
+                            ControllerHint,
+                            AlineCenterMiddle)
 
             End If
 
             If SelectedTool = Tools.Enemy Then
 
                 Dim ControllerHint As Rectangle
+
                 ControllerHint.X = GoalToolButton.Rect.X + 18
                 ControllerHint.Y = GoalToolButton.Rect.Y + 30
-                ControllerHint.Width = GoalToolButton.Rect.Width
-                ControllerHint.Height = GoalToolButton.Rect.Height
+
+                ControllerHint.Size = EnemyToolButton.Rect.Size
 
                 Dim ControllerHintShadow As Rectangle = ControllerHint
+
                 ControllerHintShadow.X = ControllerHint.X + 2
                 ControllerHintShadow.Y = ControllerHint.Y + 2
 
                 .DrawString("LT",
-            ControllerHintFont,
-            Brushes.Black,
-            ControllerHintShadow,
-            AlineCenterMiddle)
+                            ControllerHintFont,
+                            Brushes.Black,
+                            ControllerHintShadow,
+                            AlineCenterMiddle)
 
                 .DrawString("LT",
-            ControllerHintFont,
-            Brushes.White,
-            ControllerHint,
-            AlineCenterMiddle)
+                            ControllerHintFont,
+                            Brushes.White,
+                            ControllerHint,
+                            AlineCenterMiddle)
 
             End If
 

@@ -5009,11 +5009,6 @@ Public Class Form1
                                             120,
                                             90)
 
-        'SaveButton.Rect = New Rectangle(ClientRectangle.Right - 210,
-        '                                ClientRectangle.Bottom - 90,
-        '                                120,
-        '                                100)
-
     End Sub
 
     Private Sub InitializeObjects()

@@ -3653,8 +3653,8 @@ Public Class Form1
 
                 ControllerHint.X = BushToolIcon.Rect.X + 18
                 ControllerHint.Y = BushToolIcon.Rect.Y + 30
-                ControllerHint.Width = BushToolIcon.Rect.Width
-                ControllerHint.Height = BushToolIcon.Rect.Height
+
+                ControllerHint.Size = BushToolIcon.Rect.Size
 
                 Dim ControllerHintShadow As Rectangle = ControllerHint
 
@@ -3884,7 +3884,7 @@ Public Class Form1
                 ControllerHint.X = GoalToolButton.Rect.X + 18
                 ControllerHint.Y = GoalToolButton.Rect.Y + 30
 
-                ControllerHint.Size = EnemyToolButton.Rect.Size
+                ControllerHint.Size = GoalToolButton.Rect.Size
 
                 Dim ControllerHintShadow As Rectangle = ControllerHint
 
@@ -3912,7 +3912,7 @@ Public Class Form1
                 ControllerHint.X = GoalToolButton.Rect.X + 18
                 ControllerHint.Y = GoalToolButton.Rect.Y + 30
 
-                ControllerHint.Size = EnemyToolButton.Rect.Size
+                ControllerHint.Size = GoalToolButton.Rect.Size
 
                 Dim ControllerHintShadow As Rectangle = ControllerHint
 
@@ -4028,7 +4028,7 @@ Public Class Form1
                 ControllerHint.X = PortalToolIcon.Rect.X + 18
                 ControllerHint.Y = PortalToolIcon.Rect.Y + 30
 
-                ControllerHint.Size = EnemyToolButton.Rect.Size
+                ControllerHint.Size = PortalToolIcon.Rect.Size
 
                 Dim ControllerHintShadow As Rectangle = ControllerHint
 
@@ -4056,7 +4056,7 @@ Public Class Form1
                 ControllerHint.X = PortalToolIcon.Rect.X + 18
                 ControllerHint.Y = PortalToolIcon.Rect.Y + 30
 
-                ControllerHint.Size = EnemyToolButton.Rect.Size
+                ControllerHint.Size = PortalToolIcon.Rect.Size
 
                 Dim ControllerHintShadow As Rectangle = ControllerHint
 
@@ -5007,12 +5007,13 @@ Public Class Form1
         EditPlayButton.Rect = New Rectangle(ClientRectangle.Left + 210,
                                             ClientRectangle.Bottom - 90,
                                             120,
-                                            100)
+                                            90)
 
-        SaveButton.Rect = New Rectangle(ClientRectangle.Right - 210,
-                                        ClientRectangle.Bottom - 90,
-                                        120,
-                                        100)
+        'SaveButton.Rect = New Rectangle(ClientRectangle.Right - 210,
+        '                                ClientRectangle.Bottom - 90,
+        '                                120,
+        '                                100)
+
     End Sub
 
     Private Sub InitializeObjects()
@@ -9274,7 +9275,7 @@ Public Class Form1
 
         CashCollectedPostion.Y = ClientRectangle.Top + 5
 
-        EditPlayButton.Rect = New Rectangle(ClientRectangle.Left + 210, ClientRectangle.Bottom - 90, 120, 90)
+        EditPlayButton.Rect = New Rectangle(ClientRectangle.Left + 210, ClientRectangle.Bottom - 100, 120, 90)
 
         'Place the FPS display at the bottom of the client area.
         FPS_Postion.Y = ClientRectangle.Bottom - 75

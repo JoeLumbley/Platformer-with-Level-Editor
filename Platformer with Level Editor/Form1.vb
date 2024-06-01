@@ -3965,10 +3965,10 @@ Public Class Form1
                     FillRoundedRectangle(SelectedBrush, RoundedPortalToolButton, 30, Buffer.Graphics)
 
                     .DrawLine(SelectionHighlightPen,
-                      RoundedPortalToolButton.Left + 11,
-                      RoundedPortalToolButton.Bottom - 2,
-                      RoundedPortalToolButton.Right - 11,
-                      RoundedPortalToolButton.Bottom - 2)
+                              RoundedPortalToolButton.Left + 11,
+                              RoundedPortalToolButton.Bottom - 2,
+                              RoundedPortalToolButton.Right - 11,
+                              RoundedPortalToolButton.Bottom - 2)
 
                 End If
 
@@ -4024,6 +4024,7 @@ Public Class Form1
             If SelectedTool = Tools.Backdrop Then
 
                 Dim ControllerHint As Rectangle
+
                 ControllerHint.X = PortalToolIcon.Rect.X + 18
                 ControllerHint.Y = PortalToolIcon.Rect.Y + 30
 
@@ -4035,16 +4036,16 @@ Public Class Form1
                 ControllerHintShadow.Y = ControllerHint.Y + 2
 
                 .DrawString("RT",
-            ControllerHintFont,
-            Brushes.Black,
-            ControllerHintShadow,
-            AlineCenterMiddle)
+                            ControllerHintFont,
+                            Brushes.Black,
+                            ControllerHintShadow,
+                            AlineCenterMiddle)
 
                 .DrawString("RT",
-            ControllerHintFont,
-            Brushes.White,
-            ControllerHint,
-            AlineCenterMiddle)
+                            ControllerHintFont,
+                            Brushes.White,
+                            ControllerHint,
+                            AlineCenterMiddle)
 
             End If
 
@@ -4063,25 +4064,22 @@ Public Class Form1
                 ControllerHintShadow.Y = ControllerHint.Y + 2
 
                 .DrawString("LT",
-            ControllerHintFont,
-            Brushes.Black,
-            ControllerHintShadow,
-            AlineCenterMiddle)
+                            ControllerHintFont,
+                            Brushes.Black,
+                            ControllerHintShadow,
+                            AlineCenterMiddle)
 
                 .DrawString("LT",
-            ControllerHintFont,
-            Brushes.White,
-            ControllerHint,
-            AlineCenterMiddle)
+                            ControllerHintFont,
+                            Brushes.White,
+                            ControllerHint,
+                            AlineCenterMiddle)
 
             End If
 
         End With
 
     End Sub
-
-
-
 
     Private Sub DrawPlayButton()
 
@@ -4105,10 +4103,11 @@ Public Class Form1
             End If
 
             Dim ButtonCaption As Rectangle
+
             ButtonCaption.X = EditPlayButton.Rect.X + 2
             ButtonCaption.Y = EditPlayButton.Rect.Y
-            ButtonCaption.Width = EditPlayButton.Rect.Width
-            ButtonCaption.Height = EditPlayButton.Rect.Height
+
+            ButtonCaption.Size = EditPlayButton.Rect.Size
 
             .DrawString("Play",
                         FPSFont,
@@ -4117,8 +4116,10 @@ Public Class Form1
                         AlineCenterMiddle)
 
             Dim ControllerHint As Rectangle
+
             ControllerHint.X = EditPlayButton.Rect.X + 100
             ControllerHint.Y = EditPlayButton.Rect.Y + 65
+
             ControllerHint.Width = 15
             ControllerHint.Height = 7
 
@@ -4126,6 +4127,7 @@ Public Class Form1
 
             ControllerHint.X = EditPlayButton.Rect.X + 85
             ControllerHint.Y = EditPlayButton.Rect.Y + 70
+
             ControllerHint.Width = 15
             ControllerHint.Height = 15
 
@@ -4133,6 +4135,7 @@ Public Class Form1
 
             ControllerHint.X = EditPlayButton.Rect.X + 70
             ControllerHint.Y = EditPlayButton.Rect.Y + 65
+
             ControllerHint.Width = 15
             ControllerHint.Height = 7
 
@@ -4170,8 +4173,10 @@ Public Class Form1
                         AlineCenterMiddle)
 
             Dim ControllerHint As Rectangle
+
             ControllerHint.X = EditPlayButton.Rect.X + 100
             ControllerHint.Y = EditPlayButton.Rect.Y + 65
+
             ControllerHint.Width = 15
             ControllerHint.Height = 7
 
@@ -4179,6 +4184,7 @@ Public Class Form1
 
             ControllerHint.X = EditPlayButton.Rect.X + 85
             ControllerHint.Y = EditPlayButton.Rect.Y + 70
+
             ControllerHint.Width = 15
             ControllerHint.Height = 15
 
@@ -4186,6 +4192,7 @@ Public Class Form1
 
             ControllerHint.X = EditPlayButton.Rect.X + 70
             ControllerHint.Y = EditPlayButton.Rect.Y + 65
+
             ControllerHint.Width = 15
             ControllerHint.Height = 7
 
@@ -4223,8 +4230,10 @@ Public Class Form1
                         AlineCenterMiddle)
 
             Dim ControllerHint As Rectangle
+
             ControllerHint.X = MenuButton.Rect.X + 70
             ControllerHint.Y = MenuButton.Rect.Y + 65
+
             ControllerHint.Width = 15
             ControllerHint.Height = 7
 
@@ -4232,6 +4241,7 @@ Public Class Form1
 
             ControllerHint.X = MenuButton.Rect.X + 55
             ControllerHint.Y = MenuButton.Rect.Y + 70
+
             ControllerHint.Width = 15
             ControllerHint.Height = 15
 
@@ -4239,6 +4249,7 @@ Public Class Form1
 
             ControllerHint.X = MenuButton.Rect.X + 40
             ControllerHint.Y = MenuButton.Rect.Y + 65
+
             ControllerHint.Width = 15
             ControllerHint.Height = 7
 
@@ -4285,7 +4296,6 @@ Public Class Form1
                                       100,
                                       50),
                         AlineCenterMiddle)
-
 
         End With
 

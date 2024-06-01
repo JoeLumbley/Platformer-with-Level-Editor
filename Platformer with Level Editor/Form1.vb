@@ -3201,20 +3201,20 @@ Public Class Form1
                     FillRoundedRectangle(SelectedHoverBrush, RoundedBackdropToolButton, 30, Buffer.Graphics)
 
                     .DrawLine(SelectionHighlightHoverPen,
-                      RoundedBackdropToolButton.Left + 11,
-                      RoundedBackdropToolButton.Bottom - 2,
-                      RoundedBackdropToolButton.Right - 11,
-                      RoundedBackdropToolButton.Bottom - 2)
+                              RoundedBackdropToolButton.Left + 11,
+                              RoundedBackdropToolButton.Bottom - 2,
+                              RoundedBackdropToolButton.Right - 11,
+                              RoundedBackdropToolButton.Bottom - 2)
 
                 Else
 
                     FillRoundedRectangle(SelectedBrush, RoundedBackdropToolButton, 30, Buffer.Graphics)
 
                     .DrawLine(SelectionHighlightPen,
-                      RoundedBackdropToolButton.Left + 11,
-                      RoundedBackdropToolButton.Bottom - 2,
-                      RoundedBackdropToolButton.Right - 11,
-                      RoundedBackdropToolButton.Bottom - 2)
+                              RoundedBackdropToolButton.Left + 11,
+                              RoundedBackdropToolButton.Bottom - 2,
+                              RoundedBackdropToolButton.Right - 11,
+                              RoundedBackdropToolButton.Bottom - 2)
 
                 End If
 
@@ -3231,14 +3231,6 @@ Public Class Form1
                 End If
 
             End If
-
-            '.FillRectangle(Brushes.Chocolate, BackdropToolIcon.Rect)
-
-            '.DrawLine(Pens.White,
-            '          BackdropToolIcon.Rect.Right - 1,
-            '          BackdropToolIcon.Rect.Top + 1,
-            '          BackdropToolIcon.Rect.Left + 1,
-            '          BackdropToolIcon.Rect.Top + 1)
 
             ' Define the start and end points of the gradient
             Dim StartPoint As New PointF(BackdropToolIcon.Rect.Left, BackdropToolIcon.Rect.Top)
@@ -3260,65 +3252,67 @@ Public Class Form1
             GradBrush.InterpolationColors = ColorBlend
 
             ' Fill the rectangle with the gradient brush
-            'e.Graphics.FillRectangle(GradBrush, Rect)
             FillRoundedRectangle(GradBrush, BackdropToolIcon.Rect, 30, Buffer.Graphics)
 
             If SelectedTool = Tools.Portal Then
 
                 Dim ControllerHint As Rectangle
+
                 ControllerHint.X = BackdropToolButton.Rect.X + 18
                 ControllerHint.Y = BackdropToolButton.Rect.Y + 30
                 ControllerHint.Width = BackdropToolButton.Rect.Width
                 ControllerHint.Height = BackdropToolButton.Rect.Height
 
                 Dim ControllerHintShadow As Rectangle = ControllerHint
+
                 ControllerHintShadow.X = ControllerHint.X + 2
                 ControllerHintShadow.Y = ControllerHint.Y + 2
 
                 .DrawString("LT",
-            ControllerHintFont,
-            Brushes.Black,
-            ControllerHintShadow,
-            AlineCenterMiddle)
+                            ControllerHintFont,
+                            Brushes.Black,
+                            ControllerHintShadow,
+                            AlineCenterMiddle)
 
                 .DrawString("LT",
-            ControllerHintFont,
-            Brushes.White,
-            ControllerHint,
-            AlineCenterMiddle)
+                            ControllerHintFont,
+                            Brushes.White,
+                            ControllerHint,
+                            AlineCenterMiddle)
 
             End If
 
             If SelectedTool = Tools.Enemy Then
 
                 Dim ControllerHint As Rectangle
+
                 ControllerHint.X = BackdropToolButton.Rect.X + 18
                 ControllerHint.Y = BackdropToolButton.Rect.Y + 30
                 ControllerHint.Width = BackdropToolButton.Rect.Width
                 ControllerHint.Height = BackdropToolButton.Rect.Height
 
                 Dim ControllerHintShadow As Rectangle = ControllerHint
+
                 ControllerHintShadow.X = ControllerHint.X + 2
                 ControllerHintShadow.Y = ControllerHint.Y + 2
 
                 .DrawString("RT",
-            ControllerHintFont,
-            Brushes.Black,
-            ControllerHintShadow,
-            AlineCenterMiddle)
+                            ControllerHintFont,
+                            Brushes.Black,
+                            ControllerHintShadow,
+                            AlineCenterMiddle)
 
                 .DrawString("RT",
-            ControllerHintFont,
-            Brushes.White,
-            ControllerHint,
-            AlineCenterMiddle)
+                            ControllerHintFont,
+                            Brushes.White,
+                            ControllerHint,
+                            AlineCenterMiddle)
 
             End If
 
         End With
 
     End Sub
-
 
     Private Sub DrawBillToolButton()
 
@@ -3338,20 +3332,20 @@ Public Class Form1
                     FillRoundedRectangle(SelectedHoverBrush, RoundedBillToolButton, 30, Buffer.Graphics)
 
                     .DrawLine(SelectionHighlightHoverPen,
-                      RoundedBillToolButton.Left + 11,
-                      RoundedBillToolButton.Bottom - 2,
-                      RoundedBillToolButton.Right - 11,
-                      RoundedBillToolButton.Bottom - 2)
+                              RoundedBillToolButton.Left + 11,
+                              RoundedBillToolButton.Bottom - 2,
+                              RoundedBillToolButton.Right - 11,
+                              RoundedBillToolButton.Bottom - 2)
 
                 Else
 
                     FillRoundedRectangle(SelectedBrush, RoundedBillToolButton, 30, Buffer.Graphics)
 
                     .DrawLine(SelectionHighlightPen,
-                      RoundedBillToolButton.Left + 11,
-                      RoundedBillToolButton.Bottom - 2,
-                      RoundedBillToolButton.Right - 11,
-                      RoundedBillToolButton.Bottom - 2)
+                              RoundedBillToolButton.Left + 11,
+                              RoundedBillToolButton.Bottom - 2,
+                              RoundedBillToolButton.Right - 11,
+                              RoundedBillToolButton.Bottom - 2)
 
                 End If
 
@@ -3380,52 +3374,56 @@ Public Class Form1
             If SelectedTool = Tools.Block Then
 
                 Dim ControllerHint As Rectangle
+
                 ControllerHint.X = BillToolButton.Rect.X + 18
                 ControllerHint.Y = BillToolButton.Rect.Y + 30
                 ControllerHint.Width = BillToolButton.Rect.Width
                 ControllerHint.Height = BillToolButton.Rect.Height
 
                 Dim ControllerHintShadow As Rectangle = ControllerHint
+
                 ControllerHintShadow.X = ControllerHint.X + 2
                 ControllerHintShadow.Y = ControllerHint.Y + 2
 
                 .DrawString("RT",
-            ControllerHintFont,
-            Brushes.Black,
-            ControllerHintShadow,
-            AlineCenterMiddle)
+                            ControllerHintFont,
+                            Brushes.Black,
+                            ControllerHintShadow,
+                            AlineCenterMiddle)
 
                 .DrawString("RT",
-            ControllerHintFont,
-            Brushes.White,
-            ControllerHint,
-            AlineCenterMiddle)
+                            ControllerHintFont,
+                            Brushes.White,
+                            ControllerHint,
+                            AlineCenterMiddle)
 
             End If
 
             If SelectedTool = Tools.Bush Then
 
                 Dim ControllerHint As Rectangle
+
                 ControllerHint.X = BillToolButton.Rect.X + 18
                 ControllerHint.Y = BillToolButton.Rect.Y + 30
                 ControllerHint.Width = BillToolButton.Rect.Width
                 ControllerHint.Height = BillToolButton.Rect.Height
 
                 Dim ControllerHintShadow As Rectangle = ControllerHint
+
                 ControllerHintShadow.X = ControllerHint.X + 2
                 ControllerHintShadow.Y = ControllerHint.Y + 2
 
                 .DrawString("LT",
-            ControllerHintFont,
-            Brushes.Black,
-            ControllerHintShadow,
-            AlineCenterMiddle)
+                            ControllerHintFont,
+                            Brushes.Black,
+                            ControllerHintShadow,
+                            AlineCenterMiddle)
 
                 .DrawString("LT",
-            ControllerHintFont,
-            Brushes.White,
-            ControllerHint,
-            AlineCenterMiddle)
+                            ControllerHintFont,
+                            Brushes.White,
+                            ControllerHint,
+                            AlineCenterMiddle)
 
             End If
 
@@ -3511,42 +3509,44 @@ Public Class Form1
                 ControllerHintShadow.Y = ControllerHint.Y + 2
 
                 .DrawString("RT",
-            ControllerHintFont,
-            Brushes.Black,
-            ControllerHintShadow,
-            AlineCenterMiddle)
+                            ControllerHintFont,
+                            Brushes.Black,
+                            ControllerHintShadow,
+                            AlineCenterMiddle)
 
                 .DrawString("RT",
-            ControllerHintFont,
-            Brushes.White,
-            ControllerHint,
-            AlineCenterMiddle)
+                            ControllerHintFont,
+                            Brushes.White,
+                            ControllerHint,
+                            AlineCenterMiddle)
 
             End If
 
             If SelectedTool = Tools.Goal Then
 
                 Dim ControllerHint As Rectangle
+
                 ControllerHint.X = CloudToolButton.Rect.X + 18
                 ControllerHint.Y = CloudToolButton.Rect.Y + 30
                 ControllerHint.Width = CloudToolButton.Rect.Width
                 ControllerHint.Height = CloudToolButton.Rect.Height
 
                 Dim ControllerHintShadow As Rectangle = ControllerHint
+
                 ControllerHintShadow.X = ControllerHint.X + 2
                 ControllerHintShadow.Y = ControllerHint.Y + 2
 
                 .DrawString("LT",
-            ControllerHintFont,
-            Brushes.Black,
-            ControllerHintShadow,
-            AlineCenterMiddle)
+                            ControllerHintFont,
+                            Brushes.Black,
+                            ControllerHintShadow,
+                            AlineCenterMiddle)
 
                 .DrawString("LT",
-            ControllerHintFont,
-            Brushes.White,
-            ControllerHint,
-            AlineCenterMiddle)
+                            ControllerHintFont,
+                            Brushes.White,
+                            ControllerHint,
+                            AlineCenterMiddle)
 
             End If
 
@@ -3572,20 +3572,20 @@ Public Class Form1
                     FillRoundedRectangle(SelectedHoverBrush, RoundedBushToolButton, 30, Buffer.Graphics)
 
                     .DrawLine(SelectionHighlightHoverPen,
-                      RoundedBushToolButton.Left + 11,
-                      RoundedBushToolButton.Bottom - 2,
-                      RoundedBushToolButton.Right - 11,
-                      RoundedBushToolButton.Bottom - 2)
+                              RoundedBushToolButton.Left + 11,
+                              RoundedBushToolButton.Bottom - 2,
+                              RoundedBushToolButton.Right - 11,
+                              RoundedBushToolButton.Bottom - 2)
 
                 Else
 
                     FillRoundedRectangle(SelectedBrush, RoundedBushToolButton, 30, Buffer.Graphics)
 
                     .DrawLine(SelectionHighlightPen,
-                      RoundedBushToolButton.Left + 11,
-                      RoundedBushToolButton.Bottom - 2,
-                      RoundedBushToolButton.Right - 11,
-                      RoundedBushToolButton.Bottom - 2)
+                              RoundedBushToolButton.Left + 11,
+                              RoundedBushToolButton.Bottom - 2,
+                              RoundedBushToolButton.Right - 11,
+                              RoundedBushToolButton.Bottom - 2)
 
                 End If
 
@@ -3622,52 +3622,56 @@ Public Class Form1
             If SelectedTool = Tools.Bill Then
 
                 Dim ControllerHint As Rectangle
+
                 ControllerHint.X = BushToolIcon.Rect.X + 18
                 ControllerHint.Y = BushToolIcon.Rect.Y + 30
                 ControllerHint.Width = BushToolIcon.Rect.Width
                 ControllerHint.Height = BushToolIcon.Rect.Height
 
                 Dim ControllerHintShadow As Rectangle = ControllerHint
+
                 ControllerHintShadow.X = ControllerHint.X + 2
                 ControllerHintShadow.Y = ControllerHint.Y + 2
 
                 .DrawString("RT",
-            ControllerHintFont,
-            Brushes.Black,
-            ControllerHintShadow,
-            AlineCenterMiddle)
+                            ControllerHintFont,
+                            Brushes.Black,
+                            ControllerHintShadow,
+                            AlineCenterMiddle)
 
                 .DrawString("RT",
-            ControllerHintFont,
-            Brushes.White,
-            ControllerHint,
-            AlineCenterMiddle)
+                            ControllerHintFont,
+                            Brushes.White,
+                            ControllerHint,
+                            AlineCenterMiddle)
 
             End If
 
             If SelectedTool = Tools.Cloud Then
 
                 Dim ControllerHint As Rectangle
+
                 ControllerHint.X = BushToolIcon.Rect.X + 18
                 ControllerHint.Y = BushToolIcon.Rect.Y + 30
                 ControllerHint.Width = BushToolIcon.Rect.Width
                 ControllerHint.Height = BushToolIcon.Rect.Height
 
                 Dim ControllerHintShadow As Rectangle = ControllerHint
+
                 ControllerHintShadow.X = ControllerHint.X + 2
                 ControllerHintShadow.Y = ControllerHint.Y + 2
 
                 .DrawString("LT",
-            ControllerHintFont,
-            Brushes.Black,
-            ControllerHintShadow,
-            AlineCenterMiddle)
+                            ControllerHintFont,
+                            Brushes.Black,
+                            ControllerHintShadow,
+                            AlineCenterMiddle)
 
                 .DrawString("LT",
-            ControllerHintFont,
-            Brushes.White,
-            ControllerHint,
-            AlineCenterMiddle)
+                            ControllerHintFont,
+                            Brushes.White,
+                            ControllerHint,
+                            AlineCenterMiddle)
 
             End If
 
@@ -3693,20 +3697,20 @@ Public Class Form1
                     FillRoundedRectangle(SelectedHoverBrush, RoundedEnemyToolButton, 30, Buffer.Graphics)
 
                     .DrawLine(SelectionHighlightHoverPen,
-                      RoundedEnemyToolButton.Left + 11,
-                      RoundedEnemyToolButton.Bottom - 2,
-                      RoundedEnemyToolButton.Right - 11,
-                      RoundedEnemyToolButton.Bottom - 2)
+                              RoundedEnemyToolButton.Left + 11,
+                              RoundedEnemyToolButton.Bottom - 2,
+                              RoundedEnemyToolButton.Right - 11,
+                              RoundedEnemyToolButton.Bottom - 2)
 
                 Else
 
                     FillRoundedRectangle(SelectedBrush, RoundedEnemyToolButton, 30, Buffer.Graphics)
 
                     .DrawLine(SelectionHighlightPen,
-                      RoundedEnemyToolButton.Left + 11,
-                      RoundedEnemyToolButton.Bottom - 2,
-                      RoundedEnemyToolButton.Right - 11,
-                      RoundedEnemyToolButton.Bottom - 2)
+                              RoundedEnemyToolButton.Left + 11,
+                              RoundedEnemyToolButton.Bottom - 2,
+                              RoundedEnemyToolButton.Right - 11,
+                              RoundedEnemyToolButton.Bottom - 2)
 
                 End If
 
@@ -3731,52 +3735,58 @@ Public Class Form1
             If SelectedTool = Tools.Goal Then
 
                 Dim ControllerHint As Rectangle
+
                 ControllerHint.X = EnemyToolButton.Rect.X + 18
                 ControllerHint.Y = EnemyToolButton.Rect.Y + 30
-                ControllerHint.Width = EnemyToolButton.Rect.Width
-                ControllerHint.Height = EnemyToolButton.Rect.Height
+                ControllerHint.Size = EnemyToolButton.Rect.Size
+
+                'ControllerHint.Width = EnemyToolButton.Rect.Width
+                'ControllerHint.Height = EnemyToolButton.Rect.Height
 
                 Dim ControllerHintShadow As Rectangle = ControllerHint
+
                 ControllerHintShadow.X = ControllerHint.X + 2
                 ControllerHintShadow.Y = ControllerHint.Y + 2
 
                 .DrawString("RT",
-            ControllerHintFont,
-            Brushes.Black,
-            ControllerHintShadow,
-            AlineCenterMiddle)
+                            ControllerHintFont,
+                            Brushes.Black,
+                            ControllerHintShadow,
+                            AlineCenterMiddle)
 
                 .DrawString("RT",
-            ControllerHintFont,
-            Brushes.White,
-            ControllerHint,
-            AlineCenterMiddle)
+                            ControllerHintFont,
+                            Brushes.White,
+                            ControllerHint,
+                            AlineCenterMiddle)
 
             End If
 
             If SelectedTool = Tools.Backdrop Then
 
                 Dim ControllerHint As Rectangle
+
                 ControllerHint.X = EnemyToolButton.Rect.X + 18
                 ControllerHint.Y = EnemyToolButton.Rect.Y + 30
-                ControllerHint.Width = EnemyToolButton.Rect.Width
-                ControllerHint.Height = EnemyToolButton.Rect.Height
+                ControllerHint.Size = EnemyToolButton.Rect.Size
+                'ControllerHint.Height = EnemyToolButton.Rect.Height
 
                 Dim ControllerHintShadow As Rectangle = ControllerHint
+
                 ControllerHintShadow.X = ControllerHint.X + 2
                 ControllerHintShadow.Y = ControllerHint.Y + 2
 
                 .DrawString("LT",
-            ControllerHintFont,
-            Brushes.Black,
-            ControllerHintShadow,
-            AlineCenterMiddle)
+                            ControllerHintFont,
+                            Brushes.Black,
+                            ControllerHintShadow,
+                            AlineCenterMiddle)
 
                 .DrawString("LT",
-            ControllerHintFont,
-            Brushes.White,
-            ControllerHint,
-            AlineCenterMiddle)
+                            ControllerHintFont,
+                            Brushes.White,
+                            ControllerHint,
+                            AlineCenterMiddle)
 
             End If
 
@@ -3922,10 +3932,6 @@ Public Class Form1
 
     End Sub
 
-
-
-
-
     Private Sub DrawPortalToolButton()
 
         Dim RoundedPortalToolButton As Rectangle = PortalToolButton.Rect
@@ -4004,30 +4010,22 @@ Public Class Form1
 
             DoorWay.X = PortalToolIcon.Rect.X + 20
             DoorWay.Y = PortalToolIcon.Rect.Y + 8
+
             DoorWay.Width = 26
             DoorWay.Height = 48
 
-
-
             .FillRectangle(Brushes.Black, DoorWay)
-
-            'Dim Font As New Font(New FontFamily("Wingdings"), 10, FontStyle.Regular)
-
-            '.DrawString("«",
-            '            Font,
-            '            Brushes.DarkGray,
-            '            PortalToolIcon.Rect,
-            '            AlineCenterMiddle)
 
             If SelectedTool = Tools.Backdrop Then
 
                 Dim ControllerHint As Rectangle
                 ControllerHint.X = PortalToolIcon.Rect.X + 18
                 ControllerHint.Y = PortalToolIcon.Rect.Y + 30
-                ControllerHint.Width = PortalToolIcon.Rect.Width
-                ControllerHint.Height = PortalToolIcon.Rect.Height
+
+                ControllerHint.Size = EnemyToolButton.Rect.Size
 
                 Dim ControllerHintShadow As Rectangle = ControllerHint
+
                 ControllerHintShadow.X = ControllerHint.X + 2
                 ControllerHintShadow.Y = ControllerHint.Y + 2
 
@@ -4048,12 +4046,14 @@ Public Class Form1
             If SelectedTool = Tools.Pointer Then
 
                 Dim ControllerHint As Rectangle
+
                 ControllerHint.X = PortalToolIcon.Rect.X + 18
                 ControllerHint.Y = PortalToolIcon.Rect.Y + 30
-                ControllerHint.Width = PortalToolIcon.Rect.Width
-                ControllerHint.Height = PortalToolIcon.Rect.Height
+
+                ControllerHint.Size = EnemyToolButton.Rect.Size
 
                 Dim ControllerHintShadow As Rectangle = ControllerHint
+
                 ControllerHintShadow.X = ControllerHint.X + 2
                 ControllerHintShadow.Y = ControllerHint.Y + 2
 

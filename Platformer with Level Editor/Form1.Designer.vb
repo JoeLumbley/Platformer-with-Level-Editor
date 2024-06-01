@@ -45,6 +45,7 @@ Partial Class Form1
         Name = "Form1"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Form1"
+        WindowState = FormWindowState.Maximized
         ResumeLayout(False)
     End Sub
 

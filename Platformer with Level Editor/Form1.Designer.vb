@@ -41,7 +41,7 @@ Partial Class Form1
         ' 
         AutoScaleDimensions = New SizeF(10F, 25F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(618, 424)
+        ClientSize = New Size(1058, 664)
         Name = "Form1"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Form1"

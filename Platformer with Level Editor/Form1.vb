@@ -9270,7 +9270,7 @@ Public Class Form1
 
         CashCollectedPostion.Y = ClientRectangle.Top + 5
 
-        EditPlayButton.Rect = New Rectangle(ClientRectangle.Left + 210, ClientRectangle.Bottom - 100, 120, 90)
+        EditPlayButton.Rect = New Rectangle(ClientRectangle.Left + 210, ClientRectangle.Bottom - 90, 120, 90)
 
         'Place the FPS display at the bottom of the client area.
         FPS_Postion.Y = ClientRectangle.Bottom - 75

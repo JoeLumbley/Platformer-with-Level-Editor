@@ -325,7 +325,6 @@ Public Class Form1
 
     Private Backdrops() As GameObject
 
-
     Private FileObjects() As GameObject
 
     Private EditPlayButton As GameObject
@@ -380,15 +379,11 @@ Public Class Form1
 
     Private GoalToolIcon As GameObject
 
-
     Private PortalToolButton As GameObject
 
     Private PortalToolButtonHover As Boolean = False
 
     Private PortalToolIcon As GameObject
-
-
-
 
     Private EnemyToolButton As GameObject
 
@@ -1578,7 +1573,6 @@ Public Class Form1
 
         End If
 
-
     End Sub
 
     Private Sub UpdateLeftTriggerPosition()
@@ -1837,7 +1831,6 @@ Public Class Form1
             'The right thumbstick is in the neutral position.
 
             If GameState = AppState.Editing Then
-
 
                 If UpArrowDown = False And DownArrowDown = False Then
 
@@ -3741,9 +3734,6 @@ Public Class Form1
 
                 ControllerHint.Size = EnemyToolButton.Rect.Size
 
-                'ControllerHint.Width = EnemyToolButton.Rect.Width
-                'ControllerHint.Height = EnemyToolButton.Rect.Height
-
                 Dim ControllerHintShadow As Rectangle = ControllerHint
 
                 ControllerHintShadow.X = ControllerHint.X + 2
@@ -4625,7 +4615,6 @@ Public Class Form1
 
     End Sub
 
-
     Private Sub RemoveBill(Index As Integer)
 
         'Remove the bill from cash.
@@ -5162,7 +5151,6 @@ Public Class Form1
 
             If My.Computer.FileSystem.FileExists(OpenFileDialog1.FileName) = True Then
 
-
                 OpenTest2LevelFile(OpenFileDialog1.FileName)
 
                 If IsFileLoaded = True Then
@@ -5404,7 +5392,6 @@ Public Class Form1
             ShowToolPreview = True
 
         End If
-
 
         'Is the player clicking the menu button?
         If MenuButton.Rect.Contains(e) Then
@@ -5798,7 +5785,6 @@ Public Class Form1
                 SelectedEnemy = -1
                 SpawnSelected = False
                 SelectedBackdrop = -1
-
 
         End Select
 
@@ -6194,7 +6180,6 @@ Public Class Form1
         'Write Text
         Write(File_Number, "Level")
 
-
         'Write Spawn to File
         'Write ID
         Write(File_Number, ObjectID.Spawn)
@@ -6220,7 +6205,6 @@ Public Class Form1
 
         'Write Text
         Write(File_Number, "Spawn")
-
 
         'Write Blocks to File
         If Blocks IsNot Nothing Then
@@ -6426,9 +6410,6 @@ Public Class Form1
 
         End If
 
-
-
-
         'Write Goal to File
         'Write ID
         Write(File_Number, ObjectID.Goal)
@@ -6458,7 +6439,6 @@ Public Class Form1
         FileClose(File_Number)
 
     End Sub
-
 
     Private Sub OpenTestLevelFile(FilePath As String)
 
@@ -6620,7 +6600,6 @@ Public Class Form1
         End If
 
     End Sub
-
 
     Private Sub LoadGameObjects()
 
@@ -6817,7 +6796,6 @@ Public Class Form1
 
             End If
 
-
             If GoalToolButton.Rect.Contains(e.Location) Then
 
                 If ShowMenu = False Then
@@ -6845,7 +6823,6 @@ Public Class Form1
                 PortalToolButtonHover = False
 
             End If
-
 
             If BushToolButton.Rect.Contains(e.Location) Then
 
@@ -7263,7 +7240,6 @@ Public Class Form1
             End If
 
         End If
-
 
         If LevelSelected = True Then
 
@@ -7788,9 +7764,6 @@ Public Class Form1
                         SelectedBackdrop = -1
 
                     End If
-
-
-
 
                     If GoalSelected = True Then
 
@@ -8656,7 +8629,6 @@ Public Class Form1
 
         End If
 
-
     End Sub
 
     Private Sub MovePointerLeftDPad()
@@ -8824,7 +8796,6 @@ Public Class Form1
             ControllerB = False
 
         End If
-
 
         If XButtonPressed = True Then
 
@@ -9342,7 +9313,6 @@ Public Class Form1
 
         PortalToolIcon.Rect = New Rectangle(ClientRectangle.Left + 1072, ClientRectangle.Bottom - 77, 64, 64)
 
-
         EnemyToolButton.Rect = New Rectangle(ClientRectangle.Left + 877, ClientRectangle.Bottom - 90, 90, 90)
 
         EnemyToolIcon.Rect = New Rectangle(ClientRectangle.Left + 890, ClientRectangle.Bottom - 77, 64, 64)
@@ -9350,7 +9320,6 @@ Public Class Form1
         BackdropToolButton.Rect = New Rectangle(ClientRectangle.Left + 968, ClientRectangle.Bottom - 90, 90, 90)
 
         BackdropToolIcon.Rect = New Rectangle(ClientRectangle.Left + 981, ClientRectangle.Bottom - 77, 64, 64)
-
 
     End Sub
 
@@ -10228,7 +10197,6 @@ Public Class Form1
         End If
 
     End Sub
-
 
 End Class
 

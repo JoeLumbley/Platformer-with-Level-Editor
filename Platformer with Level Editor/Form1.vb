@@ -325,6 +325,9 @@ Public Class Form1
 
     Private Backdrops() As GameObject
 
+    Private Portals() As GameObject
+
+
     Private FileObjects() As GameObject
 
     Private EditPlayButton As GameObject
@@ -438,6 +441,9 @@ Public Class Form1
     Private SelectedBlock As Integer = -1
 
     Private SelectedBackdrop As Integer = -1
+
+    Private SelectedPortal As Integer = -1
+
 
     Private SelectedPlatform As Integer = -1
 
@@ -985,6 +991,8 @@ Public Class Form1
 
         DrawEnemies()
 
+        DrawPortals()
+
         DrawOurHero()
 
         DrawCollectedCash()
@@ -1016,6 +1024,8 @@ Public Class Form1
         DrawEnemies()
 
         DrawSpawn()
+
+        DrawPortals()
 
         DrawGridLines()
 
@@ -2237,6 +2247,7 @@ Public Class Form1
 
                         Case AppState.Editing
 
+                            'Draw Start of Patrol
                             Dim PatrolAOffset As New Rectangle(New Point(Enemy.PatrolA.X, Enemy.PatrolA.Y), New Drawing.Size(GridSize, GridSize))
 
                             PatrolAOffset.Offset(CameraOffset)
@@ -2245,6 +2256,8 @@ Public Class Form1
 
                             .DrawString("E", EnemyFont, Brushes.PaleGoldenrod, PatrolAOffset, AlineCenterMiddle)
 
+
+                            'Draw End of Patrol
                             Dim PatrolBOffset As New Rectangle(New Point(Enemy.PatrolB.X, Enemy.PatrolB.Y), New Drawing.Size(GridSize, GridSize))
 
                             PatrolBOffset.Offset(CameraOffset)
@@ -2253,6 +2266,7 @@ Public Class Form1
 
                             .DrawString("E", EnemyFont, New SolidBrush(Color.FromArgb(128, Color.PaleGoldenrod)), PatrolBOffset, AlineCenterMiddle)
 
+                            'Draw span of patrol.
                             Dim SpanWidth As Integer = Enemy.PatrolB.X - Enemy.PatrolA.X - GridSize
 
                             Dim SpanOffset As New Rectangle(New Point(Enemy.PatrolA.X + GridSize, Enemy.PatrolA.Y), New Drawing.Size(SpanWidth, GridSize))
@@ -2338,6 +2352,110 @@ Public Class Form1
         End If
 
     End Sub
+
+
+
+
+    Private Sub DrawPortals()
+
+        With Buffer.Graphics
+
+            If Portals IsNot Nothing Then
+
+                For Each Portal In Portals
+
+                    Dim RectOffset As Rectangle = Portal.Rect
+
+                    RectOffset.Offset(CameraOffset)
+
+                    If RectOffset.IntersectsWith(ClientRectangle) Then
+
+                        Select Case GameState
+
+                            Case AppState.Playing
+
+                                'Dim RectOffset As Rectangle = Portal.Rect
+
+                                'RectOffset.Offset(CameraOffset)
+
+                                'If RectOffset.IntersectsWith(ClientRectangle) Then
+
+                                '.FillRectangle(New SolidBrush(Color.FromArgb(Portal.Color)), RectOffset)
+
+
+                                DrawPortal(RectOffset)
+
+
+                            'End If
+
+                            Case AppState.Editing
+
+                                'Draw portal entrance
+
+                                DrawPortal(RectOffset)
+
+                                'Draw portal exit
+
+                        End Select
+
+                    End If
+
+                Next
+
+            End If
+
+        End With
+
+    End Sub
+
+
+    Private Sub DrawPortal(Rect As Rectangle)
+
+        With Buffer.Graphics
+
+            .FillRectangle(Brushes.Indigo, Rect)
+
+            ' Define the rectangle to be filled
+            Dim InflatedRect As RectangleF = Rect
+
+            'rect.Inflate(rect.Width / 6.4F, rect.Height / 6.4F)
+            InflatedRect.Inflate(15, 15)
+
+
+            ' Define the center point of the gradient
+            Dim center As New PointF(InflatedRect.Left + InflatedRect.Width / 2.0F, InflatedRect.Top + InflatedRect.Height / 2.0F)
+
+            ' Define the colors for the gradient stops
+            Dim colors() As Color = {Color.Cyan, Color.Indigo}
+
+            ' Create the path for the gradient brush
+            Dim GradPath As New GraphicsPath()
+            GradPath.AddEllipse(InflatedRect)
+
+            ' Create the gradient brush
+            Dim GradBrush As New PathGradientBrush(GradPath) With
+                {.CenterPoint = center,
+                .CenterColor = colors(0),
+                .SurroundColors = New Color() {colors(1)}}
+
+            .FillRectangle(GradBrush, Rect)
+
+            Dim DoorWay As Rectangle
+
+            DoorWay.X = Rect.X + 20
+            DoorWay.Y = Rect.Y + 8
+
+            DoorWay.Width = 26
+            DoorWay.Height = 48
+
+            .FillRectangle(Brushes.Black, DoorWay)
+
+        End With
+
+    End Sub
+
+
+
 
     Private Sub DrawBackdrops()
 
@@ -3938,8 +4056,10 @@ Public Class Form1
 
         With Buffer.Graphics
 
+
             If SelectedTool = Tools.Portal Then
 
+                'Draw hover effect for button
                 If PortalToolButtonHover = True Then
 
                     FillRoundedRectangle(SelectedHoverBrush, RoundedPortalToolButton, 30, Buffer.Graphics)
@@ -3976,41 +4096,79 @@ Public Class Form1
 
             End If
 
-            .FillRectangle(Brushes.Indigo, PortalToolIcon.Rect)
 
-            ' Define the rectangle to be filled
-            Dim rect As RectangleF = PortalToolIcon.Rect
 
-            rect.Inflate(rect.Width / 6.4F, rect.Height / 6.4F)
 
-            ' Define the center point of the gradient
-            Dim center As New PointF(rect.Left + rect.Width / 2.0F, rect.Top + rect.Height / 2.0F)
 
-            ' Define the colors for the gradient stops
-            Dim colors() As Color = {Color.Cyan, Color.Indigo}
 
-            ' Create the path for the gradient brush
-            Dim GradPath As New GraphicsPath()
-            GradPath.AddEllipse(rect)
 
-            ' Create the gradient brush
-            Dim GradBrush As New PathGradientBrush(GradPath) With
-                {.CenterPoint = center,
-                .CenterColor = colors(0),
-                .SurroundColors = New Color() {colors(1)}}
 
-            .FillRectangle(GradBrush, PortalToolIcon.Rect)
 
-            Dim DoorWay As Rectangle
 
-            DoorWay.X = PortalToolIcon.Rect.X + 20
-            DoorWay.Y = PortalToolIcon.Rect.Y + 8
 
-            DoorWay.Width = 26
-            DoorWay.Height = 48
+            DrawPortal(PortalToolIcon.Rect)
 
-            .FillRectangle(Brushes.Black, DoorWay)
 
+            '.FillRectangle(Brushes.Indigo, PortalToolIcon.Rect)
+
+            '' Define the rectangle to be filled
+            'Dim rect As RectangleF = PortalToolIcon.Rect
+
+            'rect.Inflate(rect.Width / 6.4F, rect.Height / 6.4F)
+
+            '' Define the center point of the gradient
+            'Dim center As New PointF(rect.Left + rect.Width / 2.0F, rect.Top + rect.Height / 2.0F)
+
+            '' Define the colors for the gradient stops
+            'Dim colors() As Color = {Color.Cyan, Color.Indigo}
+
+            '' Create the path for the gradient brush
+            'Dim GradPath As New GraphicsPath()
+            'GradPath.AddEllipse(rect)
+
+            '' Create the gradient brush
+            'Dim GradBrush As New PathGradientBrush(GradPath) With
+            '    {.CenterPoint = center,
+            '    .CenterColor = colors(0),
+            '    .SurroundColors = New Color() {colors(1)}}
+
+            '.FillRectangle(GradBrush, PortalToolIcon.Rect)
+
+            'Dim DoorWay As Rectangle
+
+            'DoorWay.X = PortalToolIcon.Rect.X + 20
+            'DoorWay.Y = PortalToolIcon.Rect.Y + 8
+
+            'DoorWay.Width = 26
+            'DoorWay.Height = 48
+
+            '.FillRectangle(Brushes.Black, DoorWay)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            'Draw Controller Hints
             If SelectedTool = Tools.Backdrop Then
 
                 Dim ControllerHint As Rectangle
@@ -4410,6 +4568,39 @@ Public Class Form1
         End With
 
     End Sub
+
+
+
+    Private Sub AddPortal(Rect As Rectangle)
+
+        If Portals IsNot Nothing Then
+
+            Array.Resize(Portals, Portals.Length + 1)
+
+        Else
+
+            ReDim Portals(0)
+
+        End If
+
+        Dim Index As Integer = Portals.Length - 1
+
+        'Init portal
+        Portals(Index).Rect = Rect
+
+        Portals(Index).Position.X = Rect.X
+        Portals(Index).Position.Y = Rect.Y
+
+        'Portals(Index).Color = Color.ToArgb
+
+        AutoSizeLevel(Portals(Index).Rect)
+
+    End Sub
+
+
+
+
+
 
     Private Sub AddBackdrop(Rect As Rectangle, Color As Color)
 
@@ -5627,6 +5818,28 @@ Public Class Form1
     Private Sub MouseDownEditingSelectionTools(PointOffset As Point)
 
         Select Case SelectedTool
+
+            Case Tools.Portal
+
+                'Snap portal to grid.
+                Dim SnapPoint As New Point(CInt(Math.Round(PointOffset.X / GridSize) * GridSize),
+                                               CInt(Math.Round(PointOffset.Y / GridSize) * GridSize))
+
+                'AddBackdrop(New Rectangle(SnapPoint, New Drawing.Size(GridSize, GridSize)), Color.Black)
+                AddPortal(New Rectangle(SnapPoint, New Drawing.Size(GridSize, GridSize)))
+
+                'Change tool to the mouse pointer.
+                SelectedTool = Tools.Pointer
+
+                'Turn tool preview off.
+                ShowToolPreview = False
+
+                'Select the newly created portal.
+                SelectedPortal = Portals.Length - 1
+
+                SelectionOffset.X = PointOffset.X - Portals(Portals.Length - 1).Rect.X
+                SelectionOffset.Y = PointOffset.Y - Portals(Portals.Length - 1).Rect.Y
+
 
             Case Tools.Backdrop
 

@@ -1,10 +1,8 @@
-# Platformer with Level Editor
-
-#### Make Your Own Games
+# Make Your Own Games
 
 
 
-**"Platformer with Level Editor"** is the essential tool for aspiring game developers. By delving into the source code and project structure of a platformer game with a level editor, you can gain practical experience and valuable insights.
+**"Platformer with Level Editor"** is the essential tool for aspiring game developers. By delving into the source code and project structure of a platformer game with a level editor, you can gain practical experience and valuable insights to make your own games.
 
 ![142](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/42745952-f5b1-4c03-ac29-c8aec178c5cb)
 

@@ -5714,20 +5714,15 @@ Public Class Form1
 
                 SizingHandleSelected = False
 
-
-                'If SelectedTool = Tools.Pointer Then
-
                 If SelectedTool = Tools.Pointer AndAlso CheckPortalSelection(PointOffset) = True Then
 
                     If Portals IsNot Nothing Then
 
                         For Each Portal In Portals
 
-                            Dim PortalEntranceOffset As New Rectangle(New Point(Portal.PatrolA.X, Portal.PatrolA.Y), New Drawing.Size(GridSize, GridSize))
+                            Dim PortalEntrance As New Rectangle(New Point(Portal.PatrolA.X, Portal.PatrolA.Y), New Drawing.Size(GridSize, GridSize))
 
-                            'PortalEntranceOffset.Offset(CameraOffset)
-
-                            If PortalEntranceOffset.Contains(PointOffset) Then
+                            If PortalEntrance.Contains(PointOffset) Then
 
                                 SelectedPortal = Array.IndexOf(Portals, Portal)
 
@@ -5736,11 +5731,9 @@ Public Class Form1
 
                             End If
 
-                            Dim PortalExitOffset As New Rectangle(New Point(Portal.PatrolB.X, Portal.PatrolB.Y), New Drawing.Size(GridSize, GridSize))
+                            Dim PortalExit As New Rectangle(New Point(Portal.PatrolB.X, Portal.PatrolB.Y), New Drawing.Size(GridSize, GridSize))
 
-                            'PortalExitOffset.Offset(CameraOffset)
-
-                            If PortalExitOffset.Contains(PointOffset) Then
+                            If PortalExit.Contains(PointOffset) Then
 
                                 SelectedPortal = Array.IndexOf(Portals, Portal)
 
@@ -5763,7 +5756,6 @@ Public Class Form1
 
                     End If
 
-
                     'Is the player selecting a Enemy?
                 ElseIf SelectedTool = Tools.Pointer AndAlso CheckEnemySelection(PointOffset) > -1 Then
 
@@ -5784,7 +5776,6 @@ Public Class Form1
                     SpawnSelected = False
                     SelectedBackdrop = -1
                     SelectedPortal = -1
-
 
                 ElseIf SelectedTool = Tools.Pointer AndAlso Goal.Rect.Contains(PointOffset) Then
 
@@ -5807,7 +5798,6 @@ Public Class Form1
                     'Is the player selecting a block?
                 ElseIf SelectedTool = Tools.Pointer AndAlso CheckBlockSelection(PointOffset) > -1 Then
                     'Yes, the player is selecting a block.
-
 
                     SelectedBlock = CheckBlockSelection(PointOffset)
 
@@ -5887,7 +5877,6 @@ Public Class Form1
 
                 ElseIf SelectedTool = Tools.Pointer AndAlso Spawn.Rect.Contains(PointOffset) Then
 
-
                     SpawnSelected = True
 
                     SelectionOffset.X = PointOffset.X - Spawn.Rect.X
@@ -5932,12 +5921,6 @@ Public Class Form1
 
                 End If
 
-
-
-
-                'End If
-
-
             End If
 
         Else
@@ -5971,7 +5954,6 @@ Public Class Form1
 
                 Dim SnapPointB As New Point(SnapPoint.X + GridSize, SnapPoint.Y)
 
-
                 'AddBackdrop(New Rectangle(SnapPoint, New Drawing.Size(GridSize, GridSize)), Color.Black)
                 AddPortal(New Rectangle(SnapPoint, New Drawing.Size(GridSize, GridSize)), SnapPoint, SnapPointB)
 
@@ -5983,10 +5965,10 @@ Public Class Form1
 
                 'Select the newly created portal.
                 SelectedPortal = Portals.Length - 1
+                PortalEntranceSelected = True
 
                 SelectionOffset.X = PointOffset.X - Portals(Portals.Length - 1).Rect.X
                 SelectionOffset.Y = PointOffset.Y - Portals(Portals.Length - 1).Rect.Y
-
 
             Case Tools.Backdrop
 
@@ -6146,7 +6128,6 @@ Public Class Form1
                 SpawnSelected = False
                 SelectedBackdrop = -1
                 SelectedPortal = -1
-
 
         End Select
 

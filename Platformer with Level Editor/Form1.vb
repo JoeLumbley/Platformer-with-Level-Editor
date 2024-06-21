@@ -5717,7 +5717,7 @@ Public Class Form1
 
                 'If SelectedTool = Tools.Pointer Then
 
-                If CheckPortalSelection(PointOffset) = True AndAlso SelectedTool = Tools.Pointer Then
+                If SelectedTool = Tools.Pointer AndAlso CheckPortalSelection(PointOffset) = True Then
 
                     If Portals IsNot Nothing Then
 
@@ -5765,7 +5765,7 @@ Public Class Form1
 
 
                     'Is the player selecting a Enemy?
-                ElseIf CheckEnemySelection(PointOffset) > -1 AndAlso SelectedTool = Tools.Pointer Then
+                ElseIf SelectedTool = Tools.Pointer AndAlso CheckEnemySelection(PointOffset) > -1 Then
 
                     'Yes, the player is selecting a Enemy.
 
@@ -5786,7 +5786,7 @@ Public Class Form1
                     SelectedPortal = -1
 
 
-                ElseIf Goal.Rect.Contains(PointOffset) AndAlso SelectedTool = Tools.Pointer Then
+                ElseIf SelectedTool = Tools.Pointer AndAlso Goal.Rect.Contains(PointOffset) Then
 
                     GoalSelected = True
 
@@ -5805,7 +5805,7 @@ Public Class Form1
                     SelectedPortal = -1
 
                     'Is the player selecting a block?
-                ElseIf CheckBlockSelection(PointOffset) > -1 AndAlso SelectedTool = Tools.Pointer Then
+                ElseIf SelectedTool = Tools.Pointer AndAlso CheckBlockSelection(PointOffset) > -1 Then
                     'Yes, the player is selecting a block.
 
 
@@ -5826,7 +5826,7 @@ Public Class Form1
                     SelectedPortal = -1
 
                     'Is the player selecting a bill?
-                ElseIf CheckBillSelection(PointOffset) > -1 AndAlso SelectedTool = Tools.Pointer Then
+                ElseIf SelectedTool = Tools.Pointer AndAlso CheckBillSelection(PointOffset) > -1 Then
                     'Yes, the player is selecting a bill.
 
                     SelectedBill = CheckBillSelection(PointOffset)
@@ -5846,7 +5846,7 @@ Public Class Form1
                     SelectedPortal = -1
 
                     'Is the player selecting a cloud?
-                ElseIf CheckCloudSelection(PointOffset) > -1 AndAlso SelectedTool = Tools.Pointer Then
+                ElseIf SelectedTool = Tools.Pointer AndAlso CheckCloudSelection(PointOffset) > -1 Then
                     'Yes, the player is selecting a cloud.
 
                     SelectedCloud = CheckCloudSelection(PointOffset)
@@ -5866,7 +5866,7 @@ Public Class Form1
                     SelectedPortal = -1
 
                     'Is the player selecting a bush?
-                ElseIf CheckBushSelection(PointOffset) > -1 AndAlso SelectedTool = Tools.Pointer Then
+                ElseIf SelectedTool = Tools.Pointer AndAlso CheckBushSelection(PointOffset) > -1 Then
                     'Yes, the player is selecting a bush.
 
                     SelectedBush = CheckBushSelection(PointOffset)
@@ -5885,7 +5885,7 @@ Public Class Form1
                     SelectedBackdrop = -1
                     SelectedPortal = -1
 
-                ElseIf Spawn.Rect.Contains(PointOffset) AndAlso SelectedTool = Tools.Pointer Then
+                ElseIf SelectedTool = Tools.Pointer AndAlso Spawn.Rect.Contains(PointOffset) Then
 
 
                     SpawnSelected = True
@@ -5905,7 +5905,7 @@ Public Class Form1
                     SelectedPortal = -1
 
                     'Is the player selecting a backdrop?
-                ElseIf CheckBackdropSelection(PointOffset) > -1 AndAlso SelectedTool = Tools.Pointer Then
+                ElseIf SelectedTool = Tools.Pointer AndAlso CheckBackdropSelection(PointOffset) > -1 Then
                     'Yes, the player is selecting a backdrop.
 
                     SelectedBackdrop = CheckBackdropSelection(PointOffset)

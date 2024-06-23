@@ -5969,7 +5969,6 @@ Public Class Form1
 
                 Dim SnapPointB As New Point(SnapPoint.X + GridSize, SnapPoint.Y)
 
-                'AddBackdrop(New Rectangle(SnapPoint, New Drawing.Size(GridSize, GridSize)), Color.Black)
                 AddPortal(New Rectangle(SnapPoint, New Drawing.Size(GridSize, GridSize)), SnapPoint, SnapPointB)
 
                 'Change tool to the mouse pointer.
@@ -5987,7 +5986,6 @@ Public Class Form1
 
                 AutoSizeLevel(New Rectangle(New Point(Portals(SelectedPortal).PatrolA.X, Portals(SelectedPortal).PatrolA.Y), New Drawing.Size(GridSize, GridSize)))
                 AutoSizeLevel(New Rectangle(New Point(Portals(SelectedPortal).PatrolB.X, Portals(SelectedPortal).PatrolB.Y), New Drawing.Size(GridSize, GridSize)))
-
 
             Case Tools.Backdrop
 
@@ -7456,11 +7454,6 @@ Public Class Form1
 
         End If
 
-
-
-
-
-
         If SelectedPortal > -1 Then
 
             If e.Button = MouseButtons.Left Then
@@ -7486,10 +7479,6 @@ Public Class Form1
             End If
 
         End If
-
-
-
-
 
         If SelectedBill > -1 Then
 

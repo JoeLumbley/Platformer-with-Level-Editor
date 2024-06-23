@@ -2370,22 +2370,31 @@ Public Class Form1
 
                     RectOffset.Offset(CameraOffset)
 
-                    If RectOffset.IntersectsWith(ClientRectangle) Then
+                    'If RectOffset.IntersectsWith(ClientRectangle) Then
 
-                        Select Case GameState
+                    Select Case GameState
 
                             Case AppState.Playing
 
-                                'Dim RectOffset As Rectangle = Portal.Rect
+                                'Draw portal entrance
+                                Dim PortalEntranceOffset As New Rectangle(New Point(Portal.PatrolA.X, Portal.PatrolA.Y), New Drawing.Size(GridSize, GridSize))
 
-                                'RectOffset.Offset(CameraOffset)
+                                PortalEntranceOffset.Offset(CameraOffset)
 
-                                'If RectOffset.IntersectsWith(ClientRectangle) Then
+                                DrawPortal(PortalEntranceOffset)
 
-                                '.FillRectangle(New SolidBrush(Color.FromArgb(Portal.Color)), RectOffset)
+                                '.DrawString(Array.IndexOf(Portals, Portal).ToString, EnemyFont, Brushes.PaleGoldenrod, PortalEntranceOffset, AlineCenterMiddle)
 
+                                'Draw portal exit
 
-                                DrawPortal(RectOffset)
+                                Dim PortalExitOffset As New Rectangle(New Point(Portal.PatrolB.X, Portal.PatrolB.Y), New Drawing.Size(GridSize, GridSize))
+
+                                PortalExitOffset.Offset(CameraOffset)
+
+                                DrawPortal(PortalExitOffset)
+
+                                '.DrawString(Array.IndexOf(Portals, Portal).ToString, EnemyFont, Brushes.PaleGoldenrod, PortalExitOffset, AlineCenterMiddle)
+
 
 
                             'End If
@@ -2413,7 +2422,7 @@ Public Class Form1
 
                         End Select
 
-                    End If
+                    'End If
 
                 Next
 
@@ -5728,6 +5737,8 @@ Public Class Form1
 
                                 PortalEntranceSelected = True
 
+                                SelectionOffset.X = PointOffset.X - Portals(SelectedPortal).PatrolA.X
+                                SelectionOffset.Y = PointOffset.Y - Portals(SelectedPortal).PatrolA.Y
 
                             End If
 
@@ -5738,6 +5749,10 @@ Public Class Form1
                                 SelectedPortal = Array.IndexOf(Portals, Portal)
 
                                 PortalEntranceSelected = False
+
+                                SelectionOffset.X = PointOffset.X - Portals(SelectedPortal).PatrolB.X
+                                SelectionOffset.Y = PointOffset.Y - Portals(SelectedPortal).PatrolB.Y
+
 
                             End If
 
@@ -7436,6 +7451,41 @@ Public Class Form1
             End If
 
         End If
+
+
+
+
+
+
+        If SelectedPortal > -1 Then
+
+            If e.Button = MouseButtons.Left Then
+
+                If PortalEntranceSelected = True Then
+
+                    'Move entrance, snap to grid
+                    Portals(SelectedPortal).PatrolA.X = CInt(Math.Round((PointOffset.X - SelectionOffset.X) / GridSize)) * GridSize
+                    Portals(SelectedPortal).PatrolA.Y = CInt(Math.Round((PointOffset.Y - SelectionOffset.Y) / GridSize)) * GridSize
+
+                    AutoSizeLevel(Portals(SelectedPortal).Rect)
+
+                Else
+
+                    'Move exit, snap to grid
+                    Portals(SelectedPortal).PatrolB.X = CInt(Math.Round((PointOffset.X - SelectionOffset.X) / GridSize)) * GridSize
+                    Portals(SelectedPortal).PatrolB.Y = CInt(Math.Round((PointOffset.Y - SelectionOffset.Y) / GridSize)) * GridSize
+
+
+
+                End If
+
+            End If
+
+        End If
+
+
+
+
 
         If SelectedBill > -1 Then
 

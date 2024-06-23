@@ -16,7 +16,7 @@ Gain a deep understanding of physics, collision detection, character movement, a
 #### 2. Programming Patterns
 Discover common programming patterns used in game development, such as object-oriented design and event handling.
 
-![144](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/7888e141-8729-4d0e-a333-595a4da41a18)
+![147](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/413d8e76-00c3-4ab4-9d1b-0c0ef09c5910)
 
 
 
@@ -24,8 +24,8 @@ Discover common programming patterns used in game development, such as object-or
 The level editor introduces you to key game design principles, covering aspects like level creation, storage, and loading.
 
 
+![148](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/fa8d1d5a-ff98-4c92-b4e5-83c68f1e64bc)
 
-![146](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/188e4849-bd91-4cb8-9a61-f863285d8ad6)
 
 
 

@@ -5985,6 +5985,10 @@ Public Class Form1
                 SelectionOffset.X = PointOffset.X - Portals(Portals.Length - 1).Rect.X
                 SelectionOffset.Y = PointOffset.Y - Portals(Portals.Length - 1).Rect.Y
 
+                AutoSizeLevel(New Rectangle(New Point(Portals(SelectedPortal).PatrolA.X, Portals(SelectedPortal).PatrolA.Y), New Drawing.Size(GridSize, GridSize)))
+                AutoSizeLevel(New Rectangle(New Point(Portals(SelectedPortal).PatrolB.X, Portals(SelectedPortal).PatrolB.Y), New Drawing.Size(GridSize, GridSize)))
+
+
             Case Tools.Backdrop
 
                 'Snap backdrop to grid.
@@ -7467,7 +7471,7 @@ Public Class Form1
                     Portals(SelectedPortal).PatrolA.X = CInt(Math.Round((PointOffset.X - SelectionOffset.X) / GridSize)) * GridSize
                     Portals(SelectedPortal).PatrolA.Y = CInt(Math.Round((PointOffset.Y - SelectionOffset.Y) / GridSize)) * GridSize
 
-                    AutoSizeLevel(Portals(SelectedPortal).Rect)
+                    AutoSizeLevel(New Rectangle(New Point(Portals(SelectedPortal).PatrolA.X, Portals(SelectedPortal).PatrolA.Y), New Drawing.Size(GridSize, GridSize)))
 
                 Else
 
@@ -7475,7 +7479,7 @@ Public Class Form1
                     Portals(SelectedPortal).PatrolB.X = CInt(Math.Round((PointOffset.X - SelectionOffset.X) / GridSize)) * GridSize
                     Portals(SelectedPortal).PatrolB.Y = CInt(Math.Round((PointOffset.Y - SelectionOffset.Y) / GridSize)) * GridSize
 
-
+                    AutoSizeLevel(New Rectangle(New Point(Portals(SelectedPortal).PatrolB.X, Portals(SelectedPortal).PatrolB.Y), New Drawing.Size(GridSize, GridSize)))
 
                 End If
 

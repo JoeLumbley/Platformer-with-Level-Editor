@@ -278,6 +278,8 @@ Public Class Form1
 
     Private ReadOnly ControllerHintFont As New Font(FontFamily.GenericSansSerif, 15, FontStyle.Bold)
 
+    Private ReadOnly ControllerHintFontSmall As New Font(New FontFamily("Wingdings"), 12, FontStyle.Bold)
+
     Private ReadOnly BillFont As New Font(FontFamily.GenericSansSerif, 25, FontStyle.Bold)
 
     Private ReadOnly MenuButtonFont As New Font(FontFamily.GenericSansSerif, 45)
@@ -820,6 +822,31 @@ Public Class Form1
 
         End If
 
+        If Portals IsNot Nothing Then
+
+            For Each Portal In Portals
+
+                Dim PortalEntrance As New Rectangle(New Point(Portal.PatrolA.X, Portal.PatrolA.Y), New Drawing.Size(GridSize, GridSize))
+
+                If Hero.Rect.IntersectsWith(PortalEntrance) = True Then
+
+                    If UpArrowDown = True Then
+
+                        Dim PortalExit As New Rectangle(New Point(Portal.PatrolB.X, Portal.PatrolB.Y), New Drawing.Size(GridSize, GridSize))
+
+                        Hero.Rect = PortalExit
+                        Hero.Position.X = Hero.Rect.X
+                        Hero.Position.Y = Hero.Rect.Y
+
+                    End If
+
+                End If
+
+            Next
+
+        End If
+
+
         UpdateHeroMovement()
 
         UpdateCash()
@@ -833,6 +860,11 @@ Public Class Form1
             DoGoalCollision()
 
         End If
+
+
+
+
+
 
     End Sub
 
@@ -2374,24 +2406,48 @@ Public Class Form1
 
                     Select Case GameState
 
-                            Case AppState.Playing
+                        Case AppState.Playing
 
-                                'Draw portal entrance
-                                Dim PortalEntranceOffset As New Rectangle(New Point(Portal.PatrolA.X, Portal.PatrolA.Y), New Drawing.Size(GridSize, GridSize))
+                            'Draw portal entrance
+                            Dim PortalEntrance As New Rectangle(New Point(Portal.PatrolA.X, Portal.PatrolA.Y), New Drawing.Size(GridSize, GridSize))
+                            Dim PortalEntranceOffset As Rectangle = PortalEntrance
+                            PortalEntranceOffset.Offset(CameraOffset)
 
-                                PortalEntranceOffset.Offset(CameraOffset)
 
-                                DrawPortal(PortalEntranceOffset)
+                            If Hero.Rect.IntersectsWith(PortalEntrance) = True Then
 
-                                '.DrawString(Array.IndexOf(Portals, Portal).ToString, EnemyFont, Brushes.PaleGoldenrod, PortalEntranceOffset, AlineCenterMiddle)
+                                Dim ControllerHintOffset As Rectangle = PortalEntranceOffset
 
-                                'Draw portal exit
+                                ControllerHintOffset.Offset(16, -40)
+                                ControllerHintOffset.Width = 32
+                                ControllerHintOffset.Height = 32
 
-                                Dim PortalExitOffset As New Rectangle(New Point(Portal.PatrolB.X, Portal.PatrolB.Y), New Drawing.Size(GridSize, GridSize))
+                                Dim ControllerHintTextOffset As Rectangle = ControllerHintOffset
 
-                                PortalExitOffset.Offset(CameraOffset)
 
-                                DrawPortal(PortalExitOffset)
+                                .FillRectangle(Brushes.White, ControllerHintOffset)
+                                'Controller hint
+
+                                .DrawString("é", ControllerHintFontSmall, Brushes.Black, ControllerHintTextOffset, AlineCenterMiddle)
+
+                            End If
+
+
+                            'PortalEntranceOffset.Offset(CameraOffset)
+
+                            DrawPortal(PortalEntranceOffset)
+
+
+
+                            '.DrawString(Array.IndexOf(Portals, Portal).ToString, EnemyFont, Brushes.PaleGoldenrod, PortalEntranceOffset, AlineCenterMiddle)
+
+                            'Draw portal exit
+
+                            Dim PortalExitOffset As New Rectangle(New Point(Portal.PatrolB.X, Portal.PatrolB.Y), New Drawing.Size(GridSize, GridSize))
+
+                            PortalExitOffset.Offset(CameraOffset)
+
+                            DrawPortal(PortalExitOffset)
 
                                 '.DrawString(Array.IndexOf(Portals, Portal).ToString, EnemyFont, Brushes.PaleGoldenrod, PortalExitOffset, AlineCenterMiddle)
 
@@ -2399,28 +2455,30 @@ Public Class Form1
 
                             'End If
 
-                            Case AppState.Editing
+                        Case AppState.Editing
 
-                                'Draw portal entrance
-                                Dim PortalEntranceOffset As New Rectangle(New Point(Portal.PatrolA.X, Portal.PatrolA.Y), New Drawing.Size(GridSize, GridSize))
 
-                                PortalEntranceOffset.Offset(CameraOffset)
+                            'Draw portal entrance
+                            Dim PortalEntranceOffset As New Rectangle(New Point(Portal.PatrolA.X, Portal.PatrolA.Y), New Drawing.Size(GridSize, GridSize))
 
-                                DrawPortal(PortalEntranceOffset)
+                            PortalEntranceOffset.Offset(CameraOffset)
 
-                                .DrawString(Array.IndexOf(Portals, Portal).ToString, EnemyFont, Brushes.PaleGoldenrod, PortalEntranceOffset, AlineCenterMiddle)
+                            DrawPortal(PortalEntranceOffset)
 
-                                'Draw portal exit
+                            .DrawString(Array.IndexOf(Portals, Portal).ToString, EnemyFont, Brushes.PaleGoldenrod, PortalEntranceOffset, AlineCenterMiddle)
 
-                                Dim PortalExitOffset As New Rectangle(New Point(Portal.PatrolB.X, Portal.PatrolB.Y), New Drawing.Size(GridSize, GridSize))
+                            'Draw portal exit
 
-                                PortalExitOffset.Offset(CameraOffset)
+                            Dim PortalExitOffset As New Rectangle(New Point(Portal.PatrolB.X, Portal.PatrolB.Y), New Drawing.Size(GridSize, GridSize))
 
-                                DrawPortal(PortalExitOffset)
+                            PortalExitOffset.Offset(CameraOffset)
 
-                                .DrawString(Array.IndexOf(Portals, Portal).ToString, EnemyFont, Brushes.PaleGoldenrod, PortalExitOffset, AlineCenterMiddle)
+                            DrawPortal(PortalExitOffset)
 
-                        End Select
+                            .DrawString(Array.IndexOf(Portals, Portal).ToString, EnemyFont, Brushes.PaleGoldenrod, PortalExitOffset, AlineCenterMiddle)
+
+                    End Select
+
 
                     'End If
 
@@ -5486,6 +5544,8 @@ Public Class Form1
         Enemies = Nothing
 
         Backdrops = Nothing
+
+        Portals = Nothing
 
     End Sub
 

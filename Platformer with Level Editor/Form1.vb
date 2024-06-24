@@ -329,7 +329,6 @@ Public Class Form1
 
     Private Portals() As GameObject
 
-
     Private FileObjects() As GameObject
 
     Private EditPlayButton As GameObject
@@ -447,7 +446,6 @@ Public Class Form1
     Private SelectedPortal As Integer = -1
 
     Private PortalEntranceSelected As Boolean = False
-
 
     Private SelectedPlatform As Integer = -1
 
@@ -846,7 +844,6 @@ Public Class Form1
 
         End If
 
-
         UpdateHeroMovement()
 
         UpdateCash()
@@ -860,11 +857,6 @@ Public Class Form1
             DoGoalCollision()
 
         End If
-
-
-
-
-
 
     End Sub
 

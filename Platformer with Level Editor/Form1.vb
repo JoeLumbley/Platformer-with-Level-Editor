@@ -209,6 +209,7 @@ Public Class Form1
         Enemy
         Spawn
         Backdrop
+        Portal
     End Enum
 
     Private Enum Direction As Integer
@@ -6879,6 +6880,54 @@ Public Class Form1
 
         End If
 
+
+
+
+
+
+
+        'Write portals to File
+        If Portals IsNot Nothing Then
+
+            For Each Portal In Portals
+
+                'Write ID
+                Write(File_Number, ObjectID.Portal)
+
+                'Write Position
+                Write(File_Number, Portal.Rect.X)
+                Write(File_Number, Portal.Rect.Y)
+
+                'Write Size
+                Write(File_Number, Portal.Rect.Width)
+                Write(File_Number, Portal.Rect.Height)
+
+                'Write PatrolA
+                Write(File_Number, Portal.PatrolA.X)
+                Write(File_Number, Portal.PatrolA.Y)
+
+                'Write PatrolB
+                Write(File_Number, Portal.PatrolB.X)
+                Write(File_Number, Portal.PatrolB.Y)
+
+                'Write Color
+                Write(File_Number, Portal.Color)
+
+                'Write Text
+                Write(File_Number, "Portal")
+
+            Next
+
+        End If
+
+
+
+
+
+
+
+
+
         'Write Goal to File
         'Write ID
         Write(File_Number, ObjectID.Goal)
@@ -7141,6 +7190,12 @@ Public Class Form1
                 Case ObjectID.Backdrop
 
                     AddBackdrop(FileObject.Rect, Color.FromArgb(FileObject.Color))
+
+                Case ObjectID.Portal
+
+                    AddPortal(FileObject.Rect,
+                              New Point(FileObject.PatrolA.X, FileObject.PatrolA.Y),
+                              New Point(FileObject.PatrolB.X, FileObject.PatrolB.Y))
 
             End Select
 

@@ -106,6 +106,8 @@ Public Class Form1
 
     Private ControllerLeft As Boolean = False
 
+    Private ControllerUp As Boolean = False
+
     Private ControllerJumped As Boolean = False
 
     Private IsMouseDown As Boolean = False
@@ -829,7 +831,7 @@ Public Class Form1
 
                 If Hero.Rect.IntersectsWith(PortalEntrance) = True Then
 
-                    If UpArrowDown = True Then
+                    If UpArrowDown = True Or ControllerUp = True Then
 
                         Dim PortalExit As New Rectangle(New Point(Portal.PatrolB.X, Portal.PatrolB.Y), New Drawing.Size(GridSize, GridSize))
 
@@ -1389,6 +1391,8 @@ Public Class Form1
 
             End If
 
+
+
         ElseIf ControllerPosition.Gamepad.sThumbLY >= NeutralEnd Then
             'The left thumbstick is in the up position.
 
@@ -1412,6 +1416,13 @@ Public Class Form1
 
             End If
 
+            If GameState = AppState.Playing Then
+
+                ControllerUp = True
+
+            End If
+
+
         Else
             'The left thumbstick is in the neutral position.
 
@@ -1424,6 +1435,13 @@ Public Class Form1
                 End If
 
             End If
+
+            If GameState = AppState.Playing AndAlso DPadUpPressed = False Then
+
+                ControllerUp = False
+
+            End If
+
 
         End If
 
@@ -9152,6 +9170,21 @@ Public Class Form1
                 End If
 
             End If
+
+            If GameState = AppState.Playing Then
+
+                ControllerUp = True
+
+            End If
+
+        Else
+
+            If GameState = AppState.Playing Then
+
+                ControllerUp = False
+
+            End If
+
 
         End If
 

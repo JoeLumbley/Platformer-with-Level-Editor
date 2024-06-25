@@ -1391,8 +1391,6 @@ Public Class Form1
 
             End If
 
-
-
         ElseIf ControllerPosition.Gamepad.sThumbLY >= NeutralEnd Then
             'The left thumbstick is in the up position.
 
@@ -1422,7 +1420,6 @@ Public Class Form1
 
             End If
 
-
         Else
             'The left thumbstick is in the neutral position.
 
@@ -1441,7 +1438,6 @@ Public Class Form1
                 ControllerUp = False
 
             End If
-
 
         End If
 

@@ -1668,7 +1668,6 @@ Public Class Form1
 
         End If
 
-
     End Sub
 
     Private Sub UpdateRightThumbstickPosition()
@@ -2394,9 +2393,6 @@ Public Class Form1
 
     End Sub
 
-
-
-
     Private Sub DrawPortals()
 
         With Buffer.Graphics
@@ -2409,8 +2405,6 @@ Public Class Form1
 
                     RectOffset.Offset(CameraOffset)
 
-                    'If RectOffset.IntersectsWith(ClientRectangle) Then
-
                     Select Case GameState
 
                         Case AppState.Playing
@@ -2419,7 +2413,6 @@ Public Class Form1
                             Dim PortalEntrance As New Rectangle(New Point(Portal.PatrolA.X, Portal.PatrolA.Y), New Drawing.Size(GridSize, GridSize))
                             Dim PortalEntranceOffset As Rectangle = PortalEntrance
                             PortalEntranceOffset.Offset(CameraOffset)
-
 
                             If Hero.Rect.IntersectsWith(PortalEntrance) = True Then
 
@@ -2431,39 +2424,22 @@ Public Class Form1
 
                                 Dim ControllerHintTextOffset As Rectangle = ControllerHintOffset
 
-
                                 .FillRectangle(Brushes.White, ControllerHintOffset)
-                                'Controller hint
 
                                 .DrawString("é", ControllerHintFontSmall, Brushes.Black, ControllerHintTextOffset, AlineCenterMiddle)
 
                             End If
 
-
-                            'PortalEntranceOffset.Offset(CameraOffset)
-
                             DrawPortal(PortalEntranceOffset)
 
-
-
-                            '.DrawString(Array.IndexOf(Portals, Portal).ToString, EnemyFont, Brushes.PaleGoldenrod, PortalEntranceOffset, AlineCenterMiddle)
-
                             'Draw portal exit
-
                             Dim PortalExitOffset As New Rectangle(New Point(Portal.PatrolB.X, Portal.PatrolB.Y), New Drawing.Size(GridSize, GridSize))
 
                             PortalExitOffset.Offset(CameraOffset)
 
                             DrawPortal(PortalExitOffset)
 
-                                '.DrawString(Array.IndexOf(Portals, Portal).ToString, EnemyFont, Brushes.PaleGoldenrod, PortalExitOffset, AlineCenterMiddle)
-
-
-
-                            'End If
-
                         Case AppState.Editing
-
 
                             'Draw portal entrance
                             Dim PortalEntranceOffset As New Rectangle(New Point(Portal.PatrolA.X, Portal.PatrolA.Y), New Drawing.Size(GridSize, GridSize))
@@ -2475,7 +2451,6 @@ Public Class Form1
                             .DrawString(Array.IndexOf(Portals, Portal).ToString, EnemyFont, Brushes.PaleGoldenrod, PortalEntranceOffset, AlineCenterMiddle)
 
                             'Draw portal exit
-
                             Dim PortalExitOffset As New Rectangle(New Point(Portal.PatrolB.X, Portal.PatrolB.Y), New Drawing.Size(GridSize, GridSize))
 
                             PortalExitOffset.Offset(CameraOffset)
@@ -2486,9 +2461,6 @@ Public Class Form1
 
                     End Select
 
-
-                    'End If
-
                 Next
 
             End If
@@ -2496,7 +2468,6 @@ Public Class Form1
         End With
 
     End Sub
-
 
     Private Sub DrawPortal(Rect As Rectangle)
 
@@ -2509,7 +2480,6 @@ Public Class Form1
 
             'rect.Inflate(rect.Width / 6.4F, rect.Height / 6.4F)
             InflatedRect.Inflate(15, 15)
-
 
             ' Define the center point of the gradient
             Dim center As New PointF(InflatedRect.Left + InflatedRect.Width / 2.0F, InflatedRect.Top + InflatedRect.Height / 2.0F)
@@ -2543,9 +2513,6 @@ Public Class Form1
 
     End Sub
 
-
-
-
     Private Sub DrawBackdrops()
 
         With Buffer.Graphics
@@ -2578,7 +2545,6 @@ Public Class Form1
 
             Dim RectOffset As Rectangle
 
-
             If SelectedPortal > -1 Then
 
                 If PortalEntranceSelected = True Then
@@ -2599,34 +2565,7 @@ Public Class Form1
 
                 End If
 
-
-
-
-
-
-
-
-
-
-
-
-
-                'Dim SelectionSize As New Size(Enemies(SelectedEnemy).PatrolB.X + GridSize - Enemies(SelectedEnemy).PatrolA.X, GridSize)
-
-                'RectOffset = New Rectangle(New Point(Enemies(SelectedEnemy).PatrolA.X, Enemies(SelectedEnemy).PatrolA.Y), SelectionSize)
-
-                'RectOffset.Offset(CameraOffset)
-
-                'DrawSelectionRectangle(RectOffset, Buffer.Graphics)
-
-                ''Position sizing handle.
-                'SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
-                'SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
-
-                'DrawSizingHandle(RectOffset, Buffer.Graphics)
-
             End If
-
 
             If SelectedEnemy > -1 Then
 
@@ -4195,7 +4134,6 @@ Public Class Form1
 
         With Buffer.Graphics
 
-
             If SelectedTool = Tools.Portal Then
 
                 'Draw hover effect for button
@@ -4235,77 +4173,7 @@ Public Class Form1
 
             End If
 
-
-
-
-
-
-
-
-
-
-
             DrawPortal(PortalToolIcon.Rect)
-
-
-            '.FillRectangle(Brushes.Indigo, PortalToolIcon.Rect)
-
-            '' Define the rectangle to be filled
-            'Dim rect As RectangleF = PortalToolIcon.Rect
-
-            'rect.Inflate(rect.Width / 6.4F, rect.Height / 6.4F)
-
-            '' Define the center point of the gradient
-            'Dim center As New PointF(rect.Left + rect.Width / 2.0F, rect.Top + rect.Height / 2.0F)
-
-            '' Define the colors for the gradient stops
-            'Dim colors() As Color = {Color.Cyan, Color.Indigo}
-
-            '' Create the path for the gradient brush
-            'Dim GradPath As New GraphicsPath()
-            'GradPath.AddEllipse(rect)
-
-            '' Create the gradient brush
-            'Dim GradBrush As New PathGradientBrush(GradPath) With
-            '    {.CenterPoint = center,
-            '    .CenterColor = colors(0),
-            '    .SurroundColors = New Color() {colors(1)}}
-
-            '.FillRectangle(GradBrush, PortalToolIcon.Rect)
-
-            'Dim DoorWay As Rectangle
-
-            'DoorWay.X = PortalToolIcon.Rect.X + 20
-            'DoorWay.Y = PortalToolIcon.Rect.Y + 8
-
-            'DoorWay.Width = 26
-            'DoorWay.Height = 48
-
-            '.FillRectangle(Brushes.Black, DoorWay)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
             'Draw Controller Hints
             If SelectedTool = Tools.Backdrop Then
@@ -4692,7 +4560,7 @@ Public Class Form1
                                       ExitButton.Rect.Y + 16,
                                       52,
                                       52),
-                                      AlineCenterMiddle)
+                        AlineCenterMiddle)
 
         End With
 
@@ -4707,8 +4575,6 @@ Public Class Form1
         End With
 
     End Sub
-
-
 
     Private Sub AddPortal(Rect As Rectangle, PatrolA As Point, PatrolB As Point)
 
@@ -4736,17 +4602,9 @@ Public Class Form1
         Portals(Index).PatrolB.X = PatrolB.X
         Portals(Index).PatrolB.Y = PatrolB.Y
 
-
-        'Portals(Index).Color = Color.ToArgb
-
         AutoSizeLevel(Portals(Index).Rect)
 
     End Sub
-
-
-
-
-
 
     Private Sub AddBackdrop(Rect As Rectangle, Color As Color)
 
@@ -5017,7 +4875,7 @@ Public Class Form1
                                       StartScreenOpenButton.Rect.Y + StartScreenOpenButton.Rect.Height \ 2 - 45 \ 2,
                                       150,
                                       50),
-                                      AlineCenterMiddle)
+                        AlineCenterMiddle)
 
             .DrawString("Y",
                         ButtonIconFont,
@@ -5026,7 +4884,7 @@ Public Class Form1
                                       StartScreenOpenButton.Rect.Y + StartScreenOpenButton.Rect.Height \ 2 - 45 \ 2,
                                       50,
                                       50),
-                                      AlineCenterMiddle)
+                        AlineCenterMiddle)
 
         End With
 
@@ -5078,7 +4936,7 @@ Public Class Form1
                                       StartScreenNewButton.Rect.Y + StartScreenNewButton.Rect.Height \ 2 - 45 \ 2,
                                       50,
                                       50),
-                                      AlineCenterMiddle)
+                        AlineCenterMiddle)
 
         End With
 
@@ -5100,10 +4958,10 @@ Public Class Form1
 
             'Draw title.
             .DrawString(Title.Text,
-                    TitleFont,
-                    Brushes.Black,
-                    Title.Rect,
-                    AlineCenterMiddle)
+                        TitleFont,
+                        Brushes.Black,
+                        Title.Rect,
+                        AlineCenterMiddle)
 
         End With
 
@@ -5125,10 +4983,10 @@ Public Class Form1
 
             'Draw title.
             .DrawString("Level Clear!",
-                    TitleFont,
-                    Brushes.White,
-                    Title.Rect,
-                    AlineCenterMiddle)
+                        TitleFont,
+                        Brushes.White,
+                        Title.Rect,
+                        AlineCenterMiddle)
 
         End With
 
@@ -5820,7 +5678,6 @@ Public Class Form1
                                 SelectionOffset.X = PointOffset.X - Portals(SelectedPortal).PatrolB.X
                                 SelectionOffset.Y = PointOffset.Y - Portals(SelectedPortal).PatrolB.Y
 
-
                             End If
 
                         Next
@@ -6366,18 +6223,15 @@ Public Class Form1
 
     End Function
 
-
     Private Function CheckPortalSelection(e As Point) As Boolean
 
         If Portals IsNot Nothing Then
 
             For Each Portal In Portals
 
-                Dim PortalEntranceOffset As New Rectangle(New Point(Portal.PatrolA.X, Portal.PatrolA.Y), New Drawing.Size(GridSize, GridSize))
+                Dim PortalEntrance As New Rectangle(New Point(Portal.PatrolA.X, Portal.PatrolA.Y), New Drawing.Size(GridSize, GridSize))
 
-                'PortalEntranceOffset.Offset(CameraOffset)
-
-                If PortalEntranceOffset.Contains(e) Then
+                If PortalEntrance.Contains(e) Then
 
                     Return True
 
@@ -6385,32 +6239,15 @@ Public Class Form1
 
                 End If
 
-                Dim PortalExitOffset As New Rectangle(New Point(Portal.PatrolB.X, Portal.PatrolB.Y), New Drawing.Size(GridSize, GridSize))
+                Dim PortalExit As New Rectangle(New Point(Portal.PatrolB.X, Portal.PatrolB.Y), New Drawing.Size(GridSize, GridSize))
 
-                'PortalExitOffset.Offset(CameraOffset)
-
-                If PortalExitOffset.Contains(e) Then
+                If PortalExit.Contains(e) Then
 
                     Return True
 
                     Exit Function
 
                 End If
-
-                'Dim PatrolRect As New Rectangle(Enemy.PatrolA.X,
-                '                                Enemy.PatrolA.Y,
-                '                                Enemy.PatrolB.X + GridSize - Enemy.PatrolA.X,
-                '                                GridSize)
-
-                ''Has the player selected a Enemy?
-                'If PatrolRect.Contains(e) Then
-                '    'Yes, the player has selected a Enemy.
-
-                '    Return Array.IndexOf(Enemies, Enemy)
-
-                '    Exit Function
-
-                'End If
 
             Next
 
@@ -6419,9 +6256,6 @@ Public Class Form1
         Return False
 
     End Function
-
-
-
 
     Private Sub SaveTestLevelFile(FilePath As String)
 
@@ -6894,12 +6728,6 @@ Public Class Form1
 
         End If
 
-
-
-
-
-
-
         'Write portals to File
         If Portals IsNot Nothing Then
 
@@ -6933,14 +6761,6 @@ Public Class Form1
             Next
 
         End If
-
-
-
-
-
-
-
-
 
         'Write Goal to File
         'Write ID
@@ -7459,7 +7279,6 @@ Public Class Form1
                 SaveButtonHover = False
 
             End If
-
 
             If OpenButton.Rect.Contains(e.Location) Then
 

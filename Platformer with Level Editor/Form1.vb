@@ -2560,11 +2560,6 @@ Public Class Form1
 
     End Sub
 
-
-
-
-
-
     Private Sub DrawBackdrops()
 
         With Buffer.Graphics

@@ -588,6 +588,8 @@ Public Class Form1
 
     Private ReadOnly EnemyFont As New Font(FontFamily.GenericSansSerif, 25, FontStyle.Bold)
 
+    Private ReadOnly PortalFont As New Font(FontFamily.GenericSansSerif, 20, FontStyle.Bold)
+
     Private GameLoopCancellationToken As New CancellationTokenSource()
 
     Private IsFileLoaded As Boolean = False
@@ -2438,7 +2440,7 @@ Public Class Form1
 
                             PortalExitOffset.Offset(CameraOffset)
 
-                            DrawPortal(PortalExitOffset)
+                            DrawPortalExit(PortalExitOffset)
 
                         Case AppState.Editing
 
@@ -2449,16 +2451,16 @@ Public Class Form1
 
                             DrawPortal(PortalEntranceOffset)
 
-                            .DrawString(Array.IndexOf(Portals, Portal).ToString, EnemyFont, Brushes.PaleGoldenrod, PortalEntranceOffset, AlineCenterMiddle)
+                            .DrawString(Array.IndexOf(Portals, Portal).ToString, PortalFont, Brushes.White, PortalEntranceOffset, AlineCenterMiddle)
 
                             'Draw portal exit
                             Dim PortalExitOffset As New Rectangle(New Point(Portal.PatrolB.X, Portal.PatrolB.Y), New Drawing.Size(GridSize, GridSize))
 
                             PortalExitOffset.Offset(CameraOffset)
 
-                            DrawPortal(PortalExitOffset)
+                            DrawPortalExit(PortalExitOffset)
 
-                            .DrawString(Array.IndexOf(Portals, Portal).ToString, EnemyFont, Brushes.PaleGoldenrod, PortalExitOffset, AlineCenterMiddle)
+                            .DrawString(Array.IndexOf(Portals, Portal).ToString, PortalFont, Brushes.White, PortalExitOffset, AlineCenterMiddle)
 
                     End Select
 
@@ -2513,6 +2515,55 @@ Public Class Form1
         End With
 
     End Sub
+
+    Private Sub DrawPortalExit(Rect As Rectangle)
+
+        With Buffer.Graphics
+
+            .FillRectangle(Brushes.Indigo, Rect)
+
+            ' Define the rectangle to be filled
+            Dim InflatedRect As RectangleF = Rect
+
+            'rect.Inflate(rect.Width / 6.4F, rect.Height / 6.4F)
+            InflatedRect.Inflate(15, 15)
+
+            ' Define the center point of the gradient
+            Dim center As New PointF(InflatedRect.Left + InflatedRect.Width / 2.0F, InflatedRect.Top + InflatedRect.Height / 2.0F)
+
+            ' Define the colors for the gradient stops
+            Dim colors() As Color = {Color.LightPink, Color.Maroon}
+
+            ' Create the path for the gradient brush
+            Dim GradPath As New GraphicsPath()
+            GradPath.AddEllipse(InflatedRect)
+
+            ' Create the gradient brush
+            Dim GradBrush As New PathGradientBrush(GradPath) With
+                {.CenterPoint = center,
+                .CenterColor = colors(0),
+                .SurroundColors = New Color() {colors(1)}}
+
+            .FillRectangle(GradBrush, Rect)
+
+            Dim DoorWay As Rectangle
+
+            DoorWay.X = Rect.X + 20
+            DoorWay.Y = Rect.Y + 8
+
+            DoorWay.Width = 26
+            DoorWay.Height = 48
+
+            .FillRectangle(Brushes.Black, DoorWay)
+
+        End With
+
+    End Sub
+
+
+
+
+
 
     Private Sub DrawBackdrops()
 

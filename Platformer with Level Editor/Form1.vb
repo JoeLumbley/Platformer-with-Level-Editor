@@ -628,7 +628,7 @@ Public Class Form1
 
         UpdateFrame()
 
-        Refresh()
+        Refresh() 'Triggers the OnPaint sub which draws the frame.
 
     End Sub
 
@@ -738,6 +738,148 @@ Public Class Form1
 
     End Sub
 
+    Private Sub DrawStartScreen()
+
+        DrawBackground(Color.SkyBlue)
+
+        DrawClouds()
+
+        DrawBushes()
+
+        DrawBlocks()
+
+        DrawOurHero()
+
+        DrawTitle()
+
+        DrawStartScreenNewButton()
+
+        DrawStartScreenOpenButton()
+
+    End Sub
+
+    Private Sub DrawPlaying()
+
+        DrawBackground(Color.FromArgb(Level.Color))
+
+        DrawBackdrops()
+
+        DrawClouds()
+
+        DrawBushes()
+
+        DrawBlocks()
+
+        DrawCash()
+
+        DrawGoal()
+
+        DrawEnemies()
+
+        DrawPortals()
+
+        DrawOurHero()
+
+        DrawCollectedCash()
+
+        DrawFPS()
+
+        DrawEditButton()
+
+    End Sub
+
+    Private Sub DrawEditing()
+
+        DrawBackground(Color.FromArgb(Level.Color))
+
+        DrawBackdrops()
+
+        DrawToolPreviewBackdrop()
+
+        DrawClouds()
+
+        DrawBushes()
+
+        DrawBlocks()
+
+        DrawCash()
+
+        DrawGoal()
+
+        DrawEnemies()
+
+        DrawSpawn()
+
+        DrawPortals()
+
+        DrawGridLines()
+
+        DrawSelectionAndSizingHandle()
+
+        DrawOurHero()
+
+        DrawToolPreview()
+
+        DrawToolBar()
+
+        DrawPlayButton()
+
+        DrawMenuButton()
+
+        DrawFPS()
+
+        If ShowMenu = True Then
+
+            DrawMenuBackground()
+
+            DrawSaveButton()
+
+            DrawNewButton()
+
+            DrawOpenButton()
+
+            DrawExitButton()
+
+            DrawMenuOutline()
+
+        End If
+
+    End Sub
+
+    Private Sub DrawToolBar()
+
+        DrawToolbarBackground()
+
+        DrawPointerToolButton()
+
+        DrawBlockToolButton()
+
+        DrawBillToolButton()
+
+        DrawCloudToolButton()
+
+        DrawBushesToolButton()
+
+        DrawGoalToolButton()
+
+        DrawEnemyToolButton()
+
+        DrawBackdropToolButton()
+
+        DrawPortalToolButton()
+
+    End Sub
+
+    Private Sub DrawClearScreen()
+
+        DrawBackground(Color.Black)
+
+        DrawClearTitle()
+
+        DrawOurHero()
+
+    End Sub
+
     Private Sub UpdateDeltaTime()
         'Delta time (Δt) is the elapsed time since the last frame.
 
@@ -757,6 +899,88 @@ Public Class Form1
         EditorDeltaTime = EditorCurrentFrame - EditorLastFrame 'Calculate delta time
 
         EditorLastFrame = EditorCurrentFrame 'Update last frame time
+
+    End Sub
+
+    Private Sub UpdateEnemies()
+
+        If Enemies IsNot Nothing Then
+
+            For Each Enemy In Enemies
+
+                If Enemy.Eliminated = False Then
+
+                    Dim EnemyIndex As Integer = Array.IndexOf(Enemies, Enemy)
+
+                    If Enemy.PatrolDirection = Direction.Right Then
+
+                        'Move Enemy to the right.
+                        Enemies(EnemyIndex).Velocity.X += Enemy.Acceleration.X * DeltaTime.TotalSeconds
+
+                        'Limit Enemy velocity to the max.
+                        If Enemy.Velocity.X > Enemy.MaxVelocity.X Then
+
+                            Enemies(EnemyIndex).Velocity.X = Enemy.MaxVelocity.X
+
+                        End If
+
+                    Else
+
+                        'Move Enemy to the left.
+                        Enemies(EnemyIndex).Velocity.X += -Enemy.Acceleration.X * DeltaTime.TotalSeconds
+
+                        'Limit Enemy velocity to the max.
+                        If Enemy.Velocity.X < -Enemy.MaxVelocity.X Then
+
+                            Enemies(EnemyIndex).Velocity.X = -Enemy.MaxVelocity.X
+
+                        End If
+
+                    End If
+
+                    Enemies(EnemyIndex).Position.X += Enemy.Velocity.X * DeltaTime.TotalSeconds
+
+                    If Enemy.Position.X >= Enemy.PatrolB.X Then
+
+                        'Is Enemy moving to the right?
+                        If Enemy.Velocity.X > 0 Then
+
+                            'Stop the move before changing direction.
+                            Enemies(EnemyIndex).Velocity.X = 0 'Zero speed.
+
+                            'Aline the enemy to the patrol b point.
+                            Enemies(EnemyIndex).Position.X = Enemy.PatrolB.X
+
+                            Enemies(EnemyIndex).PatrolDirection = Direction.Left
+
+                        End If
+
+                    End If
+
+                    If Enemy.Position.X <= Enemy.PatrolA.X Then
+
+                        'Is Enemy moving to the left?
+                        If Enemy.Velocity.X < 0 Then
+
+                            'Stop the move before changing direction.
+                            Enemies(EnemyIndex).Velocity.X = 0 'Zero speed.
+
+                            'Aline the enemy to the patrol a point.
+                            Enemies(EnemyIndex).Position.X = Enemy.PatrolA.X
+
+                            Enemies(EnemyIndex).PatrolDirection = Direction.Right
+
+                        End If
+
+                    End If
+
+                    Enemies(EnemyIndex).Rect.X = Math.Round(Enemy.Position.X)
+
+                End If
+
+            Next
+
+        End If
 
     End Sub
 
@@ -979,148 +1203,6 @@ Public Class Form1
             Next
 
         End If
-
-    End Sub
-
-    Private Sub DrawStartScreen()
-
-        DrawBackground(Color.SkyBlue)
-
-        DrawClouds()
-
-        DrawBushes()
-
-        DrawBlocks()
-
-        DrawOurHero()
-
-        DrawTitle()
-
-        DrawStartScreenNewButton()
-
-        DrawStartScreenOpenButton()
-
-    End Sub
-
-    Private Sub DrawPlaying()
-
-        DrawBackground(Color.FromArgb(Level.Color))
-
-        DrawBackdrops()
-
-        DrawClouds()
-
-        DrawBushes()
-
-        DrawBlocks()
-
-        DrawCash()
-
-        DrawGoal()
-
-        DrawEnemies()
-
-        DrawPortals()
-
-        DrawOurHero()
-
-        DrawCollectedCash()
-
-        DrawFPS()
-
-        DrawEditButton()
-
-    End Sub
-
-    Private Sub DrawEditing()
-
-        DrawBackground(Color.FromArgb(Level.Color))
-
-        DrawBackdrops()
-
-        DrawToolPreviewBackdrop()
-
-        DrawClouds()
-
-        DrawBushes()
-
-        DrawBlocks()
-
-        DrawCash()
-
-        DrawGoal()
-
-        DrawEnemies()
-
-        DrawSpawn()
-
-        DrawPortals()
-
-        DrawGridLines()
-
-        DrawSelectionAndSizingHandle()
-
-        DrawOurHero()
-
-        DrawToolPreview()
-
-        DrawToolBar()
-
-        DrawPlayButton()
-
-        DrawMenuButton()
-
-        DrawFPS()
-
-        If ShowMenu = True Then
-
-            DrawMenuBackground()
-
-            DrawSaveButton()
-
-            DrawNewButton()
-
-            DrawOpenButton()
-
-            DrawExitButton()
-
-            DrawMenuOutline()
-
-        End If
-
-    End Sub
-
-    Private Sub DrawToolBar()
-
-        DrawToolbarBackground()
-
-        DrawPointerToolButton()
-
-        DrawBlockToolButton()
-
-        DrawBillToolButton()
-
-        DrawCloudToolButton()
-
-        DrawBushesToolButton()
-
-        DrawGoalToolButton()
-
-        DrawEnemyToolButton()
-
-        DrawBackdropToolButton()
-
-        DrawPortalToolButton()
-
-    End Sub
-
-    Private Sub DrawClearScreen()
-
-        DrawBackground(Color.Black)
-
-        DrawClearTitle()
-
-        DrawOurHero()
 
     End Sub
 
@@ -1985,87 +2067,6 @@ Public Class Form1
 
     End Sub
 
-    Private Sub UpdateEnemies()
-
-        If Enemies IsNot Nothing Then
-
-            For Each Enemy In Enemies
-
-                If Enemy.Eliminated = False Then
-
-                    Dim EnemyIndex As Integer = Array.IndexOf(Enemies, Enemy)
-
-                    If Enemy.PatrolDirection = Direction.Right Then
-
-                        'Move Enemy to the right.
-                        Enemies(EnemyIndex).Velocity.X += Enemy.Acceleration.X * DeltaTime.TotalSeconds
-
-                        'Limit Enemy velocity to the max.
-                        If Enemy.Velocity.X > Enemy.MaxVelocity.X Then
-
-                            Enemies(EnemyIndex).Velocity.X = Enemy.MaxVelocity.X
-
-                        End If
-
-                    Else
-
-                        'Move Enemy to the left.
-                        Enemies(EnemyIndex).Velocity.X += -Enemy.Acceleration.X * DeltaTime.TotalSeconds
-
-                        'Limit Enemy velocity to the max.
-                        If Enemy.Velocity.X < -Enemy.MaxVelocity.X Then
-
-                            Enemies(EnemyIndex).Velocity.X = -Enemy.MaxVelocity.X
-
-                        End If
-
-                    End If
-
-                    Enemies(EnemyIndex).Position.X += Enemy.Velocity.X * DeltaTime.TotalSeconds
-
-                    If Enemy.Position.X >= Enemy.PatrolB.X Then
-
-                        'Is Enemy moving to the right?
-                        If Enemy.Velocity.X > 0 Then
-
-                            'Stop the move before changing direction.
-                            Enemies(EnemyIndex).Velocity.X = 0 'Zero speed.
-
-                            'Aline the enemy to the patrol b point.
-                            Enemies(EnemyIndex).Position.X = Enemy.PatrolB.X
-
-                            Enemies(EnemyIndex).PatrolDirection = Direction.Left
-
-                        End If
-
-                    End If
-
-                    If Enemy.Position.X <= Enemy.PatrolA.X Then
-
-                        'Is Enemy moving to the left?
-                        If Enemy.Velocity.X < 0 Then
-
-                            'Stop the move before changing direction.
-                            Enemies(EnemyIndex).Velocity.X = 0 'Zero speed.
-
-                            'Aline the enemy to the patrol a point.
-                            Enemies(EnemyIndex).Position.X = Enemy.PatrolA.X
-
-                            Enemies(EnemyIndex).PatrolDirection = Direction.Right
-
-                        End If
-
-                    End If
-
-                    Enemies(EnemyIndex).Rect.X = Math.Round(Enemy.Position.X)
-
-                End If
-
-            Next
-
-        End If
-
-    End Sub
     Private Sub UpdateBlocks()
 
         If Blocks IsNot Nothing Then

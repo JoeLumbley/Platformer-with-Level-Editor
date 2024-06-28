@@ -8994,6 +8994,8 @@ Public Class Form1
 
                     If IsBackDown = False Then
 
+                        DeselectObjects()
+
                         ShowMenu = True
 
                         MovePointerCenterMenu()
@@ -9625,6 +9627,8 @@ Public Class Form1
             End If
 
             If e.Button = MouseButtons.Right Then
+
+                DeselectObjects()
 
                 ShowMenu = True
 

@@ -1067,6 +1067,8 @@ Public Class Form1
                         Hero.Position.X = Hero.Rect.X
                         Hero.Position.Y = Hero.Rect.Y
 
+                        FrameHero()
+
                     End If
 
                 End If
@@ -9926,6 +9928,20 @@ Public Class Form1
         LookAhead()
 
         KeepCameraOnTheLevel()
+
+    End Sub
+
+    Private Sub FrameHero()
+
+
+
+
+        Camera.Position.X = Hero.Rect.X - (Camera.Rect.Width / 2)
+
+        Camera.Position.Y = Hero.Rect.Y - (Camera.Rect.Height / 2) - (Camera.Rect.Height / 1.25) - Hero.Rect.Height
+
+        UpdateCameraOffset()
+
 
     End Sub
 

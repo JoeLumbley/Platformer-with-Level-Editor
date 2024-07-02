@@ -10682,7 +10682,7 @@ Public Class Form1
         If SelectedTool = Tools.Portal Then
             'Yes, the player has reached the right end of the toolbar.
 
-            'Start over by selecting the first tool on the bar. Far left end.
+            'Start over by selecting the first tool on the toolbar. Far left end.
             SelectedTool = Tools.Pointer
 
             ShowToolPreview = False
@@ -10694,7 +10694,7 @@ Public Class Form1
             ToolPreview.Width = GridSize
             ToolPreview.Height = GridSize
 
-            'Select the next tool to the right on the bar.
+            'Select the next tool to the right on the toolbar.
             SelectedTool += 1
 
             If SelectedTool = Tools.Pointer Then
@@ -10722,7 +10722,7 @@ Public Class Form1
             ToolPreview.Width = GridSize
             ToolPreview.Height = GridSize
 
-            'Start over by selecting the last tool on the bar. Far right end.
+            'Start over by selecting the last tool on the toolbar. Far right end.
             SelectedTool = Tools.Portal
 
             ShowToolPreview = True
@@ -10734,7 +10734,7 @@ Public Class Form1
             ToolPreview.Width = GridSize
             ToolPreview.Height = GridSize
 
-            'Select the next tool to the left on the bar.
+            'Select the next tool to the left on the toolbar.
             SelectedTool -= 1
 
             If SelectedTool = Tools.Pointer Then

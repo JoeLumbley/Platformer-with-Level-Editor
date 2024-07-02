@@ -5183,7 +5183,7 @@ Public Class Form1
 
     Private Sub InitializeApp()
 
-        CreateSoundFileFromResource()
+        CreateSoundFilesFromResources()
 
         CreateDemoFileFromResource()
 
@@ -10309,41 +10309,66 @@ Public Class Form1
 
     End Sub
 
-    Private Sub CreateSoundFileFromResource()
+    Private Sub CreateSoundFilesFromResources()
 
         Dim File As String = Path.Combine(Application.StartupPath, "level.mp3")
 
-        If Not IO.File.Exists(File) Then
+        CreateSoundFileFromResource(File, My.Resources.level)
 
-            IO.File.WriteAllBytes(File, My.Resources.level)
+        'If Not IO.File.Exists(File) Then
 
-        End If
+        '    IO.File.WriteAllBytes(File, My.Resources.level)
+
+        'End If
 
         File = Path.Combine(Application.StartupPath, "CashCollected.mp3")
 
-        If Not IO.File.Exists(File) Then
+        CreateSoundFileFromResource(File, My.Resources.CashCollected)
 
-            IO.File.WriteAllBytes(File, My.Resources.CashCollected)
+        'If Not IO.File.Exists(File) Then
 
-        End If
+        '    IO.File.WriteAllBytes(File, My.Resources.CashCollected)
+
+        'End If
 
         File = Path.Combine(Application.StartupPath, "eliminated.mp3")
 
-        If Not IO.File.Exists(File) Then
+        CreateSoundFileFromResource(File, My.Resources.eliminated)
 
-            IO.File.WriteAllBytes(File, My.Resources.eliminated)
+        'If Not IO.File.Exists(File) Then
 
-        End If
+        '    IO.File.WriteAllBytes(File, My.Resources.eliminated)
+
+        'End If
 
         File = Path.Combine(Application.StartupPath, "clear.mp3")
 
-        If Not IO.File.Exists(File) Then
+        CreateSoundFileFromResource(File, My.Resources.clear)
 
-            IO.File.WriteAllBytes(File, My.Resources.clear)
+        'If Not IO.File.Exists(File) Then
+
+        '    IO.File.WriteAllBytes(File, My.Resources.clear)
+
+        'End If
+
+    End Sub
+
+    Private Sub CreateSoundFileFromResource(File As String, Resource As Byte())
+
+        'Do we have the file?
+        If Not IO.File.Exists(File) Then
+            'No, we don't have the file.
+
+            'Make the file.
+            IO.File.WriteAllBytes(File, Resource)
 
         End If
 
     End Sub
+
+
+
+
 
     Private Shared Sub CreateDemoFileFromResource()
 

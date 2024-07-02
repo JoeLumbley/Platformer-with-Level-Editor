@@ -10326,6 +10326,7 @@ Public Class Form1
     End Sub
 
     Private Sub CreateSoundFileFromResource(File As String, Resource As Byte())
+        'Create sound file as needed.
 
         'Has the file been made?
         If Not IO.File.Exists(File) Then
@@ -10339,11 +10340,15 @@ Public Class Form1
     End Sub
 
     Private Shared Sub CreateDemoFileFromResource()
+        'Create demo file as needed.
 
         Dim File As String = Path.Combine(Application.StartupPath, "Demo.txt")
 
+        'Has the file been made?
         If Not IO.File.Exists(File) Then
+            'No, the file hasn't been made.
 
+            'Make the file.
             IO.File.WriteAllText(File, My.Resources.Demo15)
 
         End If

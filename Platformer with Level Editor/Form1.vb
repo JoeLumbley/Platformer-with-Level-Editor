@@ -10312,44 +10312,16 @@ Public Class Form1
     Private Sub CreateSoundFilesFromResources()
 
         Dim File As String = Path.Combine(Application.StartupPath, "level.mp3")
-
         CreateSoundFileFromResource(File, My.Resources.level)
 
-        'If Not IO.File.Exists(File) Then
-
-        '    IO.File.WriteAllBytes(File, My.Resources.level)
-
-        'End If
-
         File = Path.Combine(Application.StartupPath, "CashCollected.mp3")
-
         CreateSoundFileFromResource(File, My.Resources.CashCollected)
 
-        'If Not IO.File.Exists(File) Then
-
-        '    IO.File.WriteAllBytes(File, My.Resources.CashCollected)
-
-        'End If
-
         File = Path.Combine(Application.StartupPath, "eliminated.mp3")
-
         CreateSoundFileFromResource(File, My.Resources.eliminated)
 
-        'If Not IO.File.Exists(File) Then
-
-        '    IO.File.WriteAllBytes(File, My.Resources.eliminated)
-
-        'End If
-
         File = Path.Combine(Application.StartupPath, "clear.mp3")
-
         CreateSoundFileFromResource(File, My.Resources.clear)
-
-        'If Not IO.File.Exists(File) Then
-
-        '    IO.File.WriteAllBytes(File, My.Resources.clear)
-
-        'End If
 
     End Sub
 
@@ -10365,10 +10337,6 @@ Public Class Form1
         End If
 
     End Sub
-
-
-
-
 
     Private Shared Sub CreateDemoFileFromResource()
 

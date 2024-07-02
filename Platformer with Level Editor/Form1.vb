@@ -10327,9 +10327,9 @@ Public Class Form1
 
     Private Sub CreateSoundFileFromResource(File As String, Resource As Byte())
 
-        'Do we have the file?
+        'Has the file been made?
         If Not IO.File.Exists(File) Then
-            'No, we don't have the file.
+            'No, the file hasn't been made.
 
             'Make the file.
             IO.File.WriteAllBytes(File, Resource)

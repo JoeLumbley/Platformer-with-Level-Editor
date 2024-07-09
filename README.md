@@ -55,7 +55,7 @@ Remember, “Platformer with Level Editor” isn’t just about theory—it’s 
 
 Here are some steps you can take to learn game development using the "Platformer with Level Editor" project:
 
-1. **Clone the Repository**: Start by cloning the GitHub repository to your local machine: [https://github.com/JoeLumbley/Platformer-with-Level-Editor](https://github.com/JoeLumbley/Platformer-with-Level-Editor). This will give you access to the project files and source code.
+1. **Clone the Repository**: Start by cloning the GitHub repository to your local machine. This will give you access to the project files and source code.
 
 2. **Set up the Development Environment**: Ensure you have the necessary tools installed, such as Visual Studio or any other .NET development environment. The project is built using Visual Basic .NET, so you'll need to have the appropriate tools set up.
 

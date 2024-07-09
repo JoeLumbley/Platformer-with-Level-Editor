@@ -55,9 +55,10 @@ Remember, “Platformer with Level Editor” isn’t just about theory—it’s 
 
 Here are some steps you can take to learn game development using the "Platformer with Level Editor" project:
 
-1. **Clone the Repository**: Start by cloning the GitHub repository to your local machine. This will give you access to the project files and source code.
 
-2. **Set up the Development Environment**: Ensure you have the necessary tools installed, such as Visual Studio or any other .NET development environment. The project is built using Visual Basic .NET, so you'll need to have the appropriate tools set up.
+1. **Set up the Development Environment**: Ensure you have Visual Studio installed https://visualstudio.microsoft.com/downloads/ and .NET Desktop Development workload.
+
+2. **Clone the Repository**: Clone the repository to your local machine. This will give you access to the project files and source code.
 
 3. **Explore the Project Structure**: Familiarize yourself with the project's structure and organization. Understand the different folders and files, and how they work together to create the platformer game and level editor.
 

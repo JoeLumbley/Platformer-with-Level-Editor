@@ -71,9 +71,9 @@ Here are some steps you can take to learn game development using the "Platformer
 
 8. **Modify and Extend the Project**: Once you have a good understanding of the codebase, try modifying or extending the project. This could involve adding new features, improving existing mechanics, or creating your own unique game elements.
 
-9. **Documentation and Resources**: Refer to the project's documentation and any additional resources provided, such as tutorials or blog posts, to deepen your understanding of the concepts and techniques used in the project.
+9. **Documentation and Resources**: Refer to the project's documentation and any additional resources provided, such as tutorials, to deepen your understanding of the concepts and techniques used in the project.
 
-10. **Seek Community Feedback**: Engage with the project's community, either through the GitHub repository or online forums, to get feedback, ask questions, and learn from the experiences of other developers.
+10. **Seek Community Feedback**: Engage with the project's community, either through the repository discussions or video comments, to get feedback, ask questions, and learn from the experiences of other developers.
 
 By following these steps, you can leverage the "Platformer with Level Editor" project to gain hands-on experience in game development, learn about various programming patterns and techniques, and build your skills in creating engaging and interactive games.
 

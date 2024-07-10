@@ -56,7 +56,7 @@ Remember, “Platformer with Level Editor” isn’t just about theory—it’s 
 Here are some steps you can take to learn game development using the "Platformer with Level Editor" project:
 
 
-1. **Set up the Development Environment**: Install Visual Studio from here: https://visualstudio.microsoft.com/downloads/ and include the .NET Desktop Development workload.
+1. **Set up the Development Environment**: Install Visual Studio from here:  https://visualstudio.microsoft.com/downloads/ and include the .NET Desktop Development workload.
 
 2. **Clone the Repository**: Clone the repository to your local machine. This will give you access to the project files and source code.
 

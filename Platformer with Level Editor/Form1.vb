@@ -80,10 +80,10 @@ Public Class Form1
         Public wRightMotorSpeed As UShort
     End Structure
 
-    'Set the start of the thumbstick neutral zone to half over.
+    'Set the start of the thumbstick neutral zone to 1/2 over.
     Private Const NeutralStart As Short = -16384 '-16,384 = -32,768 / 2  ''Signed 16-bit (2-byte) integer range -32,768 through 32,767.
 
-    'Set the end of the thumbstick neutral zone to half over.
+    'Set the end of the thumbstick neutral zone to 1/2 over.
     Private Const NeutralEnd As Short = 16384 '16,383.5 = 32,767 / 2  ''Signed 16-bit (2-byte) integer range -32,768 through 32,767.
 
     'Set the trigger threshold to 1/4 pull.

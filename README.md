@@ -76,7 +76,14 @@ Install Visual Studio from here:  https://visualstudio.microsoft.com/downloads/ 
 
 **Clone the Repository** 
 
-Clone the repository to your local machine. This will give you access to the project files and source code.
+Clone the repository to your local machine. 
+
+This will give you access to the project files and source code.
+
+Watch a short about cloning the repository here: https://www.youtube.com/shorts/n8bCEIdI44U
+
+![154](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/a937ec81-c192-4dff-b4b0-badd87c07f87)
+
 
 **Explore the Project Structure**
 

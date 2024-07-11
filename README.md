@@ -63,7 +63,9 @@ Visual Studio is an Integrated Development Environment (IDE) created by Microsof
 
 It is a powerful software development tool that provides a comprehensive set of features and tools for building a wide range of applications.
 
-Visual Studio Community is a free version of the IDE for individual developers, small teams, and open-source projects this is the version I recommend you download.
+Visual Studio Community is a free version of the IDE for individual developers, small teams, and open-source projects.
+
+This is the version I recommend you download.
 
 Install Visual Studio from here:  https://visualstudio.microsoft.com/downloads/ and include the .NET Desktop Development workload.
 

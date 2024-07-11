@@ -37,15 +37,46 @@ Whether it’s a cheerful jump sound or an epic boss battle theme, audio matters
 Many players use controllers. Mastering Xbox controller integration allows you to create games that feel natural and enjoyable for console players.
 
 
-
-
-
-
 Remember, “Platformer with Level Editor” isn’t just about theory—it’s hands-on learning. Dive in, experiment, and let your creativity flow! 🎮✨
 
 
 
 
+
+
+
+![Platformer with Level Editor](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/9c8fc9e2-5e4f-4f1f-a544-8b5b3a6ad385)
+
+
+
+
+
+
+
+Here are some steps you can take to learn game development using the "Platformer with Level Editor" project:
+
+
+1. **Set up the Development Environment**: Install Visual Studio from here:  https://visualstudio.microsoft.com/downloads/ and include the .NET Desktop Development workload.
+
+2. **Clone the Repository**: Clone the repository to your local machine. This will give you access to the project files and source code.
+
+3. **Explore the Project Structure**: Familiarize yourself with the project's structure and organization. Understand the different folders and files, and how they work together to create the platformer game and level editor.
+
+4. **Study the Game Mechanics**: Dive into the source code to understand game mechanics. Explore physics, collision detection, character movement, and the game loop. Pay attention to programming patterns used.
+
+5. **Experiment with the Level Editor**: Work with the level editor feature. Create your own levels and observe how they integrate with the game during gameplay.
+
+6. **Integrate Sound and Audio**: Explore audio integration. Learn how sound effects and music enhance the game’s atmosphere.
+
+7. **Implement Xbox Controller Support**: Study the code responsible for Xbox controller integration. Understand how the controller input is handled and mapped to the game's controls.
+
+8. **Modify and Extend the Project**: Once familiar with the codebase, try adding features, improving mechanics, or creating unique game elements.
+
+9. **Refer to Documentation and Resources**: Use project documentation and tutorials to deepen your understanding of concepts and techniques.
+
+10. **Seek Community Feedback**: Engage with the project’s community for feedback and learning opportunities.
+
+By following these steps, you’ll gain hands-on experience, learn programming patterns, and build skills in creating interactive games! 🎮🚀
 
 
 ![072](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/c4ae4c4c-7641-4a9f-96d5-c19805fdcc01)
@@ -54,7 +85,6 @@ Remember, “Platformer with Level Editor” isn’t just about theory—it’s 
 
 
 
-![Platformer with Level Editor](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/9c8fc9e2-5e4f-4f1f-a544-8b5b3a6ad385)
 
 ![063](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/c55ed39f-9a4e-43d6-84a0-f5c364f224d9)
 

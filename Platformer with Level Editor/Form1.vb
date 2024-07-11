@@ -81,10 +81,10 @@ Public Class Form1
     End Structure
 
     'The start of the thumbstick neutral zone.
-    Private Const NeutralStart As Short = -16256 'Signed 16-bit (2-byte) integer range -32,768 through 32,767.
+    Private Const NeutralStart As Short = -16384 '-16,384 = -32,768 / 2  ''Signed 16-bit (2-byte) integer range -32,768 through 32,767.
 
     'The end of the thumbstick neutral zone.
-    Private Const NeutralEnd As Short = 16256
+    Private Const NeutralEnd As Short = 16384 '16,383.5 = 32,767 / 2  ''Signed 16-bit (2-byte) integer range -32,768 through 32,767.
 
     'Set the trigger threshold to 64 or 1/4 pull.
     Private Const TriggerThreshold As Byte = 64 '64 = 256 / 4

@@ -76,9 +76,15 @@ Install Visual Studio from here:  https://visualstudio.microsoft.com/downloads/ 
 
 **Clone the Repository** 
 
-Clone the repository to your local machine. 
+1. Click the "Code" button.
+2. Copy the repository's URL.
+3. Open Visual Studio.
+4. Click "Clone a repository".
+5. Paste the repository URL into the location field.
+6. Click the "Clone" button.
 
-This will give you access to the project files and source code.
+Once the cloning process is complete, you will have your own local copy of the game that you can run and modify on your computer.
+
 
 Watch a short about cloning the repository here: https://www.youtube.com/shorts/n8bCEIdI44U
 

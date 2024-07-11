@@ -56,25 +56,45 @@ Remember, “Platformer with Level Editor” isn’t just about theory—it’s 
 Here are some steps you can take to learn game development using the "Platformer with Level Editor" project:
 
 
-1. **Set up the Development Environment**: Install Visual Studio from here:  https://visualstudio.microsoft.com/downloads/ and include the .NET Desktop Development workload.
+**Set up the Development Environment**
 
-2. **Clone the Repository**: Clone the repository to your local machine. This will give you access to the project files and source code.
+Install Visual Studio from here:  https://visualstudio.microsoft.com/downloads/ and include the .NET Desktop Development workload.
 
-3. **Explore the Project Structure**: Familiarize yourself with the project's structure and organization. Understand the different folders and files, and how they work together to create the platformer game and level editor.
+**Clone the Repository** 
 
-4. **Study the Game Mechanics**: Dive into the source code to understand game mechanics. Explore physics, collision detection, character movement, and the game loop. Pay attention to programming patterns used.
+Clone the repository to your local machine. This will give you access to the project files and source code.
 
-5. **Experiment with the Level Editor**: Work with the level editor feature. Create your own levels and observe how they integrate with the game during gameplay.
+**Explore the Project Structure**
 
-6. **Integrate Sound and Audio**: Explore audio integration. Learn how sound effects and music enhance the game’s atmosphere.
+Familiarize yourself with the project's structure and organization. Understand the different folders and files, and how they work together to create the platformer game and level editor.
 
-7. **Implement Xbox Controller Support**: Study the code responsible for Xbox controller integration. Understand how the controller input is handled and mapped to the game's controls.
+**Study the Game Mechanics**
 
-8. **Modify and Extend the Project**: Once familiar with the codebase, try adding features, improving mechanics, or creating unique game elements.
+Dive into the source code to understand game mechanics. Explore physics, collision detection, character movement, and the game loop. Pay attention to programming patterns used.
 
-9. **Refer to Documentation and Resources**: Use project documentation and tutorials to deepen your understanding of concepts and techniques.
+**Experiment with the Level Editor**
 
-10. **Seek Community Feedback**: Engage with the project’s community for feedback and learning opportunities.
+Work with the level editor feature. Create your own levels and observe how they integrate with the game during gameplay.
+
+**Integrate Sound and Audio**
+
+Explore audio integration. Learn how sound effects and music enhance the game’s atmosphere.
+
+**Implement Xbox Controller Support**
+
+Study the code responsible for Xbox controller integration. Understand how the controller input is handled and mapped to the game's controls.
+
+**Modify and Extend the Project**
+
+Once familiar with the codebase, try adding features, improving mechanics, or creating unique game elements.
+
+**Refer to Documentation and Resources**
+
+Use project documentation and tutorials to deepen your understanding of concepts and techniques.
+
+**Seek Community Feedback**
+
+Engage with the project’s community for feedback and learning opportunities.
 
 By following these steps, you’ll gain hands-on experience, learn programming patterns, and build skills in creating interactive games! 🎮🚀
 

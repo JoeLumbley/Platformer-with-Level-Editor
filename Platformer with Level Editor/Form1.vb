@@ -95,7 +95,7 @@ Public Class Form1
     'The trigger position must be greater than the trigger threshold to register as pulled.
     'A byte is a unsigned 8-bit (1-byte) integer range 0 through 255. This gives us 256 values.
 
-    Private ReadOnly Connected(0 To 3) As Boolean 'True or False
+    Private ReadOnly Connected(0 To 3) As Boolean 'A boolean is a logical value that is either true or false.
 
     Private ControllerNumber As Integer = 0
 

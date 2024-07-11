@@ -95,13 +95,6 @@ Watch a short about cloning the repository here: https://www.youtube.com/shorts/
 
 Familiarize yourself with the project's structure and organization. Understand the different folders and files, and how they work together to create the platformer game and level editor.
 
-**Study the Game Mechanics**
-
-Dive into the source code to understand game mechanics. Explore physics, collision detection, character movement, and the game loop. Pay attention to programming patterns used.
-
-**Experiment with the Level Editor**
-
-Work with the level editor feature. Create your own levels and observe how they integrate with the game during gameplay.
 
 **Modify and Extend the Project**
 

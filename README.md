@@ -58,13 +58,14 @@ Here are some steps you can take to learn game development using the "Platformer
 
 **Set up the Development Environment**
 
-Install Visual Studio from here:  https://visualstudio.microsoft.com/downloads/ and include the .NET Desktop Development workload.
 
 Visual Studio is an Integrated Development Environment (IDE) created by Microsoft. 
 
 It is a powerful software development tool that provides a comprehensive set of features and tools for building a wide range of applications.
 
 Visual Studio Community is a free version of the IDE for individual developers, small teams, and open-source projects this is the version I recommend you download.
+
+Install Visual Studio from here:  https://visualstudio.microsoft.com/downloads/ and include the .NET Desktop Development workload.
 
 ![153](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/22a61c77-908f-4e04-9266-93f3d34ec376)
 

@@ -89,7 +89,7 @@ Public Class Form1
     'The thumbstick position must be more than 1/2 over the neutral end to register as moved.
 
     'Set the trigger threshold to 1/4 pull.
-    Private Const TriggerThreshold As Byte = 64 '64 = 256 / 4
+    Private Const TriggerThreshold As Byte = 64 '64 = 256 / 4 ''A byte is a unsigned 8-bit (1-byte) integer range 0 through 255. This gives us 256 values.
     'The trigger position must be greater than the trigger threshold to register as pulled.
 
     Private ReadOnly Connected(0 To 3) As Boolean 'True or False

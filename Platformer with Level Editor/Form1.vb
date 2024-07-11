@@ -82,9 +82,11 @@ Public Class Form1
 
     'Set the start of the thumbstick neutral zone to 1/2 over.
     Private Const NeutralStart As Short = -16384 '-16,384 = -32,768 / 2  ''Signed 16-bit (2-byte) integer range -32,768 through 32,767.
+    'The thumbstick position must be more than 1/2 over the neutral start to register as moved.
 
     'Set the end of the thumbstick neutral zone to 1/2 over.
     Private Const NeutralEnd As Short = 16384 '16,383.5 = 32,767 / 2  ''Signed 16-bit (2-byte) integer range -32,768 through 32,767.
+    'The thumbstick position must be more than 1/2 over the neutral end to register as moved.
 
     'Set the trigger threshold to 1/4 pull.
     Private Const TriggerThreshold As Byte = 64 '64 = 256 / 4

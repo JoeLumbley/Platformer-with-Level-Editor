@@ -9493,9 +9493,6 @@ Public Class Form1
         'When our hero exits the bottom side of the level.
         If Hero.Position.Y > Level.Rect.Bottom Then
 
-            'Camera.Position.X = 0
-            'Camera.Position.Y = 0
-
             ResetCash()
 
             ResurrectEnemies()

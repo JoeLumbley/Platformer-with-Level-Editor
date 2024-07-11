@@ -76,14 +76,6 @@ Dive into the source code to understand game mechanics. Explore physics, collisi
 
 Work with the level editor feature. Create your own levels and observe how they integrate with the game during gameplay.
 
-**Integrate Sound and Audio**
-
-Explore audio integration. Learn how sound effects and music enhance the game’s atmosphere.
-
-**Implement Xbox Controller Support**
-
-Study the code responsible for Xbox controller integration. Understand how the controller input is handled and mapped to the game's controls.
-
 **Modify and Extend the Project**
 
 Once familiar with the codebase, try adding features, improving mechanics, or creating unique game elements.

@@ -66,6 +66,9 @@ It is a powerful software development tool that provides a comprehensive set of 
 
 Visual Studio Community is a free version of the IDE for individual developers, small teams, and open-source projects this is the version I recommend you download.
 
+![153](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/22a61c77-908f-4e04-9266-93f3d34ec376)
+
+
 **Clone the Repository** 
 
 Clone the repository to your local machine. This will give you access to the project files and source code.

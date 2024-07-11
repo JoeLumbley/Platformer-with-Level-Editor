@@ -87,7 +87,7 @@ Public Class Form1
     Private Const NeutralEnd As Short = 16256
 
     'Set the trigger threshold to 64 or 1/4 pull.
-    Private Const TriggerThreshold As Byte = 64 '63.75 = 255 / 4
+    Private Const TriggerThreshold As Byte = 64 '64 = 256 / 4
     'The trigger position must be greater than the trigger threshold to register as pressed.
 
     Private ReadOnly Connected(0 To 3) As Boolean 'True or False

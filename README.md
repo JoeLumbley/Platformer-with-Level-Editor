@@ -56,25 +56,57 @@ Remember, “Platformer with Level Editor” isn’t just about theory—it’s 
 Here are some steps you can take to learn game development using the "Platformer with Level Editor" project:
 
 
-1. **Set up the Development Environment**: Install Visual Studio from here:  https://visualstudio.microsoft.com/downloads/ and include the .NET Desktop Development workload.
+**Set up the Development Environment**
 
-2. **Clone the Repository**: Clone the repository to your local machine. This will give you access to the project files and source code.
 
-3. **Explore the Project Structure**: Familiarize yourself with the project's structure and organization. Understand the different folders and files, and how they work together to create the platformer game and level editor.
+Visual Studio is an Integrated Development Environment (IDE) created by Microsoft. 
 
-4. **Study the Game Mechanics**: Dive into the source code to understand game mechanics. Explore physics, collision detection, character movement, and the game loop. Pay attention to programming patterns used.
+It is a powerful software development tool that provides a comprehensive set of features and tools for building a wide range of applications.
 
-5. **Experiment with the Level Editor**: Work with the level editor feature. Create your own levels and observe how they integrate with the game during gameplay.
+This the IDE I used to make "Platformer with Level Editor" and recommend that you use also.
 
-6. **Integrate Sound and Audio**: Explore audio integration. Learn how sound effects and music enhance the game’s atmosphere.
+Visual Studio Community is a free version of the IDE for individual developers, small teams, and open-source projects.
 
-7. **Implement Xbox Controller Support**: Study the code responsible for Xbox controller integration. Understand how the controller input is handled and mapped to the game's controls.
+This is the version I recommend you download.
 
-8. **Modify and Extend the Project**: Once familiar with the codebase, try adding features, improving mechanics, or creating unique game elements.
+Install Visual Studio from here:  https://visualstudio.microsoft.com/downloads/ and include the .NET Desktop Development workload.
 
-9. **Refer to Documentation and Resources**: Use project documentation and tutorials to deepen your understanding of concepts and techniques.
+![153](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/22a61c77-908f-4e04-9266-93f3d34ec376)
 
-10. **Seek Community Feedback**: Engage with the project’s community for feedback and learning opportunities.
+
+**Clone the Repository** 
+
+1. Click the "Code" button.
+2. Copy the repository's URL.
+3. Open Visual Studio.
+4. Click "Clone a repository".
+5. Paste the repository URL into the location field.
+6. Click the "Clone" button.
+
+Once the cloning process is complete, you will have your own local copy of the game that you can run and modify on your computer.
+
+
+Watch a short about cloning the repository here: https://www.youtube.com/shorts/n8bCEIdI44U
+
+![154](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/a937ec81-c192-4dff-b4b0-badd87c07f87)
+
+
+**Explore the Project Structure**
+
+Familiarize yourself with the project's structure and organization. Understand the different folders and files, and how they work together to create the platformer game and level editor.
+
+
+**Modify and Extend the Project**
+
+Once familiar with the codebase, try adding features, improving mechanics, or creating unique game elements.
+
+**Refer to Documentation and Resources**
+
+Use project documentation and tutorials to deepen your understanding of concepts and techniques.
+
+**Seek Community Feedback**
+
+Engage with the project’s community for feedback and learning opportunities.
 
 By following these steps, you’ll gain hands-on experience, learn programming patterns, and build skills in creating interactive games! 🎮🚀
 

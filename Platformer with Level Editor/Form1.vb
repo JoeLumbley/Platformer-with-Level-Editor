@@ -46,7 +46,7 @@ Public Class Form1
                                            ByVal cchReturn As UInteger, ByVal hwndCallback As IntPtr) As Integer
     End Function
 
-    'Import GetState to get the controller button positions.
+    'Import GetState to get the controller button, stick and trigger positions.
     <DllImport("XInput1_4.dll")>
     Private Shared Function XInputGetState(dwUserIndex As Integer, ByRef pState As XINPUT_STATE) As Integer
     End Function
@@ -230,7 +230,7 @@ Public Class Form1
 
         Public ID As ObjectID
 
-        Public Position As Vector2
+        Public Position As Vector2 'A vector 2 is composed of two floating-point values called X and Y.
 
         Public Acceleration As Vector2
 

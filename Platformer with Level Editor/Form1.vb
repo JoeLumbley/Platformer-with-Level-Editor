@@ -1066,6 +1066,12 @@ Public Class Form1
 
                     If UpArrowDown = True Or ControllerUp = True Then
 
+                        If IsPlaying("Portal") = False Then
+
+                            PlaySound("Portal")
+
+                        End If
+
                         Dim PortalExit As New Rectangle(New Point(Portal.PatrolB.X, Portal.PatrolB.Y), New Drawing.Size(GridSize, GridSize))
 
                         Hero.Rect = PortalExit
@@ -5207,6 +5213,11 @@ Public Class Form1
         AddSound("clear", Application.StartupPath & "clear.mp3")
 
         SetVolume("clear", 1000)
+
+        AddSound("Portal", Application.StartupPath & "Portal.mp3")
+
+        SetVolume("Portal", 500)
+
 
         InitializeToolBarButtons()
 

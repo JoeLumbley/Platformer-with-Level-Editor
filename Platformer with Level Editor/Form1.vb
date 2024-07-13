@@ -10786,7 +10786,8 @@ Public Class Form1
                 SelectedCloud = -1 AndAlso
                 GoalSelected = False AndAlso
                 SelectedEnemy = -1 AndAlso
-                SpawnSelected = False Then
+                SpawnSelected = False AndAlso
+                SelectedPortal = -1 Then
                 'No, the player is not over a game object that can not have its color set.
 
                 If SelectedBackdrop > -1 Then

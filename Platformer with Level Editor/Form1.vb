@@ -5198,25 +5198,7 @@ Public Class Form1
 
         CreateDemoFileFromResource()
 
-        AddSound("Music", Application.StartupPath & "level.mp3")
-
-        SetVolume("Music", 50)
-
-        AddOverlapping("CashCollected", Application.StartupPath & "CashCollected.mp3")
-
-        SetVolumeOverlapping("CashCollected", 700)
-
-        AddOverlapping("eliminated", Application.StartupPath & "eliminated.mp3")
-
-        SetVolumeOverlapping("eliminated", 700)
-
-        AddSound("clear", Application.StartupPath & "clear.mp3")
-
-        SetVolume("clear", 1000)
-
-        AddSound("Portal", Application.StartupPath & "Portal.mp3")
-
-        SetVolume("Portal", 500)
+        InitializeSounds()
 
         InitializeToolBarButtons()
 
@@ -5257,6 +5239,30 @@ Public Class Form1
         MovePointerToStartScreenNewButton()
 
         Level.Color = Color.SkyBlue.ToArgb
+
+    End Sub
+
+    Private Sub InitializeSounds()
+
+        AddSound("Music", Application.StartupPath & "level.mp3")
+
+        SetVolume("Music", 50)
+
+        AddOverlapping("CashCollected", Application.StartupPath & "CashCollected.mp3")
+
+        SetVolumeOverlapping("CashCollected", 700)
+
+        AddOverlapping("eliminated", Application.StartupPath & "eliminated.mp3")
+
+        SetVolumeOverlapping("eliminated", 700)
+
+        AddSound("clear", Application.StartupPath & "clear.mp3")
+
+        SetVolume("clear", 1000)
+
+        AddSound("Portal", Application.StartupPath & "Portal.mp3")
+
+        SetVolume("Portal", 500)
 
     End Sub
 

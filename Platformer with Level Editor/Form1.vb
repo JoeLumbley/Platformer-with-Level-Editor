@@ -5216,7 +5216,7 @@ Public Class Form1
 
         AddSound("Portal", Application.StartupPath & "Portal.mp3")
 
-        SetVolume("Portal", 500)
+        SetVolume("Portal", 300)
 
 
         InitializeToolBarButtons()

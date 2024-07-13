@@ -10339,7 +10339,7 @@ Public Class Form1
         CreateSoundFileFromResource(File, My.Resources.clear)
 
         File = Path.Combine(Application.StartupPath, "Portal.mp3")
-        CreateSoundFileFromResource(File, My.Resources.Portal)
+        CreateSoundFileFromResource(File, My.Resources.Portal2)
 
     End Sub
 

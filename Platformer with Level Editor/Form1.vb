@@ -5218,7 +5218,6 @@ Public Class Form1
 
         SetVolume("Portal", 500)
 
-
         InitializeToolBarButtons()
 
         InitializeForm()

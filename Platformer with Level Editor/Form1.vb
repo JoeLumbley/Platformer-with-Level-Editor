@@ -97,7 +97,7 @@ Public Class Form1
 
     Private ReadOnly Connected(0 To 3) As Boolean 'A boolean is a logical value that is either true or false.
 
-    Private ControllerNumber As Integer = 0
+    'Private ControllerNumber As Integer = 0
 
     Private ControllerPosition As XINPUT_STATE
 
@@ -627,6 +627,8 @@ Public Class Form1
 
     Private Sounds() As String
 
+    Private LeftVibrateStart As DateTime
+
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         InitializeApp()
@@ -744,6 +746,36 @@ Public Class Form1
     Private Sub UpdateControllerData()
 
         UpdateControllerPosition()
+
+        UpdateVibrateTimer
+
+    End Sub
+
+    Private Sub UpdateVibrateTimer()
+        'TODO
+
+        Dim CurrentTime As DateTime = Now
+
+        Dim ElapsedTime As TimeSpan = CurrentTime - LeftVibrateStart 'Elapsed delta time
+
+        If ElapsedTime.Milliseconds > 300 Then
+
+            'Turn left motor off (set zero speed).
+            Vibration.wLeftMotorSpeed = 0
+
+            If Connected(0) = True Then
+
+                Vibrate(0)
+
+            End If
+
+            If Connected(0) = False AndAlso Connected(1) = True Then
+
+                Vibrate(1)
+
+            End If
+
+        End If
 
     End Sub
 
@@ -10405,10 +10437,12 @@ Public Class Form1
 
         Vibrate(ControllerNumber)
 
-        'Turn left motor off (set zero speed).
-        Vibration.wLeftMotorSpeed = 0
+        ''Turn left motor off (set zero speed).
+        'Vibration.wLeftMotorSpeed = 0
 
-        Vibrate(ControllerNumber)
+        'Vibrate(ControllerNumber)
+
+        LeftVibrateStart = Now
 
     End Sub
 
@@ -10421,11 +10455,13 @@ Public Class Form1
 
         Vibrate(ControllerNumber)
 
-        'Turn right motor off (set zero speed).
-        Vibration.wRightMotorSpeed = 0
+        ''Turn right motor off (set zero speed).
+        'Vibration.wRightMotorSpeed = 0
 
-        Vibrate(ControllerNumber)
+        'Vibrate(ControllerNumber)
 
+        'StartRightVibrateTimer
+        'TODO
     End Sub
 
     Private Sub Vibrate(ControllerNumber As Integer)

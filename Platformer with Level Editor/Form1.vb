@@ -1197,6 +1197,8 @@ Public Class Form1
                         Else
                             'Our Hero died.
 
+                            DeathRumble()
+
                             'Restart level.
                             Camera.Position.X = 0
                             Camera.Position.Y = 0
@@ -1220,6 +1222,18 @@ Public Class Form1
             Next
 
         End If
+
+    End Sub
+
+    Private Sub DeathRumble()
+
+        VibrateLeft(ControllerA, 65000)
+
+        VibrateLeft(ControllerA, 65000)
+
+        VibrateRight(ControllerA, 65000)
+
+        VibrateRight(ControllerA, 65000)
 
     End Sub
 
@@ -10390,6 +10404,11 @@ Public Class Form1
 
         Vibrate(ControllerNumber)
 
+        'Turn left motor off (set zero speed).
+        Vibration.wLeftMotorSpeed = 0
+
+        Vibrate(ControllerNumber)
+
     End Sub
 
     Private Sub VibrateRight(ControllerNumber As Integer, Speed As UShort)
@@ -10401,6 +10420,11 @@ Public Class Form1
 
         'Set right motor speed.
         Vibration.wRightMotorSpeed = Speed
+
+        Vibrate(ControllerNumber)
+
+        'Turn right motor off (set zero speed).
+        Vibration.wRightMotorSpeed = 0
 
         Vibrate(ControllerNumber)
 

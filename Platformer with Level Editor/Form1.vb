@@ -629,6 +629,9 @@ Public Class Form1
 
     Private LeftVibrateStart As DateTime
 
+    Private RightVibrateStart As DateTime
+
+
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         InitializeApp()
@@ -756,12 +759,33 @@ Public Class Form1
 
         Dim CurrentTime As DateTime = Now
 
-        Dim ElapsedTime As TimeSpan = CurrentTime - LeftVibrateStart 'Elapsed delta time
+        Dim ElapsedTime As TimeSpan = CurrentTime - LeftVibrateStart
 
-        If ElapsedTime.Milliseconds > 300 Then
+        If ElapsedTime.Milliseconds >= 300 Then
 
             'Turn left motor off (set zero speed).
             Vibration.wLeftMotorSpeed = 0
+
+            If Connected(0) = True Then
+
+                Vibrate(0)
+
+            End If
+
+            If Connected(0) = False AndAlso Connected(1) = True Then
+
+                Vibrate(1)
+
+            End If
+
+        End If
+
+        ElapsedTime = CurrentTime - RightVibrateStart
+
+        If ElapsedTime.Milliseconds >= 500 Then
+
+            'Turn right motor off (set zero speed).
+            Vibration.wRightMotorSpeed = 0
 
             If Connected(0) = True Then
 
@@ -1261,13 +1285,13 @@ Public Class Form1
 
         If Connected(0) = True Then
 
-            VibrateLeft(0, 65000)
+            VibrateRight(0, 65000)
 
         End If
 
         If Connected(0) = False AndAlso Connected(1) = True Then
 
-            VibrateLeft(1, 65000)
+            VibrateRight(1, 65000)
 
         End If
 
@@ -10462,6 +10486,9 @@ Public Class Form1
 
         'StartRightVibrateTimer
         'TODO
+
+        RightVibrateStart = Now
+
     End Sub
 
     Private Sub Vibrate(ControllerNumber As Integer)

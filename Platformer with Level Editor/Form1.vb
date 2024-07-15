@@ -1229,12 +1229,6 @@ Public Class Form1
 
         VibrateLeft(ControllerA, 65000)
 
-        VibrateLeft(ControllerA, 65000)
-
-        VibrateRight(ControllerA, 65000)
-
-        VibrateRight(ControllerA, 65000)
-
     End Sub
 
     Private Sub ResetOurHero()
@@ -10396,9 +10390,6 @@ Public Class Form1
         'The range of speed is 0 through 65,535. Unsigned 16-bit (2-byte) integer.
         'The left motor is the low-frequency rumble motor.
 
-        'Turn right motor off (set zero speed).
-        Vibration.wRightMotorSpeed = 0
-
         'Set left motor speed.
         Vibration.wLeftMotorSpeed = Speed
 
@@ -10414,9 +10405,6 @@ Public Class Form1
     Private Sub VibrateRight(ControllerNumber As Integer, Speed As UShort)
         'The range of speed is 0 through 65,535. Unsigned 16-bit (2-byte) integer.
         'The right motor is the high-frequency rumble motor.
-
-        'Turn left motor off (set zero speed).
-        Vibration.wLeftMotorSpeed = 0
 
         'Set right motor speed.
         Vibration.wRightMotorSpeed = Speed

@@ -9640,7 +9640,7 @@ Public Class Form1
 
         If ShowMenu = False Then
 
-            If e.Button = MouseButtons.Left Then
+            If e.Button = MouseButtons.Left Or e.Button = MouseButtons.Middle Then
 
                 MouseDownEditingSelection(e.Location)
 
@@ -9660,7 +9660,7 @@ Public Class Form1
 
         Else
 
-            If e.Button = MouseButtons.Left Then
+            If e.Button = MouseButtons.Left Or e.Button = MouseButtons.Middle Then
 
                 MouseDownEditingMenuButtons(e.Location)
 
@@ -10778,8 +10778,10 @@ Public Class Form1
 
         If GameState = AppState.Editing Then
 
-            'Is player double clicking on a game object that can have its color set?
-            If SizingHandleSelected = False AndAlso
+            If ShowMenu = False Then
+
+                'Is player double clicking on a game object that can have its color set?
+                If SizingHandleSelected = False AndAlso
                 SelectedBlock = -1 AndAlso
                 SelectedBill = -1 AndAlso
                 SelectedBush = -1 AndAlso
@@ -10788,9 +10790,11 @@ Public Class Form1
                 SelectedEnemy = -1 AndAlso
                 SpawnSelected = False AndAlso
                 SelectedPortal = -1 Then
-                'Yes, the player is double clicking a game object that can have its color set.
+                    'Yes, the player is double clicking a game object that can have its color set.
 
-                ShowColorPicker()
+                    ShowColorPicker()
+
+                End If
 
             End If
 

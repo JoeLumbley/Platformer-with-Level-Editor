@@ -1227,7 +1227,17 @@ Public Class Form1
 
     Private Sub DeathRumble()
 
-        VibrateLeft(ControllerA, 65000)
+        If Connected(0) = True Then
+
+            VibrateLeft(0, 65000)
+
+        End If
+
+        If Connected(0) = False AndAlso Connected(1) = True Then
+
+            VibrateLeft(1, 65000)
+
+        End If
 
     End Sub
 

@@ -10778,49 +10778,52 @@ Public Class Form1
 
         If GameState = AppState.Editing Then
 
-            DoubleClickEditing()
+            'Is player double clicking on a game object that can have its color set?
+            If SizingHandleSelected = False AndAlso
+                SelectedBlock = -1 AndAlso
+                SelectedBill = -1 AndAlso
+                SelectedBush = -1 AndAlso
+                SelectedCloud = -1 AndAlso
+                GoalSelected = False AndAlso
+                SelectedEnemy = -1 AndAlso
+                SpawnSelected = False AndAlso
+                SelectedPortal = -1 Then
+                'Yes, the player is double clicking a game object that can have its color set.
+
+                ShowColorPicker()
+
+            End If
 
         End If
 
     End Sub
 
-    Private Sub DoubleClickEditing()
+    Private Sub ShowColorPicker()
 
-        'Is player over a game object that can not have its color set?
-        If SizingHandleSelected = False AndAlso
-            SelectedBlock = -1 AndAlso
-            SelectedBill = -1 AndAlso
-            SelectedBush = -1 AndAlso
-            SelectedCloud = -1 AndAlso
-            GoalSelected = False AndAlso
-            SelectedEnemy = -1 AndAlso
-            SpawnSelected = False AndAlso
-            SelectedPortal = -1 Then
-            'No, the player is not over a game object that can not have its color set.
+        'Is the game object a backdrop?
+        If SelectedBackdrop > -1 Then
+            'Yes, the game object is a backdrop.
 
-            If SelectedBackdrop > -1 Then
+            ColorDialog1.Color = Color.FromArgb(Backdrops(SelectedBackdrop).Color)
 
-                ColorDialog1.Color = Color.FromArgb(Backdrops(SelectedBackdrop).Color)
+            ColorDialog1.FullOpen = True
 
-                ColorDialog1.FullOpen = True
+            If ColorDialog1.ShowDialog() = DialogResult.OK Then
 
-                If ColorDialog1.ShowDialog() = DialogResult.OK Then
+                Backdrops(SelectedBackdrop).Color = ColorDialog1.Color.ToArgb
 
-                    Backdrops(SelectedBackdrop).Color = ColorDialog1.Color.ToArgb
+            End If
 
-                End If
+        Else
+            'No, then the game object is the level.
 
-            Else
+            ColorDialog1.Color = Color.FromArgb(Level.Color)
 
-                ColorDialog1.Color = Color.FromArgb(Level.Color)
+            ColorDialog1.FullOpen = True
 
-                ColorDialog1.FullOpen = True
+            If ColorDialog1.ShowDialog() = DialogResult.OK Then
 
-                If ColorDialog1.ShowDialog() = DialogResult.OK Then
-
-                    Level.Color = ColorDialog1.Color.ToArgb
-
-                End If
+                Level.Color = ColorDialog1.Color.ToArgb
 
             End If
 
@@ -10831,7 +10834,7 @@ Public Class Form1
 End Class
 
 
-'Monica is our an AI assistant.
+'Monica is our an AI assistant. She helped with the Dll imports.
 'https://monica.im/
 
 

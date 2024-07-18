@@ -755,7 +755,6 @@ Public Class Form1
     End Sub
 
     Private Sub UpdateVibrateTimer()
-        'TODO
 
         Dim CurrentTime As DateTime = Now
 
@@ -10465,11 +10464,6 @@ Public Class Form1
 
         Vibrate(ControllerNumber)
 
-        ''Turn left motor off (set zero speed).
-        'Vibration.wLeftMotorSpeed = 0
-
-        'Vibrate(ControllerNumber)
-
         LeftVibrateStart = Now
 
     End Sub
@@ -10482,14 +10476,6 @@ Public Class Form1
         Vibration.wRightMotorSpeed = Speed
 
         Vibrate(ControllerNumber)
-
-        ''Turn right motor off (set zero speed).
-        'Vibration.wRightMotorSpeed = 0
-
-        'Vibrate(ControllerNumber)
-
-        'StartRightVibrateTimer
-        'TODO
 
         RightVibrateStart = Now
 

@@ -767,11 +767,11 @@ Public Class Form1
 
     Private Sub UpdateLeftVibrateTimer()
 
-        Dim CurrentTime As DateTime = Now
-
-        Dim ElapsedTime As TimeSpan = CurrentTime - LeftVibrateStart
-
         If IsLeftVibrating = True Then
+
+            Dim CurrentTime As DateTime = Now
+
+            Dim ElapsedTime As TimeSpan = CurrentTime - LeftVibrateStart
 
             If ElapsedTime.Milliseconds >= 800 Then
 
@@ -800,11 +800,11 @@ Public Class Form1
 
     Private Sub UpdateRightVibrateTimer()
 
-        Dim CurrentTime As DateTime = Now
-
-        Dim ElapsedTime As TimeSpan = CurrentTime - RightVibrateStart
-
         If IsRightVibrating = True Then
+
+            Dim CurrentTime As DateTime = Now
+
+            Dim ElapsedTime As TimeSpan = CurrentTime - RightVibrateStart
 
             If ElapsedTime.Milliseconds >= 800 Then
 

@@ -763,50 +763,6 @@ Public Class Form1
 
         UpdateRightVibrateTimer()
 
-        'Dim CurrentTime As DateTime = Now
-
-        'Dim ElapsedTime As TimeSpan = CurrentTime - LeftVibrateStart
-
-        'If ElapsedTime.Milliseconds >= 300 Then
-
-        '    'Turn left motor off (set zero speed).
-        '    Vibration.wLeftMotorSpeed = 0
-
-        '    If Connected(0) = True Then
-
-        '        Vibrate(0)
-
-        '    End If
-
-        '    If Connected(0) = False AndAlso Connected(1) = True Then
-
-        '        Vibrate(1)
-
-        '    End If
-
-        'End If
-
-        'ElapsedTime = CurrentTime - RightVibrateStart
-
-        'If ElapsedTime.Milliseconds >= 500 Then
-
-        '    'Turn right motor off (set zero speed).
-        '    Vibration.wRightMotorSpeed = 0
-
-        '    If Connected(0) = True Then
-
-        '        Vibrate(0)
-
-        '    End If
-
-        '    If Connected(0) = False AndAlso Connected(1) = True Then
-
-        '        Vibrate(1)
-
-        '    End If
-
-        'End If
-
     End Sub
 
     Private Sub UpdateLeftVibrateTimer()
@@ -874,7 +830,6 @@ Public Class Form1
         End If
 
     End Sub
-
 
     Private Sub DrawStartScreen()
 

@@ -769,11 +769,9 @@ Public Class Form1
 
         If IsLeftVibrating = True Then
 
-            Dim CurrentTime As DateTime = Now
+            Dim ElapsedTime As TimeSpan = Now - LeftVibrateStart
 
-            Dim ElapsedTime As TimeSpan = CurrentTime - LeftVibrateStart
-
-            If ElapsedTime.Milliseconds >= 800 Then
+            If ElapsedTime.TotalSeconds >= 1 Then
 
                 IsLeftVibrating = False
 
@@ -802,11 +800,9 @@ Public Class Form1
 
         If IsRightVibrating = True Then
 
-            Dim CurrentTime As DateTime = Now
+            Dim ElapsedTime As TimeSpan = Now - RightVibrateStart
 
-            Dim ElapsedTime As TimeSpan = CurrentTime - RightVibrateStart
-
-            If ElapsedTime.Milliseconds >= 800 Then
+            If ElapsedTime.TotalSeconds >= 1 Then
 
                 IsRightVibrating = False
 

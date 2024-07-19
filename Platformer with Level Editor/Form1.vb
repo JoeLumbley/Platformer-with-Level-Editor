@@ -631,6 +631,9 @@ Public Class Form1
 
     Private RightVibrateStart As DateTime
 
+    Private IsLeftVibrating As Boolean = False
+
+    Private IsRightVibrating As Boolean = False
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
@@ -756,51 +759,122 @@ Public Class Form1
 
     Private Sub UpdateVibrateTimer()
 
+        UpdateLeftVibrateTimer()
+
+        UpdateRightVibrateTimer()
+
+        'Dim CurrentTime As DateTime = Now
+
+        'Dim ElapsedTime As TimeSpan = CurrentTime - LeftVibrateStart
+
+        'If ElapsedTime.Milliseconds >= 300 Then
+
+        '    'Turn left motor off (set zero speed).
+        '    Vibration.wLeftMotorSpeed = 0
+
+        '    If Connected(0) = True Then
+
+        '        Vibrate(0)
+
+        '    End If
+
+        '    If Connected(0) = False AndAlso Connected(1) = True Then
+
+        '        Vibrate(1)
+
+        '    End If
+
+        'End If
+
+        'ElapsedTime = CurrentTime - RightVibrateStart
+
+        'If ElapsedTime.Milliseconds >= 500 Then
+
+        '    'Turn right motor off (set zero speed).
+        '    Vibration.wRightMotorSpeed = 0
+
+        '    If Connected(0) = True Then
+
+        '        Vibrate(0)
+
+        '    End If
+
+        '    If Connected(0) = False AndAlso Connected(1) = True Then
+
+        '        Vibrate(1)
+
+        '    End If
+
+        'End If
+
+    End Sub
+
+    Private Sub UpdateLeftVibrateTimer()
+
         Dim CurrentTime As DateTime = Now
 
         Dim ElapsedTime As TimeSpan = CurrentTime - LeftVibrateStart
 
-        If ElapsedTime.Milliseconds >= 300 Then
+        If IsLeftVibrating = True Then
 
-            'Turn left motor off (set zero speed).
-            Vibration.wLeftMotorSpeed = 0
+            If ElapsedTime.Milliseconds >= 800 Then
 
-            If Connected(0) = True Then
+                IsLeftVibrating = False
 
-                Vibrate(0)
+                'Turn left motor off (set zero speed).
+                Vibration.wLeftMotorSpeed = 0
 
-            End If
+                If Connected(0) = True Then
 
-            If Connected(0) = False AndAlso Connected(1) = True Then
+                    Vibrate(0)
 
-                Vibrate(1)
+                End If
 
-            End If
+                If Connected(0) = False AndAlso Connected(1) = True Then
 
-        End If
+                    Vibrate(1)
 
-        ElapsedTime = CurrentTime - RightVibrateStart
-
-        If ElapsedTime.Milliseconds >= 500 Then
-
-            'Turn right motor off (set zero speed).
-            Vibration.wRightMotorSpeed = 0
-
-            If Connected(0) = True Then
-
-                Vibrate(0)
-
-            End If
-
-            If Connected(0) = False AndAlso Connected(1) = True Then
-
-                Vibrate(1)
+                End If
 
             End If
 
         End If
 
     End Sub
+
+    Private Sub UpdateRightVibrateTimer()
+
+        Dim CurrentTime As DateTime = Now
+
+        Dim ElapsedTime As TimeSpan = CurrentTime - RightVibrateStart
+
+        If IsRightVibrating = True Then
+
+            If ElapsedTime.Milliseconds >= 800 Then
+
+                IsRightVibrating = False
+
+                'Turn right motor off (set zero speed).
+                Vibration.wRightMotorSpeed = 0
+
+                If Connected(0) = True Then
+
+                    Vibrate(0)
+
+                End If
+
+                If Connected(0) = False AndAlso Connected(1) = True Then
+
+                    Vibrate(1)
+
+                End If
+
+            End If
+
+        End If
+
+    End Sub
+
 
     Private Sub DrawStartScreen()
 
@@ -10466,6 +10540,8 @@ Public Class Form1
 
         LeftVibrateStart = Now
 
+        IsLeftVibrating = True
+
     End Sub
 
     Private Sub VibrateRight(ControllerNumber As Integer, Speed As UShort)
@@ -10478,6 +10554,8 @@ Public Class Form1
         Vibrate(ControllerNumber)
 
         RightVibrateStart = Now
+
+        IsRightVibrating = True
 
     End Sub
 

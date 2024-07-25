@@ -34,6 +34,7 @@ Imports System.Drawing.Drawing2D
 Imports System.IO
 Imports System.Numerics
 Imports System.Runtime.InteropServices
+Imports System.Security.Cryptography
 Imports System.Text
 Imports System.Threading
 
@@ -96,8 +97,6 @@ Public Class Form1
     'A byte is a unsigned 8-bit (1-byte) integer range 0 through 255. This gives us 256 values.
 
     Private ReadOnly Connected(0 To 3) As Boolean 'A boolean is a logical value that is either true or false.
-
-    'Private ControllerNumber As Integer = 0
 
     Private ControllerPosition As XINPUT_STATE
 
@@ -751,11 +750,88 @@ Public Class Form1
 
     Private Sub UpdateControllerData()
 
-        UpdateControllerPosition()
+        For ControllerNumber As Integer = 0 To 3 'Up to 4 controllers
 
-        UpdateVibrateTimer
+            Try
+
+                If IsControllerConnected(ControllerNumber) = True Then
+
+                    UpdateControllerState(ControllerNumber)
+
+                    Connected(ControllerNumber) = True
+
+                Else
+
+                    Connected(ControllerNumber) = False
+
+                End If
+
+            Catch ex As Exception
+                'Something went wrong (An exception occured).
+
+                DisplayError(ex)
+
+                Exit Sub
+
+            End Try
+
+        Next
+
+        UpdateVibrateTimer()
 
     End Sub
+
+    Private Sub UpdateControllerState(controllerNumber As Integer)
+
+        'Is controller zero connected?
+        If Connected(0) = True AndAlso controllerNumber = 0 Then
+            'Yes, controller zero is connected.
+            'Use controller zero.
+
+            UpdateButtonPosition(controllerNumber)
+
+            UpdateLeftThumbstickPosition(controllerNumber)
+
+            UpdateLeftTriggerPosition(controllerNumber)
+
+            UpdateRightThumbstickPosition(controllerNumber)
+
+            UpdateRightTriggerPosition(controllerNumber)
+
+        End If
+
+        'Is controller zero disconnected and controller one connected?
+        If Connected(0) = False AndAlso Connected(1) = True AndAlso controllerNumber = 1 Then
+            'Yes, controller zero is disconnected and controller one is connected.
+            'Use controller one.
+
+            UpdateButtonPosition(controllerNumber)
+
+            UpdateLeftThumbstickPosition(controllerNumber)
+
+            UpdateLeftTriggerPosition(controllerNumber)
+
+            UpdateRightThumbstickPosition(controllerNumber)
+
+            UpdateRightTriggerPosition(controllerNumber)
+
+        End If
+
+    End Sub
+
+    Private Sub DisplayError(ex As Exception)
+
+        MsgBox(ex.ToString()) ' Display the exception message in a message box.
+
+    End Sub
+
+    Private Function IsControllerConnected(controllerNumber As Integer) As Boolean
+
+        Return XInputGetState(controllerNumber, ControllerPosition) = 0 '0 means the controller is connected.
+        'Anything else (a non-zero value) means the controller is not connected.
+
+    End Function
+
 
     Private Sub UpdateVibrateTimer()
 
@@ -1417,76 +1493,76 @@ Public Class Form1
 
     End Sub
 
-    Private Sub UpdateControllerPosition()
+    'Private Sub UpdateControllerPosition()
 
-        For ControllerNumber = 0 To 3 'Up to 4 controllers
+    '    For ControllerNumber = 0 To 3 'Up to 4 controllers
 
-            Try
+    '        Try
 
-                ' Check if the function call was successful
-                If XInputGetState(ControllerNumber, ControllerPosition) = 0 Then
-                    ' The function call was successful, so you can access the controller state now
+    '            ' Check if the function call was successful
+    '            If XInputGetState(ControllerNumber, ControllerPosition) = 0 Then
+    '                ' The function call was successful, so you can access the controller state now
 
-                    Connected(ControllerNumber) = True
+    '                Connected(ControllerNumber) = True
 
-                    'Is controller zero connected?
-                    If Connected(0) = True AndAlso ControllerNumber = 0 Then
-                        'Yes, controller zero is connected.
-                        'Use controller zero.
+    '                'Is controller zero connected?
+    '                If Connected(0) = True AndAlso ControllerNumber = 0 Then
+    '                    'Yes, controller zero is connected.
+    '                    'Use controller zero.
 
-                        UpdateButtonPosition()
+    '                    UpdateButtonPosition(ControllerNumber)
 
-                        DoButtonLogic()
+    '                    'DoButtonLogic(ControllerNumber)
 
-                        UpdateLeftThumbstickPosition()
+    '                    UpdateLeftThumbstickPosition(ControllerNumber)
 
-                        UpdateLeftTriggerPosition()
+    '                    UpdateLeftTriggerPosition(ControllerNumber)
 
-                        UpdateRightThumbstickPosition()
+    '                    UpdateRightThumbstickPosition(ControllerNumber)
 
-                        UpdateRightTriggerPosition()
+    '                    UpdateRightTriggerPosition(ControllerNumber)
 
-                    End If
+    '                End If
 
-                    'Is controller zero disconnected and controller one connected?
-                    If Connected(0) = False AndAlso Connected(1) = True AndAlso ControllerNumber = 1 Then
-                        'Yes, controller zero is disconnected and controller one is connected.
-                        'Use controller one.
+    '                'Is controller zero disconnected and controller one connected?
+    '                If Connected(0) = False AndAlso Connected(1) = True AndAlso ControllerNumber = 1 Then
+    '                    'Yes, controller zero is disconnected and controller one is connected.
+    '                    'Use controller one.
 
-                        UpdateButtonPosition()
+    '                    UpdateButtonPosition(ControllerNumber)
 
-                        DoButtonLogic()
+    '                    'DoButtonLogic(ControllerNumber)
 
-                        UpdateLeftThumbstickPosition()
+    '                    UpdateLeftThumbstickPosition(ControllerNumber)
 
-                        UpdateLeftTriggerPosition()
+    '                    UpdateLeftTriggerPosition(ControllerNumber)
 
-                        UpdateRightThumbstickPosition()
+    '                    UpdateRightThumbstickPosition(ControllerNumber)
 
-                        UpdateRightTriggerPosition()
+    '                    UpdateRightTriggerPosition(ControllerNumber)
 
-                    End If
+    '                End If
 
-                Else
-                    ' The function call failed, so you cannot access the controller state
+    '            Else
+    '                ' The function call failed, so you cannot access the controller state
 
-                    Connected(ControllerNumber) = False
+    '                Connected(ControllerNumber) = False
 
-                End If
+    '            End If
 
-            Catch ex As Exception
+    '        Catch ex As Exception
 
-                MsgBox(ex.ToString)
+    '            MsgBox(ex.ToString)
 
-                Exit Sub
+    '            Exit Sub
 
-            End Try
+    '        End Try
 
-        Next
+    '    Next
 
-    End Sub
+    'End Sub
 
-    Private Sub UpdateLeftThumbstickPosition()
+    Private Sub UpdateLeftThumbstickPosition(controllerNumber As Integer)
         'The range on the X-axis is -32,768 through 32,767. Signed 16-bit (2-byte) integer.
         'The range on the Y-axis is -32,768 through 32,767. Signed 16-bit (2-byte) integer.
 
@@ -1772,7 +1848,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub UpdateRightTriggerPosition()
+    Private Sub UpdateRightTriggerPosition(controllerNumber As Integer)
         'The range of right trigger is 0 to 255. Unsigned 8-bit (1-byte) integer.
         'The trigger position must be greater than the trigger threshold to register as pressed.
 
@@ -1827,7 +1903,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub UpdateLeftTriggerPosition()
+    Private Sub UpdateLeftTriggerPosition(controllerNumber As Integer)
 
         'The range of left trigger is 0 to 255. Unsigned 8-bit (1-byte) integer.
         'The trigger position must be greater than the trigger threshold to register as pressed.
@@ -1871,7 +1947,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub UpdateRightThumbstickPosition()
+    Private Sub UpdateRightThumbstickPosition(controllerNumber As Integer)
         'The range on the X-axis is -32,768 through 32,767. Signed 16-bit (2-byte) integer.
         'The range on the Y-axis is -32,768 through 32,767. Signed 16-bit (2-byte) integer.
 
@@ -8711,7 +8787,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub UpdateButtonPosition()
+    Private Sub UpdateButtonPosition(controllerNumber As Integer)
         'The range of buttons is 0 to 65,535. Unsigned 16-bit (2-byte) integer.
 
         If (ControllerPosition.Gamepad.wButtons And DPadUp) <> 0 Then
@@ -8854,23 +8930,25 @@ Public Class Form1
 
         End If
 
-    End Sub
-
-    Private Sub DoButtonLogic()
-
-        DoLetterButtonLogic()
-
-        DoDPadLogic()
-
-        DoStartBackLogic()
-
-        DoBumperLogic()
-
-        DoStickLogic()
+        DoButtonLogic(controllerNumber)
 
     End Sub
 
-    Private Sub DoStickLogic()
+    Private Sub DoButtonLogic(controllerNumber As Integer)
+
+        DoLetterButtonLogic(controllerNumber)
+
+        DoDPadLogic(controllerNumber)
+
+        DoStartBackLogic(controllerNumber)
+
+        DoBumperLogic(controllerNumber)
+
+        DoStickLogic(controllerNumber)
+
+    End Sub
+
+    Private Sub DoStickLogic(controllerNumber As Integer)
 
         If LeftStickButtonPressed = True Then
 
@@ -8904,7 +8982,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub DoBumperLogic()
+    Private Sub DoBumperLogic(controllerNumber As Integer)
 
         If LeftBumperButtonPressed = True Then
 
@@ -9052,7 +9130,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub DoStartBackLogic()
+    Private Sub DoStartBackLogic(controllerNumber As Integer)
 
         If StartButtonPressed = True Then
 
@@ -9152,7 +9230,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub DoDPadLogic()
+    Private Sub DoDPadLogic(controllerNumber As Integer)
 
         If DPadLeftPressed = True Then
 
@@ -9355,7 +9433,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub DoLetterButtonLogic()
+    Private Sub DoLetterButtonLogic(controllerNumber As Integer)
 
         If AButtonPressed = True Then
 

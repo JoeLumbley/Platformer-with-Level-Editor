@@ -1384,17 +1384,17 @@ Public Class Form1
 
         If Connected(0) = True Then
 
-            VibrateLeft(0, 65000)
+            VibrateLeft(0, 65535)
 
-            VibrateRight(0, 65000)
+            VibrateRight(0, 65535)
 
         End If
 
         If Connected(0) = False AndAlso Connected(1) = True Then
 
-            VibrateLeft(1, 65000)
+            VibrateLeft(1, 65535)
 
-            VibrateRight(1, 65000)
+            VibrateRight(1, 65535)
 
         End If
 

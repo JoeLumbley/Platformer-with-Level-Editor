@@ -788,15 +788,15 @@ Public Class Form1
             'Yes, controller zero is connected.
             'Use controller zero.
 
-            UpdateButtonPosition(controllerNumber)
+            UpdateButtonPosition()
 
-            UpdateLeftThumbstickPosition(controllerNumber)
+            UpdateLeftThumbstickPosition()
 
-            UpdateLeftTriggerPosition(controllerNumber)
+            UpdateLeftTriggerPosition()
 
-            UpdateRightThumbstickPosition(controllerNumber)
+            UpdateRightThumbstickPosition()
 
-            UpdateRightTriggerPosition(controllerNumber)
+            UpdateRightTriggerPosition()
 
         End If
 
@@ -805,15 +805,15 @@ Public Class Form1
             'Yes, controller zero is disconnected and controller one is connected.
             'Use controller one.
 
-            UpdateButtonPosition(controllerNumber)
+            UpdateButtonPosition()
 
-            UpdateLeftThumbstickPosition(controllerNumber)
+            UpdateLeftThumbstickPosition()
 
-            UpdateLeftTriggerPosition(controllerNumber)
+            UpdateLeftTriggerPosition()
 
-            UpdateRightThumbstickPosition(controllerNumber)
+            UpdateRightThumbstickPosition()
 
-            UpdateRightTriggerPosition(controllerNumber)
+            UpdateRightTriggerPosition()
 
         End If
 
@@ -831,7 +831,6 @@ Public Class Form1
         'Anything else (a non-zero value) means the controller is not connected.
 
     End Function
-
 
     Private Sub UpdateVibrateTimer()
 
@@ -1562,7 +1561,7 @@ Public Class Form1
 
     'End Sub
 
-    Private Sub UpdateLeftThumbstickPosition(controllerNumber As Integer)
+    Private Sub UpdateLeftThumbstickPosition()
         'The range on the X-axis is -32,768 through 32,767. Signed 16-bit (2-byte) integer.
         'The range on the Y-axis is -32,768 through 32,767. Signed 16-bit (2-byte) integer.
 
@@ -1848,7 +1847,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub UpdateRightTriggerPosition(controllerNumber As Integer)
+    Private Sub UpdateRightTriggerPosition()
         'The range of right trigger is 0 to 255. Unsigned 8-bit (1-byte) integer.
         'The trigger position must be greater than the trigger threshold to register as pressed.
 
@@ -1903,7 +1902,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub UpdateLeftTriggerPosition(controllerNumber As Integer)
+    Private Sub UpdateLeftTriggerPosition()
 
         'The range of left trigger is 0 to 255. Unsigned 8-bit (1-byte) integer.
         'The trigger position must be greater than the trigger threshold to register as pressed.
@@ -1947,7 +1946,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub UpdateRightThumbstickPosition(controllerNumber As Integer)
+    Private Sub UpdateRightThumbstickPosition()
         'The range on the X-axis is -32,768 through 32,767. Signed 16-bit (2-byte) integer.
         'The range on the Y-axis is -32,768 through 32,767. Signed 16-bit (2-byte) integer.
 
@@ -8787,7 +8786,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub UpdateButtonPosition(controllerNumber As Integer)
+    Private Sub UpdateButtonPosition()
         'The range of buttons is 0 to 65,535. Unsigned 16-bit (2-byte) integer.
 
         If (ControllerPosition.Gamepad.wButtons And DPadUp) <> 0 Then
@@ -8930,25 +8929,25 @@ Public Class Form1
 
         End If
 
-        DoButtonLogic(controllerNumber)
+        DoButtonLogic()
 
     End Sub
 
-    Private Sub DoButtonLogic(controllerNumber As Integer)
+    Private Sub DoButtonLogic()
 
-        DoLetterButtonLogic(controllerNumber)
+        DoLetterButtonLogic()
 
-        DoDPadLogic(controllerNumber)
+        DoDPadLogic()
 
-        DoStartBackLogic(controllerNumber)
+        DoStartBackLogic()
 
-        DoBumperLogic(controllerNumber)
+        DoBumperLogic()
 
-        DoStickLogic(controllerNumber)
+        DoStickLogic()
 
     End Sub
 
-    Private Sub DoStickLogic(controllerNumber As Integer)
+    Private Sub DoStickLogic()
 
         If LeftStickButtonPressed = True Then
 
@@ -8982,7 +8981,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub DoBumperLogic(controllerNumber As Integer)
+    Private Sub DoBumperLogic()
 
         If LeftBumperButtonPressed = True Then
 
@@ -9130,7 +9129,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub DoStartBackLogic(controllerNumber As Integer)
+    Private Sub DoStartBackLogic()
 
         If StartButtonPressed = True Then
 
@@ -9230,7 +9229,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub DoDPadLogic(controllerNumber As Integer)
+    Private Sub DoDPadLogic()
 
         If DPadLeftPressed = True Then
 
@@ -9433,7 +9432,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub DoLetterButtonLogic(controllerNumber As Integer)
+    Private Sub DoLetterButtonLogic()
 
         If AButtonPressed = True Then
 

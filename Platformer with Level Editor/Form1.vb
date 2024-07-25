@@ -855,13 +855,13 @@ Public Class Form1
 
                 If Connected(0) = True Then
 
-                    Vibrate(0)
+                    SendVibrationMotorCommand(0)
 
                 End If
 
                 If Connected(0) = False AndAlso Connected(1) = True Then
 
-                    Vibrate(1)
+                    SendVibrationMotorCommand(1)
 
                 End If
 
@@ -886,13 +886,13 @@ Public Class Form1
 
                 If Connected(0) = True Then
 
-                    Vibrate(0)
+                    SendVibrationMotorCommand(0)
 
                 End If
 
                 If Connected(0) = False AndAlso Connected(1) = True Then
 
-                    Vibrate(1)
+                    SendVibrationMotorCommand(1)
 
                 End If
 
@@ -10495,7 +10495,7 @@ Public Class Form1
         'Set left motor speed.
         Vibration.wLeftMotorSpeed = Speed
 
-        Vibrate(ControllerNumber)
+        SendVibrationMotorCommand(ControllerNumber)
 
         LeftVibrateStart = Now
 
@@ -10510,7 +10510,7 @@ Public Class Form1
         'Set right motor speed.
         Vibration.wRightMotorSpeed = Speed
 
-        Vibrate(ControllerNumber)
+        SendVibrationMotorCommand(ControllerNumber)
 
         RightVibrateStart = Now
 
@@ -10518,22 +10518,22 @@ Public Class Form1
 
     End Sub
 
-    Private Sub Vibrate(ControllerNumber As Integer)
+    Private Sub SendVibrationMotorCommand(ControllerNumber As Integer)
+        'Sends vibration motor speed command to the specified controller.
 
         Try
 
-            'Turn motor on.
+            'Send motor speed command to the specified controller.
             If XInputSetState(ControllerNumber, Vibration) = 0 Then
-                'Success
-                'Text = XInputSetState(ControllerNumber, vibration).ToString
+                'The motor speed was set. Success.
             Else
-                'Fail
+                'The motor speed was not set. Fail.
                 'Text = XInputSetState(ControllerNumber, vibration).ToString
             End If
 
         Catch ex As Exception
 
-            MsgBox(ex.ToString)
+            DisplayError(ex)
 
             Exit Sub
 

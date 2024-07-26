@@ -634,6 +634,17 @@ Public Class Form1
 
     Private IsRightVibrating As Boolean = False
 
+    Private GridLinesOutlinePen As New Pen(Color.Black, 1)
+
+    'Private GridLinesOutlinePen As New Pen(Color.Black, 1)
+
+
+    Private GridLinesDashPen As New Pen(Color.Gray, 1) With {
+                        .DashCap = DashCap.Flat,
+                        .DashPattern = New Single() {32.0F, 32.0F}
+                    }
+
+
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         InitializeApp()
@@ -976,30 +987,7 @@ Public Class Form1
 
         DrawPortals()
 
-        'If Camera.Velocity.X = 0 AndAlso Camera.Velocity.Y = 0 Then
-
-        'BufferGridLines()
-
-        'DrawGridLines()
-
-        'GridLineBuffer.Clear(Color.Transparent)
-
-        ' Draw vertical lines  |
-        For x As Integer = CameraOffset.X To CameraOffset.X + Level.Rect.Width Step GridSize
-
-            Buffer.Graphics.DrawLine(Pens.Black, x, CameraOffset.Y, x, CameraOffset.Y + Level.Rect.Height)
-
-        Next
-
-        ' Draw horizontal lines ---
-        For y As Integer = CameraOffset.Y To CameraOffset.Y + Level.Rect.Height Step GridSize
-
-            Buffer.Graphics.DrawLine(Pens.Black, CameraOffset.X, y, CameraOffset.X + Level.Rect.Width, y)
-
-        Next
-
-
-        'End If
+        DrawGridLines()
 
         DrawSelectionAndSizingHandle()
 
@@ -5269,9 +5257,19 @@ Public Class Form1
 
         With Buffer.Graphics
 
-            '.DrawImageUnscaled(GridLineBitmap, 0, 0)
+            ' Draw vertical lines  |
+            For x As Integer = CameraOffset.X To CameraOffset.X + Level.Rect.Width Step GridSize
 
-            .DrawImage(GridLineBitmap, 0, 0)
+                Buffer.Graphics.DrawLine(Pens.Gray, x, CameraOffset.Y, x, CameraOffset.Y + Level.Rect.Height)
+
+            Next
+
+            ' Draw horizontal lines ---
+            For y As Integer = CameraOffset.Y To CameraOffset.Y + Level.Rect.Height Step GridSize
+
+                Buffer.Graphics.DrawLine(Pens.Gray, CameraOffset.X, y, CameraOffset.X + Level.Rect.Width, y)
+
+            Next
 
         End With
 
@@ -5284,14 +5282,14 @@ Public Class Form1
         ' Draw vertical lines  |
         For x As Integer = CameraOffset.X To CameraOffset.X + Level.Rect.Width Step GridSize
 
-            GridLineBuffer.DrawLine(Pens.Black, x, CameraOffset.Y, x, CameraOffset.Y + Level.Rect.Height)
+            GridLineBuffer.DrawLine(GridLinesDashPen, x, CameraOffset.Y, x, CameraOffset.Y + Level.Rect.Height)
 
         Next
 
         ' Draw horizontal lines ---
         For y As Integer = CameraOffset.Y To CameraOffset.Y + Level.Rect.Height Step GridSize
 
-            GridLineBuffer.DrawLine(Pens.Black, CameraOffset.X, y, CameraOffset.X + Level.Rect.Width, y)
+            GridLineBuffer.DrawLine(GridLinesDashPen, CameraOffset.X, y, CameraOffset.X + Level.Rect.Width, y)
 
         Next
 

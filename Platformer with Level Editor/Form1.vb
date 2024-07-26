@@ -715,7 +715,7 @@ Public Class Form1
             .TextRenderingHint = Drawing.Text.TextRenderingHint.AntiAliasGridFit
             .SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
             .CompositingQuality = Drawing2D.CompositingQuality.HighQuality
-            .InterpolationMode = Drawing2D.InterpolationMode.HighQualityBicubic
+            .InterpolationMode = Drawing2D.InterpolationMode.Bilinear
             .PixelOffsetMode = Drawing2D.PixelOffsetMode.HighQuality
 
         End With
@@ -976,7 +976,30 @@ Public Class Form1
 
         DrawPortals()
 
-        DrawGridLines()
+        'If Camera.Velocity.X = 0 AndAlso Camera.Velocity.Y = 0 Then
+
+        'BufferGridLines()
+
+        'DrawGridLines()
+
+        'GridLineBuffer.Clear(Color.Transparent)
+
+        ' Draw vertical lines  |
+        For x As Integer = CameraOffset.X To CameraOffset.X + Level.Rect.Width Step GridSize
+
+            Buffer.Graphics.DrawLine(Pens.Black, x, CameraOffset.Y, x, CameraOffset.Y + Level.Rect.Height)
+
+        Next
+
+        ' Draw horizontal lines ---
+        For y As Integer = CameraOffset.Y To CameraOffset.Y + Level.Rect.Height Step GridSize
+
+            Buffer.Graphics.DrawLine(Pens.Black, CameraOffset.X, y, CameraOffset.X + Level.Rect.Width, y)
+
+        Next
+
+
+        'End If
 
         DrawSelectionAndSizingHandle()
 
@@ -1906,7 +1929,7 @@ Public Class Form1
 
                     UpdateCameraOffset()
 
-                    BufferGridLines()
+                    'BufferGridLines()
 
                 End If
 
@@ -1946,7 +1969,7 @@ Public Class Form1
 
                     UpdateCameraOffset()
 
-                    BufferGridLines()
+                    'BufferGridLines()
 
                 End If
 
@@ -1975,11 +1998,15 @@ Public Class Form1
                         Camera.Velocity.X += Camera.Acceleration.X * 8 * EditorDeltaTime.TotalSeconds
 
                         'Limit decelerate to zero speed.
-                        If Camera.Velocity.X > 0 Then Camera.Velocity.X = 0 'Zero speed.
+                        If Camera.Velocity.X > 0 Then
+
+                            Camera.Velocity.X = 0 'Zero speed.
+
+                        End If
+
+                        'BufferGridLines()
 
                         UpdateCameraOffset()
-
-                        BufferGridLines()
 
                     End If
 
@@ -1989,11 +2016,15 @@ Public Class Form1
                         Camera.Velocity.X += -Camera.Acceleration.X * 8 * EditorDeltaTime.TotalSeconds
 
                         'Limit decelerate to zero speed.
-                        If Camera.Velocity.X < 0 Then Camera.Velocity.X = 0 'Zero speed.
+                        If Camera.Velocity.X < 0 Then
+
+                            Camera.Velocity.X = 0 'Zero speed.
+
+                        End If
+
+                        'BufferGridLines()
 
                         UpdateCameraOffset()
-
-                        BufferGridLines()
 
                     End If
 
@@ -2028,7 +2059,7 @@ Public Class Form1
 
                     UpdateCameraOffset()
 
-                    BufferGridLines()
+                    'BufferGridLines()
 
                 End If
 
@@ -2068,7 +2099,7 @@ Public Class Form1
 
                     UpdateCameraOffset()
 
-                    BufferGridLines()
+                    'BufferGridLines()
 
                 End If
 
@@ -2099,11 +2130,15 @@ Public Class Form1
                         Camera.Velocity.Y += Camera.Acceleration.Y * 8 * EditorDeltaTime.TotalSeconds
 
                         'Limit decelerate to zero speed.
-                        If Camera.Velocity.Y > 0 Then Camera.Velocity.Y = 0 'Zero speed.
+                        If Camera.Velocity.Y > 0 Then
+
+                            Camera.Velocity.Y = 0 'Zero speed.
+
+                            'BufferGridLines()
+
+                        End If
 
                         UpdateCameraOffset()
-
-                        BufferGridLines()
 
                     End If
 
@@ -2115,11 +2150,15 @@ Public Class Form1
                         Camera.Velocity.Y += -Camera.Acceleration.Y * 8 * EditorDeltaTime.TotalSeconds
 
                         'Limit decelerate to zero speed.
-                        If Camera.Velocity.Y < 0 Then Camera.Velocity.Y = 0 'Zero speed.
+                        If Camera.Velocity.Y < 0 Then
+
+                            Camera.Velocity.Y = 0 'Zero speed.
+
+                            'BufferGridLines()
+
+                        End If
 
                         UpdateCameraOffset()
-
-                        BufferGridLines()
 
                     End If
 
@@ -2347,21 +2386,25 @@ Public Class Form1
 
         With Buffer.Graphics
 
-            Dim RectOffset As Rectangle = Hero.Rect
+            If Hero.Rect.IntersectsWith(Camera.Rect) Then
 
-            RectOffset.Offset(CameraOffset)
+                Dim RectOffset As Rectangle = Hero.Rect
 
-            .FillRectangle(Brushes.Red, RectOffset)
+                RectOffset.Offset(CameraOffset)
 
-            .DrawString("Hero", CWJFont, Brushes.White, RectOffset, AlineCenterMiddle)
+                .FillRectangle(Brushes.Red, RectOffset)
 
-            'Draw hero position
-            .DrawString("X: " & Hero.Position.X.ToString & vbCrLf & "Y: " & Hero.Position.Y.ToString,
+                .DrawString("Hero", CWJFont, Brushes.White, RectOffset, AlineCenterMiddle)
+
+                'Draw hero position
+                .DrawString("X: " & Hero.Position.X.ToString & vbCrLf & "Y: " & Hero.Position.Y.ToString,
                         CWJFont,
                         Brushes.White,
                         RectOffset.X,
                         RectOffset.Y - 50,
                         New StringFormat With {.Alignment = StringAlignment.Near})
+
+            End If
 
         End With
 
@@ -2371,13 +2414,17 @@ Public Class Form1
 
         With Buffer.Graphics
 
-            Dim RectOffset As Rectangle = Spawn.Rect
+            If Spawn.Rect.IntersectsWith(Camera.Rect) Then
 
-            RectOffset.Offset(CameraOffset)
+                Dim RectOffset As Rectangle = Spawn.Rect
 
-            .FillRectangle(SpawnBrush, RectOffset)
+                RectOffset.Offset(CameraOffset)
 
-            .DrawString("Start", SpawnFont, Brushes.White, RectOffset, AlineCenterMiddle)
+                .FillRectangle(SpawnBrush, RectOffset)
+
+                .DrawString("Start", SpawnFont, Brushes.White, RectOffset, AlineCenterMiddle)
+
+            End If
 
         End With
 
@@ -2397,11 +2444,11 @@ Public Class Form1
 
                             If Enemy.Eliminated = False Then
 
-                                Dim RectOffset As Rectangle = Enemy.Rect
+                                If Enemy.Rect.IntersectsWith(Camera.Rect) Then
 
-                                RectOffset.Offset(CameraOffset)
+                                    Dim RectOffset As Rectangle = Enemy.Rect
 
-                                If RectOffset.IntersectsWith(ClientRectangle) Then
+                                    RectOffset.Offset(CameraOffset)
 
                                     .FillRectangle(Brushes.Chocolate, RectOffset)
 
@@ -2416,30 +2463,51 @@ Public Class Form1
                             'Draw Start of Patrol
                             Dim PatrolAOffset As New Rectangle(New Point(Enemy.PatrolA.X, Enemy.PatrolA.Y), New Drawing.Size(GridSize, GridSize))
 
-                            PatrolAOffset.Offset(CameraOffset)
+                            If PatrolAOffset.IntersectsWith(Camera.Rect) Then
 
-                            .FillRectangle(Brushes.Chocolate, PatrolAOffset)
+                                PatrolAOffset.Offset(CameraOffset)
 
-                            .DrawString("E", EnemyFont, Brushes.PaleGoldenrod, PatrolAOffset, AlineCenterMiddle)
+                                .FillRectangle(Brushes.Chocolate, PatrolAOffset)
+
+                                .DrawString("E", EnemyFont, Brushes.PaleGoldenrod, PatrolAOffset, AlineCenterMiddle)
+
+                            End If
+
+
 
 
                             'Draw End of Patrol
                             Dim PatrolBOffset As New Rectangle(New Point(Enemy.PatrolB.X, Enemy.PatrolB.Y), New Drawing.Size(GridSize, GridSize))
 
-                            PatrolBOffset.Offset(CameraOffset)
+                            If PatrolBOffset.IntersectsWith(Camera.Rect) Then
 
-                            .FillRectangle(New SolidBrush(Color.FromArgb(128, Color.Chocolate)), PatrolBOffset)
+                                PatrolBOffset.Offset(CameraOffset)
 
-                            .DrawString("E", EnemyFont, New SolidBrush(Color.FromArgb(128, Color.PaleGoldenrod)), PatrolBOffset, AlineCenterMiddle)
+
+                                .FillRectangle(Brushes.Chocolate, PatrolBOffset)
+
+                                '.FillRectangle(New SolidBrush(Color.FromArgb(128, Color.Chocolate)), PatrolBOffset)
+
+                                .DrawString("E", EnemyFont, Brushes.PaleGoldenrod, PatrolBOffset, AlineCenterMiddle)
+
+                            End If
+
+
 
                             'Draw span of patrol.
                             Dim SpanWidth As Integer = Enemy.PatrolB.X - Enemy.PatrolA.X - GridSize
 
                             Dim SpanOffset As New Rectangle(New Point(Enemy.PatrolA.X + GridSize, Enemy.PatrolA.Y), New Drawing.Size(SpanWidth, GridSize))
 
-                            SpanOffset.Offset(CameraOffset)
+                            If SpanOffset.IntersectsWith(Camera.Rect) Then
 
-                            .FillRectangle(New SolidBrush(Color.FromArgb(128, Color.Chocolate)), SpanOffset)
+                                SpanOffset.Offset(CameraOffset)
+
+                                .FillRectangle(Brushes.PaleGoldenrod, SpanOffset)
+
+                                '.FillRectangle(New SolidBrush(Color.FromArgb(128, Color.Chocolate)), SpanOffset)
+
+                            End If
 
                     End Select
 
@@ -2457,11 +2525,11 @@ Public Class Form1
 
             With Buffer.Graphics
 
-                Dim RectOffset As Rectangle = Goal.Rect
+                If Goal.Rect.IntersectsWith(Camera.Rect) Then
 
-                RectOffset.Offset(CameraOffset)
+                    Dim RectOffset As Rectangle = Goal.Rect
 
-                If RectOffset.IntersectsWith(ClientRectangle) Then
+                    RectOffset.Offset(CameraOffset)
 
                     .FillRectangle(Brushes.White, RectOffset)
 
@@ -2535,55 +2603,71 @@ Public Class Form1
 
                         Case AppState.Playing
 
-                            'Draw portal entrance
-                            Dim PortalEntrance As New Rectangle(New Point(Portal.PatrolA.X, Portal.PatrolA.Y), New Drawing.Size(GridSize, GridSize))
-                            Dim PortalEntranceOffset As Rectangle = PortalEntrance
-                            PortalEntranceOffset.Offset(CameraOffset)
+                            If Portal.Rect.IntersectsWith(Camera.Rect) Then
 
-                            If Hero.Rect.IntersectsWith(PortalEntrance) = True Then
+                                'Draw portal entrance
+                                Dim PortalEntrance As New Rectangle(New Point(Portal.PatrolA.X, Portal.PatrolA.Y), New Drawing.Size(GridSize, GridSize))
+                                Dim PortalEntranceOffset As Rectangle = PortalEntrance
+                                PortalEntranceOffset.Offset(CameraOffset)
 
-                                Dim ControllerHintOffset As Rectangle = PortalEntranceOffset
+                                If Hero.Rect.IntersectsWith(PortalEntrance) = True Then
 
-                                ControllerHintOffset.Offset(16, -40)
-                                ControllerHintOffset.Width = 32
-                                ControllerHintOffset.Height = 32
+                                    Dim ControllerHintOffset As Rectangle = PortalEntranceOffset
 
-                                Dim ControllerHintTextOffset As Rectangle = ControllerHintOffset
+                                    ControllerHintOffset.Offset(16, -40)
+                                    ControllerHintOffset.Width = 32
+                                    ControllerHintOffset.Height = 32
 
-                                .FillRectangle(Brushes.White, ControllerHintOffset)
+                                    Dim ControllerHintTextOffset As Rectangle = ControllerHintOffset
 
-                                .DrawString("é", ControllerHintFontSmall, Brushes.Black, ControllerHintTextOffset, AlineCenterMiddle)
+                                    .FillRectangle(Brushes.White, ControllerHintOffset)
+
+                                    .DrawString("é", ControllerHintFontSmall, Brushes.Black, ControllerHintTextOffset, AlineCenterMiddle)
+
+                                End If
+
+                                DrawPortal(PortalEntranceOffset)
 
                             End If
-
-                            DrawPortal(PortalEntranceOffset)
 
                             'Draw portal exit
                             Dim PortalExitOffset As New Rectangle(New Point(Portal.PatrolB.X, Portal.PatrolB.Y), New Drawing.Size(GridSize, GridSize))
 
-                            PortalExitOffset.Offset(CameraOffset)
+                            If PortalExitOffset.IntersectsWith(Camera.Rect) Then
 
-                            DrawPortalExit(PortalExitOffset)
+                                PortalExitOffset.Offset(CameraOffset)
+
+                                DrawPortalExit(PortalExitOffset)
+
+                            End If
 
                         Case AppState.Editing
 
                             'Draw portal entrance
                             Dim PortalEntranceOffset As New Rectangle(New Point(Portal.PatrolA.X, Portal.PatrolA.Y), New Drawing.Size(GridSize, GridSize))
 
-                            PortalEntranceOffset.Offset(CameraOffset)
+                            If PortalEntranceOffset.IntersectsWith(Camera.Rect) Then
 
-                            DrawPortal(PortalEntranceOffset)
+                                PortalEntranceOffset.Offset(CameraOffset)
 
-                            .DrawString(Array.IndexOf(Portals, Portal).ToString, PortalFont, Brushes.White, PortalEntranceOffset, AlineCenterMiddle)
+                                DrawPortal(PortalEntranceOffset)
+
+                                .DrawString(Array.IndexOf(Portals, Portal).ToString, PortalFont, Brushes.White, PortalEntranceOffset, AlineCenterMiddle)
+
+                            End If
 
                             'Draw portal exit
                             Dim PortalExitOffset As New Rectangle(New Point(Portal.PatrolB.X, Portal.PatrolB.Y), New Drawing.Size(GridSize, GridSize))
 
-                            PortalExitOffset.Offset(CameraOffset)
+                            If PortalExitOffset.IntersectsWith(Camera.Rect) Then
 
-                            DrawPortalExit(PortalExitOffset)
+                                PortalExitOffset.Offset(CameraOffset)
 
-                            .DrawString(Array.IndexOf(Portals, Portal).ToString, PortalFont, Brushes.White, PortalExitOffset, AlineCenterMiddle)
+                                DrawPortalExit(PortalExitOffset)
+
+                                .DrawString(Array.IndexOf(Portals, Portal).ToString, PortalFont, Brushes.White, PortalExitOffset, AlineCenterMiddle)
+
+                            End If
 
                     End Select
 
@@ -2691,13 +2775,17 @@ Public Class Form1
 
                 For Each Backdrop In Backdrops
 
-                    Dim RectOffset As Rectangle = Backdrop.Rect
+                    If Backdrop.Rect.IntersectsWith(Camera.Rect) Then
 
-                    RectOffset.Offset(CameraOffset)
+                        Dim RectOffset As Rectangle = Backdrop.Rect
 
-                    If RectOffset.IntersectsWith(ClientRectangle) Then
+                        RectOffset.Offset(CameraOffset)
 
-                        .FillRectangle(New SolidBrush(Color.FromArgb(Backdrop.Color)), RectOffset)
+                        If RectOffset.IntersectsWith(ClientRectangle) Then
+
+                            .FillRectangle(New SolidBrush(Color.FromArgb(Backdrop.Color)), RectOffset)
+
+                        End If
 
                     End If
 
@@ -2890,19 +2978,20 @@ Public Class Form1
 
                 For Each Block In Blocks
 
-                    Dim RectOffset As Rectangle = Block.Rect
+                    If Block.Rect.IntersectsWith(Camera.Rect) Then
 
-                    RectOffset.Offset(CameraOffset)
+                        Dim RectOffset As Rectangle = Block.Rect
 
-                    If RectOffset.IntersectsWith(ClientRectangle) Then
+                        RectOffset.Offset(CameraOffset)
+
 
                         .FillRectangle(Brushes.Chocolate, RectOffset)
 
                         .DrawLine(Pens.White,
-                                  RectOffset.Right - 1,
-                                  RectOffset.Top + 1,
-                                  RectOffset.Left + 1,
-                                  RectOffset.Top + 1)
+                              RectOffset.Right - 1,
+                              RectOffset.Top + 1,
+                              RectOffset.Left + 1,
+                              RectOffset.Top + 1)
 
                     End If
 
@@ -2962,25 +3051,25 @@ Public Class Form1
 
                 For Each Cloud In Clouds
 
-                    Dim RectOffset As Rectangle = Cloud.Rect
+                    If Cloud.Rect.IntersectsWith(Camera.Rect) Then
 
-                    RectOffset.Offset(CameraOffset)
+                        Dim RectOffset As Rectangle = Cloud.Rect
 
-                    If RectOffset.IntersectsWith(ClientRectangle) Then
+                        RectOffset.Offset(CameraOffset)
 
                         .FillRectangle(Brushes.White, RectOffset)
 
                         .DrawLine(LightSkyBluePen,
-                                  RectOffset.Right - 10,
-                                  RectOffset.Top + 10,
-                                  RectOffset.Right - 10,
-                                  RectOffset.Bottom - 10)
+                              RectOffset.Right - 10,
+                              RectOffset.Top + 10,
+                              RectOffset.Right - 10,
+                              RectOffset.Bottom - 10)
 
                         .DrawLine(LightSkyBluePen,
-                                  RectOffset.Left + 10,
-                                  RectOffset.Bottom - 10,
-                                  RectOffset.Right - 10,
-                                  RectOffset.Bottom - 10)
+                              RectOffset.Left + 10,
+                              RectOffset.Bottom - 10,
+                              RectOffset.Right - 10,
+                              RectOffset.Bottom - 10)
 
                         .DrawRectangle(OutinePen, RectOffset)
 
@@ -3002,25 +3091,15 @@ Public Class Form1
 
                 For Each Bill In Cash
 
-                    Dim RectOffset As Rectangle = Bill.Rect
+                    If Bill.Rect.IntersectsWith(Camera.Rect) Then
 
-                    RectOffset.Offset(CameraOffset)
+                        Dim RectOffset As Rectangle = Bill.Rect
 
-                    Select Case GameState
+                        RectOffset.Offset(CameraOffset)
 
-                        Case AppState.Start
+                        Select Case GameState
 
-                            If Bill.Collected = False Then
-
-                                .FillRectangle(Brushes.Goldenrod, RectOffset)
-
-                                .DrawString("$", BillFont, Brushes.OrangeRed, RectOffset, AlineCenterMiddle)
-
-                            End If
-
-                        Case AppState.Playing
-
-                            If RectOffset.IntersectsWith(ClientRectangle) Then
+                            Case AppState.Start
 
                                 If Bill.Collected = False Then
 
@@ -3030,19 +3109,25 @@ Public Class Form1
 
                                 End If
 
-                            End If
+                            Case AppState.Playing
 
-                        Case AppState.Editing
+                                If Bill.Collected = False Then
 
-                            If RectOffset.IntersectsWith(ClientRectangle) Then
+                                        .FillRectangle(Brushes.Goldenrod, RectOffset)
+
+                                        .DrawString("$", BillFont, Brushes.OrangeRed, RectOffset, AlineCenterMiddle)
+
+                                    End If
+
+                            Case AppState.Editing
 
                                 .FillRectangle(Brushes.Goldenrod, RectOffset)
 
                                 .DrawString("$", BillFont, Brushes.OrangeRed, RectOffset, AlineCenterMiddle)
 
-                            End If
+                        End Select
 
-                    End Select
+                    End If
 
                 Next
 
@@ -5184,7 +5269,9 @@ Public Class Form1
 
         With Buffer.Graphics
 
-            .DrawImageUnscaled(GridLineBitmap, 0, 0)
+            '.DrawImageUnscaled(GridLineBitmap, 0, 0)
+
+            .DrawImage(GridLineBitmap, 0, 0)
 
         End With
 
@@ -5416,7 +5503,7 @@ Public Class Form1
 
         Camera.MaxVelocity = New PointF(2500, 2500)
 
-        Camera.Acceleration = New PointF(400, 300)
+        Camera.Acceleration = New PointF(350, 300)
 
         BufferGridLines()
 
@@ -10174,6 +10261,10 @@ Public Class Form1
     End Sub
 
     Private Sub UpdateCameraOffset()
+
+        Camera.Rect.X = Camera.Position.X
+
+        Camera.Rect.Y = Camera.Position.Y
 
         CameraOffset.X = Camera.Position.X * -1
 

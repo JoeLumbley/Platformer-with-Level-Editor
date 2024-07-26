@@ -9709,6 +9709,8 @@ Public Class Form1
         'When our hero exits the bottom side of the level.
         If Hero.Position.Y > Level.Rect.Bottom Then
 
+            DeathRumble()
+
             ResetCash()
 
             ResurrectEnemies()

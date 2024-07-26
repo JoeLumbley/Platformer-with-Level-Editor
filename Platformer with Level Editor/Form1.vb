@@ -2472,11 +2472,11 @@ Public Class Form1
                                 PatrolBOffset.Offset(CameraOffset)
 
 
-                                .FillRectangle(Brushes.Chocolate, PatrolBOffset)
+                                .FillRectangle(Brushes.PaleGoldenrod, PatrolBOffset)
 
                                 '.FillRectangle(New SolidBrush(Color.FromArgb(128, Color.Chocolate)), PatrolBOffset)
 
-                                .DrawString("E", EnemyFont, Brushes.PaleGoldenrod, PatrolBOffset, AlineCenterMiddle)
+                                .DrawString("E", EnemyFont, Brushes.Chocolate, PatrolBOffset, AlineCenterMiddle)
 
                             End If
 

@@ -3078,7 +3078,9 @@ Public Class Form1
 
                 For Each Bill In Cash
 
+                    'Is the bill in the the frame?
                     If Bill.Rect.IntersectsWith(Camera.Rect) Then
+                        'Yes, the bill is in the frame.
 
                         Dim RectOffset As Rectangle = Bill.Rect
 

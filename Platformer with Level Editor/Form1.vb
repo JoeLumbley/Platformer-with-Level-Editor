@@ -682,6 +682,8 @@ Public Class Form1
 
                 UpdateCamera()
 
+                UpdateCameraOffset()
+
             Case AppState.Editing
 
                 UpdateControllerData()
@@ -691,6 +693,8 @@ Public Class Form1
                 UpdateMousePointerMovement()
 
                 UpdateCameraMovement()
+
+                UpdateCameraOffset()
 
             Case AppState.Clear
 
@@ -986,7 +990,11 @@ Public Class Form1
 
         DrawPortals()
 
-        DrawGridLines()
+        If Camera.Velocity.X = 0 AndAlso Camera.Velocity.Y = 0 Then
+
+            DrawGridLines()
+
+        End If
 
         DrawSelectionAndSizingHandle()
 
@@ -1914,7 +1922,7 @@ Public Class Form1
                     'Limit camera velocity to the max.
                     If Camera.Velocity.X < -Camera.MaxVelocity.X Then Camera.Velocity.X = -Camera.MaxVelocity.X
 
-                    UpdateCameraOffset()
+                    'UpdateCameraOffset()
 
                     'BufferGridLines()
 
@@ -1954,7 +1962,7 @@ Public Class Form1
                     'Limit camera velocity to the max.
                     If Camera.Velocity.X > Camera.MaxVelocity.X Then Camera.Velocity.X = Camera.MaxVelocity.X
 
-                    UpdateCameraOffset()
+                    'UpdateCameraOffset()
 
                     'BufferGridLines()
 
@@ -1993,7 +2001,7 @@ Public Class Form1
 
                         'BufferGridLines()
 
-                        UpdateCameraOffset()
+                        'UpdateCameraOffset()
 
                     End If
 
@@ -2011,7 +2019,7 @@ Public Class Form1
 
                         'BufferGridLines()
 
-                        UpdateCameraOffset()
+                        'UpdateCameraOffset()
 
                     End If
 
@@ -2044,7 +2052,7 @@ Public Class Form1
                     'Limit camera velocity to the max.
                     If Camera.Velocity.Y > Camera.MaxVelocity.Y Then Camera.Velocity.Y = Camera.MaxVelocity.Y
 
-                    UpdateCameraOffset()
+                    'UpdateCameraOffset()
 
                     'BufferGridLines()
 
@@ -2084,7 +2092,7 @@ Public Class Form1
                     'Limit camera velocity to the max.
                     If Camera.Velocity.Y < -Camera.MaxVelocity.Y Then Camera.Velocity.Y = -Camera.MaxVelocity.Y
 
-                    UpdateCameraOffset()
+                    'UpdateCameraOffset()
 
                     'BufferGridLines()
 
@@ -2125,7 +2133,7 @@ Public Class Form1
 
                         End If
 
-                        UpdateCameraOffset()
+                        'UpdateCameraOffset()
 
                     End If
 
@@ -2145,7 +2153,7 @@ Public Class Form1
 
                         End If
 
-                        UpdateCameraOffset()
+                        'UpdateCameraOffset()
 
                     End If
 
@@ -2207,6 +2215,7 @@ Public Class Form1
         'Displacement = Velocity x Delta Time
 
         Camera.Rect.Y = Math.Round(Camera.Position.Y)
+
 
     End Sub
 
@@ -5459,9 +5468,9 @@ Public Class Form1
 
         Camera.Velocity = New PointF(0, 0)
 
-        Camera.MaxVelocity = New PointF(2500, 2500)
+        Camera.MaxVelocity = New PointF(1500, 1500)
 
-        Camera.Acceleration = New PointF(350, 300)
+        Camera.Acceleration = New PointF(300, 300)
 
         BufferGridLines()
 
@@ -7927,9 +7936,9 @@ Public Class Form1
 
                         MoveCameraRight()
 
-                        UpdateCameraOffset()
+                        'UpdateCameraOffset()
 
-                        BufferGridLines()
+                        'BufferGridLines()
 
                     Else
 
@@ -7957,9 +7966,9 @@ Public Class Form1
 
                         MoveCameraLeft()
 
-                        UpdateCameraOffset()
+                        'UpdateCameraOffset()
 
-                        BufferGridLines()
+                        'BufferGridLines()
 
                     Else
 
@@ -7985,9 +7994,9 @@ Public Class Form1
 
                         MoveCameraUp()
 
-                        UpdateCameraOffset()
+                        'UpdateCameraOffset()
 
-                        BufferGridLines()
+                        'BufferGridLines()
 
                     Else
 
@@ -8013,9 +8022,9 @@ Public Class Form1
 
                         MoveCameraDown()
 
-                        UpdateCameraOffset()
+                        'UpdateCameraOffset()
 
-                        BufferGridLines()
+                        'BufferGridLines()
 
                     Else
 
@@ -8574,9 +8583,9 @@ Public Class Form1
                             'Stop Camera
                             Camera.Velocity.X = 0 'Zero speed.
 
-                            UpdateCameraOffset()
+                            'UpdateCameraOffset()
 
-                            BufferGridLines()
+                            'BufferGridLines()
 
                         End If
 
@@ -8615,9 +8624,9 @@ Public Class Form1
                             'Stop Camera
                             Camera.Velocity.X = 0 'Zero speed.
 
-                            UpdateCameraOffset()
+                            'UpdateCameraOffset()
 
-                            BufferGridLines()
+                            'BufferGridLines()
 
                         End If
 
@@ -8659,9 +8668,9 @@ Public Class Form1
                             'Stop Camera
                             Camera.Velocity.Y = 0 'Zero speed.
 
-                            UpdateCameraOffset()
+                            'UpdateCameraOffset()
 
-                            BufferGridLines()
+                            'BufferGridLines()
 
                         End If
 
@@ -8703,9 +8712,9 @@ Public Class Form1
                             'Stop Camera
                             Camera.Velocity.Y = 0 'Zero speed.
 
-                            UpdateCameraOffset()
+                            'UpdateCameraOffset()
 
-                            BufferGridLines()
+                            'BufferGridLines()
 
                         End If
 
@@ -10129,7 +10138,7 @@ Public Class Form1
             Camera.Position.X = Hero.Rect.Left - Camera.Rect.Width / 1.5
             'Camera.X = Hero.Left - Camera.Width / 1.5
 
-            UpdateCameraOffset()
+            'UpdateCameraOffset()
 
         End If
 
@@ -10142,7 +10151,7 @@ Public Class Form1
             Camera.Position.X = Hero.Rect.Left - Camera.Rect.Width / 4
             'Camera.X = Hero.Left - Camera.Width / 4
 
-            UpdateCameraOffset()
+            'UpdateCameraOffset()
 
         End If
 
@@ -10155,7 +10164,7 @@ Public Class Form1
             Camera.Position.Y = Hero.Rect.Top - Camera.Rect.Height / 1.25
             'Camera.Y = Hero.Top - Camera.Height / 1.25
 
-            UpdateCameraOffset()
+            'UpdateCameraOffset()
 
         End If
 
@@ -10166,7 +10175,7 @@ Public Class Form1
             'Move camera up.
             Camera.Position.Y = Hero.Rect.Top - Camera.Rect.Height / 6
 
-            UpdateCameraOffset()
+            'UpdateCameraOffset()
 
         End If
 
@@ -10181,7 +10190,7 @@ Public Class Form1
             'Limit the camera movement to the left side of the level.
             Camera.Position.X = Level.Rect.Left
 
-            UpdateCameraOffset()
+            'UpdateCameraOffset()
 
         End If
 
@@ -10192,7 +10201,7 @@ Public Class Form1
             'Limit the camera movement to the right side of the level.
             Camera.Position.X = Level.Rect.Right - Camera.Rect.Width
 
-            UpdateCameraOffset()
+            'UpdateCameraOffset()
 
         End If
 
@@ -10203,7 +10212,7 @@ Public Class Form1
             'Limit camera movement to the top side of the level.
             Camera.Position.Y = Level.Rect.Top
 
-            UpdateCameraOffset()
+            'UpdateCameraOffset()
 
         End If
 
@@ -10214,7 +10223,7 @@ Public Class Form1
             'Limit camera movement to the bottom of the level.
             Camera.Position.Y = Level.Rect.Bottom - Camera.Rect.Height
 
-            UpdateCameraOffset()
+            'UpdateCameraOffset()
 
         End If
 

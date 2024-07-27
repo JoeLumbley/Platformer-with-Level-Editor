@@ -2998,7 +2998,7 @@ Public Class Form1
 
                 For Each Bush In Bushes
 
-                    If Bush.Rect.IntersectsWith(ClientRectangle) Then
+                    If Bush.Rect.IntersectsWith(Camera.Rect) Then
 
                         Dim RectOffset As Rectangle = Bush.Rect
 
@@ -3300,48 +3300,7 @@ Public Class Form1
 
                     Case Tools.Portal
 
-
-
                         DrawPortal(RectOffset)
-
-
-
-
-
-                        '.FillRectangle(Brushes.Indigo, RectOffset)
-
-                        '' Define the rectangle to be filled
-                        'Dim rect As RectangleF = RectOffset
-
-                        'rect.Inflate(rect.Width / 6.4F, rect.Height / 6.4F)
-
-                        '' Define the center point of the gradient
-                        'Dim center As New PointF(rect.Left + rect.Width / 2.0F, rect.Top + rect.Height / 2.0F)
-
-                        '' Define the colors for the gradient stops
-                        'Dim colors() As Color = {Color.Cyan, Color.Indigo}
-
-                        '' Create the path for the gradient brush
-                        'Dim GradPath As New GraphicsPath()
-                        'GradPath.AddEllipse(rect)
-
-                        '' Create the gradient brush
-                        'Dim GradBrush As New PathGradientBrush(GradPath) With
-                        '    {.CenterPoint = center,
-                        '    .CenterColor = colors(0),
-                        '    .SurroundColors = New Color() {colors(1)}}
-
-                        '.FillRectangle(GradBrush, RectOffset)
-
-                        'Dim DoorWay As Rectangle
-
-                        'DoorWay.X = RectOffset.X + 20
-                        'DoorWay.Y = RectOffset.Y + 8
-
-                        'DoorWay.Width = 26
-                        'DoorWay.Height = 48
-
-                        '.FillRectangle(Brushes.Black, DoorWay)
 
                 End Select
 

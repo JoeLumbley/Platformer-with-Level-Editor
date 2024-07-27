@@ -34,7 +34,6 @@ Imports System.Drawing.Drawing2D
 Imports System.IO
 Imports System.Numerics
 Imports System.Runtime.InteropServices
-Imports System.Security.Cryptography
 Imports System.Text
 Imports System.Threading
 

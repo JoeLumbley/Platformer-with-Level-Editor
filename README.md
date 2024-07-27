@@ -5,8 +5,8 @@
 **"Platformer with Level Editor"** is a powerful tool for aspiring game developers. By delving into the source code and project structure of a platformer game with a level editor, you can gain hands-on experience and valuable insights to create your own games.
 
 
-![149](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/0317ae8d-5a44-4c5d-8222-fd28b6a19130)
 
+![157](https://github.com/user-attachments/assets/9de96926-cd97-48c8-97f8-6cdc9b1c9280)
 
 The key things you can expect to explore with this learning tool are:
 
@@ -17,16 +17,16 @@ Understanding the inner workings of a game is crucial. With this tool, you’ll 
 Game development relies on common programming patterns. Structured programming helps organize code into manageable pieces, and event handling ensures your game responds to player actions (like jumping or shooting).
 
 
-![150](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/fa5f58d0-4c7d-4767-8464-0a552771b2b8)
+![156](https://github.com/user-attachments/assets/9c2041a4-69bb-4b08-b980-ee4c16f44d1e)
 
 
 #### 3. Level Design
 The level editor is your canvas. Learn how to create captivating levels, store them efficiently, and load them seamlessly during gameplay. Level design impacts player experience, so it’s a critical skill.
 
 
-![151](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/4123e099-7678-4bdc-b418-a1c646ea01ad)
 
 
+![158](https://github.com/user-attachments/assets/55c30e0f-78aa-419c-886f-757cabb327d6)
 
 
 #### 4. Sound Integration
@@ -63,7 +63,7 @@ Visual Studio is an Integrated Development Environment (IDE) created by Microsof
 
 It is a powerful software development tool that provides a comprehensive set of features and tools for building a wide range of applications.
 
-This the IDE I use to make "Platformer with Level Editor" and I'm recommend that you use.
+This is the IDE I use to make "Platformer with Level Editor" and I'm recommend that you use.
 
 Visual Studio Community is a free version of the IDE for individual developers, small teams, and open-source projects.
 

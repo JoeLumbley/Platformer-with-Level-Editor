@@ -5264,33 +5264,15 @@ Public Class Form1
 
         With Buffer.Graphics
 
-            '' Draw vertical lines  |
-            'For x As Integer = CameraOffset.X To CameraOffset.X + Level.Rect.Width Step GridSize
-
-            '    Buffer.Graphics.DrawLine(Pens.Gray, x, CameraOffset.Y, x, CameraOffset.Y + Level.Rect.Height)
-
-            'Next
-
             If Gridlines IsNot Nothing Then
-
 
                 For Each line In Gridlines
 
                     Buffer.Graphics.DrawLine(Pens.Gray, line.X1, line.Y1, line.X2, line.Y2)
 
-
                 Next
 
             End If
-
-
-
-            ' Draw horizontal lines ---
-            'For y As Integer = CameraOffset.Y To CameraOffset.Y + Level.Rect.Height Step GridSize
-
-            '    Buffer.Graphics.DrawLine(Pens.Gray, CameraOffset.X, y, CameraOffset.X + Level.Rect.Width, y)
-
-            'Next
 
         End With
 

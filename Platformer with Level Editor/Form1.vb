@@ -3102,11 +3102,11 @@ Public Class Form1
 
                                 If Bill.Collected = False Then
 
-                                        .FillRectangle(Brushes.Goldenrod, RectOffset)
+                                    .FillRectangle(Brushes.Goldenrod, RectOffset)
 
-                                        .DrawString("$", BillFont, Brushes.OrangeRed, RectOffset, AlineCenterMiddle)
+                                    .DrawString("$", BillFont, Brushes.OrangeRed, RectOffset, AlineCenterMiddle)
 
-                                    End If
+                                End If
 
                             Case AppState.Editing
 

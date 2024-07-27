@@ -2998,11 +2998,11 @@ Public Class Form1
 
                 For Each Bush In Bushes
 
-                    Dim RectOffset As Rectangle = Bush.Rect
+                    If Bush.Rect.IntersectsWith(ClientRectangle) Then
 
-                    RectOffset.Offset(CameraOffset)
+                        Dim RectOffset As Rectangle = Bush.Rect
 
-                    If RectOffset.IntersectsWith(ClientRectangle) Then
+                        RectOffset.Offset(CameraOffset)
 
                         .FillRectangle(Brushes.GreenYellow, RectOffset)
 

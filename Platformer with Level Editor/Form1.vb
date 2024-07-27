@@ -5260,6 +5260,26 @@ Public Class Form1
 
     End Sub
 
+    Private Sub UpdateGridLines()
+
+        Gridlines = Nothing
+
+        'Update vertical lines  |
+        For x As Integer = CameraOffset.X To CameraOffset.X + Level.Rect.Width Step GridSize
+
+            AddGridLine(x, CameraOffset.Y, x, CameraOffset.Y + Level.Rect.Height)
+
+        Next
+
+        'Update horizontal lines ---
+        For y As Integer = CameraOffset.Y To CameraOffset.Y + Level.Rect.Height Step GridSize
+
+            AddGridLine(CameraOffset.X, y, CameraOffset.X + Level.Rect.Width, y)
+
+        Next
+
+    End Sub
+
     Private Sub DrawGridLines()
 
         With Buffer.Graphics
@@ -5277,41 +5297,6 @@ Public Class Form1
         End With
 
     End Sub
-
-    Private Sub UpdateGridLines()
-
-        Gridlines = Nothing
-
-        ' Draw vertical lines  |
-        For x As Integer = CameraOffset.X To CameraOffset.X + Level.Rect.Width Step GridSize
-
-            AddGridLine(x, CameraOffset.Y, x, CameraOffset.Y + Level.Rect.Height)
-
-
-            'Buffer.Graphics.DrawLine(Pens.Gray, x, CameraOffset.Y, x, CameraOffset.Y + Level.Rect.Height)
-
-            'TODO
-
-            'Gridlines.X1 = x
-            'Gridlines.Y1 = CameraOffset.Y
-            'Gridlines.X2 = x
-            'Gridlines.Y2 = CameraOffset.Y + Level.Rect.Height
-
-        Next
-
-        ' Draw horizontal lines ---
-        For y As Integer = CameraOffset.Y To CameraOffset.Y + Level.Rect.Height Step GridSize
-
-            AddGridLine(CameraOffset.X, y, CameraOffset.X + Level.Rect.Width, y)
-
-        Next
-
-    End Sub
-
-
-
-
-
 
     Private Sub BufferGridLines()
 

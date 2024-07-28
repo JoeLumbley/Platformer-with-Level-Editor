@@ -2398,6 +2398,8 @@ Public Class Form1
 
             If Hero.Rect.IntersectsWith(Camera.Rect) Then
 
+                .SmoothingMode = SmoothingMode.None
+
                 Dim RectOffset As Rectangle = Hero.Rect
 
                 RectOffset.Offset(CameraOffset)
@@ -2414,6 +2416,8 @@ Public Class Form1
                         RectOffset.Y - 50,
                         New StringFormat With {.Alignment = StringAlignment.Near})
 
+                .SmoothingMode = SmoothingMode.AntiAlias
+
             End If
 
         End With
@@ -2426,6 +2430,8 @@ Public Class Form1
 
             If Spawn.Rect.IntersectsWith(Camera.Rect) Then
 
+                .SmoothingMode = SmoothingMode.None
+
                 Dim RectOffset As Rectangle = Spawn.Rect
 
                 RectOffset.Offset(CameraOffset)
@@ -2433,6 +2439,8 @@ Public Class Form1
                 .FillRectangle(SpawnBrush, RectOffset)
 
                 .DrawString("Start", SpawnFont, Brushes.White, RectOffset, AlineCenterMiddle)
+
+                .SmoothingMode = SmoothingMode.AntiAlias
 
             End If
 
@@ -2445,6 +2453,8 @@ Public Class Form1
         With Buffer.Graphics
 
             If Enemies IsNot Nothing Then
+
+                .SmoothingMode = SmoothingMode.None
 
                 For Each Enemy In Enemies
 
@@ -2523,6 +2533,8 @@ Public Class Form1
 
                 Next
 
+                .SmoothingMode = SmoothingMode.AntiAlias
+
             End If
 
         End With
@@ -2536,6 +2548,8 @@ Public Class Form1
             With Buffer.Graphics
 
                 If Goal.Rect.IntersectsWith(Camera.Rect) Then
+
+                    .SmoothingMode = SmoothingMode.None
 
                     Dim RectOffset As Rectangle = Goal.Rect
 
@@ -2589,6 +2603,8 @@ Public Class Form1
 
                     End If
 
+                    .SmoothingMode = SmoothingMode.AntiAlias
+
                 End If
 
             End With
@@ -2602,6 +2618,8 @@ Public Class Form1
         With Buffer.Graphics
 
             If Portals IsNot Nothing Then
+
+                .SmoothingMode = SmoothingMode.None
 
                 For Each Portal In Portals
 
@@ -2683,6 +2701,8 @@ Public Class Form1
 
                 Next
 
+                .SmoothingMode = SmoothingMode.AntiAlias
+
             End If
 
         End With
@@ -2692,6 +2712,8 @@ Public Class Form1
     Private Sub DrawPortal(Rect As Rectangle)
 
         With Buffer.Graphics
+
+            .SmoothingMode = SmoothingMode.None
 
             .FillRectangle(Brushes.Indigo, Rect)
 
@@ -2729,6 +2751,8 @@ Public Class Form1
 
             .FillRectangle(Brushes.Black, DoorWay)
 
+            .SmoothingMode = SmoothingMode.AntiAlias
+
         End With
 
     End Sub
@@ -2736,6 +2760,8 @@ Public Class Form1
     Private Sub DrawPortalExit(Rect As Rectangle)
 
         With Buffer.Graphics
+
+            .SmoothingMode = SmoothingMode.None
 
             .FillRectangle(Brushes.Indigo, Rect)
 
@@ -2773,6 +2799,8 @@ Public Class Form1
 
             .FillRectangle(Brushes.Black, DoorWay)
 
+            .SmoothingMode = SmoothingMode.AntiAlias
+
         End With
 
     End Sub
@@ -2782,6 +2810,8 @@ Public Class Form1
         With Buffer.Graphics
 
             If Backdrops IsNot Nothing Then
+
+                .SmoothingMode = SmoothingMode.None
 
                 For Each Backdrop In Backdrops
 
@@ -2800,6 +2830,8 @@ Public Class Form1
                     End If
 
                 Next
+
+                .SmoothingMode = SmoothingMode.AntiAlias
 
             End If
 
@@ -2986,6 +3018,8 @@ Public Class Form1
 
             If Blocks IsNot Nothing Then
 
+                .SmoothingMode = SmoothingMode.None
+
                 For Each Block In Blocks
 
                     If Block.Rect.IntersectsWith(Camera.Rect) Then
@@ -3007,6 +3041,8 @@ Public Class Form1
 
                 Next
 
+                .SmoothingMode = SmoothingMode.AntiAlias
+
             End If
 
         End With
@@ -3018,6 +3054,8 @@ Public Class Form1
         With Buffer.Graphics
 
             If Bushes IsNot Nothing Then
+
+                .SmoothingMode = SmoothingMode.None
 
                 For Each Bush In Bushes
 
@@ -3047,6 +3085,8 @@ Public Class Form1
 
                 Next
 
+                .SmoothingMode = SmoothingMode.AntiAlias
+
             End If
 
         End With
@@ -3058,6 +3098,8 @@ Public Class Form1
         With Buffer.Graphics
 
             If Clouds IsNot Nothing Then
+
+                .SmoothingMode = SmoothingMode.None
 
                 For Each Cloud In Clouds
 
@@ -3087,6 +3129,8 @@ Public Class Form1
 
                 Next
 
+                .SmoothingMode = SmoothingMode.AntiAlias
+
             End If
 
         End With
@@ -3098,6 +3142,8 @@ Public Class Form1
         With Buffer.Graphics
 
             If Cash IsNot Nothing Then
+
+                .SmoothingMode = SmoothingMode.None
 
                 For Each Bill In Cash
 
@@ -3142,6 +3188,8 @@ Public Class Form1
                     End If
 
                 Next
+
+                .SmoothingMode = SmoothingMode.AntiAlias
 
             End If
 
@@ -5254,7 +5302,11 @@ Public Class Form1
 
         With Buffer.Graphics
 
+            .SmoothingMode = SmoothingMode.None
+
             .Clear(Color)
+
+            .SmoothingMode = SmoothingMode.AntiAlias
 
         End With
 
@@ -5264,19 +5316,92 @@ Public Class Form1
 
         Gridlines = Nothing
 
-        'Update vertical lines  |
-        For x As Integer = CameraOffset.X To CameraOffset.X + Level.Rect.Width Step GridSize
+        'Dim DistanceToEndOfLevel As Integer = Level.Rect.Right - Camera.Rect.X
 
-            AddGridLine(x, CameraOffset.Y, x, CameraOffset.Y + Level.Rect.Height)
+        'If Camera.Rect.Right > Level.Rect.Right Then
+
+        '    'Update horizontal lines ---
+        '    For y As Integer = CameraOffset.Y To CameraOffset.Y + Level.Rect.Height Step GridSize
+
+        '        AddGridLine(CameraOffset.X, y, CameraOffset.X + Level.Rect.Right, y)
+
+        '    Next
+
+        'Else
+
+        '    'Update horizontal lines ---
+        '    For y As Integer = CameraOffset.Y To CameraOffset.Y + Level.Rect.Height Step GridSize
+
+        '        AddGridLine(CameraOffset.X, y, CameraOffset.X + Camera.Rect.Right, y)
+
+        '    Next
+
+        'End If
+
+
+
+        ''Update vertical lines  |
+        'For x As Integer = CameraOffset.X To CameraOffset.X + Level.Rect.Width Step GridSize
+
+        '    If x >= CameraOffset.X AndAlso x <= CameraOffset.X + Camera.Rect.Width Then
+
+        '        AddGridLine(x, CameraOffset.Y, x, CameraOffset.Y + Level.Rect.Height)
+
+        '    End If
+
+        'Next
+
+
+
+
+        For x As Integer = 0 To Level.Rect.Width Step GridSize
+
+            If x >= Camera.Rect.Left AndAlso x <= Camera.Rect.Right Then
+
+                AddGridLine(x, 0, x, Level.Rect.Height)
+
+
+            End If
+
 
         Next
+
 
         'Update horizontal lines ---
-        For y As Integer = CameraOffset.Y To CameraOffset.Y + Level.Rect.Height Step GridSize
+        For y As Integer = 0 To Level.Rect.Height Step GridSize
 
-            AddGridLine(CameraOffset.X, y, CameraOffset.X + Level.Rect.Width, y)
+            If y >= Camera.Rect.Top AndAlso y <= Camera.Rect.Bottom Then
+
+                AddGridLine(0, y, Level.Rect.Width, y)
+
+            End If
 
         Next
+
+        ''Update vertical lines  |
+        'For x As Integer = CameraOffset.X To CameraOffset.X + Level.Rect.Width Step GridSize
+
+        '    AddGridLine(x, CameraOffset.Y, x, CameraOffset.Y + Level.Rect.Height)
+
+        'Next
+
+        ''Update horizontal lines ---
+        'For y As Integer = CameraOffset.Y To CameraOffset.Y + Level.Rect.Height Step GridSize
+
+        '    AddGridLine(CameraOffset.X, y, CameraOffset.X + Level.Rect.Width, y)
+
+        'Next
+
+        'If Gridlines IsNot Nothing Then
+
+        '    Text = Gridlines.Length.ToString
+
+        'Else
+
+        '    Text = 0
+
+        'End If
+
 
     End Sub
 
@@ -5286,11 +5411,22 @@ Public Class Form1
 
             If Gridlines IsNot Nothing Then
 
+                .SmoothingMode = SmoothingMode.None
+
+                Dim OffsetLine As Line
+
                 For Each line In Gridlines
 
-                    Buffer.Graphics.DrawLine(Pens.Gray, line.X1, line.Y1, line.X2, line.Y2)
+                    OffsetLine.X1 = line.X1 + Camera.Position.X * -1
+                    OffsetLine.Y1 = line.Y1 + Camera.Position.Y * -1
+                    OffsetLine.X2 = line.X2 + Camera.Position.X * -1
+                    OffsetLine.Y2 = line.Y2 + Camera.Position.Y * -1
+
+                    Buffer.Graphics.DrawLine(Pens.Gray, OffsetLine.X1, OffsetLine.Y1, OffsetLine.X2, OffsetLine.Y2)
 
                 Next
+
+                .SmoothingMode = SmoothingMode.AntiAlias
 
             End If
 

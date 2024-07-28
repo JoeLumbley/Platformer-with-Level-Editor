@@ -2493,9 +2493,6 @@ Public Class Form1
 
                             End If
 
-
-
-
                             'Draw End of Patrol
                             Dim PatrolBOffset As New Rectangle(New Point(Enemy.PatrolB.X, Enemy.PatrolB.Y), New Drawing.Size(GridSize, GridSize))
 
@@ -2511,8 +2508,6 @@ Public Class Form1
                                 .DrawString("E", EnemyFont, Brushes.Chocolate, PatrolBOffset, AlineCenterMiddle)
 
                             End If
-
-
 
                             'Draw span of patrol.
                             Dim SpanWidth As Integer = Enemy.PatrolB.X - Enemy.PatrolA.X - GridSize
@@ -5316,58 +5311,18 @@ Public Class Form1
 
         Gridlines = Nothing
 
-        'Dim DistanceToEndOfLevel As Integer = Level.Rect.Right - Camera.Rect.X
-
-        'If Camera.Rect.Right > Level.Rect.Right Then
-
-        '    'Update horizontal lines ---
-        '    For y As Integer = CameraOffset.Y To CameraOffset.Y + Level.Rect.Height Step GridSize
-
-        '        AddGridLine(CameraOffset.X, y, CameraOffset.X + Level.Rect.Right, y)
-
-        '    Next
-
-        'Else
-
-        '    'Update horizontal lines ---
-        '    For y As Integer = CameraOffset.Y To CameraOffset.Y + Level.Rect.Height Step GridSize
-
-        '        AddGridLine(CameraOffset.X, y, CameraOffset.X + Camera.Rect.Right, y)
-
-        '    Next
-
-        'End If
-
-
-
-        ''Update vertical lines  |
-        'For x As Integer = CameraOffset.X To CameraOffset.X + Level.Rect.Width Step GridSize
-
-        '    If x >= CameraOffset.X AndAlso x <= CameraOffset.X + Camera.Rect.Width Then
-
-        '        AddGridLine(x, CameraOffset.Y, x, CameraOffset.Y + Level.Rect.Height)
-
-        '    End If
-
-        'Next
-
-
-
-
+        'Update vertical grid lines  |
         For x As Integer = 0 To Level.Rect.Width Step GridSize
 
             If x >= Camera.Rect.Left AndAlso x <= Camera.Rect.Right Then
 
                 AddGridLine(x, 0, x, Level.Rect.Height)
 
-
             End If
-
 
         Next
 
-
-        'Update horizontal lines ---
+        'Update horizontal grid lines ---
         For y As Integer = 0 To Level.Rect.Height Step GridSize
 
             If y >= Camera.Rect.Top AndAlso y <= Camera.Rect.Bottom Then
@@ -5377,31 +5332,6 @@ Public Class Form1
             End If
 
         Next
-
-        ''Update vertical lines  |
-        'For x As Integer = CameraOffset.X To CameraOffset.X + Level.Rect.Width Step GridSize
-
-        '    AddGridLine(x, CameraOffset.Y, x, CameraOffset.Y + Level.Rect.Height)
-
-        'Next
-
-        ''Update horizontal lines ---
-        'For y As Integer = CameraOffset.Y To CameraOffset.Y + Level.Rect.Height Step GridSize
-
-        '    AddGridLine(CameraOffset.X, y, CameraOffset.X + Level.Rect.Width, y)
-
-        'Next
-
-        'If Gridlines IsNot Nothing Then
-
-        '    Text = Gridlines.Length.ToString
-
-        'Else
-
-        '    Text = 0
-
-        'End If
-
 
     End Sub
 

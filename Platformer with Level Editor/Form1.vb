@@ -635,9 +635,6 @@ Public Class Form1
 
     Private GridLinesOutlinePen As New Pen(Color.Black, 1)
 
-    'Private GridLinesOutlinePen As New Pen(Color.Black, 1)
-
-
     Private GridLinesDashPen As New Pen(Color.Gray, 1) With {
                         .DashCap = DashCap.Flat,
                         .DashPattern = New Single() {32.0F, 32.0F}
@@ -651,10 +648,7 @@ Public Class Form1
 
     End Structure
 
-
-
     Private Gridlines() As Line
-
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 

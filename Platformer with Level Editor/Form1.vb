@@ -998,11 +998,7 @@ Public Class Form1
 
         DrawPortals()
 
-        'If Camera.Velocity.X = 0 AndAlso Camera.Velocity.Y = 0 Then
-
         DrawGridLines()
-
-        'End If
 
         DrawSelectionAndSizingHandle()
 

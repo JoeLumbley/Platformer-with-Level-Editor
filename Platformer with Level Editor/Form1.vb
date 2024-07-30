@@ -3017,9 +3017,9 @@ Public Class Form1
                         .FillRectangle(Brushes.Chocolate, RectOffset)
 
                         .DrawLine(Pens.White,
-                              RectOffset.Right - 1,
+                              RectOffset.Right,
                               RectOffset.Top + 1,
-                              RectOffset.Left + 1,
+                              RectOffset.Left,
                               RectOffset.Top + 1)
 
                     End If

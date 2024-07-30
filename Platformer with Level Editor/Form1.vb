@@ -5578,9 +5578,9 @@ Public Class Form1
 
         Camera.Velocity = New PointF(0, 0)
 
-        Camera.MaxVelocity = New PointF(1700, 1500)
+        Camera.MaxVelocity = New PointF(2500, 2500)
 
-        Camera.Acceleration = New PointF(400, 300)
+        Camera.Acceleration = New PointF(700, 700)
 
         BufferGridLines()
 

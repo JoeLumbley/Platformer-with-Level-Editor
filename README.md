@@ -63,7 +63,7 @@ Visual Studio is an Integrated Development Environment (IDE) created by Microsof
 
 It is a powerful software development tool that provides a comprehensive set of features and tools for building a wide range of applications.
 
-This is the IDE I use to make "Platformer with Level Editor" and I'm recommend that you use.
+This is the IDE I use to make "Platformer with Level Editor" and I recommend that you use.
 
 Visual Studio Community is a free version of the IDE for individual developers, small teams, and open-source projects.
 

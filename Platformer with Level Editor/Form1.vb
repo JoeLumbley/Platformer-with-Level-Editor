@@ -729,16 +729,12 @@ Public Class Form1
         'Use these settings when drawing to the backbuffer.
         With Buffer.Graphics
 
-            'Bug Fix
-            .CompositingMode = Drawing2D.CompositingMode.SourceOver 'Don't Change.
-            'To fix draw string error with anti aliasing: "Parameters not valid."
-            'Set the compositing mode to source over.
-
+            .CompositingMode = CompositingMode.SourceCopy
+            .CompositingQuality = CompositingQuality.HighSpeed
             .TextRenderingHint = Drawing.Text.TextRenderingHint.AntiAliasGridFit
-            .SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
-            .CompositingQuality = Drawing2D.CompositingQuality.HighQuality
-            .InterpolationMode = Drawing2D.InterpolationMode.Bilinear
-            .PixelOffsetMode = Drawing2D.PixelOffsetMode.HighQuality
+            .PixelOffsetMode = PixelOffsetMode.None
+            .SmoothingMode = SmoothingMode.None
+            .InterpolationMode = InterpolationMode.Bilinear
 
         End With
 
@@ -2388,11 +2384,17 @@ Public Class Form1
 
             If Hero.Rect.IntersectsWith(Camera.Rect) Then
 
-                .SmoothingMode = SmoothingMode.None
-
                 Dim RectOffset As Rectangle = Hero.Rect
 
                 RectOffset.Offset(CameraOffset)
+
+                'Bug Fix Don't Change.
+                .CompositingMode = CompositingMode.SourceOver
+                'To fix draw string error with anti aliasing: "Parameters not valid."
+                'Set the compositing mode to source over.
+
+                .CompositingQuality = CompositingQuality.HighQuality
+                .PixelOffsetMode = PixelOffsetMode.HighQuality
 
                 .FillRectangle(Brushes.Red, RectOffset)
 
@@ -2406,7 +2408,9 @@ Public Class Form1
                         RectOffset.Y - 50,
                         New StringFormat With {.Alignment = StringAlignment.Near})
 
-                .SmoothingMode = SmoothingMode.AntiAlias
+                .CompositingMode = CompositingMode.SourceCopy
+                .CompositingQuality = CompositingQuality.HighSpeed
+                .PixelOffsetMode = PixelOffsetMode.None
 
             End If
 
@@ -2420,7 +2424,13 @@ Public Class Form1
 
             If Spawn.Rect.IntersectsWith(Camera.Rect) Then
 
-                .SmoothingMode = SmoothingMode.None
+                'Bug Fix Don't Change.
+                .CompositingMode = CompositingMode.SourceOver
+                'To fix draw string error with anti aliasing: "Parameters not valid."
+                'Set the compositing mode to source over.
+
+                .CompositingQuality = CompositingQuality.HighQuality
+                .PixelOffsetMode = PixelOffsetMode.HighQuality
 
                 Dim RectOffset As Rectangle = Spawn.Rect
 
@@ -2430,7 +2440,9 @@ Public Class Form1
 
                 .DrawString("Start", SpawnFont, Brushes.White, RectOffset, AlineCenterMiddle)
 
-                .SmoothingMode = SmoothingMode.AntiAlias
+                .CompositingMode = CompositingMode.SourceCopy
+                .CompositingQuality = CompositingQuality.HighSpeed
+                .PixelOffsetMode = PixelOffsetMode.None
 
             End If
 
@@ -2444,7 +2456,10 @@ Public Class Form1
 
             If Enemies IsNot Nothing Then
 
-                .SmoothingMode = SmoothingMode.None
+                'Bug Fix Don't Change.
+                .CompositingMode = CompositingMode.SourceOver
+                'To fix draw string error with anti aliasing: "Parameters not valid."
+                'Set the compositing mode to source over.
 
                 For Each Enemy In Enemies
 
@@ -2490,7 +2505,6 @@ Public Class Form1
 
                                 PatrolBOffset.Offset(CameraOffset)
 
-
                                 .FillRectangle(Brushes.PaleGoldenrod, PatrolBOffset)
 
                                 '.FillRectangle(New SolidBrush(Color.FromArgb(128, Color.Chocolate)), PatrolBOffset)
@@ -2518,7 +2532,7 @@ Public Class Form1
 
                 Next
 
-                .SmoothingMode = SmoothingMode.AntiAlias
+                .CompositingMode = CompositingMode.SourceCopy
 
             End If
 
@@ -2534,7 +2548,6 @@ Public Class Form1
 
                 If Goal.Rect.IntersectsWith(Camera.Rect) Then
 
-                    .SmoothingMode = SmoothingMode.None
 
                     Dim RectOffset As Rectangle = Goal.Rect
 
@@ -2564,11 +2577,17 @@ Public Class Form1
                         .SurroundColors = New Color() {Colors(1)}
                     }
 
+                    'Bug Fix Don't Change.
+                    .CompositingMode = CompositingMode.SourceOver
+                    'To fix draw string error with anti aliasing: "Parameters not valid."
+                    'Set the compositing mode to source over.
+
                     .FillRectangle(GradBrush, RectOffset)
 
                     If Goal.Rect.Width <= Goal.Rect.Height Then
 
                         Dim Font As New Font(New FontFamily("Wingdings"), Goal.Rect.Width \ 2, FontStyle.Regular)
+
 
                         .DrawString("«",
                                 Font,
@@ -2588,7 +2607,7 @@ Public Class Form1
 
                     End If
 
-                    .SmoothingMode = SmoothingMode.AntiAlias
+                    .CompositingMode = CompositingMode.SourceCopy
 
                 End If
 
@@ -2604,7 +2623,10 @@ Public Class Form1
 
             If Portals IsNot Nothing Then
 
-                .SmoothingMode = SmoothingMode.None
+                'Bug Fix Don't Change.
+                .CompositingMode = CompositingMode.SourceOver
+                'To fix draw string error with anti aliasing: "Parameters not valid."
+                'Set the compositing mode to source over.
 
                 For Each Portal In Portals
 
@@ -2686,7 +2708,7 @@ Public Class Form1
 
                 Next
 
-                .SmoothingMode = SmoothingMode.AntiAlias
+                .CompositingMode = CompositingMode.SourceCopy
 
             End If
 
@@ -2698,7 +2720,7 @@ Public Class Form1
 
         With Buffer.Graphics
 
-            .SmoothingMode = SmoothingMode.None
+            '.SmoothingMode = SmoothingMode.None
 
             .FillRectangle(Brushes.Indigo, Rect)
 
@@ -2736,7 +2758,7 @@ Public Class Form1
 
             .FillRectangle(Brushes.Black, DoorWay)
 
-            .SmoothingMode = SmoothingMode.AntiAlias
+            '.SmoothingMode = SmoothingMode.AntiAlias
 
         End With
 
@@ -2746,7 +2768,7 @@ Public Class Form1
 
         With Buffer.Graphics
 
-            .SmoothingMode = SmoothingMode.None
+            '.SmoothingMode = SmoothingMode.None
 
             .FillRectangle(Brushes.Indigo, Rect)
 
@@ -2784,7 +2806,7 @@ Public Class Form1
 
             .FillRectangle(Brushes.Black, DoorWay)
 
-            .SmoothingMode = SmoothingMode.AntiAlias
+            '.SmoothingMode = SmoothingMode.AntiAlias
 
         End With
 
@@ -2796,7 +2818,10 @@ Public Class Form1
 
             If Backdrops IsNot Nothing Then
 
-                .SmoothingMode = SmoothingMode.None
+                'Bug Fix Don't Change.
+                .CompositingMode = CompositingMode.SourceOver
+                'To fix draw string error with anti aliasing: "Parameters not valid."
+                'Set the compositing mode to source over.
 
                 For Each Backdrop In Backdrops
 
@@ -2816,7 +2841,7 @@ Public Class Form1
 
                 Next
 
-                .SmoothingMode = SmoothingMode.AntiAlias
+                .CompositingMode = CompositingMode.SourceCopy
 
             End If
 
@@ -3003,7 +3028,7 @@ Public Class Form1
 
             If Blocks IsNot Nothing Then
 
-                .SmoothingMode = SmoothingMode.None
+                .PixelOffsetMode = PixelOffsetMode.HighQuality
 
                 For Each Block In Blocks
 
@@ -3012,7 +3037,6 @@ Public Class Form1
                         Dim RectOffset As Rectangle = Block.Rect
 
                         RectOffset.Offset(CameraOffset)
-
 
                         .FillRectangle(Brushes.Chocolate, RectOffset)
 
@@ -3026,7 +3050,7 @@ Public Class Form1
 
                 Next
 
-                .SmoothingMode = SmoothingMode.AntiAlias
+                .PixelOffsetMode = PixelOffsetMode.None
 
             End If
 
@@ -3040,7 +3064,7 @@ Public Class Form1
 
             If Bushes IsNot Nothing Then
 
-                .SmoothingMode = SmoothingMode.None
+                .CompositingMode = CompositingMode.SourceOver
 
                 For Each Bush In Bushes
 
@@ -3070,7 +3094,7 @@ Public Class Form1
 
                 Next
 
-                .SmoothingMode = SmoothingMode.AntiAlias
+                .CompositingMode = CompositingMode.SourceCopy
 
             End If
 
@@ -3084,7 +3108,7 @@ Public Class Form1
 
             If Clouds IsNot Nothing Then
 
-                .SmoothingMode = SmoothingMode.None
+                .CompositingMode = CompositingMode.SourceOver
 
                 For Each Cloud In Clouds
 
@@ -3114,7 +3138,7 @@ Public Class Form1
 
                 Next
 
-                .SmoothingMode = SmoothingMode.AntiAlias
+                .CompositingMode = CompositingMode.SourceCopy
 
             End If
 
@@ -3128,7 +3152,10 @@ Public Class Form1
 
             If Cash IsNot Nothing Then
 
-                .SmoothingMode = SmoothingMode.None
+                'Bug Fix Don't Change.
+                .CompositingMode = CompositingMode.SourceOver
+                'To fix draw string error with anti aliasing: "Parameters not valid."
+                'Set the compositing mode to source over.
 
                 For Each Bill In Cash
 
@@ -3174,7 +3201,7 @@ Public Class Form1
 
                 Next
 
-                .SmoothingMode = SmoothingMode.AntiAlias
+                .CompositingMode = CompositingMode.SourceCopy
 
             End If
 
@@ -3186,10 +3213,18 @@ Public Class Form1
 
         With Buffer.Graphics
 
+            'Bug Fix Don't Change.
+            .CompositingMode = CompositingMode.SourceOver
+            'To fix draw string error with anti aliasing: "Parameters not valid."
+            'Set the compositing mode to source over.
+
+            .CompositingQuality = CompositingQuality.HighQuality
+            .PixelOffsetMode = PixelOffsetMode.HighQuality
+
             'Draw drop shadow.
             .DrawString("$" & CashCollected.ToString,
                     FPSFont,
-                    New SolidBrush(Color.FromArgb(255, Color.Black)),
+                    Brushes.Black,
                     CashCollectedPostion.X + 2,
                     CashCollectedPostion.Y + 2)
 
@@ -3197,6 +3232,10 @@ Public Class Form1
                         FPSFont,
                         Brushes.White,
                         CashCollectedPostion)
+
+            .CompositingMode = CompositingMode.SourceCopy
+            .CompositingQuality = CompositingQuality.HighSpeed
+            .PixelOffsetMode = PixelOffsetMode.None
 
         End With
 
@@ -3453,6 +3492,11 @@ Public Class Form1
 
             End If
 
+            'Bug Fix Don't Change.
+            .CompositingMode = CompositingMode.SourceOver
+            'To fix draw string error with anti aliasing: "Parameters not valid."
+            'Set the compositing mode to source over.
+
             .DrawString("ë",
                         PointerToolFont,
                         Brushes.White,
@@ -3461,6 +3505,8 @@ Public Class Form1
                                       PointerToolButton.Rect.Width,
                                       PointerToolButton.Rect.Height),
                         AlineCenterMiddle)
+
+            .CompositingMode = CompositingMode.SourceCopy
 
             If SelectedTool = Tools.Block Then
 
@@ -3476,6 +3522,11 @@ Public Class Form1
                 ControllerHintShadow.X = ControllerHint.X + 2
                 ControllerHintShadow.Y = ControllerHint.Y + 2
 
+                'Bug Fix Don't Change.
+                .CompositingMode = CompositingMode.SourceOver
+                'To fix draw string error with anti aliasing: "Parameters not valid."
+                'Set the compositing mode to source over.
+
                 .DrawString("LT",
                             ControllerHintFont,
                             Brushes.Black,
@@ -3487,6 +3538,8 @@ Public Class Form1
                             Brushes.White,
                             ControllerHint,
                             AlineCenterMiddle)
+
+                .CompositingMode = CompositingMode.SourceCopy
 
             End If
 
@@ -3504,6 +3557,11 @@ Public Class Form1
                 ControllerHintShadow.X = ControllerHint.X + 2
                 ControllerHintShadow.Y = ControllerHint.Y + 2
 
+                'Bug Fix Don't Change.
+                .CompositingMode = CompositingMode.SourceOver
+                'To fix draw string error with anti aliasing: "Parameters not valid."
+                'Set the compositing mode to source over.
+
                 .DrawString("RT",
                             ControllerHintFont,
                             Brushes.Black,
@@ -3515,6 +3573,8 @@ Public Class Form1
                             Brushes.White,
                             ControllerHint,
                             AlineCenterMiddle)
+
+                .CompositingMode = CompositingMode.SourceCopy
 
             End If
 
@@ -3593,6 +3653,11 @@ Public Class Form1
                 ControllerHintShadow.X = ControllerHint.X + 2
                 ControllerHintShadow.Y = ControllerHint.Y + 2
 
+                'Bug Fix Don't Change.
+                .CompositingMode = CompositingMode.SourceOver
+                'To fix draw string error with anti aliasing: "Parameters not valid."
+                'Set the compositing mode to source over.
+
                 .DrawString("RT",
                             ControllerHintFont,
                             Brushes.Black,
@@ -3604,6 +3669,8 @@ Public Class Form1
                             Brushes.White,
                             ControllerHint,
                             AlineCenterMiddle)
+
+                .CompositingMode = CompositingMode.SourceCopy
 
             End If
 
@@ -3621,6 +3688,11 @@ Public Class Form1
                 ControllerHintShadow.X = ControllerHint.X + 2
                 ControllerHintShadow.Y = ControllerHint.Y + 2
 
+                'Bug Fix Don't Change.
+                .CompositingMode = CompositingMode.SourceOver
+                'To fix draw string error with anti aliasing: "Parameters not valid."
+                'Set the compositing mode to source over.
+
                 .DrawString("LT",
                             ControllerHintFont,
                             Brushes.Black,
@@ -3632,6 +3704,8 @@ Public Class Form1
                             Brushes.White,
                             ControllerHint,
                             AlineCenterMiddle)
+
+                .CompositingMode = CompositingMode.SourceCopy
 
             End If
 
@@ -3724,6 +3798,11 @@ Public Class Form1
                 ControllerHintShadow.X = ControllerHint.X + 2
                 ControllerHintShadow.Y = ControllerHint.Y + 2
 
+                'Bug Fix Don't Change.
+                .CompositingMode = CompositingMode.SourceOver
+                'To fix draw string error with anti aliasing: "Parameters not valid."
+                'Set the compositing mode to source over.
+
                 .DrawString("LT",
                             ControllerHintFont,
                             Brushes.Black,
@@ -3735,6 +3814,8 @@ Public Class Form1
                             Brushes.White,
                             ControllerHint,
                             AlineCenterMiddle)
+
+                .CompositingMode = CompositingMode.SourceCopy
 
             End If
 
@@ -3752,6 +3833,11 @@ Public Class Form1
                 ControllerHintShadow.X = ControllerHint.X + 2
                 ControllerHintShadow.Y = ControllerHint.Y + 2
 
+                'Bug Fix Don't Change.
+                .CompositingMode = CompositingMode.SourceOver
+                'To fix draw string error with anti aliasing: "Parameters not valid."
+                'Set the compositing mode to source over.
+
                 .DrawString("RT",
                             ControllerHintFont,
                             Brushes.Black,
@@ -3763,6 +3849,8 @@ Public Class Form1
                             Brushes.White,
                             ControllerHint,
                             AlineCenterMiddle)
+
+                .CompositingMode = CompositingMode.SourceCopy
 
             End If
 
@@ -3821,11 +3909,23 @@ Public Class Form1
 
             .FillRectangle(Brushes.Goldenrod, BillToolIcon.Rect)
 
+            'Bug Fix Don't Change.
+            .CompositingMode = CompositingMode.SourceOver
+            'To fix draw string error with anti aliasing: "Parameters not valid."
+            'Set the compositing mode to source over.
+
+            .CompositingQuality = CompositingQuality.HighQuality
+            .PixelOffsetMode = PixelOffsetMode.HighQuality
+
             .DrawString("$",
                         BillIconFont,
                         Brushes.OrangeRed,
                         BillToolIcon.Rect,
                         AlineCenterMiddle)
+
+            .CompositingMode = CompositingMode.SourceCopy
+            .CompositingQuality = CompositingQuality.HighSpeed
+            .PixelOffsetMode = PixelOffsetMode.None
 
             If SelectedTool = Tools.Block Then
 
@@ -3841,6 +3941,14 @@ Public Class Form1
                 ControllerHintShadow.X = ControllerHint.X + 2
                 ControllerHintShadow.Y = ControllerHint.Y + 2
 
+                'Bug Fix Don't Change.
+                .CompositingMode = CompositingMode.SourceOver
+                'To fix draw string error with anti aliasing: "Parameters not valid."
+                'Set the compositing mode to source over.
+
+                .CompositingQuality = CompositingQuality.HighQuality
+                .PixelOffsetMode = PixelOffsetMode.HighQuality
+
                 .DrawString("RT",
                             ControllerHintFont,
                             Brushes.Black,
@@ -3852,6 +3960,10 @@ Public Class Form1
                             Brushes.White,
                             ControllerHint,
                             AlineCenterMiddle)
+
+                .CompositingMode = CompositingMode.SourceCopy
+                .CompositingQuality = CompositingQuality.HighSpeed
+                .PixelOffsetMode = PixelOffsetMode.None
 
             End If
 
@@ -3869,6 +3981,14 @@ Public Class Form1
                 ControllerHintShadow.X = ControllerHint.X + 2
                 ControllerHintShadow.Y = ControllerHint.Y + 2
 
+                'Bug Fix Don't Change.
+                .CompositingMode = CompositingMode.SourceOver
+                'To fix draw string error with anti aliasing: "Parameters not valid."
+                'Set the compositing mode to source over.
+
+                .CompositingQuality = CompositingQuality.HighQuality
+                .PixelOffsetMode = PixelOffsetMode.HighQuality
+
                 .DrawString("LT",
                             ControllerHintFont,
                             Brushes.Black,
@@ -3880,6 +4000,10 @@ Public Class Form1
                             Brushes.White,
                             ControllerHint,
                             AlineCenterMiddle)
+
+                .CompositingMode = CompositingMode.SourceCopy
+                .CompositingQuality = CompositingQuality.HighSpeed
+                .PixelOffsetMode = PixelOffsetMode.None
 
             End If
 
@@ -3964,6 +4088,14 @@ Public Class Form1
                 ControllerHintShadow.X = ControllerHint.X + 2
                 ControllerHintShadow.Y = ControllerHint.Y + 2
 
+                'Bug Fix Don't Change.
+                .CompositingMode = CompositingMode.SourceOver
+                'To fix draw string error with anti aliasing: "Parameters not valid."
+                'Set the compositing mode to source over.
+
+                .CompositingQuality = CompositingQuality.HighQuality
+                .PixelOffsetMode = PixelOffsetMode.HighQuality
+
                 .DrawString("RT",
                             ControllerHintFont,
                             Brushes.Black,
@@ -3975,6 +4107,10 @@ Public Class Form1
                             Brushes.White,
                             ControllerHint,
                             AlineCenterMiddle)
+
+                .CompositingMode = CompositingMode.SourceCopy
+                .CompositingQuality = CompositingQuality.HighSpeed
+                .PixelOffsetMode = PixelOffsetMode.None
 
             End If
 
@@ -3992,6 +4128,14 @@ Public Class Form1
                 ControllerHintShadow.X = ControllerHint.X + 2
                 ControllerHintShadow.Y = ControllerHint.Y + 2
 
+                'Bug Fix Don't Change.
+                .CompositingMode = CompositingMode.SourceOver
+                'To fix draw string error with anti aliasing: "Parameters not valid."
+                'Set the compositing mode to source over.
+
+                .CompositingQuality = CompositingQuality.HighQuality
+                .PixelOffsetMode = PixelOffsetMode.HighQuality
+
                 .DrawString("LT",
                             ControllerHintFont,
                             Brushes.Black,
@@ -4003,6 +4147,10 @@ Public Class Form1
                             Brushes.White,
                             ControllerHint,
                             AlineCenterMiddle)
+
+                .CompositingMode = CompositingMode.SourceCopy
+                .CompositingQuality = CompositingQuality.HighSpeed
+                .PixelOffsetMode = PixelOffsetMode.None
 
             End If
 
@@ -4089,6 +4237,14 @@ Public Class Form1
                 ControllerHintShadow.X = ControllerHint.X + 2
                 ControllerHintShadow.Y = ControllerHint.Y + 2
 
+                'Bug Fix Don't Change.
+                .CompositingMode = CompositingMode.SourceOver
+                'To fix draw string error with anti aliasing: "Parameters not valid."
+                'Set the compositing mode to source over.
+
+                .CompositingQuality = CompositingQuality.HighQuality
+                .PixelOffsetMode = PixelOffsetMode.HighQuality
+
                 .DrawString("RT",
                             ControllerHintFont,
                             Brushes.Black,
@@ -4100,6 +4256,10 @@ Public Class Form1
                             Brushes.White,
                             ControllerHint,
                             AlineCenterMiddle)
+
+                .CompositingMode = CompositingMode.SourceCopy
+                .CompositingQuality = CompositingQuality.HighSpeed
+                .PixelOffsetMode = PixelOffsetMode.None
 
             End If
 
@@ -4117,6 +4277,14 @@ Public Class Form1
                 ControllerHintShadow.X = ControllerHint.X + 2
                 ControllerHintShadow.Y = ControllerHint.Y + 2
 
+                'Bug Fix Don't Change.
+                .CompositingMode = CompositingMode.SourceOver
+                'To fix draw string error with anti aliasing: "Parameters not valid."
+                'Set the compositing mode to source over.
+
+                .CompositingQuality = CompositingQuality.HighQuality
+                .PixelOffsetMode = PixelOffsetMode.HighQuality
+
                 .DrawString("LT",
                             ControllerHintFont,
                             Brushes.Black,
@@ -4128,6 +4296,10 @@ Public Class Form1
                             Brushes.White,
                             ControllerHint,
                             AlineCenterMiddle)
+
+                .CompositingMode = CompositingMode.SourceCopy
+                .CompositingQuality = CompositingQuality.HighSpeed
+                .PixelOffsetMode = PixelOffsetMode.None
 
             End If
 
@@ -4186,7 +4358,14 @@ Public Class Form1
 
             .FillRectangle(Brushes.Chocolate, EnemyToolIcon.Rect)
 
+            'Bug Fix Don't Change.
+            .CompositingMode = CompositingMode.SourceOver
+            'To fix draw string error with anti aliasing: "Parameters not valid."
+            'Set the compositing mode to source over.
+
             .DrawString("E", EnemyIconFont, Brushes.PaleGoldenrod, EnemyToolIcon.Rect, AlineCenterMiddle)
+
+            .CompositingMode = CompositingMode.SourceCopy
 
             If SelectedTool = Tools.Goal Then
 
@@ -4202,6 +4381,11 @@ Public Class Form1
                 ControllerHintShadow.X = ControllerHint.X + 2
                 ControllerHintShadow.Y = ControllerHint.Y + 2
 
+                'Bug Fix Don't Change.
+                .CompositingMode = CompositingMode.SourceOver
+                'To fix draw string error with anti aliasing: "Parameters not valid."
+                'Set the compositing mode to source over.
+
                 .DrawString("RT",
                             ControllerHintFont,
                             Brushes.Black,
@@ -4213,6 +4397,8 @@ Public Class Form1
                             Brushes.White,
                             ControllerHint,
                             AlineCenterMiddle)
+
+                .CompositingMode = CompositingMode.SourceCopy
 
             End If
 
@@ -4230,6 +4416,11 @@ Public Class Form1
                 ControllerHintShadow.X = ControllerHint.X + 2
                 ControllerHintShadow.Y = ControllerHint.Y + 2
 
+                'Bug Fix Don't Change.
+                .CompositingMode = CompositingMode.SourceOver
+                'To fix draw string error with anti aliasing: "Parameters not valid."
+                'Set the compositing mode to source over.
+
                 .DrawString("LT",
                             ControllerHintFont,
                             Brushes.Black,
@@ -4241,6 +4432,8 @@ Public Class Form1
                             Brushes.White,
                             ControllerHint,
                             AlineCenterMiddle)
+
+                .CompositingMode = CompositingMode.SourceCopy
 
             End If
 
@@ -4320,6 +4513,11 @@ Public Class Form1
                 .CenterColor = colors(0),
                 .SurroundColors = New Color() {colors(1)}}
 
+            'Bug Fix Don't Change.
+            .CompositingMode = CompositingMode.SourceOver
+            'To fix draw string error with anti aliasing: "Parameters not valid."
+            'Set the compositing mode to source over.
+
             .FillRectangle(GradBrush, GoalToolIcon.Rect)
 
             Dim Font As New Font(New FontFamily("Wingdings"), GoalToolIcon.Rect.Width \ 2, FontStyle.Regular)
@@ -4329,6 +4527,9 @@ Public Class Form1
                         Brushes.Green,
                         GoalToolIcon.Rect,
                         AlineCenterMiddle)
+
+            .CompositingMode = CompositingMode.SourceCopy
+
 
             If SelectedTool = Tools.Cloud Then
 
@@ -4344,6 +4545,11 @@ Public Class Form1
                 ControllerHintShadow.X = ControllerHint.X + 2
                 ControllerHintShadow.Y = ControllerHint.Y + 2
 
+                'Bug Fix Don't Change.
+                .CompositingMode = CompositingMode.SourceOver
+                'To fix draw string error with anti aliasing: "Parameters not valid."
+                'Set the compositing mode to source over.
+
                 .DrawString("RT",
                             ControllerHintFont,
                             Brushes.Black,
@@ -4355,6 +4561,8 @@ Public Class Form1
                             Brushes.White,
                             ControllerHint,
                             AlineCenterMiddle)
+
+                .CompositingMode = CompositingMode.SourceCopy
 
             End If
 
@@ -4372,6 +4580,11 @@ Public Class Form1
                 ControllerHintShadow.X = ControllerHint.X + 2
                 ControllerHintShadow.Y = ControllerHint.Y + 2
 
+                'Bug Fix Don't Change.
+                .CompositingMode = CompositingMode.SourceOver
+                'To fix draw string error with anti aliasing: "Parameters not valid."
+                'Set the compositing mode to source over.
+
                 .DrawString("LT",
                             ControllerHintFont,
                             Brushes.Black,
@@ -4383,6 +4596,8 @@ Public Class Form1
                             Brushes.White,
                             ControllerHint,
                             AlineCenterMiddle)
+
+                .CompositingMode = CompositingMode.SourceCopy
 
             End If
 
@@ -4457,6 +4672,11 @@ Public Class Form1
                 ControllerHintShadow.X = ControllerHint.X + 2
                 ControllerHintShadow.Y = ControllerHint.Y + 2
 
+                'Bug Fix Don't Change.
+                .CompositingMode = CompositingMode.SourceOver
+                'To fix draw string error with anti aliasing: "Parameters not valid."
+                'Set the compositing mode to source over.
+
                 .DrawString("RT",
                             ControllerHintFont,
                             Brushes.Black,
@@ -4468,6 +4688,8 @@ Public Class Form1
                             Brushes.White,
                             ControllerHint,
                             AlineCenterMiddle)
+
+                .CompositingMode = CompositingMode.SourceCopy
 
             End If
 
@@ -4485,6 +4707,11 @@ Public Class Form1
                 ControllerHintShadow.X = ControllerHint.X + 2
                 ControllerHintShadow.Y = ControllerHint.Y + 2
 
+                'Bug Fix Don't Change.
+                .CompositingMode = CompositingMode.SourceOver
+                'To fix draw string error with anti aliasing: "Parameters not valid."
+                'Set the compositing mode to source over.
+
                 .DrawString("LT",
                             ControllerHintFont,
                             Brushes.Black,
@@ -4496,6 +4723,8 @@ Public Class Form1
                             Brushes.White,
                             ControllerHint,
                             AlineCenterMiddle)
+
+                .CompositingMode = CompositingMode.SourceCopy
 
             End If
 
@@ -4531,11 +4760,23 @@ Public Class Form1
 
             ButtonCaption.Size = EditPlayButton.Rect.Size
 
+            'Bug Fix Don't Change.
+            .CompositingMode = CompositingMode.SourceOver
+            'To fix draw string error with anti aliasing: "Parameters not valid."
+            'Set the compositing mode to source over.
+
+            .CompositingQuality = CompositingQuality.HighQuality
+            .PixelOffsetMode = PixelOffsetMode.HighQuality
+
             .DrawString("Play",
                         FPSFont,
                         Brushes.White,
                         ButtonCaption,
                         AlineCenterMiddle)
+
+            .CompositingMode = CompositingMode.SourceCopy
+            .CompositingQuality = CompositingQuality.HighSpeed
+            .PixelOffsetMode = PixelOffsetMode.None
 
             Dim ControllerHint As Rectangle
 
@@ -4588,11 +4829,23 @@ Public Class Form1
 
             End If
 
+            'Bug Fix Don't Change.
+            .CompositingMode = CompositingMode.SourceOver
+            'To fix draw string error with anti aliasing: "Parameters not valid."
+            'Set the compositing mode to source over.
+
+            .CompositingQuality = CompositingQuality.HighQuality
+            .PixelOffsetMode = PixelOffsetMode.HighQuality
+
             .DrawString("Edit",
                         FPSFont,
                         Brushes.White,
                         EditPlayButton.Rect,
                         AlineCenterMiddle)
+
+            .CompositingMode = CompositingMode.SourceCopy
+            .CompositingQuality = CompositingQuality.HighSpeed
+            .PixelOffsetMode = PixelOffsetMode.None
 
             Dim ControllerHint As Rectangle
 
@@ -4645,11 +4898,23 @@ Public Class Form1
 
             End If
 
+            'Bug Fix Don't Change.
+            .CompositingMode = CompositingMode.SourceOver
+            'To fix draw string error with anti aliasing: "Parameters not valid."
+            'Set the compositing mode to source over.
+
+            .CompositingQuality = CompositingQuality.HighQuality
+            .PixelOffsetMode = PixelOffsetMode.HighQuality
+
             .DrawString("≡",
                         MenuButtonFont,
                         Brushes.White,
                         MenuButton.Rect,
                         AlineCenterMiddle)
+
+            .CompositingMode = CompositingMode.SourceCopy
+            .CompositingQuality = CompositingQuality.HighSpeed
+            .PixelOffsetMode = PixelOffsetMode.None
 
             Dim ControllerHint As Rectangle
 
@@ -4695,6 +4960,15 @@ Public Class Form1
 
             End If
 
+            'Bug Fix Don't Change.
+            .CompositingMode = CompositingMode.SourceOver
+            'To fix draw string error with anti aliasing: "Parameters not valid."
+            'Set the compositing mode to source over.
+
+            .CompositingQuality = CompositingQuality.HighQuality
+            .PixelOffsetMode = PixelOffsetMode.HighQuality
+            .SmoothingMode = SmoothingMode.AntiAlias
+
             .DrawEllipse(BButtonIconOutinePen,
                          New Rectangle(SaveButton.Rect.X + 197,
                                        SaveButton.Rect.Y + SaveButton.Rect.Height \ 2 - 52 \ 2,
@@ -4719,6 +4993,11 @@ Public Class Form1
                                       50),
                         AlineCenterMiddle)
 
+            .CompositingMode = CompositingMode.SourceCopy
+            .CompositingQuality = CompositingQuality.HighSpeed
+            .PixelOffsetMode = PixelOffsetMode.None
+            .SmoothingMode = SmoothingMode.None
+
         End With
 
     End Sub
@@ -4736,6 +5015,15 @@ Public Class Form1
                 FillRoundedRectangle(Brushes.Black, OpenButton.Rect, 30, Buffer.Graphics)
 
             End If
+
+            'Bug Fix Don't Change.
+            .CompositingMode = CompositingMode.SourceOver
+            'To fix draw string error with anti aliasing: "Parameters not valid."
+            'Set the compositing mode to source over.
+
+            .CompositingQuality = CompositingQuality.HighQuality
+            .PixelOffsetMode = PixelOffsetMode.HighQuality
+            .SmoothingMode = SmoothingMode.AntiAlias
 
             .DrawEllipse(YButtonIconOutinePen,
                          New Rectangle(OpenButton.Rect.X + 197,
@@ -4761,6 +5049,11 @@ Public Class Form1
                                       50),
                         AlineCenterMiddle)
 
+            .CompositingMode = CompositingMode.SourceCopy
+            .CompositingQuality = CompositingQuality.HighSpeed
+            .PixelOffsetMode = PixelOffsetMode.None
+            .SmoothingMode = SmoothingMode.None
+
         End With
 
     End Sub
@@ -4779,6 +5072,14 @@ Public Class Form1
 
             End If
 
+            'Bug Fix Don't Change.
+            .CompositingMode = CompositingMode.SourceOver
+            'To fix draw string error with anti aliasing: "Parameters not valid."
+            'Set the compositing mode to source over.
+
+            .CompositingQuality = CompositingQuality.HighQuality
+            .PixelOffsetMode = PixelOffsetMode.HighQuality
+
             .DrawString("New", FPSFont,
                         Brushes.White,
                         New Rectangle(NewButton.Rect.X + 25,
@@ -4795,6 +5096,10 @@ Public Class Form1
                                       100,
                                       50),
                         AlineCenterMiddle)
+
+            .CompositingMode = CompositingMode.SourceCopy
+            .CompositingQuality = CompositingQuality.HighSpeed
+            .PixelOffsetMode = PixelOffsetMode.None
 
         End With
 
@@ -4814,6 +5119,15 @@ Public Class Form1
 
             End If
 
+            'Bug Fix Don't Change.
+            .CompositingMode = CompositingMode.SourceOver
+            'To fix draw string error with anti aliasing: "Parameters not valid."
+            'Set the compositing mode to source over.
+
+            .CompositingQuality = CompositingQuality.HighQuality
+            .PixelOffsetMode = PixelOffsetMode.HighQuality
+            .SmoothingMode = SmoothingMode.AntiAlias
+
             .DrawEllipse(XButtonIconOutinePen,
                          New Rectangle(ExitButton.Rect.X + ExitButton.Rect.Width \ 2 - 52 \ 2,
                                        ExitButton.Rect.Y + ExitButton.Rect.Height \ 2 - 52 \ 2,
@@ -4829,6 +5143,11 @@ Public Class Form1
                                       52),
                         AlineCenterMiddle)
 
+            .CompositingMode = CompositingMode.SourceCopy
+            .CompositingQuality = CompositingQuality.HighSpeed
+            .PixelOffsetMode = PixelOffsetMode.None
+            .SmoothingMode = SmoothingMode.None
+
         End With
 
     End Sub
@@ -4837,7 +5156,14 @@ Public Class Form1
 
         With Buffer.Graphics
 
+            'Bug Fix Don't Change.
+            .CompositingMode = CompositingMode.SourceOver
+            'To fix draw string error with anti aliasing: "Parameters not valid."
+            'Set the compositing mode to source over.
+
             .DrawString(FPS.ToString & " FPS", FPSFont, Brushes.White, FPS_Postion)
+
+            .CompositingMode = CompositingMode.SourceCopy
 
         End With
 
@@ -5137,6 +5463,8 @@ Public Class Form1
 
             Shadow.Offset(12, 12)
 
+
+
             FillRoundedRectangle(MenuShadowBrush, Shadow, 30, Buffer.Graphics)
 
             If StartScreenOpenButtonHover = True Then
@@ -5152,6 +5480,15 @@ Public Class Form1
                 FillRoundedRectangle(Brushes.Black, StartScreenOpenButton.Rect, 30, Buffer.Graphics)
 
             End If
+
+            'Bug Fix Don't Change.
+            .CompositingMode = CompositingMode.SourceOver
+            'To fix draw string error with anti aliasing: "Parameters not valid."
+            'Set the compositing mode to source over.
+
+            .CompositingQuality = CompositingQuality.HighQuality
+            .PixelOffsetMode = PixelOffsetMode.HighQuality
+            .SmoothingMode = SmoothingMode.AntiAlias
 
             .DrawEllipse(YButtonIconOutinePen,
                          New Rectangle(StartScreenOpenButton.Rect.X + 142,
@@ -5176,6 +5513,11 @@ Public Class Form1
                                       50,
                                       50),
                         AlineCenterMiddle)
+
+            .CompositingMode = CompositingMode.SourceCopy
+            .CompositingQuality = CompositingQuality.HighSpeed
+            .PixelOffsetMode = PixelOffsetMode.None
+            .SmoothingMode = SmoothingMode.None
 
         End With
 
@@ -5205,6 +5547,15 @@ Public Class Form1
 
             End If
 
+            'Bug Fix Don't Change.
+            .CompositingMode = CompositingMode.SourceOver
+            'To fix draw string error with anti aliasing: "Parameters not valid."
+            'Set the compositing mode to source over.
+
+            .CompositingQuality = CompositingQuality.HighQuality
+            .PixelOffsetMode = PixelOffsetMode.HighQuality
+            .SmoothingMode = SmoothingMode.AntiAlias
+
             .DrawEllipse(BButtonIconOutinePen,
                          New Rectangle(StartScreenNewButton.Rect.X + 140,
                                        StartScreenNewButton.Rect.Y + StartScreenNewButton.Rect.Height \ 2 - 52 \ 2,
@@ -5229,6 +5580,11 @@ Public Class Form1
                                       50),
                         AlineCenterMiddle)
 
+            .CompositingMode = CompositingMode.SourceCopy
+            .CompositingQuality = CompositingQuality.HighSpeed
+            .PixelOffsetMode = PixelOffsetMode.None
+            .SmoothingMode = SmoothingMode.None
+
         End With
 
     End Sub
@@ -5236,6 +5592,14 @@ Public Class Form1
     Private Sub DrawTitle()
 
         With Buffer.Graphics
+
+            'Bug Fix Don't Change.
+            .CompositingMode = CompositingMode.SourceOver
+            'To fix draw string error with anti aliasing: "Parameters not valid."
+            'Set the compositing mode to source over.
+
+            .CompositingQuality = CompositingQuality.HighQuality
+            .PixelOffsetMode = PixelOffsetMode.HighQuality
 
             'Draw drop shadow.
             .DrawString(Title.Text,
@@ -5254,6 +5618,10 @@ Public Class Form1
                         Title.Rect,
                         AlineCenterMiddle)
 
+            .CompositingMode = CompositingMode.SourceCopy
+            .CompositingQuality = CompositingQuality.HighSpeed
+            .PixelOffsetMode = PixelOffsetMode.None
+
         End With
 
     End Sub
@@ -5261,6 +5629,14 @@ Public Class Form1
     Private Sub DrawClearTitle()
 
         With Buffer.Graphics
+
+            'Bug Fix Don't Change.
+            .CompositingMode = CompositingMode.SourceOver
+            'To fix draw string error with anti aliasing: "Parameters not valid."
+            'Set the compositing mode to source over.
+
+            .CompositingQuality = CompositingQuality.HighQuality
+            .PixelOffsetMode = PixelOffsetMode.HighQuality
 
             'Draw drop shadow.
             .DrawString("Level Clear!",
@@ -5279,6 +5655,10 @@ Public Class Form1
                         Title.Rect,
                         AlineCenterMiddle)
 
+            .CompositingMode = CompositingMode.SourceCopy
+            .CompositingQuality = CompositingQuality.HighSpeed
+            .PixelOffsetMode = PixelOffsetMode.None
+
         End With
 
     End Sub
@@ -5287,11 +5667,7 @@ Public Class Form1
 
         With Buffer.Graphics
 
-            .SmoothingMode = SmoothingMode.None
-
             .Clear(Color)
-
-            .SmoothingMode = SmoothingMode.AntiAlias
 
         End With
 
@@ -5331,8 +5707,6 @@ Public Class Form1
 
             If Gridlines IsNot Nothing Then
 
-                .SmoothingMode = SmoothingMode.None
-
                 Dim OffsetLine As Line
 
                 For Each line In Gridlines
@@ -5345,8 +5719,6 @@ Public Class Form1
                     Buffer.Graphics.DrawLine(Pens.Gray, OffsetLine.X1, OffsetLine.Y1, OffsetLine.X2, OffsetLine.Y2)
 
                 Next
-
-                .SmoothingMode = SmoothingMode.AntiAlias
 
             End If
 
@@ -5376,7 +5748,12 @@ Public Class Form1
 
     Private Sub DrawRoundedRectangle(pen As Pen, Rect As Rectangle, radius As Integer, g As Graphics)
 
-        Dim path As New Drawing2D.GraphicsPath()
+        g.CompositingMode = CompositingMode.SourceOver
+        g.CompositingQuality = CompositingQuality.HighQuality
+        g.PixelOffsetMode = PixelOffsetMode.HighQuality
+        g.SmoothingMode = SmoothingMode.AntiAlias
+
+        Dim path As New GraphicsPath()
 
         'Add top line inside the top left and top right corners.
         path.AddLine(Rect.Left + radius, Rect.Top, Rect.Right - radius, Rect.Top)
@@ -5406,11 +5783,21 @@ Public Class Form1
 
         g.DrawPath(pen, path)
 
+        g.CompositingMode = CompositingMode.SourceCopy
+        g.CompositingQuality = CompositingQuality.HighSpeed
+        g.PixelOffsetMode = PixelOffsetMode.None
+        g.SmoothingMode = SmoothingMode.None
+
     End Sub
 
-    Private Sub FillRoundedRectangle(brush As Brush, Rect As Rectangle, radius As Integer, e As Graphics)
+    Private Sub FillRoundedRectangle(brush As Brush, Rect As Rectangle, radius As Integer, g As Graphics)
 
-        Dim Path As New Drawing2D.GraphicsPath()
+        g.CompositingMode = CompositingMode.SourceOver
+        g.CompositingQuality = CompositingQuality.HighQuality
+        g.PixelOffsetMode = PixelOffsetMode.HighQuality
+        g.SmoothingMode = SmoothingMode.AntiAlias
+
+        Dim Path As New GraphicsPath()
 
         'Add top line inside the top left and top right corners.
         Path.AddLine(Rect.Left + radius, Rect.Top, Rect.Right - radius, Rect.Top)
@@ -5438,7 +5825,12 @@ Public Class Form1
 
         Path.CloseFigure()
 
-        e.FillPath(brush, Path)
+        g.FillPath(brush, Path)
+
+        g.CompositingMode = CompositingMode.SourceCopy
+        g.CompositingQuality = CompositingQuality.HighSpeed
+        g.PixelOffsetMode = PixelOffsetMode.None
+        g.SmoothingMode = SmoothingMode.None
 
     End Sub
 

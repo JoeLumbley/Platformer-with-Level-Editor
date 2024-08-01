@@ -3384,7 +3384,6 @@ Public Class Form1
             .CompositingMode = CompositingMode.SourceCopy
             .CompositingQuality = CompositingQuality.HighSpeed
             .PixelOffsetMode = PixelOffsetMode.None
-            .SmoothingMode = SmoothingMode.None
 
         End With
 

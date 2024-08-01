@@ -3249,9 +3249,7 @@ Public Class Form1
                     Case Tools.Block
 
                         .CompositingMode = CompositingMode.SourceCopy
-                        .CompositingQuality = CompositingQuality.HighSpeed
                         .PixelOffsetMode = PixelOffsetMode.HighQuality
-                        .SmoothingMode = SmoothingMode.None
 
                         .FillRectangle(Brushes.Chocolate, RectOffset)
 
@@ -3264,9 +3262,6 @@ Public Class Form1
                     Case Tools.Bill
 
                         .CompositingMode = CompositingMode.SourceOver
-                        .CompositingQuality = CompositingQuality.HighQuality
-                        .PixelOffsetMode = PixelOffsetMode.HighQuality
-                        .SmoothingMode = SmoothingMode.AntiAlias
 
                         .FillRectangle(Brushes.Goldenrod, RectOffset)
 
@@ -3311,9 +3306,6 @@ Public Class Form1
                     Case Tools.Enemy
 
                         .CompositingMode = CompositingMode.SourceOver
-                        .CompositingQuality = CompositingQuality.HighQuality
-                        .PixelOffsetMode = PixelOffsetMode.HighQuality
-                        .SmoothingMode = SmoothingMode.AntiAlias
 
                         .FillRectangle(Brushes.Chocolate, RectOffset)
 
@@ -3332,9 +3324,6 @@ Public Class Form1
                     Case Tools.Goal
 
                         .CompositingMode = CompositingMode.SourceOver
-                        .CompositingQuality = CompositingQuality.HighQuality
-                        .PixelOffsetMode = PixelOffsetMode.HighQuality
-                        .SmoothingMode = SmoothingMode.AntiAlias
 
                         .FillRectangle(Brushes.White, RectOffset)
 

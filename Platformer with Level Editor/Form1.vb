@@ -3248,15 +3248,25 @@ Public Class Form1
 
                     Case Tools.Block
 
+                        .CompositingMode = CompositingMode.SourceCopy
+                        .CompositingQuality = CompositingQuality.HighSpeed
+                        .PixelOffsetMode = PixelOffsetMode.HighQuality
+                        .SmoothingMode = SmoothingMode.None
+
                         .FillRectangle(Brushes.Chocolate, RectOffset)
 
                         .DrawLine(Pens.White,
-                                  RectOffset.Right - 1,
+                                  RectOffset.Right,
                                   RectOffset.Top + 1,
-                                  RectOffset.Left + 1,
+                                  RectOffset.Left,
                                   RectOffset.Top + 1)
 
                     Case Tools.Bill
+
+                        .CompositingMode = CompositingMode.SourceOver
+                        .CompositingQuality = CompositingQuality.HighQuality
+                        .PixelOffsetMode = PixelOffsetMode.HighQuality
+                        .SmoothingMode = SmoothingMode.AntiAlias
 
                         .FillRectangle(Brushes.Goldenrod, RectOffset)
 
@@ -3300,21 +3310,31 @@ Public Class Form1
 
                     Case Tools.Enemy
 
+                        .CompositingMode = CompositingMode.SourceOver
+                        .CompositingQuality = CompositingQuality.HighQuality
+                        .PixelOffsetMode = PixelOffsetMode.HighQuality
+                        .SmoothingMode = SmoothingMode.AntiAlias
+
                         .FillRectangle(Brushes.Chocolate, RectOffset)
 
                         .DrawString("E", EnemyFont, Brushes.PaleGoldenrod, RectOffset, AlineCenterMiddle)
 
                         Dim PatrolB As New Rectangle(RectOffset.X + GridSize, RectOffset.Y, GridSize, GridSize)
 
-                        .FillRectangle(New SolidBrush(Color.FromArgb(128, Color.Chocolate)), PatrolB)
+                        .FillRectangle(Brushes.PaleGoldenrod, PatrolB)
 
                         .DrawString("E",
                                     EnemyFont,
-                                    New SolidBrush(Color.FromArgb(128, Color.PaleGoldenrod)),
+                                    Brushes.Chocolate,
                                     PatrolB,
                                     AlineCenterMiddle)
 
                     Case Tools.Goal
+
+                        .CompositingMode = CompositingMode.SourceOver
+                        .CompositingQuality = CompositingQuality.HighQuality
+                        .PixelOffsetMode = PixelOffsetMode.HighQuality
+                        .SmoothingMode = SmoothingMode.AntiAlias
 
                         .FillRectangle(Brushes.White, RectOffset)
 
@@ -3371,6 +3391,11 @@ Public Class Form1
                 End Select
 
             End If
+
+            .CompositingMode = CompositingMode.SourceCopy
+            .CompositingQuality = CompositingQuality.HighSpeed
+            .PixelOffsetMode = PixelOffsetMode.None
+            .SmoothingMode = SmoothingMode.None
 
         End With
 

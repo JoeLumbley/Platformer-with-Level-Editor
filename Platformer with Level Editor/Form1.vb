@@ -2507,8 +2507,6 @@ Public Class Form1
 
                                 .FillRectangle(Brushes.PaleGoldenrod, PatrolBOffset)
 
-                                '.FillRectangle(New SolidBrush(Color.FromArgb(128, Color.Chocolate)), PatrolBOffset)
-
                                 .DrawString("E", EnemyFont, Brushes.Chocolate, PatrolBOffset, AlineCenterMiddle)
 
                             End If
@@ -2523,8 +2521,6 @@ Public Class Form1
                                 SpanOffset.Offset(CameraOffset)
 
                                 .FillRectangle(Brushes.PaleGoldenrod, SpanOffset)
-
-                                '.FillRectangle(New SolidBrush(Color.FromArgb(128, Color.Chocolate)), SpanOffset)
 
                             End If
 

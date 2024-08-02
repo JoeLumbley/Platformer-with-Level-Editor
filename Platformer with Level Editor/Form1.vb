@@ -4007,7 +4007,6 @@ Public Class Form1
                     .CompositingMode = CompositingMode.SourceOver
                     .CompositingQuality = CompositingQuality.HighQuality
                     .PixelOffsetMode = PixelOffsetMode.HighQuality
-                    .SmoothingMode = SmoothingMode.AntiAlias
 
                     Dim ToolTip As Rectangle
 
@@ -4018,7 +4017,6 @@ Public Class Form1
 
                     .FillRectangle(Brushes.Yellow, ToolTip)
                     .DrawString("Cash", ToolTipFont, ToolTipBrush, ToolTip.Location)
-
 
                 Else
 
@@ -4037,7 +4035,6 @@ Public Class Form1
 
             .CompositingQuality = CompositingQuality.HighQuality
             .PixelOffsetMode = PixelOffsetMode.HighQuality
-            .SmoothingMode = SmoothingMode.AntiAlias
 
             .DrawString("$",
                         BillIconFont,

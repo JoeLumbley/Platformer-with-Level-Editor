@@ -3499,7 +3499,6 @@ Public Class Form1
                     .CompositingMode = CompositingMode.SourceOver
                     .CompositingQuality = CompositingQuality.HighQuality
                     .PixelOffsetMode = PixelOffsetMode.HighQuality
-                    .SmoothingMode = SmoothingMode.AntiAlias
 
                     Dim ToolTip As Rectangle
 
@@ -3509,6 +3508,7 @@ Public Class Form1
                     ToolTip.Height = 28
 
                     .FillRectangle(Brushes.Yellow, ToolTip)
+
                     .DrawString("Pointer", ToolTipFont, ToolTipBrush, ToolTip.Location)
 
                 Else
@@ -3522,7 +3522,6 @@ Public Class Form1
             .CompositingMode = CompositingMode.SourceOver
             .CompositingQuality = CompositingQuality.HighQuality
             .PixelOffsetMode = PixelOffsetMode.HighQuality
-            .SmoothingMode = SmoothingMode.AntiAlias
 
             .DrawString("ë",
                         PointerToolFont,
@@ -3592,6 +3591,7 @@ Public Class Form1
             .CompositingMode = CompositingMode.SourceCopy
             .CompositingQuality = CompositingQuality.HighSpeed
             .PixelOffsetMode = PixelOffsetMode.None
+            .SmoothingMode = SmoothingMode.None
 
         End With
 
@@ -3661,7 +3661,6 @@ Public Class Form1
                     .CompositingMode = CompositingMode.SourceOver
                     .CompositingQuality = CompositingQuality.HighQuality
                     .PixelOffsetMode = PixelOffsetMode.HighQuality
-                    .SmoothingMode = SmoothingMode.AntiAlias
 
                     Dim ToolTip As Rectangle
 
@@ -3699,7 +3698,6 @@ Public Class Form1
             'Set the compositing mode to source over.
 
             .CompositingQuality = CompositingQuality.HighQuality
-            .SmoothingMode = SmoothingMode.AntiAlias
 
             If SelectedTool = Tools.Pointer Then
 

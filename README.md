@@ -16,7 +16,7 @@ Understanding the inner workings of a game is crucial. With this tool, you’ll 
 #### 2. Programming Patterns
 Game development relies on common programming patterns. Structured programming helps organize code into manageable pieces, and event handling ensures your game responds to player actions (like jumping or shooting).
 
-![164](https://github.com/user-attachments/assets/8929d5b7-08e1-4aaf-b8a5-fbdd352d2e9b)
+![167](https://github.com/user-attachments/assets/5788aacc-5b04-4862-bb88-281d99df3e58)
 
 
 

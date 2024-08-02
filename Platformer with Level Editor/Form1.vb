@@ -595,6 +595,14 @@ Public Class Form1
 
     Private ReadOnly PortalFont As New Font(FontFamily.GenericSansSerif, 20, FontStyle.Bold)
 
+    Private ReadOnly ToolTipFont As New Font(FontFamily.GenericSansSerif, 10, FontStyle.Bold)
+
+    Private ToolTipColor As Color = Color.Black
+
+    Private ToolTipBrush As New SolidBrush(ToolTipColor)
+
+
+
     Private GameLoopCancellationToken As New CancellationTokenSource()
 
     Private IsFileLoaded As Boolean = False
@@ -3455,6 +3463,16 @@ Public Class Form1
                       RoundedPointerToolButton.Right - 11,
                       RoundedPointerToolButton.Bottom - 2)
 
+                    Dim ToolTip As Rectangle
+
+                    ToolTip.X = RoundedPointerToolButton.Left
+                    ToolTip.Y = RoundedPointerToolButton.Top - 30
+                    ToolTip.Width = 75
+                    ToolTip.Height = 28
+
+                    .FillRectangle(Brushes.Yellow, ToolTip)
+                    .DrawString("Pointer", ToolTipFont, ToolTipBrush, ToolTip.Location)
+
                 Else
 
                     FillRoundedRectangle(SelectedBrush, RoundedPointerToolButton, 30, Buffer.Graphics)
@@ -3477,6 +3495,21 @@ Public Class Form1
                 If PointerToolButtonHover = True Then
 
                     FillRoundedRectangle(HoverBrush, RoundedPointerToolButton, 30, Buffer.Graphics)
+
+                    .CompositingMode = CompositingMode.SourceOver
+                    .CompositingQuality = CompositingQuality.HighQuality
+                    .PixelOffsetMode = PixelOffsetMode.HighQuality
+                    .SmoothingMode = SmoothingMode.AntiAlias
+
+                    Dim ToolTip As Rectangle
+
+                    ToolTip.X = RoundedPointerToolButton.Left
+                    ToolTip.Y = RoundedPointerToolButton.Top - 30
+                    ToolTip.Width = 75
+                    ToolTip.Height = 28
+
+                    .FillRectangle(Brushes.Yellow, ToolTip)
+                    .DrawString("Pointer", ToolTipFont, ToolTipBrush, ToolTip.Location)
 
                 Else
 
@@ -3592,6 +3625,16 @@ Public Class Form1
                               RoundedBlockToolButton.Right - 11,
                               RoundedBlockToolButton.Bottom - 2)
 
+                    Dim ToolTip As Rectangle
+
+                    ToolTip.X = RoundedBlockToolButton.Left
+                    ToolTip.Y = RoundedBlockToolButton.Top - 30
+                    ToolTip.Width = 60
+                    ToolTip.Height = 28
+
+                    .FillRectangle(Brushes.Yellow, ToolTip)
+                    .DrawString("Block", ToolTipFont, ToolTipBrush, ToolTip.Location)
+
                 Else
 
                     FillRoundedRectangle(SelectedBrush, RoundedBlockToolButton, 30, Buffer.Graphics)
@@ -3614,6 +3657,21 @@ Public Class Form1
                 If BlockToolButtonHover = True Then
 
                     FillRoundedRectangle(HoverBrush, RoundedBlockToolButton, 30, Buffer.Graphics)
+
+                    .CompositingMode = CompositingMode.SourceOver
+                    .CompositingQuality = CompositingQuality.HighQuality
+                    .PixelOffsetMode = PixelOffsetMode.HighQuality
+                    .SmoothingMode = SmoothingMode.AntiAlias
+
+                    Dim ToolTip As Rectangle
+
+                    ToolTip.X = RoundedBlockToolButton.Left
+                    ToolTip.Y = RoundedBlockToolButton.Top - 30
+                    ToolTip.Width = 60
+                    ToolTip.Height = 28
+
+                    .FillRectangle(Brushes.Yellow, ToolTip)
+                    .DrawString("Block", ToolTipFont, ToolTipBrush, ToolTip.Location)
 
                 Else
 
@@ -3736,6 +3794,16 @@ Public Class Form1
                               RoundedBackdropToolButton.Right - 11,
                               RoundedBackdropToolButton.Bottom - 2)
 
+                    Dim ToolTip As Rectangle
+
+                    ToolTip.X = RoundedBackdropToolButton.Left
+                    ToolTip.Y = RoundedBackdropToolButton.Top - 30
+                    ToolTip.Width = 98
+                    ToolTip.Height = 28
+
+                    .FillRectangle(Brushes.Yellow, ToolTip)
+                    .DrawString("Backdrop", ToolTipFont, ToolTipBrush, ToolTip.Location)
+
                 Else
 
                     FillRoundedRectangle(SelectedBrush, RoundedBackdropToolButton, 30, Buffer.Graphics)
@@ -3758,6 +3826,21 @@ Public Class Form1
                 If BackdropToolButtonHover = True Then
 
                     FillRoundedRectangle(HoverBrush, RoundedBackdropToolButton, 30, Buffer.Graphics)
+
+                    .CompositingMode = CompositingMode.SourceOver
+                    .CompositingQuality = CompositingQuality.HighQuality
+                    .PixelOffsetMode = PixelOffsetMode.HighQuality
+                    .SmoothingMode = SmoothingMode.AntiAlias
+
+                    Dim ToolTip As Rectangle
+
+                    ToolTip.X = RoundedBackdropToolButton.Left
+                    ToolTip.Y = RoundedBackdropToolButton.Top - 30
+                    ToolTip.Width = 98
+                    ToolTip.Height = 28
+
+                    .FillRectangle(Brushes.Yellow, ToolTip)
+                    .DrawString("Backdrop", ToolTipFont, ToolTipBrush, ToolTip.Location)
 
                 Else
 
@@ -3890,6 +3973,16 @@ Public Class Form1
                               RoundedBillToolButton.Right - 11,
                               RoundedBillToolButton.Bottom - 2)
 
+                    Dim ToolTip As Rectangle
+
+                    ToolTip.X = RoundedBillToolButton.Left
+                    ToolTip.Y = RoundedBillToolButton.Top - 30
+                    ToolTip.Width = 60
+                    ToolTip.Height = 28
+
+                    .FillRectangle(Brushes.Yellow, ToolTip)
+                    .DrawString("Cash", ToolTipFont, ToolTipBrush, ToolTip.Location)
+
                 Else
 
                     FillRoundedRectangle(SelectedBrush, RoundedBillToolButton, 30, Buffer.Graphics)
@@ -3912,6 +4005,22 @@ Public Class Form1
                 If BillToolButtonHover = True Then
 
                     FillRoundedRectangle(HoverBrush, RoundedBillToolButton, 30, Buffer.Graphics)
+
+                    .CompositingMode = CompositingMode.SourceOver
+                    .CompositingQuality = CompositingQuality.HighQuality
+                    .PixelOffsetMode = PixelOffsetMode.HighQuality
+                    .SmoothingMode = SmoothingMode.AntiAlias
+
+                    Dim ToolTip As Rectangle
+
+                    ToolTip.X = RoundedBillToolButton.Left
+                    ToolTip.Y = RoundedBillToolButton.Top - 30
+                    ToolTip.Width = 60
+                    ToolTip.Height = 28
+
+                    .FillRectangle(Brushes.Yellow, ToolTip)
+                    .DrawString("Cash", ToolTipFont, ToolTipBrush, ToolTip.Location)
+
 
                 Else
 
@@ -4031,6 +4140,16 @@ Public Class Form1
                               RoundedCloudToolButton.Right - 11,
                               RoundedCloudToolButton.Bottom - 2)
 
+                    Dim ToolTip As Rectangle
+
+                    ToolTip.X = RoundedCloudToolButton.Left
+                    ToolTip.Y = RoundedCloudToolButton.Top - 30
+                    ToolTip.Width = 65
+                    ToolTip.Height = 28
+
+                    .FillRectangle(Brushes.Yellow, ToolTip)
+                    .DrawString("Cloud", ToolTipFont, ToolTipBrush, ToolTip.Location)
+
                 Else
 
                     FillRoundedRectangle(SelectedBrush, RoundedCloudToolButton, 30, Buffer.Graphics)
@@ -4053,6 +4172,21 @@ Public Class Form1
                 If CloudToolButtonHover = True Then
 
                     FillRoundedRectangle(HoverBrush, RoundedCloudToolButton, 30, Buffer.Graphics)
+
+                    .CompositingMode = CompositingMode.SourceOver
+                    .CompositingQuality = CompositingQuality.HighQuality
+                    .PixelOffsetMode = PixelOffsetMode.HighQuality
+                    .SmoothingMode = SmoothingMode.AntiAlias
+
+                    Dim ToolTip As Rectangle
+
+                    ToolTip.X = RoundedCloudToolButton.Left
+                    ToolTip.Y = RoundedCloudToolButton.Top - 30
+                    ToolTip.Width = 65
+                    ToolTip.Height = 28
+
+                    .FillRectangle(Brushes.Yellow, ToolTip)
+                    .DrawString("Cloud", ToolTipFont, ToolTipBrush, ToolTip.Location)
 
                 Else
 
@@ -4178,6 +4312,17 @@ Public Class Form1
                               RoundedBushToolButton.Right - 11,
                               RoundedBushToolButton.Bottom - 2)
 
+                    Dim ToolTip As Rectangle
+
+                    ToolTip.X = RoundedBushToolButton.Left
+                    ToolTip.Y = RoundedBushToolButton.Top - 30
+                    ToolTip.Width = 55
+                    ToolTip.Height = 28
+
+                    .FillRectangle(Brushes.Yellow, ToolTip)
+                    .DrawString("Bush", ToolTipFont, ToolTipBrush, ToolTip.Location)
+
+
                 Else
 
                     FillRoundedRectangle(SelectedBrush, RoundedBushToolButton, 30, Buffer.Graphics)
@@ -4200,6 +4345,21 @@ Public Class Form1
                 If BushToolButtonHover = True Then
 
                     FillRoundedRectangle(HoverBrush, RoundedBushToolButton, 30, Buffer.Graphics)
+
+                    .CompositingMode = CompositingMode.SourceOver
+                    .CompositingQuality = CompositingQuality.HighQuality
+                    .PixelOffsetMode = PixelOffsetMode.HighQuality
+                    .SmoothingMode = SmoothingMode.AntiAlias
+
+                    Dim ToolTip As Rectangle
+
+                    ToolTip.X = RoundedBushToolButton.Left
+                    ToolTip.Y = RoundedBushToolButton.Top - 30
+                    ToolTip.Width = 55
+                    ToolTip.Height = 28
+
+                    .FillRectangle(Brushes.Yellow, ToolTip)
+                    .DrawString("Bush", ToolTipFont, ToolTipBrush, ToolTip.Location)
 
                 Else
 
@@ -4327,6 +4487,17 @@ Public Class Form1
                               RoundedEnemyToolButton.Right - 11,
                               RoundedEnemyToolButton.Bottom - 2)
 
+                    Dim ToolTip As Rectangle
+
+                    ToolTip.X = RoundedEnemyToolButton.Left
+                    ToolTip.Y = RoundedEnemyToolButton.Top - 30
+                    ToolTip.Width = 73
+                    ToolTip.Height = 28
+
+                    .FillRectangle(Brushes.Yellow, ToolTip)
+                    .DrawString("Enemy", ToolTipFont, ToolTipBrush, ToolTip.Location)
+
+
                 Else
 
                     FillRoundedRectangle(SelectedBrush, RoundedEnemyToolButton, 30, Buffer.Graphics)
@@ -4349,6 +4520,21 @@ Public Class Form1
                 If EnemyToolButtonHover = True Then
 
                     FillRoundedRectangle(HoverBrush, RoundedEnemyToolButton, 30, Buffer.Graphics)
+
+                    .CompositingMode = CompositingMode.SourceOver
+                    .CompositingQuality = CompositingQuality.HighQuality
+                    .PixelOffsetMode = PixelOffsetMode.HighQuality
+                    .SmoothingMode = SmoothingMode.AntiAlias
+
+                    Dim ToolTip As Rectangle
+
+                    ToolTip.X = RoundedEnemyToolButton.Left
+                    ToolTip.Y = RoundedEnemyToolButton.Top - 30
+                    ToolTip.Width = 73
+                    ToolTip.Height = 28
+
+                    .FillRectangle(Brushes.Yellow, ToolTip)
+                    .DrawString("Enemy", ToolTipFont, ToolTipBrush, ToolTip.Location)
 
                 Else
 
@@ -4465,6 +4651,16 @@ Public Class Form1
                               RoundedGoalToolButton.Right - 11,
                               RoundedGoalToolButton.Bottom - 2)
 
+                    Dim ToolTip As Rectangle
+
+                    ToolTip.X = RoundedGoalToolButton.Left
+                    ToolTip.Y = RoundedGoalToolButton.Top - 30
+                    ToolTip.Width = 55
+                    ToolTip.Height = 28
+
+                    .FillRectangle(Brushes.Yellow, ToolTip)
+                    .DrawString("Goal", ToolTipFont, ToolTipBrush, ToolTip.Location)
+
                 Else
 
                     FillRoundedRectangle(SelectedBrush, RoundedGoalToolButton, 30, Buffer.Graphics)
@@ -4487,6 +4683,22 @@ Public Class Form1
                 If GoalToolButtonHover = True Then
 
                     FillRoundedRectangle(HoverBrush, RoundedGoalToolButton, 30, Buffer.Graphics)
+
+                    .CompositingMode = CompositingMode.SourceOver
+                    .CompositingQuality = CompositingQuality.HighQuality
+                    .PixelOffsetMode = PixelOffsetMode.HighQuality
+                    .SmoothingMode = SmoothingMode.AntiAlias
+
+                    Dim ToolTip As Rectangle
+
+                    ToolTip.X = RoundedGoalToolButton.Left
+                    ToolTip.Y = RoundedGoalToolButton.Top - 30
+                    ToolTip.Width = 55
+                    ToolTip.Height = 28
+
+                    .FillRectangle(Brushes.Yellow, ToolTip)
+                    .DrawString("Goal", ToolTipFont, ToolTipBrush, ToolTip.Location)
+
 
                 Else
 
@@ -4637,6 +4849,16 @@ Public Class Form1
                               RoundedPortalToolButton.Right - 11,
                               RoundedPortalToolButton.Bottom - 2)
 
+                    Dim ToolTip As Rectangle
+
+                    ToolTip.X = RoundedPortalToolButton.Left
+                    ToolTip.Y = RoundedPortalToolButton.Top - 30
+                    ToolTip.Width = 65
+                    ToolTip.Height = 28
+
+                    .FillRectangle(Brushes.Yellow, ToolTip)
+                    .DrawString("Portal", ToolTipFont, ToolTipBrush, ToolTip.Location)
+
                 Else
 
                     FillRoundedRectangle(SelectedBrush, RoundedPortalToolButton, 30, Buffer.Graphics)
@@ -4659,6 +4881,21 @@ Public Class Form1
                 If PortalToolButtonHover = True Then
 
                     FillRoundedRectangle(HoverBrush, RoundedPortalToolButton, 30, Buffer.Graphics)
+
+                    .CompositingMode = CompositingMode.SourceOver
+                    .CompositingQuality = CompositingQuality.HighQuality
+                    .PixelOffsetMode = PixelOffsetMode.HighQuality
+                    .SmoothingMode = SmoothingMode.AntiAlias
+
+                    Dim ToolTip As Rectangle
+
+                    ToolTip.X = RoundedPortalToolButton.Left
+                    ToolTip.Y = RoundedPortalToolButton.Top - 30
+                    ToolTip.Width = 65
+                    ToolTip.Height = 28
+
+                    .FillRectangle(Brushes.Yellow, ToolTip)
+                    .DrawString("Portal", ToolTipFont, ToolTipBrush, ToolTip.Location)
 
                 Else
 

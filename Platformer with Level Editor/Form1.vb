@@ -4955,9 +4955,6 @@ Public Class Form1
             'To fix draw string error with anti aliasing: "Parameters not valid."
             'Set the compositing mode to source over.
 
-            .CompositingQuality = CompositingQuality.HighQuality
-            .PixelOffsetMode = PixelOffsetMode.HighQuality
-
             .DrawString("Play",
                         FPSFont,
                         Brushes.White,
@@ -4965,8 +4962,6 @@ Public Class Form1
                         AlineCenterMiddle)
 
             .CompositingMode = CompositingMode.SourceCopy
-            .CompositingQuality = CompositingQuality.HighSpeed
-            .PixelOffsetMode = PixelOffsetMode.None
 
             Dim ControllerHint As Rectangle
 
@@ -5024,9 +5019,6 @@ Public Class Form1
             'To fix draw string error with anti aliasing: "Parameters not valid."
             'Set the compositing mode to source over.
 
-            .CompositingQuality = CompositingQuality.HighQuality
-            .PixelOffsetMode = PixelOffsetMode.HighQuality
-
             .DrawString("Edit",
                         FPSFont,
                         Brushes.White,
@@ -5034,8 +5026,6 @@ Public Class Form1
                         AlineCenterMiddle)
 
             .CompositingMode = CompositingMode.SourceCopy
-            .CompositingQuality = CompositingQuality.HighSpeed
-            .PixelOffsetMode = PixelOffsetMode.None
 
             Dim ControllerHint As Rectangle
 
@@ -5093,9 +5083,6 @@ Public Class Form1
             'To fix draw string error with anti aliasing: "Parameters not valid."
             'Set the compositing mode to source over.
 
-            .CompositingQuality = CompositingQuality.HighQuality
-            .PixelOffsetMode = PixelOffsetMode.HighQuality
-
             .DrawString("≡",
                         MenuButtonFont,
                         Brushes.White,
@@ -5103,8 +5090,6 @@ Public Class Form1
                         AlineCenterMiddle)
 
             .CompositingMode = CompositingMode.SourceCopy
-            .CompositingQuality = CompositingQuality.HighSpeed
-            .PixelOffsetMode = PixelOffsetMode.None
 
             Dim ControllerHint As Rectangle
 
@@ -5354,12 +5339,12 @@ Public Class Form1
             'To fix draw string error with anti aliasing: "Parameters not valid."
             'Set the compositing mode to source over.
 
-            .CompositingQuality = CompositingQuality.HighQuality
+            '.CompositingQuality = CompositingQuality.HighQuality
 
             .DrawString(FPS.ToString & " FPS", FPSFont, Brushes.White, FPS_Postion)
 
             .CompositingMode = CompositingMode.SourceCopy
-            .CompositingQuality = CompositingQuality.HighSpeed
+            '.CompositingQuality = CompositingQuality.HighSpeed
 
         End With
 

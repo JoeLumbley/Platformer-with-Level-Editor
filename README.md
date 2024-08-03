@@ -115,40 +115,24 @@ By following these steps, you’ll gain hands-on experience, learn programming p
 
 ![063](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/c55ed39f-9a4e-43d6-84a0-f5c364f224d9)
 
-![159](https://github.com/user-attachments/assets/63eddec2-4129-49d5-a4e1-3e8e93de31d7)
-
-![161](https://github.com/user-attachments/assets/9eb6d6e7-0bca-444b-bdee-0b3346cb0da2)
-
-![162](https://github.com/user-attachments/assets/c9f50b91-a1d8-4d13-b70b-842cb8fd5ac1)
 
 
+
+
+![172](https://github.com/user-attachments/assets/15ff1e09-5101-429c-9e6c-9dafca0a57d9)
 
 
 
 
 
+![170](https://github.com/user-attachments/assets/666da83f-5c51-4e65-92b9-e665f0fba2aa)
+
+![171](https://github.com/user-attachments/assets/45efa3ef-2f8f-4be5-a9e8-81f22a6e4cbb)
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+![169](https://github.com/user-attachments/assets/e423b338-cb9c-430c-8d31-9c67eb08f12c)
 
 

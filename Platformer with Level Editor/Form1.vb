@@ -2401,8 +2401,8 @@ Public Class Form1
                 'To fix draw string error with anti aliasing: "Parameters not valid."
                 'Set the compositing mode to source over.
 
-                .CompositingQuality = CompositingQuality.HighQuality
-                .PixelOffsetMode = PixelOffsetMode.HighQuality
+                '.CompositingQuality = CompositingQuality.HighQuality
+                '.PixelOffsetMode = PixelOffsetMode.HighQuality
 
                 .FillRectangle(Brushes.Red, RectOffset)
 
@@ -2417,8 +2417,8 @@ Public Class Form1
                         New StringFormat With {.Alignment = StringAlignment.Near})
 
                 .CompositingMode = CompositingMode.SourceCopy
-                .CompositingQuality = CompositingQuality.HighSpeed
-                .PixelOffsetMode = PixelOffsetMode.None
+                '.CompositingQuality = CompositingQuality.HighSpeed
+                '.PixelOffsetMode = PixelOffsetMode.None
 
             End If
 
@@ -3197,9 +3197,6 @@ Public Class Form1
             'To fix draw string error with anti aliasing: "Parameters not valid."
             'Set the compositing mode to source over.
 
-            .CompositingQuality = CompositingQuality.HighQuality
-            .PixelOffsetMode = PixelOffsetMode.HighQuality
-
             'Draw drop shadow.
             .DrawString("$" & CashCollected.ToString,
                     FPSFont,
@@ -3213,8 +3210,6 @@ Public Class Form1
                         CashCollectedPostion)
 
             .CompositingMode = CompositingMode.SourceCopy
-            .CompositingQuality = CompositingQuality.HighSpeed
-            .PixelOffsetMode = PixelOffsetMode.None
 
         End With
 

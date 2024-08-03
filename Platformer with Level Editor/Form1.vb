@@ -3620,8 +3620,7 @@ Public Class Form1
                     FillRoundedRectangle(SelectedHoverBrush, RoundedBlockToolButton, 30, Buffer.Graphics)
 
                     .CompositingMode = CompositingMode.SourceOver
-                    '.CompositingQuality = CompositingQuality.HighQuality
-                    '.PixelOffsetMode = PixelOffsetMode.HighQuality
+
                     .SmoothingMode = SmoothingMode.AntiAlias
 
                     .DrawLine(SelectionHighlightHoverPen,
@@ -3648,8 +3647,7 @@ Public Class Form1
                     FillRoundedRectangle(SelectedBrush, RoundedBlockToolButton, 30, Buffer.Graphics)
 
                     .CompositingMode = CompositingMode.SourceOver
-                    '.CompositingQuality = CompositingQuality.HighQuality
-                    '.PixelOffsetMode = PixelOffsetMode.HighQuality
+
                     .SmoothingMode = SmoothingMode.AntiAlias
 
                     .DrawLine(SelectionHighlightPen,
@@ -3669,8 +3667,6 @@ Public Class Form1
                     FillRoundedRectangle(HoverBrush, RoundedBlockToolButton, 30, Buffer.Graphics)
 
                     .CompositingMode = CompositingMode.SourceOver
-                    '.CompositingQuality = CompositingQuality.HighQuality
-                    '.PixelOffsetMode = PixelOffsetMode.HighQuality
 
                     Dim ToolTip As Rectangle
 
@@ -3693,8 +3689,6 @@ Public Class Form1
 
             .FillRectangle(Brushes.Chocolate, BlockToolIcon.Rect)
 
-            '.CompositingQuality = CompositingQuality.HighSpeed
-            '.SmoothingMode = SmoothingMode.None
             .PixelOffsetMode = PixelOffsetMode.HighQuality
 
             .DrawLine(Pens.White,
@@ -3709,8 +3703,6 @@ Public Class Form1
             .CompositingMode = CompositingMode.SourceOver
             'To fix draw string error with anti aliasing: "Parameters not valid."
             'Set the compositing mode to source over.
-
-            '.CompositingQuality = CompositingQuality.HighQuality
 
             If SelectedTool = Tools.Pointer Then
 
@@ -3769,9 +3761,6 @@ Public Class Form1
             End If
 
             .CompositingMode = CompositingMode.SourceCopy
-            '.CompositingQuality = CompositingQuality.HighSpeed
-            '.PixelOffsetMode = PixelOffsetMode.None
-            '.SmoothingMode = SmoothingMode.None
 
         End With
 

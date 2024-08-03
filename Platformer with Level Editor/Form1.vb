@@ -2432,9 +2432,6 @@ Public Class Form1
                 'To fix draw string error with anti aliasing: "Parameters not valid."
                 'Set the compositing mode to source over.
 
-                .CompositingQuality = CompositingQuality.HighQuality
-                .PixelOffsetMode = PixelOffsetMode.HighQuality
-
                 Dim RectOffset As Rectangle = Spawn.Rect
 
                 RectOffset.Offset(CameraOffset)
@@ -2444,8 +2441,6 @@ Public Class Form1
                 .DrawString("Start", SpawnFont, Brushes.White, RectOffset, AlineCenterMiddle)
 
                 .CompositingMode = CompositingMode.SourceCopy
-                .CompositingQuality = CompositingQuality.HighSpeed
-                .PixelOffsetMode = PixelOffsetMode.None
 
             End If
 

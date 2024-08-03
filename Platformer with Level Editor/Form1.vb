@@ -5140,8 +5140,6 @@ Public Class Form1
             'To fix draw string error with anti aliasing: "Parameters not valid."
             'Set the compositing mode to source over.
 
-            '.CompositingQuality = CompositingQuality.HighQuality
-            '.PixelOffsetMode = PixelOffsetMode.HighQuality
             .SmoothingMode = SmoothingMode.AntiAlias
 
             .DrawEllipse(BButtonIconOutinePen,
@@ -5171,8 +5169,6 @@ Public Class Form1
                         AlineCenterMiddle)
 
             .CompositingMode = CompositingMode.SourceCopy
-            '.CompositingQuality = CompositingQuality.HighSpeed
-            '.PixelOffsetMode = PixelOffsetMode.None
 
         End With
 
@@ -5197,8 +5193,6 @@ Public Class Form1
             'To fix draw string error with anti aliasing: "Parameters not valid."
             'Set the compositing mode to source over.
 
-            '.CompositingQuality = CompositingQuality.HighQuality
-            '.PixelOffsetMode = PixelOffsetMode.HighQuality
             .SmoothingMode = SmoothingMode.AntiAlias
 
             .DrawEllipse(YButtonIconOutinePen,
@@ -5228,8 +5222,6 @@ Public Class Form1
                         AlineCenterMiddle)
 
             .CompositingMode = CompositingMode.SourceCopy
-            '.CompositingQuality = CompositingQuality.HighSpeed
-            '.PixelOffsetMode = PixelOffsetMode.None
 
         End With
 
@@ -5254,9 +5246,6 @@ Public Class Form1
             'To fix draw string error with anti aliasing: "Parameters not valid."
             'Set the compositing mode to source over.
 
-            '.CompositingQuality = CompositingQuality.HighQuality
-            '.PixelOffsetMode = PixelOffsetMode.HighQuality
-
             .DrawString("New", FPSFont,
                         Brushes.White,
                         New Rectangle(NewButton.Rect.X + 25,
@@ -5275,8 +5264,6 @@ Public Class Form1
                         AlineCenterMiddle)
 
             .CompositingMode = CompositingMode.SourceCopy
-            '.CompositingQuality = CompositingQuality.HighSpeed
-            '.PixelOffsetMode = PixelOffsetMode.None
 
         End With
 
@@ -5301,8 +5288,6 @@ Public Class Form1
             'To fix draw string error with anti aliasing: "Parameters not valid."
             'Set the compositing mode to source over.
 
-            '.CompositingQuality = CompositingQuality.HighQuality
-            '.PixelOffsetMode = PixelOffsetMode.HighQuality
             .SmoothingMode = SmoothingMode.AntiAlias
 
             .DrawEllipse(XButtonIconOutinePen,
@@ -5323,8 +5308,6 @@ Public Class Form1
                         AlineCenterMiddle)
 
             .CompositingMode = CompositingMode.SourceCopy
-            '.CompositingQuality = CompositingQuality.HighSpeed
-            '.PixelOffsetMode = PixelOffsetMode.None
 
         End With
 
@@ -5339,12 +5322,9 @@ Public Class Form1
             'To fix draw string error with anti aliasing: "Parameters not valid."
             'Set the compositing mode to source over.
 
-            '.CompositingQuality = CompositingQuality.HighQuality
-
             .DrawString(FPS.ToString & " FPS", FPSFont, Brushes.White, FPS_Postion)
 
             .CompositingMode = CompositingMode.SourceCopy
-            '.CompositingQuality = CompositingQuality.HighSpeed
 
         End With
 

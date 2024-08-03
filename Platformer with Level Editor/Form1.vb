@@ -3257,6 +3257,7 @@ Public Class Form1
                     Case Tools.Block
 
                         .CompositingMode = CompositingMode.SourceCopy
+
                         .PixelOffsetMode = PixelOffsetMode.HighQuality
 
                         .FillRectangle(Brushes.Chocolate, RectOffset)
@@ -3267,13 +3268,17 @@ Public Class Form1
                                   RectOffset.Left,
                                   RectOffset.Top + 1)
 
-                    Case Tools.Bill
+                        .PixelOffsetMode = PixelOffsetMode.None
 
-                        .CompositingMode = CompositingMode.SourceOver
+                    Case Tools.Bill
 
                         .FillRectangle(Brushes.Goldenrod, RectOffset)
 
+                        .CompositingMode = CompositingMode.SourceOver
+
                         .DrawString("$", BillFont, Brushes.OrangeRed, RectOffset, AlineCenterMiddle)
+
+                        .CompositingMode = CompositingMode.SourceCopy
 
                     Case Tools.Cloud
 
@@ -3313,9 +3318,9 @@ Public Class Form1
 
                     Case Tools.Enemy
 
-                        .CompositingMode = CompositingMode.SourceOver
-
                         .FillRectangle(Brushes.Chocolate, RectOffset)
+
+                        .CompositingMode = CompositingMode.SourceOver
 
                         .DrawString("E", EnemyFont, Brushes.PaleGoldenrod, RectOffset, AlineCenterMiddle)
 
@@ -3328,6 +3333,8 @@ Public Class Form1
                                     Brushes.Chocolate,
                                     PatrolB,
                                     AlineCenterMiddle)
+
+                        .CompositingMode = CompositingMode.SourceCopy
 
                     Case Tools.Goal
 
@@ -3381,6 +3388,8 @@ Public Class Form1
 
                         End If
 
+                        .CompositingMode = CompositingMode.SourceCopy
+
                     Case Tools.Portal
 
                         DrawPortal(RectOffset)
@@ -3388,10 +3397,6 @@ Public Class Form1
                 End Select
 
             End If
-
-            .CompositingMode = CompositingMode.SourceCopy
-            .CompositingQuality = CompositingQuality.HighSpeed
-            .PixelOffsetMode = PixelOffsetMode.None
 
         End With
 

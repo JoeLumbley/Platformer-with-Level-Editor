@@ -2599,6 +2599,12 @@ Public Class Form1
 
                     End If
 
+                    If GameState = AppState.Editing Then
+
+                        .DrawString("End", SpawnFont, Brushes.Black, RectOffset, AlineCenterMiddle)
+
+                    End If
+
                     .CompositingMode = CompositingMode.SourceCopy
 
                 End If

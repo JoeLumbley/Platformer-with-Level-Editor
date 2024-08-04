@@ -2828,174 +2828,191 @@ Public Class Form1
 
     Private Sub DrawSelectionAndSizingHandle()
 
+
         If GameState = AppState.Editing Then
 
-            Dim RectOffset As Rectangle
+                Dim RectOffset As Rectangle
 
-            If SelectedPortal > -1 Then
+                If SelectedPortal > -1 Then
 
-                If PortalEntranceSelected = True Then
+                    If PortalEntranceSelected = True Then
 
-                    Dim PortalEntranceOffset As New Rectangle(New Point(Portals(SelectedPortal).PatrolA.X, Portals(SelectedPortal).PatrolA.Y), New Drawing.Size(GridSize, GridSize))
+                        Dim PortalEntranceOffset As New Rectangle(New Point(Portals(SelectedPortal).PatrolA.X, Portals(SelectedPortal).PatrolA.Y), New Drawing.Size(GridSize, GridSize))
 
-                    PortalEntranceOffset.Offset(CameraOffset)
+                        PortalEntranceOffset.Offset(CameraOffset)
 
-                    DrawSelectionRectangle(PortalEntranceOffset, Buffer.Graphics)
+                        DrawSelectionRectangle(PortalEntranceOffset, Buffer.Graphics)
 
-                Else
+                    Else
 
-                    Dim PortalExitOffset As New Rectangle(New Point(Portals(SelectedPortal).PatrolB.X, Portals(SelectedPortal).PatrolB.Y), New Drawing.Size(GridSize, GridSize))
+                        Dim PortalExitOffset As New Rectangle(New Point(Portals(SelectedPortal).PatrolB.X, Portals(SelectedPortal).PatrolB.Y), New Drawing.Size(GridSize, GridSize))
 
-                    PortalExitOffset.Offset(CameraOffset)
+                        PortalExitOffset.Offset(CameraOffset)
 
-                    DrawSelectionRectangle(PortalExitOffset, Buffer.Graphics)
+                        DrawSelectionRectangle(PortalExitOffset, Buffer.Graphics)
+
+                    End If
+
+                End If
+
+                If SelectedEnemy > -1 Then
+
+                    Dim SelectionSize As New Size(Enemies(SelectedEnemy).PatrolB.X + GridSize - Enemies(SelectedEnemy).PatrolA.X, GridSize)
+
+                    RectOffset = New Rectangle(New Point(Enemies(SelectedEnemy).PatrolA.X, Enemies(SelectedEnemy).PatrolA.Y), SelectionSize)
+
+                    RectOffset.Offset(CameraOffset)
+
+                    DrawSelectionRectangle(RectOffset, Buffer.Graphics)
+
+                    'Position sizing handle.
+                    SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
+                    SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
+
+                    DrawSizingHandle(RectOffset, Buffer.Graphics)
+
+                End If
+
+                If SelectedBackdrop > -1 Then
+
+                    RectOffset = Backdrops(SelectedBackdrop).Rect
+
+                    RectOffset.Offset(CameraOffset)
+
+                    DrawSelectionRectangle(RectOffset, Buffer.Graphics)
+
+                    'Position sizing handle.
+                    SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
+                    SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
+
+                    DrawSizingHandle(RectOffset, Buffer.Graphics)
+
+                End If
+
+                If SelectedBush > -1 Then
+
+                    RectOffset = Bushes(SelectedBush).Rect
+
+                    RectOffset.Offset(CameraOffset)
+
+                    DrawSelectionRectangle(RectOffset, Buffer.Graphics)
+
+                    'Position sizing handle.
+                    SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
+                    SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
+
+                    DrawSizingHandle(RectOffset, Buffer.Graphics)
+
+                End If
+
+                If SpawnSelected = True Then
+
+                    RectOffset = Spawn.Rect
+
+                    RectOffset.Offset(CameraOffset)
+
+                    DrawSelectionRectangle(RectOffset, Buffer.Graphics)
+
+                End If
+
+                If SelectedBlock > -1 Then
+
+                    RectOffset = Blocks(SelectedBlock).Rect
+
+                    RectOffset.Offset(CameraOffset)
+
+                    DrawSelectionRectangle(RectOffset, Buffer.Graphics)
+
+                    'Position sizing handle.
+                    SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
+                    SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
+
+                    DrawSizingHandle(RectOffset, Buffer.Graphics)
+
+                End If
+
+                If GoalSelected = True Then
+
+                    RectOffset = Goal.Rect
+
+                    RectOffset.Offset(CameraOffset)
+
+                    DrawSelectionRectangle(RectOffset, Buffer.Graphics)
+
+                    'Position sizing handle.
+                    SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
+                    SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
+
+                    DrawSizingHandle(RectOffset, Buffer.Graphics)
+
+                End If
+
+                If SelectedCloud > -1 Then
+
+                    RectOffset = Clouds(SelectedCloud).Rect
+
+                    RectOffset.Offset(CameraOffset)
+
+                    DrawSelectionRectangle(RectOffset, Buffer.Graphics)
+
+                    'Position sizing handle.
+                    SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
+                    SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
+
+                    DrawSizingHandle(RectOffset, Buffer.Graphics)
+
+                End If
+
+                If SelectedBill > -1 Then
+
+                    RectOffset = Cash(SelectedBill).Rect
+
+                    RectOffset.Offset(CameraOffset)
+
+                    DrawSelectionRectangle(RectOffset, Buffer.Graphics)
 
                 End If
 
             End If
 
-            If SelectedEnemy > -1 Then
-
-                Dim SelectionSize As New Size(Enemies(SelectedEnemy).PatrolB.X + GridSize - Enemies(SelectedEnemy).PatrolA.X, GridSize)
-
-                RectOffset = New Rectangle(New Point(Enemies(SelectedEnemy).PatrolA.X, Enemies(SelectedEnemy).PatrolA.Y), SelectionSize)
-
-                RectOffset.Offset(CameraOffset)
-
-                DrawSelectionRectangle(RectOffset, Buffer.Graphics)
-
-                'Position sizing handle.
-                SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
-                SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
-
-                DrawSizingHandle(RectOffset, Buffer.Graphics)
-
-            End If
-
-            If SelectedBackdrop > -1 Then
-
-                RectOffset = Backdrops(SelectedBackdrop).Rect
-
-                RectOffset.Offset(CameraOffset)
-
-                DrawSelectionRectangle(RectOffset, Buffer.Graphics)
-
-                'Position sizing handle.
-                SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
-                SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
-
-                DrawSizingHandle(RectOffset, Buffer.Graphics)
-
-            End If
-
-            If SelectedBush > -1 Then
-
-                RectOffset = Bushes(SelectedBush).Rect
-
-                RectOffset.Offset(CameraOffset)
-
-                DrawSelectionRectangle(RectOffset, Buffer.Graphics)
-
-                'Position sizing handle.
-                SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
-                SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
-
-                DrawSizingHandle(RectOffset, Buffer.Graphics)
-
-            End If
-
-            If SpawnSelected = True Then
-
-                RectOffset = Spawn.Rect
-
-                RectOffset.Offset(CameraOffset)
-
-                DrawSelectionRectangle(RectOffset, Buffer.Graphics)
-
-            End If
-
-            If SelectedBlock > -1 Then
-
-                RectOffset = Blocks(SelectedBlock).Rect
-
-                RectOffset.Offset(CameraOffset)
-
-                DrawSelectionRectangle(RectOffset, Buffer.Graphics)
-
-                'Position sizing handle.
-                SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
-                SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
-
-                DrawSizingHandle(RectOffset, Buffer.Graphics)
-
-            End If
-
-            If GoalSelected = True Then
-
-                RectOffset = Goal.Rect
-
-                RectOffset.Offset(CameraOffset)
-
-                DrawSelectionRectangle(RectOffset, Buffer.Graphics)
-
-                'Position sizing handle.
-                SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
-                SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
-
-                DrawSizingHandle(RectOffset, Buffer.Graphics)
-
-            End If
-
-            If SelectedCloud > -1 Then
-
-                RectOffset = Clouds(SelectedCloud).Rect
-
-                RectOffset.Offset(CameraOffset)
-
-                DrawSelectionRectangle(RectOffset, Buffer.Graphics)
-
-                'Position sizing handle.
-                SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
-                SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
-
-                DrawSizingHandle(RectOffset, Buffer.Graphics)
-
-            End If
-
-            If SelectedBill > -1 Then
-
-                RectOffset = Cash(SelectedBill).Rect
-
-                RectOffset.Offset(CameraOffset)
-
-                DrawSelectionRectangle(RectOffset, Buffer.Graphics)
-
-            End If
-
-        End If
-
     End Sub
 
     Private Sub DrawSelectionRectangle(Rect As Rectangle, Grap As Graphics)
 
+        Grap.CompositingMode = CompositingMode.SourceOver
+
+        Grap.SmoothingMode = SmoothingMode.AntiAlias
+
         'Draw selection rectangle outline.
         DrawRoundedRectangle(SelectionRectangleOutlinePen, Rect, 5, Grap)
 
+        Grap.SmoothingMode = SmoothingMode.None
+
         'Draw dash selection rectangle.
         Grap.DrawRectangle(SelectionRectangleDashPen, Rect)
+
+        Grap.CompositingMode = CompositingMode.SourceCopy
 
     End Sub
 
     Private Sub DrawSizingHandle(Rect As Rectangle, Grap As Graphics)
 
+        Grap.CompositingMode = CompositingMode.SourceOver
+
         'Draw sizing handle center.
         FillRoundedRectangle(Brushes.White, SizingHandle, 5, Grap)
+
+        Grap.SmoothingMode = SmoothingMode.AntiAlias
 
         'Draw sizing handle outer outline.
         DrawRoundedRectangle(SizingHandleOuterOutlinePen, SizingHandle, 5, Grap)
 
         'Draw sizing handle inner outline.
         DrawRoundedRectangle(SizingHandleInnerOutlinePen, SizingHandle, 5, Grap)
+
+        Grap.CompositingMode = CompositingMode.SourceCopy
+
+        Grap.SmoothingMode = SmoothingMode.None
 
     End Sub
 

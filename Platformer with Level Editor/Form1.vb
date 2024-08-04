@@ -5867,7 +5867,7 @@ Public Class Form1
                     OffsetLine.X2 = line.X2 + Camera.Position.X * -1
                     OffsetLine.Y2 = line.Y2 + Camera.Position.Y * -1
 
-                    Buffer.Graphics.DrawLine(Pens.Gray, OffsetLine.X1, OffsetLine.Y1, OffsetLine.X2, OffsetLine.Y2)
+                    .DrawLine(Pens.Gray, OffsetLine.X1, OffsetLine.Y1, OffsetLine.X2, OffsetLine.Y2)
 
                 Next
 

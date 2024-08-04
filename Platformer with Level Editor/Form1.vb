@@ -477,9 +477,9 @@ Public Class Form1
 
     Private GridSize As Integer = 64
 
-    Private GridLineBitmap As New Bitmap(Screen.PrimaryScreen.WorkingArea.Size.Width, Screen.PrimaryScreen.WorkingArea.Size.Height)
+    'Private GridLineBitmap As New Bitmap(Screen.PrimaryScreen.WorkingArea.Size.Width, Screen.PrimaryScreen.WorkingArea.Size.Height)
 
-    Private GridLineBuffer As Graphics = Graphics.FromImage(GridLineBitmap)
+    'Private GridLineBuffer As Graphics = Graphics.FromImage(GridLineBitmap)
 
     Private SizingHandle As New Rectangle(0, 0, 25, 25)
 
@@ -5614,8 +5614,6 @@ Public Class Form1
 
             Shadow.Offset(12, 12)
 
-
-
             FillRoundedRectangle(MenuShadowBrush, Shadow, 30, Buffer.Graphics)
 
             If StartScreenOpenButtonHover = True Then
@@ -5637,8 +5635,6 @@ Public Class Form1
             'To fix draw string error with anti aliasing: "Parameters not valid."
             'Set the compositing mode to source over.
 
-            .CompositingQuality = CompositingQuality.HighQuality
-            .PixelOffsetMode = PixelOffsetMode.HighQuality
             .SmoothingMode = SmoothingMode.AntiAlias
 
             .DrawEllipse(YButtonIconOutinePen,
@@ -5646,6 +5642,8 @@ Public Class Form1
                                        StartScreenOpenButton.Rect.Y + StartScreenOpenButton.Rect.Height \ 2 - 52 \ 2,
                                        52,
                                        52))
+
+            .SmoothingMode = SmoothingMode.None
 
             .DrawString("Open",
                         FPSFont,
@@ -5666,9 +5664,6 @@ Public Class Form1
                         AlineCenterMiddle)
 
             .CompositingMode = CompositingMode.SourceCopy
-            .CompositingQuality = CompositingQuality.HighSpeed
-            .PixelOffsetMode = PixelOffsetMode.None
-            .SmoothingMode = SmoothingMode.None
 
         End With
 
@@ -5703,8 +5698,6 @@ Public Class Form1
             'To fix draw string error with anti aliasing: "Parameters not valid."
             'Set the compositing mode to source over.
 
-            .CompositingQuality = CompositingQuality.HighQuality
-            .PixelOffsetMode = PixelOffsetMode.HighQuality
             .SmoothingMode = SmoothingMode.AntiAlias
 
             .DrawEllipse(BButtonIconOutinePen,
@@ -5712,6 +5705,8 @@ Public Class Form1
                                        StartScreenNewButton.Rect.Y + StartScreenNewButton.Rect.Height \ 2 - 52 \ 2,
                                        52,
                                        52))
+
+            .SmoothingMode = SmoothingMode.None
 
             .DrawString("New",
                         FPSFont,
@@ -5732,9 +5727,6 @@ Public Class Form1
                         AlineCenterMiddle)
 
             .CompositingMode = CompositingMode.SourceCopy
-            .CompositingQuality = CompositingQuality.HighSpeed
-            .PixelOffsetMode = PixelOffsetMode.None
-            .SmoothingMode = SmoothingMode.None
 
         End With
 
@@ -5748,9 +5740,6 @@ Public Class Form1
             .CompositingMode = CompositingMode.SourceOver
             'To fix draw string error with anti aliasing: "Parameters not valid."
             'Set the compositing mode to source over.
-
-            .CompositingQuality = CompositingQuality.HighQuality
-            .PixelOffsetMode = PixelOffsetMode.HighQuality
 
             'Draw drop shadow.
             .DrawString(Title.Text,
@@ -5770,8 +5759,6 @@ Public Class Form1
                         AlineCenterMiddle)
 
             .CompositingMode = CompositingMode.SourceCopy
-            .CompositingQuality = CompositingQuality.HighSpeed
-            .PixelOffsetMode = PixelOffsetMode.None
 
         End With
 
@@ -5785,9 +5772,6 @@ Public Class Form1
             .CompositingMode = CompositingMode.SourceOver
             'To fix draw string error with anti aliasing: "Parameters not valid."
             'Set the compositing mode to source over.
-
-            .CompositingQuality = CompositingQuality.HighQuality
-            .PixelOffsetMode = PixelOffsetMode.HighQuality
 
             'Draw drop shadow.
             .DrawString("Level Clear!",
@@ -5807,8 +5791,6 @@ Public Class Form1
                         AlineCenterMiddle)
 
             .CompositingMode = CompositingMode.SourceCopy
-            .CompositingQuality = CompositingQuality.HighSpeed
-            .PixelOffsetMode = PixelOffsetMode.None
 
         End With
 

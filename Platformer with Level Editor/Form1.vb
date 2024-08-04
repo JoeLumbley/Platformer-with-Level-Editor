@@ -1386,7 +1386,7 @@ Public Class Form1
 
                             UpdateCameraOffset()
 
-                            BufferGridLines()
+                            'BufferGridLines()
 
                             ResetCash()
 
@@ -1482,7 +1482,7 @@ Public Class Form1
 
                 UpdateCameraOffset()
 
-                BufferGridLines()
+                'BufferGridLines()
 
                 ResetCash()
 
@@ -5430,7 +5430,7 @@ Public Class Form1
 
             Level.Rect.Width = Rect.Right
 
-            BufferGridLines()
+            'BufferGridLines()
 
         End If
 
@@ -5438,7 +5438,7 @@ Public Class Form1
 
             Level.Rect.Height = Rect.Bottom
 
-            BufferGridLines()
+            'BufferGridLines()
 
         End If
 
@@ -5877,31 +5877,30 @@ Public Class Form1
 
     End Sub
 
-    Private Sub BufferGridLines()
+    'Private Sub BufferGridLines()
 
-        GridLineBuffer.Clear(Color.Transparent)
+    '    GridLineBuffer.Clear(Color.Transparent)
 
-        ' Draw vertical lines  |
-        For x As Integer = CameraOffset.X To CameraOffset.X + Level.Rect.Width Step GridSize
+    '    ' Draw vertical lines  |
+    '    For x As Integer = CameraOffset.X To CameraOffset.X + Level.Rect.Width Step GridSize
 
-            GridLineBuffer.DrawLine(GridLinesDashPen, x, CameraOffset.Y, x, CameraOffset.Y + Level.Rect.Height)
+    '        GridLineBuffer.DrawLine(GridLinesDashPen, x, CameraOffset.Y, x, CameraOffset.Y + Level.Rect.Height)
 
-        Next
+    '    Next
 
-        ' Draw horizontal lines ---
-        For y As Integer = CameraOffset.Y To CameraOffset.Y + Level.Rect.Height Step GridSize
+    '    ' Draw horizontal lines ---
+    '    For y As Integer = CameraOffset.Y To CameraOffset.Y + Level.Rect.Height Step GridSize
 
-            GridLineBuffer.DrawLine(GridLinesDashPen, CameraOffset.X, y, CameraOffset.X + Level.Rect.Width, y)
+    '        GridLineBuffer.DrawLine(GridLinesDashPen, CameraOffset.X, y, CameraOffset.X + Level.Rect.Width, y)
 
-        Next
+    '    Next
 
-    End Sub
+    'End Sub
 
     Private Sub DrawRoundedRectangle(pen As Pen, Rect As Rectangle, radius As Integer, g As Graphics)
 
         g.CompositingMode = CompositingMode.SourceOver
-        'g.CompositingQuality = CompositingQuality.HighQuality
-        'g.PixelOffsetMode = PixelOffsetMode.HighQuality
+
         g.SmoothingMode = SmoothingMode.AntiAlias
 
         Dim path As New GraphicsPath()
@@ -5935,8 +5934,7 @@ Public Class Form1
         g.DrawPath(pen, path)
 
         g.CompositingMode = CompositingMode.SourceCopy
-        'g.CompositingQuality = CompositingQuality.HighSpeed
-        'g.PixelOffsetMode = PixelOffsetMode.None
+
         g.SmoothingMode = SmoothingMode.None
 
     End Sub
@@ -5944,8 +5942,7 @@ Public Class Form1
     Private Sub FillRoundedRectangle(brush As Brush, Rect As Rectangle, radius As Integer, g As Graphics)
 
         g.CompositingMode = CompositingMode.SourceOver
-        'g.CompositingQuality = CompositingQuality.HighQuality
-        'g.PixelOffsetMode = PixelOffsetMode.HighQuality
+
         g.SmoothingMode = SmoothingMode.AntiAlias
 
         Dim Path As New GraphicsPath()
@@ -5979,8 +5976,7 @@ Public Class Form1
         g.FillPath(brush, Path)
 
         g.CompositingMode = CompositingMode.SourceCopy
-        'g.CompositingQuality = CompositingQuality.HighSpeed
-        'g.PixelOffsetMode = PixelOffsetMode.None
+
         g.SmoothingMode = SmoothingMode.None
 
     End Sub
@@ -6125,7 +6121,7 @@ Public Class Form1
 
         Camera.Acceleration = New PointF(700, 700)
 
-        BufferGridLines()
+        'BufferGridLines()
 
     End Sub
 
@@ -6220,7 +6216,7 @@ Public Class Form1
 
         CreateNewLevel()
 
-        BufferGridLines()
+        'BufferGridLines()
 
         CashCollected = 0
 
@@ -7760,7 +7756,7 @@ Public Class Form1
 
             End If
 
-            BufferGridLines()
+            'BufferGridLines()
 
         End If
 
@@ -7842,7 +7838,7 @@ Public Class Form1
 
             End If
 
-            BufferGridLines()
+            'BufferGridLines()
 
         End If
 
@@ -8529,7 +8525,7 @@ Public Class Form1
 
                 UpdateCameraOffset()
 
-                BufferGridLines()
+                'BufferGridLines()
 
             End If
 
@@ -8553,7 +8549,7 @@ Public Class Form1
 
                     EditorLastFrame = Now
 
-                    BufferGridLines()
+                    'BufferGridLines()
 
                 End If
 
@@ -9790,7 +9786,7 @@ Public Class Form1
 
                         GameState = AppState.Editing
 
-                        BufferGridLines()
+                        'BufferGridLines()
 
                     End If
 
@@ -10343,7 +10339,7 @@ Public Class Form1
 
             UpdateCameraOffset()
 
-            BufferGridLines()
+            'BufferGridLines()
 
         End If
 
@@ -10369,7 +10365,7 @@ Public Class Form1
 
                     EditorLastFrame = Now
 
-                    BufferGridLines()
+                    'BufferGridLines()
 
                 End If
 
@@ -10567,7 +10563,7 @@ Public Class Form1
 
             DoResize()
 
-            BufferGridLines()
+            'BufferGridLines()
 
         End If
 

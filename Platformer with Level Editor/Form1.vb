@@ -2601,6 +2601,12 @@ Public Class Form1
 
                     If GameState = AppState.Editing Then
 
+                        Dim ShadowOffset As Rectangle = RectOffset
+
+                        ShadowOffset.Offset(2, 2)
+
+                        .DrawString("End", SpawnFont, Brushes.White, ShadowOffset, AlineCenterMiddle)
+
                         .DrawString("End", SpawnFont, Brushes.Black, RectOffset, AlineCenterMiddle)
 
                     End If

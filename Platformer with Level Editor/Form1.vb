@@ -3407,9 +3407,17 @@ Public Class Form1
 
             Shadow.Offset(15, 15)
 
+            .CompositingMode = CompositingMode.SourceOver
+
+            .SmoothingMode = SmoothingMode.AntiAlias
+
             FillRoundedRectangle(MenuShadowBrush, Shadow, 30, Buffer.Graphics)
 
             FillRoundedRectangle(Brushes.Black, MenuBackground.Rect, 30, Buffer.Graphics)
+
+            .CompositingMode = CompositingMode.SourceCopy
+
+            .SmoothingMode = SmoothingMode.None
 
         End With
 
@@ -3417,11 +3425,23 @@ Public Class Form1
 
     Private Sub DrawMenuOutline()
 
-        Dim OutLineRect As Rectangle = MenuBackground.Rect
+        With Buffer.Graphics
 
-        OutLineRect.Inflate(2, 2)
+            Dim OutLineRect As Rectangle = MenuBackground.Rect
 
-        DrawRoundedRectangle(MenuOutinePen, OutLineRect, 30, Buffer.Graphics)
+            OutLineRect.Inflate(2, 2)
+
+            .CompositingMode = CompositingMode.SourceOver
+
+            .SmoothingMode = SmoothingMode.AntiAlias
+
+            DrawRoundedRectangle(MenuOutinePen, OutLineRect, 30, Buffer.Graphics)
+
+            .CompositingMode = CompositingMode.SourceCopy
+
+            .SmoothingMode = SmoothingMode.None
+
+        End With
 
     End Sub
 
@@ -3436,23 +3456,21 @@ Public Class Form1
             RoundedPointerToolButton.Width = PointerToolButton.Rect.Width - 4
             RoundedPointerToolButton.Height = PointerToolButton.Rect.Height - 4
 
+            .CompositingMode = CompositingMode.SourceOver
+
+            .SmoothingMode = SmoothingMode.AntiAlias
+
             If SelectedTool = Tools.Pointer Then
 
                 If PointerToolButtonHover = True Then
 
                     FillRoundedRectangle(SelectedHoverBrush, RoundedPointerToolButton, 30, Buffer.Graphics)
 
-                    .CompositingMode = CompositingMode.SourceOver
-
-                    .SmoothingMode = SmoothingMode.AntiAlias
-
                     .DrawLine(SelectionHighlightHoverPen,
                       RoundedPointerToolButton.Left + 11,
                       RoundedPointerToolButton.Bottom - 2,
                       RoundedPointerToolButton.Right - 11,
                       RoundedPointerToolButton.Bottom - 2)
-
-                    .SmoothingMode = SmoothingMode.None
 
                     Dim ToolTip As Rectangle
 
@@ -3469,17 +3487,11 @@ Public Class Form1
 
                     FillRoundedRectangle(SelectedBrush, RoundedPointerToolButton, 30, Buffer.Graphics)
 
-                    .CompositingMode = CompositingMode.SourceOver
-
-                    .SmoothingMode = SmoothingMode.AntiAlias
-
                     .DrawLine(SelectionHighlightPen,
                       RoundedPointerToolButton.Left + 11,
                       RoundedPointerToolButton.Bottom - 2,
                       RoundedPointerToolButton.Right - 11,
                       RoundedPointerToolButton.Bottom - 2)
-
-                    .SmoothingMode = SmoothingMode.None
 
                 End If
 
@@ -3488,8 +3500,6 @@ Public Class Form1
                 If PointerToolButtonHover = True Then
 
                     FillRoundedRectangle(HoverBrush, RoundedPointerToolButton, 30, Buffer.Graphics)
-
-                    .CompositingMode = CompositingMode.SourceOver
 
                     Dim ToolTip As Rectangle
 
@@ -3510,7 +3520,7 @@ Public Class Form1
 
             End If
 
-            .CompositingMode = CompositingMode.SourceOver
+            .SmoothingMode = SmoothingMode.None
 
             .DrawString("ë",
                         PointerToolFont,
@@ -3579,6 +3589,7 @@ Public Class Form1
 
             .CompositingMode = CompositingMode.SourceCopy
 
+
         End With
 
     End Sub
@@ -3594,23 +3605,21 @@ Public Class Form1
 
         With Buffer.Graphics
 
+            .CompositingMode = CompositingMode.SourceOver
+
+            .SmoothingMode = SmoothingMode.AntiAlias
+
             If SelectedTool = Tools.Block Then
 
                 If BlockToolButtonHover = True Then
 
                     FillRoundedRectangle(SelectedHoverBrush, RoundedBlockToolButton, 30, Buffer.Graphics)
 
-                    .CompositingMode = CompositingMode.SourceOver
-
-                    .SmoothingMode = SmoothingMode.AntiAlias
-
                     .DrawLine(SelectionHighlightHoverPen,
                               RoundedBlockToolButton.Left + 11,
                               RoundedBlockToolButton.Bottom - 2,
                               RoundedBlockToolButton.Right - 11,
                               RoundedBlockToolButton.Bottom - 2)
-
-                    .SmoothingMode = SmoothingMode.None
 
                     Dim ToolTip As Rectangle
 
@@ -3627,17 +3636,11 @@ Public Class Form1
 
                     FillRoundedRectangle(SelectedBrush, RoundedBlockToolButton, 30, Buffer.Graphics)
 
-                    .CompositingMode = CompositingMode.SourceOver
-
-                    .SmoothingMode = SmoothingMode.AntiAlias
-
                     .DrawLine(SelectionHighlightPen,
                               RoundedBlockToolButton.Left + 11,
                               RoundedBlockToolButton.Bottom - 2,
                               RoundedBlockToolButton.Right - 11,
                               RoundedBlockToolButton.Bottom - 2)
-
-                    .SmoothingMode = SmoothingMode.None
 
                 End If
 
@@ -3646,8 +3649,6 @@ Public Class Form1
                 If BlockToolButtonHover = True Then
 
                     FillRoundedRectangle(HoverBrush, RoundedBlockToolButton, 30, Buffer.Graphics)
-
-                    .CompositingMode = CompositingMode.SourceOver
 
                     Dim ToolTip As Rectangle
 
@@ -3668,9 +3669,11 @@ Public Class Form1
 
             End If
 
-            .FillRectangle(Brushes.Chocolate, BlockToolIcon.Rect)
-
             .PixelOffsetMode = PixelOffsetMode.HighQuality
+
+            .SmoothingMode = SmoothingMode.None
+
+            .FillRectangle(Brushes.Chocolate, BlockToolIcon.Rect)
 
             .DrawLine(Pens.White,
                       BlockToolIcon.Rect.Right,
@@ -3679,11 +3682,6 @@ Public Class Form1
                       BlockToolIcon.Rect.Top + 1)
 
             .PixelOffsetMode = PixelOffsetMode.None
-
-            'Bug Fix Don't Change.
-            .CompositingMode = CompositingMode.SourceOver
-            'To fix draw string error with anti aliasing: "Parameters not valid."
-            'Set the compositing mode to source over.
 
             If SelectedTool = Tools.Pointer Then
 
@@ -3758,23 +3756,21 @@ Public Class Form1
 
         With Buffer.Graphics
 
+            .CompositingMode = CompositingMode.SourceOver
+
+            .SmoothingMode = SmoothingMode.AntiAlias
+
             If SelectedTool = Tools.Backdrop Then
 
                 If BackdropToolButtonHover = True Then
 
                     FillRoundedRectangle(SelectedHoverBrush, RoundedBackdropToolButton, 30, Buffer.Graphics)
 
-                    .CompositingMode = CompositingMode.SourceOver
-
-                    .SmoothingMode = SmoothingMode.AntiAlias
-
                     .DrawLine(SelectionHighlightHoverPen,
                               RoundedBackdropToolButton.Left + 11,
                               RoundedBackdropToolButton.Bottom - 2,
                               RoundedBackdropToolButton.Right - 11,
                               RoundedBackdropToolButton.Bottom - 2)
-
-                    .SmoothingMode = SmoothingMode.None
 
                     Dim ToolTip As Rectangle
 
@@ -3791,17 +3787,11 @@ Public Class Form1
 
                     FillRoundedRectangle(SelectedBrush, RoundedBackdropToolButton, 30, Buffer.Graphics)
 
-                    .CompositingMode = CompositingMode.SourceOver
-
-                    .SmoothingMode = SmoothingMode.AntiAlias
-
                     .DrawLine(SelectionHighlightPen,
                               RoundedBackdropToolButton.Left + 11,
                               RoundedBackdropToolButton.Bottom - 2,
                               RoundedBackdropToolButton.Right - 11,
                               RoundedBackdropToolButton.Bottom - 2)
-
-                    .SmoothingMode = SmoothingMode.None
 
                 End If
 
@@ -3810,8 +3800,6 @@ Public Class Form1
                 If BackdropToolButtonHover = True Then
 
                     FillRoundedRectangle(HoverBrush, RoundedBackdropToolButton, 30, Buffer.Graphics)
-
-                    .CompositingMode = CompositingMode.SourceOver
 
                     Dim ToolTip As Rectangle
 
@@ -3853,10 +3841,7 @@ Public Class Form1
             ' Fill the rectangle with the gradient brush
             FillRoundedRectangle(GradBrush, BackdropToolIcon.Rect, 30, Buffer.Graphics)
 
-            'Bug Fix Don't Change.
-            .CompositingMode = CompositingMode.SourceOver
-            'To fix draw string error with anti aliasing: "Parameters not valid."
-            'Set the compositing mode to source over.
+            .SmoothingMode = SmoothingMode.None
 
             If SelectedTool = Tools.Portal Then
 
@@ -3931,15 +3916,15 @@ Public Class Form1
 
         With Buffer.Graphics
 
+            .CompositingMode = CompositingMode.SourceOver
+
+            .SmoothingMode = SmoothingMode.AntiAlias
+
             If SelectedTool = Tools.Bill Then
 
                 If BillToolButtonHover = True Then
 
                     FillRoundedRectangle(SelectedHoverBrush, RoundedBillToolButton, 30, Buffer.Graphics)
-
-                    .CompositingMode = CompositingMode.SourceOver
-
-                    .SmoothingMode = SmoothingMode.AntiAlias
 
                     .DrawLine(SelectionHighlightHoverPen,
                               RoundedBillToolButton.Left + 11,
@@ -3984,8 +3969,6 @@ Public Class Form1
 
                     FillRoundedRectangle(HoverBrush, RoundedBillToolButton, 30, Buffer.Graphics)
 
-                    .CompositingMode = CompositingMode.SourceOver
-
                     Dim ToolTip As Rectangle
 
                     ToolTip.X = RoundedBillToolButton.Left
@@ -4006,11 +3989,6 @@ Public Class Form1
             End If
 
             .FillRectangle(Brushes.Goldenrod, BillToolIcon.Rect)
-
-            'Bug Fix Don't Change.
-            .CompositingMode = CompositingMode.SourceOver
-            'To fix draw string error with anti aliasing: "Parameters not valid."
-            'Set the compositing mode to source over.
 
             .DrawString("$",
                         BillIconFont,
@@ -4091,23 +4069,21 @@ Public Class Form1
 
         With Buffer.Graphics
 
+            .CompositingMode = CompositingMode.SourceOver
+
+            .SmoothingMode = SmoothingMode.AntiAlias
+
             If SelectedTool = Tools.Cloud Then
 
                 If CloudToolButtonHover = True Then
 
                     FillRoundedRectangle(SelectedHoverBrush, RoundedCloudToolButton, 30, Buffer.Graphics)
 
-                    .CompositingMode = CompositingMode.SourceOver
-
-                    .SmoothingMode = SmoothingMode.AntiAlias
-
                     .DrawLine(SelectionHighlightHoverPen,
                               RoundedCloudToolButton.Left + 11,
                               RoundedCloudToolButton.Bottom - 2,
                               RoundedCloudToolButton.Right - 11,
                               RoundedCloudToolButton.Bottom - 2)
-
-                    .SmoothingMode = SmoothingMode.None
 
                     Dim ToolTip As Rectangle
 
@@ -4124,17 +4100,11 @@ Public Class Form1
 
                     FillRoundedRectangle(SelectedBrush, RoundedCloudToolButton, 30, Buffer.Graphics)
 
-                    .CompositingMode = CompositingMode.SourceOver
-
-                    .SmoothingMode = SmoothingMode.AntiAlias
-
                     .DrawLine(SelectionHighlightPen,
                               RoundedCloudToolButton.Left + 11,
                               RoundedCloudToolButton.Bottom - 2,
                               RoundedCloudToolButton.Right - 11,
                               RoundedCloudToolButton.Bottom - 2)
-
-                    .SmoothingMode = SmoothingMode.None
 
                 End If
 
@@ -4143,8 +4113,6 @@ Public Class Form1
                 If CloudToolButtonHover = True Then
 
                     FillRoundedRectangle(HoverBrush, RoundedCloudToolButton, 30, Buffer.Graphics)
-
-                    .CompositingMode = CompositingMode.SourceOver
 
                     Dim ToolTip As Rectangle
 
@@ -4165,6 +4133,8 @@ Public Class Form1
 
             End If
 
+            .SmoothingMode = SmoothingMode.None
+
             .FillRectangle(Brushes.White, CloundToolIcon.Rect)
 
             .DrawLine(CloundToolIconPen,
@@ -4180,11 +4150,6 @@ Public Class Form1
                       CloundToolIcon.Rect.Bottom - 10)
 
             .DrawRectangle(CloundToolIconOutinePen, CloundToolIcon.Rect)
-
-            'Bug Fix Don't Change.
-            .CompositingMode = CompositingMode.SourceOver
-            'To fix draw string error with anti aliasing: "Parameters not valid."
-            'Set the compositing mode to source over.
 
             If SelectedTool = Tools.Bush Then
 
@@ -4257,23 +4222,21 @@ Public Class Form1
 
         With Buffer.Graphics
 
+            .CompositingMode = CompositingMode.SourceOver
+
+            .SmoothingMode = SmoothingMode.AntiAlias
+
             If SelectedTool = Tools.Bush Then
 
                 If BushToolButtonHover = True Then
 
                     FillRoundedRectangle(SelectedHoverBrush, RoundedBushToolButton, 30, Buffer.Graphics)
 
-                    .CompositingMode = CompositingMode.SourceOver
-
-                    .SmoothingMode = SmoothingMode.AntiAlias
-
                     .DrawLine(SelectionHighlightHoverPen,
                               RoundedBushToolButton.Left + 11,
                               RoundedBushToolButton.Bottom - 2,
                               RoundedBushToolButton.Right - 11,
                               RoundedBushToolButton.Bottom - 2)
-
-                    .SmoothingMode = SmoothingMode.None
 
                     Dim ToolTip As Rectangle
 
@@ -4290,17 +4253,11 @@ Public Class Form1
 
                     FillRoundedRectangle(SelectedBrush, RoundedBushToolButton, 30, Buffer.Graphics)
 
-                    .CompositingMode = CompositingMode.SourceOver
-
-                    .SmoothingMode = SmoothingMode.AntiAlias
-
                     .DrawLine(SelectionHighlightPen,
                               RoundedBushToolButton.Left + 11,
                               RoundedBushToolButton.Bottom - 2,
                               RoundedBushToolButton.Right - 11,
                               RoundedBushToolButton.Bottom - 2)
-
-                    .SmoothingMode = SmoothingMode.None
 
                 End If
 
@@ -4309,8 +4266,6 @@ Public Class Form1
                 If BushToolButtonHover = True Then
 
                     FillRoundedRectangle(HoverBrush, RoundedBushToolButton, 30, Buffer.Graphics)
-
-                    .CompositingMode = CompositingMode.SourceOver
 
                     Dim ToolTip As Rectangle
 
@@ -4331,6 +4286,8 @@ Public Class Form1
 
             End If
 
+            .SmoothingMode = SmoothingMode.None
+
             .FillRectangle(Brushes.GreenYellow, BushToolIcon.Rect)
 
             .DrawLine(BushToolIconPen,
@@ -4346,11 +4303,6 @@ Public Class Form1
                       BushToolIcon.Rect.Bottom - 10)
 
             .DrawRectangle(BushToolIconOutinePen, BushToolIcon.Rect)
-
-            'Bug Fix Don't Change.
-            .CompositingMode = CompositingMode.SourceOver
-            'To fix draw string error with anti aliasing: "Parameters not valid."
-            'Set the compositing mode to source over.
 
             If SelectedTool = Tools.Bill Then
 
@@ -4425,23 +4377,21 @@ Public Class Form1
 
         With Buffer.Graphics
 
+            .CompositingMode = CompositingMode.SourceOver
+
+            .SmoothingMode = SmoothingMode.AntiAlias
+
             If SelectedTool = Tools.Enemy Then
 
                 If EnemyToolButtonHover = True Then
 
                     FillRoundedRectangle(SelectedHoverBrush, RoundedEnemyToolButton, 30, Buffer.Graphics)
 
-                    .CompositingMode = CompositingMode.SourceOver
-
-                    .SmoothingMode = SmoothingMode.AntiAlias
-
                     .DrawLine(SelectionHighlightHoverPen,
                               RoundedEnemyToolButton.Left + 11,
                               RoundedEnemyToolButton.Bottom - 2,
                               RoundedEnemyToolButton.Right - 11,
                               RoundedEnemyToolButton.Bottom - 2)
-
-                    .SmoothingMode = SmoothingMode.None
 
                     Dim ToolTip As Rectangle
 
@@ -4458,17 +4408,11 @@ Public Class Form1
 
                     FillRoundedRectangle(SelectedBrush, RoundedEnemyToolButton, 30, Buffer.Graphics)
 
-                    .CompositingMode = CompositingMode.SourceOver
-
-                    .SmoothingMode = SmoothingMode.AntiAlias
-
                     .DrawLine(SelectionHighlightPen,
                               RoundedEnemyToolButton.Left + 11,
                               RoundedEnemyToolButton.Bottom - 2,
                               RoundedEnemyToolButton.Right - 11,
                               RoundedEnemyToolButton.Bottom - 2)
-
-                    .SmoothingMode = SmoothingMode.None
 
                 End If
 
@@ -4477,8 +4421,6 @@ Public Class Form1
                 If EnemyToolButtonHover = True Then
 
                     FillRoundedRectangle(HoverBrush, RoundedEnemyToolButton, 30, Buffer.Graphics)
-
-                    .CompositingMode = CompositingMode.SourceOver
 
                     Dim ToolTip As Rectangle
 
@@ -4498,6 +4440,8 @@ Public Class Form1
                 End If
 
             End If
+
+            .SmoothingMode = SmoothingMode.None
 
             .FillRectangle(Brushes.Chocolate, EnemyToolIcon.Rect)
 
@@ -4582,23 +4526,21 @@ Public Class Form1
 
         With Buffer.Graphics
 
+            .CompositingMode = CompositingMode.SourceOver
+
+            .SmoothingMode = SmoothingMode.AntiAlias
+
             If SelectedTool = Tools.Goal Then
 
                 If GoalToolButtonHover = True Then
 
                     FillRoundedRectangle(SelectedHoverBrush, RoundedGoalToolButton, 30, Buffer.Graphics)
 
-                    .CompositingMode = CompositingMode.SourceOver
-
-                    .SmoothingMode = SmoothingMode.AntiAlias
-
                     .DrawLine(SelectionHighlightHoverPen,
                               RoundedGoalToolButton.Left + 11,
                               RoundedGoalToolButton.Bottom - 2,
                               RoundedGoalToolButton.Right - 11,
                               RoundedGoalToolButton.Bottom - 2)
-
-                    .SmoothingMode = SmoothingMode.None
 
                     Dim ToolTip As Rectangle
 
@@ -4615,17 +4557,11 @@ Public Class Form1
 
                     FillRoundedRectangle(SelectedBrush, RoundedGoalToolButton, 30, Buffer.Graphics)
 
-                    .CompositingMode = CompositingMode.SourceOver
-
-                    .SmoothingMode = SmoothingMode.AntiAlias
-
                     .DrawLine(SelectionHighlightPen,
                               RoundedGoalToolButton.Left + 11,
                               RoundedGoalToolButton.Bottom - 2,
                               RoundedGoalToolButton.Right - 11,
                               RoundedGoalToolButton.Bottom - 2)
-
-                    .SmoothingMode = SmoothingMode.None
 
                 End If
 
@@ -4634,8 +4570,6 @@ Public Class Form1
                 If GoalToolButtonHover = True Then
 
                     FillRoundedRectangle(HoverBrush, RoundedGoalToolButton, 30, Buffer.Graphics)
-
-                    .CompositingMode = CompositingMode.SourceOver
 
                     Dim ToolTip As Rectangle
 
@@ -4655,6 +4589,8 @@ Public Class Form1
                 End If
 
             End If
+
+            .SmoothingMode = SmoothingMode.None
 
             .FillRectangle(Brushes.White, GoalToolIcon.Rect)
 
@@ -4678,11 +4614,6 @@ Public Class Form1
                 {.CenterPoint = center,
                 .CenterColor = colors(0),
                 .SurroundColors = New Color() {colors(1)}}
-
-            'Bug Fix Don't Change.
-            .CompositingMode = CompositingMode.SourceOver
-            'To fix draw string error with anti aliasing: "Parameters not valid."
-            'Set the compositing mode to source over.
 
             .FillRectangle(GradBrush, GoalToolIcon.Rect)
 
@@ -4767,6 +4698,10 @@ Public Class Form1
 
         With Buffer.Graphics
 
+            .CompositingMode = CompositingMode.SourceOver
+
+            .SmoothingMode = SmoothingMode.AntiAlias
+
             If SelectedTool = Tools.Portal Then
 
                 'Draw hover effect for button
@@ -4774,17 +4709,11 @@ Public Class Form1
 
                     FillRoundedRectangle(SelectedHoverBrush, RoundedPortalToolButton, 30, Buffer.Graphics)
 
-                    .CompositingMode = CompositingMode.SourceOver
-
-                    .SmoothingMode = SmoothingMode.AntiAlias
-
                     .DrawLine(SelectionHighlightHoverPen,
                               RoundedPortalToolButton.Left + 11,
                               RoundedPortalToolButton.Bottom - 2,
                               RoundedPortalToolButton.Right - 11,
                               RoundedPortalToolButton.Bottom - 2)
-
-                    .SmoothingMode = SmoothingMode.None
 
                     Dim ToolTip As Rectangle
 
@@ -4801,17 +4730,11 @@ Public Class Form1
 
                     FillRoundedRectangle(SelectedBrush, RoundedPortalToolButton, 30, Buffer.Graphics)
 
-                    .CompositingMode = CompositingMode.SourceOver
-
-                    .SmoothingMode = SmoothingMode.AntiAlias
-
                     .DrawLine(SelectionHighlightPen,
                               RoundedPortalToolButton.Left + 11,
                               RoundedPortalToolButton.Bottom - 2,
                               RoundedPortalToolButton.Right - 11,
                               RoundedPortalToolButton.Bottom - 2)
-
-                    .SmoothingMode = SmoothingMode.None
 
                 End If
 
@@ -4820,8 +4743,6 @@ Public Class Form1
                 If PortalToolButtonHover = True Then
 
                     FillRoundedRectangle(HoverBrush, RoundedPortalToolButton, 30, Buffer.Graphics)
-
-                    .CompositingMode = CompositingMode.SourceOver
 
                     Dim ToolTip As Rectangle
 
@@ -4842,12 +4763,9 @@ Public Class Form1
 
             End If
 
-            DrawPortal(PortalToolIcon.Rect)
+            .SmoothingMode = SmoothingMode.None
 
-            'Bug Fix Don't Change.
-            .CompositingMode = CompositingMode.SourceOver
-            'To fix draw string error with anti aliasing: "Parameters not valid."
-            'Set the compositing mode to source over.
+            DrawPortal(PortalToolIcon.Rect)
 
             'Draw Controller Hints
             If SelectedTool = Tools.Backdrop Then
@@ -4923,6 +4841,10 @@ Public Class Form1
 
         With Buffer.Graphics
 
+            .CompositingMode = CompositingMode.SourceOver
+
+            .SmoothingMode = SmoothingMode.AntiAlias
+
             If EditPlayButtonHover = True Then
 
                 FillRoundedRectangle(HoverBrush, RoundedEditPlayButton, 30, Buffer.Graphics)
@@ -4940,18 +4862,11 @@ Public Class Form1
 
             ButtonCaption.Size = EditPlayButton.Rect.Size
 
-            'Bug Fix Don't Change.
-            .CompositingMode = CompositingMode.SourceOver
-            'To fix draw string error with anti aliasing: "Parameters not valid."
-            'Set the compositing mode to source over.
-
             .DrawString("Play",
                         FPSFont,
                         Brushes.White,
                         ButtonCaption,
                         AlineCenterMiddle)
-
-            .CompositingMode = CompositingMode.SourceCopy
 
             Dim ControllerHint As Rectangle
 
@@ -4978,6 +4893,10 @@ Public Class Form1
             ControllerHint.Height = 7
 
             FillRoundedRectangle(Brushes.Gray, ControllerHint, 7, Buffer.Graphics)
+
+            .CompositingMode = CompositingMode.SourceCopy
+
+            .SmoothingMode = SmoothingMode.None
 
         End With
 
@@ -4994,6 +4913,10 @@ Public Class Form1
 
         With Buffer.Graphics
 
+            .CompositingMode = CompositingMode.SourceOver
+
+            .SmoothingMode = SmoothingMode.AntiAlias
+
             If EditPlayButtonHover = True Then
 
                 FillRoundedRectangle(HoverBrush, RoundedEditPlayButton, 30, Buffer.Graphics)
@@ -5004,18 +4927,11 @@ Public Class Form1
 
             End If
 
-            'Bug Fix Don't Change.
-            .CompositingMode = CompositingMode.SourceOver
-            'To fix draw string error with anti aliasing: "Parameters not valid."
-            'Set the compositing mode to source over.
-
             .DrawString("Edit",
                         FPSFont,
                         Brushes.White,
                         EditPlayButton.Rect,
                         AlineCenterMiddle)
-
-            .CompositingMode = CompositingMode.SourceCopy
 
             Dim ControllerHint As Rectangle
 
@@ -5043,6 +4959,10 @@ Public Class Form1
 
             FillRoundedRectangle(Brushes.Gray, ControllerHint, 7, Buffer.Graphics)
 
+            .CompositingMode = CompositingMode.SourceCopy
+
+            .SmoothingMode = SmoothingMode.None
+
         End With
 
     End Sub
@@ -5058,6 +4978,10 @@ Public Class Form1
 
         With Buffer.Graphics
 
+            .CompositingMode = CompositingMode.SourceOver
+
+            .SmoothingMode = SmoothingMode.AntiAlias
+
             If MenuButtonHover = True Then
 
                 FillRoundedRectangle(HoverBrush, RoundedMenuButton, 30, Buffer.Graphics)
@@ -5068,18 +4992,11 @@ Public Class Form1
 
             End If
 
-            'Bug Fix Don't Change.
-            .CompositingMode = CompositingMode.SourceOver
-            'To fix draw string error with anti aliasing: "Parameters not valid."
-            'Set the compositing mode to source over.
-
             .DrawString("≡",
                         MenuButtonFont,
                         Brushes.White,
                         MenuButton.Rect,
                         AlineCenterMiddle)
-
-            .CompositingMode = CompositingMode.SourceCopy
 
             Dim ControllerHint As Rectangle
 
@@ -5107,6 +5024,10 @@ Public Class Form1
 
             FillRoundedRectangle(Brushes.OrangeRed, ControllerHint, 7, Buffer.Graphics)
 
+            .CompositingMode = CompositingMode.SourceCopy
+
+            .SmoothingMode = SmoothingMode.None
+
         End With
 
     End Sub
@@ -5114,6 +5035,10 @@ Public Class Form1
     Private Sub DrawSaveButton()
 
         With Buffer.Graphics
+
+            .CompositingMode = CompositingMode.SourceOver
+
+            .SmoothingMode = SmoothingMode.AntiAlias
 
             If SaveButtonHover = True Then
 
@@ -5124,13 +5049,6 @@ Public Class Form1
                 FillRoundedRectangle(Brushes.Black, SaveButton.Rect, 30, Buffer.Graphics)
 
             End If
-
-            'Bug Fix Don't Change.
-            .CompositingMode = CompositingMode.SourceOver
-            'To fix draw string error with anti aliasing: "Parameters not valid."
-            'Set the compositing mode to source over.
-
-            .SmoothingMode = SmoothingMode.AntiAlias
 
             .DrawEllipse(BButtonIconOutinePen,
                          New Rectangle(SaveButton.Rect.X + 197,
@@ -5168,6 +5086,10 @@ Public Class Form1
 
         With Buffer.Graphics
 
+            .CompositingMode = CompositingMode.SourceOver
+
+            .SmoothingMode = SmoothingMode.AntiAlias
+
             If OpenButtonHover = True Then
 
                 FillRoundedRectangle(HoverBrush, OpenButton.Rect, 30, Buffer.Graphics)
@@ -5177,13 +5099,6 @@ Public Class Form1
                 FillRoundedRectangle(Brushes.Black, OpenButton.Rect, 30, Buffer.Graphics)
 
             End If
-
-            'Bug Fix Don't Change.
-            .CompositingMode = CompositingMode.SourceOver
-            'To fix draw string error with anti aliasing: "Parameters not valid."
-            'Set the compositing mode to source over.
-
-            .SmoothingMode = SmoothingMode.AntiAlias
 
             .DrawEllipse(YButtonIconOutinePen,
                          New Rectangle(OpenButton.Rect.X + 197,
@@ -5221,6 +5136,10 @@ Public Class Form1
 
         With Buffer.Graphics
 
+            .CompositingMode = CompositingMode.SourceOver
+
+            .SmoothingMode = SmoothingMode.AntiAlias
+
             If NewButtonHover = True Then
 
                 FillRoundedRectangle(HoverBrush, NewButton.Rect, 30, Buffer.Graphics)
@@ -5231,10 +5150,7 @@ Public Class Form1
 
             End If
 
-            'Bug Fix Don't Change.
-            .CompositingMode = CompositingMode.SourceOver
-            'To fix draw string error with anti aliasing: "Parameters not valid."
-            'Set the compositing mode to source over.
+            .SmoothingMode = SmoothingMode.None
 
             .DrawString("New", FPSFont,
                         Brushes.White,
@@ -5263,6 +5179,10 @@ Public Class Form1
 
         With Buffer.Graphics
 
+            .CompositingMode = CompositingMode.SourceOver
+
+            .SmoothingMode = SmoothingMode.AntiAlias
+
             If ExitButtonHover = True Then
 
                 FillRoundedRectangle(HoverBrush, ExitButton.Rect, 30, Buffer.Graphics)
@@ -5272,13 +5192,6 @@ Public Class Form1
                 FillRoundedRectangle(Brushes.Black, ExitButton.Rect, 30, Buffer.Graphics)
 
             End If
-
-            'Bug Fix Don't Change.
-            .CompositingMode = CompositingMode.SourceOver
-            'To fix draw string error with anti aliasing: "Parameters not valid."
-            'Set the compositing mode to source over.
-
-            .SmoothingMode = SmoothingMode.AntiAlias
 
             .DrawEllipse(XButtonIconOutinePen,
                          New Rectangle(ExitButton.Rect.X + ExitButton.Rect.Width \ 2 - 52 \ 2,
@@ -5610,6 +5523,10 @@ Public Class Form1
 
         With Buffer.Graphics
 
+            .CompositingMode = CompositingMode.SourceOver
+
+            .SmoothingMode = SmoothingMode.AntiAlias
+
             Dim Shadow As Rectangle = StartScreenOpenButton.Rect
 
             Shadow.Offset(12, 12)
@@ -5629,13 +5546,6 @@ Public Class Form1
                 FillRoundedRectangle(Brushes.Black, StartScreenOpenButton.Rect, 30, Buffer.Graphics)
 
             End If
-
-            'Bug Fix Don't Change.
-            .CompositingMode = CompositingMode.SourceOver
-            'To fix draw string error with anti aliasing: "Parameters not valid."
-            'Set the compositing mode to source over.
-
-            .SmoothingMode = SmoothingMode.AntiAlias
 
             .DrawEllipse(YButtonIconOutinePen,
                          New Rectangle(StartScreenOpenButton.Rect.X + 142,
@@ -5677,6 +5587,10 @@ Public Class Form1
 
             Shadow.Offset(12, 12)
 
+            .CompositingMode = CompositingMode.SourceOver
+
+            .SmoothingMode = SmoothingMode.AntiAlias
+
             FillRoundedRectangle(MenuShadowBrush, Shadow, 30, Buffer.Graphics)
 
             If StartScreenNewButtonHover = True Then
@@ -5692,13 +5606,6 @@ Public Class Form1
                 FillRoundedRectangle(Brushes.Black, StartScreenNewButton.Rect, 30, Buffer.Graphics)
 
             End If
-
-            'Bug Fix Don't Change.
-            .CompositingMode = CompositingMode.SourceOver
-            'To fix draw string error with anti aliasing: "Parameters not valid."
-            'Set the compositing mode to source over.
-
-            .SmoothingMode = SmoothingMode.AntiAlias
 
             .DrawEllipse(BButtonIconOutinePen,
                          New Rectangle(StartScreenNewButton.Rect.X + 140,
@@ -5861,9 +5768,9 @@ Public Class Form1
 
     Private Sub DrawRoundedRectangle(pen As Pen, Rect As Rectangle, radius As Integer, g As Graphics)
 
-        g.CompositingMode = CompositingMode.SourceOver
+        'g.CompositingMode = CompositingMode.SourceOver
 
-        g.SmoothingMode = SmoothingMode.AntiAlias
+        'g.SmoothingMode = SmoothingMode.AntiAlias
 
         Dim path As New GraphicsPath()
 
@@ -5895,17 +5802,17 @@ Public Class Form1
 
         g.DrawPath(pen, path)
 
-        g.CompositingMode = CompositingMode.SourceCopy
+        'g.CompositingMode = CompositingMode.SourceCopy
 
-        g.SmoothingMode = SmoothingMode.None
+        'g.SmoothingMode = SmoothingMode.None
 
     End Sub
 
     Private Sub FillRoundedRectangle(brush As Brush, Rect As Rectangle, radius As Integer, g As Graphics)
 
-        g.CompositingMode = CompositingMode.SourceOver
+        'g.CompositingMode = CompositingMode.SourceOver
 
-        g.SmoothingMode = SmoothingMode.AntiAlias
+        'g.SmoothingMode = SmoothingMode.AntiAlias
 
         Dim Path As New GraphicsPath()
 
@@ -5937,9 +5844,9 @@ Public Class Form1
 
         g.FillPath(brush, Path)
 
-        g.CompositingMode = CompositingMode.SourceCopy
+        'g.CompositingMode = CompositingMode.SourceCopy
 
-        g.SmoothingMode = SmoothingMode.None
+        'g.SmoothingMode = SmoothingMode.None
 
     End Sub
 

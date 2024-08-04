@@ -11177,8 +11177,8 @@ Public Class Form1
     Private Sub MovePointerCenterMenu()
         'Move mouse pointer to the center of the menu.
 
-        Cursor.Position = New Point(MenuBackground.Rect.X + MenuBackground.Rect.Width \ 2,
-                                    MenuBackground.Rect.Y + MenuBackground.Rect.Height \ 2)
+        Cursor.Position = New Point(ScreenOffset.X + MenuBackground.Rect.X + MenuBackground.Rect.Width \ 2,
+                                    ScreenOffset.Y + MenuBackground.Rect.Y + MenuBackground.Rect.Height \ 2)
 
     End Sub
 

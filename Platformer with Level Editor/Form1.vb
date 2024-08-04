@@ -5877,26 +5877,6 @@ Public Class Form1
 
     End Sub
 
-    'Private Sub BufferGridLines()
-
-    '    GridLineBuffer.Clear(Color.Transparent)
-
-    '    ' Draw vertical lines  |
-    '    For x As Integer = CameraOffset.X To CameraOffset.X + Level.Rect.Width Step GridSize
-
-    '        GridLineBuffer.DrawLine(GridLinesDashPen, x, CameraOffset.Y, x, CameraOffset.Y + Level.Rect.Height)
-
-    '    Next
-
-    '    ' Draw horizontal lines ---
-    '    For y As Integer = CameraOffset.Y To CameraOffset.Y + Level.Rect.Height Step GridSize
-
-    '        GridLineBuffer.DrawLine(GridLinesDashPen, CameraOffset.X, y, CameraOffset.X + Level.Rect.Width, y)
-
-    '    Next
-
-    'End Sub
-
     Private Sub DrawRoundedRectangle(pen As Pen, Rect As Rectangle, radius As Integer, g As Graphics)
 
         g.CompositingMode = CompositingMode.SourceOver

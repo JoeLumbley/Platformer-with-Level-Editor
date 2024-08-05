@@ -127,6 +127,10 @@ Public Class Form1
 
     Private LeftTriggerDown As Boolean = False
 
+    Private LeftThumbstickDown As Boolean = False
+
+    Private RightThumbstickDown As Boolean = False
+
     Private Const DPadUp As Integer = 1
     Private Const DPadDown As Integer = 2
     Private Const DPadLeft As Integer = 4
@@ -1528,7 +1532,11 @@ Public Class Form1
 
             If GameState = AppState.Editing Then
 
-                MovePointerLeft()
+                If ShowMenu = False Then
+
+                    MovePointerLeft()
+
+                End If
 
             End If
 
@@ -1559,7 +1567,11 @@ Public Class Form1
 
             If GameState = AppState.Editing Then
 
-                MovePointerRight()
+                If ShowMenu = False Then
+
+                    MovePointerRight()
+
+                End If
 
             End If
 
@@ -1606,7 +1618,64 @@ Public Class Form1
 
             If GameState = AppState.Editing Then
 
-                MovePointerDown()
+                If ShowMenu = True Then
+
+                    If LeftThumbstickDown = False Then
+
+                        LeftThumbstickDown = True
+
+                        Dim MousePointerOffset As Point = MousePointer.Rect.Location
+
+                        MousePointerOffset.X -= ScreenOffset.X
+                        MousePointerOffset.Y -= ScreenOffset.Y
+
+                        'Is the mouse pointer on the menu?
+                        If Not MenuBackground.Rect.Contains(MousePointerOffset) Then
+                            'No, the mouse pointer is not on the menu.
+
+                            MovePointerOverSaveButton()
+
+                        End If
+
+                        'Is the mouse pointer on the open button?
+                        If OpenButton.Rect.Contains(MousePointerOffset) Then
+                            'Yes, the mouse pointer is on the open button.
+
+                            MovePointerOverNewButton()
+
+                        End If
+
+                        'Is the mouse pointer on the save button?
+                        If SaveButton.Rect.Contains(MousePointerOffset) Then
+                            'Yes, the mouse pointer is on the save button.
+
+                            MovePointerOverOpenButton()
+
+                        End If
+
+                        'Is the mouse pointer on the new button?
+                        If NewButton.Rect.Contains(MousePointerOffset) Then
+                            'Yes, the mouse pointer is on the new button.
+
+                            MovePointerOverExitButton()
+
+                        End If
+
+                        'Is the mouse pointer on the exit button?
+                        If ExitButton.Rect.Contains(MousePointerOffset) Then
+                            'Yes, the mouse pointer is on the exit button.
+
+                            MovePointerOverSaveButton()
+
+                        End If
+
+                    End If
+
+                Else
+
+                    MovePointerDown()
+
+                End If
 
             End If
 
@@ -1629,7 +1698,64 @@ Public Class Form1
 
             If GameState = AppState.Editing Then
 
-                MovePointerUp()
+                If ShowMenu = True Then
+
+                    If RightThumbstickDown = False Then
+
+                        RightThumbstickDown = True
+
+                        Dim MousePointerOffset As Point = MousePointer.Rect.Location
+
+                        MousePointerOffset.X -= ScreenOffset.X
+                        MousePointerOffset.Y -= ScreenOffset.Y
+
+                        'Is the mouse pointer on the menu?
+                        If Not MenuBackground.Rect.Contains(MousePointerOffset) Then
+                            'No, the mouse pointer is not on the menu.
+
+                            MovePointerOverExitButton()
+
+                        End If
+
+                        'Is the mouse pointer on the open button?
+                        If OpenButton.Rect.Contains(MousePointerOffset) Then
+                            'Yes, the mouse pointer is on the open button.
+
+                            MovePointerOverSaveButton()
+
+                        End If
+
+                        'Is the mouse pointer on the new button?
+                        If NewButton.Rect.Contains(MousePointerOffset) Then
+                            'Yes, the mouse pointer is on the new button.
+
+                            MovePointerOverOpenButton()
+
+                        End If
+
+                        'Is the mouse pointer on the exit button?
+                        If ExitButton.Rect.Contains(MousePointerOffset) Then
+                            'Yes, the mouse pointer is on the exit button.
+
+                            MovePointerOverNewButton()
+
+                        End If
+
+                        'Is the mouse pointer on the save button?
+                        If SaveButton.Rect.Contains(MousePointerOffset) Then
+                            'Yes, the mouse pointer is on the save button.
+
+                            MovePointerOverExitButton()
+
+                        End If
+
+                    End If
+
+                Else
+
+                    MovePointerUp()
+
+                End If
 
             End If
 
@@ -1647,6 +1773,7 @@ Public Class Form1
 
             End If
 
+
             If GameState = AppState.Playing Then
 
                 ControllerUp = True
@@ -1657,6 +1784,10 @@ Public Class Form1
             'The left thumbstick is in the neutral position.
 
             If GameState = AppState.Start Or GameState = AppState.Editing Then
+
+                LeftThumbstickDown = False
+
+                RightThumbstickDown = False
 
                 If DPadUpPressed = False AndAlso DPadDownPressed = False AndAlso UpArrowDown = False AndAlso DownArrowDown = False Then
 
@@ -2843,149 +2974,149 @@ Public Class Form1
 
         If GameState = AppState.Editing Then
 
-                Dim RectOffset As Rectangle
+            Dim RectOffset As Rectangle
 
-                If SelectedPortal > -1 Then
+            If SelectedPortal > -1 Then
 
-                    If PortalEntranceSelected = True Then
+                If PortalEntranceSelected = True Then
 
-                        Dim PortalEntranceOffset As New Rectangle(New Point(Portals(SelectedPortal).PatrolA.X, Portals(SelectedPortal).PatrolA.Y), New Drawing.Size(GridSize, GridSize))
+                    Dim PortalEntranceOffset As New Rectangle(New Point(Portals(SelectedPortal).PatrolA.X, Portals(SelectedPortal).PatrolA.Y), New Drawing.Size(GridSize, GridSize))
 
-                        PortalEntranceOffset.Offset(CameraOffset)
+                    PortalEntranceOffset.Offset(CameraOffset)
 
-                        DrawSelectionRectangle(PortalEntranceOffset, Buffer.Graphics)
+                    DrawSelectionRectangle(PortalEntranceOffset, Buffer.Graphics)
 
-                    Else
+                Else
 
-                        Dim PortalExitOffset As New Rectangle(New Point(Portals(SelectedPortal).PatrolB.X, Portals(SelectedPortal).PatrolB.Y), New Drawing.Size(GridSize, GridSize))
+                    Dim PortalExitOffset As New Rectangle(New Point(Portals(SelectedPortal).PatrolB.X, Portals(SelectedPortal).PatrolB.Y), New Drawing.Size(GridSize, GridSize))
 
-                        PortalExitOffset.Offset(CameraOffset)
+                    PortalExitOffset.Offset(CameraOffset)
 
-                        DrawSelectionRectangle(PortalExitOffset, Buffer.Graphics)
-
-                    End If
-
-                End If
-
-                If SelectedEnemy > -1 Then
-
-                    Dim SelectionSize As New Size(Enemies(SelectedEnemy).PatrolB.X + GridSize - Enemies(SelectedEnemy).PatrolA.X, GridSize)
-
-                    RectOffset = New Rectangle(New Point(Enemies(SelectedEnemy).PatrolA.X, Enemies(SelectedEnemy).PatrolA.Y), SelectionSize)
-
-                    RectOffset.Offset(CameraOffset)
-
-                    DrawSelectionRectangle(RectOffset, Buffer.Graphics)
-
-                    'Position sizing handle.
-                    SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
-                    SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
-
-                    DrawSizingHandle(RectOffset, Buffer.Graphics)
-
-                End If
-
-                If SelectedBackdrop > -1 Then
-
-                    RectOffset = Backdrops(SelectedBackdrop).Rect
-
-                    RectOffset.Offset(CameraOffset)
-
-                    DrawSelectionRectangle(RectOffset, Buffer.Graphics)
-
-                    'Position sizing handle.
-                    SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
-                    SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
-
-                    DrawSizingHandle(RectOffset, Buffer.Graphics)
-
-                End If
-
-                If SelectedBush > -1 Then
-
-                    RectOffset = Bushes(SelectedBush).Rect
-
-                    RectOffset.Offset(CameraOffset)
-
-                    DrawSelectionRectangle(RectOffset, Buffer.Graphics)
-
-                    'Position sizing handle.
-                    SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
-                    SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
-
-                    DrawSizingHandle(RectOffset, Buffer.Graphics)
-
-                End If
-
-                If SpawnSelected = True Then
-
-                    RectOffset = Spawn.Rect
-
-                    RectOffset.Offset(CameraOffset)
-
-                    DrawSelectionRectangle(RectOffset, Buffer.Graphics)
-
-                End If
-
-                If SelectedBlock > -1 Then
-
-                    RectOffset = Blocks(SelectedBlock).Rect
-
-                    RectOffset.Offset(CameraOffset)
-
-                    DrawSelectionRectangle(RectOffset, Buffer.Graphics)
-
-                    'Position sizing handle.
-                    SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
-                    SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
-
-                    DrawSizingHandle(RectOffset, Buffer.Graphics)
-
-                End If
-
-                If GoalSelected = True Then
-
-                    RectOffset = Goal.Rect
-
-                    RectOffset.Offset(CameraOffset)
-
-                    DrawSelectionRectangle(RectOffset, Buffer.Graphics)
-
-                    'Position sizing handle.
-                    SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
-                    SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
-
-                    DrawSizingHandle(RectOffset, Buffer.Graphics)
-
-                End If
-
-                If SelectedCloud > -1 Then
-
-                    RectOffset = Clouds(SelectedCloud).Rect
-
-                    RectOffset.Offset(CameraOffset)
-
-                    DrawSelectionRectangle(RectOffset, Buffer.Graphics)
-
-                    'Position sizing handle.
-                    SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
-                    SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
-
-                    DrawSizingHandle(RectOffset, Buffer.Graphics)
-
-                End If
-
-                If SelectedBill > -1 Then
-
-                    RectOffset = Cash(SelectedBill).Rect
-
-                    RectOffset.Offset(CameraOffset)
-
-                    DrawSelectionRectangle(RectOffset, Buffer.Graphics)
+                    DrawSelectionRectangle(PortalExitOffset, Buffer.Graphics)
 
                 End If
 
             End If
+
+            If SelectedEnemy > -1 Then
+
+                Dim SelectionSize As New Size(Enemies(SelectedEnemy).PatrolB.X + GridSize - Enemies(SelectedEnemy).PatrolA.X, GridSize)
+
+                RectOffset = New Rectangle(New Point(Enemies(SelectedEnemy).PatrolA.X, Enemies(SelectedEnemy).PatrolA.Y), SelectionSize)
+
+                RectOffset.Offset(CameraOffset)
+
+                DrawSelectionRectangle(RectOffset, Buffer.Graphics)
+
+                'Position sizing handle.
+                SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
+                SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
+
+                DrawSizingHandle(RectOffset, Buffer.Graphics)
+
+            End If
+
+            If SelectedBackdrop > -1 Then
+
+                RectOffset = Backdrops(SelectedBackdrop).Rect
+
+                RectOffset.Offset(CameraOffset)
+
+                DrawSelectionRectangle(RectOffset, Buffer.Graphics)
+
+                'Position sizing handle.
+                SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
+                SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
+
+                DrawSizingHandle(RectOffset, Buffer.Graphics)
+
+            End If
+
+            If SelectedBush > -1 Then
+
+                RectOffset = Bushes(SelectedBush).Rect
+
+                RectOffset.Offset(CameraOffset)
+
+                DrawSelectionRectangle(RectOffset, Buffer.Graphics)
+
+                'Position sizing handle.
+                SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
+                SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
+
+                DrawSizingHandle(RectOffset, Buffer.Graphics)
+
+            End If
+
+            If SpawnSelected = True Then
+
+                RectOffset = Spawn.Rect
+
+                RectOffset.Offset(CameraOffset)
+
+                DrawSelectionRectangle(RectOffset, Buffer.Graphics)
+
+            End If
+
+            If SelectedBlock > -1 Then
+
+                RectOffset = Blocks(SelectedBlock).Rect
+
+                RectOffset.Offset(CameraOffset)
+
+                DrawSelectionRectangle(RectOffset, Buffer.Graphics)
+
+                'Position sizing handle.
+                SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
+                SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
+
+                DrawSizingHandle(RectOffset, Buffer.Graphics)
+
+            End If
+
+            If GoalSelected = True Then
+
+                RectOffset = Goal.Rect
+
+                RectOffset.Offset(CameraOffset)
+
+                DrawSelectionRectangle(RectOffset, Buffer.Graphics)
+
+                'Position sizing handle.
+                SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
+                SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
+
+                DrawSizingHandle(RectOffset, Buffer.Graphics)
+
+            End If
+
+            If SelectedCloud > -1 Then
+
+                RectOffset = Clouds(SelectedCloud).Rect
+
+                RectOffset.Offset(CameraOffset)
+
+                DrawSelectionRectangle(RectOffset, Buffer.Graphics)
+
+                'Position sizing handle.
+                SizingHandle.X = RectOffset.Right - SizingHandle.Width \ 2
+                SizingHandle.Y = RectOffset.Bottom - SizingHandle.Height \ 2
+
+                DrawSizingHandle(RectOffset, Buffer.Graphics)
+
+            End If
+
+            If SelectedBill > -1 Then
+
+                RectOffset = Cash(SelectedBill).Rect
+
+                RectOffset.Offset(CameraOffset)
+
+                DrawSelectionRectangle(RectOffset, Buffer.Graphics)
+
+            End If
+
+        End If
 
     End Sub
 
@@ -6387,7 +6518,9 @@ Public Class Form1
 
             ShowMenu = True
 
-            MovePointerCenterMenu()
+            'MovePointerCenterMenu()
+
+            MovePointerOverSaveButton()
 
         End If
 
@@ -8997,7 +9130,9 @@ Public Class Form1
 
                             ShowMenu = True
 
-                            MovePointerCenterMenu()
+                            'MovePointerCenterMenu()
+
+                            MovePointerOverSaveButton()
 
                         Else
 
@@ -9732,7 +9867,9 @@ Public Class Form1
 
                         ShowMenu = True
 
-                        MovePointerCenterMenu()
+                        'MovePointerCenterMenu()
+
+                        MovePointerOverSaveButton()
 
                         IsBackDown = True
 
@@ -10367,7 +10504,9 @@ Public Class Form1
 
                 ShowMenu = True
 
-                MovePointerCenterMenu()
+                'MovePointerCenterMenu()
+
+                MovePointerOverSaveButton()
 
             End If
 

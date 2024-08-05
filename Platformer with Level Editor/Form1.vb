@@ -129,7 +129,11 @@ Public Class Form1
 
     Private LeftThumbstickDown As Boolean = False
 
+    Private LeftThumbstickUp As Boolean = False
+
     Private RightThumbstickDown As Boolean = False
+
+    Private RightThumbstickUp As Boolean = False
 
     Private Const DPadUp As Integer = 1
     Private Const DPadDown As Integer = 2
@@ -1700,9 +1704,9 @@ Public Class Form1
 
                 If ShowMenu = True Then
 
-                    If RightThumbstickDown = False Then
+                    If LeftThumbstickUp = False Then
 
-                        RightThumbstickDown = True
+                        LeftThumbstickUp = True
 
                         Dim MousePointerOffset As Point = MousePointer.Rect.Location
 
@@ -1787,7 +1791,7 @@ Public Class Form1
 
                 LeftThumbstickDown = False
 
-                RightThumbstickDown = False
+                LeftThumbstickUp = False
 
                 If DPadUpPressed = False AndAlso DPadDownPressed = False AndAlso UpArrowDown = False AndAlso DownArrowDown = False Then
 
@@ -2195,6 +2199,59 @@ Public Class Form1
 
                     'BufferGridLines()
 
+                Else
+
+                    If RightThumbstickDown = False Then
+
+                        RightThumbstickDown = True
+
+                        Dim MousePointerOffset As Point = MousePointer.Rect.Location
+
+                        MousePointerOffset.X -= ScreenOffset.X
+                        MousePointerOffset.Y -= ScreenOffset.Y
+
+                        'Is the mouse pointer on the menu?
+                        If Not MenuBackground.Rect.Contains(MousePointerOffset) Then
+                            'No, the mouse pointer is not on the menu.
+
+                            MovePointerOverSaveButton()
+
+                        End If
+
+                        'Is the mouse pointer on the open button?
+                        If OpenButton.Rect.Contains(MousePointerOffset) Then
+                            'Yes, the mouse pointer is on the open button.
+
+                            MovePointerOverNewButton()
+
+                        End If
+
+                        'Is the mouse pointer on the save button?
+                        If SaveButton.Rect.Contains(MousePointerOffset) Then
+                            'Yes, the mouse pointer is on the save button.
+
+                            MovePointerOverOpenButton()
+
+                        End If
+
+                        'Is the mouse pointer on the new button?
+                        If NewButton.Rect.Contains(MousePointerOffset) Then
+                            'Yes, the mouse pointer is on the new button.
+
+                            MovePointerOverExitButton()
+
+                        End If
+
+                        'Is the mouse pointer on the exit button?
+                        If ExitButton.Rect.Contains(MousePointerOffset) Then
+                            'Yes, the mouse pointer is on the exit button.
+
+                            MovePointerOverSaveButton()
+
+                        End If
+
+                    End If
+
                 End If
 
             End If
@@ -2235,6 +2292,59 @@ Public Class Form1
 
                     'BufferGridLines()
 
+                Else
+
+                    If RightThumbstickUp = False Then
+
+                        RightThumbstickUp = True
+
+                        Dim MousePointerOffset As Point = MousePointer.Rect.Location
+
+                        MousePointerOffset.X -= ScreenOffset.X
+                        MousePointerOffset.Y -= ScreenOffset.Y
+
+                        'Is the mouse pointer on the menu?
+                        If Not MenuBackground.Rect.Contains(MousePointerOffset) Then
+                            'No, the mouse pointer is not on the menu.
+
+                            MovePointerOverExitButton()
+
+                        End If
+
+                        'Is the mouse pointer on the open button?
+                        If OpenButton.Rect.Contains(MousePointerOffset) Then
+                            'Yes, the mouse pointer is on the open button.
+
+                            MovePointerOverSaveButton()
+
+                        End If
+
+                        'Is the mouse pointer on the new button?
+                        If NewButton.Rect.Contains(MousePointerOffset) Then
+                            'Yes, the mouse pointer is on the new button.
+
+                            MovePointerOverOpenButton()
+
+                        End If
+
+                        'Is the mouse pointer on the exit button?
+                        If ExitButton.Rect.Contains(MousePointerOffset) Then
+                            'Yes, the mouse pointer is on the exit button.
+
+                            MovePointerOverNewButton()
+
+                        End If
+
+                        'Is the mouse pointer on the save button?
+                        If SaveButton.Rect.Contains(MousePointerOffset) Then
+                            'Yes, the mouse pointer is on the save button.
+
+                            MovePointerOverExitButton()
+
+                        End If
+
+                    End If
+
                 End If
 
             End If
@@ -2253,6 +2363,10 @@ Public Class Form1
             'The right thumbstick is in the neutral position.
 
             If GameState = AppState.Editing Then
+
+                RightThumbstickUp = False
+
+                RightThumbstickDown = False
 
                 If UpArrowDown = False And DownArrowDown = False Then
 

@@ -10098,6 +10098,7 @@ Public Class Form1
 
                         Dim MousePointerOffset As Point = MousePointer.Rect.Location
 
+                        'Convert mouse pointer from screen coordinates to client coordinates.
                         MousePointerOffset.X -= ScreenOffset.X
                         MousePointerOffset.Y -= ScreenOffset.Y
 

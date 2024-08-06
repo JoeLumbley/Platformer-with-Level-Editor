@@ -1822,7 +1822,6 @@ Public Class Form1
 
             End If
 
-
             If GameState = AppState.Playing Then
 
                 ControllerUp = True
@@ -2091,106 +2090,18 @@ Public Class Form1
         If ControllerPosition.Gamepad.sThumbRX <= NeutralStart Then
             'The right thumbstick is in the left position.
 
-            RightThumbstickLeft = True
-
-            If GameState = AppState.Editing Then
-
-                If ShowMenu = False Then
-
-                    'Is the camera moving right?
-                    If Camera.Velocity.X > 0 Then
-                        'Yes, the camera is moving right.
-
-                        'Stop move before changing direction.
-                        Camera.Velocity.X = 0 'Zero speed.
-
-                    End If
-
-                    'Move camera left.
-                    Camera.Velocity.X += -Camera.Acceleration.X * EditorDeltaTime.TotalSeconds
-
-                    'Limit camera velocity to the max.
-                    If Camera.Velocity.X < -Camera.MaxVelocity.X Then Camera.Velocity.X = -Camera.MaxVelocity.X
-
-                    'UpdateCameraOffset()
-
-                    'BufferGridLines()
-
-                Else
-
-                    If ShowSaveWarning = True Or ShowSaveFileDialog = True Then
-
-                        MovePointerLeft()
-
-                    End If
-
-                End If
-
-            End If
-
-
-            If GameState = AppState.Start Then
-
-                If ShowOpenFileDialog = False Then
-
-                    MovePointerToStartScreenNewButton()
-
-                End If
-
-            End If
+            DoRightThumbstickLeftLogic()
 
         ElseIf ControllerPosition.Gamepad.sThumbRX >= NeutralEnd Then
             'The right thumbstick is in the right position.
 
-            RightThumbstickRight = True
-
-            If GameState = AppState.Editing Then
-
-                If ShowMenu = False Then
-
-                    'Is the camera moving left?
-                    If Camera.Velocity.X < 0 Then
-                        'Yes, the camera is moving left.
-
-                        'Stop move before changing direction.
-                        Camera.Velocity.X = 0 'Zero speed.
-
-                    End If
-
-                    'Move camera right.
-                    Camera.Velocity.X += Camera.Acceleration.X * EditorDeltaTime.TotalSeconds
-
-                    'Limit camera velocity to the max.
-                    If Camera.Velocity.X > Camera.MaxVelocity.X Then Camera.Velocity.X = Camera.MaxVelocity.X
-
-                    'UpdateCameraOffset()
-
-                    'BufferGridLines()
-
-                Else
-
-                    If ShowSaveWarning = True Or ShowSaveFileDialog = True Then
-
-                        MovePointerRight()
-
-                    End If
-
-                End If
-
-            End If
-
-            If GameState = AppState.Start Then
-
-                If ShowOpenFileDialog = False Then
-
-                    MovePointerToStartScreenOpenButton()
-
-                End If
-
-            End If
+            DoRightThumbstickRightLogic()
 
         Else
             'The right thumbstick is in the neutral position.
+
+            'DoRightThumbstickXAxisNeutralLogic
+
 
             RightThumbstickLeft = False
 
@@ -2253,6 +2164,8 @@ Public Class Form1
         'What position is the right thumbstick in on the Y-axis?
         If ControllerPosition.Gamepad.sThumbRY <= NeutralStart Then
             'The right thumbstick is in the down position.
+
+            'DoRightThumbstickDownLogic
 
             If GameState = AppState.Editing Then
 
@@ -2357,6 +2270,10 @@ Public Class Form1
         ElseIf ControllerPosition.Gamepad.sThumbRY >= NeutralEnd Then
             'The right thumbstick is in the up position.
 
+
+            'DoRightThumbstickUpLogic
+
+
             If GameState = AppState.Editing Then
 
                 If ShowMenu = False Then
@@ -2460,6 +2377,9 @@ Public Class Form1
         Else
             'The right thumbstick is in the neutral position.
 
+            'DoRightThumbstickYAxisNeutralLogic
+
+
             RightThumbstickUp = False
 
             RightThumbstickDown = False
@@ -2509,6 +2429,108 @@ Public Class Form1
                     End If
 
                 End If
+
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub DoRightThumbstickLeftLogic()
+
+        RightThumbstickLeft = True
+
+        If GameState = AppState.Editing Then
+
+            If ShowMenu = False Then
+
+                'Is the camera moving right?
+                If Camera.Velocity.X > 0 Then
+                    'Yes, the camera is moving right.
+
+                    'Stop move before changing direction.
+                    Camera.Velocity.X = 0 'Zero speed.
+
+                End If
+
+                'Move camera left.
+                Camera.Velocity.X += -Camera.Acceleration.X * EditorDeltaTime.TotalSeconds
+
+                'Limit camera velocity to the max.
+                If Camera.Velocity.X < -Camera.MaxVelocity.X Then Camera.Velocity.X = -Camera.MaxVelocity.X
+
+                'UpdateCameraOffset()
+
+                'BufferGridLines()
+
+            Else
+
+                If ShowSaveWarning = True Or ShowSaveFileDialog = True Then
+
+                    MovePointerLeft()
+
+                End If
+
+            End If
+
+        End If
+
+        If GameState = AppState.Start Then
+
+            If ShowOpenFileDialog = False Then
+
+                MovePointerToStartScreenNewButton()
+
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub DoRightThumbstickRightLogic()
+
+        RightThumbstickRight = True
+
+        If GameState = AppState.Editing Then
+
+            If ShowMenu = False Then
+
+                'Is the camera moving left?
+                If Camera.Velocity.X < 0 Then
+                    'Yes, the camera is moving left.
+
+                    'Stop move before changing direction.
+                    Camera.Velocity.X = 0 'Zero speed.
+
+                End If
+
+                'Move camera right.
+                Camera.Velocity.X += Camera.Acceleration.X * EditorDeltaTime.TotalSeconds
+
+                'Limit camera velocity to the max.
+                If Camera.Velocity.X > Camera.MaxVelocity.X Then Camera.Velocity.X = Camera.MaxVelocity.X
+
+                'UpdateCameraOffset()
+
+                'BufferGridLines()
+
+            Else
+
+                If ShowSaveWarning = True Or ShowSaveFileDialog = True Then
+
+                    MovePointerRight()
+
+                End If
+
+            End If
+
+        End If
+
+        If GameState = AppState.Start Then
+
+            If ShowOpenFileDialog = False Then
+
+                MovePointerToStartScreenOpenButton()
 
             End If
 

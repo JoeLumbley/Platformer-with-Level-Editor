@@ -2098,7 +2098,7 @@ Public Class Form1
             DoRightThumbstickRightLogic()
 
         Else
-            'The right thumbstick is in the neutral position X-axis.
+            'The right thumbstick is in the neutral position on the X-axis.
 
             DoRightThumbstickXAxisNeutralLogic()
 

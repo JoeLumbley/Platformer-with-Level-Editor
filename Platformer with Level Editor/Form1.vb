@@ -2314,37 +2314,9 @@ Public Class Form1
 
                 If LeftArrowDown = False And RightArrowDown = False Then
 
-                    If Camera.Velocity.X < 0 Then
-
-                        'Decelerate camera.
-                        Camera.Velocity.X += Camera.Acceleration.X * 8 * EditorDeltaTime.TotalSeconds
-
-                        'Limit decelerate to zero speed.
-                        If Camera.Velocity.X > 0 Then
-
-                            Camera.Velocity.X = 0 'Zero speed.
-
-                        End If
-
-                    End If
-
-                    If Camera.Velocity.X > 0 Then
-
-                        'Decelerate camera.
-                        Camera.Velocity.X += -Camera.Acceleration.X * 8 * EditorDeltaTime.TotalSeconds
-
-                        'Limit decelerate to zero speed.
-                        If Camera.Velocity.X < 0 Then
-
-                            Camera.Velocity.X = 0 'Zero speed.
-
-                        End If
-
-                    End If
+                    DecelerateCameraXAxis()
 
                 End If
-
-            Else
 
             End If
 
@@ -2513,6 +2485,38 @@ Public Class Form1
 
         Camera.Rect.Y = Math.Round(Camera.Position.Y)
 
+
+    End Sub
+
+    Private Sub DecelerateCameraXAxis()
+
+        If Camera.Velocity.X < 0 Then
+
+            'Decelerate camera.
+            Camera.Velocity.X += Camera.Acceleration.X * 8 * EditorDeltaTime.TotalSeconds
+
+            'Limit decelerate to zero speed.
+            If Camera.Velocity.X > 0 Then
+
+                Camera.Velocity.X = 0 'Zero speed.
+
+            End If
+
+        End If
+
+        If Camera.Velocity.X > 0 Then
+
+            'Decelerate camera.
+            Camera.Velocity.X += -Camera.Acceleration.X * 8 * EditorDeltaTime.TotalSeconds
+
+            'Limit decelerate to zero speed.
+            If Camera.Velocity.X < 0 Then
+
+                Camera.Velocity.X = 0 'Zero speed.
+
+            End If
+
+        End If
 
     End Sub
 

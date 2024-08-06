@@ -2186,56 +2186,7 @@ Public Class Form1
 
                 Else
 
-                    If RightThumbstickDown = False Then
-
-                        RightThumbstickDown = True
-
-                        Dim MousePointerOffset As Point = MousePointer.Rect.Location
-
-                        MousePointerOffset.X -= ScreenOffset.X
-                        MousePointerOffset.Y -= ScreenOffset.Y
-
-                        'Is the mouse pointer on the menu?
-                        If Not MenuBackground.Rect.Contains(MousePointerOffset) Then
-                            'No, the mouse pointer is not on the menu.
-
-                            MovePointerOverSaveButton()
-
-                        End If
-
-                        'Is the mouse pointer on the open button?
-                        If OpenButton.Rect.Contains(MousePointerOffset) Then
-                            'Yes, the mouse pointer is on the open button.
-
-                            MovePointerOverNewButton()
-
-                        End If
-
-                        'Is the mouse pointer on the save button?
-                        If SaveButton.Rect.Contains(MousePointerOffset) Then
-                            'Yes, the mouse pointer is on the save button.
-
-                            MovePointerOverOpenButton()
-
-                        End If
-
-                        'Is the mouse pointer on the new button?
-                        If NewButton.Rect.Contains(MousePointerOffset) Then
-                            'Yes, the mouse pointer is on the new button.
-
-                            MovePointerOverExitButton()
-
-                        End If
-
-                        'Is the mouse pointer on the exit button?
-                        If ExitButton.Rect.Contains(MousePointerOffset) Then
-                            'Yes, the mouse pointer is on the exit button.
-
-                            MovePointerOverSaveButton()
-
-                        End If
-
-                    End If
+                    DoRightThumbstickDownMenuLogic()
 
                 End If
 
@@ -2469,6 +2420,61 @@ Public Class Form1
                 'Yes, the mouse pointer is on the save button.
 
                 MovePointerOverExitButton()
+
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub DoRightThumbstickDownMenuLogic()
+
+        If RightThumbstickDown = False Then
+
+            RightThumbstickDown = True
+
+            Dim MousePointerOffset As Point = MousePointer.Rect.Location
+
+            MousePointerOffset.X -= ScreenOffset.X
+            MousePointerOffset.Y -= ScreenOffset.Y
+
+            'Is the mouse pointer on the menu?
+            If Not MenuBackground.Rect.Contains(MousePointerOffset) Then
+                'No, the mouse pointer is not on the menu.
+
+                MovePointerOverSaveButton()
+
+            End If
+
+            'Is the mouse pointer on the open button?
+            If OpenButton.Rect.Contains(MousePointerOffset) Then
+                'Yes, the mouse pointer is on the open button.
+
+                MovePointerOverNewButton()
+
+            End If
+
+            'Is the mouse pointer on the save button?
+            If SaveButton.Rect.Contains(MousePointerOffset) Then
+                'Yes, the mouse pointer is on the save button.
+
+                MovePointerOverOpenButton()
+
+            End If
+
+            'Is the mouse pointer on the new button?
+            If NewButton.Rect.Contains(MousePointerOffset) Then
+                'Yes, the mouse pointer is on the new button.
+
+                MovePointerOverExitButton()
+
+            End If
+
+            'Is the mouse pointer on the exit button?
+            If ExitButton.Rect.Contains(MousePointerOffset) Then
+                'Yes, the mouse pointer is on the exit button.
+
+                MovePointerOverSaveButton()
 
             End If
 

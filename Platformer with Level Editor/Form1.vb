@@ -2174,20 +2174,7 @@ Public Class Form1
 
             If ShowMenu = False Then
 
-                'Is the camera moving up?
-                If Camera.Velocity.Y < 0 Then
-                    'Yes, the camera is moving up.
-
-                    'Stop move before changing direction.
-                    Camera.Velocity.Y = 0 'Zero speed.
-
-                End If
-
-                'Move camera down.
-                Camera.Velocity.Y += Camera.Acceleration.Y * EditorDeltaTime.TotalSeconds
-
-                'Limit camera velocity to the max.
-                If Camera.Velocity.Y > Camera.MaxVelocity.Y Then Camera.Velocity.Y = Camera.MaxVelocity.Y
+                MoveCameraDown()
 
             Else
 
@@ -2324,20 +2311,7 @@ Public Class Form1
 
             If ShowMenu = False Then
 
-                'Is the camera moving right?
-                If Camera.Velocity.X > 0 Then
-                    'Yes, the camera is moving right.
-
-                    'Stop move before changing direction.
-                    Camera.Velocity.X = 0 'Zero speed.
-
-                End If
-
-                'Move camera left.
-                Camera.Velocity.X += -Camera.Acceleration.X * EditorDeltaTime.TotalSeconds
-
-                'Limit camera velocity to the max.
-                If Camera.Velocity.X < -Camera.MaxVelocity.X Then Camera.Velocity.X = -Camera.MaxVelocity.X
+                MoveCameraLeft()
 
             Else
 
@@ -2371,20 +2345,7 @@ Public Class Form1
 
             If ShowMenu = False Then
 
-                'Is the camera moving left?
-                If Camera.Velocity.X < 0 Then
-                    'Yes, the camera is moving left.
-
-                    'Stop move before changing direction.
-                    Camera.Velocity.X = 0 'Zero speed.
-
-                End If
-
-                'Move camera right.
-                Camera.Velocity.X += Camera.Acceleration.X * EditorDeltaTime.TotalSeconds
-
-                'Limit camera velocity to the max.
-                If Camera.Velocity.X > Camera.MaxVelocity.X Then Camera.Velocity.X = Camera.MaxVelocity.X
+                MoveCameraRight()
 
             Else
 

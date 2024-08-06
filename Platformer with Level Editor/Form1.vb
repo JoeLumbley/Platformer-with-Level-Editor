@@ -2226,37 +2226,7 @@ Public Class Form1
 
             If UpArrowDown = False And DownArrowDown = False Then
 
-                'Is the camera moving up?
-                If Camera.Velocity.Y < 0 Then
-                    'Yes, the camera is moving up.
-
-                    'Decelerate camera.
-                    Camera.Velocity.Y += Camera.Acceleration.Y * 8 * EditorDeltaTime.TotalSeconds
-
-                    'Limit decelerate to zero speed.
-                    If Camera.Velocity.Y > 0 Then
-
-                        Camera.Velocity.Y = 0 'Zero speed.
-
-                    End If
-
-                End If
-
-                'Is the camera moving down?
-                If Camera.Velocity.Y > 0 Then
-                    'Yes, the camera is moving down.
-
-                    'Decelerate camera.
-                    Camera.Velocity.Y += -Camera.Acceleration.Y * 8 * EditorDeltaTime.TotalSeconds
-
-                    'Limit decelerate to zero speed.
-                    If Camera.Velocity.Y < 0 Then
-
-                        Camera.Velocity.Y = 0 'Zero speed.
-
-                    End If
-
-                End If
+                DecelerateCameraYAxis()
 
             End If
 
@@ -2543,6 +2513,42 @@ Public Class Form1
 
         Camera.Rect.Y = Math.Round(Camera.Position.Y)
 
+
+    End Sub
+
+    Private Sub DecelerateCameraYAxis()
+
+        'Is the camera moving up?
+        If Camera.Velocity.Y < 0 Then
+            'Yes, the camera is moving up.
+
+            'Decelerate camera.
+            Camera.Velocity.Y += Camera.Acceleration.Y * 8 * EditorDeltaTime.TotalSeconds
+
+            'Limit decelerate to zero speed.
+            If Camera.Velocity.Y > 0 Then
+
+                Camera.Velocity.Y = 0 'Zero speed.
+
+            End If
+
+        End If
+
+        'Is the camera moving down?
+        If Camera.Velocity.Y > 0 Then
+            'Yes, the camera is moving down.
+
+            'Decelerate camera.
+            Camera.Velocity.Y += -Camera.Acceleration.Y * 8 * EditorDeltaTime.TotalSeconds
+
+            'Limit decelerate to zero speed.
+            If Camera.Velocity.Y < 0 Then
+
+                Camera.Velocity.Y = 0 'Zero speed.
+
+            End If
+
+        End If
 
     End Sub
 

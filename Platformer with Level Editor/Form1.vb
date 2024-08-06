@@ -2347,19 +2347,11 @@ Public Class Form1
 
             End If
 
-            'Is the mouse pointer on the open button?
-            If OpenButton.Rect.Contains(MousePointerOffset) Then
-                'Yes, the mouse pointer is on the open button.
+            'Is the mouse pointer on the save button?
+            If SaveButton.Rect.Contains(MousePointerOffset) Then
+                'Yes, the mouse pointer is on the save button.
 
-                MovePointerOverSaveButton()
-
-            End If
-
-            'Is the mouse pointer on the new button?
-            If NewButton.Rect.Contains(MousePointerOffset) Then
-                'Yes, the mouse pointer is on the new button.
-
-                MovePointerOverOpenButton()
+                MovePointerOverExitButton()
 
             End If
 
@@ -2371,11 +2363,19 @@ Public Class Form1
 
             End If
 
-            'Is the mouse pointer on the save button?
-            If SaveButton.Rect.Contains(MousePointerOffset) Then
-                'Yes, the mouse pointer is on the save button.
+            'Is the mouse pointer on the new button?
+            If NewButton.Rect.Contains(MousePointerOffset) Then
+                'Yes, the mouse pointer is on the new button.
 
-                MovePointerOverExitButton()
+                MovePointerOverOpenButton()
+
+            End If
+
+            'Is the mouse pointer on the open button?
+            If OpenButton.Rect.Contains(MousePointerOffset) Then
+                'Yes, the mouse pointer is on the open button.
+
+                MovePointerOverSaveButton()
 
             End If
 

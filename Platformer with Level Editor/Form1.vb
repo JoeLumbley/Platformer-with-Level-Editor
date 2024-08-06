@@ -2118,60 +2118,7 @@ Public Class Form1
         Else
             'The right thumbstick is in the neutral position.
 
-            'DoRightThumbstickYAxisNeutralLogic
-
-
-            RightThumbstickUp = False
-
-            RightThumbstickDown = False
-
-            If GameState = AppState.Editing Then
-
-                If UpArrowDown = False And DownArrowDown = False Then
-
-                    'Is the camera moving up?
-                    If Camera.Velocity.Y < 0 Then
-                        'Yes, the camera is moving up.
-
-                        'Decelerate camera.
-                        Camera.Velocity.Y += Camera.Acceleration.Y * 8 * EditorDeltaTime.TotalSeconds
-
-                        'Limit decelerate to zero speed.
-                        If Camera.Velocity.Y > 0 Then
-
-                            Camera.Velocity.Y = 0 'Zero speed.
-
-                            'BufferGridLines()
-
-                        End If
-
-                        'UpdateCameraOffset()
-
-                    End If
-
-                    'Is the camera moving down?
-                    If Camera.Velocity.Y > 0 Then
-                        'Yes, the camera is moving down.
-
-                        'Decelerate camera.
-                        Camera.Velocity.Y += -Camera.Acceleration.Y * 8 * EditorDeltaTime.TotalSeconds
-
-                        'Limit decelerate to zero speed.
-                        If Camera.Velocity.Y < 0 Then
-
-                            Camera.Velocity.Y = 0 'Zero speed.
-
-                            'BufferGridLines()
-
-                        End If
-
-                        'UpdateCameraOffset()
-
-                    End If
-
-                End If
-
-            End If
+            DoRightThumbstickYAxisNeutralLogic()
 
         End If
 
@@ -2197,10 +2144,6 @@ Public Class Form1
 
                 'Limit camera velocity to the max.
                 If Camera.Velocity.Y < -Camera.MaxVelocity.Y Then Camera.Velocity.Y = -Camera.MaxVelocity.Y
-
-                'UpdateCameraOffset()
-
-                'BufferGridLines()
 
             Else
 
@@ -2302,10 +2245,6 @@ Public Class Form1
                 'Limit camera velocity to the max.
                 If Camera.Velocity.Y > Camera.MaxVelocity.Y Then Camera.Velocity.Y = Camera.MaxVelocity.Y
 
-                'UpdateCameraOffset()
-
-                'BufferGridLines()
-
             Else
 
                 If ShowSaveWarning = True Or ShowSaveFileDialog = True Then
@@ -2378,6 +2317,54 @@ Public Class Form1
             If ShowOpenFileDialog = False Then
 
                 MovePointerToStartScreenOpenButton()
+
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub DoRightThumbstickYAxisNeutralLogic()
+
+        RightThumbstickUp = False
+
+        RightThumbstickDown = False
+
+        If GameState = AppState.Editing Then
+
+            If UpArrowDown = False And DownArrowDown = False Then
+
+                'Is the camera moving up?
+                If Camera.Velocity.Y < 0 Then
+                    'Yes, the camera is moving up.
+
+                    'Decelerate camera.
+                    Camera.Velocity.Y += Camera.Acceleration.Y * 8 * EditorDeltaTime.TotalSeconds
+
+                    'Limit decelerate to zero speed.
+                    If Camera.Velocity.Y > 0 Then
+
+                        Camera.Velocity.Y = 0 'Zero speed.
+
+                    End If
+
+                End If
+
+                'Is the camera moving down?
+                If Camera.Velocity.Y > 0 Then
+                    'Yes, the camera is moving down.
+
+                    'Decelerate camera.
+                    Camera.Velocity.Y += -Camera.Acceleration.Y * 8 * EditorDeltaTime.TotalSeconds
+
+                    'Limit decelerate to zero speed.
+                    If Camera.Velocity.Y < 0 Then
+
+                        Camera.Velocity.Y = 0 'Zero speed.
+
+                    End If
+
+                End If
 
             End If
 

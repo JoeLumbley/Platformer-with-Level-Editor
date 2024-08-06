@@ -2312,7 +2312,7 @@ Public Class Form1
 
             If ShowMenu = False Then
 
-                If LeftArrowDown = False And RightArrowDown = False Then
+                If LeftArrowDown = False AndAlso RightArrowDown = False Then
 
                     DecelerateCameraXAxis()
 
@@ -2335,11 +2335,14 @@ Public Class Form1
             MousePointerOffset.X -= ScreenOffset.X
             MousePointerOffset.Y -= ScreenOffset.Y
 
-            'Is the mouse pointer on the menu?
-            If Not MenuBackground.Rect.Contains(MousePointerOffset) Then
-                'No, the mouse pointer is not on the menu.
+            'Is the mouse pointer over any button?
+            If Not OpenButton.Rect.Contains(MousePointerOffset) AndAlso
+               Not NewButton.Rect.Contains(MousePointerOffset) AndAlso
+               Not ExitButton.Rect.Contains(MousePointerOffset) AndAlso
+               Not SaveButton.Rect.Contains(MousePointerOffset) Then
+                'No, the mouse pointer is not over any button.
 
-                MovePointerOverExitButton()
+                MovePointerOverSaveButton()
 
             End If
 
@@ -2390,9 +2393,12 @@ Public Class Form1
             MousePointerOffset.X -= ScreenOffset.X
             MousePointerOffset.Y -= ScreenOffset.Y
 
-            'Is the mouse pointer on the menu?
-            If Not MenuBackground.Rect.Contains(MousePointerOffset) Then
-                'No, the mouse pointer is not on the menu.
+            'Is the mouse pointer over any button?
+            If Not OpenButton.Rect.Contains(MousePointerOffset) AndAlso
+               Not NewButton.Rect.Contains(MousePointerOffset) AndAlso
+               Not ExitButton.Rect.Contains(MousePointerOffset) AndAlso
+               Not SaveButton.Rect.Contains(MousePointerOffset) Then
+                'No, the mouse pointer is not over any button.
 
                 MovePointerOverSaveButton()
 
@@ -2484,7 +2490,6 @@ Public Class Form1
         'Displacement = Velocity x Delta Time
 
         Camera.Rect.Y = Math.Round(Camera.Position.Y)
-
 
     End Sub
 

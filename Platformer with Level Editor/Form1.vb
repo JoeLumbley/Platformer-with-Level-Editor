@@ -2332,6 +2332,7 @@ Public Class Form1
 
             Dim MousePointerOffset As Point = MousePointer.Rect.Location
 
+            'Convert from screen to client.
             MousePointerOffset.X -= ScreenOffset.X
             MousePointerOffset.Y -= ScreenOffset.Y
 
@@ -2390,6 +2391,7 @@ Public Class Form1
 
             Dim MousePointerOffset As Point = MousePointer.Rect.Location
 
+            'Convert from screen to client.
             MousePointerOffset.X -= ScreenOffset.X
             MousePointerOffset.Y -= ScreenOffset.Y
 
@@ -2404,19 +2406,19 @@ Public Class Form1
 
             End If
 
-            'Is the mouse pointer on the open button?
-            If OpenButton.Rect.Contains(MousePointerOffset) Then
-                'Yes, the mouse pointer is on the open button.
-
-                MovePointerOverNewButton()
-
-            End If
-
             'Is the mouse pointer on the save button?
             If SaveButton.Rect.Contains(MousePointerOffset) Then
                 'Yes, the mouse pointer is on the save button.
 
                 MovePointerOverOpenButton()
+
+            End If
+
+            'Is the mouse pointer on the open button?
+            If OpenButton.Rect.Contains(MousePointerOffset) Then
+                'Yes, the mouse pointer is on the open button.
+
+                MovePointerOverNewButton()
 
             End If
 

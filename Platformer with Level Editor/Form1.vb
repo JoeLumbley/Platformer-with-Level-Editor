@@ -2128,32 +2128,25 @@ Public Class Form1
 
         If GameState = AppState.Editing Then
 
+            'Is the menu open?
             If ShowMenu = False Then
+                'No, the menu is not open.
 
-                'Is the camera moving down?
-                If Camera.Velocity.Y > 0 Then
-                    'Yes, the camera is moving down.
-
-                    'Stop move before changing direction.
-                    Camera.Velocity.Y = 0 'Zero speed.
-
-                End If
-
-                'Move camera up.
-                Camera.Velocity.Y += -Camera.Acceleration.Y * EditorDeltaTime.TotalSeconds
-
-                'Limit camera velocity to the max.
-                If Camera.Velocity.Y < -Camera.MaxVelocity.Y Then Camera.Velocity.Y = -Camera.MaxVelocity.Y
+                MoveCameraUp()
 
             Else
+                'Yes, the menu is open.
 
+                'Are dialog windows open?
                 If ShowSaveWarning = True Or ShowSaveFileDialog = True Then
+                    'Yes, dialog windows are open.
 
                     RightThumbstickUp = True
 
                     MovePointerUp()
 
                 Else
+                    'No, dialog windows are not open.
 
                     If RightThumbstickUp = False Then
 

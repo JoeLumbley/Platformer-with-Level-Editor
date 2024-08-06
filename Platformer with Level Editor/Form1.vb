@@ -639,6 +639,8 @@ Public Class Form1
 
     Private ShowOpenFileDialog As Boolean = False
 
+    Private ShowSaveFileDialog As Boolean = False
+
     Private ShowSaveWarning As Boolean = False
 
     Private LevelName As String = "Untitled"
@@ -2083,7 +2085,7 @@ Public Class Form1
 
                 Else
 
-                    If ShowSaveWarning = True Then
+                    If ShowSaveWarning = True Or ShowSaveFileDialog = True Then
 
                         MovePointerLeft()
 
@@ -2134,7 +2136,7 @@ Public Class Form1
 
                 Else
 
-                    If ShowSaveWarning = True Then
+                    If ShowSaveWarning = True Or ShowSaveFileDialog = True Then
 
                         MovePointerRight()
 
@@ -2244,7 +2246,7 @@ Public Class Form1
 
                 Else
 
-                    If ShowSaveWarning = True Then
+                    If ShowSaveWarning = True Or ShowSaveFileDialog = True Then
 
                         RightThumbstickDown = True
 
@@ -2347,7 +2349,7 @@ Public Class Form1
 
                 Else
 
-                    If ShowSaveWarning = True Then
+                    If ShowSaveWarning = True Or ShowSaveFileDialog = True Then
 
                         RightThumbstickUp = True
 
@@ -6478,6 +6480,8 @@ Public Class Form1
         SaveFileDialog1.FilterIndex = 1
         SaveFileDialog1.InitialDirectory = Application.StartupPath
 
+        ShowSaveFileDialog = True
+
         If SaveFileDialog1.ShowDialog(Me) = System.Windows.Forms.DialogResult.OK Then
 
             SaveTest2LevelFile(SaveFileDialog1.FileName)
@@ -6486,6 +6490,8 @@ Public Class Form1
             Text = LevelName & " - Platformer with Level Editor - Code with Joe"
 
         End If
+
+        ShowSaveFileDialog = False
 
     End Sub
 
@@ -10102,7 +10108,7 @@ Public Class Form1
 
                 Else
 
-                    If ShowSaveWarning = True Then
+                    If ShowSaveWarning = True Or ShowSaveFileDialog = True Then
 
                         MovePointerLeftDPad()
 
@@ -10144,7 +10150,7 @@ Public Class Form1
 
                 Else
 
-                    If ShowSaveWarning = True Then
+                    If ShowSaveWarning = True Or ShowSaveFileDialog = True Then
 
                         MovePointerRightDPad()
 
@@ -10180,7 +10186,7 @@ Public Class Form1
 
                 If ShowMenu = True Then
 
-                    If ShowSaveWarning = True Then
+                    If ShowSaveWarning = True Or ShowSaveFileDialog = True Then
 
                         MovePointerUpDPad()
 
@@ -10290,7 +10296,7 @@ Public Class Form1
 
                 If ShowMenu = True Then
 
-                    If ShowSaveWarning = True Then
+                    If ShowSaveWarning = True Or ShowSaveFileDialog = True Then
 
                         MovePointerDownDPad()
 
@@ -10919,6 +10925,8 @@ Public Class Form1
         If NewButton.Rect.Contains(e) Then
             'Yes, the player is selecting the new button.
 
+            ShowSaveWarning = True
+
             'Does the player want to save this level before creating a new level?
             If MsgBox("Changes to " & LevelName & " may be lost." & vbCrLf & "Create a new level anyway?",
                       MsgBoxStyle.Question Or MsgBoxStyle.OkCancel,
@@ -10930,6 +10938,8 @@ Public Class Form1
                 ShowMenu = False
 
             End If
+
+            ShowSaveWarning = False
 
         End If
 

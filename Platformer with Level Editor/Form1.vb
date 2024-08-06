@@ -2158,7 +2158,9 @@ Public Class Form1
 
         If GameState = AppState.Start Then
 
+            'Is the open file dialog open?
             If ShowOpenFileDialog = False Then
+                'No, the open file dialog is not open.
 
                 MovePointerToStartScreenNewButton()
 
@@ -2202,7 +2204,9 @@ Public Class Form1
 
         If GameState = AppState.Start Then
 
+            'Is the open file dialog open?
             If ShowOpenFileDialog = False Then
+                'No, the open file dialog is not open.
 
                 MovePointerToStartScreenOpenButton()
 

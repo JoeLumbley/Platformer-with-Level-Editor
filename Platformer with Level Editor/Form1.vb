@@ -2172,19 +2172,25 @@ Public Class Form1
 
         If GameState = AppState.Editing Then
 
+            'Is the menu open?
             If ShowMenu = False Then
+                'No, the menu is not open.
 
                 MoveCameraDown()
 
             Else
+                'Yes, the menu is open.
 
+                'Are dialog windows open?
                 If ShowSaveWarning = True Or ShowSaveFileDialog = True Then
+                    'Yes, dialog windows are open.
 
                     RightThumbstickDown = True
 
                     MovePointerDown()
 
                 Else
+                    'No, dialog windows are not open.
 
                     DoRightThumbstickDownMenuLogic()
 

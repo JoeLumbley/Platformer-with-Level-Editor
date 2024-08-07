@@ -333,6 +333,10 @@ Public Class Form1
 
     Private MousePointer As GameObject
 
+    Private MouseWheelNotchesUp As Integer = 0
+
+    Private MouseWheelNotchesDown As Integer = 0
+
     Private Goal As GameObject
 
     Private Spawn As GameObject
@@ -11700,30 +11704,46 @@ Public Class Form1
         If e.Delta > 0 Then
             'The player is rolling the mouse wheel up.
 
-            If GameState = AppState.Editing Then
+            MouseWheelNotchesUp += 1
 
-                MouseWheelUpEditing(e.Location)
+            If MouseWheelNotchesUp >= 3 Then
 
-            End If
+                MouseWheelNotchesUp = 0
 
-            If GameState = AppState.Start Then
+                If GameState = AppState.Editing Then
 
-                MovePointerToStartScreenNewButton()
+                    MouseWheelUpEditing()
+
+                End If
+
+                If GameState = AppState.Start Then
+
+                    MovePointerToStartScreenNewButton()
+
+                End If
 
             End If
 
         Else
             'The player is rolling the mouse wheel down.
 
-            If GameState = AppState.Editing Then
+            MouseWheelNotchesDown += 1
 
-                MouseWheelDownEditing(e.Location)
+            If MouseWheelNotchesDown >= 3 Then
 
-            End If
+                MouseWheelNotchesDown = 0
 
-            If GameState = AppState.Start Then
+                If GameState = AppState.Editing Then
 
-                MovePointerToStartScreenOpenButton()
+                    MouseWheelDownEditing()
+
+                End If
+
+                If GameState = AppState.Start Then
+
+                    MovePointerToStartScreenOpenButton()
+
+                End If
 
             End If
 
@@ -11731,7 +11751,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub MouseWheelDownEditing(MousePointer As Point)
+    Private Sub MouseWheelDownEditing()
 
         If ShowMenu = False Then
 
@@ -11745,7 +11765,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub MouseWheelUpEditing(MousePointer As Point)
+    Private Sub MouseWheelUpEditing()
 
         If ShowMenu = False Then
 

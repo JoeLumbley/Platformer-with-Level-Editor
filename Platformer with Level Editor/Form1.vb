@@ -1551,58 +1551,12 @@ Public Class Form1
         ElseIf ControllerPosition.Gamepad.sThumbLX >= NeutralEnd Then
             'The left thumbstick is in the right position.
 
-            If GameState = AppState.Editing Then
-
-                If ShowMenu = False Then
-
-                    MovePointerRight()
-
-                Else
-
-                    If ShowSaveWarning = True Or ShowSaveFileDialog = True Then
-
-                        MovePointerRight()
-
-                    End If
-
-                End If
-
-            End If
-
-            If GameState = AppState.Playing Then
-
-                ControllerLeft = False
-
-                ControllerRight = True
-
-            End If
-
-            If GameState = AppState.Start Then
-
-                If ShowOpenFileDialog = True Then
-
-                    MovePointerRight()
-
-                Else
-
-                    MovePointerToStartScreenOpenButton()
-
-                End If
-
-            End If
+            DoLeftThumbstickRightLogic()
 
         Else
             'The left thumbstick is in the neutral position.
 
-            If GameState = AppState.Start Or GameState = AppState.Editing Then
-
-                If DPadLeftPressed = False AndAlso DPadRightPressed = False AndAlso LeftArrowDown = False AndAlso RightArrowDown = False AndAlso RightThumbstickLeft = False AndAlso RightThumbstickRight = False Then
-
-                    DeceleratePointerXAxis()
-
-                End If
-
-            End If
+            DoLeftThumbstickXAxisNeutralLogic()
 
         End If
 
@@ -1610,90 +1564,7 @@ Public Class Form1
         If ControllerPosition.Gamepad.sThumbLY <= NeutralStart Then
             'The left thumbstick is in the down position.
 
-            If GameState = AppState.Editing Then
-
-                If ShowMenu = True Then
-
-                    If ShowSaveWarning = True Or ShowSaveFileDialog = True Then
-
-                        MovePointerDown()
-
-                    Else
-
-                        If LeftThumbstickDown = False Then
-
-                            LeftThumbstickDown = True
-
-                            Dim MousePointerOffset As Point = MousePointer.Rect.Location
-
-                            MousePointerOffset.X -= ScreenOffset.X
-                            MousePointerOffset.Y -= ScreenOffset.Y
-
-                            'Is the mouse pointer on the menu?
-                            If Not MenuBackground.Rect.Contains(MousePointerOffset) Then
-                                'No, the mouse pointer is not on the menu.
-
-                                MovePointerOverSaveButton()
-
-                            End If
-
-                            'Is the mouse pointer on the open button?
-                            If OpenButton.Rect.Contains(MousePointerOffset) Then
-                                'Yes, the mouse pointer is on the open button.
-
-                                MovePointerOverNewButton()
-
-                            End If
-
-                            'Is the mouse pointer on the save button?
-                            If SaveButton.Rect.Contains(MousePointerOffset) Then
-                                'Yes, the mouse pointer is on the save button.
-
-                                MovePointerOverOpenButton()
-
-                            End If
-
-                            'Is the mouse pointer on the new button?
-                            If NewButton.Rect.Contains(MousePointerOffset) Then
-                                'Yes, the mouse pointer is on the new button.
-
-                                MovePointerOverExitButton()
-
-                            End If
-
-                            'Is the mouse pointer on the exit button?
-                            If ExitButton.Rect.Contains(MousePointerOffset) Then
-                                'Yes, the mouse pointer is on the exit button.
-
-                                MovePointerOverSaveButton()
-
-                            End If
-
-                        End If
-
-                    End If
-
-                Else
-
-                    MovePointerDown()
-
-                End If
-
-            End If
-
-            If GameState = AppState.Start Then
-
-                If ShowOpenFileDialog = True Then
-
-                    MovePointerDown()
-
-                Else
-
-                    MovePointerToStartScreenOpenButton()
-
-                End If
-
-            End If
+            DoLeftThumbstickDownLogic()
 
         ElseIf ControllerPosition.Gamepad.sThumbLY >= NeutralEnd Then
             'The left thumbstick is in the up position.
@@ -1853,6 +1724,158 @@ Public Class Form1
             Else
 
                 MovePointerToStartScreenNewButton()
+
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub DoLeftThumbstickRightLogic()
+
+        If GameState = AppState.Editing Then
+
+            If ShowMenu = False Then
+
+                MovePointerRight()
+
+            Else
+
+                If ShowSaveWarning = True Or ShowSaveFileDialog = True Then
+
+                    MovePointerRight()
+
+                End If
+
+            End If
+
+        End If
+
+        If GameState = AppState.Playing Then
+
+            ControllerLeft = False
+
+            ControllerRight = True
+
+        End If
+
+        If GameState = AppState.Start Then
+
+            If ShowOpenFileDialog = True Then
+
+                MovePointerRight()
+
+            Else
+
+                MovePointerToStartScreenOpenButton()
+
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub DoLeftThumbstickXAxisNeutralLogic()
+
+        If GameState = AppState.Start Or GameState = AppState.Editing Then
+
+            If DPadLeftPressed = False AndAlso
+              DPadRightPressed = False AndAlso
+                 LeftArrowDown = False AndAlso
+                RightArrowDown = False AndAlso
+           RightThumbstickLeft = False AndAlso
+          RightThumbstickRight = False Then
+
+                DeceleratePointerXAxis()
+
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub DoLeftThumbstickDownLogic()
+
+        If GameState = AppState.Editing Then
+
+            If ShowMenu = True Then
+
+                If ShowSaveWarning = True Or ShowSaveFileDialog = True Then
+
+                    MovePointerDown()
+
+                Else
+
+                    If LeftThumbstickDown = False Then
+
+                        LeftThumbstickDown = True
+
+                        Dim MousePointerOffset As Point = MousePointer.Rect.Location
+
+                        MousePointerOffset.X -= ScreenOffset.X
+                        MousePointerOffset.Y -= ScreenOffset.Y
+
+                        'Is the mouse pointer on the menu?
+                        If Not MenuBackground.Rect.Contains(MousePointerOffset) Then
+                            'No, the mouse pointer is not on the menu.
+
+                            MovePointerOverSaveButton()
+
+                        End If
+
+                        'Is the mouse pointer on the open button?
+                        If OpenButton.Rect.Contains(MousePointerOffset) Then
+                            'Yes, the mouse pointer is on the open button.
+
+                            MovePointerOverNewButton()
+
+                        End If
+
+                        'Is the mouse pointer on the save button?
+                        If SaveButton.Rect.Contains(MousePointerOffset) Then
+                            'Yes, the mouse pointer is on the save button.
+
+                            MovePointerOverOpenButton()
+
+                        End If
+
+                        'Is the mouse pointer on the new button?
+                        If NewButton.Rect.Contains(MousePointerOffset) Then
+                            'Yes, the mouse pointer is on the new button.
+
+                            MovePointerOverExitButton()
+
+                        End If
+
+                        'Is the mouse pointer on the exit button?
+                        If ExitButton.Rect.Contains(MousePointerOffset) Then
+                            'Yes, the mouse pointer is on the exit button.
+
+                            MovePointerOverSaveButton()
+
+                        End If
+
+                    End If
+
+                End If
+
+            Else
+
+                MovePointerDown()
+
+            End If
+
+        End If
+
+        If GameState = AppState.Start Then
+
+            If ShowOpenFileDialog = True Then
+
+                MovePointerDown()
+
+            Else
+
+                MovePointerToStartScreenOpenButton()
 
             End If
 

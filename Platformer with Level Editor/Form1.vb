@@ -1574,25 +1574,7 @@ Public Class Form1
         Else
             'The left thumbstick is in the neutral position.
 
-            If GameState = AppState.Start Or GameState = AppState.Editing Then
-
-                LeftThumbstickDown = False
-
-                LeftThumbstickUp = False
-
-                If DPadUpPressed = False AndAlso DPadDownPressed = False AndAlso UpArrowDown = False AndAlso DownArrowDown = False AndAlso RightThumbstickDown = False AndAlso RightThumbstickUp = False Then
-
-                    DeceleratePointerYAxis()
-
-                End If
-
-            End If
-
-            If GameState = AppState.Playing AndAlso DPadUpPressed = False Then
-
-                ControllerUp = False
-
-            End If
+            DoLeftThumbstickYAxisNeutralLogic()
 
         End If
 
@@ -1884,6 +1866,30 @@ Public Class Form1
         If GameState = AppState.Playing Then
 
             ControllerUp = True
+
+        End If
+
+    End Sub
+
+    Private Sub DoLeftThumbstickYAxisNeutralLogic()
+
+        If GameState = AppState.Start Or GameState = AppState.Editing Then
+
+            LeftThumbstickDown = False
+
+            LeftThumbstickUp = False
+
+            If DPadUpPressed = False AndAlso DPadDownPressed = False AndAlso UpArrowDown = False AndAlso DownArrowDown = False AndAlso RightThumbstickDown = False AndAlso RightThumbstickUp = False Then
+
+                DeceleratePointerYAxis()
+
+            End If
+
+        End If
+
+        If GameState = AppState.Playing AndAlso DPadUpPressed = False Then
+
+            ControllerUp = False
 
         End If
 

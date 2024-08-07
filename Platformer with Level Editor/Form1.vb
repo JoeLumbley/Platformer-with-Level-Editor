@@ -10197,97 +10197,7 @@ Public Class Form1
 
         If DPadUpPressed = True Then
 
-            If GameState = AppState.Editing Then
-
-                If ShowMenu = True Then
-
-                    If ShowSaveWarning = True Or ShowSaveFileDialog = True Then
-
-                        MovePointerUpDPad()
-
-                    Else
-
-                        If IsDPadUp = False Then
-
-                            IsDPadUp = True
-
-                            Dim MousePointerOffset As Point = MousePointer.Rect.Location
-
-                            'Convert mouse pointer from screen coordinates to client coordinates.
-                            MousePointerOffset.X -= ScreenOffset.X
-                            MousePointerOffset.Y -= ScreenOffset.Y
-
-                            'Is the mouse pointer on the menu?
-                            If Not MenuBackground.Rect.Contains(MousePointerOffset) Then
-                                'No, the mouse pointer is not on the menu.
-
-                                MovePointerOverExitButton()
-
-                            End If
-
-                            'Is the mouse pointer on the open button?
-                            If OpenButton.Rect.Contains(MousePointerOffset) Then
-                                'Yes, the mouse pointer is on the open button.
-
-                                MovePointerOverSaveButton()
-
-                            End If
-
-                            'Is the mouse pointer on the new button?
-                            If NewButton.Rect.Contains(MousePointerOffset) Then
-                                'Yes, the mouse pointer is on the new button.
-
-                                MovePointerOverOpenButton()
-
-                            End If
-
-                            'Is the mouse pointer on the exit button?
-                            If ExitButton.Rect.Contains(MousePointerOffset) Then
-                                'Yes, the mouse pointer is on the exit button.
-
-                                MovePointerOverNewButton()
-
-                            End If
-
-                            'Is the mouse pointer on the save button?
-                            If SaveButton.Rect.Contains(MousePointerOffset) Then
-                                'Yes, the mouse pointer is on the save button.
-
-                                MovePointerOverExitButton()
-
-                            End If
-
-                        End If
-
-                    End If
-
-                Else
-
-                    MovePointerUpDPad()
-
-                End If
-
-            End If
-
-            If GameState = AppState.Start Then
-
-                If ShowOpenFileDialog = True Then
-
-                    MovePointerUpDPad()
-
-                Else
-
-                    MovePointerToStartScreenNewButton()
-
-                End If
-
-            End If
-
-            If GameState = AppState.Playing Then
-
-                ControllerUp = True
-
-            End If
+            DoDPadUpLogic()
 
         Else
 
@@ -10396,6 +10306,102 @@ Public Class Form1
         Else
 
             IsDPadDown = False
+
+        End If
+
+    End Sub
+
+    Private Sub DoDPadUpLogic()
+
+        If GameState = AppState.Editing Then
+
+            If ShowMenu = True Then
+
+                If ShowSaveWarning = True Or ShowSaveFileDialog = True Then
+
+                    MovePointerUpDPad()
+
+                Else
+
+                    If IsDPadUp = False Then
+
+                        IsDPadUp = True
+
+                        Dim MousePointerOffset As Point = MousePointer.Rect.Location
+
+                        'Convert mouse pointer from screen coordinates to client coordinates.
+                        MousePointerOffset.X -= ScreenOffset.X
+                        MousePointerOffset.Y -= ScreenOffset.Y
+
+                        'Is the mouse pointer on the menu?
+                        If Not MenuBackground.Rect.Contains(MousePointerOffset) Then
+                            'No, the mouse pointer is not on the menu.
+
+                            MovePointerOverExitButton()
+
+                        End If
+
+                        'Is the mouse pointer on the open button?
+                        If OpenButton.Rect.Contains(MousePointerOffset) Then
+                            'Yes, the mouse pointer is on the open button.
+
+                            MovePointerOverSaveButton()
+
+                        End If
+
+                        'Is the mouse pointer on the new button?
+                        If NewButton.Rect.Contains(MousePointerOffset) Then
+                            'Yes, the mouse pointer is on the new button.
+
+                            MovePointerOverOpenButton()
+
+                        End If
+
+                        'Is the mouse pointer on the exit button?
+                        If ExitButton.Rect.Contains(MousePointerOffset) Then
+                            'Yes, the mouse pointer is on the exit button.
+
+                            MovePointerOverNewButton()
+
+                        End If
+
+                        'Is the mouse pointer on the save button?
+                        If SaveButton.Rect.Contains(MousePointerOffset) Then
+                            'Yes, the mouse pointer is on the save button.
+
+                            MovePointerOverExitButton()
+
+                        End If
+
+                    End If
+
+                End If
+
+            Else
+
+                MovePointerUpDPad()
+
+            End If
+
+        End If
+
+        If GameState = AppState.Start Then
+
+            If ShowOpenFileDialog = True Then
+
+                MovePointerUpDPad()
+
+            Else
+
+                MovePointerToStartScreenNewButton()
+
+            End If
+
+        End If
+
+        If GameState = AppState.Playing Then
+
+            ControllerUp = True
 
         End If
 

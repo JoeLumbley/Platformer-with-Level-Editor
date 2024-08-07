@@ -11741,8 +11741,6 @@ Public Class Form1
 
             DoMenuLogicDown()
 
-            'MouseWheelDownEditingShowMenuTrue(MousePointer)
-
         End If
 
     End Sub
@@ -11757,24 +11755,9 @@ Public Class Form1
 
             DoMenuLogicUp()
 
-            'MouseWheelUpEditingShowMenuTrue(MousePointer)
-
         End If
 
     End Sub
-
-    'Private Sub MouseWheelDownEditingShowMenuTrue(MousePointer As Point)
-
-    '    DoMenuLogicDown()
-
-    'End Sub
-
-
-    'Private Sub MouseWheelUpEditingShowMenuTrue(MousePointer As Point)
-
-    '    DoMenuLogicUp()
-
-    'End Sub
 
     Private Sub MovePointerOverExitButton()
 

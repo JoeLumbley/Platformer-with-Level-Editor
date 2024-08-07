@@ -1873,54 +1873,60 @@ Public Class Form1
 
             LeftThumbstickUp = True
 
-            Dim MousePointerOffset As Point = MousePointer.Rect.Location
+            DoMenuLogicUp()
 
-            'Convert from screen to client.
-            MousePointerOffset.X -= ScreenOffset.X
-            MousePointerOffset.Y -= ScreenOffset.Y
+        End If
 
-            'Is the mouse pointer over any button?
-            If Not OpenButton.Rect.Contains(MousePointerOffset) AndAlso
-               Not NewButton.Rect.Contains(MousePointerOffset) AndAlso
-               Not ExitButton.Rect.Contains(MousePointerOffset) AndAlso
-               Not SaveButton.Rect.Contains(MousePointerOffset) Then
-                'No, the mouse pointer is not over any button.
+    End Sub
 
-                MovePointerOverSaveButton()
+    Private Sub DoMenuLogicUp()
 
-            End If
+        Dim MousePointerOffset As Point = MousePointer.Rect.Location
 
-            'Is the mouse pointer on the save button?
-            If SaveButton.Rect.Contains(MousePointerOffset) Then
-                'Yes, the mouse pointer is on the save button.
+        'Convert from screen to client.
+        MousePointerOffset.X -= ScreenOffset.X
+        MousePointerOffset.Y -= ScreenOffset.Y
 
-                MovePointerOverExitButton()
+        'Is the mouse pointer over any button?
+        If Not OpenButton.Rect.Contains(MousePointerOffset) AndAlso
+           Not NewButton.Rect.Contains(MousePointerOffset) AndAlso
+           Not ExitButton.Rect.Contains(MousePointerOffset) AndAlso
+           Not SaveButton.Rect.Contains(MousePointerOffset) Then
+            'No, the mouse pointer is not over any button.
 
-            End If
+            MovePointerOverSaveButton()
 
-            'Is the mouse pointer on the exit button?
-            If ExitButton.Rect.Contains(MousePointerOffset) Then
-                'Yes, the mouse pointer is on the exit button.
+        End If
 
-                MovePointerOverNewButton()
+        'Is the mouse pointer on the save button?
+        If SaveButton.Rect.Contains(MousePointerOffset) Then
+            'Yes, the mouse pointer is on the save button.
 
-            End If
+            MovePointerOverExitButton()
 
-            'Is the mouse pointer on the new button?
-            If NewButton.Rect.Contains(MousePointerOffset) Then
-                'Yes, the mouse pointer is on the new button.
+        End If
 
-                MovePointerOverOpenButton()
+        'Is the mouse pointer on the exit button?
+        If ExitButton.Rect.Contains(MousePointerOffset) Then
+            'Yes, the mouse pointer is on the exit button.
 
-            End If
+            MovePointerOverNewButton()
 
-            'Is the mouse pointer on the open button?
-            If OpenButton.Rect.Contains(MousePointerOffset) Then
-                'Yes, the mouse pointer is on the open button.
+        End If
 
-                MovePointerOverSaveButton()
+        'Is the mouse pointer on the new button?
+        If NewButton.Rect.Contains(MousePointerOffset) Then
+            'Yes, the mouse pointer is on the new button.
 
-            End If
+            MovePointerOverOpenButton()
+
+        End If
+
+        'Is the mouse pointer on the open button?
+        If OpenButton.Rect.Contains(MousePointerOffset) Then
+            'Yes, the mouse pointer is on the open button.
+
+            MovePointerOverSaveButton()
 
         End If
 

@@ -1546,45 +1546,7 @@ Public Class Form1
         If ControllerPosition.Gamepad.sThumbLX <= NeutralStart Then
             'The left thumbstick is in the left position.
 
-            If GameState = AppState.Editing Then
-
-                If ShowMenu = False Then
-
-                    MovePointerLeft()
-
-                Else
-
-                    If ShowSaveWarning = True Or ShowSaveFileDialog = True Then
-
-                        MovePointerLeft()
-
-                    End If
-
-                End If
-
-            End If
-
-            If GameState = AppState.Playing Then
-
-                ControllerLeft = True
-
-                ControllerRight = False
-
-            End If
-
-            If GameState = AppState.Start Then
-
-                If ShowOpenFileDialog = True Then
-
-                    MovePointerLeft()
-
-                Else
-
-                    MovePointerToStartScreenNewButton()
-
-                End If
-
-            End If
+            DoLeftThumbstickLeftLogic()
 
         ElseIf ControllerPosition.Gamepad.sThumbLX >= NeutralEnd Then
             'The left thumbstick is in the right position.
@@ -1643,7 +1605,6 @@ Public Class Form1
             End If
 
         End If
-
 
         'What position is the left thumbstick in on the Y-axis?
         If ControllerPosition.Gamepad.sThumbLY <= NeutralStart Then
@@ -1848,6 +1809,50 @@ Public Class Form1
             If GameState = AppState.Playing AndAlso DPadUpPressed = False Then
 
                 ControllerUp = False
+
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub DoLeftThumbstickLeftLogic()
+
+        If GameState = AppState.Editing Then
+
+            If ShowMenu = False Then
+
+                MovePointerLeft()
+
+            Else
+
+                If ShowSaveWarning = True Or ShowSaveFileDialog = True Then
+
+                    MovePointerLeft()
+
+                End If
+
+            End If
+
+        End If
+
+        If GameState = AppState.Playing Then
+
+            ControllerLeft = True
+
+            ControllerRight = False
+
+        End If
+
+        If GameState = AppState.Start Then
+
+            If ShowOpenFileDialog = True Then
+
+                MovePointerLeft()
+
+            Else
+
+                MovePointerToStartScreenNewButton()
 
             End If
 

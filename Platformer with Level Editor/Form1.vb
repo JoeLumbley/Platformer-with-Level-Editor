@@ -11739,56 +11739,11 @@ Public Class Form1
 
         Else
 
-            MouseWheelDownEditingShowMenuTrue(MousePointer)
+            DoMenuLogicDown()
+
+            'MouseWheelDownEditingShowMenuTrue(MousePointer)
 
         End If
-
-    End Sub
-
-    Private Sub MouseWheelDownEditingShowMenuTrue(MousePointer As Point)
-
-        DoMenuLogicDown()
-
-
-        ''Is the mouse pointer on the menu?
-        'If Not MenuBackground.Rect.Contains(MousePointer) Then
-        '    'No, the mouse pointer is not on the menu.
-
-        '    MovePointerOverSaveButton()
-
-        'End If
-
-        ''Is the mouse pointer on the open button?
-        'If OpenButton.Rect.Contains(MousePointer) Then
-        '    'Yes, the mouse pointer is on the open button.
-
-        '    MovePointerOverNewButton()
-
-        'End If
-
-        ''Is the mouse pointer on the save button?
-        'If SaveButton.Rect.Contains(MousePointer) Then
-        '    'Yes, the mouse pointer is on the save button.
-
-        '    MovePointerOverOpenButton()
-
-        'End If
-
-        ''Is the mouse pointer on the new button?
-        'If NewButton.Rect.Contains(MousePointer) Then
-        '    'Yes, the mouse pointer is on the new button.
-
-        '    MovePointerOverExitButton()
-
-        'End If
-
-        ''Is the mouse pointer on the exit button?
-        'If ExitButton.Rect.Contains(MousePointer) Then
-        '    'Yes, the mouse pointer is on the exit button.
-
-        '    MovePointerOverSaveButton()
-
-        'End If
 
     End Sub
 
@@ -11800,57 +11755,26 @@ Public Class Form1
 
         Else
 
-            MouseWheelUpEditingShowMenuTrue(MousePointer)
+            DoMenuLogicUp()
+
+            'MouseWheelUpEditingShowMenuTrue(MousePointer)
 
         End If
 
     End Sub
 
-    Private Sub MouseWheelUpEditingShowMenuTrue(MousePointer As Point)
+    'Private Sub MouseWheelDownEditingShowMenuTrue(MousePointer As Point)
 
-        DoMenuLogicUp()
+    '    DoMenuLogicDown()
 
-        ''Is the mouse pointer on the menu?
-        'If Not MenuBackground.Rect.Contains(MousePointer) Then
-        '    'No, the mouse pointer is not on the menu.
+    'End Sub
 
-        '    MovePointerOverExitButton()
 
-        'End If
+    'Private Sub MouseWheelUpEditingShowMenuTrue(MousePointer As Point)
 
-        ''Is the mouse pointer on the open button?
-        'If OpenButton.Rect.Contains(MousePointer) Then
-        '    'Yes, the mouse pointer is on the open button.
+    '    DoMenuLogicUp()
 
-        '    MovePointerOverSaveButton()
-
-        'End If
-
-        ''Is the mouse pointer on the new button?
-        'If NewButton.Rect.Contains(MousePointer) Then
-        '    'Yes, the mouse pointer is on the new button.
-
-        '    MovePointerOverOpenButton()
-
-        'End If
-
-        ''Is the mouse pointer on the exit button?
-        'If ExitButton.Rect.Contains(MousePointer) Then
-        '    'Yes, the mouse pointer is on the exit button.
-
-        '    MovePointerOverNewButton()
-
-        'End If
-
-        ''Is the mouse pointer on the save button?
-        'If SaveButton.Rect.Contains(MousePointer) Then
-        '    'Yes, the mouse pointer is on the save button.
-
-        '    MovePointerOverExitButton()
-
-        'End If
-
-    End Sub
+    'End Sub
 
     Private Sub MovePointerOverExitButton()
 

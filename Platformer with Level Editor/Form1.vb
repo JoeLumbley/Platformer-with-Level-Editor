@@ -10114,38 +10114,7 @@ Public Class Form1
 
             ControllerLeft = True
 
-            If GameState = AppState.Editing Then
-
-
-                If ShowMenu = False Then
-
-                    MovePointerLeftDPad()
-
-                Else
-
-                    If ShowSaveWarning = True Or ShowSaveFileDialog = True Then
-
-                        MovePointerLeftDPad()
-
-                    End If
-
-                End If
-
-            End If
-
-            If GameState = AppState.Start Then
-
-                If ShowOpenFileDialog = True Then
-
-                    MovePointerLeftDPad()
-
-                Else
-
-                    MovePointerToStartScreenNewButton()
-
-                End If
-
-            End If
+            DoDPadLeftLogic()
 
         Else
 
@@ -10155,47 +10124,15 @@ Public Class Form1
 
         If DPadRightPressed = True Then
 
+            DoDPadRightLogic()
+
             ControllerRight = True
-
-            If GameState = AppState.Editing Then
-
-                If ShowMenu = False Then
-
-                    MovePointerRightDPad()
-
-                Else
-
-                    If ShowSaveWarning = True Or ShowSaveFileDialog = True Then
-
-                        MovePointerRightDPad()
-
-                    End If
-
-                End If
-
-            End If
-
-            If GameState = AppState.Start Then
-
-                If ShowOpenFileDialog = True Then
-
-                    MovePointerRightDPad()
-
-                Else
-
-                    MovePointerToStartScreenOpenButton()
-
-                End If
-
-            End If
 
         Else
 
             ControllerRight = False
 
         End If
-
-
 
         If DPadUpPressed = True Then
 
@@ -10311,7 +10248,6 @@ Public Class Form1
 
         End If
 
-
         If GameState = AppState.Start Then
 
             If ShowOpenFileDialog = True Then
@@ -10321,6 +10257,79 @@ Public Class Form1
             Else
 
                 MovePointerToStartScreenOpenButton()
+
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub DoDPadRightLogic()
+
+        If GameState = AppState.Editing Then
+
+            If ShowMenu = False Then
+
+                MovePointerRightDPad()
+
+            Else
+
+                If ShowSaveWarning = True Or ShowSaveFileDialog = True Then
+
+                    MovePointerRightDPad()
+
+                End If
+
+            End If
+
+        End If
+
+        If GameState = AppState.Start Then
+
+            If ShowOpenFileDialog = True Then
+
+                MovePointerRightDPad()
+
+            Else
+
+                MovePointerToStartScreenOpenButton()
+
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub DoDPadLeftLogic()
+
+        If GameState = AppState.Editing Then
+
+
+            If ShowMenu = False Then
+
+                MovePointerLeftDPad()
+
+            Else
+
+                If ShowSaveWarning = True Or ShowSaveFileDialog = True Then
+
+                    MovePointerLeftDPad()
+
+                End If
+
+            End If
+
+        End If
+
+        If GameState = AppState.Start Then
+
+            If ShowOpenFileDialog = True Then
+
+                MovePointerLeftDPad()
+
+            Else
+
+                MovePointerToStartScreenNewButton()
 
             End If
 

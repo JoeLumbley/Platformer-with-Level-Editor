@@ -9005,66 +9005,7 @@ Public Class Form1
 
             Case Keys.O
 
-                If GameState = AppState.Editing Then
-
-                    If ShowMenu = True Then
-
-                        ShowSaveWarning = True
-
-                        'Does the player want to save this level before opening a level?
-                        If MsgBox("Changes to " & LevelName & " may be lost." & vbCrLf & "Open a level anyway?",
-                                  MsgBoxStyle.Question Or MsgBoxStyle.OkCancel,
-                                  "Open Level - Platformer with Level Editor") = MsgBoxResult.Ok Then
-                            'No, the player doesn't want to save this level before opening a level?
-
-                            ShowOpenLevelDialog()
-
-                        End If
-
-                        ShowSaveWarning = False
-
-                    End If
-
-                End If
-
-                If GameState = AppState.Start Then
-
-                    OpenFileDialog1.FileName = ""
-                    OpenFileDialog1.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
-                    OpenFileDialog1.FilterIndex = 1
-                    OpenFileDialog1.InitialDirectory = Application.StartupPath
-
-                    If OpenFileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
-
-                        If My.Computer.FileSystem.FileExists(OpenFileDialog1.FileName) = True Then
-
-                            InitializeObjects()
-
-                            OpenTest2LevelFile(OpenFileDialog1.FileName)
-
-                            If IsFileLoaded = True Then
-
-                                LevelName = Path.GetFileName(OpenFileDialog1.FileName)
-
-                                Text = LevelName & " - Platformer with Level Editor - Code with Joe"
-
-                                CashCollected = 0
-
-                                LastFrame = Now
-
-                                GameState = AppState.Playing
-
-                                MovePointerOffScreen()
-
-                                PlayLevelMusic()
-
-                            End If
-
-                        End If
-
-                    End If
-
-                End If
+                DoOKeyDownLogic()
 
             Case Keys.S
 
@@ -9263,6 +9204,71 @@ Public Class Form1
                 End If
 
         End Select
+
+    End Sub
+
+    Private Sub DoOKeyDownLogic()
+
+        If GameState = AppState.Editing Then
+
+            If ShowMenu = True Then
+
+                ShowSaveWarning = True
+
+                'Does the player want to save this level before opening a level?
+                If MsgBox("Changes to " & LevelName & " may be lost." & vbCrLf & "Open a level anyway?",
+                                  MsgBoxStyle.Question Or MsgBoxStyle.OkCancel,
+                                  "Open Level - Platformer with Level Editor") = MsgBoxResult.Ok Then
+                    'No, the player doesn't want to save this level before opening a level?
+
+                    ShowOpenLevelDialog()
+
+                End If
+
+                ShowSaveWarning = False
+
+            End If
+
+        End If
+
+        If GameState = AppState.Start Then
+
+            OpenFileDialog1.FileName = ""
+            OpenFileDialog1.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
+            OpenFileDialog1.FilterIndex = 1
+            OpenFileDialog1.InitialDirectory = Application.StartupPath
+
+            If OpenFileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+
+                If My.Computer.FileSystem.FileExists(OpenFileDialog1.FileName) = True Then
+
+                    InitializeObjects()
+
+                    OpenTest2LevelFile(OpenFileDialog1.FileName)
+
+                    If IsFileLoaded = True Then
+
+                        LevelName = Path.GetFileName(OpenFileDialog1.FileName)
+
+                        Text = LevelName & " - Platformer with Level Editor - Code with Joe"
+
+                        CashCollected = 0
+
+                        LastFrame = Now
+
+                        GameState = AppState.Playing
+
+                        MovePointerOffScreen()
+
+                        PlayLevelMusic()
+
+                    End If
+
+                End If
+
+            End If
+
+        End If
 
     End Sub
 

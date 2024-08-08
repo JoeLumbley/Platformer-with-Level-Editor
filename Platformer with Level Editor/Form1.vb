@@ -9125,15 +9125,7 @@ Public Class Form1
 
             Case Keys.X
 
-                If GameState = AppState.Editing Then
-
-                    If ShowMenu = True Then
-
-                        ShowMenu = False
-
-                    End If
-
-                End If
+                DoXKeyDownLogic()
 
             Case 93 'Context Menu ≡
 
@@ -9175,6 +9167,20 @@ Public Class Form1
 
     End Sub
 
+    Private Sub DoXKeyDownLogic()
+
+        If GameState = AppState.Editing Then
+
+            If ShowMenu = True Then
+
+                ShowMenu = False
+
+            End If
+
+        End If
+
+    End Sub
+
     Private Sub DoContextMenuKeyDownLogic()
 
         If GameState = AppState.Editing Then
@@ -9188,8 +9194,6 @@ Public Class Form1
                     DeselectObjects()
 
                     ShowMenu = True
-
-                    'MovePointerCenterMenu()
 
                     MovePointerOverSaveButton()
 

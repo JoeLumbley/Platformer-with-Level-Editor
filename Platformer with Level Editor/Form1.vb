@@ -9103,25 +9103,7 @@ Public Class Form1
 
             Case Keys.M 'Mute
 
-                If IsMKeyDown = False Then
-
-                    IsMKeyDown = True
-
-                    If IsPlaying("Music") = True Then
-
-                        PauseSound("Music")
-
-                        IsMuted = True
-
-                    Else
-
-                        LoopSound("Music")
-
-                        IsMuted = False
-
-                    End If
-
-                End If
+                DoMKeyDownLogic()
 
             Case Keys.X
 
@@ -9164,6 +9146,30 @@ Public Class Form1
                 End If
 
         End Select
+
+    End Sub
+
+    Private Sub DoMKeyDownLogic()
+
+        If IsMKeyDown = False Then
+
+            IsMKeyDown = True
+
+            If IsPlaying("Music") = True Then
+
+                PauseSound("Music")
+
+                IsMuted = True
+
+            Else
+
+                LoopSound("Music")
+
+                IsMuted = False
+
+            End If
+
+        End If
 
     End Sub
 

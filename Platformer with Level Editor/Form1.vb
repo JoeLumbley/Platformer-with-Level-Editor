@@ -9009,15 +9009,7 @@ Public Class Form1
 
             Case Keys.S
 
-                If GameState = AppState.Editing Then
-
-                    If ShowMenu = True Then
-
-                        ShowSaveLevelDialog()
-
-                    End If
-
-                End If
+                DoSKeyDownLogic()
 
             Case Keys.C
 
@@ -9204,6 +9196,20 @@ Public Class Form1
                 End If
 
         End Select
+
+    End Sub
+
+    Private Sub DoSKeyDownLogic()
+
+        If GameState = AppState.Editing Then
+
+            If ShowMenu = True Then
+
+                ShowSaveLevelDialog()
+
+            End If
+
+        End If
 
     End Sub
 

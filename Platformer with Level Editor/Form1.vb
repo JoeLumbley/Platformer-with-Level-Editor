@@ -9137,31 +9137,7 @@ Public Class Form1
 
             Case 93 'Context Menu ≡
 
-                If GameState = AppState.Editing Then
-
-                    If IsContextDown = False Then
-
-                        IsContextDown = True
-
-                        If ShowMenu = False Then
-
-                            DeselectObjects()
-
-                            ShowMenu = True
-
-                            'MovePointerCenterMenu()
-
-                            MovePointerOverSaveButton()
-
-                        Else
-
-                            ShowMenu = False
-
-                        End If
-
-                    End If
-
-                End If
+                DoContextMenuKeyDownLogic()
 
             Case Keys.PageUp
 
@@ -9196,6 +9172,36 @@ Public Class Form1
                 End If
 
         End Select
+
+    End Sub
+
+    Private Sub DoContextMenuKeyDownLogic()
+
+        If GameState = AppState.Editing Then
+
+            If IsContextDown = False Then
+
+                IsContextDown = True
+
+                If ShowMenu = False Then
+
+                    DeselectObjects()
+
+                    ShowMenu = True
+
+                    'MovePointerCenterMenu()
+
+                    MovePointerOverSaveButton()
+
+                Else
+
+                    ShowMenu = False
+
+                End If
+
+            End If
+
+        End If
 
     End Sub
 

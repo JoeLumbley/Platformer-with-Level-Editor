@@ -8824,10 +8824,6 @@ Public Class Form1
 
                         MoveCameraRight()
 
-                        'UpdateCameraOffset()
-
-                        'BufferGridLines()
-
                     Else
 
                         MovePointerRight()
@@ -8853,10 +8849,6 @@ Public Class Form1
                     If ShowMenu = False Then
 
                         MoveCameraLeft()
-
-                        'UpdateCameraOffset()
-
-                        'BufferGridLines()
 
                     Else
 
@@ -9000,66 +8992,7 @@ Public Class Form1
 
             Case Keys.Y
 
-                If GameState = AppState.Editing Then
-
-                    If ShowMenu = True Then
-
-                        ShowSaveWarning = True
-
-                        'Does the player want to save this level before opening a level?
-                        If MsgBox("Changes to " & LevelName & " may be lost." & vbCrLf & "Open a level anyway?",
-                                  MsgBoxStyle.Question Or MsgBoxStyle.OkCancel,
-                                  "Open Level - Platformer with Level Editor") = MsgBoxResult.Ok Then
-                            'No, the player doesn't want to save this level before opening a level?
-
-                            ShowOpenLevelDialog()
-
-                        End If
-
-                        ShowSaveWarning = False
-
-                    End If
-
-                End If
-
-                If GameState = AppState.Start Then
-
-                    OpenFileDialog1.FileName = ""
-                    OpenFileDialog1.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
-                    OpenFileDialog1.FilterIndex = 1
-                    OpenFileDialog1.InitialDirectory = Application.StartupPath
-
-                    If OpenFileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
-
-                        If My.Computer.FileSystem.FileExists(OpenFileDialog1.FileName) = True Then
-
-                            InitializeObjects()
-
-                            OpenTest2LevelFile(OpenFileDialog1.FileName)
-
-                            If IsFileLoaded = True Then
-
-                                LevelName = Path.GetFileName(OpenFileDialog1.FileName)
-
-                                Text = LevelName & " - Platformer with Level Editor - Code with Joe"
-
-                                CashCollected = 0
-
-                                LastFrame = Now
-
-                                GameState = AppState.Playing
-
-                                MovePointerOffScreen()
-
-                                PlayLevelMusic()
-
-                            End If
-
-                        End If
-
-                    End If
-
-                End If
+                DoYKeyDownLogic()
 
             Case Keys.N
 
@@ -9067,23 +9000,8 @@ Public Class Form1
 
             Case Keys.R
 
-                If GameState = AppState.Editing Then
+                DoRKeyDownLogic()
 
-                    If ShowMenu = True Then
-
-                        'Does the player want to save this level before creating a new level?
-                        If MsgBox("Changes to " & LevelName & " may be lost." & vbCrLf & "Create a new level anyway?",
-                                  MsgBoxStyle.Question Or MsgBoxStyle.OkCancel,
-                                  "New Level - Platformer with Level Editor") = MsgBoxResult.Ok Then
-                            'No, the player doesn't want to save this level before creating a new level?
-
-                            InitAndCreateNewLevel()
-
-                        End If
-
-                    End If
-
-                End If
 
             Case Keys.O
 
@@ -9348,6 +9266,71 @@ Public Class Form1
 
     End Sub
 
+    Private Sub DoYKeyDownLogic()
+
+        If GameState = AppState.Editing Then
+
+            If ShowMenu = True Then
+
+                ShowSaveWarning = True
+
+                'Does the player want to save this level before opening a level?
+                If MsgBox("Changes to " & LevelName & " may be lost." & vbCrLf & "Open a level anyway?",
+                                  MsgBoxStyle.Question Or MsgBoxStyle.OkCancel,
+                                  "Open Level - Platformer with Level Editor") = MsgBoxResult.Ok Then
+                    'No, the player doesn't want to save this level before opening a level?
+
+                    ShowOpenLevelDialog()
+
+                End If
+
+                ShowSaveWarning = False
+
+            End If
+
+        End If
+
+        If GameState = AppState.Start Then
+
+            OpenFileDialog1.FileName = ""
+            OpenFileDialog1.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*"
+            OpenFileDialog1.FilterIndex = 1
+            OpenFileDialog1.InitialDirectory = Application.StartupPath
+
+            If OpenFileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+
+                If My.Computer.FileSystem.FileExists(OpenFileDialog1.FileName) = True Then
+
+                    InitializeObjects()
+
+                    OpenTest2LevelFile(OpenFileDialog1.FileName)
+
+                    If IsFileLoaded = True Then
+
+                        LevelName = Path.GetFileName(OpenFileDialog1.FileName)
+
+                        Text = LevelName & " - Platformer with Level Editor - Code with Joe"
+
+                        CashCollected = 0
+
+                        LastFrame = Now
+
+                        GameState = AppState.Playing
+
+                        MovePointerOffScreen()
+
+                        PlayLevelMusic()
+
+                    End If
+
+                End If
+
+            End If
+
+        End If
+
+    End Sub
+
     Private Sub DoNKeyDownLogic()
 
         If GameState = AppState.Editing Then
@@ -9389,6 +9372,28 @@ Public Class Form1
             MovePointerOffScreen()
 
             PlayLevelMusic()
+
+        End If
+
+    End Sub
+
+    Private Sub DoRKeyDownLogic()
+
+        If GameState = AppState.Editing Then
+
+            If ShowMenu = True Then
+
+                'Does the player want to save this level before creating a new level?
+                If MsgBox("Changes to " & LevelName & " may be lost." & vbCrLf & "Create a new level anyway?",
+                                  MsgBoxStyle.Question Or MsgBoxStyle.OkCancel,
+                                  "New Level - Platformer with Level Editor") = MsgBoxResult.Ok Then
+                    'No, the player doesn't want to save this level before creating a new level?
+
+                    InitAndCreateNewLevel()
+
+                End If
+
+            End If
 
         End If
 

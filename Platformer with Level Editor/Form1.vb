@@ -9063,47 +9063,7 @@ Public Class Form1
 
             Case Keys.N
 
-                If GameState = AppState.Editing Then
-
-                    If ShowMenu = True Then
-
-                        'Does the player want to save this level before creating a new level?
-                        If MsgBox("Changes to " & LevelName & " may be lost." & vbCrLf & "Create a new level anyway?",
-                                  MsgBoxStyle.Question Or MsgBoxStyle.OkCancel,
-                                  "New Level - Platformer with Level Editor") = MsgBoxResult.Ok Then
-                            'No, the player doesn't want to save this level before creating a new level?
-
-                            InitAndCreateNewLevel()
-
-                        End If
-
-                    End If
-
-                End If
-
-                If GameState = AppState.Start Then
-
-                    ClearObjects()
-
-                    InitializeObjects()
-
-                    CreateNewLevel()
-
-                    LevelName = "Untitled"
-
-                    Text = LevelName & " - Platformer with Level Editor - Code with Joe"
-
-                    CashCollected = 0
-
-                    LastFrame = Now
-
-                    GameState = AppState.Playing
-
-                    MovePointerOffScreen()
-
-                    PlayLevelMusic()
-
-                End If
+                DoNKeyDownLogic()
 
             Case Keys.R
 
@@ -9385,6 +9345,52 @@ Public Class Form1
                 End If
 
         End Select
+
+    End Sub
+
+    Private Sub DoNKeyDownLogic()
+
+        If GameState = AppState.Editing Then
+
+            If ShowMenu = True Then
+
+                'Does the player want to save this level before creating a new level?
+                If MsgBox("Changes to " & LevelName & " may be lost." & vbCrLf & "Create a new level anyway?",
+                                  MsgBoxStyle.Question Or MsgBoxStyle.OkCancel,
+                                  "New Level - Platformer with Level Editor") = MsgBoxResult.Ok Then
+                    'No, the player doesn't want to save this level before creating a new level?
+
+                    InitAndCreateNewLevel()
+
+                End If
+
+            End If
+
+        End If
+
+        If GameState = AppState.Start Then
+
+            ClearObjects()
+
+            InitializeObjects()
+
+            CreateNewLevel()
+
+            LevelName = "Untitled"
+
+            Text = LevelName & " - Platformer with Level Editor - Code with Joe"
+
+            CashCollected = 0
+
+            LastFrame = Now
+
+            GameState = AppState.Playing
+
+            MovePointerOffScreen()
+
+            PlayLevelMusic()
+
+        End If
 
     End Sub
 

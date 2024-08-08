@@ -8882,13 +8882,9 @@ Public Class Form1
 
                         MoveCameraUp()
 
-                        'UpdateCameraOffset()
-
-                        'BufferGridLines()
-
                     Else
 
-                        MovePointerUp()
+                        DoMenuLogicUp()
 
                     End If
 
@@ -8910,13 +8906,9 @@ Public Class Form1
 
                         MoveCameraDown()
 
-                        'UpdateCameraOffset()
-
-                        'BufferGridLines()
-
                     Else
 
-                        MovePointerDown()
+                        DoMenuLogicDown()
 
                     End If
 
@@ -9368,6 +9360,10 @@ Public Class Form1
 
                         SelectNextToolToTheLeft()
 
+                    Else
+
+                        DoMenuLogicUp()
+
                     End If
 
                 End If
@@ -9379,6 +9375,10 @@ Public Class Form1
                     If ShowMenu = False Then
 
                         SelectNextToolToTheRight()
+
+                    Else
+
+                        DoMenuLogicDown()
 
                     End If
 

@@ -8974,21 +8974,7 @@ Public Class Form1
 
             Case Keys.Enter
 
-                If GameState = AppState.Editing Then
-
-                    If ShowMenu = True Then
-
-                        If IsMouseDown = False Then
-
-                            DoMouseLeftDown()
-
-                            IsMouseDown = True
-
-                        End If
-
-                    End If
-
-                End If
+                DoEnterKeyDownLogic()
 
             Case Keys.Y
 
@@ -9001,7 +8987,6 @@ Public Class Form1
             Case Keys.R
 
                 DoRKeyDownLogic()
-
 
             Case Keys.O
 
@@ -9084,6 +9069,26 @@ Public Class Form1
                 End If
 
         End Select
+
+    End Sub
+
+    Private Sub DoEnterKeyDownLogic()
+
+        If GameState = AppState.Editing Then
+
+            If ShowMenu = True Then
+
+                If IsMouseDown = False Then
+
+                    DoMouseLeftDown()
+
+                    IsMouseDown = True
+
+                End If
+
+            End If
+
+        End If
 
     End Sub
 

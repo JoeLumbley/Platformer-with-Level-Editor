@@ -9010,15 +9010,7 @@ Public Class Form1
 
             Case Keys.Escape
 
-                If GameState = AppState.Editing Then
-
-                    If ShowMenu = True Then
-
-                        ShowMenu = False
-
-                    End If
-
-                End If
+                DoEscapeKeyDownLogic()
 
             Case Keys.Delete
 
@@ -9069,6 +9061,20 @@ Public Class Form1
                 End If
 
         End Select
+
+    End Sub
+
+    Private Sub DoEscapeKeyDownLogic()
+
+        If GameState = AppState.Editing Then
+
+            If ShowMenu = True Then
+
+                ShowMenu = False
+
+            End If
+
+        End If
 
     End Sub
 

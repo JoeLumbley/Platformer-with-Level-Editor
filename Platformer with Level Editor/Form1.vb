@@ -8842,27 +8842,7 @@ Public Class Form1
             Case Keys.Left
                 'Yes, the player has pressed the left arrow key down.
 
-                LeftArrowDown = True
-
-                If GameState = AppState.Editing Then
-
-                    If ShowMenu = False Then
-
-                        MoveCameraLeft()
-
-                    Else
-
-                        MovePointerLeft()
-
-                    End If
-
-                End If
-
-                If GameState = AppState.Start Then
-
-                    MovePointerToStartScreenNewButton()
-
-                End If
+                DoArrowLeftKeyDownLogic()
 
             Case Keys.Up
 
@@ -8961,6 +8941,32 @@ Public Class Form1
                 End If
 
         End Select
+
+    End Sub
+
+    Private Sub DoArrowLeftKeyDownLogic()
+
+        LeftArrowDown = True
+
+        If GameState = AppState.Editing Then
+
+            If ShowMenu = False Then
+
+                MoveCameraLeft()
+
+            Else
+
+                MovePointerLeft()
+
+            End If
+
+        End If
+
+        If GameState = AppState.Start Then
+
+            MovePointerToStartScreenNewButton()
+
+        End If
 
     End Sub
 

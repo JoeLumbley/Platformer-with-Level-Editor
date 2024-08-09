@@ -696,6 +696,138 @@ Public Class Form1
 
     End Sub
 
+    Private Sub Form1_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+
+        Select Case e.KeyCode
+
+            Case Keys.E
+
+                DoEKeyDownLogic()
+
+            Case Keys.P
+
+                DoPKeyDownLogic()
+
+            Case Keys.Right
+
+                DoArrowRightKeyDownLogic()
+
+            Case Keys.Left
+
+                DoArrowLeftKeyDownLogic()
+
+            Case Keys.Up
+
+                DoArrowUpKeyDownLogic()
+
+            Case Keys.Down
+
+                DoArrowDownKeyDownLogic()
+
+            Case Keys.A
+
+                DoAKeyDownLogic()
+
+            Case Keys.B
+
+                DoBKeyDownLogic()
+
+            Case Keys.Enter
+
+                DoEnterKeyDownLogic()
+
+            Case Keys.Y
+
+                DoYKeyDownLogic()
+
+            Case Keys.N
+
+                DoNKeyDownLogic()
+
+            Case Keys.R
+
+                DoRKeyDownLogic()
+
+            Case Keys.O
+
+                DoOKeyDownLogic()
+
+            Case Keys.S
+
+                DoSKeyDownLogic()
+
+            Case Keys.C
+
+                DoCKeyDownLogic()
+
+            Case Keys.Escape
+
+                DoEscapeKeyDownLogic()
+
+            Case Keys.Delete
+
+                DoDeleteKeyDownLogic()
+
+            Case Keys.M 'Mute
+
+                DoMKeyDownLogic()
+
+            Case Keys.X
+
+                DoXKeyDownLogic()
+
+            Case 93 'Context Menu ≡
+
+                DoContextMenuKeyDownLogic()
+
+            Case Keys.PageUp
+
+                DoPageUpKeyDownLogic()
+
+            Case Keys.PageDown
+
+                DoPageDownKeyDownLogic()
+
+        End Select
+
+    End Sub
+
+    Private Sub Form1_DoubleClick(sender As Object, e As EventArgs) Handles MyBase.DoubleClick
+
+        If GameState = AppState.Editing Then
+
+            If ShowMenu = False Then
+
+                'Is player double clicking on a game object that can have its color set?
+                If SizingHandleSelected = False AndAlso
+                SelectedBlock = -1 AndAlso
+                SelectedBill = -1 AndAlso
+                SelectedBush = -1 AndAlso
+                SelectedCloud = -1 AndAlso
+                GoalSelected = False AndAlso
+                SelectedEnemy = -1 AndAlso
+                SpawnSelected = False AndAlso
+                SelectedPortal = -1 Then
+                    'Yes, the player is double clicking a game object that can have its color set.
+
+                    ShowColorPicker()
+
+                End If
+
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub Form1_Closing(sender As Object, e As CancelEventArgs) Handles MyBase.Closing
+
+        GameLoopCancellationToken.Cancel(True)
+
+        CloseSounds()
+
+    End Sub
+
     Private Sub UpdateFrame()
 
         Select Case GameState
@@ -8770,105 +8902,6 @@ Public Class Form1
 
     End Sub
 
-    Private Sub Form1_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
-
-        Select Case e.KeyCode
-
-            Case Keys.E
-
-                DoEKeyDownLogic()
-
-            Case Keys.P
-
-                DoPKeyDownLogic()
-
-            Case Keys.Right
-
-                DoArrowRightKeyDownLogic()
-
-            Case Keys.Left
-
-                DoArrowLeftKeyDownLogic()
-
-            Case Keys.Up
-
-                DoArrowUpKeyDownLogic()
-
-            Case Keys.Down
-
-                DoArrowDownKeyDownLogic()
-
-            Case Keys.A
-
-                DoAKeyDownLogic()
-
-            Case Keys.B
-
-                DoBKeyDownLogic()
-
-            Case Keys.Enter
-
-                DoEnterKeyDownLogic()
-
-            Case Keys.Y
-
-                DoYKeyDownLogic()
-
-            Case Keys.N
-
-                DoNKeyDownLogic()
-
-            Case Keys.R
-
-                DoRKeyDownLogic()
-
-            Case Keys.O
-
-                DoOKeyDownLogic()
-
-            Case Keys.S
-
-                DoSKeyDownLogic()
-
-            Case Keys.C
-
-                DoCKeyDownLogic()
-
-            Case Keys.Escape
-
-                DoEscapeKeyDownLogic()
-
-            Case Keys.Delete
-
-                DoDeleteKeyDownLogic()
-
-            Case Keys.M 'Mute
-
-                DoMKeyDownLogic()
-
-            Case Keys.X
-
-                DoXKeyDownLogic()
-
-            Case 93 'Context Menu ≡
-
-                DoContextMenuKeyDownLogic()
-
-            Case Keys.PageUp
-
-                DoPageUpKeyDownLogic()
-
-            Case Keys.PageDown
-
-                DoPageDownKeyDownLogic()
-
-
-
-
-        End Select
-
-    End Sub
-
     Private Sub DoPageUpKeyDownLogic()
 
         If GameState = AppState.Editing Then
@@ -9594,10 +9627,6 @@ Public Class Form1
                             'Stop Camera
                             Camera.Velocity.X = 0 'Zero speed.
 
-                            'UpdateCameraOffset()
-
-                            'BufferGridLines()
-
                         End If
 
                     Else
@@ -9634,10 +9663,6 @@ Public Class Form1
 
                             'Stop Camera
                             Camera.Velocity.X = 0 'Zero speed.
-
-                            'UpdateCameraOffset()
-
-                            'BufferGridLines()
 
                         End If
 
@@ -9679,10 +9704,6 @@ Public Class Form1
                             'Stop Camera
                             Camera.Velocity.Y = 0 'Zero speed.
 
-                            'UpdateCameraOffset()
-
-                            'BufferGridLines()
-
                         End If
 
                     Else
@@ -9722,10 +9743,6 @@ Public Class Form1
 
                             'Stop Camera
                             Camera.Velocity.Y = 0 'Zero speed.
-
-                            'UpdateCameraOffset()
-
-                            'BufferGridLines()
 
                         End If
 
@@ -11226,14 +11243,6 @@ Public Class Form1
 
     End Sub
 
-    Private Sub Form1_Closing(sender As Object, e As CancelEventArgs) Handles MyBase.Closing
-
-        GameLoopCancellationToken.Cancel(True)
-
-        CloseSounds()
-
-    End Sub
-
     Private Sub UpdateCamera()
 
         LookAhead()
@@ -11992,34 +12001,6 @@ Public Class Form1
             Else
 
                 ShowToolPreview = True
-
-            End If
-
-        End If
-
-    End Sub
-
-    Private Sub Form1_DoubleClick(sender As Object, e As EventArgs) Handles MyBase.DoubleClick
-
-        If GameState = AppState.Editing Then
-
-            If ShowMenu = False Then
-
-                'Is player double clicking on a game object that can have its color set?
-                If SizingHandleSelected = False AndAlso
-                SelectedBlock = -1 AndAlso
-                SelectedBill = -1 AndAlso
-                SelectedBush = -1 AndAlso
-                SelectedCloud = -1 AndAlso
-                GoalSelected = False AndAlso
-                SelectedEnemy = -1 AndAlso
-                SpawnSelected = False AndAlso
-                SelectedPortal = -1 Then
-                    'Yes, the player is double clicking a game object that can have its color set.
-
-                    ShowColorPicker()
-
-                End If
 
             End If
 

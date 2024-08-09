@@ -8914,27 +8914,9 @@ Public Class Form1
 
             Case Keys.A
 
-                ADown = True
+                DoAKeyDownLogic()
 
-                If GameState = AppState.Editing Then
-
-                    If ShowMenu = True Then
-
-                        If IsMouseDown = False Then
-
-                            DoMouseLeftDown()
-
-                            IsMouseDown = True
-
-                        End If
-
-                    End If
-
-                End If
-
-                'Has the player pressed the B key down?
             Case Keys.B
-                'Yes, the player has pressed the B key down.
 
                 DoBKeyDownLogic()
 
@@ -9030,6 +9012,12 @@ Public Class Form1
 
     End Sub
 
+
+
+
+
+
+
     Private Sub DoEscapeKeyDownLogic()
 
         If GameState = AppState.Editing Then
@@ -9037,6 +9025,28 @@ Public Class Form1
             If ShowMenu = True Then
 
                 ShowMenu = False
+
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub DoAKeyDownLogic()
+
+        ADown = True
+
+        If GameState = AppState.Editing Then
+
+            If ShowMenu = True Then
+
+                If IsMouseDown = False Then
+
+                    DoMouseLeftDown()
+
+                    IsMouseDown = True
+
+                End If
 
             End If
 

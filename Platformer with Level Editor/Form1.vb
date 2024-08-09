@@ -8812,35 +8812,11 @@ Public Class Form1
 
                 End If
 
-            'Has the player pressed the right arrow key down?
             Case Keys.Right
-                'Yes, the player has pressed the right arrow key down.
 
-                RightArrowDown = True
+                DoArrowRightKeyDownLogic()
 
-                If GameState = AppState.Editing Then
-
-                    If ShowMenu = False Then
-
-                        MoveCameraRight()
-
-                    Else
-
-                        MovePointerRight()
-
-                    End If
-
-                End If
-
-                If GameState = AppState.Start Then
-
-                    MovePointerToStartScreenOpenButton()
-
-                End If
-
-            'Has the player pressed the left arrow key down?
             Case Keys.Left
-                'Yes, the player has pressed the left arrow key down.
 
                 DoArrowLeftKeyDownLogic()
 
@@ -8965,6 +8941,32 @@ Public Class Form1
         If GameState = AppState.Start Then
 
             MovePointerToStartScreenNewButton()
+
+        End If
+
+    End Sub
+
+    Private Sub DoArrowRightKeyDownLogic()
+
+        RightArrowDown = True
+
+        If GameState = AppState.Editing Then
+
+            If ShowMenu = False Then
+
+                MoveCameraRight()
+
+            Else
+
+                MovePointerRight()
+
+            End If
+
+        End If
+
+        If GameState = AppState.Start Then
+
+            MovePointerToStartScreenOpenButton()
 
         End If
 

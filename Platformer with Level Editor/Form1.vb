@@ -8860,26 +8860,16 @@ Public Class Form1
 
             Case Keys.PageDown
 
-                If GameState = AppState.Editing Then
+                DoPageDownKeyDownLogic()
 
-                    If ShowMenu = False Then
 
-                        SelectNextToolToTheRight()
 
-                    Else
-
-                        DoMenuLogicDown()
-
-                    End If
-
-                End If
 
         End Select
 
     End Sub
 
     Private Sub DoPageUpKeyDownLogic()
-
 
         If GameState = AppState.Editing Then
 
@@ -8895,10 +8885,25 @@ Public Class Form1
 
         End If
 
-
     End Sub
 
+    Private Sub DoPageDownKeyDownLogic()
 
+        If GameState = AppState.Editing Then
+
+            If ShowMenu = False Then
+
+                SelectNextToolToTheRight()
+
+            Else
+
+                DoMenuLogicDown()
+
+            End If
+
+        End If
+
+    End Sub
 
     Private Sub DoPKeyDownLogic()
 

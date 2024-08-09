@@ -8946,15 +8946,7 @@ Public Class Form1
 
             Case Keys.C
 
-                If GameState = AppState.Editing Then
-
-                    If ShowMenu = True Then
-
-                        ShowMenu = False
-
-                    End If
-
-                End If
+                DoCKeyDownLogic()
 
             Case Keys.Escape
 
@@ -9012,11 +9004,19 @@ Public Class Form1
 
     End Sub
 
+    Private Sub DoCKeyDownLogic()
 
+        If GameState = AppState.Editing Then
 
+            If ShowMenu = True Then
 
+                ShowMenu = False
 
+            End If
 
+        End If
+
+    End Sub
 
     Private Sub DoEscapeKeyDownLogic()
 

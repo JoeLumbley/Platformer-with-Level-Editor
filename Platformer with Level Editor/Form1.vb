@@ -8936,41 +8936,7 @@ Public Class Form1
             Case Keys.B
                 'Yes, the player has pressed the B key down.
 
-                BDown = True
-
-                If GameState = AppState.Editing Then
-
-                    If ShowMenu = True Then
-
-                        ShowSaveLevelDialog()
-
-                    End If
-
-                End If
-
-                If GameState = AppState.Start Then
-
-                    ClearObjects()
-
-                    InitializeObjects()
-
-                    CreateNewLevel()
-
-                    LevelName = "Untitled"
-
-                    Text = LevelName & " - Platformer with Level Editor - Code with Joe"
-
-                    CashCollected = 0
-
-                    LastFrame = Now
-
-                    GameState = AppState.Playing
-
-                    MovePointerOffScreen()
-
-                    PlayLevelMusic()
-
-                End If
+                DoBKeyDownLogic()
 
             Case Keys.Enter
 
@@ -9225,6 +9191,46 @@ Public Class Form1
                 End If
 
             End If
+
+        End If
+
+    End Sub
+
+    Private Sub DoBKeyDownLogic()
+
+        BDown = True
+
+        If GameState = AppState.Editing Then
+
+            If ShowMenu = True Then
+
+                ShowSaveLevelDialog()
+
+            End If
+
+        End If
+
+        If GameState = AppState.Start Then
+
+            ClearObjects()
+
+            InitializeObjects()
+
+            CreateNewLevel()
+
+            LevelName = "Untitled"
+
+            Text = LevelName & " - Platformer with Level Editor - Code with Joe"
+
+            CashCollected = 0
+
+            LastFrame = Now
+
+            GameState = AppState.Playing
+
+            MovePointerOffScreen()
+
+            PlayLevelMusic()
 
         End If
 

@@ -9691,43 +9691,7 @@ Public Class Form1
 
             Case Keys.Up
 
-                UpArrowDown = False
-
-                If GameState = AppState.Editing Then
-
-                    If ShowMenu = False Then
-
-                        'Is the camera moving up?
-                        If Camera.Velocity.Y < 0 Then
-                            'Yes, the camera is moving up.
-
-                            'Stop Camera
-                            Camera.Velocity.Y = 0 'Zero speed.
-
-                        End If
-
-                    Else
-
-                        If MousePointer.Velocity.Y < 0 Then
-
-                            'Stop mouse pointer
-                            MousePointer.Velocity.Y = 0 'Zero speed.
-
-                        End If
-
-                    End If
-
-                End If
-
-                If GameState = AppState.Start Then
-
-                    If MousePointer.Velocity.Y < 0 Then
-
-                        MousePointer.Velocity.Y = 0 'Zero speed.
-
-                    End If
-
-                End If
+                DoArrowUpKeyUpLogic()
 
             Case Keys.Down
 
@@ -9760,6 +9724,48 @@ Public Class Form1
                 IsMKeyDown = False
 
         End Select
+
+    End Sub
+
+    Private Sub DoArrowUpKeyUpLogic()
+
+        UpArrowDown = False
+
+        If GameState = AppState.Editing Then
+
+            If ShowMenu = False Then
+
+                'Is the camera moving up?
+                If Camera.Velocity.Y < 0 Then
+                    'Yes, the camera is moving up.
+
+                    'Stop Camera
+                    Camera.Velocity.Y = 0 'Zero speed.
+
+                End If
+
+            Else
+
+                If MousePointer.Velocity.Y < 0 Then
+
+                    'Stop mouse pointer
+                    MousePointer.Velocity.Y = 0 'Zero speed.
+
+                End If
+
+            End If
+
+        End If
+
+        If GameState = AppState.Start Then
+
+            If MousePointer.Velocity.Y < 0 Then
+
+                MousePointer.Velocity.Y = 0 'Zero speed.
+
+            End If
+
+        End If
 
     End Sub
 

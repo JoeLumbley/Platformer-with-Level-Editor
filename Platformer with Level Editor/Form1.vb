@@ -9035,71 +9035,9 @@ Public Class Form1
 
                 End If
 
-                'Has the player pressed the delete key down?
             Case Keys.Delete
-                'Yes, the player has pressed the delete key down.
 
-                If GameState = AppState.Editing Then
-
-                    If SelectedBlock > -1 Then
-
-                        RemoveBlock(SelectedBlock)
-
-                        SelectedBlock = -1
-
-                    End If
-
-                    If SelectedBill > -1 Then
-
-                        RemoveBill(SelectedBill)
-
-                        SelectedBill = -1
-
-                    End If
-
-                    If SelectedBush > -1 Then
-
-                        RemoveBush(SelectedBush)
-
-                        SelectedBush = -1
-
-                    End If
-
-                    If SelectedCloud > -1 Then
-
-                        RemoveCloud(SelectedCloud)
-
-                        SelectedCloud = -1
-
-                    End If
-
-                    If SelectedEnemy > -1 Then
-
-                        RemoveEnemy(SelectedEnemy)
-
-                        SelectedEnemy = -1
-
-                    End If
-
-                    If SelectedBackdrop > -1 Then
-
-                        RemoveBackdrop(SelectedBackdrop)
-
-                        SelectedBackdrop = -1
-
-                    End If
-
-                    If GoalSelected = True Then
-
-                        'Place goal off level.
-                        Goal.Rect.X = -100
-                        Goal.Rect.Y = -100
-
-                        GoalSelected = False
-
-                    End If
-
-                End If
+                DoDeleteKeyDownLogic()
 
             Case Keys.M 'Mute
 
@@ -9146,6 +9084,72 @@ Public Class Form1
                 End If
 
         End Select
+
+    End Sub
+
+    Private Sub DoDeleteKeyDownLogic()
+
+        If GameState = AppState.Editing Then
+
+            If SelectedBlock > -1 Then
+
+                RemoveBlock(SelectedBlock)
+
+                SelectedBlock = -1
+
+            End If
+
+            If SelectedBill > -1 Then
+
+                RemoveBill(SelectedBill)
+
+                SelectedBill = -1
+
+            End If
+
+            If SelectedBush > -1 Then
+
+                RemoveBush(SelectedBush)
+
+                SelectedBush = -1
+
+            End If
+
+            If SelectedCloud > -1 Then
+
+                RemoveCloud(SelectedCloud)
+
+                SelectedCloud = -1
+
+            End If
+
+            If SelectedEnemy > -1 Then
+
+                RemoveEnemy(SelectedEnemy)
+
+                SelectedEnemy = -1
+
+            End If
+
+            If SelectedBackdrop > -1 Then
+
+                RemoveBackdrop(SelectedBackdrop)
+
+                SelectedBackdrop = -1
+
+            End If
+
+            If GoalSelected = True Then
+
+                'Place goal off level.
+                Goal.Rect.X = -100
+                Goal.Rect.Y = -100
+
+                GoalSelected = False
+
+            End If
+
+        End If
 
     End Sub
 

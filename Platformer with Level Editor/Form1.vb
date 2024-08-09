@@ -8866,51 +8866,11 @@ Public Class Form1
 
             Case Keys.Up
 
-                UpArrowDown = True
-
-                If GameState = AppState.Editing Then
-
-                    If ShowMenu = False Then
-
-                        MoveCameraUp()
-
-                    Else
-
-                        DoMenuLogicUp()
-
-                    End If
-
-                End If
-
-                If GameState = AppState.Start Then
-
-                    MovePointerToStartScreenNewButton()
-
-                End If
+                DoArrowUpKeyDownLogic()
 
             Case Keys.Down
 
-                DownArrowDown = True
-
-                If GameState = AppState.Editing Then
-
-                    If ShowMenu = False Then
-
-                        MoveCameraDown()
-
-                    Else
-
-                        DoMenuLogicDown()
-
-                    End If
-
-                End If
-
-                If GameState = AppState.Start Then
-
-                    MovePointerToStartScreenOpenButton()
-
-                End If
+                DoArrowDownKeyDownLogic()
 
             Case Keys.A
 
@@ -9001,6 +8961,58 @@ Public Class Form1
                 End If
 
         End Select
+
+    End Sub
+
+    Private Sub DoArrowUpKeyDownLogic()
+
+        UpArrowDown = True
+
+        If GameState = AppState.Editing Then
+
+            If ShowMenu = False Then
+
+                MoveCameraUp()
+
+            Else
+
+                DoMenuLogicUp()
+
+            End If
+
+        End If
+
+        If GameState = AppState.Start Then
+
+            MovePointerToStartScreenNewButton()
+
+        End If
+
+    End Sub
+
+    Private Sub DoArrowDownKeyDownLogic()
+
+        DownArrowDown = True
+
+        If GameState = AppState.Editing Then
+
+            If ShowMenu = False Then
+
+                MoveCameraDown()
+
+            Else
+
+                DoMenuLogicDown()
+
+            End If
+
+        End If
+
+        If GameState = AppState.Start Then
+
+            MovePointerToStartScreenOpenButton()
+
+        End If
 
     End Sub
 

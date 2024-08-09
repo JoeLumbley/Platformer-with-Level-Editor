@@ -9731,43 +9731,7 @@ Public Class Form1
 
             Case Keys.Down
 
-                DownArrowDown = False
-
-                If GameState = AppState.Editing Then
-
-                    If ShowMenu = False Then
-
-                        'Is the camera moving down?
-                        If Camera.Velocity.Y > 0 Then
-                            'Yes, the camera is moving down.
-
-                            'Stop Camera
-                            Camera.Velocity.Y = 0 'Zero speed.
-
-                        End If
-
-                    Else
-
-                        If MousePointer.Velocity.Y > 0 Then
-
-                            'Stop mouse pointer
-                            MousePointer.Velocity.Y = 0 'Zero speed.
-
-                        End If
-
-                    End If
-
-                End If
-
-                If GameState = AppState.Start Then
-
-                    If MousePointer.Velocity.Y > 0 Then
-
-                        MousePointer.Velocity.Y = 0 'Zero speed.
-
-                    End If
-
-                End If
+                DoArrowDownKeyUpLogic()
 
             Case Keys.A
 
@@ -9796,6 +9760,48 @@ Public Class Form1
                 IsMKeyDown = False
 
         End Select
+
+    End Sub
+
+    Private Sub DoArrowDownKeyUpLogic()
+
+        DownArrowDown = False
+
+        If GameState = AppState.Editing Then
+
+            If ShowMenu = False Then
+
+                'Is the camera moving down?
+                If Camera.Velocity.Y > 0 Then
+                    'Yes, the camera is moving down.
+
+                    'Stop Camera
+                    Camera.Velocity.Y = 0 'Zero speed.
+
+                End If
+
+            Else
+
+                If MousePointer.Velocity.Y > 0 Then
+
+                    'Stop mouse pointer
+                    MousePointer.Velocity.Y = 0 'Zero speed.
+
+                End If
+
+            End If
+
+        End If
+
+        If GameState = AppState.Start Then
+
+            If MousePointer.Velocity.Y > 0 Then
+
+                MousePointer.Velocity.Y = 0 'Zero speed.
+
+            End If
+
+        End If
 
     End Sub
 

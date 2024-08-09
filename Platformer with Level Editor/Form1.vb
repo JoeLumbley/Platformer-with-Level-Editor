@@ -8764,8 +8764,6 @@ Public Class Form1
 
                 UpdateCameraOffset()
 
-                'BufferGridLines()
-
             End If
 
         End If
@@ -8858,19 +8856,7 @@ Public Class Form1
 
             Case Keys.PageUp
 
-                If GameState = AppState.Editing Then
-
-                    If ShowMenu = False Then
-
-                        SelectNextToolToTheLeft()
-
-                    Else
-
-                        DoMenuLogicUp()
-
-                    End If
-
-                End If
+                DoPageUpKeyDownLogic()
 
             Case Keys.PageDown
 
@@ -8892,7 +8878,30 @@ Public Class Form1
 
     End Sub
 
+    Private Sub DoPageUpKeyDownLogic()
+
+
+        If GameState = AppState.Editing Then
+
+            If ShowMenu = False Then
+
+                SelectNextToolToTheLeft()
+
+            Else
+
+                DoMenuLogicUp()
+
+            End If
+
+        End If
+
+
+    End Sub
+
+
+
     Private Sub DoPKeyDownLogic()
+
         If GameState = AppState.Editing Then
 
             DeselectObjects()

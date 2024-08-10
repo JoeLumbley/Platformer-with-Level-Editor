@@ -9616,40 +9616,7 @@ Public Class Form1
 
             Case Keys.Right
 
-                RightArrowDown = False
-
-                If GameState = AppState.Editing Then
-
-                    If ShowMenu = False Then
-
-                        If Camera.Velocity.X > 0 Then
-
-                            'Stop Camera
-                            Camera.Velocity.X = 0 'Zero speed.
-
-                        End If
-
-                    Else
-
-                        If MousePointer.Velocity.X > 0 Then
-
-                            MousePointer.Velocity.X = 0 'Zero speed.
-
-                        End If
-
-                    End If
-
-                End If
-
-                If GameState = AppState.Start Then
-
-                    If MousePointer.Velocity.X > 0 Then
-
-                        MousePointer.Velocity.X = 0 'Zero speed.
-
-                    End If
-
-                End If
+                DoRightKeyUpLogic()
 
             Case Keys.Left
 
@@ -9690,6 +9657,45 @@ Public Class Form1
                 IsMKeyDown = False
 
         End Select
+
+    End Sub
+
+    Private Sub DoRightKeyUpLogic()
+
+        RightArrowDown = False
+
+        If GameState = AppState.Editing Then
+
+            If ShowMenu = False Then
+
+                If Camera.Velocity.X > 0 Then
+
+                    'Stop Camera
+                    Camera.Velocity.X = 0 'Zero speed.
+
+                End If
+
+            Else
+
+                If MousePointer.Velocity.X > 0 Then
+
+                    MousePointer.Velocity.X = 0 'Zero speed.
+
+                End If
+
+            End If
+
+        End If
+
+        If GameState = AppState.Start Then
+
+            If MousePointer.Velocity.X > 0 Then
+
+                MousePointer.Velocity.X = 0 'Zero speed.
+
+            End If
+
+        End If
 
     End Sub
 

@@ -738,6 +738,59 @@ Public Class Form1
 
     End Sub
 
+    Private Sub Form1_MouseWheel(sender As Object, e As MouseEventArgs) Handles MyBase.MouseWheel
+
+        'Is the player rolling the mouse wheel up or down?
+        If e.Delta > 0 Then
+            'The player is rolling the mouse wheel up.
+
+            MouseWheelNotchesUp += 1
+
+            If MouseWheelNotchesUp >= 3 Then
+
+                MouseWheelNotchesUp = 0
+
+                If GameState = AppState.Editing Then
+
+                    MouseWheelUpEditing()
+
+                End If
+
+                If GameState = AppState.Start Then
+
+                    MovePointerToStartScreenNewButton()
+
+                End If
+
+            End If
+
+        Else
+            'The player is rolling the mouse wheel down.
+
+            MouseWheelNotchesDown += 1
+
+            If MouseWheelNotchesDown >= 3 Then
+
+                MouseWheelNotchesDown = 0
+
+                If GameState = AppState.Editing Then
+
+                    MouseWheelDownEditing()
+
+                End If
+
+                If GameState = AppState.Start Then
+
+                    MovePointerToStartScreenOpenButton()
+
+                End If
+
+            End If
+
+        End If
+
+    End Sub
+
     Private Sub Form1_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
 
         Select Case e.KeyCode
@@ -880,27 +933,25 @@ Public Class Form1
 
     Private Sub Form1_DoubleClick(sender As Object, e As EventArgs) Handles MyBase.DoubleClick
 
-        If GameState = AppState.Editing Then
+        DoDoubleClickLogic()
 
-            If ShowMenu = False Then
+    End Sub
 
-                'Is player double clicking on a game object that can have its color set?
-                If SizingHandleSelected = False AndAlso
-                SelectedBlock = -1 AndAlso
-                SelectedBill = -1 AndAlso
-                SelectedBush = -1 AndAlso
-                SelectedCloud = -1 AndAlso
-                GoalSelected = False AndAlso
-                SelectedEnemy = -1 AndAlso
-                SpawnSelected = False AndAlso
-                SelectedPortal = -1 Then
-                    'Yes, the player is double clicking a game object that can have its color set.
+    Private Sub Form1_Move(sender As Object, e As EventArgs) Handles MyBase.Move
 
-                    ShowColorPicker()
+        ScreenOffset = PointToScreen(New Point(0, 0))
 
-                End If
+    End Sub
 
-            End If
+    Private Sub Form1_Resize(sender As Object, e As EventArgs) Handles MyBase.Resize
+
+        'Is the form minimized?
+        If Not Me.WindowState = FormWindowState.Minimized Then
+            'No, the form is not minimized.
+
+            DoResize()
+
+            'BufferGridLines()
 
         End If
 
@@ -8295,8 +8346,6 @@ Public Class Form1
 
             End If
 
-            'BufferGridLines()
-
         End If
 
     End Sub
@@ -11106,21 +11155,29 @@ Public Class Form1
 
     End Sub
 
-    Private Sub Form1_Move(sender As Object, e As EventArgs) Handles MyBase.Move
+    Private Sub DoDoubleClickLogic()
 
-        ScreenOffset = PointToScreen(New Point(0, 0))
+        If GameState = AppState.Editing Then
 
-    End Sub
+            If ShowMenu = False Then
 
-    Private Sub Form1_Resize(sender As Object, e As EventArgs) Handles MyBase.Resize
+                'Is player double clicking on a game object that can have its color set?
+                If SizingHandleSelected = False AndAlso
+                SelectedBlock = -1 AndAlso
+                SelectedBill = -1 AndAlso
+                SelectedBush = -1 AndAlso
+                SelectedCloud = -1 AndAlso
+                GoalSelected = False AndAlso
+                SelectedEnemy = -1 AndAlso
+                SpawnSelected = False AndAlso
+                SelectedPortal = -1 Then
+                    'Yes, the player is double clicking a game object that can have its color set.
 
-        'Is the form minimized?
-        If Not Me.WindowState = FormWindowState.Minimized Then
-            'No, the form is not minimized.
+                    ShowColorPicker()
 
-            DoResize()
+                End If
 
-            'BufferGridLines()
+            End If
 
         End If
 
@@ -11884,58 +11941,6 @@ Public Class Form1
 
     End Sub
 
-    Private Sub Form1_MouseWheel(sender As Object, e As MouseEventArgs) Handles MyBase.MouseWheel
-
-        'Is the player rolling the mouse wheel up or down?
-        If e.Delta > 0 Then
-            'The player is rolling the mouse wheel up.
-
-            MouseWheelNotchesUp += 1
-
-            If MouseWheelNotchesUp >= 3 Then
-
-                MouseWheelNotchesUp = 0
-
-                If GameState = AppState.Editing Then
-
-                    MouseWheelUpEditing()
-
-                End If
-
-                If GameState = AppState.Start Then
-
-                    MovePointerToStartScreenNewButton()
-
-                End If
-
-            End If
-
-        Else
-            'The player is rolling the mouse wheel down.
-
-            MouseWheelNotchesDown += 1
-
-            If MouseWheelNotchesDown >= 3 Then
-
-                MouseWheelNotchesDown = 0
-
-                If GameState = AppState.Editing Then
-
-                    MouseWheelDownEditing()
-
-                End If
-
-                If GameState = AppState.Start Then
-
-                    MovePointerToStartScreenOpenButton()
-
-                End If
-
-            End If
-
-        End If
-
-    End Sub
 
     Private Sub MouseWheelDownEditing()
 

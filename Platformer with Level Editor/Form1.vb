@@ -696,6 +696,36 @@ Public Class Form1
 
     End Sub
 
+    Private Sub Form1_MouseDown(sender As Object, e As MouseEventArgs) Handles MyBase.MouseDown
+
+        Select Case GameState
+
+            Case AppState.Start
+
+                MouseDownStart(e)
+
+            Case AppState.Playing
+
+                If EditPlayButton.Rect.Contains(e.Location) Then
+
+                    'Remember the cameras in game position before opening the editor.
+                    CameraPlayPostion.X = Camera.Position.X
+                    CameraPlayPostion.Y = Camera.Position.Y
+
+                    GameState = AppState.Editing
+
+                    EditorLastFrame = Now
+
+                End If
+
+            Case AppState.Editing
+
+                MouseDownEditing(e)
+
+        End Select
+
+    End Sub
+
     Private Sub Form1_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
 
         Select Case e.KeyCode
@@ -10874,41 +10904,7 @@ Public Class Form1
 
             UpdateCameraOffset()
 
-            'BufferGridLines()
-
         End If
-
-    End Sub
-
-    Private Sub Form1_MouseDown(sender As Object, e As MouseEventArgs) Handles MyBase.MouseDown
-
-        Select Case GameState
-
-            Case AppState.Start
-
-                MouseDownStart(e)
-
-            Case AppState.Playing
-
-                If EditPlayButton.Rect.Contains(e.Location) Then
-
-                    'Remember the cameras in game position before opening the editor.
-                    CameraPlayPostion.X = Camera.Position.X
-                    CameraPlayPostion.Y = Camera.Position.Y
-
-                    GameState = AppState.Editing
-
-                    EditorLastFrame = Now
-
-                    'BufferGridLines()
-
-                End If
-
-            Case AppState.Editing
-
-                MouseDownEditing(e)
-
-        End Select
 
     End Sub
 

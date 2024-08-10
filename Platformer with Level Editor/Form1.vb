@@ -9636,9 +9636,7 @@ Public Class Form1
 
             Case Keys.B
 
-                If Jumped = True Then Jumped = False
-
-                BDown = False
+                DoBDownKeyUpLogic()
 
             Case Keys.Delete
 
@@ -9824,6 +9822,14 @@ Public Class Form1
         If Jumped = True Then Jumped = False
 
         ADown = False
+
+    End Sub
+
+    Private Sub DoBDownKeyUpLogic()
+
+        If Jumped = True Then Jumped = False
+
+        BDown = False
 
     End Sub
 

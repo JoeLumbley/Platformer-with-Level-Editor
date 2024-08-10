@@ -9640,7 +9640,7 @@ Public Class Form1
 
             Case Keys.Delete
 
-                DeleteDown = False
+                DoDeleteDownKeyUpLogic()
 
             Case 93 'Context Menu ≡
 
@@ -9832,6 +9832,15 @@ Public Class Form1
         BDown = False
 
     End Sub
+
+    Private Sub DoDeleteDownKeyUpLogic()
+
+        DeleteDown = False
+
+    End Sub
+
+
+
 
     Private Sub UpdateButtonPosition()
         'The range of buttons is 0 to 65,535. Unsigned 16-bit (2-byte) integer.

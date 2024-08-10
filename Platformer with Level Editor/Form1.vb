@@ -732,25 +732,7 @@ Public Class Form1
 
         If GameState = AppState.Start Then
 
-            If StartScreenOpenButton.Rect.Contains(e.Location) Then
-
-                StartScreenOpenButtonHover = True
-
-            Else
-
-                StartScreenOpenButtonHover = False
-
-            End If
-
-            If StartScreenNewButton.Rect.Contains(e.Location) Then
-
-                StartScreenNewButtonHover = True
-
-            Else
-
-                StartScreenNewButtonHover = False
-
-            End If
+            MouseMoveStart(e)
 
         End If
 
@@ -8400,6 +8382,30 @@ Public Class Form1
             End Select
 
         Next
+
+    End Sub
+
+    Private Sub MouseMoveStart(e As MouseEventArgs)
+
+        If StartScreenOpenButton.Rect.Contains(e.Location) Then
+
+            StartScreenOpenButtonHover = True
+
+        Else
+
+            StartScreenOpenButtonHover = False
+
+        End If
+
+        If StartScreenNewButton.Rect.Contains(e.Location) Then
+
+            StartScreenNewButtonHover = True
+
+        Else
+
+            StartScreenNewButtonHover = False
+
+        End If
 
     End Sub
 

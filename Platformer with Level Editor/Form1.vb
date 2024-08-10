@@ -9632,9 +9632,7 @@ Public Class Form1
 
             Case Keys.A
 
-                If Jumped = True Then Jumped = False
-
-                ADown = False
+                DoADownKeyUpLogic()
 
             Case Keys.B
 
@@ -9642,9 +9640,7 @@ Public Class Form1
 
                 BDown = False
 
-                'Has the player let the delete key up?
             Case Keys.Delete
-                'Yes, the player has let the delete key up.
 
                 DeleteDown = False
 
@@ -9820,6 +9816,14 @@ Public Class Form1
             End If
 
         End If
+
+    End Sub
+
+    Private Sub DoADownKeyUpLogic()
+
+        If Jumped = True Then Jumped = False
+
+        ADown = False
 
     End Sub
 

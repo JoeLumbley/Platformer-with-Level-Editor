@@ -9644,7 +9644,7 @@ Public Class Form1
 
             Case 93 'Context Menu ≡
 
-                IsContextDown = False
+                DoContextMenuDownKeyUpLogic()
 
             Case Keys.M
 
@@ -9839,6 +9839,11 @@ Public Class Form1
 
     End Sub
 
+    Private Sub DoContextMenuDownKeyUpLogic()
+
+        IsContextDown = False
+
+    End Sub
 
 
 

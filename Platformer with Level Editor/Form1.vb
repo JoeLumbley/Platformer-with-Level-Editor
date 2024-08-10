@@ -792,6 +792,50 @@ Public Class Form1
 
     End Sub
 
+    Private Sub Form1_KeyUp(sender As Object, e As KeyEventArgs) Handles MyBase.KeyUp
+
+        Select Case e.KeyCode
+
+            Case Keys.Right
+
+                DoArrowRightKeyUpLogic()
+
+            Case Keys.Left
+
+                DoArrowLeftKeyUpLogic()
+
+            Case Keys.Up
+
+                DoArrowUpKeyUpLogic()
+
+            Case Keys.Down
+
+                DoArrowDownKeyUpLogic()
+
+            Case Keys.A
+
+                DoADownKeyUpLogic()
+
+            Case Keys.B
+
+                DoBDownKeyUpLogic()
+
+            Case Keys.Delete
+
+                DoDeleteDownKeyUpLogic()
+
+            Case 93 'Context Menu ≡
+
+                DoContextMenuDownKeyUpLogic()
+
+            Case Keys.M 'Mute
+
+                DoMDownKeyUpLogic()
+
+        End Select
+
+    End Sub
+
     Private Sub Form1_DoubleClick(sender As Object, e As EventArgs) Handles MyBase.DoubleClick
 
         If GameState = AppState.Editing Then
@@ -9610,51 +9654,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub Form1_KeyUp(sender As Object, e As KeyEventArgs) Handles MyBase.KeyUp
-
-        Select Case e.KeyCode
-
-            Case Keys.Right
-
-                DoRightKeyUpLogic()
-
-            Case Keys.Left
-
-                DoLeftKeyUpLogic()
-
-            Case Keys.Up
-
-                DoArrowUpKeyUpLogic()
-
-            Case Keys.Down
-
-                DoArrowDownKeyUpLogic()
-
-            Case Keys.A
-
-                DoADownKeyUpLogic()
-
-            Case Keys.B
-
-                DoBDownKeyUpLogic()
-
-            Case Keys.Delete
-
-                DoDeleteDownKeyUpLogic()
-
-            Case 93 'Context Menu ≡
-
-                DoContextMenuDownKeyUpLogic()
-
-            Case Keys.M
-
-                DoMDownKeyUpLogic()
-
-        End Select
-
-    End Sub
-
-    Private Sub DoRightKeyUpLogic()
+    Private Sub DoArrowRightKeyUpLogic()
 
         RightArrowDown = False
 
@@ -9693,7 +9693,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub DoLeftKeyUpLogic()
+    Private Sub DoArrowLeftKeyUpLogic()
 
         LeftArrowDown = False
 

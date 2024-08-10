@@ -716,6 +716,46 @@ Public Class Form1
 
     End Sub
 
+    Private Sub Form1_MouseMove(sender As Object, e As MouseEventArgs) Handles MyBase.MouseMove
+
+        If GameState = AppState.Editing Then
+
+            MouseMoveEditing(e)
+
+        End If
+
+        If GameState = AppState.Playing Then
+
+            MouseMovePlaying(e)
+
+        End If
+
+        If GameState = AppState.Start Then
+
+            If StartScreenOpenButton.Rect.Contains(e.Location) Then
+
+                StartScreenOpenButtonHover = True
+
+            Else
+
+                StartScreenOpenButtonHover = False
+
+            End If
+
+            If StartScreenNewButton.Rect.Contains(e.Location) Then
+
+                StartScreenNewButtonHover = True
+
+            Else
+
+                StartScreenNewButtonHover = False
+
+            End If
+
+        End If
+
+    End Sub
+
     Private Sub Form1_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
 
         Select Case e.KeyCode
@@ -8363,49 +8403,15 @@ Public Class Form1
 
     End Sub
 
-    Private Sub Form1_MouseMove(sender As Object, e As MouseEventArgs) Handles MyBase.MouseMove
+    Private Sub MouseMovePlaying(e As MouseEventArgs)
 
-        If GameState = AppState.Editing Then
+        If EditPlayButton.Rect.Contains(e.Location) Then
 
-            MouseMoveEditing(e)
+            EditPlayButtonHover = True
 
-        End If
+        Else
 
-        If GameState = AppState.Playing Then
-
-            If EditPlayButton.Rect.Contains(e.Location) Then
-
-                EditPlayButtonHover = True
-
-            Else
-
-                EditPlayButtonHover = False
-
-            End If
-
-        End If
-
-        If GameState = AppState.Start Then
-
-            If StartScreenOpenButton.Rect.Contains(e.Location) Then
-
-                StartScreenOpenButtonHover = True
-
-            Else
-
-                StartScreenOpenButtonHover = False
-
-            End If
-
-            If StartScreenNewButton.Rect.Contains(e.Location) Then
-
-                StartScreenNewButtonHover = True
-
-            Else
-
-                StartScreenNewButtonHover = False
-
-            End If
+            EditPlayButtonHover = False
 
         End If
 
@@ -11005,8 +11011,6 @@ Public Class Form1
                 DeselectObjects()
 
                 ShowMenu = True
-
-                'MovePointerCenterMenu()
 
                 MovePointerOverSaveButton()
 

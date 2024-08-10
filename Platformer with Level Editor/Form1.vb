@@ -9648,7 +9648,7 @@ Public Class Form1
 
             Case Keys.M
 
-                IsMKeyDown = False
+                DoMDownKeyUpLogic()
 
         End Select
 
@@ -9845,7 +9845,11 @@ Public Class Form1
 
     End Sub
 
+    Private Sub DoMDownKeyUpLogic()
 
+        IsMKeyDown = False
+
+    End Sub
 
     Private Sub UpdateButtonPosition()
         'The range of buttons is 0 to 65,535. Unsigned 16-bit (2-byte) integer.

@@ -706,17 +706,7 @@ Public Class Form1
 
             Case AppState.Playing
 
-                If EditPlayButton.Rect.Contains(e.Location) Then
-
-                    'Remember the cameras in game position before opening the editor.
-                    CameraPlayPostion.X = Camera.Position.X
-                    CameraPlayPostion.Y = Camera.Position.Y
-
-                    GameState = AppState.Editing
-
-                    EditorLastFrame = Now
-
-                End If
+                MouseDownPlaying(e)
 
             Case AppState.Editing
 
@@ -10977,6 +10967,22 @@ Public Class Form1
             MovePointerOffScreen()
 
             PlayLevelMusic()
+
+        End If
+
+    End Sub
+
+    Private Sub MouseDownPlaying(e As MouseEventArgs)
+
+        If EditPlayButton.Rect.Contains(e.Location) Then
+
+            'Remember the cameras in game position before opening the editor.
+            CameraPlayPostion.X = Camera.Position.X
+            CameraPlayPostion.Y = Camera.Position.Y
+
+            GameState = AppState.Editing
+
+            EditorLastFrame = Now
 
         End If
 

@@ -217,6 +217,172 @@ This code is a basic structure of a platformer game with a level editor. Each pa
 
 
 
+# Controller Code Walkthrough
+
+Let's break down the steps involved in using controllers in the game code. This includes detecting the controller, reading its state, and responding to input.
+
+### **Importing Necessary Libraries**
+
+Before you can use controllers, you need to import the necessary libraries:
+
+```vb
+Imports System.Runtime.InteropServices
+```
+
+- This allows you to use functions from external libraries (like the XInput library) that handle controller inputs.
+
+### **Declaring DLL Imports**
+
+You need to declare functions from the XInput library that will help you interact with the controller:
+
+```vb
+<DllImport("XInput1_4.dll")>
+Private Shared Function XInputGetState(dwUserIndex As Integer, ByRef pState As XINPUT_STATE) As Integer
+End Function
+```
+
+- **XInputGetState**: This function checks the state of the controller (e.g., whether it's connected and the status of buttons and sticks).
+
+### **Defining Structures for Controller State**
+
+You need to define structures that represent the state of the controller:
+
+```vb
+<StructLayout(LayoutKind.Explicit)>
+Public Structure XINPUT_STATE
+    <FieldOffset(0)> Public dwPacketNumber As UInteger
+    <FieldOffset(4)> Public Gamepad As XINPUT_GAMEPAD
+End Structure
+
+<StructLayout(LayoutKind.Sequential)>
+Public Structure XINPUT_GAMEPAD
+    Public wButtons As UShort
+    Public bLeftTrigger As Byte
+    Public bRightTrigger As Byte
+    Public sThumbLX As Short
+    Public sThumbLY As Short
+    Public sThumbRX As Short
+    Public sThumbRY As Short
+End Structure
+```
+
+- **XINPUT_STATE**: Contains the packet number and the gamepad state.
+- **XINPUT_GAMEPAD**: Contains button states and thumbstick positions.
+
+### **Checking if the Controller is Connected**
+
+You need a method to check if the controller is connected:
+
+```vb
+Private Function IsControllerConnected(controllerNumber As Integer) As Boolean
+    Return XInputGetState(controllerNumber, ControllerPosition) = 0
+End Function
+```
+
+- This function returns `True` if the controller is connected (indicated by a return value of 0).
+
+### **Updating Controller State**
+
+You need to update the controller state regularly, typically in the game loop:
+
+```vb
+Private Sub UpdateControllerData()
+    For ControllerNumber As Integer = 0 To 3
+        Try
+            If IsControllerConnected(ControllerNumber) Then
+                UpdateControllerState(ControllerNumber)
+            End If
+        Catch ex As Exception
+            DisplayError(ex)
+        End Try
+    Next
+End Sub
+```
+
+- This loop checks each controller (up to 4) and updates its state if connected.
+
+### **Reading Button States**
+
+Inside the `UpdateControllerState` method, you will read the button states:
+
+```vb
+Private Sub UpdateControllerState(controllerNumber As Integer)
+    If Connected(0) AndAlso controllerNumber = 0 Then
+        ' Use controller zero
+        UpdateButtonPosition()
+        ' Other updates for thumbsticks, triggers, etc.
+    End If
+End Sub
+```
+
+- You can check specific buttons by using bitwise operations on `wButtons`:
+
+```vb
+If (Gamepad.wButtons And AButton) <> 0 Then
+    ' A button is pressed
+End If
+```
+
+### **Handling Input Actions**
+
+You will typically have methods to handle specific input actions based on button presses:
+
+```vb
+Private Sub DoAKeyDownLogic()
+    ' Logic for when the A button is pressed
+End Sub
+```
+
+### **Vibrating the Controller**
+
+You can also make the controller vibrate based on game events:
+
+```vb
+<DllImport("XInput1_4.dll")>
+Private Shared Function XInputSetState(playerIndex As Integer, ByRef vibration As XINPUT_VIBRATION) As Integer
+End Function
+
+Public Structure XINPUT_VIBRATION
+    Public wLeftMotorSpeed As UShort
+    Public wRightMotorSpeed As UShort
+End Structure
+```
+
+- You can set the motor speeds to create a vibration effect.
+
+### **Integrating with Game Logic**
+
+Finally, you integrate the controller input into the game logic, allowing players to control the hero, navigate menus, and interact with the game world using the controller.
+
+### Summary
+
+Using controllers in your game involves:
+1. Importing necessary libraries.
+2. Declaring external functions to communicate with the controller.
+3. Defining structures to hold controller state information.
+4. Checking if the controller is connected.
+5. Regularly updating the controller state in the game loop.
+6. Reading button states and handling input actions.
+7. Optionally, implementing vibration feedback.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Getting Started
 
 Here are some steps you can take to learn game development using the "Platformer with Level Editor" project:

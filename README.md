@@ -217,11 +217,12 @@ This code is a basic structure of a platformer game with a level editor. Each pa
 
 
 
+# Getting Started
 
 Here are some steps you can take to learn game development using the "Platformer with Level Editor" project:
 
 
-**Set up the Development Environment**
+### **Set up the Development Environment**
 
 
 Visual Studio is an Integrated Development Environment (IDE) created by Microsoft. 
@@ -239,7 +240,7 @@ Install Visual Studio from here:  https://visualstudio.microsoft.com/downloads/ 
 ![153](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/22a61c77-908f-4e04-9266-93f3d34ec376)
 
 
-**Clone the Repository** 
+### **Clone the Repository** 
 
 1. Click the "Code" button.
 2. Copy the repository's URL.
@@ -256,23 +257,23 @@ Watch a short about cloning the repository here: https://www.youtube.com/shorts/
 ![154](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/a937ec81-c192-4dff-b4b0-badd87c07f87)
 
 
-**Explore the Project Structure**
+### **Explore the Project Structure**
 
 Familiarize yourself with the project's structure and organization. Understand the different folders and files, and how they work together to create the platformer game and level editor.
 
 
-**Modify and Extend the Project**
+### **Modify and Extend the Project**
 
 Once familiar with the codebase, try adding features, improving mechanics, or creating unique game elements.
 
-**Refer to Documentation and Resources**
+### **Refer to Documentation and Resources**
 
 Use project documentation and tutorials to deepen your understanding of concepts and techniques.
 
 ![072](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/c4ae4c4c-7641-4a9f-96d5-c19805fdcc01)
 
 
-**Seek Community Feedback**
+### **Seek Community Feedback**
 
 Engage with the project’s community for feedback and learning opportunities.
 

@@ -1,4 +1,4 @@
-# Make Your Own Games
+# **Make Your Own Games**
 
 
 
@@ -10,17 +10,17 @@
 
 The key things you can expect to explore with this learning tool are:
 
-#### 1. Game Mechanics
+### **Game Mechanics**
 Understanding the inner workings of a game is crucial. With this tool, you’ll explore physics (how objects move), collision detection (when objects interact), character movement (controls), and game loops (the heartbeat of your game).
 
-#### 2. Programming Patterns
+### **Programming Patterns**
 Game development relies on common programming patterns. Structured programming helps organize code into manageable pieces, and event handling ensures your game responds to player actions (like jumping or shooting).
 
 ![167](https://github.com/user-attachments/assets/5788aacc-5b04-4862-bb88-281d99df3e58)
 
 
 
-#### 3. Level Design
+### **Level Design**
 The level editor is your canvas. Learn how to create captivating levels, store them efficiently, and load them seamlessly during gameplay. Level design impacts player experience, so it’s a critical skill.
 
 
@@ -29,11 +29,11 @@ The level editor is your canvas. Learn how to create captivating levels, store t
 
 
 
-#### 4. Sound Integration
+### **Sound Integration**
 Sound effects and music enhance immersion. Discover how to integrate audio assets into your game.
 Whether it’s a cheerful jump sound or an epic boss battle theme, audio matters!
 
-#### 5. Xbox Controller Support
+### **Xbox Controller Support**
 Many players use controllers. Mastering Xbox controller integration allows you to create games that feel natural and enjoyable for console players.
 
 
@@ -50,7 +50,7 @@ Remember, “Platformer with Level Editor” isn’t just about theory—it’s 
 # Code Walkthrough
 "Platformer with Level Editor" is a game application that allows users to create and customize their own platformer levels. The application includes various tools and features to help players design, edit, and play through their custom levels.
 
-### 1. **Imports and Class Declaration**
+### **Imports and Class Declaration**
 
 ```vb
 Imports System.ComponentModel
@@ -68,7 +68,7 @@ Public Class Form1
 
 - **Public Class Form1**: This declares a class named `Form1`. In VB.NET, a class is like a blueprint for creating objects. Here, `Form1` represents the main window of the application.
 
-### 2. **DLL Imports for Audio and Controller**
+### **DLL Imports for Audio and Controller**
 
 ```vb
 <DllImport("winmm.dll", EntryPoint:="mciSendStringW")>
@@ -80,7 +80,7 @@ End Function
 
 - **Function mciSendStringW**: This function sends commands to the multimedia control interface (MCI) for audio playback.
 
-### 3. **Game State and Controller Setup**
+### **Game State and Controller Setup**
 
 ```vb
 Private Enum AppState As Integer
@@ -93,7 +93,7 @@ End Enum
 
 - **Enum**: An enumeration (enum) is a way to define a group of related constants. Here, `AppState` defines different states the game can be in: starting, playing, editing, and clear.
 
-### 4. **Variables for Game Objects**
+### **Variables for Game Objects**
 
 ```vb
 Private Hero As GameObject
@@ -103,7 +103,7 @@ Private Blocks() As GameObject
 
 - **Variables**: These are used to store data. `Hero` is a single game object representing the player. `Cash` and `Blocks` are arrays that can hold multiple game objects (like bills or blocks).
 
-### 5. **Game Initialization**
+### **Game Initialization**
 
 ```vb
 Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -113,7 +113,7 @@ End Sub
 
 - **Form1_Load**: This is an event that runs when the form (window) loads. It calls `InitializeApp()` to set up the game.
 
-### 6. **Initializing the Game**
+### **Initializing the Game**
 
 ```vb
 Private Sub InitializeApp()
@@ -125,7 +125,7 @@ End Sub
 
 - **InitializeApp**: This method sets up the game by creating sound files, initializing game objects, and setting up the form's appearance.
 
-### 7. **Creating Sounds**
+### **Creating Sounds**
 
 ```vb
 Private Sub CreateSoundFilesFromResources()
@@ -136,7 +136,7 @@ End Sub
 
 - **CreateSoundFilesFromResources**: This method creates sound files from resources included in the project. It uses the `CreateSoundFileFromResource` method to save the sound file.
 
-### 8. **Game Loop**
+### **Game Loop**
 
 ```vb
 Private Sub GameTimer_Tick(sender As Object, e As EventArgs) Handles GameTimer.Tick
@@ -147,7 +147,7 @@ End Sub
 
 - **GameTimer_Tick**: This event runs repeatedly at set intervals (like a clock tick ⏰). It updates the game state and redraws the window.
 
-### 9. **Updating the Frame**
+### **Updating the Frame**
 
 ```vb
 Private Sub UpdateFrame()
@@ -164,7 +164,7 @@ End Sub
 
 - **UpdateFrame**: This method checks the current game state and runs the appropriate logic based on whether the game is starting, playing, or in editing mode.
 
-### 10. **User Input Handling**
+### **User Input Handling**
 
 ```vb
 Private Sub Form1_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
@@ -179,7 +179,7 @@ End Sub
 
 - **Form1_KeyDown**: This event handles keyboard input. When a key is pressed, it checks which key and calls the corresponding method to handle that input.
 
-### 11. **Game Object Interaction**
+### **Game Object Interaction**
 
 ```vb
 Private Sub DrawOurHero()
@@ -193,7 +193,7 @@ End Sub
 
 - **DrawOurHero**: This method draws the hero on the screen. It checks if the hero is within the camera's view before drawing it.
 
-### 12. **Ending the Game**
+### **Ending the Game**
 
 ```vb
 Private Sub Form1_Closing(sender As Object, e As CancelEventArgs) Handles MyBase.Closing

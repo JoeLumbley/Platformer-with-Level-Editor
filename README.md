@@ -47,6 +47,171 @@ Remember, “Platformer with Level Editor” isn’t just about theory—it’s 
 ![152](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/a2c5b26f-9b93-4a48-a898-5c7df788ed37)
 
 
+# Code Walkthrough
+"Platformer with Level Editor" is a game application that allows users to create and customize their own platformer levels. The application includes various tools and features to help players design, edit, and play through their custom levels.
+
+### 1. **Imports and Class Declaration**
+
+```vb
+Imports System.ComponentModel
+Imports System.Drawing.Drawing2D
+Imports System.IO
+Imports System.Numerics
+Imports System.Runtime.InteropServices
+Imports System.Text
+Imports System.Threading
+
+Public Class Form1
+```
+
+- **Imports**: These lines bring in useful libraries that provide extra functionality. For example, `System.IO` helps with file operations, and `System.Drawing` is used for graphics.
+
+- **Public Class Form1**: This declares a class named `Form1`. In VB.NET, a class is like a blueprint for creating objects. Here, `Form1` represents the main window of the application.
+
+### 2. **DLL Imports for Audio and Controller**
+
+```vb
+<DllImport("winmm.dll", EntryPoint:="mciSendStringW")>
+Private Shared Function mciSendStringW(<MarshalAs(UnmanagedType.LPTStr)> ByVal lpszCommand As String, <MarshalAs(UnmanagedType.LPWStr)> ByVal lpszReturnString As StringBuilder, ByVal cchReturn As UInteger, ByVal hwndCallback As IntPtr) As Integer
+End Function
+```
+
+- **DllImport**: This is used to call functions from external libraries (DLLs). Here, it allows the program to play audio files.
+
+- **Function mciSendStringW**: This function sends commands to the multimedia control interface (MCI) for audio playback.
+
+### 3. **Game State and Controller Setup**
+
+```vb
+Private Enum AppState As Integer
+    Start
+    Playing
+    Editing
+    Clear
+End Enum
+```
+
+- **Enum**: An enumeration (enum) is a way to define a group of related constants. Here, `AppState` defines different states the game can be in: starting, playing, editing, and clear.
+
+### 4. **Variables for Game Objects**
+
+```vb
+Private Hero As GameObject
+Private Cash() As GameObject
+Private Blocks() As GameObject
+```
+
+- **Variables**: These are used to store data. `Hero` is a single game object representing the player. `Cash` and `Blocks` are arrays that can hold multiple game objects (like bills or blocks).
+
+### 5. **Game Initialization**
+
+```vb
+Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    InitializeApp()
+End Sub
+```
+
+- **Form1_Load**: This is an event that runs when the form (window) loads. It calls `InitializeApp()` to set up the game.
+
+### 6. **Initializing the Game**
+
+```vb
+Private Sub InitializeApp()
+    CreateSoundFilesFromResources()
+    InitializeObjects()
+    InitializeForm()
+End Sub
+```
+
+- **InitializeApp**: This method sets up the game by creating sound files, initializing game objects, and setting up the form's appearance.
+
+### 7. **Creating Sounds**
+
+```vb
+Private Sub CreateSoundFilesFromResources()
+    Dim File As String = Path.Combine(Application.StartupPath, "level.mp3")
+    CreateSoundFileFromResource(File, My.Resources.level)
+End Sub
+```
+
+- **CreateSoundFilesFromResources**: This method creates sound files from resources included in the project. It uses the `CreateSoundFileFromResource` method to save the sound file.
+
+### 8. **Game Loop**
+
+```vb
+Private Sub GameTimer_Tick(sender As Object, e As EventArgs) Handles GameTimer.Tick
+    UpdateFrame()
+    Refresh()
+End Sub
+```
+
+- **GameTimer_Tick**: This event runs repeatedly at set intervals (like a clock tick ⏰). It updates the game state and redraws the window.
+
+### 9. **Updating the Frame**
+
+```vb
+Private Sub UpdateFrame()
+    Select Case GameState
+        Case AppState.Start
+            ' Logic for starting state
+        Case AppState.Playing
+            ' Logic for playing state
+        Case AppState.Editing
+            ' Logic for editing state
+    End Select
+End Sub
+```
+
+- **UpdateFrame**: This method checks the current game state and runs the appropriate logic based on whether the game is starting, playing, or in editing mode.
+
+### 10. **User Input Handling**
+
+```vb
+Private Sub Form1_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+    Select Case e.KeyCode
+        Case Keys.E
+            DoEKeyDownLogic()
+        Case Keys.P
+            DoPKeyDownLogic()
+    End Select
+End Sub
+```
+
+- **Form1_KeyDown**: This event handles keyboard input. When a key is pressed, it checks which key and calls the corresponding method to handle that input.
+
+### 11. **Game Object Interaction**
+
+```vb
+Private Sub DrawOurHero()
+    With Buffer.Graphics
+        If Hero.Rect.IntersectsWith(Camera.Rect) Then
+            ' Draw hero logic here
+        End If
+    End With
+End Sub
+```
+
+- **DrawOurHero**: This method draws the hero on the screen. It checks if the hero is within the camera's view before drawing it.
+
+### 12. **Ending the Game**
+
+```vb
+Private Sub Form1_Closing(sender As Object, e As CancelEventArgs) Handles MyBase.Closing
+    CloseSounds()
+End Sub
+```
+
+- **Form1_Closing**: This event runs when the user closes the application. It calls `CloseSounds()` to stop any playing sounds.
+
+
+
+This code is a basic structure of a platformer game with a level editor. Each part of the code works together to create a playable game where users can design their own levels. 
+
+
+
+
+
+
 
 
 
@@ -136,5 +301,66 @@ By following these steps, you’ll gain hands-on experience, learn programming p
 
 
 ![169](https://github.com/user-attachments/assets/e423b338-cb9c-430c-8d31-9c67eb08f12c)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

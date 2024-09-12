@@ -48,7 +48,7 @@ Remember, “Platformer with Level Editor” isn’t just about theory—it’s 
 
 
 # Code Walkthrough
-"Platformer with Level Editor" is a game application that allows users to create and customize their own platformer levels. The application includes various tools and features to help players design, edit, and play through their custom levels.
+**"Platformer with Level Editor"** is a game application that allows users to create and customize their own platformer levels. The application includes various tools and features to help players design, edit, and play through their custom levels.
 
 ### **Imports and Class Declaration**
 

@@ -696,6 +696,36 @@ Public Class Form1
 
     End Sub
 
+    Protected Overrides Sub OnPaint(e As PaintEventArgs)
+
+        DrawFrame()
+
+        'Show buffer on form.
+        Buffer.Render(e.Graphics)
+
+        'Release memory used by buffer.
+        Buffer.Dispose()
+        Buffer = Nothing
+
+        'Create new buffer.
+        Buffer = Context.Allocate(CreateGraphics(), ClientRectangle)
+
+        'Use these settings when drawing to the backbuffer.
+        With Buffer.Graphics
+
+            .CompositingMode = CompositingMode.SourceCopy
+            .CompositingQuality = CompositingQuality.HighSpeed
+            .TextRenderingHint = Drawing.Text.TextRenderingHint.AntiAliasGridFit
+            .PixelOffsetMode = PixelOffsetMode.None
+            .SmoothingMode = SmoothingMode.None
+            .InterpolationMode = InterpolationMode.Bilinear
+
+        End With
+
+        UpdateFrameCounter()
+
+    End Sub
+
     Private Sub Form1_MouseDown(sender As Object, e As MouseEventArgs) Handles MyBase.MouseDown
 
         Select Case GameState
@@ -951,15 +981,11 @@ Public Class Form1
 
             DoResize()
 
-            'BufferGridLines()
-
         End If
 
     End Sub
 
     Private Sub Form1_Closing(sender As Object, e As CancelEventArgs) Handles MyBase.Closing
-
-        GameLoopCancellationToken.Cancel(True)
 
         CloseSounds()
 
@@ -1010,36 +1036,6 @@ Public Class Form1
                 UpdateClearScreenTimer()
 
         End Select
-
-    End Sub
-
-    Protected Overrides Sub OnPaint(e As PaintEventArgs)
-
-        DrawFrame()
-
-        'Show buffer on form.
-        Buffer.Render(e.Graphics)
-
-        'Release memory used by buffer.
-        Buffer.Dispose()
-        Buffer = Nothing
-
-        'Create new buffer.
-        Buffer = Context.Allocate(CreateGraphics(), ClientRectangle)
-
-        'Use these settings when drawing to the backbuffer.
-        With Buffer.Graphics
-
-            .CompositingMode = CompositingMode.SourceCopy
-            .CompositingQuality = CompositingQuality.HighSpeed
-            .TextRenderingHint = Drawing.Text.TextRenderingHint.AntiAliasGridFit
-            .PixelOffsetMode = PixelOffsetMode.None
-            .SmoothingMode = SmoothingMode.None
-            .InterpolationMode = InterpolationMode.Bilinear
-
-        End With
-
-        UpdateFrameCounter()
 
     End Sub
 
@@ -1140,7 +1136,7 @@ Public Class Form1
 
     Private Sub DisplayError(ex As Exception)
 
-        MsgBox(ex.ToString()) ' Display the exception message in a message box.
+        MsgBox(ex.ToString()) 'Display the exception message in a message box.
 
     End Sub
 
@@ -1495,11 +1491,11 @@ Public Class Form1
                 ''Skydive steering
                 'If RightArrowDown = True Or ControllerRight = True Then
 
-                '    OurHero.Velocity.X += 25.5F * DeltaTime.TotalSeconds
+                '    Hero.Velocity.X += 25.5F * DeltaTime.TotalSeconds
 
                 'ElseIf LeftArrowDown = True Or ControllerLeft = True Then
 
-                '    OurHero.Velocity.X += -25.5F * DeltaTime.TotalSeconds
+                '    Hero.Velocity.X += -25.5F * DeltaTime.TotalSeconds
 
                 'End If
 

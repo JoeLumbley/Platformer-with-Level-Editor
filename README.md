@@ -1,8 +1,7 @@
 # **Make Your Own Games**
 
 
-
-**"Platformer with Level Editor"** is a powerful tool for aspiring game developers. By delving into the source code and project structure of a platformer game with a level editor, you can gain hands-on experience and valuable insights to create your own games.
+ If you've ever wanted to dive into game development, **Platformer with Level Editor** is your ticket. This tool is perfect for those looking to roll up their sleeves and get hands-on with creating games.
 
 ![163](https://github.com/user-attachments/assets/0d73e214-4b16-49c9-a7ec-be1896427bca)
 
@@ -11,18 +10,17 @@
 The key things you can expect to explore with this learning tool are:
 
 ### **Game Mechanics**
-Understanding the inner workings of a game is crucial. With this tool, you’ll explore physics (how objects move), collision detection (when objects interact), character movement (controls), and game loops (the heartbeat of your game).
+Get the lowdown on how games tick. We’re talking physics (how things move), collision detection (when stuff bumps into each other), character controls, and the all-important game loop that keeps everything running.
 
 ### **Programming Patterns**
-Game development relies on common programming patterns. Structured programming helps organize code into manageable pieces, and event handling ensures your game responds to player actions (like jumping or shooting).
+Game dev isn’t just about coding; it’s about organizing your code. You’ll learn how to structure your programming and handle events so your game reacts to player moves like jumping or shooting.
 
 ![167](https://github.com/user-attachments/assets/5788aacc-5b04-4862-bb88-281d99df3e58)
 
 
 
 ### **Level Design**
-The level editor is your canvas. Learn how to create captivating levels, store them efficiently, and load them seamlessly during gameplay. Level design impacts player experience, so it’s a critical skill.
-
+The level editor is your playground. Learn to whip up engaging levels, manage them like a pro, and make sure they load smoothly during gameplay. Good level design can make or break the player experience.
 
 
 ![166](https://github.com/user-attachments/assets/7a263e93-d8a8-49f9-a6d6-49108dea7c9f)
@@ -30,11 +28,10 @@ The level editor is your canvas. Learn how to create captivating levels, store t
 
 
 ### **Sound Integration**
-Sound effects and music enhance immersion. Discover how to integrate audio assets into your game.
-Whether it’s a cheerful jump sound or an epic boss battle theme, audio matters!
+Sounds matter! You’ll figure out how to bring in sound effects and music to amp up the fun—think catchy jump sounds and epic battle tunes.
 
 ### **Xbox Controller Support**
-Many players use controllers. Mastering Xbox controller integration allows you to create games that feel natural and enjoyable for console players.
+Many gamers use controllers, so you’ll learn how to integrate Xbox controller support to make your game feel just right for console players.
 
 
 Remember, “Platformer with Level Editor” isn’t just about theory—it’s hands-on learning. Dive in, experiment, and let your creativity flow! 🎮✨
@@ -51,6 +48,8 @@ Remember, “Platformer with Level Editor” isn’t just about theory—it’s 
 **"Platformer with Level Editor"** is a game application that allows users to create and customize their own platformer levels. The application includes various tools and features to help players design, edit, and play through their custom levels.
 
 ### **Imports and Class Declaration**
+
+We start by bringing in libraries that give our game extra functionality and setting up the main class for our app.
 
 ```vb
 Imports System.ComponentModel
@@ -80,7 +79,9 @@ End Function
 
 - **Function mciSendStringW**: This function sends commands to the multimedia control interface (MCI) for audio playback.
 
-### **Game State and Controller Setup**
+### **Game State Management**
+
+We define different game states—like starting, playing, and editing—and manage them smoothly.
 
 ```vb
 Private Enum AppState As Integer
@@ -115,6 +116,8 @@ End Sub
 
 ### **Initializing the Game**
 
+When your app loads, you’ll set up everything from sound files to game objects.
+
 ```vb
 Private Sub InitializeApp()
     CreateSoundFilesFromResources()
@@ -137,6 +140,8 @@ End Sub
 - **CreateSoundFilesFromResources**: This method creates sound files from resources included in the project. It uses the `CreateSoundFileFromResource` method to save the sound file.
 
 ### **Game Loop**
+
+This is where the magic happens. The loop updates the game state and refreshes the screen like clockwork.
 
 ```vb
 Private Sub GameTimer_Tick(sender As Object, e As EventArgs) Handles GameTimer.Tick
@@ -165,6 +170,8 @@ End Sub
 - **UpdateFrame**: This method checks the current game state and runs the appropriate logic based on whether the game is starting, playing, or in editing mode.
 
 ### **User Input Handling**
+
+ You’ll learn to handle keyboard inputs and make sure your game objects interact the way you want.
 
 ```vb
 Private Sub Form1_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
@@ -374,6 +381,82 @@ Using controllers in your game involves:
 
 
 
+
+
+
+
+
+
+
+
+# Getting Started
+
+Here are some steps you can take to learn game development using the "Platformer with Level Editor" project:
+
+
+### **Set Up Your Environment**
+
+Visual Studio is an Integrated Development Environment (IDE) created by Microsoft. 
+
+It is a powerful software development tool that provides a comprehensive set of features and tools for building a wide range of applications.
+
+This is the IDE I use to make "Platformer with Level Editor" and I recommend that you use.
+
+Grab Visual Studio Community—it's free and perfect for indie devs.
+
+Install Visual Studio from here:  https://visualstudio.microsoft.com/downloads/ and include the .NET Desktop Development workload.
+
+![153](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/22a61c77-908f-4e04-9266-93f3d34ec376)
+
+
+### **Clone the Repository** 
+
+Follow the steps to get your local copy of the project.
+
+1. Click the "Code" button.
+2. Copy the repository's URL.
+3. Open Visual Studio.
+4. Click "Clone a repository".
+5. Paste the repository URL into the location field.
+6. Click the "Clone" button.
+
+Once the cloning process is complete, you will have your own local copy of the game that you can run and modify on your computer.
+
+
+Watch a short about cloning the repository here: https://www.youtube.com/shorts/n8bCEIdI44U
+
+![154](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/a937ec81-c192-4dff-b4b0-badd87c07f87)
+
+
+### **Explore and Modify:**
+
+Get familiar with the project structure and start adding your own flair.
+
+### **Use Resources**
+
+Don’t forget to check out the documentation and tutorials to level up your skills.
+
+
+![072](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/c4ae4c4c-7641-4a9f-96d5-c19805fdcc01)
+
+
+### **Seek Community Feedback**
+
+Engage with the project’s community for feedback and learning opportunities.
+
+By following these steps, you’ll gain hands-on experience, learn programming patterns, and build skills in creating interactive games! 🎮🚀
+
+
+
+
+
+
+
+
+
+
+
+
 # **Why GDI+**
 
 ### **Easy to Learn**
@@ -446,67 +529,6 @@ GDI+ strikes a perfect balance between functionality and accessibility. Its simp
 
 
 
-# Getting Started
-
-Here are some steps you can take to learn game development using the "Platformer with Level Editor" project:
-
-
-### **Set up the Development Environment**
-
-
-Visual Studio is an Integrated Development Environment (IDE) created by Microsoft. 
-
-It is a powerful software development tool that provides a comprehensive set of features and tools for building a wide range of applications.
-
-This is the IDE I use to make "Platformer with Level Editor" and I recommend that you use.
-
-Visual Studio Community is a free version of the IDE for individual developers, small teams, and open-source projects.
-
-This is the version I recommend you download.
-
-Install Visual Studio from here:  https://visualstudio.microsoft.com/downloads/ and include the .NET Desktop Development workload.
-
-![153](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/22a61c77-908f-4e04-9266-93f3d34ec376)
-
-
-### **Clone the Repository** 
-
-1. Click the "Code" button.
-2. Copy the repository's URL.
-3. Open Visual Studio.
-4. Click "Clone a repository".
-5. Paste the repository URL into the location field.
-6. Click the "Clone" button.
-
-Once the cloning process is complete, you will have your own local copy of the game that you can run and modify on your computer.
-
-
-Watch a short about cloning the repository here: https://www.youtube.com/shorts/n8bCEIdI44U
-
-![154](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/a937ec81-c192-4dff-b4b0-badd87c07f87)
-
-
-### **Explore the Project Structure**
-
-Familiarize yourself with the project's structure and organization. Understand the different folders and files, and how they work together to create the platformer game and level editor.
-
-
-### **Modify and Extend the Project**
-
-Once familiar with the codebase, try adding features, improving mechanics, or creating unique game elements.
-
-### **Refer to Documentation and Resources**
-
-Use project documentation and tutorials to deepen your understanding of concepts and techniques.
-
-![072](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/c4ae4c4c-7641-4a9f-96d5-c19805fdcc01)
-
-
-### **Seek Community Feedback**
-
-Engage with the project’s community for feedback and learning opportunities.
-
-By following these steps, you’ll gain hands-on experience, learn programming patterns, and build skills in creating interactive games! 🎮🚀
 
 ![063](https://github.com/JoeLumbley/Platformer-with-Level-Editor/assets/77564255/c55ed39f-9a4e-43d6-84a0-f5c364f224d9)
 

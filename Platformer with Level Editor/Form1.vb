@@ -6391,10 +6391,6 @@ Public Class Form1
 
     Private Sub DrawRoundedRectangle(pen As Pen, Rect As Rectangle, radius As Integer, g As Graphics)
 
-        'g.CompositingMode = CompositingMode.SourceOver
-
-        'g.SmoothingMode = SmoothingMode.AntiAlias
-
         Dim path As New GraphicsPath()
 
         'Add top line inside the top left and top right corners.
@@ -6425,17 +6421,9 @@ Public Class Form1
 
         g.DrawPath(pen, path)
 
-        'g.CompositingMode = CompositingMode.SourceCopy
-
-        'g.SmoothingMode = SmoothingMode.None
-
     End Sub
 
     Private Sub FillRoundedRectangle(brush As Brush, Rect As Rectangle, radius As Integer, g As Graphics)
-
-        'g.CompositingMode = CompositingMode.SourceOver
-
-        'g.SmoothingMode = SmoothingMode.AntiAlias
 
         Dim Path As New GraphicsPath()
 
@@ -6466,10 +6454,6 @@ Public Class Form1
         Path.CloseFigure()
 
         g.FillPath(brush, Path)
-
-        'g.CompositingMode = CompositingMode.SourceCopy
-
-        'g.SmoothingMode = SmoothingMode.None
 
     End Sub
 
@@ -6595,9 +6579,9 @@ Public Class Form1
 
         Hero.Velocity = New PointF(0, 0)
 
-        Hero.MaxVelocity = New PointF(400, 1000)
+        Hero.MaxVelocity = New PointF(300, 1000)
 
-        Hero.Acceleration = New PointF(300, 25)
+        Hero.Acceleration = New PointF(100, 25)
 
         Spawn.Rect = New Rectangle(128, 769, 64, 64)
 
